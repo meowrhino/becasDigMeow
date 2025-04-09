@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" data-theme="dark">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,20 +11,31 @@
   <style>
     /* PALETA DE COLORES – Usamos la nueva paleta original */
     html[data-theme="dark"] {
-      --bg: #221E33;         /* Fondo en modo oscuro */
-      --text: #FFD66B;       /* Texto en modo oscuro */
-      --accent: #EC7F51;     /* Acento (nubes, botones) */
-      --secondary: #33201E;  /* Detalles secundarios */
+      --bg: #221E33;
+      /* Fondo en modo oscuro */
+      --text: #FFD66B;
+      /* Texto en modo oscuro */
+      --accent: #EC7F51;
+      /* Acento (nubes, botones) */
+      --secondary: #33201E;
+      /* Detalles secundarios */
     }
+
     html[data-theme="light"] {
-      --bg: #FFD66B;         /* Fondo en modo claro */
-      --text: #221E33;       /* Texto en modo claro */
-      --accent: #EC7F51;     /* Acento se mantiene */
+      --bg: #FFD66B;
+      /* Fondo en modo claro */
+      --text: #221E33;
+      /* Texto en modo claro */
+      --accent: #EC7F51;
+      /* Acento se mantiene */
       --secondary: #33201E;
     }
-    
+
     /* BASE Y RESETEO */
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 20px;
@@ -35,7 +47,7 @@
       transition: background-color 0.3s, color 0.3s;
       line-height: 1.5;
     }
-    
+
     /* CONTAINER DEL CONTENIDO (excluyendo el header-cloud) */
     .container {
       max-width: 800px;
@@ -44,20 +56,40 @@
       position: relative;
       z-index: 1;
     }
-    
+
     /* FORMATO DE LAS SECCIONES */
-    header, section, footer {
-      margin-bottom: 2rem;
-      padding: 1rem;
+    header,
+    section,
+    footer {
+      padding: 3rem 5rem;
       border-radius: 8px;
-      background-color: rgba(236,127,81, 0.15);
+      background-color: rgba(236, 127, 81, 0.15);
     }
+
     /* En modo claro se podría ajustar si lo deseas */
-    header h1 { font-size: 2.5em; margin-bottom: 0.2em; }
-    header h2 { font-size: 1.5em; color: var(--secondary); margin-top: 0; }
-    .section { margin-bottom: 2em; }
-    p { margin-bottom: 1em; }
-    ul { margin: 0 0 1em 20px; }
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 0.3em;
+    }
+
+    header h2 {
+      font-size: 1.5em;
+      color: var(--secondary);
+      margin-top: 0;
+    }
+
+    .section {
+      margin-bottom: 2em;
+    }
+
+    p {
+      margin-bottom: 1em;
+    }
+
+    ul {
+      margin: 0 0 1em 20px;
+    }
+
     .cta-button {
       display: inline-block;
       padding: 15px 25px;
@@ -69,107 +101,140 @@
       border-radius: 5px;
       transition: background-color 0.3s, color 0.3s;
     }
+
     .cta-button:hover {
       background-color: var(--secondary);
       color: var(--text);
     }
-    footer { text-align: center; margin-top: 2em; }
-    
+
+    footer {
+      text-align: center;
+    }
+
     /* HEADER-CLOUD: Envuelve título, subtítulo y botón de aplicar en una nube */
     .header-cloud {
       position: relative;
-      padding: 40px;
+      padding: 40px 80px;
       background-color: var(--accent);
       color: var(--bg);
       clip-path: var(--nube);
-      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
       text-align: center;
       margin-bottom: 2rem;
     }
-    .header-cloud h1, .header-cloud h2, .header-cloud .cta-button {
+
+    .header-cloud h1,
+    .header-cloud h2,
+    .header-cloud .cta-button {
       position: relative;
       z-index: 1;
     }
-    
+
     /* DEFINICIÓN DE LA FORMA DE LA NUBE (mismo clip-path que en el zip de Meowrhino) */
     :root {
       --nube: polygon(99.426% 44.728%, 99.426% 44.728%, 99.871% 41.37%, 99.98% 37.982%, 99.78% 34.598%, 99.298% 31.252%, 98.561% 27.979%, 97.597% 24.812%, 96.432% 21.786%, 95.095% 18.935%, 93.611% 16.293%, 92.009% 13.895%, 92.009% 13.895%, 90.386% 11.942%, 88.654% 10.355%, 86.828% 9.112%, 84.925% 8.191%, 82.96% 7.57%, 80.948% 7.227%, 78.907% 7.141%, 76.851% 7.288%, 74.797% 7.648%, 72.759% 8.198%, 72.759% 8.198%, 71.935% 8.479%, 71.117% 8.802%, 70.308% 9.166%, 69.509% 9.573%, 68.72% 10.022%, 67.943% 10.512%, 67.179% 11.044%, 66.429% 11.618%, 65.695% 12.234%, 64.978% 12.891%, 64.978% 12.891%, 64.649% 12.219%, 64.312% 11.557%, 63.967% 10.909%, 63.614% 10.272%, 63.253% 9.649%, 62.886% 9.04%, 62.511% 8.446%, 62.129% 7.866%, 61.741% 7.301%, 61.347% 6.752%, 61.347% 6.752%, 59.724% 4.799%, 57.992% 3.213%, 56.166% 1.97%, 54.263% 1.049%, 52.297% 0.428%, 50.286% 0.085%, 48.245% -0.002%, 46.189% 0.145%, 44.134% 0.505%, 42.097% 1.055%, 42.097% 1.055%, 40.406% 1.679%, 38.751% 2.481%, 37.142% 3.46%, 35.59% 4.616%, 34.105% 5.948%, 32.698% 7.458%, 31.379% 9.143%, 30.159% 11.005%, 29.048% 13.042%, 28.058% 15.255%, 28.058% 15.255%, 27.516% 14.778%, 26.964% 14.337%, 26.402% 13.933%, 25.83% 13.569%, 25.248% 13.244%, 24.658% 12.962%, 24.058% 12.723%, 23.45% 12.528%, 22.833% 12.38%, 22.208% 12.279%, 22.208% 12.279%, 20.213% 12.271%, 18.266% 12.683%, 16.375% 13.478%, 14.546% 14.621%, 12.787% 16.076%, 11.105% 17.808%, 9.507% 19.78%, 7.999% 21.958%, 6.591% 24.305%, 5.287% 26.786%, 5.287% 26.786%, 4.106% 29.369%, 3.047% 32.078%, 2.125% 34.894%, 1.351% 37.802%, 0.74% 40.785%, 0.303% 43.825%, 0.054% 46.906%, 0.005% 50.011%, 0.171% 53.123%, 0.563% 56.225%, 0.563% 56.225%, 0.803% 57.519%, 1.083% 58.778%, 1.403% 60.002%, 1.761% 61.191%, 2.155% 62.345%, 2.585% 63.464%, 3.048% 64.548%, 3.543% 65.596%, 4.069% 66.608%, 4.625% 67.585%, 4.625% 67.585%, 4.542% 68.011%, 4.464% 68.44%, 4.393% 68.871%, 4.327% 69.305%, 4.268% 69.741%, 4.213% 70.178%, 4.164% 70.615%, 4.121% 71.051%, 4.083% 71.488%, 4.051% 71.922%, 4.051% 71.922%, 3.996% 73.58%, 4.052% 75.222%, 4.213% 76.837%, 4.474% 78.417%, 4.83% 79.951%, 5.276% 81.431%, 5.804% 82.847%, 6.411% 84.19%, 7.09% 85.449%, 7.837% 86.616%, 7.837% 86.616%, 8.563% 87.542%, 9.34% 88.315%, 10.161% 88.942%, 11.018% 89.43%, 11.905% 89.786%, 12.816% 90.016%, 13.742% 90.129%, 14.676% 90.131%, 15.613% 90.029%, 16.545% 89.83%, 16.545% 89.83%, 16.634% 89.804%, 16.723% 89.777%, 16.811% 89.749%, 16.898% 89.72%, 16.984% 89.69%, 17.07% 89.659%, 17.155% 89.627%, 17.239% 89.594%, 17.323% 89.559%, 17.406% 89.524%, 17.406% 89.524%, 18.764% 91.763%, 20.268% 93.695%, 21.899% 95.335%, 23.639% 96.696%, 25.466% 97.796%, 27.364% 98.648%, 29.312% 99.267%, 31.291% 99.669%, 33.281% 99.869%, 35.265% 99.881%, 35.265% 99.881%, 37.204% 99.716%, 39.152% 99.364%, 41.086% 98.81%, 42.982% 98.039%, 44.818% 97.037%, 46.57% 95.789%, 48.216% 94.281%, 49.733% 92.497%, 51.097% 90.423%, 52.285% 88.045%, 52.285% 88.045%, 52.613% 88.03%, 52.941% 88.006%, 53.268% 87.974%, 53.596% 87.932%, 53.924% 87.883%, 54.252% 87.825%, 54.58% 87.76%, 54.907% 87.686%, 55.235% 87.606%, 55.563% 87.517%, 55.563% 87.517%, 56.701% 89.03%, 57.907% 90.405%, 59.173% 91.64%, 60.492% 92.733%, 61.86% 93.682%, 63.268% 94.487%, 64.712% 95.145%, 66.183% 95.656%, 67.675% 96.016%, 69.183% 96.225%, 69.183% 96.225%, 70.986% 96.212%, 72.749% 95.872%, 74.466% 95.229%, 76.134% 94.307%, 77.746% 93.127%, 79.298% 91.715%, 80.784% 90.093%, 82.2% 88.284%, 83.541% 86.312%, 84.801% 84.201%, 84.801% 84.201%, 85.12% 83.613%, 85.428% 83.014%, 85.724% 82.403%, 86.009% 81.781%, 86.282% 81.148%, 86.543% 80.506%, 86.793% 79.853%, 87.032% 79.191%, 87.258% 78.52%, 87.473% 77.84%, 87.473% 77.84%, 88.153% 77.897%, 88.834% 77.883%, 89.514% 77.802%, 90.192% 77.654%, 90.864% 77.441%, 91.529% 77.165%, 92.184% 76.827%, 92.828% 76.429%, 93.458% 75.973%, 94.073% 75.46%, 94.073% 75.46%, 94.856% 74.659%, 95.566% 73.733%, 96.202% 72.696%, 96.769% 71.559%, 97.267% 70.334%, 97.698% 69.035%, 98.065% 67.673%, 98.369% 66.26%, 98.613% 64.81%, 98.797% 63.334%, 98.797% 63.334%, 98.894% 62.023%, 98.915% 60.717%, 98.862% 59.423%, 98.738% 58.146%, 98.545% 56.892%, 98.284% 55.668%, 97.958% 54.48%, 97.569% 53.334%, 97.12% 52.235%, 96.612% 51.191%, 96.612% 51.191%, 96.993% 50.688%, 97.355% 50.158%, 97.696% 49.599%, 98.016% 49.009%, 98.313% 48.387%, 98.586% 47.73%, 98.836% 47.038%, 99.059% 46.308%, 99.256% 45.539%, 99.426% 44.728%);
-    
-    /* CONTENEDOR DE FONDOS – Las nubes se generan dinámicamente */
-    #backgroundContainer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 200%;
-      height: 200%;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: -2;
-    }
-    .cloud {
-      position: absolute;
-      background: var(--accent);
-      clip-path: var(--nube);
-      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
-      animation: float linear infinite;
-    }
-    @keyframes float {
-      0% { transform: translate(0, 0); }
-      50% { transform: translate(-15px, 10px); }
-      100% { transform: translate(0, 0); }
-    }
-    
-    /* PANEL DE CONTROLES (ahora con 2 botones) – Ubicado en la esquina inferior derecha */
-    nav {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      z-index: 1000;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    nav button {
-      background-color: var(--accent);
-      color: var(--bg);
-      border: none;
-      padding: 8px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.9em;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    nav button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    }
-    nav button.active {
-      box-shadow: 0 0 0 2px var(--secondary);
-    }
-    
-    /* Responsive */
-    @media (max-width: 600px) {
-      .container { padding: 10px; }
-      header h1 { font-size: 2em; }
-      header h2 { font-size: 1.2em; }
-      nav { font-size: 0.8em; }
-    }
+
+      /* CONTENEDOR DE FONDOS – Las nubes se generan dinámicamente */
+      #backgroundContainer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 200%;
+        height: 200%;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: -2;
+      }
+
+      .cloud {
+        position: absolute;
+        background: var(--accent);
+        clip-path: var(--nube);
+        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+        animation: float linear infinite;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translate(0, 0);
+        }
+
+        50% {
+          transform: translate(-15px, 10px);
+        }
+
+        100% {
+          transform: translate(0, 0);
+        }
+      }
+
+      /* PANEL DE CONTROLES (ahora con 2 botones) – Ubicado en la esquina inferior derecha */
+      nav {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      nav button {
+        background-color: var(--accent);
+        color: var(--bg);
+        border: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9em;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      nav button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      }
+
+      nav button.active {
+        box-shadow: 0 0 0 2px var(--secondary);
+      }
+
+      /* Responsive */
+      @media (max-width: 600px) {
+        .container {
+          padding: 10px;
+        }
+
+        header h1 {
+          font-size: 2em;
+        }
+
+        header h2 {
+          font-size: 1.2em;
+        }
+
+        nav {
+          font-size: 0.8em;
+        }
+      }
   </style>
 </head>
+
 <body>
   <!-- Contenedor de nubes (fondo dinámico) -->
   <div id="backgroundContainer"></div>
-  
+
   <!-- Panel de controles en la esquina inferior derecha -->
   <nav>
     <button id="toggleTheme" aria-label="Alternar modo claro/oscuro">🌙</button>
-    <button id="randomizeClouds">Randomize Clouds</button>
-    <button id="modifyCloudsButton">Modify Clouds</button>
+    <button id="randomizeClouds">☁️‼️</button>
+    <button id="modifyCloudsButton">☁️❓</button>
   </nav>
-  
+
   <!-- Formulario para modificar parámetros de nubes (oculto por defecto) -->
-  <div id="cloudForm" style="display:none; position:fixed; bottom:70px; left:10px; background:rgba(255,255,255,0.95); padding:10px; border-radius:5px; z-index:1001; font-family: sans-serif; color: #000;">
-    <label>Count: <input type="number" id="inputCount" value="15" /></label><br>
+  <div id="cloudForm"
+    style="display:none; position:fixed; bottom:70px; left:10px; background:rgba(255,255,255,0.95); padding:10px; border-radius:5px; z-index:1001; font-family: sans-serif; color: #000;">
+    <label>Count: <input type="number" id="inputCount" value="150" /></label><br>
     <label>Min Width: <input type="number" id="inputMinWidth" value="100" /></label><br>
     <label>Max Width: <input type="number" id="inputMaxWidth" value="300" /></label><br>
     <label>Opacity Min: <input type="number" id="inputOpacityMin" value="0.08" step="0.01" /></label><br>
@@ -179,64 +244,89 @@
     <button id="applyCloudSettings">Apply Cloud Settings</button>
     <button id="closeCloudForm">Close</button>
   </div>
-  
+
   <!-- HEADER CLOUD: Envuelve el título, subtítulo y botón de aplicar en una nube -->
-  <div class="header-cloud">
-    <header>
-      <h1>Becas Meowrhino</h1>
-      <h2>Digitalización y Resistencia Digital</h2>
-    </header>
-    <footer>
-      <a class="cta-button" href="mailto:manuellatourf@gmail.com?subject=aplicaci%C3%B3n%20beca%20digitalizaci%C3%B3n%20meowrhino">
-        Aplicar a la Beca
-      </a>
-    </footer>
+  <div style="display: flex; justify-content: center;">
+    <div class="header-cloud">
+      <header>
+        <h1>Becas Meowrhino</h1>
+        <h2>Digitalización y Resistencia Digital</h2>
+      </header>
+      <footer>
+        <a class="cta-button"
+          href="mailto:manuellatourf@gmail.com?subject=aplicaci%C3%B3n%20beca%20digitalizaci%C3%B3n%20meowrhino">
+          Aplicar a la Beca
+        </a>
+      </footer>
+    </div>
   </div>
-  
+
   <!-- Contenido principal (secciones sin modificar) -->
   <div class="container">
     <main>
       <div class="section">
         <p>
           Te hago una web por entre 200 y 500 euros, depende de lo que necesites*<br>
-          *Si es una web con muchas páginas, para que no se exceda el presupuesto, lo que generalmente se hará será generar plantillas base con instrucciones para que puedas añadir tantas como quieras.
+          *Si es una web con muchas páginas, para que no se exceda el presupuesto, lo que generalmente se hará será
+          generar plantillas base con instrucciones para que puedas añadir tantas como quieras.
         </p>
       </div>
-      
+
       <div class="section">
         <p>
-          <strong>Cómo aplicar:</strong> Para aplicar, puedes contactarme y tendremos una llamada de 15 minutos. De cara a ella, te recomiendo tener una idea clara, que ya hayas hecho una revisión de los documentos, imágenes y archivos de todo tipo (puede ser que estén en la nube) y mínimo 3 referentes de lo que quieres. No han de ser súper exactos, puede ser una idea del vibe, o de la manera de organizar, de los colores, del tratamiento tipográfico, (...).
+          <strong>Cómo aplicar:</strong> Para aplicar, puedes contactarme y tendremos una llamada de 15 minutos. De cara
+          a ella, te recomiendo tener una idea clara, que ya hayas hecho una revisión de los documentos, imágenes y
+          archivos de todo tipo (puede ser que estén en la nube) y mínimo 3 referentes de lo que quieres. No han de ser
+          súper exactos, puede ser una idea del vibe, o de la manera de organizar, de los colores, del tratamiento
+          tipográfico, (...).
         </p>
         <p>
-          Tras estos minutos te daré unos "deberes" que consistirán en instrucciones para elaborar un brief. Piensa que si al final no lo quieres hacer conmigo, este ejercicio te servirá para entender mejor qué necesitas y llevarlo con otra persona.
+          Tras estos minutos te daré unos "deberes" que consistirán en instrucciones para elaborar un brief. Piensa que
+          si al final no lo quieres hacer conmigo, este ejercicio te servirá para entender mejor qué necesitas y
+          llevarlo con otra persona.
         </p>
         <p>
-          Estos deberes tendrán una deadline que será una reunión presencial conmigo de aproximadamente 1h-1h30min, donde haremos juntos el wireframe o incluso un primer boceto de diseño.
+          Estos deberes tendrán una deadline que será una reunión presencial conmigo de aproximadamente 1h-1h30min,
+          donde haremos juntos el wireframe o incluso un primer boceto de diseño.
         </p>
       </div>
-      
+
       <div class="section">
         <p>
-          Si aceptas seguir, aquí deberás abonar la mitad del importe y los deberes. Tras esto, realizaré una preview de tu página en Figma (seguramente en el wireframe ya quede bastante claro todo) para que puedas hacerte una idea de cómo quedaría. Deberás pagar la primera parte del importe, pues estarías pagando la parte de diseño web.
+          Si aceptas seguir, aquí deberás abonar la mitad del importe y los deberes. Tras esto, realizaré una preview de
+          tu página en Figma (seguramente en el wireframe ya quede bastante claro todo) para que puedas hacerte una idea
+          de cómo quedaría. Deberás pagar la primera parte del importe, pues estarías pagando la parte de diseño web.
         </p>
         <p>
-          Y en la entrega del código, deberás abonar el importe restante :), pagando la parte del desarrollo web. Yo te puedo guiar para montar tu repositorio de GitHub o alternativas más éticas como Codeberg para que puedas tener tu página web online sin mantenimiento, pero por defecto habrá una página que sea <em>meowrhino.github.io/tunombre</em>.
+          Y en la entrega del código, deberás abonar el importe restante :), pagando la parte del desarrollo web. Yo te
+          puedo guiar para montar tu repositorio de GitHub o alternativas más éticas como Codeberg para que puedas tener
+          tu página web online sin mantenimiento, pero por defecto habrá una página que sea
+          <em>meowrhino.github.io/tunombre</em>.
         </p>
       </div>
-      
+
       <div class="section">
         <p>
           <strong>Q&A:</strong><br>
-          <em>¿Sin mantenimiento?</em> Sí, si quieres pagar un dominio, tendrás que pagar el dominio y el hosting. Piensa que un meowrhino.github.io no queda mal y no tendrás que pagar nada; si no me quieres tener en el enlace de tu web, siempre puedes crearte una cuenta en GitHub o algún repositorio que tenga Pages y lanzarla desde ahí, podemos verlo juntos :) 
+          <em>¿Sin mantenimiento?</em> Sí, si quieres pagar un dominio, tendrás que pagar el dominio y el hosting.
+          Piensa que un meowrhino.github.io no queda mal y no tendrás que pagar nada; si no me quieres tener en el
+          enlace de tu web, siempre puedes crearte una cuenta en GitHub o algún repositorio que tenga Pages y lanzarla
+          desde ahí, podemos verlo juntos :)
         </p>
         <p>
-          <em>¿Tendré que hacer código?</em> Sí, pero seguramente con el PDF que te envíe le perderás el miedo. Aceptaré hasta 2 mails de preguntas sobre cómo trabajar con él durante el primer mes; pasado ese mes es posible que cobre algo por la consulta, pues sería inviable estar respondiendo a todes :(
+          <em>¿Tendré que hacer código?</em> Sí, pero seguramente con el PDF que te envíe le perderás el miedo. Aceptaré
+          hasta 2 mails de preguntas sobre cómo trabajar con él durante el primer mes; pasado ese mes es posible que
+          cobre algo por la consulta, pues sería inviable estar respondiendo a todes :(
         </p>
         <p>
-          <em>¿Puedes hacerlo todo tú?</em> Sí, como decía, yo puedo mantenerte la web en mi GitHub y tal, solo que entonces los cambios que sean posteriores a la entrega de la web, que sean cambios de opinión y no errores o posibles bugs, deberán correr a tu cargo. El objetivo de estas becas es fomentar la alfabetización digital de las personas precarias que necesiten estos recursos. Si te hallas en posición para poder pagar lo que se merece este trabajo, te recomiendo que lo hablemos y veamos sin compromiso.
+          <em>¿Puedes hacerlo todo tú?</em> Sí, como decía, yo puedo mantenerte la web en mi GitHub y tal, solo que
+          entonces los cambios que sean posteriores a la entrega de la web, que sean cambios de opinión y no errores o
+          posibles bugs, deberán correr a tu cargo. El objetivo de estas becas es fomentar la alfabetización digital de
+          las personas precarias que necesiten estos recursos. Si te hallas en posición para poder pagar lo que se
+          merece este trabajo, te recomiendo que lo hablemos y veamos sin compromiso.
         </p>
       </div>
-      
+
       <div class="section">
         <p><strong>Ventajas:</strong></p>
         <ul>
@@ -244,30 +334,31 @@
           <li>Será una web divertidísima</li>
           <li>Cuentas con mis conocimientos y experiencia en diseño UX/UI</li>
           <li>Cuentas con mis conocimientos y experiencia en desarrollo web</li>
-          <li>Cuando se te entregue la web, se te entregará un pequeño PDF que te guiará por tu nueva web para que puedas modificarla como gustes (yo me quedaré una copia de la web para mi archivo/portfolio en la que puedo borrar todos tus datos personales :))</li>
+          <li>Cuando se te entregue la web, se te entregará un pequeño PDF que te guiará por tu nueva web para que
+            puedas modificarla como gustes (yo me quedaré una copia de la web para mi archivo/portfolio en la que puedo
+            borrar todos tus datos personales :))</li>
           <li>¡Serás parte de esta iniciativa tan chula!</li>
         </ul>
         <p>
-          Parece una tontería, pero este pequeño acto de resistencia puede hacer que en 2 o 3 años puedas emanciparte de las redes sociales y ser cada vez más independiente de los tecnócratas que quieren convertirse en señores feudales digitales.
+          Parece una tontería, pero este pequeño acto de resistencia puede hacer que en 2 o 3 años puedas emanciparte de
+          las redes sociales y ser cada vez más independiente de los tecnócratas que quieren convertirse en señores
+          feudales digitales.
         </p>
         <p>
           <em>¡Contra el fascismo, curiosidad y juego!</em>
         </p>
       </div>
-      
+
     </main>
-    
-    <footer>
-      <!-- Este botón ya aparece dentro del header-cloud -->
-    </footer>
+
   </div>
-  
+
   <!-- JAVASCRIPT: Toggle de tema y generación dinámica de nubes -->
   <script>
     // Toggle de modo (oscuro/claro)
     const toggleThemeBtn = document.getElementById('toggleTheme');
     toggleThemeBtn.addEventListener('click', () => {
-      if(document.documentElement.getAttribute('data-theme') === 'light'){
+      if (document.documentElement.getAttribute('data-theme') === 'light') {
         document.documentElement.setAttribute('data-theme', 'dark');
         toggleThemeBtn.textContent = '🌙';
       } else {
@@ -275,27 +366,27 @@
         toggleThemeBtn.textContent = '☀️';
       }
     });
-    
+
     // Parámetros globales para las nubes (por defecto)
     let cloudParams = {
-      count: 15,
+      count: 150,
       minWidth: 100,
       maxWidth: 300,
       opacityRange: [0.08, 0.15],
       durationRange: [18, 26]
     };
-    
+
     const bgContainer = document.getElementById('backgroundContainer');
-    
+
     // Función para obtener un número aleatorio entre min y max
     function randomBetween(min, max) {
       return Math.random() * (max - min) + min;
     }
-    
+
     // Función para generar nubes dinámicamente según parámetros
     function generateClouds(params) {
       bgContainer.innerHTML = "";
-      for(let i = 0; i < params.count; i++){
+      for (let i = 0; i < params.count; i++) {
         const cloud = document.createElement("div");
         cloud.classList.add("cloud");
         // Tamaño aleatorio
@@ -315,38 +406,38 @@
         bgContainer.appendChild(cloud);
       }
     }
-    
+
     // Inicializar las nubes con los parámetros por defecto
     generateClouds(cloudParams);
-    
+
     // Botón para randomizar los parámetros de las nubes
     const randomizeButton = document.getElementById('randomizeClouds');
     randomizeButton.addEventListener('click', () => {
       // Genera valores aleatorios dentro de rangos razonables
-      cloudParams.count = Math.floor(randomBetween(10, 30));
+      cloudParams.count = Math.floor(randomBetween(100, 300));
       cloudParams.minWidth = randomBetween(80, 150);
       cloudParams.maxWidth = randomBetween(250, 400);
-      if(cloudParams.minWidth > cloudParams.maxWidth) {
-         [cloudParams.minWidth, cloudParams.maxWidth] = [cloudParams.maxWidth, cloudParams.minWidth];
+      if (cloudParams.minWidth > cloudParams.maxWidth) {
+        [cloudParams.minWidth, cloudParams.maxWidth] = [cloudParams.maxWidth, cloudParams.minWidth];
       }
       cloudParams.opacityRange = [randomBetween(0.05, 0.1), randomBetween(0.15, 0.25)];
-      if(cloudParams.opacityRange[0] > cloudParams.opacityRange[1]){
-         [cloudParams.opacityRange[0], cloudParams.opacityRange[1]] = [cloudParams.opacityRange[1], cloudParams.opacityRange[0]];
+      if (cloudParams.opacityRange[0] > cloudParams.opacityRange[1]) {
+        [cloudParams.opacityRange[0], cloudParams.opacityRange[1]] = [cloudParams.opacityRange[1], cloudParams.opacityRange[0]];
       }
       cloudParams.durationRange = [randomBetween(12, 20), randomBetween(22, 30)];
-      if(cloudParams.durationRange[0] > cloudParams.durationRange[1]){
-         [cloudParams.durationRange[0], cloudParams.durationRange[1]] = [cloudParams.durationRange[1], cloudParams.durationRange[0]];
+      if (cloudParams.durationRange[0] > cloudParams.durationRange[1]) {
+        [cloudParams.durationRange[0], cloudParams.durationRange[1]] = [cloudParams.durationRange[1], cloudParams.durationRange[0]];
       }
       generateClouds(cloudParams);
     });
-    
+
     // Mostrar/ocultar el formulario para modificar parámetros
     const modifyButton = document.getElementById('modifyCloudsButton');
     const cloudForm = document.getElementById('cloudForm');
     modifyButton.addEventListener('click', () => {
       cloudForm.style.display = cloudForm.style.display === "none" ? "block" : "none";
     });
-    
+
     // Aplicar los parámetros manuales del formulario
     document.getElementById('applyCloudSettings').addEventListener('click', () => {
       cloudParams.count = parseInt(document.getElementById('inputCount').value);
@@ -361,11 +452,12 @@
       generateClouds(cloudParams);
       cloudForm.style.display = "none";
     });
-    
+
     // Botón para cerrar el formulario
     document.getElementById('closeCloudForm').addEventListener('click', () => {
       cloudForm.style.display = "none";
     });
   </script>
 </body>
+
 </html>
