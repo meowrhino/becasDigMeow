@@ -9,7 +9,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
+    /* DEFINICIÓN DE LA FORMA DE LA NUBE (mismo clip-path que en el zip de Meowrhino) */
+    /* 1) Variables globales */
+    :root {
+      --nube: polygon(99.426% 44.728%, 99.426% 44.728%, 99.871% 41.37%, 99.98% 37.982%, 99.78% 34.598%, 99.298% 31.252%, 98.561% 27.979%, 97.597% 24.812%, 96.432% 21.786%, 95.095% 18.935%, 93.611% 16.293%, 92.009% 13.895%, 92.009% 13.895%, 90.386% 11.942%, 88.654% 10.355%, 86.828% 9.112%, 84.925% 8.191%, 82.96% 7.57%, 80.948% 7.227%, 78.907% 7.141%, 76.851% 7.288%, 74.797% 7.648%, 72.759% 8.198%, 72.759% 8.198%, 71.935% 8.479%, 71.117% 8.802%, 70.308% 9.166%, 69.509% 9.573%, 68.72% 10.022%, 67.943% 10.512%, 67.179% 11.044%, 66.429% 11.618%, 65.695% 12.234%, 64.978% 12.891%, 64.978% 12.891%, 64.649% 12.219%, 64.312% 11.557%, 63.967% 10.909%, 63.614% 10.272%, 63.253% 9.649%, 62.886% 9.04%, 62.511% 8.446%, 62.129% 7.866%, 61.741% 7.301%, 61.347% 6.752%, 61.347% 6.752%, 59.724% 4.799%, 57.992% 3.213%, 56.166% 1.97%, 54.263% 1.049%, 52.297% 0.428%, 50.286% 0.085%, 48.245% -0.002%, 46.189% 0.145%, 44.134% 0.505%, 42.097% 1.055%, 42.097% 1.055%, 40.406% 1.679%, 38.751% 2.481%, 37.142% 3.46%, 35.59% 4.616%, 34.105% 5.948%, 32.698% 7.458%, 31.379% 9.143%, 30.159% 11.005%, 29.048% 13.042%, 28.058% 15.255%, 28.058% 15.255%, 27.516% 14.778%, 26.964% 14.337%, 26.402% 13.933%, 25.83% 13.569%, 25.248% 13.244%, 24.658% 12.962%, 24.058% 12.723%, 23.45% 12.528%, 22.833% 12.38%, 22.208% 12.279%, 22.208% 12.279%, 20.213% 12.271%, 18.266% 12.683%, 16.375% 13.478%, 14.546% 14.621%, 12.787% 16.076%, 11.105% 17.808%, 9.507% 19.78%, 7.999% 21.958%, 6.591% 24.305%, 5.287% 26.786%, 5.287% 26.786%, 4.106% 29.369%, 3.047% 32.078%, 2.125% 34.894%, 1.351% 37.802%, 0.74% 40.785%, 0.303% 43.825%, 0.054% 46.906%, 0.005% 50.011%, 0.171% 53.123%, 0.563% 56.225%, 0.563% 56.225%, 0.803% 57.519%, 1.083% 58.778%, 1.403% 60.002%, 1.761% 61.191%, 2.155% 62.345%, 2.585% 63.464%, 3.048% 64.548%, 3.543% 65.596%, 4.069% 66.608%, 4.625% 67.585%, 4.625% 67.585%, 4.542% 68.011%, 4.464% 68.44%, 4.393% 68.871%, 4.327% 69.305%, 4.268% 69.741%, 4.213% 70.178%, 4.164% 70.615%, 4.121% 71.051%, 4.083% 71.488%, 4.051% 71.922%, 4.051% 71.922%, 3.996% 73.58%, 4.052% 75.222%, 4.213% 76.837%, 4.474% 78.417%, 4.83% 79.951%, 5.276% 81.431%, 5.804% 82.847%, 6.411% 84.19%, 7.09% 85.449%, 7.837% 86.616%, 7.837% 86.616%, 8.563% 87.542%, 9.34% 88.315%, 10.161% 88.942%, 11.018% 89.43%, 11.905% 89.786%, 12.816% 90.016%, 13.742% 90.129%, 14.676% 90.131%, 15.613% 90.029%, 16.545% 89.83%, 16.545% 89.83%, 16.634% 89.804%, 16.723% 89.777%, 16.811% 89.749%, 16.898% 89.72%, 16.984% 89.69%, 17.07% 89.659%, 17.155% 89.627%, 17.239% 89.594%, 17.323% 89.559%, 17.406% 89.524%, 17.406% 89.524%, 18.764% 91.763%, 20.268% 93.695%, 21.899% 95.335%, 23.639% 96.696%, 25.466% 97.796%, 27.364% 98.648%, 29.312% 99.267%, 31.291% 99.669%, 33.281% 99.869%, 35.265% 99.881%, 35.265% 99.881%, 37.204% 99.716%, 39.152% 99.364%, 41.086% 98.81%, 42.982% 98.039%, 44.818% 97.037%, 46.57% 95.789%, 48.216% 94.281%, 49.733% 92.497%, 51.097% 90.423%, 52.285% 88.045%, 52.285% 88.045%, 52.613% 88.03%, 52.941% 88.006%, 53.268% 87.974%, 53.596% 87.932%, 53.924% 87.883%, 54.252% 87.825%, 54.58% 87.76%, 54.907% 87.686%, 55.235% 87.606%, 55.563% 87.517%, 55.563% 87.517%, 56.701% 89.03%, 57.907% 90.405%, 59.173% 91.64%, 60.492% 92.733%, 61.86% 93.682%, 63.268% 94.487%, 64.712% 95.145%, 66.183% 95.656%, 67.675% 96.016%, 69.183% 96.225%, 69.183% 96.225%, 70.986% 96.212%, 72.749% 95.872%, 74.466% 95.229%, 76.134% 94.307%, 77.746% 93.127%, 79.298% 91.715%, 80.784% 90.093%, 82.2% 88.284%, 83.541% 86.312%, 84.801% 84.201%, 84.801% 84.201%, 85.12% 83.613%, 85.428% 83.014%, 85.724% 82.403%, 86.009% 81.781%, 86.282% 81.148%, 86.543% 80.506%, 86.793% 79.853%, 87.032% 79.191%, 87.258% 78.52%, 87.473% 77.84%, 87.473% 77.84%, 88.153% 77.897%, 88.834% 77.883%, 89.514% 77.802%, 90.192% 77.654%, 90.864% 77.441%, 91.529% 77.165%, 92.184% 76.827%, 92.828% 76.429%, 93.458% 75.973%, 94.073% 75.46%, 94.073% 75.46%, 94.856% 74.659%, 95.566% 73.733%, 96.202% 72.696%, 96.769% 71.559%, 97.267% 70.334%, 97.698% 69.035%, 98.065% 67.673%, 98.369% 66.26%, 98.613% 64.81%, 98.797% 63.334%, 98.797% 63.334%, 98.894% 62.023%, 98.915% 60.717%, 98.862% 59.423%, 98.738% 58.146%, 98.545% 56.892%, 98.284% 55.668%, 97.958% 54.48%, 97.569% 53.334%, 97.12% 52.235%, 96.612% 51.191%, 96.612% 51.191%, 96.993% 50.688%, 97.355% 50.158%, 97.696% 49.599%, 98.016% 49.009%, 98.313% 48.387%, 98.586% 47.73%, 98.836% 47.038%, 99.059% 46.308%, 99.256% 45.539%, 99.426% 44.728%);
+    }
+
+
+
     /* PALETAS: cloud (nubecita), dark (luna), tea (té) */
+    /* 2) Paletas de color */
     html[data-theme="cloud"] {
       --bg: #BE6152;
       --text: #C0B1AA;
@@ -34,7 +43,9 @@
       --secondary: #33201E;
     }
 
-    /* RESET & BASE */
+
+
+    /* 3) Reset & Base */
     * {
       box-sizing: border-box;
     }
@@ -45,13 +56,14 @@
       font-family: 'Inknut Antiqua', serif;
       background-color: var(--bg);
       color: var(--text);
-      position: relative;
       overflow-x: hidden;
-      transition: background-color 0.3s, color 0.3s;
+      transition: background-color .3s, color .3s;
       line-height: 1.5;
     }
 
-    /* CONTAINER DEL CONTENIDO (excluyendo el header-cloud) */
+
+
+    /* 4) Container general */
     .container {
       max-width: 800px;
       margin: 0 auto;
@@ -60,10 +72,12 @@
       z-index: 1;
     }
 
-    /* FORMATO DE LAS SECCIONES */
-    header,
-    section,
-    footer {
+
+
+    /* 5) Estilos secciones internas */
+    .container header,
+    .container section,
+    .container footer {
       padding: 3rem 5rem;
       border-radius: 8px;
       background-color: rgba(236, 127, 81, 0.15);
@@ -120,15 +134,49 @@
     }
 
     /* HEADER-CLOUD: Envuelve título, subtítulo y botón de aplicar en una nube */
+
+    /* 6) NUEVA implementación de .header-cloud */
     .header-cloud {
       position: relative;
+      display: inline-block;
+      /* se adapta al ancho del contenido */
+      text-align: center;
       padding: 40px 80px;
+      margin-bottom: 2rem;
+    }
+
+    /* La nube de fondo, con su clip-path y proporción */
+    .header-cloud::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(90vw, 800px);
+      /* hasta 800px o 90% de la ventana */
+      aspect-ratio: 1.43 / 1;
+      /* ratio ancho:alto similar a las otras nubes */
       background-color: var(--accent);
-      color: var(--bg);
       clip-path: var(--nube);
       filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
-      text-align: center;
-      margin-bottom: 2rem;
+      z-index: -1;
+    }
+
+    /* Asegura que el contenido quede por encima de la nube */
+    .header-cloud>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Ajustes responsive */
+    @media (max-width: 600px) {
+      .header-cloud {
+        padding: 20px 40px;
+      }
+
+      .header-cloud::before {
+        width: 95vw;
+      }
     }
 
     .header-cloud h1,
@@ -138,93 +186,103 @@
       z-index: 1;
     }
 
-    /* DEFINICIÓN DE LA FORMA DE LA NUBE (mismo clip-path que en el zip de Meowrhino) */
-    :root {
-      --nube: polygon(99.426% 44.728%, 99.426% 44.728%, 99.871% 41.37%, 99.98% 37.982%, 99.78% 34.598%, 99.298% 31.252%, 98.561% 27.979%, 97.597% 24.812%, 96.432% 21.786%, 95.095% 18.935%, 93.611% 16.293%, 92.009% 13.895%, 92.009% 13.895%, 90.386% 11.942%, 88.654% 10.355%, 86.828% 9.112%, 84.925% 8.191%, 82.96% 7.57%, 80.948% 7.227%, 78.907% 7.141%, 76.851% 7.288%, 74.797% 7.648%, 72.759% 8.198%, 72.759% 8.198%, 71.935% 8.479%, 71.117% 8.802%, 70.308% 9.166%, 69.509% 9.573%, 68.72% 10.022%, 67.943% 10.512%, 67.179% 11.044%, 66.429% 11.618%, 65.695% 12.234%, 64.978% 12.891%, 64.978% 12.891%, 64.649% 12.219%, 64.312% 11.557%, 63.967% 10.909%, 63.614% 10.272%, 63.253% 9.649%, 62.886% 9.04%, 62.511% 8.446%, 62.129% 7.866%, 61.741% 7.301%, 61.347% 6.752%, 61.347% 6.752%, 59.724% 4.799%, 57.992% 3.213%, 56.166% 1.97%, 54.263% 1.049%, 52.297% 0.428%, 50.286% 0.085%, 48.245% -0.002%, 46.189% 0.145%, 44.134% 0.505%, 42.097% 1.055%, 42.097% 1.055%, 40.406% 1.679%, 38.751% 2.481%, 37.142% 3.46%, 35.59% 4.616%, 34.105% 5.948%, 32.698% 7.458%, 31.379% 9.143%, 30.159% 11.005%, 29.048% 13.042%, 28.058% 15.255%, 28.058% 15.255%, 27.516% 14.778%, 26.964% 14.337%, 26.402% 13.933%, 25.83% 13.569%, 25.248% 13.244%, 24.658% 12.962%, 24.058% 12.723%, 23.45% 12.528%, 22.833% 12.38%, 22.208% 12.279%, 22.208% 12.279%, 20.213% 12.271%, 18.266% 12.683%, 16.375% 13.478%, 14.546% 14.621%, 12.787% 16.076%, 11.105% 17.808%, 9.507% 19.78%, 7.999% 21.958%, 6.591% 24.305%, 5.287% 26.786%, 5.287% 26.786%, 4.106% 29.369%, 3.047% 32.078%, 2.125% 34.894%, 1.351% 37.802%, 0.74% 40.785%, 0.303% 43.825%, 0.054% 46.906%, 0.005% 50.011%, 0.171% 53.123%, 0.563% 56.225%, 0.563% 56.225%, 0.803% 57.519%, 1.083% 58.778%, 1.403% 60.002%, 1.761% 61.191%, 2.155% 62.345%, 2.585% 63.464%, 3.048% 64.548%, 3.543% 65.596%, 4.069% 66.608%, 4.625% 67.585%, 4.625% 67.585%, 4.542% 68.011%, 4.464% 68.44%, 4.393% 68.871%, 4.327% 69.305%, 4.268% 69.741%, 4.213% 70.178%, 4.164% 70.615%, 4.121% 71.051%, 4.083% 71.488%, 4.051% 71.922%, 4.051% 71.922%, 3.996% 73.58%, 4.052% 75.222%, 4.213% 76.837%, 4.474% 78.417%, 4.83% 79.951%, 5.276% 81.431%, 5.804% 82.847%, 6.411% 84.19%, 7.09% 85.449%, 7.837% 86.616%, 7.837% 86.616%, 8.563% 87.542%, 9.34% 88.315%, 10.161% 88.942%, 11.018% 89.43%, 11.905% 89.786%, 12.816% 90.016%, 13.742% 90.129%, 14.676% 90.131%, 15.613% 90.029%, 16.545% 89.83%, 16.545% 89.83%, 16.634% 89.804%, 16.723% 89.777%, 16.811% 89.749%, 16.898% 89.72%, 16.984% 89.69%, 17.07% 89.659%, 17.155% 89.627%, 17.239% 89.594%, 17.323% 89.559%, 17.406% 89.524%, 17.406% 89.524%, 18.764% 91.763%, 20.268% 93.695%, 21.899% 95.335%, 23.639% 96.696%, 25.466% 97.796%, 27.364% 98.648%, 29.312% 99.267%, 31.291% 99.669%, 33.281% 99.869%, 35.265% 99.881%, 35.265% 99.881%, 37.204% 99.716%, 39.152% 99.364%, 41.086% 98.81%, 42.982% 98.039%, 44.818% 97.037%, 46.57% 95.789%, 48.216% 94.281%, 49.733% 92.497%, 51.097% 90.423%, 52.285% 88.045%, 52.285% 88.045%, 52.613% 88.03%, 52.941% 88.006%, 53.268% 87.974%, 53.596% 87.932%, 53.924% 87.883%, 54.252% 87.825%, 54.58% 87.76%, 54.907% 87.686%, 55.235% 87.606%, 55.563% 87.517%, 55.563% 87.517%, 56.701% 89.03%, 57.907% 90.405%, 59.173% 91.64%, 60.492% 92.733%, 61.86% 93.682%, 63.268% 94.487%, 64.712% 95.145%, 66.183% 95.656%, 67.675% 96.016%, 69.183% 96.225%, 69.183% 96.225%, 70.986% 96.212%, 72.749% 95.872%, 74.466% 95.229%, 76.134% 94.307%, 77.746% 93.127%, 79.298% 91.715%, 80.784% 90.093%, 82.2% 88.284%, 83.541% 86.312%, 84.801% 84.201%, 84.801% 84.201%, 85.12% 83.613%, 85.428% 83.014%, 85.724% 82.403%, 86.009% 81.781%, 86.282% 81.148%, 86.543% 80.506%, 86.793% 79.853%, 87.032% 79.191%, 87.258% 78.52%, 87.473% 77.84%, 87.473% 77.84%, 88.153% 77.897%, 88.834% 77.883%, 89.514% 77.802%, 90.192% 77.654%, 90.864% 77.441%, 91.529% 77.165%, 92.184% 76.827%, 92.828% 76.429%, 93.458% 75.973%, 94.073% 75.46%, 94.073% 75.46%, 94.856% 74.659%, 95.566% 73.733%, 96.202% 72.696%, 96.769% 71.559%, 97.267% 70.334%, 97.698% 69.035%, 98.065% 67.673%, 98.369% 66.26%, 98.613% 64.81%, 98.797% 63.334%, 98.797% 63.334%, 98.894% 62.023%, 98.915% 60.717%, 98.862% 59.423%, 98.738% 58.146%, 98.545% 56.892%, 98.284% 55.668%, 97.958% 54.48%, 97.569% 53.334%, 97.12% 52.235%, 96.612% 51.191%, 96.612% 51.191%, 96.993% 50.688%, 97.355% 50.158%, 97.696% 49.599%, 98.016% 49.009%, 98.313% 48.387%, 98.586% 47.73%, 98.836% 47.038%, 99.059% 46.308%, 99.256% 45.539%, 99.426% 44.728%);
 
-      /* CONTENEDOR DE FONDOS – Las nubes se generan dinámicamente */
-      #backgroundContainer {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 200%;
-        height: 200%;
-        pointer-events: none;
-        overflow: hidden;
-        z-index: -2;
+
+    /* CONTENEDOR DE FONDOS – Las nubes se generan dinámicamente */
+    #backgroundContainer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -2;
+    }
+
+    .cloud {
+      position: absolute;
+      background: var(--accent);
+      clip-path: var(--nube);
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+      animation: float linear infinite;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translate(0, 0);
       }
 
-      .cloud {
-        position: absolute;
-        background: var(--accent);
-        clip-path: var(--nube);
-        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
-        animation: float linear infinite;
+      50% {
+        transform: translate(-15px, 10px);
       }
 
-      @keyframes float {
-        0% {
-          transform: translate(0, 0);
-        }
+      100% {
+        transform: translate(0, 0);
+      }
+    }
 
-        50% {
-          transform: translate(-15px, 10px);
-        }
+    /* PANEL DE CONTROLES (ahora con 2 botones) – Ubicado en la esquina inferior derecha */
+    nav {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-        100% {
-          transform: translate(0, 0);
-        }
+    nav button {
+      background-color: var(--accent);
+      color: var(--bg);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    nav button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    nav button.active {
+      box-shadow: 0 0 0 2px var(--secondary);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container {
+        padding: 10px;
       }
 
-      /* PANEL DE CONTROLES (ahora con 2 botones) – Ubicado en la esquina inferior derecha */
+      header h1 {
+        font-size: 2em;
+      }
+
+      header h2 {
+        font-size: 1.2em;
+      }
+
       nav {
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        z-index: 1000;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+        font-size: 0.8em;
       }
 
-      nav button {
-        background-color: var(--accent);
-        color: var(--bg);
-        border: none;
-        padding: 8px 12px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 0.9em;
-        transition: transform 0.2s, box-shadow 0.2s;
+      .header-cloud {
+        padding: 20px 40px;
       }
+    }
 
-      nav button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-      }
-
-      nav button.active {
-        box-shadow: 0 0 0 2px var(--secondary);
-      }
-
-      /* Responsive */
-      @media (max-width: 600px) {
-        .container {
-          padding: 10px;
-        }
-
-        header h1 {
-          font-size: 2em;
-        }
-
-        header h2 {
-          font-size: 1.2em;
-        }
-
-        nav {
-          font-size: 0.8em;
-        }
-      }
+    /* limpia el fondo y el padding de los hijos header/footer de .header-cloud */
+    .header-cloud>header,
+    .header-cloud>footer {
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+    }
   </style>
 </head>
 
@@ -363,127 +421,160 @@
 
   <!-- JAVASCRIPT: Toggle de tema y generación dinámica de nubes -->
   <script>
-    // Toggle de modo (oscuro/claro)
-    const toggleThemeBtn = document.getElementById('toggleTheme');
-    toggleThemeBtn.addEventListener('click', () => {
-      if (document.documentElement.getAttribute('data-theme') === 'light') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        toggleThemeBtn.textContent = '🌙';
-      } else {
-        document.documentElement.setAttribute('data-theme', 'light');
-        toggleThemeBtn.textContent = '☀️';
+    (() => {
+      // —————————————————————————
+      // 1) UTILIDADES
+      // —————————————————————————
+
+      const qs = (sel) => document.querySelector(sel);
+      const qsa = (sel) => Array.from(document.querySelectorAll(sel));
+
+      // Genera un número aleatorio entre min y max
+      const randomBetween = (min, max) => Math.random() * (max - min) + min;
+
+      // Vacía un contenedor de forma performante
+      function clearContainer(container) {
+        while (container.firstChild) {
+          container.removeChild(container.firstChild);
+        }
       }
-    });
 
-    // Parámetros globales para las nubes (por defecto)
-    let cloudParams = {
-      count: 150,
-      minWidth: 100,
-      maxWidth: 300,
-      opacityRange: [0.08, 0.15],
-      durationRange: [18, 26]
-    };
+      // —————————————————————————
+      // 2) GESTIÓN DE TEMA
+      // —————————————————————————
 
-    const bgContainer = document.getElementById('backgroundContainer');
+      const themeBtn = qs('#toggleTheme');
+      const root = document.documentElement;
 
-    // Función para obtener un número aleatorio entre min y max
-    function randomBetween(min, max) {
-      return Math.random() * (max - min) + min;
-    }
-
-    // Función para generar nubes dinámicamente según parámetros
-    function generateClouds(params) {
-      bgContainer.innerHTML = "";
-      for (let i = 0; i < params.count; i++) {
-        const cloud = document.createElement("div");
-        cloud.classList.add("cloud");
-        // Tamaño aleatorio
-        const width = randomBetween(params.minWidth, params.maxWidth);
-        const height = width * randomBetween(0.6, 0.8);
-        cloud.style.width = width + "px";
-        cloud.style.height = height + "px";
-        // Posición aleatoria (algunas pueden quedar parcialmente fuera)
-        cloud.style.top = randomBetween(-10, 110) + "%";
-        cloud.style.left = randomBetween(-10, 110) + "%";
-        // Opacidad aleatoria
-        cloud.style.opacity = randomBetween(params.opacityRange[0], params.opacityRange[1]);
-        // Animación: duración y delay aleatorios
-        const duration = randomBetween(params.durationRange[0], params.durationRange[1]);
-        cloud.style.animationDuration = duration + "s";
-        cloud.style.animationDelay = randomBetween(0, 5) + "s";
-        bgContainer.appendChild(cloud);
+      function applyTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        themeBtn.textContent = theme === 'light' ? '☀️' : '🌙';
+        // Marca activo si quieres
+        themeBtn.classList.toggle('active', theme === 'dark');
       }
-    }
 
-    // Inicializar las nubes con los parámetros por defecto
-    generateClouds(cloudParams);
+      themeBtn.addEventListener('click', () => {
+        const current = root.getAttribute('data-theme') || 'dark';
+        applyTheme(current === 'light' ? 'dark' : 'light');
+      });
 
-    // Botón para randomizar los parámetros de las nubes
-    const randomizeButton = document.getElementById('randomizeClouds');
-    randomizeButton.addEventListener('click', () => {
-      // Genera valores aleatorios dentro de rangos razonables
-      cloudParams.count = Math.floor(randomBetween(100, 300));
-      cloudParams.minWidth = randomBetween(80, 150);
-      cloudParams.maxWidth = randomBetween(250, 400);
-      if (cloudParams.minWidth > cloudParams.maxWidth) {
-        [cloudParams.minWidth, cloudParams.maxWidth] = [cloudParams.maxWidth, cloudParams.minWidth];
-      }
-      cloudParams.opacityRange = [randomBetween(0.05, 0.1), randomBetween(0.15, 0.25)];
-      if (cloudParams.opacityRange[0] > cloudParams.opacityRange[1]) {
-        [cloudParams.opacityRange[0], cloudParams.opacityRange[1]] = [cloudParams.opacityRange[1], cloudParams.opacityRange[0]];
-      }
-      cloudParams.durationRange = [randomBetween(12, 20), randomBetween(22, 30)];
-      if (cloudParams.durationRange[0] > cloudParams.durationRange[1]) {
-        [cloudParams.durationRange[0], cloudParams.durationRange[1]] = [cloudParams.durationRange[1], cloudParams.durationRange[0]];
-      }
-      generateClouds(cloudParams);
-    });
+      // Inicializa icono según el tema por defecto al cargar
+      document.addEventListener('DOMContentLoaded', () => {
+        applyTheme(root.getAttribute('data-theme') || 'dark');
+      });
 
-    // Mostrar/ocultar el formulario para modificar parámetros
-    const modifyButton = document.getElementById('modifyCloudsButton');
-    const cloudForm = document.getElementById('cloudForm');
-    modifyButton.addEventListener('click', () => {
-      cloudForm.style.display = cloudForm.style.display === "none" ? "block" : "none";
-    });
+      // —————————————————————————
+      // 3) GESTIÓN DE NUBES
+      // —————————————————————————
 
-    // Lee los valores del formulario de nubes y devuelve un objeto cloudParams validado
-    function readCloudSettingsFromForm() {
-      const count = parseInt(document.getElementById('inputCount').value);
-      let minWidth = parseFloat(document.getElementById('inputMinWidth').value);
-      let maxWidth = parseFloat(document.getElementById('inputMaxWidth').value);
-      let opacityMin = parseFloat(document.getElementById('inputOpacityMin').value);
-      let opacityMax = parseFloat(document.getElementById('inputOpacityMax').value);
-      let durationMin = parseFloat(document.getElementById('inputDurationMin').value);
-      let durationMax = parseFloat(document.getElementById('inputDurationMax').value);
+      const bgContainer = qs('#backgroundContainer');
 
-      // Validar e invertir si necesario
-      if (minWidth > maxWidth) [minWidth, maxWidth] = [maxWidth, minWidth];
-      if (opacityMin > opacityMax) [opacityMin, opacityMax] = [opacityMax, opacityMin];
-      if (durationMin > durationMax) [durationMin, durationMax] = [durationMax, durationMin];
-
-      return {
-        count,
-        minWidth,
-        maxWidth,
-        opacityRange: [opacityMin, opacityMax],
-        durationRange: [durationMin, durationMax]
+      // Parámetros por defecto (podrías leer estos valores de CSS custom props si prefieres)
+      let cloudParams = {
+        count: 150,
+        minWidth: 100,
+        maxWidth: 300,
+        opacityRange: [0.08, 0.15],
+        durationRange: [18, 26],
       };
-    }
 
+      // Genera un único div.cloud con estilos aleatorios
+      function createCloud(params) {
+        const cloud = document.createElement('div');
+        cloud.className = 'cloud';
 
-    // Aplicar los parámetros manuales del formulario
-    document.getElementById('applyCloudSettings').addEventListener('click', () => {
-      cloudParams = readCloudSettingsFromForm();
+        const w = randomBetween(params.minWidth, params.maxWidth);
+        cloud.style.width = `${w}px`;
+        cloud.style.height = `${w * randomBetween(0.6, 0.8)}px`;
+        cloud.style.top = `${randomBetween(-10, 110)}%`;
+        cloud.style.left = `${randomBetween(-10, 110)}%`;
+        cloud.style.opacity = randomBetween(...params.opacityRange);
+        cloud.style.animationDuration = `${randomBetween(...params.durationRange)}s`;
+        cloud.style.animationDelay = `${randomBetween(0, 5)}s`;
 
+        return cloud;
+      }
+
+      // Genera todas las nubes usando un DocumentFragment
+      function generateClouds(params) {
+        clearContainer(bgContainer);
+
+        const frag = document.createDocumentFragment();
+        for (let i = 0; i < params.count; i++) {
+          frag.appendChild(createCloud(params));
+        }
+        bgContainer.appendChild(frag);
+      }
+
+      // Inicializa
       generateClouds(cloudParams);
-      cloudForm.style.display = "none";
-    });
 
-    // Botón para cerrar el formulario
-    document.getElementById('closeCloudForm').addEventListener('click', () => {
-      cloudForm.style.display = "none";
-    });
+      // —————————————————————————
+      // 4) CONTROLES UI
+      // —————————————————————————
+
+      // Randomizar parámetros
+      qs('#randomizeClouds').addEventListener('click', () => {
+        cloudParams.count = Math.floor(randomBetween(100, 300));
+        cloudParams.minWidth = randomBetween(80, 150);
+        cloudParams.maxWidth = randomBetween(250, 400);
+        cloudParams.opacityRange = [randomBetween(0.05, 0.1), randomBetween(0.15, 0.25)];
+        cloudParams.durationRange = [randomBetween(12, 20), randomBetween(22, 30)];
+
+        // Asegura el orden
+        if (cloudParams.minWidth > cloudParams.maxWidth) [cloudParams.minWidth, cloudParams.maxWidth] = [cloudParams.maxWidth, cloudParams.minWidth];
+        if (cloudParams.opacityRange[0] > cloudParams.opacityRange[1]) cloudParams.opacityRange.reverse();
+        if (cloudParams.durationRange[0] > cloudParams.durationRange[1]) cloudParams.durationRange.reverse();
+
+        generateClouds(cloudParams);
+      });
+
+      // Mostrar/ocultar form
+      const modifyBtn = qs('#modifyCloudsButton');
+      const cloudForm = qs('#cloudForm');
+      modifyBtn.addEventListener('click', () => {
+        cloudForm.style.display = cloudForm.style.display === 'block' ? 'none' : 'block';
+        modifyBtn.classList.toggle('active');
+      });
+
+      // Aplicar valores del form
+      qs('#applyCloudSettings').addEventListener('click', () => {
+        const getVal = (id, parse) => parse(qs(id).value);
+        const count = getVal('#inputCount', Number);
+        let minWidth = getVal('#inputMinWidth', parseFloat);
+        let maxWidth = getVal('#inputMaxWidth', parseFloat);
+        let opacityMin = getVal('#inputOpacityMin', parseFloat);
+        let opacityMax = getVal('#inputOpacityMax', parseFloat);
+        let durationMin = getVal('#inputDurationMin', parseFloat);
+        let durationMax = getVal('#inputDurationMax', parseFloat);
+
+        // Validación simple
+        if (minWidth > maxWidth) [minWidth, maxWidth] = [maxWidth, minWidth];
+        if (opacityMin > opacityMax) [opacityMin, opacityMax] = [opacityMax, opacityMin];
+        if (durationMin > durationMax) [durationMin, durationMax] = [durationMax, durationMin];
+
+        cloudParams = {
+          count,
+          minWidth,
+          maxWidth,
+          opacityRange: [opacityMin, opacityMax],
+          durationRange: [durationMin, durationMax]
+        };
+
+        generateClouds(cloudParams);
+        cloudForm.style.display = 'none';
+        modifyBtn.classList.remove('active');
+      });
+
+      // Cerrar form sin aplicar
+      qs('#closeCloudForm').addEventListener('click', () => {
+        cloudForm.style.display = 'none';
+        modifyBtn.classList.remove('active');
+      });
+
+    })();
   </script>
+
 </body>
 
 </html>
