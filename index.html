@@ -9,33 +9,35 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
-    /* PALETA DE COLORES – Usamos la nueva paleta original */
+    /* PALETAS: cloud (nubecita), dark (luna), tea (té) */
+    html[data-theme="cloud"] {
+      --bg: #BE6152;
+      --text: #C0B1AA;
+      --accent: #E1C697;
+      --subtitle: #B3BE7C;
+      --secondary: #33201E;
+    }
     html[data-theme="dark"] {
       --bg: #221E33;
       /* Fondo en modo oscuro */
       --text: #FFD66B;
       /* Texto en modo oscuro */
       --accent: #EC7F51;
-      /* Acento (nubes, botones) */
+      --subtitle: #D1A15F;
       --secondary: #33201E;
       /* Detalles secundarios */
     }
 
     html[data-theme="light"] {
       --bg: #FFD66B;
-      /* Fondo en modo claro */
-      --text: #221E33;
-      /* Texto en modo claro */
-      --accent: #EC7F51;
-      /* Acento se mantiene */
+      --text: #33201E;
+      --accent: #E1C697;
+      --subtitle: #BE8C5A;
       --secondary: #33201E;
     }
 
-    /* BASE Y RESETEO */
-    * {
-      box-sizing: border-box;
-    }
-
+    /* RESET & BASE */
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       padding: 20px;
@@ -65,30 +67,16 @@
       border-radius: 8px;
       background-color: rgba(236, 127, 81, 0.15);
     }
-
-    /* En modo claro se podría ajustar si lo deseas */
-    header h1 {
-      font-size: 2.5em;
-      margin-bottom: 0.3em;
+    header h1 { font-size: 2.5em; margin-bottom: .3em; }
+    header h2 { font-size: 1.5em; color: var(--subtitle); margin-top: 0; }
+    .section { margin-bottom: 2em; }
+    .section h3 {
+      font-size: 1.3em;
+      margin-bottom: .5em;
+      color: var(--subtitle);
     }
-
-    header h2 {
-      font-size: 1.5em;
-      color: var(--secondary);
-      margin-top: 0;
-    }
-
-    .section {
-      margin-bottom: 2em;
-    }
-
-    p {
-      margin-bottom: 1em;
-    }
-
-    ul {
-      margin: 0 0 1em 20px;
-    }
+    p { margin-bottom: 1em; }
+    ul { margin: 0 0 1em 20px; }
 
     .cta-button {
       display: inline-block;
@@ -118,7 +106,7 @@
       background-color: var(--accent);
       color: var(--bg);
       clip-path: var(--nube);
-      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
       text-align: center;
       margin-bottom: 2rem;
     }
