@@ -17,7 +17,6 @@
       --subtitle: #B3BE7C;
       --secondary: #33201E;
     }
-
     html[data-theme="dark"] {
       --bg: #221E33;
       --text: #FFD66B;
@@ -25,8 +24,7 @@
       --subtitle: #D1A15F;
       --secondary: #33201E;
     }
-
-    html[data-theme="light"] {
+    html[data-theme="tea"] {
       --bg: #FFD66B;
       --text: #33201E;
       --accent: #E1C697;
@@ -35,10 +33,7 @@
     }
 
     /* RESET & BASE */
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       padding: 20px;
@@ -68,35 +63,16 @@
       border-radius: 8px;
       background-color: rgba(236, 127, 81, 0.15);
     }
-
-    header h1 {
-      font-size: 2.5em;
-      margin-bottom: .3em;
-    }
-
-    header h2 {
-      font-size: 1.5em;
-      color: var(--subtitle);
-      margin-top: 0;
-    }
-
-    .section {
-      margin-bottom: 2em;
-    }
-
+    header h1 { font-size: 2.5em; margin-bottom: .3em; }
+    header h2 { font-size: 1.5em; color: var(--subtitle); margin-top: 0; }
+    .section { margin-bottom: 2em; }
     .section h3 {
       font-size: 1.3em;
       margin-bottom: .5em;
       color: var(--subtitle);
     }
-
-    p {
-      margin-bottom: 1em;
-    }
-
-    ul {
-      margin: 0 0 1em 20px;
-    }
+    p { margin-bottom: 1em; }
+    ul { margin: 0 0 1em 20px; }
 
     .cta-button {
       display: inline-block;
@@ -126,7 +102,7 @@
       background-color: var(--accent);
       color: var(--bg);
       clip-path: var(--nube);
-      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
       text-align: center;
       margin-bottom: 2rem;
     }
@@ -446,35 +422,17 @@
       cloudForm.style.display = cloudForm.style.display === "none" ? "block" : "none";
     });
 
-    // Lee los valores del formulario de nubes y devuelve un objeto cloudParams validado
-    function readCloudSettingsFromForm() {
-      const count = parseInt(document.getElementById('inputCount').value);
-      let minWidth = parseFloat(document.getElementById('inputMinWidth').value);
-      let maxWidth = parseFloat(document.getElementById('inputMaxWidth').value);
-      let opacityMin = parseFloat(document.getElementById('inputOpacityMin').value);
-      let opacityMax = parseFloat(document.getElementById('inputOpacityMax').value);
-      let durationMin = parseFloat(document.getElementById('inputDurationMin').value);
-      let durationMax = parseFloat(document.getElementById('inputDurationMax').value);
-
-      // Validar e invertir si necesario
-      if (minWidth > maxWidth) [minWidth, maxWidth] = [maxWidth, minWidth];
-      if (opacityMin > opacityMax) [opacityMin, opacityMax] = [opacityMax, opacityMin];
-      if (durationMin > durationMax) [durationMin, durationMax] = [durationMax, durationMin];
-
-      return {
-        count,
-        minWidth,
-        maxWidth,
-        opacityRange: [opacityMin, opacityMax],
-        durationRange: [durationMin, durationMax]
-      };
-    }
-
-
     // Aplicar los parámetros manuales del formulario
     document.getElementById('applyCloudSettings').addEventListener('click', () => {
-      cloudParams = readCloudSettingsFromForm();
-
+      cloudParams.count = parseInt(document.getElementById('inputCount').value);
+      cloudParams.minWidth = parseFloat(document.getElementById('inputMinWidth').value);
+      cloudParams.maxWidth = parseFloat(document.getElementById('inputMaxWidth').value);
+      const opacityMin = parseFloat(document.getElementById('inputOpacityMin').value);
+      const opacityMax = parseFloat(document.getElementById('inputOpacityMax').value);
+      cloudParams.opacityRange = [opacityMin, opacityMax];
+      const durationMin = parseFloat(document.getElementById('inputDurationMin').value);
+      const durationMax = parseFloat(document.getElementById('inputDurationMax').value);
+      cloudParams.durationRange = [durationMin, durationMax];
       generateClouds(cloudParams);
       cloudForm.style.display = "none";
     });
