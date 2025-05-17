@@ -134,8 +134,10 @@
       display: inline-block;
       text-align: center;
       padding: 40px 80px;
-      margin-bottom: 2rem;
+      margin: 4rem auto 2rem auto;
+      /* añade margen superior en todas vistas */
     }
+
 
     .header-cloud::before {
       content: "";
@@ -143,13 +145,14 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: min(90vw, 800px);
-      aspect-ratio: 1.43 / 1;
+      width: clamp(300px, 80vw, 700px);
+      aspect-ratio: 1.4 / 1;
       background-color: var(--accent);
       clip-path: var(--nube);
       filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
       z-index: -1;
     }
+
 
     .header-cloud>* {
       position: relative;
@@ -242,7 +245,20 @@
       .header-cloud {
         padding: 20px 40px;
       }
+
+      .header-cloud::before {
+        width: 100vw;
+        /* ahora usa todo el ancho del móvil */
+        max-width: 480px;
+        /* y puede crecer más que antes */
+        top: 10%;
+      }
+      
+      .header-cloud{
+        top: 5%;
+      }
     }
+
 
     /* limpia el fondo y el padding de los hijos header/footer de .header-cloud */
     .header-cloud>header,
@@ -286,7 +302,7 @@
   </div>
 
   <!-- HEADER CLOUD: Envuelve el título, subtítulo y botón de aplicar en una nube -->
-  <div style="display: flex; justify-content: center;">
+  <div style="display: flex; justify-content: center; padding-top: 50px;">
     <div class="header-cloud">
       <header>
         <h1>Becas Meowrhino</h1>
