@@ -63,11 +63,6 @@
       filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
     }
 
-    html[data-theme="light"] body {
-      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    }
-
-
 
     /*NEW ONES*/
     html[data-theme="rain"] {
@@ -162,7 +157,9 @@
       overflow-x: hidden;
       transition: background-color 0.3s, color 0.3s;
       line-height: 1.5;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     }
+
 
     /* 4) Container general */
     .container {
@@ -187,6 +184,11 @@
       font-size: 2.5em;
       margin-bottom: 0.3em;
     }
+
+    h2 {
+      text-align: left;
+    }
+
 
     /*
     header h2 {
@@ -228,10 +230,6 @@
 
     .cta-button:hover {
       background-color: var(--text);
-    }
-
-    footer {
-      text-align: center;
     }
 
     /* HEADER-CLOUD: Envuelve título, subtítulo y botón de aplicar en una nube */
@@ -406,7 +404,6 @@
       flex-direction: column;
       align-items: center;
       gap: 4rem;
-      margin: 4rem auto;
       max-width: 1000px;
     }
 
@@ -423,7 +420,7 @@
     .img-ordenador {
       width: 100%;
       max-width: 800px;
-      border-radius: 12px;
+      border-radius: 4px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
 
@@ -469,11 +466,15 @@
     }
 
     footer {
+      text-align: center;
+    }
+
+    footer a {
       text-decoration: none;
       color: var(--text);
     }
 
-    footer:hover {
+    footer a:hover {
       text-decoration: underline;
     }
   </style>
@@ -644,6 +645,7 @@
       </div>
 
       <div class="section">
+        <h2>ejemplos de webs</h2>
         <section id="galeriaWebs" class="galeria-meowrhino"></section>
       </div>
 
