@@ -61,6 +61,7 @@
     .container {
       max-width: 800px;
       margin: 0 auto;
+      margin-top: 60px;
       padding: 20px;
       position: relative;
       z-index: 1;
@@ -129,6 +130,13 @@
     /* HEADER-CLOUD: Envuelve título, subtítulo y botón de aplicar en una nube */
 
     /* 6) NUEVA implementación de .header-cloud */
+
+    .pre-header-cloud {
+      display: flex;
+      justify-content: center;
+      padding-top: 50px;
+    }
+
     .header-cloud {
       position: relative;
       display: inline-block;
@@ -228,14 +236,16 @@
     @media (max-width: 600px) {
       .container {
         padding: 10px;
+        margin-top: 0px;
       }
 
       header h1 {
-        font-size: 2em;
+        font-size: 1.5em;
       }
 
       header h2 {
-        font-size: 1.2em;
+        font-size: 0.90em;
+        margin-bottom: 0px;
       }
 
       nav {
@@ -243,21 +253,29 @@
       }
 
       .header-cloud {
-        padding: 20px 40px;
+        padding: 20px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 220px;
       }
 
       .header-cloud::before {
         width: 100vw;
-        /* ahora usa todo el ancho del móvil */
         max-width: 480px;
-        /* y puede crecer más que antes */
-        top: 10%;
+        top: 50%;
+        transform: translate(-50%, -50%);
       }
-      
-      .header-cloud{
-        top: 5%;
+
+      .pre-header-cloud {
+        display: flex;
+        justify-content: center;
+        margin-top: -50px;
       }
     }
+
+
 
 
     /* limpia el fondo y el padding de los hijos header/footer de .header-cloud */
@@ -302,7 +320,7 @@
   </div>
 
   <!-- HEADER CLOUD: Envuelve el título, subtítulo y botón de aplicar en una nube -->
-  <div style="display: flex; justify-content: center; padding-top: 50px;">
+  <div class="pre-header-cloud">
     <div class="header-cloud">
       <header>
         <h1>Becas Meowrhino</h1>
