@@ -429,9 +429,19 @@
       bottom: -30px;
       transform: translateX(-50%);
       width: 160px;
-      border-radius: 24px;
+      border-radius: 2.5px;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
     }
+
+    .web-preview.movil-izquierda .img-movil {
+      left: 5%;
+    }
+
+    .web-preview.movil-derecha .img-movil {
+      right: 5%;
+    }
+
+
 
     .ver-web {
       display: inline-block;
@@ -616,9 +626,12 @@
 
       <div class="section">
         <section id="galeriaWebs" class="galeria-meowrhino"></section>
-
-
       </div>
+
+      <footer>
+        <a href="https://meowrhino.neocities.org/"> @meowrhino </a>
+        </a>
+      </footer>
 
     </main>
 
@@ -873,9 +886,10 @@
 
     const websRealizadas = [
       {
-        nombre: "snerta",
+        nombre: "berta esteve",
         carpeta: "snerta",
-        link: "https://meowrhino.github.io/snerta/"
+        link: "https://meowrhino.github.io/snerta/",
+        movilPos: "left"
       },
       // aquí irás añadiendo más webs
     ];
@@ -886,11 +900,11 @@
         const article = document.createElement('article');
         article.className = 'web-card';
         article.innerHTML = `
-      <div class="web-preview">
-        <img src="galeria/${web.carpeta}/ordenador.png" alt="Vista escritorio de ${web.nombre}" class="img-ordenador">
-        <img src="galeria/${web.carpeta}/movil.png" alt="Vista móvil de ${web.nombre}" class="img-movil">
+        <div class="web-preview ${web.movilPos === 'right' ? 'movil-derecha' : 'movil-izquierda'}">
+        <img src="galeria/${web.carpeta}/ordenador.png" alt="vista escritorio de ${web.nombre}" class="img-ordenador">
+        <img src="galeria/${web.carpeta}/movil.png" alt="vista móvil de ${web.nombre}" class="img-movil">
       </div>
-      <a href="${web.link}" target="_blank" class="ver-web">Ver web →</a>
+      <a href="${web.link}" target="_blank" class="ver-web">ver web de ${web.nombre}</a>
     `;
         contenedor.appendChild(article);
       });
