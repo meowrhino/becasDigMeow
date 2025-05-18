@@ -19,18 +19,28 @@
     /* 2) Paletas de color */
     html[data-theme="cloud"] {
       --bg: #BE6152;
-      --text: #C0B1AA;
+      --text: #484341;
       --accent: #E1C697;
-      --subtitle: #B3BE7C;
+      --subtitle: #E7A84D;
       --secondary: #33201E;
+    }
+
+    html[data-theme="cloud"] .cloud {
+      background: #C0B1AA;
+      /* el mismo de cloud-bg */
     }
 
     html[data-theme="dark"] {
       --bg: #221E33;
       --text: #FFD66B;
       --accent: #EC7F51;
-      --subtitle: #D1A15F;
-      --secondary: #33201E;
+      --subtitle: #462525;
+      --secondary: #707070;
+    }
+
+    html[data-theme="dark"] .cloud {
+      background: #000;
+      /* el mismo de cloud-bg */
     }
 
     html[data-theme="light"] {
@@ -40,6 +50,21 @@
       --subtitle: #BE8C5A;
       --secondary: #33201E;
     }
+    
+    html[data-theme="light"] .cloud {
+      background: #BE6152;
+      /* el mismo de cloud-bg */
+    }
+
+    html[data-theme="light"] .cloud {
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    }
+
+    html[data-theme="light"] body {
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    }
+
+
 
     /* 3) Reset & Base */
     * {
@@ -119,8 +144,7 @@
     }
 
     .cta-button:hover {
-      background-color: var(--secondary);
-      color: var(--text);
+      background-color: var(--text);
     }
 
     footer {
@@ -302,10 +326,12 @@
   <nav>
     <button id="toggleTheme" aria-label="Alternar modo claro/oscuro">🌙</button>
     <button id="randomizeClouds">☁️‼️</button>
-    <button id="modifyCloudsButton">☁️❓</button>
+    <!--<button id="modifyCloudsButton">☁️❓</button>-->
+    <!--<button id="fullOpacityClouds">☁️💥</button>-->
   </nav>
 
   <!-- Formulario para modificar parámetros de nubes (oculto por defecto) -->
+  <!--
   <div id="cloudForm"
     style="display:none; position:fixed; bottom:70px; left:10px; background:rgba(255,255,255,0.95); padding:10px; border-radius:5px; z-index:1001; font-family: sans-serif; color: #000;">
     <label>Count: <input type="number" id="inputCount" value="150" /></label><br>
@@ -318,6 +344,7 @@
     <button id="applyCloudSettings">Apply Cloud Settings</button>
     <button id="closeCloudForm">Close</button>
   </div>
+  -->
 
   <!-- HEADER CLOUD: Envuelve el título, subtítulo y botón de aplicar en una nube -->
   <div class="pre-header-cloud">
@@ -454,6 +481,21 @@
       const themeBtn = qs('#toggleTheme');
       const root = document.documentElement;
 
+      const themes = ['dark', 'light', 'cloud'];
+      let currentThemeIndex = themes.indexOf(root.getAttribute('data-theme') || 'dark');
+
+      function applyTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        themeBtn.textContent = theme === 'light' ? '☀️' : theme === 'cloud' ? '☁️' : '🌙';
+      }
+
+      themeBtn.addEventListener('click', () => {
+        currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+        applyTheme(themes[currentThemeIndex]);
+      });
+
+
+      /*
       function applyTheme(theme) {
         root.setAttribute('data-theme', theme);
         themeBtn.textContent = theme === 'light' ? '☀️' : '🌙';
@@ -465,6 +507,7 @@
         const current = root.getAttribute('data-theme') || 'dark';
         applyTheme(current === 'light' ? 'dark' : 'light');
       });
+      */
 
       // Inicializa icono según el tema por defecto al cargar
       document.addEventListener('DOMContentLoaded', () => {
@@ -482,7 +525,7 @@
         count: 150,
         minWidth: 100,
         maxWidth: 300,
-        opacityRange: [0.08, 0.15],
+        opacityRange: [1, 1],
         durationRange: [18, 26],
       };
 
@@ -517,6 +560,14 @@
       // Inicializa
       generateClouds(cloudParams);
 
+
+      // btn que cambia la opacidad de todas las nubes a 1
+      /*
+      qs('#fullOpacityClouds').addEventListener('click', () => {
+        qsa('.cloud').forEach(c => c.style.opacity = '1');
+      });
+      */
+
       // —————————————————————————
       // 4) CONTROLES UI
       // —————————————————————————
@@ -526,7 +577,7 @@
         cloudParams.count = Math.floor(randomBetween(100, 300));
         cloudParams.minWidth = randomBetween(80, 150);
         cloudParams.maxWidth = randomBetween(250, 400);
-        cloudParams.opacityRange = [randomBetween(0.05, 0.1), randomBetween(0.15, 0.25)];
+        cloudParams.opacityRange = [1];
         cloudParams.durationRange = [randomBetween(12, 20), randomBetween(22, 30)];
 
         // Asegura el orden
@@ -538,6 +589,7 @@
       });
 
       // Mostrar/ocultar form
+      /*
       const modifyBtn = qs('#modifyCloudsButton');
       const cloudForm = qs('#cloudForm');
       modifyBtn.addEventListener('click', () => {
@@ -579,7 +631,7 @@
         cloudForm.style.display = 'none';
         modifyBtn.classList.remove('active');
       });
-
+*/
     })();
   </script>
 
