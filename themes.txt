@@ -1,0 +1,218 @@
+/*propias*/
+    /*original*/
+    --original-color-1: #221E33;
+    --original-color-2: #FFD66B;
+    --original-color-3: #EC7F51;
+    --original-color-4: #33201E;
+
+    /*burnt*/
+    --burnt-color-1: #462846;
+    --burnt-color-2: #FFE49E;
+    --burnt-color-3: #F2A17A;
+    --burnt-color-4: #F4F4F4;
+
+    /*monochrome*/
+    --color-1: #353535;
+    --color-2: #F9D67B;
+    --color-3: #FCFAF1;
+    --color-4: #707070;
+
+    /*archive*/
+    --archive-color-1: #000000;
+    --archive-color-2: #0026F5;
+    --archive-color-3: #656D7C;
+    --archive-color-4: #F8DA5C;
+
+    /*tfg*/
+    --tfg-color-1: #FDF7F4;
+    --tfg-color-2: #EB3D25;
+    --tfg-color-3: #0026F5;
+    --tfg-color-4: #FFFD54;
+
+    /*blancas*/
+    /*ketchup*/
+    --ketchup-color-1: #EEEBDD;
+    --ketchup-color-2: #CE1212;
+    --ketchup-color-3: #810000;
+    --ketchup-color-4: #1B1717;
+
+    /*chocoBar*/
+    --chocoBar-color-1: #FFF0D1;
+    --chocoBar-color-2: #795757;
+    --chocoBar-color-3: #664343;
+    --chocoBar-color-4: #3B3030;
+
+    /*shootingStar*/
+    --shootingStar-color-1: #FFFFFF;
+    --shootingStar-color-2: #F2C482;
+    --shootingStar-color-3: #D7DDC3;
+    --shootingStar-color-4: #AC5E9F;
+
+    /*skull*/
+    --skull-color-1: #FBF9FA;
+    --skull-color-2: #FD0054;
+    --skull-color-3: #A80038;
+    --skull-color-4: #2B2024;
+
+    /*lemonzest*/
+    --lemonzest-color-1: #FFFFFF;
+    --lemonzest-color-2: #F3EFD5;
+    --lemonzest-color-3: #656D7C;
+    --lemonzest-color-4: #F8DA5C;
+
+    /*claritas*/
+    /*coolCap*/
+    --coolCap-color-1: #C96868;
+    --coolCap-color-2: #FADFA1;
+    --coolCap-color-3: #FFF4EA;
+    --coolCap-color-4: #7EACB5;
+
+    /*baby*/
+    --baby-color-1: #78B3CE;
+    --baby-color-2: #C9E6F0;
+    --baby-color-3: #FBF8EF;
+    --baby-color-4: #E4BA6B;
+
+    /*autumnWinter*/
+    --autumnWinter-color-1: #DCE4C9;
+    --autumnWinter-color-2: #F5F5DC;
+    --autumnWinter-color-3: #B6A28E;
+    --autumnWinter-color-4: #E07B39;
+
+    /*lavenderMint*/
+    --lavenderMint-color-1: #6256CA;
+    --lavenderMint-color-2: #86D293;
+    --lavenderMint-color-3: #C1E2A4;
+    --lavenderMint-color-4: #FDFAD9;
+
+    /*fortuneCookie*/
+    --fortuneCookie-color-1: #FF885B;
+    --fortuneCookie-color-2: #FFF19F;
+    --fortuneCookie-color-3: #33372C;
+    --fortuneCookie-color-4: #557C56;
+
+    /*color*/
+    /*raspberry*/
+    --raspberry-color-1: #99154E;
+    --raspberry-color-2: #FFC93C;
+    --raspberry-color-3: #FFDDCC;
+    --raspberry-color-4: #DD97A8;
+
+    /*dino*/
+    --dino-color-1: #071A52;
+    --dino-color-2: #086972;
+    --dino-color-3: #068888;
+    --dino-color-4: #A7FF83;
+
+    /*mailBox*/
+    --mailBox-color-1: #08D9D6;
+    --mailBox-color-2: #252A34;
+    --mailBox-color-3: #FF2E63;
+    --mailBox-color-4: #EAEAEA;
+
+    /*lumber*/
+    --lumber-color-1: #43766C;
+    --lumber-color-2: #F8FAE5;
+    --lumber-color-3: #B19470;
+    --lumber-color-4: #76453B;
+
+    /*pewpew*/
+    --pewpew-color-1: #453E80;
+    --pewpew-color-2: #FFFFFF;
+    --pewpew-color-3: #936F4C;
+    --pewpew-color-4: #F36A10;
+
+    /*fun*/
+    /*orangeOracle*/
+    --orangeOracle-color-1: #333333;
+    --orangeOracle-color-2: #FF6000;
+    --orangeOracle-color-3: #FFC859;
+    --orangeOracle-color-4: #FFE6C7;
+
+    /*coolTheyThem*/
+    --coolTheyThem-color-1: #071A52;
+    --coolTheyThem-color-2: #086972;
+    --coolTheyThem-color-3: #068888;
+    --coolTheyThem-color-4: #A7FF83;
+
+    /*shyThunder*/
+    --shyThunder-color-1: #010059;
+    --shyThunder-color-2: #0E98C4;
+    --shyThunder-color-3: #B3B3B3;
+    --shyThunder-color-4: #FCF594;
+
+    /*demure*/
+    --demure-color-1: #FAA3A4;
+    --demure-color-2: #00416D;
+    --demure-color-3: #F5F1DA;
+    --demure-color-4: #E3DFC8;
+
+    /*gingerBread*/
+    --gingerBread-color-1: #A02334;
+    --gingerBread-color-2: #FFAD60;
+    --gingerBread-color-3: #FFEEAD;
+    --gingerBread-color-4: #96CEB4;
+
+    /*oscuras*/
+    /*zombie*/
+    --zombie-color-1: #32012F;
+    --zombie-color-2: #524C42;
+    --zombie-color-3: #E2DFD0;
+    --zombie-color-4: #95F900;
+
+    /*vampire*/
+    --vampire-color-1: #1A1919;
+    --vampire-color-2: #A04747;
+    --vampire-color-3: #D8A25E;
+    --vampire-color-4: #EEDF7A;
+
+    /*sibyl*/
+    --sibyl-color-1: #241023;
+    --sibyl-color-2: #883C82;
+    --sibyl-color-3: #D8A9CA;
+    --sibyl-color-4: #E4BA6B;
+
+    /*bumblebee*/
+    --bumblebee-color-1: #222831;
+    --bumblebee-color-2: #393E46;
+    --bumblebee-color-3: #FFD369;
+    --bumblebee-color-4: #EEEEEE;
+
+    /*pumpkin*/
+    --pumpkin-color-1: #630E1A;
+    --pumpkin-color-2: #FFFFFF;
+    --pumpkin-color-3: #936F4C;
+    --pumpkin-color-4: #F36A10;
+
+    /*monocromas*/
+    /*spiderweb*/
+    --spiderweb-color-1: #000000;
+    --spiderweb-color-2: #52057B;
+    --spiderweb-color-3: #892CDC;
+    --spiderweb-color-4: #BC6FF1;
+
+    /*amphora*/
+    --amphora-color-1: #635985;
+    --amphora-color-2: #443C68;
+    --amphora-color-3: #393053;
+    --amphora-color-4: #18122B;
+
+    /*beetle*/
+    --beetle-color-1: #1A1A19;
+    --beetle-color-2: #31511E;
+    --beetle-color-3: #859F3D;
+    --beetle-color-4: #39401D;
+
+    /*crayon*/
+    --crayon-color-1: #440A0A;
+    --crayon-color-2: #BF3131;
+    --crayon-color-3: #EA9696;
+    --crayon-color-4: #F3C8C8;
+
+    /*umbrella*/
+    --umbrella-color-1: #49243E;
+    --umbrella-color-2: #704264;
+    --umbrella-color-3: #BB8493;
+    --umbrella-color-4: #DBAFA0;
+
+}

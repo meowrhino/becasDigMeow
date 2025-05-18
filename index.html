@@ -39,8 +39,7 @@
     }
 
     html[data-theme="dark"] .cloud {
-      background: #000;
-      /* el mismo de cloud-bg */
+      background: #868B9A;
     }
 
     html[data-theme="light"] {
@@ -50,7 +49,7 @@
       --subtitle: #BE8C5A;
       --secondary: #33201E;
     }
-    
+
     html[data-theme="light"] .cloud {
       background: #BE6152;
       /* el mismo de cloud-bg */
@@ -63,6 +62,64 @@
     html[data-theme="light"] body {
       text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     }
+
+
+    /*NEW ONES*/
+    html[data-theme="rain"] {
+      --bg: #445E75;
+      --text: #D9E6F2;
+      --accent: #7DBBE6;
+      --subtitle: #AFCBDF;
+      --secondary: #2A3B4C;
+    }
+
+    html[data-theme="rain"] .cloud {
+      background: #6B93AD;
+      /* azul grisáceo suave */
+    }
+
+
+    html[data-theme="snow"] {
+      --bg: #EDF4F8;
+      --text: #336699;
+      --accent: #88C0D0;
+      --subtitle: #5E81AC;
+      --secondary: #B0C5D1;
+    }
+
+    html[data-theme="snow"] .cloud {
+      background: #D6E9F2;
+      /* hielo pastel */
+    }
+
+
+    html[data-theme="fog"] {
+      --bg: #A0A0A0;
+      --text: #2D2D2D;
+      --accent: #D8D8D8;
+      --subtitle: #BABABA;
+      --secondary: #888;
+    }
+
+    html[data-theme="fog"] .cloud {
+      background: #C8C8C8;
+      /* niebla lechosa, intermedia */
+    }
+
+
+    html[data-theme="storm"] {
+      --bg: #2C2F3F;
+      --text: #FFD700;
+      --accent: #9E4BFF;
+      --subtitle: #7761C3;
+      --secondary: #383B4B;
+    }
+
+    html[data-theme="storm"] .cloud {
+      background: #554477;
+      /* púrpura tormentoso apagado */
+    }
+
 
 
 
@@ -228,11 +285,10 @@
     /* PANEL DE CONTROLES (ahora con 2 botones) – Ubicado en la esquina inferior derecha */
     nav {
       position: fixed;
-      bottom: 10px;
+      top: 10px;
       right: 10px;
       z-index: 1000;
       display: flex;
-      flex-direction: column;
       gap: 10px;
     }
 
@@ -324,8 +380,8 @@
 
   <!-- Panel de controles en la esquina inferior derecha -->
   <nav>
-    <button id="toggleTheme" aria-label="Alternar modo claro/oscuro">🌙</button>
     <button id="randomizeClouds">☁️‼️</button>
+    <button id="toggleTheme" aria-label="Alternar modo claro/oscuro">🌙</button>
     <!--<button id="modifyCloudsButton">☁️❓</button>-->
     <!--<button id="fullOpacityClouds">☁️💥</button>-->
   </nav>
@@ -350,13 +406,13 @@
   <div class="pre-header-cloud">
     <div class="header-cloud">
       <header>
-        <h1>Becas Meowrhino</h1>
-        <h2>Digitalización y Resistencia Digital</h2>
+        <h1>beca digitalización <br> meowrhino</h1>
+        <!--<h2>Digitalización y Resistencia Digital</h2>-->
       </header>
       <footer>
         <a class="cta-button"
           href="mailto:manuellatourf@gmail.com?subject=aplicaci%C3%B3n%20beca%20digitalizaci%C3%B3n%20meowrhino">
-          Aplicar a la Beca
+          ¡quiero una web!
         </a>
       </footer>
     </div>
@@ -481,18 +537,32 @@
       const themeBtn = qs('#toggleTheme');
       const root = document.documentElement;
 
-      const themes = ['dark', 'light', 'cloud'];
-      let currentThemeIndex = themes.indexOf(root.getAttribute('data-theme') || 'dark');
+      // Orden nuevo: de claro a oscuro
+      const themes = ['light', 'cloud', 'fog', 'rain', 'snow', 'storm', 'dark'];
+      const emojis = {
+        light: '☀️',
+        cloud: '☁️',
+        fog: '🌫️',
+        rain: '🌧️',
+        snow: '❄️',
+        storm: '⛈️',
+        dark: '🌙'
+      };
+
+      let currentThemeIndex = themes.indexOf(root.getAttribute('data-theme')) || 0;
 
       function applyTheme(theme) {
         root.setAttribute('data-theme', theme);
-        themeBtn.textContent = theme === 'light' ? '☀️' : theme === 'cloud' ? '☁️' : '🌙';
+        themeBtn.textContent = emojis[theme] || '🎛️';
+        currentThemeIndex = themes.indexOf(theme);
       }
 
       themeBtn.addEventListener('click', () => {
         currentThemeIndex = (currentThemeIndex + 1) % themes.length;
-        applyTheme(themes[currentThemeIndex]);
+        const nextTheme = themes[currentThemeIndex];
+        applyTheme(nextTheme);
       });
+
 
 
       /*
@@ -509,10 +579,61 @@
       });
       */
 
+      /*
       // Inicializa icono según el tema por defecto al cargar
       document.addEventListener('DOMContentLoaded', () => {
         applyTheme(root.getAttribute('data-theme') || 'dark');
+      });*/
+
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const root = document.documentElement;
+
+        navigator.geolocation?.getCurrentPosition(async (pos) => {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+
+          try {
+            const apiKey = '990fd8edd33ce21c64a5173c1a482507'; // tu clave ya puesta :)
+            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+
+            const res = await fetch(url);
+            const data = await res.json();
+
+            const weather = data.weather[0].main.toLowerCase(); // tipo de clima
+            const hour = new Date().getHours();
+            const isNight = hour < 6 || hour >= 20;
+
+            let theme = 'light'; // por defecto
+
+            if (weather === 'clear') {
+              theme = isNight ? 'dark' : 'light';
+            } else if (weather === 'clouds') {
+              theme = 'cloud';
+            } else if (['rain', 'drizzle'].includes(weather)) {
+              theme = 'rain';
+            } else if (weather === 'thunderstorm') {
+              theme = 'storm';
+            } else if (weather === 'snow') {
+              theme = 'snow';
+            } else if (['mist', 'fog', 'haze', 'smoke'].includes(weather)) {
+              theme = 'fog';
+            } else {
+              theme = isNight ? 'dark' : 'light';
+            }
+
+            applyTheme(theme);
+          } catch (err) {
+            console.warn('No se pudo obtener el clima, usando hora local');
+            const hour = new Date().getHours();
+            applyTheme(hour >= 6 && hour < 20 ? 'light' : 'dark');
+          }
+        }, () => {
+          const hour = new Date().getHours();
+          applyTheme(hour >= 6 && hour < 20 ? 'light' : 'dark');
+        });
       });
+
 
       // —————————————————————————
       // 3) GESTIÓN DE NUBES
@@ -575,8 +696,8 @@
       // Randomizar parámetros
       qs('#randomizeClouds').addEventListener('click', () => {
         cloudParams.count = Math.floor(randomBetween(100, 300));
-        cloudParams.minWidth = randomBetween(80, 150);
-        cloudParams.maxWidth = randomBetween(250, 400);
+        cloudParams.minWidth = randomBetween(40, 250);
+        cloudParams.maxWidth = randomBetween(400, 600);
         cloudParams.opacityRange = [1];
         cloudParams.durationRange = [randomBetween(12, 20), randomBetween(22, 30)];
 
