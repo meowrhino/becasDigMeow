@@ -30,7 +30,7 @@
       /* el mismo de cloud-bg */
     }
 
-    
+
 
     html[data-theme="dark"] {
       --bg: #221E33;
@@ -194,13 +194,12 @@
       */
 
     .section {
-      margin-bottom: 2em;
+      margin-bottom: 5em;
     }
 
     .section h3 {
       font-size: 1.3em;
       margin-bottom: 0.5em;
-      color: var(--subtitle);
     }
 
     p {
@@ -396,6 +395,58 @@
       max-width: 100%;
       word-break: break-word;
     }
+
+
+    /*GALERIA*/
+    .galeria-meowrhino {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4rem;
+      margin: 4rem auto;
+      max-width: 1000px;
+    }
+
+    .web-card {
+      text-align: center;
+    }
+
+    .web-preview {
+      position: relative;
+      display: inline-block;
+    }
+
+    .img-ordenador {
+      width: 100%;
+      max-width: 800px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .img-movil {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      border-radius: 24px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .ver-web {
+      display: inline-block;
+      margin-top: 2rem;
+      font-weight: bold;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 1.2em;
+      transition: color 0.3s, text-decoration 0.3s;
+    }
+
+    .ver-web:hover {
+      color: var(--text);
+      text-decoration: underline;
+    }
   </style>
 
 </head>
@@ -467,24 +518,35 @@
           también hagas una primera recopilación de lo que quieras que aparezca en la web, ya sean textos, imágenes,
           vídeos, tipografías,...
         </p>
+      </div>
 
+      <div class="section">
         <h2>tus deberes</h2>
         <p>
           o instrucciones para elaborar un brief, yo te enumeraré todo lo que necesito para la web y tu tendrás un par
           de semanas (o lo que necesites) para recopilarlo y así tenerlo todo a mano. el deadline de los deberes será
           una reunión presencial conmigo donde haremos juntos el wireframe o incluso primeros bocetos de diseño.
         </p>
+      </div>
+
+      <div class="section">
         <h2>primera entrega</h2>
         <p>
           una vez suceda esto, te pediré que entregues los deberes y abones la mitad del importe que hayamos pactado. yo
           realizaré una preview de tu página en figma. ese pago se correspondería con la parte de "diseño" de tu web.
         </p>
+      </div>
+
+      <div class="section">
         <h2>segunda entrega</h2>
         <p>
           para la entrega del código se te pedirá que abones el importe restante, cubriendo la parte del desarrollo web.
           yo te montaré la web en mi repositorio de github con lo que tendrás para siempre (a no ser que algo cambie
           trágicamente) una web accesible mediante el link meowrhino.github.io/[tuNombre]
         </p>
+      </div>
+
+      <div class="section">
         <h2>tercera entrega</h2>
         <p>
           la tercera entrega consistirá en ayudarte a montar tu repositorio de github o alternativas más éticas como
@@ -502,47 +564,60 @@
       </div>
 
       <div class="section">
+        <h2>Q&A</h2>
+        <h3>¿sin mantenimiento?</h3>
         <p>
-          <strong>Q&A:</strong><br>
-          <em>¿Sin mantenimiento?</em> Sí, si quieres pagar un dominio, tendrás que pagar el dominio y el hosting.
-          Piensa que un meowrhino.github.io no queda mal y no tendrás que pagar nada; si no me quieres tener en el
-          enlace de tu web, siempre puedes crearte una cuenta en GitHub o algún repositorio que tenga Pages y lanzarla
-          desde ahí, podemos verlo juntos :)
+          si quieres pagar un dominio, tendrás que pagar el dominio y el hosting.
+          piensa que un meowrhino.github.io no queda mal, te "une" a esta propuesta y no tendrás que pagar nada. en el
+          proyecto se incluye asesorarte y acompañarte para que lo traslades a tu propio repositorio también para que le
+          puedas hacer mantenimiento.
         </p>
+
+        <h3>¿puedes mantenerla tú?</h3>
         <p>
-          <em>¿Tendré que hacer código?</em> Sí, pero seguramente con el PDF que te envíe le perderás el miedo. Aceptaré
-          hasta 2 mails de preguntas sobre cómo trabajar con él durante el primer mes; pasado ese mes es posible que
-          cobre algo por la consulta, pues sería inviable estar respondiendo a todes :(
+          puedo, claro, la cosa será que tendremos que acordar precios para cada "cambio" que sean justos para ambos,
+          todo se puede hablar :). aún así mi objetivo principal es promover la alfabetización digital, dar agencia a
+          las personas para que sean capaces de gestionar todo ellas mismas. igualmente, no ha de ser blanco o negro,
+          puedes ir haciendo, y por proyecto contestaré un máximo de 3 mails sin cobrar (canjeables el primer mes tras
+          la entrega del código), igualmente si quieres hacer algo más complejo, me mandas un mail y lo hablamos sin
+          problema :).
         </p>
+
+        <h3>me da mucho miedo el código</h3>
         <p>
-          <em>¿Puedes hacerlo todo tú?</em> Sí, como decía, yo puedo mantenerte la web en mi GitHub y tal, solo que
-          entonces los cambios que sean posteriores a la entrega de la web, que sean cambios de opinión y no errores o
-          posibles bugs, deberán correr a tu cargo. El objetivo de estas becas es fomentar la alfabetización digital de
-          las personas precarias que necesiten estos recursos. Si te hallas en posición para poder pagar lo que se
-          merece este trabajo, te recomiendo que lo hablemos y veamos sin compromiso.
+          piensa que recibirás un .pdf que te explique todo, que tendrás 3 mails durante el primer mes, y que tras éso
+          aunque cobraré por consulta los precios los intentaremos siempre mantener éticos y todo se puede ir hablando
+          según necesidades económicas y temporales.
         </p>
+
+        <h3>¿me lo puedes gestionar todo tú?</h3>
+        <p>
+          por supuesto, pero te entregaré igualmente ese .pdf y durante el primer mes tras la entrega si cambias de
+          opinión te guiaré para acercarte a tu independencia digital. si no, no pasa nada, yo necesito ingresos y tú te
+          quitas una cosa de la cabeza, todo es gestionable.
+        </p>
+
+        <h3>¿cómo funcionan esos 3 mails gratuitos?</h3>
+        <p>
+          si te entrego la web el 20 de julio tendrás hasta el 20 de agosto para enviarme 3 mails, puedes agrupar varias
+          preguntas en un solo mail. te contestaré lo más rápido que pueda, y de ahí vamos viendo.
+        </p>
+
+        <h3>¿.pdf explicativo?</h3>
+        <p>
+          será un documento que seguramente vaya evolucionando con cada web que vaya haciendo en este marco. para mí es
+          todo un reto, pero quiero imaginar un mundo en el que podemos independizarnos de las redes sociales y que cada
+          persona tenga acceso fácil y rápido a todos sus documentos, imágenes, código, estructuras, etc. se puede hacer
+          de todo, depende de lo que se quiera hacer serán unos tiempos u otros. no te preocupes que te asesoraré en
+          todo lo posible y aprenderemos juntes.
+        </p>
+
       </div>
 
       <div class="section">
-        <p><strong>Ventajas:</strong></p>
-        <ul>
-          <li>Será de código abierto</li>
-          <li>Será una web divertidísima</li>
-          <li>Cuentas con mis conocimientos y experiencia en diseño UX/UI</li>
-          <li>Cuentas con mis conocimientos y experiencia en desarrollo web</li>
-          <li>Cuando se te entregue la web, se te entregará un pequeño PDF que te guiará por tu nueva web para que
-            puedas modificarla como gustes (yo me quedaré una copia de la web para mi archivo/portfolio en la que puedo
-            borrar todos tus datos personales :))</li>
-          <li>¡Serás parte de esta iniciativa tan chula!</li>
-        </ul>
-        <p>
-          Parece una tontería, pero este pequeño acto de resistencia puede hacer que en 2 o 3 años puedas emanciparte de
-          las redes sociales y ser cada vez más independiente de los tecnócratas que quieren convertirse en señores
-          feudales digitales.
-        </p>
-        <!--<p>
-          <em>¡Contra el fascismo, curiosidad y juego!</em>
-        </p>-->
+        <section id="galeriaWebs" class="galeria-meowrhino"></section>
+
+
       </div>
 
     </main>
@@ -793,6 +868,38 @@
       });
 */
     })();
+
+
+
+    const websRealizadas = [
+      {
+        nombre: "snerta",
+        carpeta: "snerta",
+        link: "https://meowrhino.github.io/snerta/"
+      },
+      // añade más aquí
+    ];
+
+    function crearGaleria(webs) {
+      const contenedor = document.getElementById('galeriaWebs');
+      webs.forEach(web => {
+        const article = document.createElement('article');
+        article.className = 'web-card';
+        article.innerHTML = `
+      <div class="web-preview">
+        <img src="/galeria/${web.carpeta}/ordenador.png" alt="Vista escritorio de ${web.nombre}" class="img-ordenador">
+        <img src="/galeria/${web.carpeta}/movil.png" alt="Vista móvil de ${web.nombre}" class="img-movil">
+      </div>
+      <a href="${web.link}" target="_blank" class="ver-web">Ver web →</a>
+    `;
+        contenedor.appendChild(article);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      crearGaleria(websRealizadas);
+    });
+
   </script>
 
 </body>
