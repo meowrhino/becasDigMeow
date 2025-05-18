@@ -292,19 +292,80 @@
       animation: float linear infinite;
     }
 
+    /*
     @keyframes float {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+
+      50% {
+        transform: translate(-40px, 25px) rotate(2deg);
+      }
+
+      100% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+    }
+    */
+
+    @keyframes float1 {
       0% {
         transform: translate(0, 0);
       }
 
       50% {
-        transform: translate(-15px, 10px);
+        transform: translate(-30px, 20px) rotate(1deg);
       }
 
       100% {
         transform: translate(0, 0);
       }
     }
+
+    @keyframes float2 {
+      0% {
+        transform: translate(0, 0);
+      }
+
+      50% {
+        transform: translate(25px, -15px) rotate(-1deg);
+      }
+
+      100% {
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes float3 {
+      0% {
+        transform: translate(0, 0);
+      }
+
+      50% {
+        transform: translate(-20px, -25px) rotate(2deg);
+      }
+
+      100% {
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes float4 {
+      0% {
+        transform: translate(0, 0);
+      }
+
+      50% {
+        transform: translate(35px, 10px) rotate(-2deg);
+      }
+
+      100% {
+        transform: translate(0, 0);
+      }
+    }
+
+
+
 
     /* PANEL DE CONTROLES (ahora con 2 botones) – Ubicado en la esquina inferior derecha */
     nav {
@@ -671,6 +732,33 @@
       // Genera un número aleatorio entre min y max
       const randomBetween = (min, max) => Math.random() * (max - min) + min;
 
+      // Función que genera parámetros aleatorios para las nubes
+      function getRandomCloudParams() {
+        let minW = randomBetween(40, 250);
+        let maxW = randomBetween(400, 600);
+        if (minW > maxW) [minW, maxW] = [maxW, minW];
+
+        // Detectar si es móvil (ancho menor a 600px)
+        const isMobile = window.innerWidth <= 600;
+
+        const count = isMobile
+          ? Math.floor(randomBetween(30, 50))
+          : Math.floor(randomBetween(80, 120));
+
+        return {
+          count,
+          minWidth: minW,
+          maxWidth: maxW,
+          opacityRange: [1],
+          durationRange: [
+            randomBetween(12, 20),
+            randomBetween(22, 30)
+          ]
+        };
+      }
+
+
+
       // Vacía un contenedor de forma performante
       function clearContainer(container) {
         while (container.firstChild) {
@@ -790,13 +878,7 @@
       const bgContainer = qs('#backgroundContainer');
 
       // Parámetros por defecto (podrías leer estos valores de CSS custom props si prefieres)
-      let cloudParams = {
-        count: 150,
-        minWidth: 100,
-        maxWidth: 300,
-        opacityRange: [1, 1],
-        durationRange: [18, 26],
-      };
+      let cloudParams = getRandomCloudParams();
 
       // Genera un único div.cloud con estilos aleatorios
       function createCloud(params) {
@@ -809,8 +891,10 @@
         cloud.style.top = `${randomBetween(-10, 110)}%`;
         cloud.style.left = `${randomBetween(-10, 110)}%`;
         cloud.style.opacity = randomBetween(...params.opacityRange);
+
         cloud.style.animationDuration = `${randomBetween(...params.durationRange)}s`;
         cloud.style.animationDelay = `${randomBetween(0, 5)}s`;
+        cloud.style.animationName = `float${Math.floor(randomBetween(1, 4))}`;
 
         return cloud;
       }
@@ -843,19 +927,10 @@
 
       // Randomizar parámetros
       qs('#randomizeClouds').addEventListener('click', () => {
-        cloudParams.count = Math.floor(randomBetween(100, 300));
-        cloudParams.minWidth = randomBetween(40, 250);
-        cloudParams.maxWidth = randomBetween(400, 600);
-        cloudParams.opacityRange = [1];
-        cloudParams.durationRange = [randomBetween(12, 20), randomBetween(22, 30)];
-
-        // Asegura el orden
-        if (cloudParams.minWidth > cloudParams.maxWidth) [cloudParams.minWidth, cloudParams.maxWidth] = [cloudParams.maxWidth, cloudParams.minWidth];
-        if (cloudParams.opacityRange[0] > cloudParams.opacityRange[1]) cloudParams.opacityRange.reverse();
-        if (cloudParams.durationRange[0] > cloudParams.durationRange[1]) cloudParams.durationRange.reverse();
-
+        cloudParams = getRandomCloudParams();
         generateClouds(cloudParams);
       });
+
 
       // Mostrar/ocultar form
       /*
@@ -934,7 +1009,6 @@
     document.addEventListener('DOMContentLoaded', () => {
       crearGaleria(websRealizadas);
     });
-
 
   </script>
 
