@@ -409,6 +409,7 @@
 
     .web-card {
       text-align: center;
+      position: relative;
     }
 
     .web-preview {
@@ -425,17 +426,18 @@
 
     .img-movil {
       position: absolute;
-      top: -20px;
+      top: -30px;
       left: 50%;
       transform: translateX(-50%);
-      width: 150px;
+      width: 160px;
       border-radius: 24px;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      z-index: 2;
     }
 
     .ver-web {
       display: inline-block;
-      margin-top: 2rem;
+      margin-top: 3rem;
       font-weight: bold;
       color: var(--accent);
       text-decoration: none;
@@ -877,7 +879,7 @@
         carpeta: "snerta",
         link: "https://meowrhino.github.io/snerta/"
       },
-      // añade más aquí
+      // aquí irás añadiendo más webs
     ];
 
     function crearGaleria(webs) {
@@ -887,8 +889,8 @@
         article.className = 'web-card';
         article.innerHTML = `
       <div class="web-preview">
-        <img src="/galeria/${web.carpeta}/ordenador.png" alt="Vista escritorio de ${web.nombre}" class="img-ordenador">
-        <img src="/galeria/${web.carpeta}/movil.png" alt="Vista móvil de ${web.nombre}" class="img-movil">
+        <img src="galeria/${web.carpeta}/ordenador.png" alt="Vista escritorio de ${web.nombre}" class="img-ordenador">
+        <img src="galeria/${web.carpeta}/movil.png" alt="Vista móvil de ${web.nombre}" class="img-movil">
       </div>
       <a href="${web.link}" target="_blank" class="ver-web">Ver web →</a>
     `;
@@ -899,6 +901,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       crearGaleria(websRealizadas);
     });
+
 
   </script>
 
