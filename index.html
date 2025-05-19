@@ -64,23 +64,16 @@
     }
 
 
-    /*NEW ONES*/
     html[data-theme="rain"] {
-      --bg: #086972;
-      /* cielo mojado con saturación */
-      --text: #FFF4C2;
-      /* amarillo lluvia (impermeable <3) */
-      --accent: #b56e4b;
-      /* rosa empapado pastel */
-      --subtitle: #068888;
-      /* gota alegre */
-      --secondary: #252A34;
-      /* contraste gris profundo */
+      --bg: #082b32;
+      --text: #e2e6e9;
+      --accent: #d6991f;
+      --subtitle: #cbd7df;
+      --secondary: #2a2f36;
     }
 
     html[data-theme="rain"] .cloud {
-      background: #206145;
-      /* sorpresa verde brillante, como paraguas neón */
+      background: #AB8B60
     }
 
 
@@ -126,7 +119,7 @@
 
 
     html[data-theme="storm"] {
-      --bg: #010059;
+      --bg: #2b2239;
       --text: #FCF594;
       --accent: #472044;
       --subtitle: #B3B3B3;
@@ -134,7 +127,7 @@
     }
 
     html[data-theme="storm"] .cloud {
-      background: #56478f;
+      background: #9d89b6;
       /* rayo púrpura 💜⚡ */
     }
 
@@ -824,68 +817,18 @@
 
       /*para que el tema se decida segun el tiempo que haga en barna*/
       document.addEventListener('DOMContentLoaded', () => {
-  const API_KEY = '990fd8edd33ce21c64a5173c1a482507'; // tu clave ya puesta :)
-  const lat = 41.3874;  // Latitud de Barcelona
-  const lon = 2.1686;   // Longitud de Barcelona
+        const API_KEY = '990fd8edd33ce21c64a5173c1a482507'; // tu clave ya puesta :)
+        const lat = 41.3874;  // Latitud de Barcelona
+        const lon = 2.1686;   // Longitud de Barcelona
 
-  async function setThemeByBarcelonaWeather() {
-    try {
-      const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`
-      );
-      const data = await res.json();
-
-      const weather = data.weather[0].main.toLowerCase();
-      const hour = new Date().getHours();
-      const isNight = hour < 6 || hour >= 20;
-
-      let theme = 'light'; // por defecto
-
-      if (weather === 'clear') {
-        theme = isNight ? 'dark' : 'light';
-      } else if (weather === 'clouds') {
-        theme = 'cloud';
-      } else if (['rain', 'drizzle'].includes(weather)) {
-        theme = 'rain';
-      } else if (weather === 'thunderstorm') {
-        theme = 'storm';
-      } else if (weather === 'snow') {
-        theme = 'snow';
-      } else if (['mist', 'fog', 'haze', 'smoke'].includes(weather)) {
-        theme = 'fog';
-      } else {
-        theme = isNight ? 'dark' : 'light';
-      }
-
-      applyTheme(theme);
-    } catch (err) {
-      console.warn('No se pudo obtener el clima, usando hora local');
-      const hour = new Date().getHours();
-      applyTheme(hour >= 6 && hour < 20 ? 'light' : 'dark');
-    }
-  }
-
-  setThemeByBarcelonaWeather();
-});
-
-
-/* PARA QUE EL TEMA SEA SEGUN LO EL TIEMPO QUYE HAGA EN DONDE ABRAN LA PAGINA
-
-      document.addEventListener('DOMContentLoaded', () => {
-        const root = document.documentElement;
-
-        navigator.geolocation?.getCurrentPosition(async (pos) => {
-          const lat = pos.coords.latitude;
-          const lon = pos.coords.longitude;
-
+        async function setThemeByBarcelonaWeather() {
           try {
-            const apiKey = '990fd8edd33ce21c64a5173c1a482507'; // tu clave ya puesta :)
-            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
-
-            const res = await fetch(url);
+            const res = await fetch(
+              `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+            );
             const data = await res.json();
 
-            const weather = data.weather[0].main.toLowerCase(); // tipo de clima
+            const weather = data.weather[0].main.toLowerCase();
             const hour = new Date().getHours();
             const isNight = hour < 6 || hour >= 20;
 
@@ -913,12 +856,62 @@
             const hour = new Date().getHours();
             applyTheme(hour >= 6 && hour < 20 ? 'light' : 'dark');
           }
-        }, () => {
-          const hour = new Date().getHours();
-          applyTheme(hour >= 6 && hour < 20 ? 'light' : 'dark');
-        });
+        }
+
+        setThemeByBarcelonaWeather();
       });
-*/
+
+
+      /* PARA QUE EL TEMA SEA SEGUN LO EL TIEMPO QUYE HAGA EN DONDE ABRAN LA PAGINA
+      
+            document.addEventListener('DOMContentLoaded', () => {
+              const root = document.documentElement;
+      
+              navigator.geolocation?.getCurrentPosition(async (pos) => {
+                const lat = pos.coords.latitude;
+                const lon = pos.coords.longitude;
+      
+                try {
+                  const apiKey = '990fd8edd33ce21c64a5173c1a482507'; // tu clave ya puesta :)
+                  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+      
+                  const res = await fetch(url);
+                  const data = await res.json();
+      
+                  const weather = data.weather[0].main.toLowerCase(); // tipo de clima
+                  const hour = new Date().getHours();
+                  const isNight = hour < 6 || hour >= 20;
+      
+                  let theme = 'light'; // por defecto
+      
+                  if (weather === 'clear') {
+                    theme = isNight ? 'dark' : 'light';
+                  } else if (weather === 'clouds') {
+                    theme = 'cloud';
+                  } else if (['rain', 'drizzle'].includes(weather)) {
+                    theme = 'rain';
+                  } else if (weather === 'thunderstorm') {
+                    theme = 'storm';
+                  } else if (weather === 'snow') {
+                    theme = 'snow';
+                  } else if (['mist', 'fog', 'haze', 'smoke'].includes(weather)) {
+                    theme = 'fog';
+                  } else {
+                    theme = isNight ? 'dark' : 'light';
+                  }
+      
+                  applyTheme(theme);
+                } catch (err) {
+                  console.warn('No se pudo obtener el clima, usando hora local');
+                  const hour = new Date().getHours();
+                  applyTheme(hour >= 6 && hour < 20 ? 'light' : 'dark');
+                }
+              }, () => {
+                const hour = new Date().getHours();
+                applyTheme(hour >= 6 && hour < 20 ? 'light' : 'dark');
+              });
+            });
+      */
 
       // —————————————————————————
       // 3) GESTIÓN DE NUBES
