@@ -822,6 +822,55 @@
       });*/
 
 
+      /*para que el tema se decida segun el tiempo que haga en barna*/
+      document.addEventListener('DOMContentLoaded', () => {
+  const API_KEY = '990fd8edd33ce21c64a5173c1a482507'; // tu clave ya puesta :)
+  const lat = 41.3874;  // Latitud de Barcelona
+  const lon = 2.1686;   // Longitud de Barcelona
+
+  async function setThemeByBarcelonaWeather() {
+    try {
+      const res = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+      );
+      const data = await res.json();
+
+      const weather = data.weather[0].main.toLowerCase();
+      const hour = new Date().getHours();
+      const isNight = hour < 6 || hour >= 20;
+
+      let theme = 'light'; // por defecto
+
+      if (weather === 'clear') {
+        theme = isNight ? 'dark' : 'light';
+      } else if (weather === 'clouds') {
+        theme = 'cloud';
+      } else if (['rain', 'drizzle'].includes(weather)) {
+        theme = 'rain';
+      } else if (weather === 'thunderstorm') {
+        theme = 'storm';
+      } else if (weather === 'snow') {
+        theme = 'snow';
+      } else if (['mist', 'fog', 'haze', 'smoke'].includes(weather)) {
+        theme = 'fog';
+      } else {
+        theme = isNight ? 'dark' : 'light';
+      }
+
+      applyTheme(theme);
+    } catch (err) {
+      console.warn('No se pudo obtener el clima, usando hora local');
+      const hour = new Date().getHours();
+      applyTheme(hour >= 6 && hour < 20 ? 'light' : 'dark');
+    }
+  }
+
+  setThemeByBarcelonaWeather();
+});
+
+
+/* PARA QUE EL TEMA SEA SEGUN LO EL TIEMPO QUYE HAGA EN DONDE ABRAN LA PAGINA
+
       document.addEventListener('DOMContentLoaded', () => {
         const root = document.documentElement;
 
@@ -869,7 +918,7 @@
           applyTheme(hour >= 6 && hour < 20 ? 'light' : 'dark');
         });
       });
-
+*/
 
       // —————————————————————————
       // 3) GESTIÓN DE NUBES
