@@ -874,7 +874,7 @@
           } catch (err) {
             console.warn('⚠️ No se pudo obtener el clima, usando hora local');
             const hour = new Date().getHours();
-            const fallbackTheme = hour >= 6 && hour < 20 ? 'light' : 'dark';
+            const fallbackTheme = hour >= 7 && hour < 19 ? 'light' : 'dark';
             console.log('✅ Tema por fallback:', fallbackTheme);
             applyTheme(fallbackTheme);
           }
