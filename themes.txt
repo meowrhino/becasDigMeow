@@ -1,4 +1,4 @@
-/*propias*/
+/*propias*/ {
     /*original*/
     --original-color-1: #221E33;
     --original-color-2: #FFD66B;
@@ -214,5 +214,127 @@
     --umbrella-color-2: #704264;
     --umbrella-color-3: #BB8493;
     --umbrella-color-4: #DBAFA0;
+}
+
+/*climaticas 1*/ {
+    /* PALETAS: cloud (nubecita), dark (luna), tea (té) */
+    /* 2) Paletas de color */
+    html[data-theme="cloud"] {
+      --bg: #BE6152;
+      --text: #484341;
+      --accent: #E1C697;
+      --subtitle: #E7A84D;
+      --secondary: #33201E;
+    }
+
+    html[data-theme="cloud"] .cloud {
+      background: #C0B1AA;
+      /* el mismo de cloud-bg */
+    }
+
+
+
+    html[data-theme="dark"] {
+      --bg: #221E33;
+      --text: #FFD66B;
+      --accent: #EC7F51;
+      --subtitle: #462525;
+      --secondary: #707070;
+    }
+
+    html[data-theme="dark"] .cloud {
+      background: #868B9A;
+    }
+
+
+
+    html[data-theme="light"] {
+      --bg: #FFD66B;
+      --text: #33201E;
+      --accent: #E1C697;
+      --subtitle: #BE8C5A;
+      --secondary: #33201E;
+    }
+
+    html[data-theme="light"] .cloud {
+      background: #BE6152;
+      /* el mismo de cloud-bg */
+    }
+
+    html[data-theme="light"] .cloud {
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    }
+
+
+    html[data-theme="rain"] {
+      --bg: #082b32;
+      --text: #e2e6e9;
+      --accent: #d6991f;
+      --subtitle: #cbd7df;
+      --secondary: #2a2f36;
+    }
+
+    html[data-theme="rain"] .cloud {
+      background: #AB8B60
+    }
+
+
+
+    html[data-theme="snow"] {
+      --bg: #7dad9f;
+      /* nieve dorada por el sol */
+      --text: #3d515b;
+      /* aire frío y cristalino */
+      --accent: #FFD66B;
+      /* amarillo mantecoso muy snowball */
+      --subtitle: #E4BA6B;
+      /* bufanda tostada */
+      --secondary: #FBF8EF;
+      /* blancura envolvente */
+    }
+
+    html[data-theme="snow"] .cloud {
+      background: #FFFFFF;
+      /* copito de nieve clásico */
+    }
+
+
+
+    html[data-theme="fog"] {
+      --bg: #b0b0b0;
+      /* niebla con sol filtrado: casi mágica */
+      --text: #333333;
+      /* letra en niebla como tinta encantada */
+      --accent: #d7c26e;
+      /* luz tenue pero cálida: linterna en la niebla */
+      --subtitle: #96CEB4;
+      /* frescor que se cuela en el vapor */
+      --secondary: #C1E2A4;
+      /* fondo vegetal borroso */
+    }
+
+    html[data-theme="fog"] .cloud {
+      background: #5f8499;
+      /* como una nube de merengue difuminado */
+    }
+
+
+
+    html[data-theme="storm"] {
+      --bg: #2b2239;
+      --text: #FCF594;
+      --accent: #472044;
+      --subtitle: #B3B3B3;
+      --secondary: #241023;
+    }
+
+    html[data-theme="storm"] .cloud {
+      background: #9d89b6;
+      /* rayo púrpura 💜⚡ */
+    }
+
+
+    /*podrian ser temas con la fase de la luna*/
+    /*o mezclar la fase de la luna con donde esta zodiaicalmente*/
 
 }
