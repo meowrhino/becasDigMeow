@@ -824,11 +824,12 @@
         async function setThemeByBarcelonaWeather() {
           try {
             const res = await fetch(
-              `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+              `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
             );
             const data = await res.json();
 
             const weather = data.weather[0].main.toLowerCase();
+            const cloudPercentage = data.clouds?.all || 0;
             const hour = new Date().getHours();
             const isNight = hour < 6 || hour >= 20;
 
@@ -837,7 +838,9 @@
             if (weather === 'clear') {
               theme = isNight ? 'dark' : 'light';
             } else if (weather === 'clouds') {
-              theme = 'cloud';
+              theme = cloudPercentage < 30
+                ? (isNight ? 'dark' : 'light')
+                : 'cloud';
             } else if (['rain', 'drizzle'].includes(weather)) {
               theme = 'rain';
             } else if (weather === 'thunderstorm') {
@@ -860,7 +863,6 @@
 
         setThemeByBarcelonaWeather();
       });
-
 
       /* PARA QUE EL TEMA SEA SEGUN LO EL TIEMPO QUYE HAGA EN DONDE ABRAN LA PAGINA
       
