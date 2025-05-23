@@ -829,35 +829,54 @@
             const data = await res.json();
 
             const weather = data.weather[0].main.toLowerCase();
+            const description = data.weather[0].description;
             const cloudPercentage = data.clouds?.all || 0;
             const hour = new Date().getHours();
             const isNight = hour < 6 || hour >= 20;
+
+            console.log('⛅ Clima actual:', weather);
+            console.log('📝 Descripción:', description);
+            console.log('☁️ Porcentaje de nubes:', cloudPercentage);
+            console.log('🕒 Hora actual:', hour, '| Es de noche:', isNight);
 
             let theme = 'light'; // por defecto
 
             if (weather === 'clear') {
               theme = isNight ? 'dark' : 'light';
+              console.log('🎨 Tema por clear:', theme);
             } else if (weather === 'clouds') {
-              theme = cloudPercentage < 30
-                ? (isNight ? 'dark' : 'light')
-                : 'cloud';
+              if (cloudPercentage < 30) {
+                theme = isNight ? 'dark' : 'light';
+                console.log('🎨 Tema por clouds con pocas nubes (<30%):', theme);
+              } else {
+                theme = 'cloud';
+                console.log('🎨 Tema por clouds con muchas nubes (≥30%):', theme);
+              }
             } else if (['rain', 'drizzle'].includes(weather)) {
               theme = 'rain';
+              console.log('🎨 Tema por lluvia:', theme);
             } else if (weather === 'thunderstorm') {
               theme = 'storm';
+              console.log('🎨 Tema por tormenta:', theme);
             } else if (weather === 'snow') {
               theme = 'snow';
+              console.log('🎨 Tema por nieve:', theme);
             } else if (['mist', 'fog', 'haze', 'smoke'].includes(weather)) {
               theme = 'fog';
+              console.log('🎨 Tema por niebla/humo:', theme);
             } else {
               theme = isNight ? 'dark' : 'light';
+              console.log('🎨 Tema por defecto:', theme);
             }
 
+            console.log('✅ Tema final aplicado:', theme);
             applyTheme(theme);
           } catch (err) {
-            console.warn('No se pudo obtener el clima, usando hora local');
+            console.warn('⚠️ No se pudo obtener el clima, usando hora local');
             const hour = new Date().getHours();
-            applyTheme(hour >= 6 && hour < 20 ? 'light' : 'dark');
+            const fallbackTheme = hour >= 6 && hour < 20 ? 'light' : 'dark';
+            console.log('✅ Tema por fallback:', fallbackTheme);
+            applyTheme(fallbackTheme);
           }
         }
 
