@@ -392,6 +392,8 @@
       align-items: center;
       gap: 4rem;
       max-width: 1000px;
+
+      margin-top: 30vh;
     }
 
     .web-card {
@@ -505,6 +507,46 @@
       left: 0;
       color: var(--text);
       text-shadow: var(--text-shadow);
+    }
+
+    .web-card {
+      position: relative;
+
+    }
+
+    .web-preview {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .img-ordenador,
+    .img-movil {
+      transition: opacity 0.4s ease;
+      z-index: 1;
+    }
+
+    .web-texto {
+      position: absolute;
+      z-index: 2;
+      opacity: 0;
+      text-align: center;
+      padding: 20px;
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.4;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .web-card:hover .img-ordenador,
+    .web-card:hover .img-movil {
+      opacity: 0;
+    }
+
+    .web-card:hover .web-texto {
+      opacity: 1;
     }
   </style>
 
@@ -726,7 +768,8 @@
         </p>
 
         <h3>¿3 mails gratuitos?</h3>
-        <p>por proyecto contestaré un máximo de 3 mails sin cobrar (canjeables el primer mes tras la entrega del código)</p>
+        <p>por proyecto contestaré un máximo de 3 mails sin cobrar (canjeables el primer mes tras la entrega del código)
+        </p>
         <p>
           si te entrego la web el 20 de julio tendrás hasta el 20 de agosto para enviarme 3 mails, puedes agrupar varias
           preguntas en un solo mail. te contestaré lo más rápido que pueda, y de ahí vamos viendo.
@@ -763,12 +806,12 @@
       </div>
 
       <div class="section">
-        <h2>ejemplos de webs</h2>
+
         <section id="galeriaWebs" class="galeria-meowrhino"></section>
       </div>
 
       <footer>
-        <a href="https://meowrhino.neocities.org/"> @meowrhino </a>
+        web: <a href="https://meowrhino.neocities.org/"> @meowrhino </a>
         </a>
       </footer>
 
@@ -1144,55 +1187,61 @@
 
 
 
-    const websRealizadas = [
-      {
-        nombre: "hifas studio",
-        carpeta: "anakatana",
-        link: "https://meowrhino.github.io/anakatana/",
-        movilPos: "left"
-      },
-      {
-        nombre: "erikamichi",
-        carpeta: "erikamichi",
-        link: "https://meowrhino.github.io/erikamichie/",
-        movilPos: "left"
-      },
-      {
-        nombre: "estructuras3000",
-        carpeta: "e3000",
-        link: "https://meowrhino.github.io/e300/",
-        movilPos: "left"
-      },
-      {
-        nombre: "andrea",
-        carpeta: "andreacarilla",
-        link: "https://meowrhino.github.io/andreacarilla/",
-        movilPos: "left"
-      },
-      {
-        nombre: "berta",
-        carpeta: "snerta",
-        link: "https://meowrhino.github.io/snerta/",
-        movilPos: "left"
-      },
-      // aquí irás añadiendo más webs
-    ];
+   const websRealizadas = [
+  {
+    nombre: "ver hifas studio",
+    carpeta: "anakatana",
+    link: "https://meowrhino.github.io/anakatana/",
+    movilPos: "left",
+    texto: "tienda funcional para la marca <a href='https://meowrhino.github.io/anakatana/'>hifas studio</a>"
+  },
+  {
+    nombre: "ver erikamichi",
+    carpeta: "erikamichi",
+    link: "https://meowrhino.github.io/rikamichie/",
+    movilPos: "left",
+    texto: "despliegue de <a href='https://meowrhino.github.io/rikamichie/'>rikamichie</a> en cruz navegable"
+  },
+  {
+    nombre: "ver estructuras3000",
+    carpeta: "e3000",
+    link: "https://meowrhino.github.io/e300/",
+    movilPos: "left",
+    texto: "web oficial del colectivo <a href='https://meowrhino.github.io/e300/'>estructuras3000</a>"
+  },
+  {
+    nombre: "ver andrea carilla",
+    carpeta: "andreacarilla",
+    link: "https://meowrhino.github.io/andreacarilla/",
+    movilPos: "left",
+    texto: "portfolio online y archivo de la fotógrafa <a href='https://meowrhino.github.io/andreacarilla/'>andrea carilla</a>"
+  },
+  {
+    nombre: "ver berta esteve",
+    carpeta: "snerta",
+    link: "https://meowrhino.github.io/snerta/",
+    movilPos: "left",
+    texto: "página profesional de la curadora <a href='https://meowrhino.github.io/snerta/'>berta esteve</a>"
+  },
+  // puedes seguir añadiendo más
+];
 
-    function crearGaleria(webs) {
-      const contenedor = document.getElementById('galeriaWebs');
-      webs.forEach(web => {
-        const article = document.createElement('article');
-        article.className = 'web-card';
-        article.innerHTML = `
-        <div class="web-preview ${web.movilPos === 'right' ? 'movil-derecha' : 'movil-izquierda'}">
+function crearGaleria(webs) {
+  const contenedor = document.getElementById('galeriaWebs');
+  webs.forEach(web => {
+    const article = document.createElement('article');
+    article.className = 'web-card';
+    article.innerHTML = `
+      <div class="web-preview ${web.movilPos === 'right' ? 'movil-derecha' : 'movil-izquierda'}">
         <img src="galeria/${web.carpeta}/ordenador.png" alt="vista escritorio de ${web.nombre}" class="img-ordenador">
         <img src="galeria/${web.carpeta}/movil.png" alt="vista móvil de ${web.nombre}" class="img-movil">
+        <div class="web-texto">${web.texto}</div>
       </div>
-      <a href="${web.link}" target="_blank" class="ver-web">ver web de ${web.nombre}</a>
+      <a href="${web.link}" target="_blank" class="ver-web">${web.nombre}</a>
     `;
-        contenedor.appendChild(article);
-      });
-    }
+    contenedor.appendChild(article);
+  });
+}
 
     document.addEventListener('DOMContentLoaded', () => {
       crearGaleria(websRealizadas);

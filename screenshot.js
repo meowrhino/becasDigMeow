@@ -15,7 +15,7 @@ if (!url || !nombre) {
 }
 
 const sizes = [
-  { width: 1920, height: 1000, name: "ordenador" },
+  { width: 1920, height: 1280, name: "ordenador" },
   { width: 375, height: 667, name: "movil" },
 ];
 
