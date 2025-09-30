@@ -2,16 +2,20 @@ const puppeteer = require("puppeteer");
 const fs = require("fs");
 const path = require("path");
 
-// 💡 USO: node screenshot.js https://ejemplo.com nombre_personalizado
+// 💡 USO:
+// node screenshot.js url1 nombre1 url2 nombre2 url3 nombre3 ...
 
-const url = process.argv[2];
-const nombre = process.argv[3];
+const args = process.argv.slice(2);
 
-if (!url || !nombre) {
-  console.error(
-    "❌ Uso: node screenshot.js https://ejemplo.com nombre_personalizado"
-  );
+if (args.length === 0 || args.length % 2 !== 0) {
+  console.error("❌ Uso: node screenshot.js [url1] [nombre1] [url2] [nombre2] ...");
   process.exit(1);
+}
+
+// construimos pares de url y nombre
+const pairs = [];
+for (let i = 0; i < args.length; i += 2) {
+  pairs.push({ url: args[i], nombre: args[i + 1] });
 }
 
 const sizes = [
@@ -23,16 +27,27 @@ const sizes = [
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
-  const dir = path.join("img", nombre);
-  fs.mkdirSync(dir, { recursive: true });
+  for (const { url, nombre } of pairs) {
+    console.log(`🌐 Procesando: ${url} → ${nombre}`);
 
-  for (const size of sizes) {
-    await page.setViewport({ width: size.width, height: size.height });
-    await page.goto(url, { waitUntil: "networkidle2" });
+    const dir = path.join("galeria", nombre);
+    fs.mkdirSync(dir, { recursive: true });
 
-    const filename = path.join(dir, `${size.name}.png`);
-    await page.screenshot({ path: filename }); // <- ✅ solo lo visible
-    console.log(`✅ Captura guardada: ${filename}`);
+    for (const size of sizes) {
+      await page.setViewport({ width: size.width, height: size.height });
+      await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: 'light' }]);
+      await page.evaluate(() => {
+        Object.defineProperty(window, 'devicePixelRatio', {
+          get: () => 2,
+        });
+      });
+      await page.goto(url, { waitUntil: "networkidle2" });
+      await new Promise(resolve => setTimeout(resolve, 10000));
+
+      const filename = path.join(dir, `${size.name}.png`);
+      await page.screenshot({ path: filename }); // captura solo viewport
+      console.log(`✅ Captura guardada: ${filename}`);
+    }
   }
 
   await browser.close();
