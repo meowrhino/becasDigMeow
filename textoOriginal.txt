@@ -1,0 +1,209 @@
+  <!-- Contenido principal (secciones sin modificar) -->
+  <div class="container">
+    <main>
+      <div class="section">
+        <h2>por qué querrías una web</h2>
+        <p>
+          porque piensas en dejar de depender de rrss y sus propietarios, porque crees en el codigo abierto, porque
+          quieres apoyar una propuesta de una amiga, por recuperar la propiedad de tu identidad online, porque te gusta
+          jugar, por explorar espacios nuevos, por salir de cuadrículas, vigilancia u otras formas de censura, para
+          protegerte de que te tiren la cuenta abajo, para dejar de pagar mensualidades que no sabes si necesitas o no,
+          porque te has leído tecnofeudalismo y estás rallada...
+        </p>
+
+        <p>
+          internet nació como bien común y queremos que siga siendo descentralizado, local, común y sobretodo,
+          divertido.
+        </p>
+
+        <!--
+          una web de código abierto, precio asequible, sin mantenimiento, para que puedas tener tu portfolio, tu web de
+          artista, tu web de recetas, un album de fotos, tus textos, ¡lo que quieras! y que tengas agencia para
+          modificarla como y cuando gustes.
+          -->
+
+      </div>
+      <!--
+      <div class="section">
+        <h2>pasos para tener una web</h2>
+        <p>
+          lo primero son una llamada de 15 minutos para un primer contacto. te recomiendo que vayas haciendo
+          pensamientos alrededor de 3 cosas:
+        </p>
+
+
+
+        <p class="bullet-p">
+          encontrar algunos referentes que te molen (pueden ser lo que quieras, webs, funciones, formas, historias,...)
+        </p>
+        <p class="bullet-p">
+          que hagas una recopilación de lo que te imaginas en la web, ya sean textos, imágenes, vídeos, tipografías,
+          colores,... puedes pensar también en algún juego o alguna función divertida y lo vemos.
+        </p>
+        <p class="bullet-p">
+          y que pienses en cuanto te puedes gastar y te quieres gastar.
+        </p>
+
+      </div>
+
+      <div class="section">
+        <h2>el presupuesto</h2>
+        <p>
+          por ahora el precio "base" son 300€, se te aplicaría el precio base si quieres algo muy sencillo, si no tienes
+          un duro o si eres muy colaboradora en la web, me explico:
+        </p>
+        <p>
+          el objetivo de estas becas es la alfabetización digital; quiero hacerte un codigo que luego tu puedas
+          mantener, actualizar, e incluso cambiar si lo deseas. yo quiero que salgas de aquí no sólo con una web sino
+          con unas intuiciones sobre programación básicas, que te acompañaré a tener con el .pdf
+          que vendrá con tu web.
+        </p>
+        <p>
+          entonces pienso el precio como una estimación entre el mínimo de 300€, 500€ y 700€* según la complejidad, tu
+          colaboración y tu situación económica. yo hago el código y las primeras pruebas, pero si tienes 20 proyectos,
+          por 300€, te haría una estructura para que puedas subirlos tú, te subiría un par o tres de
+          ejemplo y te acompañaría en lo posible en tu aprendizaje para que subas el resto.
+        </p>
+        <p>
+          un punto importante de la colaboración es el respeto de las fechas de entrega de los deberes. si yo me atraso
+          por un motivo u otro te lo comentaré y lo mismo te tocará a ti, por cada retraso injustificado tuyo el precio
+          de la web subirá 100€.
+        </p>
+
+      </div>
+
+      <div class="section">
+        <h2>tus deberes</h2>
+        <p>
+          te enumeraré todo lo necesario para tu web y tendrás un par de semanas (o lo que necesites) para
+          recopilarlo. el deadline de los deberes lo acordaremos entre las dos y, a ser
+          posible, será una reunión presencial conmigo donde te presentaré bocetos de diseño e incluso elaboraremos un
+          wireframe, aprovechando lo que traigas de deberes.
+        </p>
+        <p>
+          te pediría también que si hay alguna gestión previsible de archivos la tengas en cuenta, por ejemplo
+          si tienes muchas imágenes muy grandes y pesadas, pensar si hace falta <a
+            href="https://www.iloveimg.com/es/recortar-imagen">recortarlas</a>, o <a
+            href="https://www.iloveimg.com/es/comprimir-imagen">que pesen menos</a>) y verificar que todo esté ordenado
+          de una manera comprensible (o que al menos me quede claro a mí). darle una vuelta a lo que haces, al porqué lo
+          haces, cómo quieres mostrarlo, para qué quieres mostrarlo y el tono general de todo
+        </p>
+
+        <p>
+          no comenzaré a trabajar hasta que los deberes estén entregados y en orden. y no me gustaría tener que cobrarte
+          más por retrasos, así que cuando hablemos de fechas no te pido compromiso sino honestidad y respeto con el
+          tiempo de ambas.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>primera entrega</h2>
+        <p>
+          con la 2a entrega de los deberes abonarás la mitad del importe. realizaré una preview de tu página en figma en
+          un plazo que concretemos. la complejidad de ese prototipo dependerá de tu presupuesto. Aceptaré modificaciones
+          y ajustes necesarios pero en siempre siguiendo mi criterio en caso de conflicto. esto es porque cada web es
+          una obra mía y no quiero firmar cosas que no me representen.
+        </p>
+        <p>
+          en caso que el conflicto sea irresoluble, se te cobrará lo proporcional por el diseño y el resto se te
+          reembolsará.
+        </p>
+        <p>
+          no aceptaré revisiones ni cambios ni seguiré trabajando hasta que se realice el pago.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>segunda entrega</h2>
+        <p>
+          si aceptas el prototipo abonarás la otra mitad del importe y yo te prepararé la web en mi repositorio de
+          github, y a partir de que esté lista, tendrás para siempre una web accesible mediante el link
+          meowrhino.github.io/[tuNombre] (a no ser que pase algo terrible con github, internet o el mundo)
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>tercera entrega</h2>
+        <p>
+          a partir de aquí ya todo es opcional, yo no puedo obligar a nadie (por más que querría).
+        </p>
+        <p>
+          mi sueño sería que montases tu propio repositorio de github, para que tengas acceso al código y puedas
+          actualizar, modificar, o lo que quieras tu página web. que te apetezca igual pensar en si quieres un dominio o
+          no, o si quieres ver de tenerla en un sitio que no sea github, como neocities.
+        </p>
+
+        <p>
+          en este proceso no estarás sola, sino estaré en la manera que me lo permitan mis tiempos y recursos y también
+          tendrás el .pdf que hablábamos antes como un pequeño manual de instrucciones al que volver siempre que te
+          agobies en el texto y estés haciendo algo que hayamos podido predecir.
+        </p>
+
+        <p>
+          en el pdf encontrarás cómo subir tu web a github y cómo manejarte con el repositorio, una guía basiquísima de
+          visual studio code para el correcto mantenimiento de tu web, y depende de tu web habrán cosas específicas que
+          aparecerán en tu .pdf que igual en otro no tendrían sentido.
+        </p>
+        <p>
+          yo me quedaré una copia de la web para archivo que será el link de github que comentábamos antes
+          (meowrhino.github.io/[tuNombre]), si lo deseas, borraré todos tus datos personales (aunque piensa que si se
+          quedan ahí te pueden servir de publicidad). ese .pdf quedará público en esta página, para que cualquiera pueda
+          consultarlo.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>Q&A</h2>
+        <h3>¿sin mantenimiento?</h3>
+        <p>
+          si quieres pagar un dominio, tendrás que pagar el dominio y el hosting (si es que no lo haces en github
+          pages). un meowrhino.github.io no queda mal, te "une" a esta propuesta y no tendrás que pagar nada, pero queda
+          al final mucho más profesional un dominio propio.
+        </p>
+
+        <h3>¿puedes mantenerla tú?</h3>
+        <p>
+          claro, pero no es el objetivo de la beca. si quieres que yo mantenga tu web, tendrás que pagar una
+          tarifa que tendremos que hablar por cada cambio. el objetivo de la beca es que hacer muchas webs a gente que
+          no podría pagar una web de verdad, pagando con aprender unos básicos de código y tampoco estar constantemente
+          manteniendo webs, que no es lo que me interesa. como me da palo, lo cobro extra.
+        </p>
+
+        <h3>¿3 mails gratuitos?</h3>
+        <p>por proyecto contestaré un máximo de 3 mails sin cobrar (canjeables el primer mes tras la entrega del código)
+        </p>
+        <p>
+          si te entrego la web el 20 de julio tendrás hasta el 20 de agosto para enviarme 3 mails, puedes agrupar varias
+          preguntas en un solo mail. te contestaré lo más rápido que pueda, y de ahí vamos viendo.
+        </p>
+        <p>
+          no cobraré necesariamente por mail, pero sí seré honesta con el tiempo y los recursos que me conlleve cada
+          respuesta y pondré límites o precios donde vea necesario.
+        </p>
+
+        <h3>¿.pdf explicativo?</h3>
+        <p>
+          será un documento que seguramente vaya evolucionando con cada web que vaya haciendo en este marco. para mí es
+          todo un reto, pero quiero imaginar un mundo en el que podemos independizarnos de las redes sociales y que cada
+          persona tenga acceso fácil y rápido a todos sus documentos, imágenes, código, estructuras, etc. se puede hacer
+          de todo, depende de lo que se quiera hacer serán unos tiempos u otros. no te preocupes que te asesoraré en
+          todo lo posible y aprenderemos juntes.
+        </p>
+
+        <h3>me da mucho miedo el código</h3>
+        <p>
+          piensa que recibirás un .pdf que te explique todo, que tendrás 3 mails durante el primer mes, y que tras éso
+          aunque cobraré por consulta, los precios los intentaremos siempre mantener éticos y todo se puede ir hablando
+          según necesidades económicas y temporales. ni yo me quiero hacer rica con ésto ni quiero estar currando sin
+          cobrar porque sería una falta de respeto al trabajo que hago.
+        </p>
+
+        <h3>¿y si no quiero gestionar nada?</h3>
+        <p>
+          te entregaré igualmente ese .pdf y durante el primer mes tras la entrega si cambias de
+          opinión te guiaré para acercarte a tu independencia digital. si no, no pasa nada, yo necesito ingresos y tú te
+          quitas una cosa de la cabeza, todo es gestionable.
+        </p>
+
+      </div>
+-->
