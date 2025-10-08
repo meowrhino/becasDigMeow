@@ -324,23 +324,6 @@
       box-shadow: 0 0 0 2px var(--text);
     }
 
-    /* Botón de idioma arriba izq */
-    #toggleLang{
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      z-index: 1000;
-      background-color: var(--accent);
-      color: var(--bg);
-      border: none;
-      padding: 8px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.9em;
-      transition: transform .2s, box-shadow .2s;
-    }
-    #toggleLang:hover{ transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,.2);}
-
     /* Responsive */
     @media (max-width: 600px) {
       .container {
@@ -574,9 +557,6 @@
   <!-- Contenedor de nubes (fondo dinámico) -->
   <div id="backgroundContainer"></div>
 
-  <!-- Botón de idioma (arriba izq) -->
-  <button id="toggleLang" aria-label="cambiar idioma">ES</button>
-
   <!-- Panel de controles en la esquina inferior derecha -->
   <nav>
     <button id="randomizeClouds" aria-label="mover nubes">☁️‼️</button>
@@ -605,7 +585,7 @@
   <div class="pre-header-cloud">
     <div class="header-cloud">
       <header>
-        <h1 id="mainTitle">beca digitalización <br> meowrhino</h1>
+        <h1>beca digitalización <br> meowrhino</h1>
         <!--<h2>Digitalización y Resistencia Digital</h2>-->
       </header>
       <footer>
@@ -621,8 +601,8 @@
   <div class="container">
     <main>
       <div class="section">
-        <h2 id="whyTitle">por qué querrías una web</h2>
-        <p id="whyP1">
+        <h2>por qué querrías una web</h2>
+        <p>
           porque piensas en dejar de depender de rrss y sus propietarios, porque crees en el codigo abierto, porque
           quieres apoyar una propuesta de una amiga, por recuperar la propiedad de tu identidad online, porque te gusta
           jugar, por explorar espacios nuevos, por salir de cuadrículas, vigilancia u otras formas de censura, para
@@ -630,7 +610,7 @@
           porque te has leído tecnofeudalismo y estás rallada...
         </p>
 
-        <p id="whyP2">
+        <p>
           internet nació como bien común y queremos que siga siendo descentralizado, local, común y sobretodo,
           divertido.
         </p>
@@ -932,6 +912,29 @@
         applyTheme(nextTheme);
       });
 
+
+
+      /*
+      function applyTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        themeBtn.textContent = theme === 'light' ? '☀️' : '🌙';
+        // Marca activo si quieres
+        themeBtn.classList.toggle('active', theme === 'dark');
+      }
+
+      themeBtn.addEventListener('click', () => {
+        const current = root.getAttribute('data-theme') || 'dark';
+        applyTheme(current === 'light' ? 'dark' : 'light');
+      });
+      */
+
+      /*
+      // Inicializa icono según el tema por defecto al cargar
+      document.addEventListener('DOMContentLoaded', () => {
+        applyTheme(root.getAttribute('data-theme') || 'dark');
+      });*/
+
+
       /*para que el tema se decida segun el tiempo que haga en barna*/
       document.addEventListener('DOMContentLoaded', () => {
         const API_KEY = '990fd8edd33ce21c64a5173c1a482507'; // tu clave ya puesta :)
@@ -1023,6 +1026,57 @@
         setThemeByBarcelonaWeather();
       });
 
+      /* PARA QUE EL TEMA SEA SEGUN LO EL TIEMPO QUYE HAGA EN DONDE ABRAN LA PAGINA
+      
+            document.addEventListener('DOMContentLoaded', () => {
+              const root = document.documentElement;
+      
+              navigator.geolocation?.getCurrentPosition(async (pos) => {
+                const lat = pos.coords.latitude;
+                const lon = pos.coords.longitude;
+      
+                try {
+                  const apiKey = '990fd8edd33ce21c64a5173c1a482507'; // tu clave ya puesta :)
+                  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+      
+                  const res = await fetch(url);
+                  const data = await res.json();
+      
+                  const weather = data.weather[0].main.toLowerCase(); // tipo de clima
+                  const hour = new Date().getHours();
+                  const isNight = hour < 6 || hour >= 20;
+      
+                  let theme = 'light'; // por defecto
+      
+                  if (weather === 'clear') {
+                    theme = isNight ? 'dark' : 'light';
+                  } else if (weather === 'clouds') {
+                    theme = 'cloud';
+                  } else if (['rain', 'drizzle'].includes(weather)) {
+                    theme = 'rain';
+                  } else if (weather === 'thunderstorm') {
+                    theme = 'storm';
+                  } else if (weather === 'snow') {
+                    theme = 'snow';
+                  } else if (['mist', 'fog', 'haze', 'smoke'].includes(weather)) {
+                    theme = 'fog';
+                  } else {
+                    theme = isNight ? 'dark' : 'light';
+                  }
+      
+                  applyTheme(theme);
+                } catch (err) {
+                  console.warn('No se pudo obtener el clima, usando hora local');
+                  const hour = new Date().getHours();
+                  applyTheme(hour >= 6 && hour < 20 ? 'light' : 'dark');
+                }
+              }, () => {
+                const hour = new Date().getHours();
+                applyTheme(hour >= 6 && hour < 20 ? 'light' : 'dark');
+              });
+            });
+      */
+
       // —————————————————————————
       // 3) GESTIÓN DE NUBES
       // —————————————————————————
@@ -1067,192 +1121,161 @@
       // Inicializa
       generateClouds(cloudParams);
 
+
+      // btn que cambia la opacidad de todas las nubes a 1
+      /*
+      qs('#fullOpacityClouds').addEventListener('click', () => {
+        qsa('.cloud').forEach(c => c.style.opacity = '1');
+      });
+      */
+
+      // —————————————————————————
+      // 4) CONTROLES UI
+      // —————————————————————————
+
       // Randomizar parámetros
       qs('#randomizeClouds').addEventListener('click', () => {
         cloudParams = getRandomCloudParams();
         generateClouds(cloudParams);
       });
 
+
+      // Mostrar/ocultar form
+      /*
+      const modifyBtn = qs('#modifyCloudsButton');
+      const cloudForm = qs('#cloudForm');
+      modifyBtn.addEventListener('click', () => {
+        cloudForm.style.display = cloudForm.style.display === 'block' ? 'none' : 'block';
+        modifyBtn.classList.toggle('active');
+      });
+
+      // Aplicar valores del form
+      qs('#applyCloudSettings').addEventListener('click', () => {
+        const getVal = (id, parse) => parse(qs(id).value);
+        const count = getVal('#inputCount', Number);
+        let minWidth = getVal('#inputMinWidth', parseFloat);
+        let maxWidth = getVal('#inputMaxWidth', parseFloat);
+        let opacityMin = getVal('#inputOpacityMin', parseFloat);
+        let opacityMax = getVal('#inputOpacityMax', parseFloat);
+        let durationMin = getVal('#inputDurationMin', parseFloat);
+        let durationMax = getVal('#inputDurationMax', parseFloat);
+
+        // Validación simple
+        if (minWidth > maxWidth) [minWidth, maxWidth] = [maxWidth, minWidth];
+        if (opacityMin > opacityMax) [opacityMin, opacityMax] = [opacityMax, opacityMin];
+        if (durationMin > durationMax) [durationMin, durationMax] = [durationMax, durationMin];
+
+        cloudParams = {
+          count,
+          minWidth,
+          maxWidth,
+          opacityRange: [opacityMin, opacityMax],
+          durationRange: [durationMin, durationMax]
+        };
+
+        generateClouds(cloudParams);
+        cloudForm.style.display = 'none';
+        modifyBtn.classList.remove('active');
+      });
+
+      // Cerrar form sin aplicar
+      qs('#closeCloudForm').addEventListener('click', () => {
+        cloudForm.style.display = 'none';
+        modifyBtn.classList.remove('active');
+      });
+*/
     })();
 
-    /* ==========================
-       BLOQUE MULTILENGUAJE
-       ========================== */
+
 
     const websRealizadas = [
       {
-        nombre: "andrea carilla",
+        nombre: "ver andrea carilla",
         carpeta: "andreacarilla",
         link: "https://meowrhino.github.io/andreacarilla/",
         movilPos: "left",
-        imgQuantity: 1,
-        textoES: "portfolio online y archivo de la fotógrafa <a href='https://meowrhino.github.io/andreacarilla/'>andrea carilla</a>. La página principal se divide en una galería y una nube de links con opciones de filtrado por categorías.",
-        textoEN: "online portfolio and archive of photographer <a href='https://meowrhino.github.io/andreacarilla/'>andrea carilla</a>. The homepage combines a gallery with a link cloud and category filters.",
-        textoFR: "portfolio en ligne et archive de la photographe <a href='https://meowrhino.github.io/andreacarilla/'>andrea carilla</a>. La page d’accueil mêle une galerie et un nuage de liens avec des filtres par catégorie.",
-        textoCAT: "portfolio en línia i arxiu de la fotògrafa <a href='https://meowrhino.github.io/andreacarilla/'>andrea carilla</a>. La portada combina una galeria i un núvol d’enllaços amb filtres per categories."
+        texto: "portfolio online y archivo de la fotógrafa <a href='https://meowrhino.github.io/andreacarilla/'>andrea carilla</a>. La página principal se divide en una galería y una nube de links con opciones de filtrado por categorías."
       },
 
       {
-        nombre: "berta esteve",
+        nombre: "ver berta esteve",
         carpeta: "bertaesteve",
         link: "https://meowrhino.github.io/snerta/",
         movilPos: "left",
-        imgQuantity: 1,
-        textoES: "archivo profesional de la curadora <a href='https://meowrhino.github.io/snerta/'>berta esteve</a> que se divide en una home scrolleable y un archivo de proyectos que puede actualizar ella misma.",
-        textoEN: "professional archive of curator <a href='https://meowrhino.github.io/snerta/'>berta esteve</a>, featuring a scrollable home and a project archive she can update herself.",
-        textoFR: "archives professionnelles de la curatrice <a href='https://meowrhino.github.io/snerta/'>berta esteve</a>, avec une page d’accueil défilante et un archive de projets qu’elle peut mettre à jour.",
-        textoCAT: "arxiu professional de la curadora <a href='https://meowrhino.github.io/snerta/'>berta esteve</a>, amb una home desplaçable i un arxiu de projectes que pot actualitzar ella mateixa."
+        texto: "archivo profesional de la curadora <a href='https://meowrhino.github.io/snerta/'>berta esteve</a> que se divide en una home scrolleable y un archivo de proyectos que puede actualizar ella misma."
       },
 
       {
-        nombre: "christine",
+        nombre: "ver christine",
         carpeta: "christine",
         link: "https://meowrhino.github.io/christine/",
         movilPos: "left",
-        imgQuantity: 1,
-        textoES: "web brújula para explorar el universo de <a href='https://meowrhino.github.io/christine/'>christine</a>. Los proyectos se disponen en coordenadas en 4 ejes y se eligen 2 para poblar el gráfico.",
-        textoEN: "compass-like website to explore <a href='https://meowrhino.github.io/christine/'>christine</a>’s universe. Projects live on four axes; two are chosen to populate the chart.",
-        textoFR: "site-boussole pour explorer l’univers de <a href='https://meowrhino.github.io/christine/'>christine</a>. Les projets se placent sur 4 axes et deux alimentent le graphique.",
-        textoCAT: "web brúixola per explorar l’univers de <a href='https://meowrhino.github.io/christine/'>christine</a>. Els projectes es distribueixen en 4 eixos i se’n trien 2 per poblar el gràfic."
+        texto: "web brújula para explorar el universo de <a href='https://meowrhino.github.io/christine/'>christine</a>. Los proyectos se disponen en coordenadas en 4 ejes y se eligen 2 para poblar el gráfico."
       },
 
       {
-        nombre: "estructuras3000",
+        nombre: "ver estructuras3000",
         carpeta: "e3000",
         link: "https://meowrhino.github.io/e300/",
         movilPos: "left",
-        imgQuantity: 1,
-        textoES: "web oficial del colectivo <a href='https://meowrhino.github.io/e300/'>estructuras3000</a>.",
-        textoEN: "official website of the collective <a href='https://meowrhino.github.io/e300/'>estructuras3000</a>.",
-        textoFR: "site officiel du collectif <a href='https://meowrhino.github.io/e300/'>estructuras3000</a>.",
-        textoCAT: "web oficial del col·lectiu <a href='https://meowrhino.github.io/e300/'>estructuras3000</a>."
+        texto: "web oficial del colectivo <a href='https://meowrhino.github.io/e300/'>estructuras3000</a>."
       },
 
       {
-        nombre: "hifas studio",
+        nombre: "ver hifas studio",
         carpeta: "hifasstudio",
         link: "https://meowrhino.github.io/anakatana/",
         movilPos: "left",
-        imgQuantity: 1,
-        textoES: "ecommerce funcional para la tienda <a href='https://meowrhino.github.io/anakatana/'>hifas studio</a> con panel de administración, registro de transacciones y cobros vía Stripe.",
-        textoEN: "functional ecommerce for <a href='https://meowrhino.github.io/anakatana/'>hifas studio</a> with admin panel, transaction logging and Stripe payments.",
-        textoFR: "e-commerce fonctionnel pour <a href='https://meowrhino.github.io/anakatana/'>hifas studio</a> avec panneau d’admin, journal des transactions et paiements Stripe.",
-        textoCAT: "ecommerce funcional per a <a href='https://meowrhino.github.io/anakatana/'>hifas studio</a> amb panell d’administració, registre de transaccions i pagaments amb Stripe."
+        texto: "ecommerce funcional para la tienda <a href='https://meowrhino.github.io/anakatana/'>hifas studio</a> con panel de administración, registro de transacciones y cobros vía Stripe."
       },
 
       {
-        nombre: "jaumeclotet",
+        nombre: "ver jaumeclotet",
         carpeta: "jaumeclotet",
         link: "https://meowrhino.github.io/jaumeclotet/",
         movilPos: "left",
-        imgQuantity: 1,
-        textoES: "página oficial del artista <a href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a> donde se destacan 6 proyectos de su archivo y una sorpresa cuando has visto todos.",
-        textoEN: "official page of artist <a href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a>, highlighting 6 archive projects and a surprise once you’ve seen them all.",
-        textoFR: "page officielle de l’artiste <a href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a> avec 6 projets mis en avant et une surprise quand tu les as tous vus.",
-        textoCAT: "pàgina oficial de l’artista <a href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a> amb 6 projectes destacats i una sorpresa quan els hagis vist tots."
+        texto: "página oficial del artista <a href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a> donde se destacan 6 proyectos de su archivo y una sorpresa cuando has visto todos."
       },
       
       {
-        nombre: "erikamichi",
+        nombre: "ver erikamichi",
         carpeta: "rikamichie",
         link: "https://meowrhino.github.io/rikamichie/",
         movilPos: "left",
-        imgQuantity: 1,
-        textoES: "sitio web de <a href='https://meowrhino.github.io/rikamichie/'>rikamichie</a> donde se combinan todas sus disciplinas en una cruz navegable dividida en 6 pantallas.",
-        textoEN: "website of <a href='https://meowrhino.github.io/rikamichie/'>rikamichie</a> combining all her disciplines in a navigable cross split into 6 screens.",
-        textoFR: "site de <a href='https://meowrhino.github.io/rikamichie/'>rikamichie</a> combinant toutes ses disciplines dans une croix navigable en 6 écrans.",
-        textoCAT: "lloc web de <a href='https://meowrhino.github.io/rikamichie/'>rikamichie</a> on es combinen totes les seves disciplines en una creu navegable dividida en 6 pantalles."
+        texto: "sitio web de <a href='https://meowrhino.github.io/rikamichie/'>rikamichie</a> donde se combinan todas sus disciplinas en una cruz navegable dividida en 6 pantallas."
       },
 
       {
-        nombre: "villagranota",
+        nombre: "ver villagranota",
         carpeta: "villagranota",
         link: "https://meowrhino.github.io/villagranota/",
         movilPos: "left",
-        imgQuantity: 1,
-        textoES: "statement online del colectivo <a href='https://meowrhino.github.io/villagranota/'>villagranota</a> por el código libre, divertido y honesto. Un pequeño estanque digital.",
-        textoEN: "online statement of the collective <a href='https://meowrhino.github.io/villagranota/'>villagranota</a> for free, fun and honest code. A small digital pond.",
-        textoFR: "déclaration en ligne du collectif <a href='https://meowrhino.github.io/villagranota/'>villagranota</a> pour un code libre, ludique et honnête. Un petit étang numérique.",
-        textoCAT: "manifest en línia del col·lectiu <a href='https://meowrhino.github.io/villagranota/'>villagranota</a> pel codi lliure, divertit i honest. Un petit estany digital."
-      }
+        texto: "statement online del colectivo <a href='https://meowrhino.github.io/villagranota/'>villagranota</a> por el código libre, divertido y honesto. Un pequeño estanque digital."
+      },
+
+
+      // puedes seguir añadiendo más
     ];
 
-    const LANGS = ['ES','EN','FR','CAT'];
-    const galleryVerb = { ES:'ver', EN:'view', FR:'voir', CAT:'veure' };
-
-    const textosMain = {
-      ES: {
-        mainTitle: 'beca digitalización <br> meowrhino',
-        whyTitle: 'por qué querrías una web',
-        whyP1: 'porque piensas en dejar de depender de rrss y sus propietarios, porque crees en el codigo abierto, porque quieres apoyar una propuesta de una amiga, por recuperar la propiedad de tu identidad online, porque te gusta jugar, por explorar espacios nuevos, por salir de cuadrículas, vigilancia u otras formas de censura, para protegerte de que te tiren la cuenta abajo, para dejar de pagar mensualidades que no sabes si necesitas o no, porque te has leído tecnofeudalismo y estás rallada...',
-        whyP2: 'internet nació como bien común y queremos que siga siendo descentralizado, local, común y sobretodo, divertido.'
-      },
-      EN: {
-        mainTitle: 'digitization grant <br> meowrhino',
-        whyTitle: 'why you might want a website',
-        whyP1: "because you want to stop depending on social media and their owners; because you believe in open source; because you want to support a friend; to reclaim your online identity; to play and explore new spaces; to get away from grids, surveillance or other censorship; to protect yourself from takedowns; to stop paying monthly fees you may not need; because you read techno-feudalism and got a bit rattled...",
-        whyP2: 'the internet was born as a common good and we want it to remain decentralized, local, common and, above all, fun.'
-      },
-      FR: {
-        mainTitle: 'bourse de numérisation <br> meowrhino',
-        whyTitle: 'pourquoi vouloir un site web',
-        whyP1: "parce que tu veux cesser de dépendre des réseaux sociaux et de leurs propriétaires; parce que tu crois au logiciel libre; pour soutenir la proposition d’une amie; pour reprendre la main sur ton identité en ligne; pour jouer et explorer de nouveaux espaces; pour sortir des grilles, de la surveillance ou d’autres formes de censure; pour te protéger des fermetures de compte; pour arrêter de payer des abonnements peut-être inutiles; parce que tu as lu le techno-féodalisme et que ça t’a travaillé...",
-        whyP2: "internet est né comme un bien commun et nous voulons qu’il reste décentralisé, local, commun et surtout, ludique."
-      },
-      CAT: {
-        mainTitle: 'beca de digitalització <br> meowrhino',
-        whyTitle: 'per què voldries una web',
-        whyP1: "perquè vols deixar de dependre de les xarxes i dels seus propietaris; perquè creus en el codi obert; perquè vols donar suport a la proposta d’una amiga; per recuperar la propietat de la teva identitat en línia; per jugar i explorar espais nous; per evitar graelles, vigilància o altres formes de censura; per protegir-te de que et tanquin el compte; per deixar de pagar mensualitats que potser no et calen; perquè has llegit tecnofeudalisme i t’ha deixat pensativa...",
-        whyP2: 'internet va néixer com a bé comú i volem que continuï sent descentralitzat, local, comú i, sobretot, divertit.'
-      }
-    };
-
-    function crearGaleria(webs, lang='ES') {
+    function crearGaleria(webs) {
       const contenedor = document.getElementById('galeriaWebs');
-      contenedor.innerHTML = '';
       webs.forEach(web => {
         const article = document.createElement('article');
         article.className = 'web-card';
-        const texto = web[`texto${lang}`] || web.textoES || '';
-        const verb = galleryVerb[lang] || galleryVerb.ES;
         article.innerHTML = `
       <div class="web-preview ${web.movilPos === 'right' ? 'movil-derecha' : 'movil-izquierda'}">
         <img src="galeria/${web.carpeta}/ordenador.png" alt="vista escritorio de ${web.nombre}" class="img-ordenador" loading="lazy" decoding="async">
         <img src="galeria/${web.carpeta}/movil.png" alt="vista móvil de ${web.nombre}" class="img-movil" loading="lazy" decoding="async">
-        <div class="web-texto">${texto}</div>
+        <div class="web-texto">${web.texto}</div>
       </div>
-      <a href="${web.link}" target="_blank" rel="noopener noreferrer" class="ver-web">${verb} ${web.nombre}</a>
+      <a href="${web.link}" target="_blank" rel="noopener noreferrer" class="ver-web">${web.nombre}</a>
     `;
         contenedor.appendChild(article);
       });
     }
 
-    let currentLangIndex = 0; // ES por defecto
-    function applyLanguage(lang){
-      const c = document.querySelector('.container');
-      const h = document.querySelector('.pre-header-cloud');
-      if (c && h){
-        c.style.transition = h.style.transition = 'opacity 250ms';
-        c.style.opacity = h.style.opacity = '0.35';
-      }
-      const t = textosMain[lang];
-      document.querySelector('#mainTitle').innerHTML = t.mainTitle;
-      document.querySelector('#whyTitle').textContent = t.whyTitle;
-      document.querySelector('#whyP1').textContent = t.whyP1;
-      document.querySelector('#whyP2').textContent = t.whyP2;
-      crearGaleria(websRealizadas, lang);
-      const btn = document.querySelector('#toggleLang');
-      if (btn) btn.textContent = lang;
-      requestAnimationFrame(()=>{ if (c && h){ c.style.opacity = h.style.opacity = '1'; } });
-    }
-
     document.addEventListener('DOMContentLoaded', () => {
-      applyLanguage('ES');
-      const langBtn = document.querySelector('#toggleLang');
-      langBtn.addEventListener('click', () => {
-        currentLangIndex = (currentLangIndex + 1) % LANGS.length;
-        applyLanguage(LANGS[currentLangIndex]);
-      });
+      crearGaleria(websRealizadas);
     });
 
   </script>
