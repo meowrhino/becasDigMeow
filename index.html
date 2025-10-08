@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/svg" href="img/nube/nube.svg">
+  <link rel="icon" type="image/svg+xml" href="img/nube/nube.svg">
   <style>
     /* DEFINICIÓN DE LA FORMA DE LA NUBE (mismo clip-path que en el zip de Meowrhino) */
     /* 1) Variables globales */
@@ -812,8 +812,7 @@
       </div>
 
       <footer>
-        web: <a href="https://meowrhino.neocities.org/"> @meowrhino </a>
-        </a>
+        web: <a href="https://meowrhino.neocities.org/" rel="noopener" target="_blank"> @meowrhino </a>
       </footer>
 
     </main>
@@ -850,7 +849,6 @@
           count,
           minWidth: minW,
           maxWidth: maxW,
-          opacityRange: [1],
           durationRange: [
             randomBetween(12, 20),
             randomBetween(22, 30)
@@ -1098,11 +1096,13 @@
         cloud.style.height = `${w * randomBetween(0.6, 0.8)}px`;
         cloud.style.top = `${randomBetween(-10, 110)}%`;
         cloud.style.left = `${randomBetween(-10, 110)}%`;
-        cloud.style.opacity = randomBetween(...params.opacityRange);
+        // Opacidad fija (100%)
+        cloud.style.opacity = '1';
 
         cloud.style.animationDuration = `${randomBetween(...params.durationRange)}s`;
         cloud.style.animationDelay = `${randomBetween(0, 5)}s`;
-        cloud.style.animationName = `float${Math.floor(randomBetween(1, 4))}`;
+        // randomBetween(1, 5) devuelve [1,5), con floor => 1..4 (incluye float4)
+        cloud.style.animationName = `float${Math.floor(randomBetween(1, 5))}`;
 
         return cloud;
       }
@@ -1234,7 +1234,7 @@
         carpeta: "jaumeclotet",
         link: "https://meowrhino.github.io/jaumeclotet/",
         movilPos: "left",
-        texto: "página oficial del artista <a href='https://meowrhino.github.io/rikamichie/'>jaumeclotet</a> donde se destacan 6 proyectos de su archivo y una sorpresa cuando has visto todos."
+        texto: "página oficial del artista <a href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a> donde se destacan 6 proyectos de su archivo y una sorpresa cuando has visto todos."
       },
       
       {
@@ -1264,11 +1264,11 @@
         article.className = 'web-card';
         article.innerHTML = `
       <div class="web-preview ${web.movilPos === 'right' ? 'movil-derecha' : 'movil-izquierda'}">
-        <img src="galeria/${web.carpeta}/ordenador.png" alt="vista escritorio de ${web.nombre}" class="img-ordenador">
-        <img src="galeria/${web.carpeta}/movil.png" alt="vista móvil de ${web.nombre}" class="img-movil">
+        <img src="galeria/${web.carpeta}/ordenador.png" alt="vista escritorio de ${web.nombre}" class="img-ordenador" loading="lazy" decoding="async">
+        <img src="galeria/${web.carpeta}/movil.png" alt="vista móvil de ${web.nombre}" class="img-movil" loading="lazy" decoding="async">
         <div class="web-texto">${web.texto}</div>
       </div>
-      <a href="${web.link}" target="_blank" class="ver-web">${web.nombre}</a>
+      <a href="${web.link}" target="_blank" rel="noopener noreferrer" class="ver-web">${web.nombre}</a>
     `;
         contenedor.appendChild(article);
       });
