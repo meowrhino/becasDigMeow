@@ -566,6 +566,17 @@
     .web-card:hover .web-texto {
       opacity: 1;
     }
+
+    /* === Slideshow: respirar + fade === */
+    @keyframes breathe {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+      100% { transform: scale(1); }
+    }
+    .web-preview.breathing { animation: breathe 900ms cubic-bezier(0.25, 0.1, 0.25, 1.0); }
+
+    /* reforzamos transición de opacidad para el swap */
+    .img-ordenador, .img-movil { transition: opacity 250ms ease; }
   </style>
 
 </head>
@@ -1085,7 +1096,7 @@
         carpeta: "andreacarilla",
         link: "https://meowrhino.github.io/andreacarilla/",
         movilPos: "left",
-        imgQuantity: 1,
+        imgQuantity: 2,
         textoES: "portfolio online y archivo de la fotógrafa <a href='https://meowrhino.github.io/andreacarilla/'>andrea carilla</a>. La página principal se divide en una galería y una nube de links con opciones de filtrado por categorías.",
         textoEN: "online portfolio and archive of photographer <a href='https://meowrhino.github.io/andreacarilla/'>andrea carilla</a>. The homepage combines a gallery with a link cloud and category filters.",
         textoFR: "portfolio en ligne et archive de la photographe <a href='https://meowrhino.github.io/andreacarilla/'>andrea carilla</a>. La page d’accueil mêle une galerie et un nuage de liens avec des filtres par catégorie.",
@@ -1097,7 +1108,7 @@
         carpeta: "bertaesteve",
         link: "https://meowrhino.github.io/snerta/",
         movilPos: "left",
-        imgQuantity: 1,
+        imgQuantity: 2,
         textoES: "archivo profesional de la curadora <a href='https://meowrhino.github.io/snerta/'>berta esteve</a> que se divide en una home scrolleable y un archivo de proyectos que puede actualizar ella misma.",
         textoEN: "professional archive of curator <a href='https://meowrhino.github.io/snerta/'>berta esteve</a>, featuring a scrollable home and a project archive she can update herself.",
         textoFR: "archives professionnelles de la curatrice <a href='https://meowrhino.github.io/snerta/'>berta esteve</a>, avec une page d’accueil défilante et un archive de projets qu’elle peut mettre à jour.",
@@ -1109,7 +1120,7 @@
         carpeta: "christine",
         link: "https://meowrhino.github.io/christine/",
         movilPos: "left",
-        imgQuantity: 1,
+        imgQuantity: 2,
         textoES: "web brújula para explorar el universo de <a href='https://meowrhino.github.io/christine/'>christine</a>. Los proyectos se disponen en coordenadas en 4 ejes y se eligen 2 para poblar el gráfico.",
         textoEN: "compass-like website to explore <a href='https://meowrhino.github.io/christine/'>christine</a>’s universe. Projects live on four axes; two are chosen to populate the chart.",
         textoFR: "site-boussole pour explorer l’univers de <a href='https://meowrhino.github.io/christine/'>christine</a>. Les projets se placent sur 4 axes et deux alimentent le graphique.",
@@ -1121,7 +1132,7 @@
         carpeta: "e3000",
         link: "https://meowrhino.github.io/e300/",
         movilPos: "left",
-        imgQuantity: 1,
+        imgQuantity: 2,
         textoES: "web oficial del colectivo <a href='https://meowrhino.github.io/e300/'>estructuras3000</a>.",
         textoEN: "official website of the collective <a href='https://meowrhino.github.io/e300/'>estructuras3000</a>.",
         textoFR: "site officiel du collectif <a href='https://meowrhino.github.io/e300/'>estructuras3000</a>.",
@@ -1133,7 +1144,7 @@
         carpeta: "hifasstudio",
         link: "https://meowrhino.github.io/anakatana/",
         movilPos: "left",
-        imgQuantity: 1,
+        imgQuantity: 3,
         textoES: "ecommerce funcional para la tienda <a href='https://meowrhino.github.io/anakatana/'>hifas studio</a> con panel de administración, registro de transacciones y cobros vía Stripe.",
         textoEN: "functional ecommerce for <a href='https://meowrhino.github.io/anakatana/'>hifas studio</a> with admin panel, transaction logging and Stripe payments.",
         textoFR: "e-commerce fonctionnel pour <a href='https://meowrhino.github.io/anakatana/'>hifas studio</a> avec panneau d’admin, journal des transactions et paiements Stripe.",
@@ -1145,7 +1156,7 @@
         carpeta: "jaumeclotet",
         link: "https://meowrhino.github.io/jaumeclotet/",
         movilPos: "left",
-        imgQuantity: 1,
+        imgQuantity: 2,
         textoES: "página oficial del artista <a href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a> donde se destacan 6 proyectos de su archivo y una sorpresa cuando has visto todos.",
         textoEN: "official page of artist <a href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a>, highlighting 6 archive projects and a surprise once you’ve seen them all.",
         textoFR: "page officielle de l’artiste <a href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a> avec 6 projets mis en avant et une surprise quand tu les as tous vus.",
@@ -1157,7 +1168,7 @@
         carpeta: "rikamichie",
         link: "https://meowrhino.github.io/rikamichie/",
         movilPos: "left",
-        imgQuantity: 1,
+        imgQuantity: 2,
         textoES: "sitio web de <a href='https://meowrhino.github.io/rikamichie/'>rikamichie</a> donde se combinan todas sus disciplinas en una cruz navegable dividida en 6 pantallas.",
         textoEN: "website of <a href='https://meowrhino.github.io/rikamichie/'>rikamichie</a> combining all her disciplines in a navigable cross split into 6 screens.",
         textoFR: "site de <a href='https://meowrhino.github.io/rikamichie/'>rikamichie</a> combinant toutes ses disciplines dans une croix navigable en 6 écrans.",
@@ -1169,7 +1180,7 @@
         carpeta: "villagranota",
         link: "https://meowrhino.github.io/villagranota/",
         movilPos: "left",
-        imgQuantity: 1,
+        imgQuantity: 2,
         textoES: "statement online del colectivo <a href='https://meowrhino.github.io/villagranota/'>villagranota</a> por el código libre, divertido y honesto. Un pequeño estanque digital.",
         textoEN: "online statement of the collective <a href='https://meowrhino.github.io/villagranota/'>villagranota</a> for free, fun and honest code. A small digital pond.",
         textoFR: "déclaration en ligne du collectif <a href='https://meowrhino.github.io/villagranota/'>villagranota</a> pour un code libre, ludique et honnête. Un petit étang numérique.",
@@ -1229,14 +1240,63 @@
           CAT: `vista mòbil de ${web.nombre}`
         }[lang];
         article.innerHTML = `
-      <div class="web-preview ${web.movilPos === 'right' ? 'movil-derecha' : 'movil-izquierda'}">
-        <img src="galeria/${web.carpeta}/ordenador.png" alt="${altDesktop}" class="img-ordenador" loading="lazy" decoding="async">
-        <img src="galeria/${web.carpeta}/movil.png" alt="${altMobile}" class="img-movil" loading="lazy" decoding="async">
+      <div class="web-preview ${web.movilPos === 'right' ? 'movil-derecha' : 'movil-izquierda'}" data-folder="${web.carpeta}" data-qty="${web.imgQuantity || 1}">
+        <img src="galeria/${web.carpeta}/${(web.imgQuantity||1)>1?'ordenador-0':'ordenador'}.png" alt="${altDesktop}" class="img-ordenador" loading="lazy" decoding="async" onerror="this.src='galeria/_placeholder/ordenador.png';">
+        <img src="galeria/${web.carpeta}/${(web.imgQuantity||1)>1?'movil-0':'movil'}.png" alt="${altMobile}" class="img-movil" loading="lazy" decoding="async" onerror="this.src='galeria/_placeholder/movil.png';">
         <div class="web-texto">${texto}</div>
       </div>
       <a href="${web.link}" target="_blank" rel="noopener noreferrer" class="ver-web">${verb} ${web.nombre}</a>
     `;
         contenedor.appendChild(article);
+      });
+    }
+
+    // ==========================
+    // Slideshow con "respirar" y efecto ola
+    // ==========================
+    const TOTAL_WEB_COUNT = websRealizadas.length; // cache: no hace falta contar DOM cada vez
+    const BASE_PER_CARD_MS = 800; // base de 0.8s por tarjeta para ola completa
+
+    function makeSrc(folder, device, idx, qty){
+      if(qty > 1){ return `galeria/${folder}/${device}-${idx}.png`; }
+      return `galeria/${folder}/${device}.png`;
+    }
+
+    function swapSrcWithFade(imgEl, nextSrc){
+      imgEl.style.opacity = '0';
+      const onload = () => { imgEl.style.opacity = '1'; imgEl.removeEventListener('load', onload); };
+      imgEl.addEventListener('load', onload);
+      setTimeout(()=>{ imgEl.src = nextSrc; }, 120);
+    }
+
+    function setupSlides(){
+      const cards = Array.from(document.querySelectorAll('.web-preview'));
+      const total = TOTAL_WEB_COUNT || cards.length || 1;
+      const SLIDE_INTERVAL_MS = Math.max(3500, total * BASE_PER_CARD_MS); // ola completa
+      const STAGGER = Math.floor(SLIDE_INTERVAL_MS / total); // retraso escalonado
+
+      cards.forEach((card, idx) => {
+        const folder = card.getAttribute('data-folder');
+        const qty = parseInt(card.getAttribute('data-qty') || '1', 10);
+        if(qty <= 1) return; // sin slideshow si solo hay 1
+
+        const desk = card.querySelector('.img-ordenador');
+        const mob  = card.querySelector('.img-movil');
+        let cur = 0;
+
+        function advance(){
+          card.classList.add('breathing');
+          setTimeout(()=> card.classList.remove('breathing'), 500);
+          cur = (cur + 1) % qty;
+          swapSrcWithFade(desk, makeSrc(folder, 'ordenador', cur, qty));
+          swapSrcWithFade(mob,  makeSrc(folder, 'movil',     cur, qty));
+        }
+
+        setTimeout(() => {
+          // primer cambio tras el offset para iniciar la ola
+          advance();
+          setInterval(advance, SLIDE_INTERVAL_MS);
+        }, idx * STAGGER);
       });
     }
 
@@ -1265,6 +1325,7 @@
       document.querySelector('#whyP1').textContent = t.whyP1;
       document.querySelector('#whyP2').textContent = t.whyP2;
       crearGaleria(websRealizadas, lang);
+      setupSlides();
       const btn = document.querySelector('#toggleLang');
       if (btn) btn.textContent = lang;
       requestAnimationFrame(()=>{ if (c && h){ c.style.opacity = h.style.opacity = '1'; } });
