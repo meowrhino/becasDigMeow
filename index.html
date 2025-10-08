@@ -20,7 +20,7 @@
 
     /* 🌞 light */
     html[data-theme="light"] {
-      --bg: #F9D475;
+      --bg: #e7c97e;
       --text: #42302A;
       --accent: #FFE9C7;
       --clouds: #BC544C;
@@ -918,7 +918,7 @@
         fog: '🌫️'
       };
 
-      let currentThemeIndex = themes.indexOf(root.getAttribute('data-theme')) || 0;
+      let currentThemeIndex = Math.max(0, themes.indexOf(root.getAttribute('data-theme')));
 
       function applyTheme(theme) {
         root.setAttribute('data-theme', theme);
@@ -1215,10 +1215,23 @@
         article.className = 'web-card';
         const texto = web[`texto${lang}`] || web.textoES || '';
         const verb = galleryVerb[lang] || galleryVerb.ES;
+        const altDesktop = {
+          ES: `vista escritorio de ${web.nombre}`,
+          EN: `desktop view of ${web.nombre}`,
+          FR: `aperçu bureau de ${web.nombre}`,
+          CAT: `vista d'escriptori de ${web.nombre}`
+        }[lang];
+
+        const altMobile = {
+          ES: `vista móvil de ${web.nombre}`,
+          EN: `mobile view of ${web.nombre}`,
+          FR: `aperçu mobile de ${web.nombre}`,
+          CAT: `vista mòbil de ${web.nombre}`
+        }[lang];
         article.innerHTML = `
       <div class="web-preview ${web.movilPos === 'right' ? 'movil-derecha' : 'movil-izquierda'}">
-        <img src="galeria/${web.carpeta}/ordenador.png" alt="vista escritorio de ${web.nombre}" class="img-ordenador" loading="lazy" decoding="async">
-        <img src="galeria/${web.carpeta}/movil.png" alt="vista móvil de ${web.nombre}" class="img-movil" loading="lazy" decoding="async">
+        <img src="galeria/${web.carpeta}/ordenador.png" alt="${altDesktop}" class="img-ordenador" loading="lazy" decoding="async">
+        <img src="galeria/${web.carpeta}/movil.png" alt="${altMobile}" class="img-movil" loading="lazy" decoding="async">
         <div class="web-texto">${texto}</div>
       </div>
       <a href="${web.link}" target="_blank" rel="noopener noreferrer" class="ver-web">${verb} ${web.nombre}</a>
@@ -1236,6 +1249,17 @@
         c.style.opacity = h.style.opacity = '0.35';
       }
       const t = textosMain[lang];
+      // Actualiza <html lang> y <title> según el idioma activo
+      document.documentElement.setAttribute('lang',
+        lang === 'ES' ? 'es' : lang === 'EN' ? 'en' : lang === 'FR' ? 'fr' : 'ca');
+
+      const titles = {
+        ES: 'becas digitalización meowrhino',
+        EN: 'meowrhino digitization grant',
+        FR: 'bourse de numérisation meowrhino',
+        CAT:'beca de digitalització meowrhino'
+      };
+      document.title = titles[lang] || titles.ES;
       document.querySelector('#mainTitle').innerHTML = t.mainTitle;
       document.querySelector('#whyTitle').textContent = t.whyTitle;
       document.querySelector('#whyP1').textContent = t.whyP1;
