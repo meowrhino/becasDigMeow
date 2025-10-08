@@ -1,0 +1,1 @@
+Drop-in fallback images used when project screenshots are missing.
