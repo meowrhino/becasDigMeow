@@ -325,7 +325,7 @@
     }
 
     /* Botón de idioma arriba izq */
-    #toggleLang{
+    #toggleLang {
       position: fixed;
       top: 10px;
       left: 10px;
@@ -339,7 +339,11 @@
       font-size: 0.9em;
       transition: transform .2s, box-shadow .2s;
     }
-    #toggleLang:hover{ transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,.2);}
+
+    #toggleLang:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, .2);
+    }
 
     /* Responsive */
     @media (max-width: 600px) {
@@ -411,7 +415,7 @@
       gap: 4rem;
       max-width: 1000px;
 
-      margin-top: 30vh;
+      margin-top: 10vh;
     }
 
     .web-card {
@@ -569,14 +573,28 @@
 
     /* === Slideshow: respirar + fade === */
     @keyframes breathe {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.06); }
-      100% { transform: scale(1); }
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.06);
+      }
+
+      100% {
+        transform: scale(1);
+      }
     }
-    .web-preview.breathing { animation: breathe 900ms cubic-bezier(0.25, 0.1, 0.25, 1.0); }
+
+    .web-preview.breathing {
+      animation: breathe 900ms cubic-bezier(0.25, 0.1, 0.25, 1.0);
+    }
 
     /* reforzamos transición de opacidad para el swap */
-    .img-ordenador, .img-movil { transition: opacity 250ms ease; }
+    .img-ordenador,
+    .img-movil {
+      transition: opacity 250ms ease;
+    }
   </style>
 
 </head>
@@ -1144,7 +1162,7 @@
         carpeta: "hifasstudio",
         link: "https://meowrhino.github.io/anakatana/",
         movilPos: "left",
-        imgQuantity: 3,
+        imgQuantity: 1,
         textoES: "ecommerce funcional para la tienda <a href='https://meowrhino.github.io/anakatana/'>hifas studio</a> con panel de administración, registro de transacciones y cobros vía Stripe.",
         textoEN: "functional ecommerce for <a href='https://meowrhino.github.io/anakatana/'>hifas studio</a> with admin panel, transaction logging and Stripe payments.",
         textoFR: "e-commerce fonctionnel pour <a href='https://meowrhino.github.io/anakatana/'>hifas studio</a> avec panneau d’admin, journal des transactions et paiements Stripe.",
@@ -1162,7 +1180,7 @@
         textoFR: "page officielle de l’artiste <a href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a> avec 6 projets mis en avant et une surprise quand tu les as tous vus.",
         textoCAT: "pàgina oficial de l’artista <a href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a> amb 6 projectes destacats i una sorpresa quan els hagis vist tots."
       },
-      
+
       {
         nombre: "erikamichi",
         carpeta: "rikamichie",
@@ -1188,8 +1206,8 @@
       }
     ];
 
-    const LANGS = ['ES','EN','FR','CAT'];
-    const galleryVerb = { ES:'ver', EN:'view', FR:'voir', CAT:'veure' };
+    const LANGS = ['ES', 'EN', 'FR', 'CAT'];
+    const galleryVerb = { ES: 'ver', EN: 'view', FR: 'voir', CAT: 'veure' };
 
     const textosMain = {
       ES: {
@@ -1212,13 +1230,13 @@
       },
       CAT: {
         mainTitle: 'beca de digitalització <br> meowrhino',
-        whyTitle: 'per què voldries una web',
-        whyP1: "perquè vols deixar de dependre de les xarxes i dels seus propietaris; perquè creus en el codi obert; perquè vols donar suport a la proposta d’una amiga; per recuperar la propietat de la teva identitat en línia; per jugar i explorar espais nous; per evitar graelles, vigilància o altres formes de censura; per protegir-te de que et tanquin el compte; per deixar de pagar mensualitats que potser no et calen; perquè has llegit tecnofeudalisme i t’ha deixat pensativa...",
-        whyP2: 'internet va néixer com a bé comú i volem que continuï sent descentralitzat, local, comú i, sobretot, divertit.'
+        whyTitle: 'per què una web pròpia?',
+        whyP1: 'perquè vols deixar de viure de lloguer dins les plataformes; perquè creus en el codi obert; perquè vols donar suport a la proposta d’una amiga; per recuperar la propietat de la teva identitat en línia; per jugar i explorar espais nous; per escapar de graelles, vigilància i censura; per no quedar-te sense compte d’un dia per l’altre; per deixar de pagar subscripcions que no et calen; perquè pensas massa en la tecnocracia/tecnofeudalisme”...',
+        whyP2: 'internet va néixer com un bé comú i la volem descentralitzada, local, compartida i —sobretot— divertida.'
       }
     };
 
-    function crearGaleria(webs, lang='ES') {
+    function crearGaleria(webs, lang = 'ES') {
       const contenedor = document.getElementById('galeriaWebs');
       contenedor.innerHTML = '';
       webs.forEach(web => {
@@ -1241,8 +1259,8 @@
         }[lang];
         article.innerHTML = `
       <div class="web-preview ${web.movilPos === 'right' ? 'movil-derecha' : 'movil-izquierda'}" data-folder="${web.carpeta}" data-qty="${web.imgQuantity || 1}">
-        <img src="galeria/${web.carpeta}/${(web.imgQuantity||1)>1?'ordenador-0':'ordenador'}.png" alt="${altDesktop}" class="img-ordenador" loading="lazy" decoding="async" onerror="this.src='galeria/_placeholder/ordenador.png';">
-        <img src="galeria/${web.carpeta}/${(web.imgQuantity||1)>1?'movil-0':'movil'}.png" alt="${altMobile}" class="img-movil" loading="lazy" decoding="async" onerror="this.src='galeria/_placeholder/movil.png';">
+        <img src="galeria/${web.carpeta}/${(web.imgQuantity || 1) > 1 ? 'ordenador-0' : 'ordenador'}.png" alt="${altDesktop}" class="img-ordenador" loading="lazy" decoding="async" onerror="this.src='galeria/_placeholder/ordenador.png';">
+        <img src="galeria/${web.carpeta}/${(web.imgQuantity || 1) > 1 ? 'movil-0' : 'movil'}.png" alt="${altMobile}" class="img-movil" loading="lazy" decoding="async" onerror="this.src='galeria/_placeholder/movil.png';">
         <div class="web-texto">${texto}</div>
       </div>
       <a href="${web.link}" target="_blank" rel="noopener noreferrer" class="ver-web">${verb} ${web.nombre}</a>
@@ -1257,19 +1275,19 @@
     const TOTAL_WEB_COUNT = websRealizadas.length; // cache: no hace falta contar DOM cada vez
     const BASE_PER_CARD_MS = 800; // base de 0.8s por tarjeta para ola completa
 
-    function makeSrc(folder, device, idx, qty){
-      if(qty > 1){ return `galeria/${folder}/${device}-${idx}.png`; }
+    function makeSrc(folder, device, idx, qty) {
+      if (qty > 1) { return `galeria/${folder}/${device}-${idx}.png`; }
       return `galeria/${folder}/${device}.png`;
     }
 
-    function swapSrcWithFade(imgEl, nextSrc){
+    function swapSrcWithFade(imgEl, nextSrc) {
       imgEl.style.opacity = '0';
       const onload = () => { imgEl.style.opacity = '1'; imgEl.removeEventListener('load', onload); };
       imgEl.addEventListener('load', onload);
-      setTimeout(()=>{ imgEl.src = nextSrc; }, 120);
+      setTimeout(() => { imgEl.src = nextSrc; }, 120);
     }
 
-    function setupSlides(){
+    function setupSlides() {
       const cards = Array.from(document.querySelectorAll('.web-preview'));
       const total = TOTAL_WEB_COUNT || cards.length || 1;
       const SLIDE_INTERVAL_MS = Math.max(3500, total * BASE_PER_CARD_MS); // ola completa
@@ -1278,18 +1296,18 @@
       cards.forEach((card, idx) => {
         const folder = card.getAttribute('data-folder');
         const qty = parseInt(card.getAttribute('data-qty') || '1', 10);
-        if(qty <= 1) return; // sin slideshow si solo hay 1
+        if (qty <= 1) return; // sin slideshow si solo hay 1
 
         const desk = card.querySelector('.img-ordenador');
-        const mob  = card.querySelector('.img-movil');
+        const mob = card.querySelector('.img-movil');
         let cur = 0;
 
-        function advance(){
+        function advance() {
           card.classList.add('breathing');
-          setTimeout(()=> card.classList.remove('breathing'), 500);
+          setTimeout(() => card.classList.remove('breathing'), 500);
           cur = (cur + 1) % qty;
           swapSrcWithFade(desk, makeSrc(folder, 'ordenador', cur, qty));
-          swapSrcWithFade(mob,  makeSrc(folder, 'movil',     cur, qty));
+          swapSrcWithFade(mob, makeSrc(folder, 'movil', cur, qty));
         }
 
         setTimeout(() => {
@@ -1301,10 +1319,10 @@
     }
 
     let currentLangIndex = 0; // ES por defecto
-    function applyLanguage(lang){
+    function applyLanguage(lang) {
       const c = document.querySelector('.container');
       const h = document.querySelector('.pre-header-cloud');
-      if (c && h){
+      if (c && h) {
         c.style.transition = h.style.transition = 'opacity 250ms';
         c.style.opacity = h.style.opacity = '0.35';
       }
@@ -1312,12 +1330,12 @@
       // Actualiza <html lang> y <title> según el idioma activo
       document.documentElement.setAttribute('lang',
         lang === 'ES' ? 'es' : lang === 'EN' ? 'en' : lang === 'FR' ? 'fr' : 'ca');
- 
+
       const titles = {
         ES: 'becas digitalización meowrhino',
         EN: 'meowrhino digitization grant',
         FR: 'bourse de numérisation meowrhino',
-        CAT:'beca de digitalització meowrhino'
+        CAT: 'beca de digitalització meowrhino'
       };
       document.title = titles[lang] || titles.ES;
       document.querySelector('#mainTitle').innerHTML = t.mainTitle;
@@ -1328,7 +1346,7 @@
       setupSlides();
       const btn = document.querySelector('#toggleLang');
       if (btn) btn.textContent = lang;
-      requestAnimationFrame(()=>{ if (c && h){ c.style.opacity = h.style.opacity = '1'; } });
+      requestAnimationFrame(() => { if (c && h) { c.style.opacity = h.style.opacity = '1'; } });
     }
 
     document.addEventListener('DOMContentLoaded', () => {
