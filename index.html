@@ -631,10 +631,11 @@
     }
 
     .web-card:hover .img-ordenador,
-    .web-card:hover .img-movil {
+    .web-card:hover .img-movil,
+    .web-card:hover .temp-layer {
       opacity: 0 !important;
     }
-
+    
     .web-card:hover .web-texto {
       opacity: 1 !important;
     }
@@ -1300,7 +1301,7 @@
         carpeta: "hifasstudio",
         link: "https://meowrhino.github.io/anakatana/",
         movilPos: "left",
-        imgQuantity: 1,
+        imgQuantity: 2,
         textoES: "ecommerce funcional para la tienda <a href='https://meowrhino.github.io/anakatana/'>hifas studio</a> con panel de administración, registro de transacciones y cobros vía Stripe.",
         textoEN: "functional ecommerce for <a href='https://meowrhino.github.io/anakatana/'>hifas studio</a> with admin panel, transaction logging and Stripe payments.",
         textoFR: "e-commerce fonctionnel pour <a href='https://meowrhino.github.io/anakatana/'>hifas studio</a> avec panneau d’admin, journal des transactions et paiements Stripe.",
@@ -1312,7 +1313,7 @@
         carpeta: "jaumeclotet",
         link: "https://meowrhino.github.io/jaumeclotet/",
         movilPos: "left",
-        imgQuantity: 1,
+        imgQuantity: 4,
         textoES: "página oficial del artista <a href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a> donde se destacan 6 proyectos de su archivo y una sorpresa cuando has visto todos.",
         textoEN: "official page of artist <a href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a>, highlighting 6 archive projects and a surprise once you’ve seen them all.",
         textoFR: "page officielle de l’artiste <a href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a> avec 6 projets mis en avant et une surprise quand tu les as tous vus.",
@@ -1395,10 +1396,18 @@
           FR: `aperçu mobile de ${web.nombre}`,
           CAT: `vista mòbil de ${web.nombre}`
         }[lang];
+        // Lógica para elegir extensión según imgQuantity
+        const qty = web.imgQuantity || 1;
+        const ordenadorImg = qty > 1
+          ? `galeria/${web.carpeta}/ordenador-1.jpeg`
+          : `galeria/${web.carpeta}/ordenador.png`;
+        const movilImg = qty > 1
+          ? `galeria/${web.carpeta}/movil-1.jpeg`
+          : `galeria/${web.carpeta}/movil.png`;
         article.innerHTML = `
-      <div class="web-preview ${web.movilPos === 'right' ? 'movil-derecha' : 'movil-izquierda'}" data-folder="${web.carpeta}" data-qty="${web.imgQuantity || 1}">
-        <img src="galeria/${web.carpeta}/${(web.imgQuantity || 1) > 1 ? 'ordenador-0' : 'ordenador'}.png" alt="${altDesktop}" class="img-ordenador img-fade" loading="lazy" decoding="async" onerror="this.src='galeria/_placeholder/ordenador.png';">
-        <img src="galeria/${web.carpeta}/${(web.imgQuantity || 1) > 1 ? 'movil-0' : 'movil'}.png" alt="${altMobile}" class="img-movil img-fade" loading="lazy" decoding="async" onerror="this.src='galeria/_placeholder/movil.png';">
+      <div class="web-preview ${web.movilPos === 'right' ? 'movil-derecha' : 'movil-izquierda'}" data-folder="${web.carpeta}" data-qty="${qty}">
+        <img src="${ordenadorImg}" alt="${altDesktop}" class="img-ordenador img-fade" loading="lazy" decoding="async" onerror="this.src='galeria/_placeholder/ordenador.png';">
+        <img src="${movilImg}" alt="${altMobile}" class="img-movil img-fade" loading="lazy" decoding="async" onerror="this.src='galeria/_placeholder/movil.png';">
         <div class="web-texto">${texto}</div>
       </div>
       <a href="${web.link}" target="_blank" rel="noopener noreferrer" class="ver-web">${verb} ${web.nombre}</a>
@@ -1422,8 +1431,13 @@
     const BASE_PER_CARD_MS = 800; // base de 0.8s por tarjeta para ola completa
 
     function makeSrc(folder, device, idx, qty) {
-      if (qty > 1) { return `galeria/${folder}/${device}-${idx}.png`; }
-      return `galeria/${folder}/${device}.png`;
+      // Para galerías con varias imágenes, los archivos están nombrados 1..qty
+      if (qty > 1) {
+        const i = (idx % qty) + 1; // mapea 0..qty-1 -> 1..qty
+        return `galeria/${folder}/${device}-${i}.jpeg`;
+      }
+      // Con una sola imagen usamos el base (sin sufijo). OJO: en crearGaleria() ya ponemos .png
+      return `galeria/${folder}/${device}.jpeg`;
     }
 
     function swapSrcWithFade(imgEl, nextSrc) {
