@@ -1,0 +1,27 @@
+1
+
+si
+pensaba un emoji pero no hay bandera catalana en emoji... de momento haremos con letras
+las animaciones de cambio de idioma se han de aplicar a los textos si, puedes aprovechar la misma animacion que hagas para cambiar la galeria si es posibe
+creo que si que seran esas! :) merci por añadir los nuevos
+
+2
+
+no tengo ni idea, la verdad, me gustaria que el intervalo base esté calculado segun el total de webs que haya para que asi parezca una pequeña "ola" que va cambiando las webs
+si, las imagenes estran ordenadas exactamente asi, de momento solo tenemos movil.png y ordenador.png pero si hay varias, las primeras seran movil-0 y ordenador-0y asi se iran enumerando (podemos añadir en el array "img quantity" para que si hay 1 entienda que no se cambia pero si hay 2, entienda que ha de ir haciendo bucle entre esas 2, y que pueda haber tantas como se quiera)
+queremos bucle si! 
+y creo que si
+
+3
+
+el mensaje deberia tener algo como "ahora en barcelona hace este tiempo (clima y tempoeratura). el tema sleeccionado es (tema seleccionado) puedes cambiar el idioma, tema o nubes de fondo con los botones de la parte superior de la pantalla
+
+confirmo!
+y esto como quieras a mi me encanta el marquee pero es verdad que esta obsoleto... puedes hacer el marquee normal de momento pero preparar lo otro "por si acaso" y dejarlo comentado
+
+ademas:
+si justo, ahora en escritorio los botones quedan fijos arriba mientras scrolleas, en movil parece algo mas sticky, cuando scrolleas dejan de verse pero si subes un poco el scroll se ven, no se porque funcionan distintos porque creo que no hay niongun mediaquery haciendo este cambio
+
+y si, el margen este algo pequeñito ya estaria bien, pero creo recordar que tuvimos problemas gestionandolo entonces igual mira un poco de como hacerlo
+
+te amo!! dale fuerte, con cariño y esmero y mucha investigacion

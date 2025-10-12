@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>becas digitalización meowrhino</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,6 +14,8 @@
     /* 1) Variables globales */
     :root {
       --nube: polygon(99.426% 44.728%, 99.426% 44.728%, 99.871% 41.37%, 99.98% 37.982%, 99.78% 34.598%, 99.298% 31.252%, 98.561% 27.979%, 97.597% 24.812%, 96.432% 21.786%, 95.095% 18.935%, 93.611% 16.293%, 92.009% 13.895%, 92.009% 13.895%, 90.386% 11.942%, 88.654% 10.355%, 86.828% 9.112%, 84.925% 8.191%, 82.96% 7.57%, 80.948% 7.227%, 78.907% 7.141%, 76.851% 7.288%, 74.797% 7.648%, 72.759% 8.198%, 72.759% 8.198%, 71.935% 8.479%, 71.117% 8.802%, 70.308% 9.166%, 69.509% 9.573%, 68.72% 10.022%, 67.943% 10.512%, 67.179% 11.044%, 66.429% 11.618%, 65.695% 12.234%, 64.978% 12.891%, 64.978% 12.891%, 64.649% 12.219%, 64.312% 11.557%, 63.967% 10.909%, 63.614% 10.272%, 63.253% 9.649%, 62.886% 9.04%, 62.511% 8.446%, 62.129% 7.866%, 61.741% 7.301%, 61.347% 6.752%, 61.347% 6.752%, 59.724% 4.799%, 57.992% 3.213%, 56.166% 1.97%, 54.263% 1.049%, 52.297% 0.428%, 50.286% 0.085%, 48.245% -0.002%, 46.189% 0.145%, 44.134% 0.505%, 42.097% 1.055%, 42.097% 1.055%, 40.406% 1.679%, 38.751% 2.481%, 37.142% 3.46%, 35.59% 4.616%, 34.105% 5.948%, 32.698% 7.458%, 31.379% 9.143%, 30.159% 11.005%, 29.048% 13.042%, 28.058% 15.255%, 28.058% 15.255%, 27.516% 14.778%, 26.964% 14.337%, 26.402% 13.933%, 25.83% 13.569%, 25.248% 13.244%, 24.658% 12.962%, 24.058% 12.723%, 23.45% 12.528%, 22.833% 12.38%, 22.208% 12.279%, 22.208% 12.279%, 20.213% 12.271%, 18.266% 12.683%, 16.375% 13.478%, 14.546% 14.621%, 12.787% 16.076%, 11.105% 17.808%, 9.507% 19.78%, 7.999% 21.958%, 6.591% 24.305%, 5.287% 26.786%, 5.287% 26.786%, 4.106% 29.369%, 3.047% 32.078%, 2.125% 34.894%, 1.351% 37.802%, 0.74% 40.785%, 0.303% 43.825%, 0.054% 46.906%, 0.005% 50.011%, 0.171% 53.123%, 0.563% 56.225%, 0.563% 56.225%, 0.803% 57.519%, 1.083% 58.778%, 1.403% 60.002%, 1.761% 61.191%, 2.155% 62.345%, 2.585% 63.464%, 3.048% 64.548%, 3.543% 65.596%, 4.069% 66.608%, 4.625% 67.585%, 4.625% 67.585%, 4.542% 68.011%, 4.464% 68.44%, 4.393% 68.871%, 4.327% 69.305%, 4.268% 69.741%, 4.213% 70.178%, 4.164% 70.615%, 4.121% 71.051%, 4.083% 71.488%, 4.051% 71.922%, 4.051% 71.922%, 3.996% 73.58%, 4.052% 75.222%, 4.213% 76.837%, 4.474% 78.417%, 4.83% 79.951%, 5.276% 81.431%, 5.804% 82.847%, 6.411% 84.19%, 7.09% 85.449%, 7.837% 86.616%, 7.837% 86.616%, 8.563% 87.542%, 9.34% 88.315%, 10.161% 88.942%, 11.018% 89.43%, 11.905% 89.786%, 12.816% 90.016%, 13.742% 90.129%, 14.676% 90.131%, 15.613% 90.029%, 16.545% 89.83%, 16.545% 89.83%, 16.634% 89.804%, 16.723% 89.777%, 16.811% 89.749%, 16.898% 89.72%, 16.984% 89.69%, 17.07% 89.659%, 17.155% 89.627%, 17.239% 89.594%, 17.323% 89.559%, 17.406% 89.524%, 17.406% 89.524%, 18.764% 91.763%, 20.268% 93.695%, 21.899% 95.335%, 23.639% 96.696%, 25.466% 97.796%, 27.364% 98.648%, 29.312% 99.267%, 31.291% 99.669%, 33.281% 99.869%, 35.265% 99.881%, 35.265% 99.881%, 37.204% 99.716%, 39.152% 99.364%, 41.086% 98.81%, 42.982% 98.039%, 44.818% 97.037%, 46.57% 95.789%, 48.216% 94.281%, 49.733% 92.497%, 51.097% 90.423%, 52.285% 88.045%, 52.285% 88.045%, 52.613% 88.03%, 52.941% 88.006%, 53.268% 87.974%, 53.596% 87.932%, 53.924% 87.883%, 54.252% 87.825%, 54.58% 87.76%, 54.907% 87.686%, 55.235% 87.606%, 55.563% 87.517%, 55.563% 87.517%, 56.701% 89.03%, 57.907% 90.405%, 59.173% 91.64%, 60.492% 92.733%, 61.86% 93.682%, 63.268% 94.487%, 64.712% 95.145%, 66.183% 95.656%, 67.675% 96.016%, 69.183% 96.225%, 69.183% 96.225%, 70.986% 96.212%, 72.749% 95.872%, 74.466% 95.229%, 76.134% 94.307%, 77.746% 93.127%, 79.298% 91.715%, 80.784% 90.093%, 82.2% 88.284%, 83.541% 86.312%, 84.801% 84.201%, 84.801% 84.201%, 85.12% 83.613%, 85.428% 83.014%, 85.724% 82.403%, 86.009% 81.781%, 86.282% 81.148%, 86.543% 80.506%, 86.793% 79.853%, 87.032% 79.191%, 87.258% 78.52%, 87.473% 77.84%, 87.473% 77.84%, 88.153% 77.897%, 88.834% 77.883%, 89.514% 77.802%, 90.192% 77.654%, 90.864% 77.441%, 91.529% 77.165%, 92.184% 76.827%, 92.828% 76.429%, 93.458% 75.973%, 94.073% 75.46%, 94.073% 75.46%, 94.856% 74.659%, 95.566% 73.733%, 96.202% 72.696%, 96.769% 71.559%, 97.267% 70.334%, 97.698% 69.035%, 98.065% 67.673%, 98.369% 66.26%, 98.613% 64.81%, 98.797% 63.334%, 98.797% 63.334%, 98.894% 62.023%, 98.915% 60.717%, 98.862% 59.423%, 98.738% 58.146%, 98.545% 56.892%, 98.284% 55.668%, 97.958% 54.48%, 97.569% 53.334%, 97.12% 52.235%, 96.612% 51.191%, 96.612% 51.191%, 96.993% 50.688%, 97.355% 50.158%, 97.696% 49.599%, 98.016% 49.009%, 98.313% 48.387%, 98.586% 47.73%, 98.836% 47.038%, 99.059% 46.308%, 99.256% 45.539%, 99.426% 44.728%);
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
     }
 
     /* 2) Paletas simplificadas, ordenadas */
@@ -297,11 +299,12 @@
     /* 9) Panel de controles */
     nav {
       position: fixed;
-      top: 10px;
-      right: 10px;
+      top: calc(10px + var(--safe-top));
+      right: calc(10px + var(--safe-right));
       z-index: 1000;
       display: flex;
       gap: 10px;
+      will-change: transform;
     }
 
     nav button {
@@ -327,7 +330,7 @@
     /* Botón de idioma arriba izq */
     #toggleLang {
       position: fixed;
-      top: 10px;
+      top: calc(10px + var(--safe-top));
       left: 10px;
       z-index: 1000;
       background-color: var(--accent);
@@ -338,6 +341,7 @@
       cursor: pointer;
       font-size: 0.9em;
       transition: transform .2s, box-shadow .2s;
+      will-change: transform;
     }
 
     #toggleLang:hover {
@@ -374,10 +378,11 @@
         justify-content: center;
         align-items: center;
         min-height: 220px;
+        padding-inline: 18px;
       }
 
       .header-cloud::before {
-        width: 100vw;
+        width: calc(100vw - 24px);
         max-width: 480px;
         top: 50%;
         transform: translate(-50%, -50%);
@@ -387,7 +392,41 @@
         display: flex;
         justify-content: center;
         margin-top: -50px;
+        padding-inline: 6px;
       }
+    }
+    /* ——— Ticker/Aviso temporal ——— */
+    #ticker {
+      position: absolute;
+      top: calc(10px + var(--safe-top));
+      left: 0;
+      width: 100%;
+      z-index: 0;             /* detrás de los botones */
+      height: 34px;           /* altura similar a los botones */
+      display: flex;
+      align-items: center;    /* centra verticalmente el texto */
+      overflow: hidden;
+      pointer-events: none;   /* no captura clics */
+      padding-left: clamp(56px, 8vw, 120px);  /* deja hueco al botón de idioma */
+      padding-right: clamp(96px, 12vw, 180px);/* deja hueco a los botones de la derecha */
+    }
+    .ticker-inner {
+      display: inline-block;
+      white-space: nowrap;
+      animation-name: ticker-scroll;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      animation-duration: 25s; /* fallback; se recalibra por JS */
+      animation-delay: -6s;    /* aparece enseguida antes de la calibración */
+      will-change: transform;
+      opacity: .9;
+    }
+    @keyframes ticker-scroll {
+      0%   { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .ticker-inner{ animation: none; }
     }
 
 
@@ -549,6 +588,35 @@
       z-index: 1;
     }
 
+    .img-fade {
+      transition: opacity 250ms ease;
+      opacity: 1;
+    }
+
+    .img-fade.is-hidden {
+      opacity: 0;
+    }
+
+    /* capa temporal para crossfade continuo */
+    .temp-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      pointer-events: none;
+    }
+
+    /* el texto crece SOLO en hover */
+    .web-texto {
+      transform: scale(1);
+      transition: opacity 0.4s ease, transform 220ms ease;
+    }
+
+    .web-card:hover .web-texto {
+      transform: scale(1.04);
+    }
+
     .web-texto {
       position: absolute;
       z-index: 2;
@@ -564,11 +632,21 @@
 
     .web-card:hover .img-ordenador,
     .web-card:hover .img-movil {
-      opacity: 0;
+      opacity: 0 !important;
     }
 
     .web-card:hover .web-texto {
-      opacity: 1;
+      opacity: 1 !important;
+    }
+
+    /* Touch toggle: simula :hover en móvil */
+    .web-card.show-text .img-ordenador,
+    .web-card.show-text .img-movil {
+      opacity: 0 !important;
+    }
+
+    .web-card.show-text .web-texto {
+      opacity: 1 !important;
     }
 
     /* === Slideshow: respirar + fade === */
@@ -586,7 +664,9 @@
       }
     }
 
-    .web-preview.breathing {
+    /* solo las imágenes respiran, no el texto */
+    .img-ordenador.breathing,
+    .img-movil.breathing {
       animation: breathe 900ms cubic-bezier(0.25, 0.1, 0.25, 1.0);
     }
 
@@ -602,6 +682,9 @@
 <body>
   <!-- Contenedor de nubes (fondo dinámico) -->
   <div id="backgroundContainer"></div>
+  <div id="ticker" aria-live="polite">
+    <div class="ticker-inner"><span id="tickerText">…</span></div>
+  </div>
 
   <!-- Botón de idioma (arriba izq) -->
   <button id="toggleLang" aria-label="cambiar idioma">ES</button>
@@ -875,6 +958,8 @@
       // 1) UTILIDADES
       // —————————————————————————
 
+      window.lastWeather = null;
+
       const qs = (sel) => document.querySelector(sel);
       const qsa = (sel) => Array.from(document.querySelectorAll(sel));
 
@@ -953,6 +1038,7 @@
         root.setAttribute('data-theme', theme);
         themeBtn.textContent = emojis[theme] || '🎛️';
         currentThemeIndex = themes.indexOf(theme);
+        if (typeof updateTicker === 'function') updateTicker();
       }
 
       themeBtn.addEventListener('click', () => {
@@ -1015,7 +1101,6 @@
               }
             }
 
-
             else if (weather === 'drizzle') {
               theme = 'lightRain';
               console.log('chispea', theme);
@@ -1039,13 +1124,17 @@
             }
 
             console.log('✅ Tema final aplicado:', theme);
+            window.lastWeather = { temp, description, cloudPercentage, weather, isNight };
             applyTheme(theme);
+            if (typeof updateTicker === 'function') updateTicker();
           } catch (err) {
             console.warn('⚠️ No se pudo obtener el clima, usando hora local');
             const hour = new Date().getHours();
             const fallbackTheme = hour >= 7 && hour < 19 ? 'light' : 'dark';
+            window.lastWeather = null;
             console.log('✅ Tema por fallback:', fallbackTheme);
             applyTheme(fallbackTheme);
+            if (typeof updateTicker === 'function') updateTicker();
           }
         }
 
@@ -1103,6 +1192,55 @@
       });
 
     })();
+
+    const langToLocale = { ES:'es-ES', EN:'en-GB', FR:'fr-FR', CAT:'ca-ES' };
+    const themeLabels  = {
+      ES:{light:'claro',dark:'oscuro',cloud:'nubes',darkCloud:'nube densa',lightRain:'llovizna',rain:'lluvia',storm:'tormenta',heat:'calor',snow:'nieve',fog:'niebla'},
+      EN:{light:'light',dark:'dark',cloud:'clouds',darkCloud:'overcast',lightRain:'drizzle',rain:'rain',storm:'storm',heat:'heat',snow:'snow',fog:'fog'},
+      FR:{light:'clair',dark:'sombre',cloud:'nuages',darkCloud:'couvert',lightRain:'bruine',rain:'pluie',storm:'orage',heat:'chaleur',snow:'neige',fog:'brouillard'},
+      CAT:{light:'clar',dark:'fosc',cloud:'núvols',darkCloud:'enuvolat',lightRain:'plugim',rain:'pluja',storm:'tempesta',heat:'calor',snow:'neu',fog:'boira'}
+    };
+
+    function updateTicker(){
+      const el = document.getElementById('tickerText');
+      if (!el) return;
+      const lang = (typeof LANGS !== 'undefined' && Array.isArray(LANGS) && typeof currentLangIndex === 'number') ? LANGS[currentLangIndex] : 'ES';
+      const theme = (typeof themes !== 'undefined' && Array.isArray(themes) && typeof currentThemeIndex === 'number') ? themes[currentThemeIndex] : 'light';
+      const label = (typeof themeLabels !== 'undefined' && themeLabels[lang] && themeLabels[lang][theme]) ? themeLabels[lang][theme] : theme;
+
+      const msgs = {
+        ES: `El tiempo en Barcelona es «${label}». Para cambiar el tema, el idioma o las nubes, usa los 3 botones de la parte superior de tu pantalla.`,
+        EN: `Weather in Barcelona is “${label}.” To change the theme, language, or clouds, use the 3 buttons at the top of your screen.`,
+        FR: `À Barcelone, la météo est « ${label} ». Pour changer le thème, la langue ou les nuages, utilise les 3 boutons en haut de l’écran.`,
+        CAT:`El temps a Barcelona és «${label}». Per canviar el tema, l’idioma o els núvols, fes servir els 3 botons de la part superior de la pantalla.`
+      };
+
+      el.textContent = msgs[lang] || msgs.ES;
+      calibrateTicker();
+    }
+
+    function calibrateTicker(){
+      const inner = document.querySelector('.ticker-inner');
+      const span  = document.getElementById('tickerText');
+      if (!inner || !span) return;
+
+      // velocidad en píxeles por segundo
+      const SPEED = 80;
+
+      // medidas reales
+      const textW = span.offsetWidth || 0;
+      const vw    = window.innerWidth || 0;
+
+      // duración total: distancia (texto+viewport) / velocidad
+      let dur = (textW + vw) / SPEED; // en segundos
+      dur = Math.max(12, Math.min(40, dur));
+
+      // retraso negativo para empezar ya visible (30% del ciclo, máx 8s)
+      const neg = Math.min(8, dur * 0.3);
+
+      inner.style.animationDuration = `${dur}s`;
+      inner.style.animationDelay = `-${neg}s`;
+    }
 
     /* ==========================
        BLOQUE MULTILENGUAJE
@@ -1211,22 +1349,22 @@
 
     const textosMain = {
       ES: {
-        mainTitle: 'beca digitalización <br> meowrhino',
-        whyTitle: 'por qué querrías una web',
-        whyP1: 'porque piensas en dejar de depender de rrss y sus propietarios, porque crees en el codigo abierto, porque quieres apoyar una propuesta de una amiga, por recuperar la propiedad de tu identidad online, porque te gusta jugar, por explorar espacios nuevos, por salir de cuadrículas, vigilancia u otras formas de censura, para protegerte de que te tiren la cuenta abajo, para dejar de pagar mensualidades que no sabes si necesitas o no, porque te has leído tecnofeudalismo y estás rallada...',
-        whyP2: 'internet nació como bien común y queremos que siga siendo descentralizado, local, común y sobretodo, divertido.'
+        mainTitle: 'beca de digitalización <br> meowrhino',
+        whyTitle: 'por qué una web propia?',
+        whyP1: 'porque no quieres vivir de alquiler dentro de las plataformas; porque crees en el código abierto; porque quieres apoyar la propuesta de una amiga; para recuperar la propiedad de tu identidad en línea; para jugar y explorar espacios nuevos; para escapar de cuadrículas, vigilancia y censura; para no quedarte sin cuenta de un día para otro; para dejar de pagar suscripciones que no te hacen falta; porque piensas demasiado en la tecnocracia/tecnofeudalismo…',
+        whyP2: 'internet nació como bien común y la queremos descentralizada, local, compartida y —sobre todo— divertida.'
       },
       EN: {
         mainTitle: 'digitization grant <br> meowrhino',
-        whyTitle: 'why you might want a website',
-        whyP1: "because you want to stop depending on social media and their owners; because you believe in open source; because you want to support a friend; to reclaim your online identity; to play and explore new spaces; to get away from grids, surveillance or other censorship; to protect yourself from takedowns; to stop paying monthly fees you may not need; because you read techno-feudalism and got a bit rattled...",
-        whyP2: 'the internet was born as a common good and we want it to remain decentralized, local, common and, above all, fun.'
+        whyTitle: 'why a website of your own?',
+        whyP1: 'because you don’t want to live “renting” inside platforms; because you believe in open‑source; because you want to support a friend’s proposal; to reclaim ownership of your online identity; to play and explore new spaces; to escape grids, surveillance and censorship; to not lose your account overnight; to stop paying subscriptions you don’t need; because you think too much about technocracy/techno‑feudalism…',
+        whyP2: 'the internet was born as a commons, and we want it decentralized, local, shared and—above all—fun.'
       },
       FR: {
         mainTitle: 'bourse de numérisation <br> meowrhino',
-        whyTitle: 'pourquoi vouloir un site web',
-        whyP1: "parce que tu veux cesser de dépendre des réseaux sociaux et de leurs propriétaires; parce que tu crois au logiciel libre; pour soutenir la proposition d’une amie; pour reprendre la main sur ton identité en ligne; pour jouer et explorer de nouveaux espaces; pour sortir des grilles, de la surveillance ou d’autres formes de censure; pour te protéger des fermetures de compte; pour arrêter de payer des abonnements peut-être inutiles; parce que tu as lu le techno-féodalisme et que ça t’a travaillé...",
-        whyP2: "internet est né comme un bien commun et nous voulons qu’il reste décentralisé, local, commun et surtout, ludique."
+        whyTitle: 'pourquoi un site à toi ?',
+        whyP1: 'parce que tu ne veux plus vivre en location dans les plateformes ; parce que tu crois au logiciel libre ; parce que tu veux soutenir la proposition d’une amie ; pour reprendre la propriété de ton identité en ligne ; pour jouer et explorer de nouveaux espaces ; pour échapper aux grilles, à la surveillance et à la censure ; pour ne pas te retrouver sans compte du jour au lendemain ; pour arrêter de payer des abonnements inutiles ; parce que tu penses trop à la technocratie/techno‑féodalisme…',
+        whyP2: 'internet est né comme un bien commun et nous le voulons décentralisé, local, partagé et —surtout— ludique.'
       },
       CAT: {
         mainTitle: 'beca de digitalització <br> meowrhino',
@@ -1259,13 +1397,21 @@
         }[lang];
         article.innerHTML = `
       <div class="web-preview ${web.movilPos === 'right' ? 'movil-derecha' : 'movil-izquierda'}" data-folder="${web.carpeta}" data-qty="${web.imgQuantity || 1}">
-        <img src="galeria/${web.carpeta}/${(web.imgQuantity || 1) > 1 ? 'ordenador-0' : 'ordenador'}.png" alt="${altDesktop}" class="img-ordenador" loading="lazy" decoding="async" onerror="this.src='galeria/_placeholder/ordenador.png';">
-        <img src="galeria/${web.carpeta}/${(web.imgQuantity || 1) > 1 ? 'movil-0' : 'movil'}.png" alt="${altMobile}" class="img-movil" loading="lazy" decoding="async" onerror="this.src='galeria/_placeholder/movil.png';">
+        <img src="galeria/${web.carpeta}/${(web.imgQuantity || 1) > 1 ? 'ordenador-0' : 'ordenador'}.png" alt="${altDesktop}" class="img-ordenador img-fade" loading="lazy" decoding="async" onerror="this.src='galeria/_placeholder/ordenador.png';">
+        <img src="galeria/${web.carpeta}/${(web.imgQuantity || 1) > 1 ? 'movil-0' : 'movil'}.png" alt="${altMobile}" class="img-movil img-fade" loading="lazy" decoding="async" onerror="this.src='galeria/_placeholder/movil.png';">
         <div class="web-texto">${texto}</div>
       </div>
       <a href="${web.link}" target="_blank" rel="noopener noreferrer" class="ver-web">${verb} ${web.nombre}</a>
     `;
         contenedor.appendChild(article);
+        // Soporte móvil: toque = alternar texto (si no se hace click en el enlace)
+        const prefersNoHover = window.matchMedia && window.matchMedia('(hover: none)').matches;
+        if (prefersNoHover) {
+          article.addEventListener('click', (ev) => {
+            if (ev.target.closest('a.ver-web')) return; // deja navegar
+            article.classList.toggle('show-text');
+          });
+        }
       });
     }
 
@@ -1281,8 +1427,11 @@
     }
 
     function swapSrcWithFade(imgEl, nextSrc) {
-      imgEl.style.opacity = '0';
-      const onload = () => { imgEl.style.opacity = '1'; imgEl.removeEventListener('load', onload); };
+      imgEl.classList.add('is-hidden');
+      const onload = () => {
+        imgEl.classList.remove('is-hidden');
+        imgEl.removeEventListener('load', onload);
+      };
       imgEl.addEventListener('load', onload);
       setTimeout(() => { imgEl.src = nextSrc; }, 120);
     }
@@ -1293,21 +1442,33 @@
       const SLIDE_INTERVAL_MS = Math.max(3500, total * BASE_PER_CARD_MS); // ola completa
       const STAGGER = Math.floor(SLIDE_INTERVAL_MS / total); // retraso escalonado
 
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { e.target.__visible = e.isIntersecting; });
+      }, { rootMargin: '50px' });
+
       cards.forEach((card, idx) => {
         const folder = card.getAttribute('data-folder');
         const qty = parseInt(card.getAttribute('data-qty') || '1', 10);
         if (qty <= 1) return; // sin slideshow si solo hay 1
+        io.observe(card);
 
         const desk = card.querySelector('.img-ordenador');
         const mob = card.querySelector('.img-movil');
         let cur = 0;
 
+        function preload(src){ const im = new Image(); im.decoding='async'; im.loading='eager'; im.src = src; }
+
         function advance() {
-          card.classList.add('breathing');
-          setTimeout(() => card.classList.remove('breathing'), 500);
-          cur = (cur + 1) % qty;
+          if (!card.__visible || document.hidden) return;
+          desk.classList.add('breathing');
+          mob.classList.add('breathing');
+          setTimeout(() => { desk.classList.remove('breathing'); mob.classList.remove('breathing'); }, 900);
+          const next = (cur + 1) % qty;
+          preload(makeSrc(folder, 'ordenador', next, qty));
+          preload(makeSrc(folder, 'movil',     next, qty));
+          cur = next;
           swapSrcWithFade(desk, makeSrc(folder, 'ordenador', cur, qty));
-          swapSrcWithFade(mob, makeSrc(folder, 'movil', cur, qty));
+          swapSrcWithFade(mob,  makeSrc(folder, 'movil',     cur, qty));
         }
 
         setTimeout(() => {
@@ -1332,7 +1493,7 @@
         lang === 'ES' ? 'es' : lang === 'EN' ? 'en' : lang === 'FR' ? 'fr' : 'ca');
 
       const titles = {
-        ES: 'becas digitalización meowrhino',
+        ES: 'beca de digitalización meowrhino',
         EN: 'meowrhino digitization grant',
         FR: 'bourse de numérisation meowrhino',
         CAT: 'beca de digitalització meowrhino'
@@ -1346,18 +1507,36 @@
       setupSlides();
       const btn = document.querySelector('#toggleLang');
       if (btn) btn.textContent = lang;
+      if (typeof updateTicker === 'function') updateTicker();
       requestAnimationFrame(() => { if (c && h) { c.style.opacity = h.style.opacity = '1'; } });
     }
 
+    const getInitialLang = () => {
+      const qp = new URLSearchParams(location.search).get('lang');
+      const fromQS = qp && LANGS.includes(qp.toUpperCase()) ? qp.toUpperCase() : null;
+      return fromQS || localStorage.getItem('lang') || 'ES';
+    };
+    const setLangInURL = (lang) => {
+      const u = new URL(location.href);
+      u.searchParams.set('lang', lang);
+      history.replaceState(null, '', u);
+    };
+
     document.addEventListener('DOMContentLoaded', () => {
-      applyLanguage('ES');
+      const initial = getInitialLang();
+      currentLangIndex = LANGS.indexOf(initial);
+      applyLanguage(initial);
       const langBtn = document.querySelector('#toggleLang');
       langBtn.addEventListener('click', () => {
         currentLangIndex = (currentLangIndex + 1) % LANGS.length;
-        applyLanguage(LANGS[currentLangIndex]);
+        const lang = LANGS[currentLangIndex];
+        localStorage.setItem('lang', lang);
+        setLangInURL(lang);
+        applyLanguage(lang);
       });
     });
 
+    window.addEventListener('resize', calibrateTicker);
   </script>
 
 </body>
