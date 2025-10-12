@@ -665,10 +665,18 @@
       }
     }
 
+    @keyframes breatheShift {
+      0%   { transform: translateX(-50%) scale(1); }
+      50%  { transform: translateX(-50%) scale(1.06); }
+      100% { transform: translateX(-50%) scale(1); }
+    }
+
     /* solo las imágenes respiran, no el texto */
-    .img-ordenador.breathing,
-    .img-movil.breathing {
+    .img-ordenador.breathing {
       animation: breathe 900ms cubic-bezier(0.25, 0.1, 0.25, 1.0);
+    }
+    .img-movil.breathing {
+      animation: breatheShift 900ms cubic-bezier(0.25, 0.1, 0.25, 1.0);
     }
 
     /* reforzamos transición de opacidad para el swap */
