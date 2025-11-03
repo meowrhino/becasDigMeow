@@ -516,6 +516,7 @@
       text-align: center;
       position: relative;
     }
+    .web-card { touch-action: manipulation; }
 
     .web-preview {
       position: relative;
@@ -699,10 +700,12 @@
     .web-card.show-text .img-ordenador,
     .web-card.show-text .img-movil {
       opacity: 0 !important;
+      pointer-events: none; /* evita que capten el toque cuando están ocultas */
     }
 
     .web-card.show-text .web-texto {
       opacity: 1 !important;
+      pointer-events: auto; /* permite que el toque caiga sobre el texto visible */
     }
 
     /* === Slideshow: respirar + fade === */
@@ -1503,12 +1506,30 @@
         // Soporte móvil: toque = alternar texto (si no se hace click en el enlace)
         const prefersNoHover = window.matchMedia && window.matchMedia('(hover: none)').matches;
         if (prefersNoHover) {
-          article.addEventListener('click', (ev) => {
-            if (ev.target.closest('a.ver-web')) return; // deja navegar
-            article.classList.toggle('show-text');
-          });
+          const handler = (ev) => {
+            if (ev.target.closest('a.ver-web')) return; // deja navegar al link
+            if (ev.type === 'pointerup') ev.preventDefault();
+            ev.stopPropagation();
+            const isOpen = article.classList.contains('show-text');
+            document.querySelectorAll('.web-card.show-text').forEach(el => {
+              if (el !== article) el.classList.remove('show-text');
+            });
+            article.classList.toggle('show-text', !isOpen);
+          };
+          article.addEventListener('pointerup', handler, { passive: false });
+          article.addEventListener('click', handler, { passive: false });
         }
       });
+      // Cierre global fuera de la galería para móviles
+      if (window.matchMedia && window.matchMedia('(hover: none)').matches) {
+        const closer = (ev) => {
+          if (!ev.target.closest('.web-card')) {
+            document.querySelectorAll('.web-card.show-text').forEach(el => el.classList.remove('show-text'));
+          }
+        };
+        document.addEventListener('pointerup', closer);
+        document.addEventListener('click', closer);
+      }
     }
 
     // ==========================
