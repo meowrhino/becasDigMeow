@@ -1,0 +1,7 @@
+# robots.txt para meowrhino
+
+User-agent: *
+Allow: /
+
+# sitemap
+Sitemap: https://meowrhino.github.io/becasDigMeow/sitemap.xml
