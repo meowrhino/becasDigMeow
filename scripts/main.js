@@ -247,17 +247,17 @@ const websRealizadas = [
   {
     nombre: "andrea carilla",
     carpeta: "andreacarilla",
-    link: "andreacarilla.work",
+    link: "https://meowrhino.github.io/andreacarilla/",
     movilPos: "left",
     imgQuantity: 5,
     textoES:
-      "portfolio online y archivo de <a target='_blank' href='https://andreacarilla.work/'>andrea</a>. La página principal se divide en una galería y una nube de links con opciones de filtrado por categorías.",
+      "portfolio online y archivo de <a target='_blank' href='https://meowrhino.github.io/andreacarilla/'>andrea</a>. La página principal se divide en una galería y una nube de links con opciones de filtrado por categorías.",
     textoEN:
-      "<a target='_blank' href='https://andreacarilla.work/'>andrea</a>'s online portfolio and archive. The homepage combines a gallery with a link cloud and category filters.",
+      "<a target='_blank' href='https://meowrhino.github.io/andreacarilla/'>andrea</a>'s online portfolio and archive. The homepage combines a gallery with a link cloud and category filters.",
     textoFR:
-      "portfolio en ligne et archive d'<a target='_blank' href='https://andreacarilla.work/'>andrea</a>. La page d’accueil mêle une galerie et un nuage de liens avec des filtres par catégorie.",
+      "portfolio en ligne et archive d'<a target='_blank' href='https://meowrhino.github.io/andreacarilla/'>andrea</a>. La page d’accueil mêle une galerie et un nuage de liens avec des filtres par catégorie.",
     textoCAT:
-      "portfolio en línia i arxiu de la fotògrafa <a target='_blank' href='https://andreacarilla.work/'>andrea</a>. La portada combina una galeria i un núvol d’enllaços amb filtres per categories.",
+      "portfolio en línia i arxiu de la fotògrafa <a target='_blank' href='https://meowrhino.github.io/andreacarilla/'>andrea</a>. La portada combina una galeria i un núvol d’enllaços amb filtres per categories.",
   },
 
   {
@@ -295,7 +295,7 @@ const websRealizadas = [
   {
     nombre: "mikesx",
     carpeta: "mikesx",
-    link: "https://meowrhino.github.io/mikesx/",
+    link: "https://mikebros.com/",
     movilPos: "left",
     imgQuantity: 5,
     textoES:
@@ -363,13 +363,13 @@ const websRealizadas = [
     movilPos: "left",
     imgQuantity: 4,
     textoES:
-      "página oficial del artista <a target='_blank' href='https://jaumeclotet.com/'>jaumeclotet</a> donde se destacan 6 proyectos de su archivo y una sorpresa cuando has visto todos.",
+      "página oficial del artista <a target='_blank' href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a> donde se destacan 6 proyectos de su archivo y una sorpresa cuando has visto todos.",
     textoEN:
-      "<a target='_blank' href='https://jaumeclotet.com/'>jaumeclotet</a>'s official page, highlighting 6 archive projects and a surprise once you’ve seen them all.",
+      "<a target='_blank' href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a>'s official page, highlighting 6 archive projects and a surprise once you’ve seen them all.",
     textoFR:
-      "page officielle de l’artiste <a target='_blank' href='https://jaumeclotet.com/'>jaumeclotet</a> avec 6 projets mis en avant et une surprise quand tu les as tous vus.",
+      "page officielle de l’artiste <a target='_blank' href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a> avec 6 projets mis en avant et une surprise quand tu les as tous vus.",
     textoCAT:
-      "pàgina oficial de l’artista <a target='_blank' href='https://jaumeclotet.com/'>jaumeclotet</a> amb 6 projectes destacats i una sorpresa quan els hagis vist tots.",
+      "pàgina oficial de l’artista <a target='_blank' href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a> amb 6 projectes destacats i una sorpresa quan els hagis vist tots.",
   },
 
   {
