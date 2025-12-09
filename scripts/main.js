@@ -251,13 +251,13 @@ const websRealizadas = [
     movilPos: "left",
     imgQuantity: 5,
     textoES:
-      "portfolio online y archivo de la fotógrafa <a target='_blank' href='https://meowrhino.github.io/andreacarilla/'>andrea</a>. La página principal se divide en una galería y una nube de links con opciones de filtrado por categorías.",
+      "portfolio online y archivo de <a target='_blank' href='andreacarilla.work'>andrea</a>. La página principal se divide en una galería y una nube de links con opciones de filtrado por categorías.",
     textoEN:
-      "online portfolio and archive of photographer <a target='_blank' href='https://meowrhino.github.io/andreacarilla/'>andrea</a>. The homepage combines a gallery with a link cloud and category filters.",
+      "<a target='_blank' href='andreacarilla.work'>andrea</a>'s online portfolio and archive. The homepage combines a gallery with a link cloud and category filters.",
     textoFR:
-      "portfolio en ligne et archive de la photographe <a target='_blank' href='https://meowrhino.github.io/andreacarilla/'>andrea</a>. La page d’accueil mêle une galerie et un nuage de liens avec des filtres par catégorie.",
+      "portfolio en ligne et archive d'<a target='_blank' href='andreacarilla.work'>andrea</a>. La page d’accueil mêle une galerie et un nuage de liens avec des filtres par catégorie.",
     textoCAT:
-      "portfolio en línia i arxiu de la fotògrafa <a target='_blank' href='https://meowrhino.github.io/andreacarilla/'>andrea</a>. La portada combina una galeria i un núvol d’enllaços amb filtres per categories.",
+      "portfolio en línia i arxiu de la fotògrafa <a target='_blank' href='andreacarilla.work'>andrea</a>. La portada combina una galeria i un núvol d’enllaços amb filtres per categories.",
   },
 
   {
@@ -269,7 +269,7 @@ const websRealizadas = [
     textoES:
       "portfolio de diseño gráfico de <a target='_blank' href='https://mirandaperezhita.com/'>miranda</a>. Se compone de un scroll y menú de navegación responsive con idiomas y colores según proyecto.",
     textoEN:
-      "graphic design portfolio of <a target='_blank' href='https://mirandaperezhita.com/'>miranda</a>. It features a scroll-based layout and a responsive navigation menu with language options and project-specific color themes.",
+      "<a target='_blank' href='https://mirandaperezhita.com/'>miranda</a>'s graphic design portfolio. It features a scroll-based layout and a responsive navigation menu with language options and project-specific color themes.",
     textoFR:
       "portfolio de design graphique de <a target='_blank' href='https://mirandaperezhita.com/'>miranda</a>. Il propose une page à défilement continu et un menu de navigation responsive avec gestion des langues et des couleurs selon le projet.",
     textoCAT:
@@ -299,13 +299,13 @@ const websRealizadas = [
     movilPos: "left",
     imgQuantity: 5,
     textoES:
-      "portfolio temático del diseñador gráfico <a target='_blank' href='https://meowrhino.github.io/mikesx/'>mikesx</a>. La home simula una stack de CD's que se repite infinitamente, cada uno contiene una galería con sus imágenes",
+      "portfolio temático del diseñador gráfico <a target='_blank' href='mikebros.com'>mikesx</a>. La home simula una stack de CD's que se repite infinitamente, cada uno contiene una galería con sus imágenes",
     textoEN:
-      "thematic portfolio of graphic designer <a target='_blank' href='https://meowrhino.github.io/mikesx/'>mikesx</a>. The homepage simulates an infinite stack of CDs, each containing a gallery with his images.",
+      "<a target='_blank' href='mikebros.com'>mikesx</a>'s thematic portfolio. The homepage simulates an infinite stack of CDs, each containing a gallery with his images.",
     textoFR:
-      "portfolio thématique du graphiste <a target='_blank' href='https://meowrhino.github.io/mikesx/'>mikesx</a>. La page d’accueil simule une pile infinie de CD, chacun contenant une galerie avec ses images.",
+      "portfolio thématique du graphiste <a target='_blank' href='mikebros.com'>mikesx</a>. La page d’accueil simule une pile infinie de CD, chacun contenant une galerie avec ses images.",
     textoCAT:
-      "portfolio temàtic del dissenyador gràfic <a target='_blank' href='https://meowrhino.github.io/mikesx/'>mikesx</a>. La portada simula una pila infinita de CD's, cadascun amb una galeria amb les seves imatges.",
+      "portfolio temàtic del dissenyador gràfic <a target='_blank' href='mikebros.com'>mikesx</a>. La portada simula una pila infinita de CD's, cadascun amb una galeria amb les seves imatges.",
   },
 
   {
@@ -363,13 +363,13 @@ const websRealizadas = [
     movilPos: "left",
     imgQuantity: 4,
     textoES:
-      "página oficial del artista <a target='_blank' href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a> donde se destacan 6 proyectos de su archivo y una sorpresa cuando has visto todos.",
+      "página oficial del artista <a target='_blank' href='https://jaumeclotet.com/'>jaumeclotet</a> donde se destacan 6 proyectos de su archivo y una sorpresa cuando has visto todos.",
     textoEN:
-      "official page of artist <a target='_blank' href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a>, highlighting 6 archive projects and a surprise once you’ve seen them all.",
+      "<a target='_blank' href='https://jaumeclotet.com/'>jaumeclotet</a>'s official page, highlighting 6 archive projects and a surprise once you’ve seen them all.",
     textoFR:
-      "page officielle de l’artiste <a target='_blank' href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a> avec 6 projets mis en avant et une surprise quand tu les as tous vus.",
+      "page officielle de l’artiste <a target='_blank' href='https://jaumeclotet.com/'>jaumeclotet</a> avec 6 projets mis en avant et une surprise quand tu les as tous vus.",
     textoCAT:
-      "pàgina oficial de l’artista <a target='_blank' href='https://meowrhino.github.io/jaumeclotet/'>jaumeclotet</a> amb 6 projectes destacats i una sorpresa quan els hagis vist tots.",
+      "pàgina oficial de l’artista <a target='_blank' href='https://jaumeclotet.com/'>jaumeclotet</a> amb 6 projectes destacats i una sorpresa quan els hagis vist tots.",
   },
 
   {
@@ -381,7 +381,7 @@ const websRealizadas = [
     textoES:
       "sitio web de <a target='_blank' href='https://meowrhino.github.io/rikamichie/'>rikamichie</a> donde se combinan todas sus disciplinas en una cruz navegable dividida en 6 pantallas.",
     textoEN:
-      "website of <a target='_blank' href='https://meowrhino.github.io/rikamichie/'>rikamichie</a> combining all her disciplines in a navigable cross split into 6 screens.",
+      " <a target='_blank' href='https://meowrhino.github.io/rikamichie/'>rikamichie</a>'s website where she puts together all her disciplines in a navigable cross split into 6 screens.",
     textoFR:
       "site de <a target='_blank' href='https://meowrhino.github.io/rikamichie/'>rikamichie</a> combinant toutes ses disciplines dans une croix navigable en 6 écrans.",
     textoCAT:
@@ -397,7 +397,7 @@ const websRealizadas = [
     textoES:
       "statement online del colectivo <a target='_blank' href='https://meowrhino.github.io/villagranota/'>villagranota</a> por el código libre, divertido y honesto. Un pequeño estanque digital.",
     textoEN:
-      "online statement of the collective <a target='_blank' href='https://meowrhino.github.io/villagranota/'>villagranota</a> for free, fun and honest code. A small digital pond.",
+      "<a target='_blank' href='https://meowrhino.github.io/villagranota/'>villagranota</a>'s online statement for free, fun and honest code. A small digital pond.",
     textoFR:
       "déclaration en ligne du collectif <a target='_blank' href='https://meowrhino.github.io/villagranota/'>villagranota</a> pour un code libre, ludique et honnête. Un petit étang numérique.",
     textoCAT:
