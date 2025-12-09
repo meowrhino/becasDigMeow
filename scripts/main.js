@@ -251,13 +251,13 @@ const websRealizadas = [
     movilPos: "left",
     imgQuantity: 5,
     textoES:
-      "portfolio online y archivo de <a target='_blank' href='andreacarilla.work'>andrea</a>. La página principal se divide en una galería y una nube de links con opciones de filtrado por categorías.",
+      "portfolio online y archivo de <a target='_blank' href='https://andreacarilla.work/'>andrea</a>. La página principal se divide en una galería y una nube de links con opciones de filtrado por categorías.",
     textoEN:
-      "<a target='_blank' href='andreacarilla.work'>andrea</a>'s online portfolio and archive. The homepage combines a gallery with a link cloud and category filters.",
+      "<a target='_blank' href='https://andreacarilla.work/'>andrea</a>'s online portfolio and archive. The homepage combines a gallery with a link cloud and category filters.",
     textoFR:
-      "portfolio en ligne et archive d'<a target='_blank' href='andreacarilla.work'>andrea</a>. La page d’accueil mêle une galerie et un nuage de liens avec des filtres par catégorie.",
+      "portfolio en ligne et archive d'<a target='_blank' href='https://andreacarilla.work/'>andrea</a>. La page d’accueil mêle une galerie et un nuage de liens avec des filtres par catégorie.",
     textoCAT:
-      "portfolio en línia i arxiu de la fotògrafa <a target='_blank' href='andreacarilla.work'>andrea</a>. La portada combina una galeria i un núvol d’enllaços amb filtres per categories.",
+      "portfolio en línia i arxiu de la fotògrafa <a target='_blank' href='https://andreacarilla.work/'>andrea</a>. La portada combina una galeria i un núvol d’enllaços amb filtres per categories.",
   },
 
   {
@@ -299,13 +299,13 @@ const websRealizadas = [
     movilPos: "left",
     imgQuantity: 5,
     textoES:
-      "portfolio temático del diseñador gráfico <a target='_blank' href='mikebros.com'>mikesx</a>. La home simula una stack de CD's que se repite infinitamente, cada uno contiene una galería con sus imágenes",
+      "portfolio temático del diseñador gráfico <a target='_blank' href='https://mikebros.com/'>mikesx</a>. La home simula una stack de CD's que se repite infinitamente, cada uno contiene una galería con sus imágenes",
     textoEN:
-      "<a target='_blank' href='mikebros.com'>mikesx</a>'s thematic portfolio. The homepage simulates an infinite stack of CDs, each containing a gallery with his images.",
+      "<a target='_blank' href='https://mikebros.com/'>mikesx</a>'s thematic portfolio. The homepage simulates an infinite stack of CDs, each containing a gallery with his images.",
     textoFR:
-      "portfolio thématique du graphiste <a target='_blank' href='mikebros.com'>mikesx</a>. La page d’accueil simule une pile infinie de CD, chacun contenant une galerie avec ses images.",
+      "portfolio thématique du graphiste <a target='_blank' href='https://mikebros.com/'>mikesx</a>. La page d’accueil simule une pile infinie de CD, chacun contenant une galerie avec ses images.",
     textoCAT:
-      "portfolio temàtic del dissenyador gràfic <a target='_blank' href='mikebros.com'>mikesx</a>. La portada simula una pila infinita de CD's, cadascun amb una galeria amb les seves imatges.",
+      "portfolio temàtic del dissenyador gràfic <a target='_blank' href='https://mikebros.com/'>mikesx</a>. La portada simula una pila infinita de CD's, cadascun amb una galeria amb les seves imatges.",
   },
 
   {
