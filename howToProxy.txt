@@ -1,0 +1,122 @@
+# Proxy / Analytics for GitHub Pages + Cloudflare
+
+This file explains two ways to get traffic analytics for a GitHub Pages site using Cloudflare:
+
+A) Cloudflare Web Analytics (NO proxy) — recommended
+B) Cloudflare Proxy (orange cloud) — only AFTER GitHub HTTPS is stable
+
+
+──────────────────────────────────────────────────────────────────────────────
+A) Cloudflare Web Analytics (NO proxy) — recommended
+──────────────────────────────────────────────────────────────────────────────
+
+Goal:
+- Keep DNS as “DNS only” (grey cloud) for @ and www
+- Still get analytics via a small script in your HTML
+
+1) Cloudflare: create Web Analytics site
+   - Cloudflare → your domain → Analytics & Logs → Web Analytics
+   - “Create site / Add site”
+   - Domain: your root domain (e.g. meowrhino.studio)
+   - If available, also add www (www.meowrhino.studio)
+
+2) Copy the snippet Cloudflare gives you
+   It looks like:
+   <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+           data-cf-beacon='{"token":"XXXX"}'></script>
+
+3) Paste snippet into your website <head>
+   Case 1 — pure static HTML:
+     - Open index.html
+     - Paste snippet just before </head>
+     - Commit + push
+
+   Case 2 — Jekyll (you have _layouts or _includes):
+     - Paste snippet in:
+       _layouts/default.html   (before </head>)
+       OR
+       _includes/head.html     (before </head>)
+     - Commit + push
+
+4) Verify
+   - Open your site in a new tab, refresh a couple times
+   - Cloudflare → Web Analytics: data should start appearing (can take a bit to populate)
+
+Notes:
+- This does NOT require orange cloud
+- It does NOT affect GitHub Pages HTTPS
+
+
+──────────────────────────────────────────────────────────────────────────────
+B) Proxy (orange cloud) — Cloudflare “network” analytics
+──────────────────────────────────────────────────────────────────────────────
+
+Important:
+- Do this ONLY after GitHub Pages has issued the certificate and “Enforce HTTPS”
+  is available/working for your custom domain.
+
+1) Start by proxying ONLY www (safer)
+   Cloudflare → DNS:
+   - Keep @ A-records as DNS only (grey)
+   - Turn the www CNAME to “Proxied” (orange)
+
+2) Cloudflare SSL/TLS settings
+   Cloudflare → SSL/TLS:
+   - Encryption mode: Full (strict)
+
+3) Test
+   - Visit https://www.yourdomain.com
+   - If OK, you can optionally proxy @ too (more aggressive). Start with www first.
+
+4) Common problems and fixes
+   - ERR_TOO_MANY_REDIRECTS:
+       Usually caused by double redirects (Cloudflare + GitHub).
+       Fix: disable “Always Use HTTPS” in Cloudflare temporarily, remove extra redirect rules.
+
+   - 525 / 526 SSL errors:
+       SSL mode mismatch. Ensure “Full (strict)”.
+       If still failing, revert to DNS only (grey) until origin HTTPS is clean.
+
+   - GitHub can’t issue cert / Enforce HTTPS unavailable:
+       Often caused by:
+         * AAAA records for @ or www (remove them)
+         * CAA records blocking Let’s Encrypt (remove or allow letsencrypt.org)
+         * Wrong/missing www CNAME, or duplicate DNS records for www
+
+
+──────────────────────────────────────────────────────────────────────────────
+DNS “minimum” for GitHub Pages (reference)
+──────────────────────────────────────────────────────────────────────────────
+
+For the root domain (@):
+- A @ → 185.199.108.153   (DNS only)
+- A @ → 185.199.109.153   (DNS only)
+- A @ → 185.199.110.153   (DNS only)
+- A @ → 185.199.111.153   (DNS only)
+
+For www:
+- CNAME www → <youruser>.github.io   (DNS only while setting up HTTPS)
+
+Avoid:
+- Any AAAA for @ or www (unless specifically set to GitHub Pages IPv6)
+- Any extra A/AAAA/CNAME duplicates for www
+- CAA records that do not allow letsencrypt.org
+
+
+End of file.
+
+
+──────────────────────────────────────────────────────────────────────────────
+Privacy/Legal text (ES) — para Politica de privacidad
+──────────────────────────────────────────────────────────────────────────────
+
+Instrucciones:
+- Sustituye los corchetes con tus datos (responsable del sitio y email de contacto).
+- Si usas la ruta A y no la B, usa solo el bloque A. Si activas el proxy (ruta B), añade tambien ese bloque.
+- Enlaza la politica de Cloudflare: https://www.cloudflare.com/privacypolicy/ y su pagina de Web Analytics: https://www.cloudflare.com/web-analytics/
+
+Bloque ruta A — Cloudflare Web Analytics (sin cookies):
+"Analitica: usamos Cloudflare Web Analytics sin cookies para medir visitas de forma agregada. Cloudflare recibe datos tecnicos como IP truncada, agente de usuario, URL visitada y referer. Finalidad: conocer el uso del sitio y mejorarlo; no realizamos perfilado ni vendemos datos. Base juridica: interes legitimo en analizar el uso del sitio. Proveedor: Cloudflare, Inc.; ver su politica en https://www.cloudflare.com/privacypolicy/ y su Web Analytics en https://www.cloudflare.com/web-analytics/. Si quieres oponerte a esta medicion, escribe a [tu email de contacto]."
+
+Bloque ruta B — Cloudflare Proxy/CDN (nube naranja):
+"CDN/seguridad: el trafico del sitio se enruta a traves de Cloudflare como proveedor de CDN y proteccion. Cloudflare procesa las solicitudes y puede ver IP, cabeceras, URL y (si no hay cifrado extremo a extremo) el contenido de las peticiones. Finalidad: entregar el sitio mas rapido, cachear contenido y mitigar ataques. Base juridica: interes legitimo en proteger y operar el servicio. Proveedor: Cloudflare, Inc.; ver su politica en https://www.cloudflare.com/privacypolicy/. Esto puede implicar transferencias internacionales de datos segun la ubicacion de sus centros. Contacto del responsable: [tu nombre o razon social] — [tu email de contacto]."
