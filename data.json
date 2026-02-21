@@ -1,0 +1,353 @@
+{
+  "es": {
+    "welcome": {
+      "titulo": "meowrhino studio"
+    },
+    "tools": [
+      {
+        "name": "conversores",
+        "items": [
+          { "name": "imgToWeb", "url": "https://meowrhino.github.io/imgToWeb/", "status": "finished" },
+          { "name": "videoToWeb", "url": "https://meowrhino.github.io/videoToWeb/", "status": "beta" }
+        ]
+      },
+      {
+        "name": "herramientas web",
+        "items": [
+          { "name": "colorfun", "url": "https://meowrhino.github.io/colorFun/", "status": "finished" }
+        ],
+        "dropdowns": [
+          {
+            "name": "formateadores",
+            "items": [
+              { "name": "paula", "url": "https://meowrhino.github.io/paulabarjau/formateador.html", "status": "finished" },
+              { "name": "miranda", "url": "https://meowrhino.github.io/mirandaperezhita/formateador.html", "status": "finished" },
+              { "name": "andrea", "url": "https://meowrhino.github.io/andreacarilla/formateador.html", "status": "finished" },
+              { "name": "jaume", "url": "https://meowrhino.github.io/jaumeclotet/formateador.html", "status": "finished" }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "autónomos",
+        "items": [
+          { "name": "calculadora impuestos", "url": "https://meowrhino.github.io/calculadoraInversa/", "status": "finished" },
+          { "name": "generador facturas", "url": "https://meowrhino.github.io/generadorFacturas/", "status": "finished" }
+        ],
+        "dropdowns": [
+          {
+            "name": "wip",
+            "items": [
+              { "name": "apuntes autónomos", "url": "https://meowrhino.github.io/faqAutonomos/", "status": "wip" },
+              { "name": "calculador hacienda", "url": "https://meowrhino.github.io/taxrhino/", "status": "wip" }
+            ]
+          }
+        ]
+      }
+    ],
+    "statement": {
+      "lineas": [
+        "meowrhino studio es un estudio de diseño web basado en Barcelona",
+        "hacemos webs porque queremos conseguir un internet más común, cercano y divertido",
+        "capacitamos al cliente para el mantenimiento de su proyecto",
+        "buscamos un vínculo distinto con nuestros espacios digitales",
+        "trabajamos con código abierto",
+        "evitamos las cuotas de mantenimiento"
+      ]
+    },
+    "metodologia": {
+      "pasos": [
+        {
+          "semana": "semana 0",
+          "titulo": "puesta en contacto",
+          "descripcion": "se estima una estructura de web\ny una línea estética\nse elabora un presupuesto"
+        },
+        {
+          "semana": "semana 1",
+          "titulo": "reunión presencial",
+          "descripcion": "puesta en común de referentes e ideas\nelaboración de un concepto con cliente\nse planea, prepara y decide\nla forma y el contenido de la web\n(primera propuesta de diseño)."
+        },
+        {
+          "semana": "semana 2",
+          "titulo": "cierre de diseño",
+          "descripcion": "revisión de diseño\nprimer pago"
+        },
+        {
+          "semana": "semana 3",
+          "titulo": "reunión presencial",
+          "descripcion": "preparación del ordenador\npara la actualización de la web"
+        },
+        {
+          "semana": "semana 4",
+          "titulo": "cierre del proyecto",
+          "descripcion": "se da por testeada la web\ncualquier cambio se deberá abonar"
+        }
+      ]
+    },
+    "pricing": {
+      "rango": "425 – 600 €",
+      "nota": "sin IVA · precio según complejidad y capacidad de pago",
+      "incluye": [
+        "3 reuniones presenciales de máximo 2 horas",
+        "diseño web personalizado",
+        "elaboración y entrega de código",
+        "sesión formativa de mantenimiento"
+      ]
+    },
+    "politicas": {
+      "parrafos": [
+        "los pagos se dividen en dos mitades: la primera al cerrar el diseño, la segunda al finalizar la programación. no hay cuotas ni suscripciones.",
+        "tras la entrega, el cliente dispone de 10 días hábiles para revisiones incluidas. pasado ese plazo, cualquier cambio se cobra por hora de trabajo.",
+        "no aceptamos proyectos que contradigan nuestros valores: internet abierto, accesible y sin dependencias de plataformas de pago."
+      ]
+    },
+    "portfolio": {
+      "proyectos": [
+        { "nombre": "rikamichie", "imagen": "img/rikamichie.png", "url": "https://rikamichie.com" },
+        { "nombre": "andrea carilla", "imagen": "img/andreacarilla.png", "url": "https://andreacarilla.work" },
+        { "nombre": "conor", "imagen": "img/conor.png", "url": "https://meowrhino.github.io/conor/" },
+        { "nombre": "mike bros", "imagen": "img/mikebros.png", "url": "https://mikebros.com" },
+        { "nombre": "diego san marcos", "imagen": "img/diegosanmarcos.png", "url": "https://meowrhino.github.io/diegosanmarcos/" },
+        { "nombre": "miranda", "imagen": "img/miranda.png", "url": "https://mirandaperezhita.com" },
+        { "nombre": "berta esteve", "imagen": "img/bertaesteve.png", "url": "https://bertaesteve.cat" },
+        { "nombre": "paula barjau", "imagen": "img/paulabarjau.png", "url": "https://meowrhino.github.io/paulabarjau/" },
+        { "nombre": "jaume clotet", "imagen": "img/jaumeclotet.png", "url": "https://jaumeclotet.com" },
+        { "nombre": "el mundo de las jordis", "imagen": "img/elmundodelasjordis.png", "url": "https://elmundodelasjordis.com" }
+      ]
+    }
+  },
+  "en": {
+    "welcome": {
+      "titulo": "meowrhino studio"
+    },
+    "tools": [
+      {
+        "name": "converters",
+        "items": [
+          { "name": "imgToWeb", "url": "https://meowrhino.github.io/imgToWeb/", "status": "finished" },
+          { "name": "videoToWeb", "url": "https://meowrhino.github.io/videoToWeb/", "status": "beta" }
+        ]
+      },
+      {
+        "name": "web tools",
+        "items": [
+          { "name": "colorfun", "url": "https://meowrhino.github.io/colorFun/", "status": "finished" }
+        ],
+        "dropdowns": [
+          {
+            "name": "formatters",
+            "items": [
+              { "name": "paula", "url": "https://meowrhino.github.io/paulabarjau/formateador.html", "status": "finished" },
+              { "name": "miranda", "url": "https://meowrhino.github.io/mirandaperezhita/formateador.html", "status": "finished" },
+              { "name": "andrea", "url": "https://meowrhino.github.io/andreacarilla/formateador.html", "status": "finished" },
+              { "name": "jaume", "url": "https://meowrhino.github.io/jaumeclotet/formateador.html", "status": "finished" }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "freelance",
+        "items": [
+          { "name": "tax calculator", "url": "https://meowrhino.github.io/calculadoraInversa/", "status": "finished" },
+          { "name": "invoice generator", "url": "https://meowrhino.github.io/generadorFacturas/", "status": "finished" }
+        ],
+        "dropdowns": [
+          {
+            "name": "wip",
+            "items": [
+              { "name": "freelance notes", "url": "https://meowrhino.github.io/faqAutonomos/", "status": "wip" },
+              { "name": "tax calculator v2", "url": "https://meowrhino.github.io/taxrhino/", "status": "wip" }
+            ]
+          }
+        ]
+      }
+    ],
+    "statement": {
+      "lineas": [
+        "meowrhino studio is a web design studio based in Barcelona",
+        "we make websites because we want a more human, closer, and fun internet",
+        "we empower clients to maintain their own projects",
+        "we look for a different relationship with our digital spaces",
+        "we work with open source",
+        "we avoid maintenance fees"
+      ]
+    },
+    "metodologia": {
+      "pasos": [
+        {
+          "semana": "week 0",
+          "titulo": "first contact",
+          "descripcion": "we estimate the web structure\nand an aesthetic direction\na budget is drafted"
+        },
+        {
+          "semana": "week 1",
+          "titulo": "in-person meeting",
+          "descripcion": "sharing references and ideas\ncrafting a concept together\nplanning, preparing and deciding\nthe form and content of the web\n(first design proposal)."
+        },
+        {
+          "semana": "week 2",
+          "titulo": "design sign-off",
+          "descripcion": "design review\nfirst payment"
+        },
+        {
+          "semana": "week 3",
+          "titulo": "in-person meeting",
+          "descripcion": "setting up the computer\nfor web updates"
+        },
+        {
+          "semana": "week 4",
+          "titulo": "project closure",
+          "descripcion": "web is considered tested\nany further changes will be billed"
+        }
+      ]
+    },
+    "pricing": {
+      "rango": "425 – 600 €",
+      "nota": "excl. VAT · price based on complexity and client budget",
+      "incluye": [
+        "3 in-person meetings, up to 2 hours each",
+        "custom web design",
+        "code development and delivery",
+        "maintenance training session"
+      ]
+    },
+    "politicas": {
+      "parrafos": [
+        "payments are split in two: the first half when design is signed off, the second when development is complete. no subscriptions, no monthly fees.",
+        "after delivery, the client has 10 working days for included revisions. after that period, any change is billed by the hour.",
+        "we don't take on projects that go against our values: an open, accessible web free from paid platform dependencies."
+      ]
+    },
+    "portfolio": {
+      "proyectos": [
+        { "nombre": "rikamichie", "imagen": "img/rikamichie.png", "url": "https://rikamichie.com" },
+        { "nombre": "andrea carilla", "imagen": "img/andreacarilla.png", "url": "https://andreacarilla.work" },
+        { "nombre": "conor", "imagen": "img/conor.png", "url": "https://meowrhino.github.io/conor/" },
+        { "nombre": "mike bros", "imagen": "img/mikebros.png", "url": "https://mikebros.com" },
+        { "nombre": "diego san marcos", "imagen": "img/diegosanmarcos.png", "url": "https://meowrhino.github.io/diegosanmarcos/" },
+        { "nombre": "miranda", "imagen": "img/miranda.png", "url": "https://mirandaperezhita.com" },
+        { "nombre": "berta esteve", "imagen": "img/bertaesteve.png", "url": "https://bertaesteve.cat" },
+        { "nombre": "paula barjau", "imagen": "img/paulabarjau.png", "url": "https://meowrhino.github.io/paulabarjau/" },
+        { "nombre": "jaume clotet", "imagen": "img/jaumeclotet.png", "url": "https://jaumeclotet.com" },
+        { "nombre": "el mundo de las jordis", "imagen": "img/elmundodelasjordis.png", "url": "https://elmundodelasjordis.com" }
+      ]
+    }
+  },
+  "cat": {
+    "welcome": {
+      "titulo": "meowrhino studio"
+    },
+    "tools": [
+      {
+        "name": "conversors",
+        "items": [
+          { "name": "imgToWeb", "url": "https://meowrhino.github.io/imgToWeb/", "status": "finished" },
+          { "name": "videoToWeb", "url": "https://meowrhino.github.io/videoToWeb/", "status": "beta" }
+        ]
+      },
+      {
+        "name": "eines web",
+        "items": [
+          { "name": "colorfun", "url": "https://meowrhino.github.io/colorFun/", "status": "finished" }
+        ],
+        "dropdowns": [
+          {
+            "name": "formateadors",
+            "items": [
+              { "name": "paula", "url": "https://meowrhino.github.io/paulabarjau/formateador.html", "status": "finished" },
+              { "name": "miranda", "url": "https://meowrhino.github.io/mirandaperezhita/formateador.html", "status": "finished" },
+              { "name": "andrea", "url": "https://meowrhino.github.io/andreacarilla/formateador.html", "status": "finished" },
+              { "name": "jaume", "url": "https://meowrhino.github.io/jaumeclotet/formateador.html", "status": "finished" }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "autònoms",
+        "items": [
+          { "name": "calculadora impostos", "url": "https://meowrhino.github.io/calculadoraInversa/", "status": "finished" },
+          { "name": "generador factures", "url": "https://meowrhino.github.io/generadorFacturas/", "status": "finished" }
+        ],
+        "dropdowns": [
+          {
+            "name": "wip",
+            "items": [
+              { "name": "apunts autònoms", "url": "https://meowrhino.github.io/faqAutonomos/", "status": "wip" },
+              { "name": "calculador hisenda", "url": "https://meowrhino.github.io/taxrhino/", "status": "wip" }
+            ]
+          }
+        ]
+      }
+    ],
+    "statement": {
+      "lineas": [
+        "meowrhino studio és un estudi de disseny web basat a Barcelona",
+        "fem webs perquè volem un internet més comú, proper i divertit",
+        "capacitem el client per al manteniment del seu projecte",
+        "busquem un vincle diferent amb els nostres espais digitals",
+        "treballem amb codi obert",
+        "evitem les quotes de manteniment"
+      ]
+    },
+    "metodologia": {
+      "pasos": [
+        {
+          "semana": "setmana 0",
+          "titulo": "presa de contacte",
+          "descripcion": "s'estima una estructura de web\ni una línia estètica\ns'elabora un pressupost"
+        },
+        {
+          "semana": "setmana 1",
+          "titulo": "reunió presencial",
+          "descripcion": "posada en comú de referents i idees\nelaboració d'un concepte amb el client\nes planeja, prepara i decideix\nla forma i el contingut de la web\n(primera proposta de disseny)."
+        },
+        {
+          "semana": "setmana 2",
+          "titulo": "tancament de disseny",
+          "descripcion": "revisió de disseny\nprimer pagament"
+        },
+        {
+          "semana": "setmana 3",
+          "titulo": "reunió presencial",
+          "descripcion": "preparació de l'ordinador\nper a l'actualització de la web"
+        },
+        {
+          "semana": "setmana 4",
+          "titulo": "tancament del projecte",
+          "descripcion": "la web es dona per testada\nqualsevol canvi s'haurà d'abonar"
+        }
+      ]
+    },
+    "pricing": {
+      "rango": "425 – 600 €",
+      "nota": "sense IVA · preu segons complexitat i capacitat de pagament",
+      "incluye": [
+        "3 reunions presencials de màxim 2 hores",
+        "disseny web personalitzat",
+        "elaboració i entrega de codi",
+        "sessió formativa de manteniment"
+      ]
+    },
+    "politicas": {
+      "parrafos": [
+        "els pagaments es divideixen en dues meitats: la primera en tancar el disseny, la segona en finalitzar la programació. sense quotes ni subscripcions.",
+        "després de l'entrega, el client disposa de 10 dies hàbils per a revisions incloses. passat aquest termini, qualsevol canvi es cobra per hora de treball.",
+        "no acceptem projectes que contradiguin els nostres valors: internet obert, accessible i sense dependències de plataformes de pagament."
+      ]
+    },
+    "portfolio": {
+      "proyectos": [
+        { "nombre": "rikamichie", "imagen": "img/rikamichie.png", "url": "https://rikamichie.com" },
+        { "nombre": "andrea carilla", "imagen": "img/andreacarilla.png", "url": "https://andreacarilla.work" },
+        { "nombre": "conor", "imagen": "img/conor.png", "url": "https://meowrhino.github.io/conor/" },
+        { "nombre": "mike bros", "imagen": "img/mikebros.png", "url": "https://mikebros.com" },
+        { "nombre": "diego san marcos", "imagen": "img/diegosanmarcos.png", "url": "https://meowrhino.github.io/diegosanmarcos/" },
+        { "nombre": "miranda", "imagen": "img/miranda.png", "url": "https://mirandaperezhita.com" },
+        { "nombre": "berta esteve", "imagen": "img/bertaesteve.png", "url": "https://bertaesteve.cat" },
+        { "nombre": "paula barjau", "imagen": "img/paulabarjau.png", "url": "https://meowrhino.github.io/paulabarjau/" },
+        { "nombre": "jaume clotet", "imagen": "img/jaumeclotet.png", "url": "https://jaumeclotet.com" },
+        { "nombre": "el mundo de las jordis", "imagen": "img/elmundodelasjordis.png", "url": "https://elmundodelasjordis.com" }
+      ]
+    }
+  }
+}

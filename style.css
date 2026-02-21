@@ -1,0 +1,747 @@
+@import url("https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700&display=swap");
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  font-family: "Inknut Antiqua", serif;
+  font-weight: 400;
+  line-height: 1.3;
+  background: #ffffff;
+  color: #000000;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+p, h1, h2, h3 {
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================================
+   CONTAINER
+   ============================================ */
+
+#content {
+  position: relative;
+  width: 100dvw;
+  height: 100dvh;
+}
+
+/* ============================================
+   CELDAS (PAGES)
+   ============================================ */
+
+.celda {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 10dvh 10dvw;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  color: #000000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.celda.activa {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ============================================
+   ZONE LABEL (large background text)
+   ============================================ */
+
+.zone-label-bg {
+  position: fixed;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Inknut Antiqua", serif;
+  font-size: clamp(5rem, 18dvw, 16rem);
+  font-weight: 300;
+  color: rgba(0, 0, 0, 0.055);
+  text-transform: lowercase;
+  letter-spacing: -0.03em;
+  pointer-events: none;
+  z-index: 1;
+  white-space: nowrap;
+  user-select: none;
+  transition: opacity 0.6s ease;
+  line-height: 1;
+}
+
+/* ============================================
+   TOP-RIGHT HEADER (minimap inline)
+   ============================================ */
+
+.header-topright {
+  position: fixed;
+  top: 3dvh;
+  right: 3dvw;
+  z-index: 100;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.minimap-inline {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 3px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.minimap-inline:hover {
+  opacity: 1;
+}
+
+.minimap-inline-cell {
+  background: #d0d0d0;
+  transition: background 0.2s ease;
+}
+
+.minimap-inline-cell.activa {
+  background: #000;
+}
+
+.minimap-inline-cell.invisible {
+  visibility: hidden;
+}
+
+/* ============================================
+   EXPANDED MINIMAP (overlay)
+   ============================================ */
+
+.minimap-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  height: 100dvh;
+  background: rgba(255, 255, 255, 0.97);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.minimap-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.minimap-expanded {
+  display: grid;
+  gap: 12px;
+}
+
+.minimap-expanded-cell {
+  background: #c0c0c0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  font-family: "Inknut Antiqua", serif;
+  font-size: clamp(0.5rem, 1dvw, 0.85rem);
+  color: #ffffff;
+  transition: background 0.3s ease, transform 0.3s ease;
+  text-transform: lowercase;
+}
+
+.minimap-expanded-cell:hover {
+  transform: scale(1.06);
+  background: #555;
+}
+
+.minimap-expanded-cell.activa {
+  background: #000000;
+}
+
+.minimap-expanded-cell.invisible {
+  visibility: hidden;
+}
+
+/* ============================================
+   NAVIGATION LABELS (side text)
+   ============================================ */
+
+.nav-label {
+  position: absolute;
+  font-size: clamp(0.7rem, 1dvw, 1rem);
+  color: #999;
+  cursor: pointer;
+  z-index: 10;
+  transition: color 0.3s ease;
+  font-family: "Inknut Antiqua", serif;
+  letter-spacing: 0.05em;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.nav-label:hover {
+  color: #000;
+}
+
+.nav-label.left {
+  left: 3dvw;
+  top: 50%;
+  writing-mode: vertical-rl;
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.nav-label.right {
+  right: 3dvw;
+  top: 50%;
+  writing-mode: vertical-rl;
+  transform: translateY(-50%);
+}
+
+.nav-label.top {
+  top: 3dvh;
+  left: 50%;
+  transform: translateX(-50%) rotate(180deg);
+}
+
+.nav-label.bottom {
+  bottom: 3dvh;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ============================================
+   PAGE: WELCOME
+   ============================================ */
+
+.celda.welcome {
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 0 10dvw;
+  background-color: transparent;
+}
+
+.welcome-content {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome-title {
+  position: fixed;
+  top: 18dvh;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(1.6rem, 3.5dvw, 3rem);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.welcome-tools {
+  width: 70vw;
+  width: 70dvw;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Link button — tarjeta como en el linktree */
+.tool-link {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 4px;
+  padding: 0.4rem 1rem;
+  font-family: "Inknut Antiqua", serif;
+  font-size: clamp(0.7rem, 0.95dvw, 0.9rem);
+  font-weight: 600;
+  color: #000;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  position: relative;
+}
+
+.tool-link:hover {
+  border-color: rgba(0,0,0,0.35);
+  background: #f7f7f7;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+.tool-link:active {
+  transform: translateY(0);
+}
+
+/* Dropdown — mismo tamaño exacto que tool-link */
+.tools-dropdown-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+
+.tools-dropdown-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 4px;
+  padding: 0.4rem 1rem;
+  font-family: "Inknut Antiqua", serif;
+  font-size: clamp(0.7rem, 0.95dvw, 0.9rem);
+  font-weight: 600;
+  color: #000;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.tools-dropdown-btn:hover {
+  border-color: rgba(0,0,0,0.35);
+  background: #f7f7f7;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+.tools-dropdown-btn.active {
+  border-color: rgba(0,0,0,0.35);
+  background: #f7f7f7;
+}
+
+.tools-dropdown-icon {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+
+.tools-dropdown-btn.active .tools-dropdown-icon {
+  transform: rotate(180deg);
+}
+
+/* Contenido desplegable */
+.tools-dropdown-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+  overflow: hidden;
+  width: 100%;
+  background: #ffffff;
+}
+
+.tools-dropdown-content.open {
+  grid-template-rows: 1fr;
+}
+
+.tools-dropdown-inner {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0;
+  transition: margin-top 0.2s ease;
+}
+
+.tools-dropdown-content.open .tools-dropdown-inner {
+  margin-top: 0.5rem;
+}
+
+/* ============================================
+   PAGE: PORTFOLIO — screenshots flotando
+   ============================================ */
+
+.celda.portfolio {
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+.portfolio-clouds-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Cada item es la screenshot flotando directamente */
+.portfolio-cloud-item {
+  position: absolute;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-timing-function: linear;
+}
+
+.portfolio-cloud-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.portfolio-cloud-item:hover img {
+  opacity: 0.88;
+}
+
+.portfolio-cloud-item .pcloud-name {
+  position: absolute;
+  bottom: -1.4em;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(0.5rem, 0.7dvw, 0.65rem);
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  color: #999;
+  letter-spacing: 0.04em;
+}
+
+.portfolio-cloud-item:hover .pcloud-name {
+  opacity: 1;
+}
+
+/* Portfolio: grid mode */
+.portfolio-grid-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10dvh 10dvw;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.portfolio-grid-container.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(8px, 1.2dvw, 16px);
+  width: 100%;
+  max-width: 1100px;
+}
+
+.portfolio-item {
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  display: block;
+  border-radius: 4px;
+}
+
+.portfolio-item:hover {
+  transform: translateY(-3px);
+}
+
+.portfolio-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Switch button */
+.portfolio-switch {
+  position: absolute;
+  bottom: 3dvh;
+  right: 3dvw;
+  z-index: 10;
+  font-family: "Inknut Antiqua", serif;
+  font-size: clamp(0.6rem, 0.85dvw, 0.8rem);
+  color: #999;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 0.4em 0.8em;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  letter-spacing: 0.05em;
+  border-radius: 4px;
+}
+
+.portfolio-switch:hover {
+  color: #000;
+  border-color: #000;
+}
+
+/* Float animations — cielo nublado, movimiento horizontal de izquierda a derecha
+   con deriva vertical leve y rotación mínima, como nubes reales */
+@keyframes pcloud1 {
+  from { transform: translateX(0px)   translateY(0px)   rotate(-0.3deg); }
+  to   { transform: translateX(120px) translateY(-8px)  rotate( 0.4deg); }
+}
+@keyframes pcloud2 {
+  from { transform: translateX(0px)   translateY(0px)   rotate( 0.5deg); }
+  to   { transform: translateX(90px)  translateY( 6px)  rotate(-0.3deg); }
+}
+@keyframes pcloud3 {
+  from { transform: translateX(0px)   translateY(0px)   rotate(-0.2deg); }
+  to   { transform: translateX(150px) translateY(-4px)  rotate( 0.6deg); }
+}
+@keyframes pcloud4 {
+  from { transform: translateX(0px)   translateY(0px)   rotate( 0.4deg); }
+  to   { transform: translateX(70px)  translateY( 10px) rotate(-0.5deg); }
+}
+@keyframes pcloud5 {
+  from { transform: translateX(0px)   translateY(0px)   rotate(-0.6deg); }
+  to   { transform: translateX(110px) translateY( 4px)  rotate( 0.2deg); }
+}
+@keyframes pcloud6 {
+  from { transform: translateX(0px)   translateY(0px)   rotate( 0.3deg); }
+  to   { transform: translateX(80px)  translateY(-12px) rotate(-0.4deg); }
+}
+
+@media (max-width: 1024px) {
+  .portfolio-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .portfolio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ============================================
+   PAGE: STATEMENT
+   ============================================ */
+
+.statement-content {
+  text-align: center;
+  max-width: 800px;
+  line-height: 1.6;
+  font-size: clamp(0.85rem, 1.2dvw, 1.15rem);
+}
+
+.statement-content p {
+  margin-bottom: 0.5em;
+}
+
+/* ============================================
+   PAGE: METODOLOGIA (zigzag)
+   ============================================ */
+
+.metodologia-content {
+  width: 100%;
+  max-width: 1000px;
+}
+
+.metodo-zigzag {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: auto auto auto;
+  gap: 0;
+  align-items: start;
+}
+
+.metodo-paso {
+  text-align: center;
+  overflow: visible;
+}
+
+.metodo-paso .metodo-semana {
+  display: none;
+}
+
+.metodo-paso h3 {
+  font-size: clamp(0.75rem, 1dvw, 1rem);
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+
+.metodo-paso p {
+  font-size: clamp(0.6rem, 0.8dvw, 0.82rem);
+  color: #444;
+  line-height: 1.6;
+}
+
+.metodo-timeline-bar {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding-top: 3dvh;
+  margin-top: 2dvh;
+}
+
+.metodo-timeline-bar span {
+  font-size: clamp(0.6rem, 0.75dvw, 0.78rem);
+  font-weight: 700;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .celda.metodologia {
+    padding: 12dvh 8dvw;
+  }
+
+  .metodo-zigzag {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5dvh;
+  }
+
+  .metodo-paso {
+    text-align: center;
+    padding-left: 2em;
+    position: relative;
+    width: 75%;
+    max-width: 320px;
+  }
+
+  .metodo-paso .metodo-semana {
+    display: block;
+    font-size: clamp(0.55rem, 2dvw, 0.7rem);
+    font-weight: 700;
+    white-space: nowrap;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: rotate(90deg);
+    transform-origin: top left;
+  }
+
+  .metodo-timeline-bar {
+    display: none;
+  }
+}
+
+/* ============================================
+   PAGE: PRICING
+   ============================================ */
+
+.pricing-content {
+  text-align: center;
+  max-width: 680px;
+  line-height: 1.6;
+}
+
+.pricing-content .precio-rango {
+  font-size: clamp(1.4rem, 2.5dvw, 2.4rem);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.4em;
+}
+
+.pricing-content .precio-nota {
+  font-size: clamp(0.65rem, 0.85dvw, 0.8rem);
+  color: #999;
+  margin-bottom: 2.5em;
+  line-height: 1.8;
+}
+
+.pricing-content .incluye-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pricing-content .incluye-item {
+  font-size: clamp(0.75rem, 1dvw, 0.95rem);
+  margin-bottom: 0.5em;
+  color: #333;
+}
+
+.pricing-content .incluye-item::before {
+  content: "·";
+  margin-right: 0.6em;
+  color: #999;
+}
+
+/* ============================================
+   PAGE: POLITICAS
+   ============================================ */
+
+.politicas-content {
+  text-align: center;
+  max-width: 720px;
+  line-height: 1.9;
+  font-size: clamp(0.8rem, 1.05dvw, 1rem);
+}
+
+.politicas-content p {
+  margin-bottom: 2em;
+  color: #333;
+}
+
+.politicas-content p:last-child {
+  margin-bottom: 0;
+  color: #888;
+  font-size: 0.88em;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .nav-label {
+    font-size: clamp(0.6rem, 2.5dvw, 0.8rem);
+  }
+}
