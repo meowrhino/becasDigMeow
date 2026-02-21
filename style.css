@@ -53,7 +53,7 @@ p, h1, h2, h3 {
   margin: 0;
   padding: 10dvh 10dvw;
   box-sizing: border-box;
-  background-color: #ffffff;
+  background-color: transparent;
   color: #000000;
   opacity: 0;
   pointer-events: none;
@@ -274,6 +274,8 @@ p, h1, h2, h3 {
 }
 
 .welcome-tools {
+  position: relative;
+  z-index: 3;
   width: 70vw;
   width: 70dvw;
   max-width: 800px;
@@ -412,13 +414,22 @@ p, h1, h2, h3 {
   overflow: hidden;
 }
 
+/* Capa horizontal (WAAPI) */
+.portfolio-cloud-track {
+  position: absolute;
+  will-change: transform;
+}
+
 /* Cada item es la screenshot flotando directamente */
 .portfolio-cloud-item {
-  position: absolute;
+  position: relative;
+  width: 100%;
+  height: 100%;
   cursor: pointer;
   text-decoration: none;
   color: inherit;
   display: block;
+  will-change: transform;
   animation-iteration-count: infinite;
   animation-direction: normal;
   animation-timing-function: linear;
@@ -509,50 +520,49 @@ p, h1, h2, h3 {
 .portfolio-switch {
   position: absolute;
   bottom: 3dvh;
-  right: 3dvw;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 10;
   font-family: "Inknut Antiqua", serif;
-  font-size: clamp(0.6rem, 0.85dvw, 0.8rem);
+  font-size: clamp(0.7rem, 1dvw, 1rem);
   color: #999;
-  background: #fff;
-  border: 1px solid #ccc;
-  padding: 0.4em 0.8em;
+  background: none;
+  border: none;
+  padding: 0;
   cursor: pointer;
-  transition: color 0.2s, border-color 0.2s;
+  transition: color 0.3s ease;
   letter-spacing: 0.05em;
-  border-radius: 4px;
+  text-transform: lowercase;
 }
 
 .portfolio-switch:hover {
   color: #000;
-  border-color: #000;
 }
 
-/* Float animations — cielo nublado, movimiento horizontal de izquierda a derecha
-   con deriva vertical leve y rotación mínima, como nubes reales */
+/* Float animations — deriva vertical leve + rotación mínima */
 @keyframes pcloud1 {
-  from { transform: translateX(0px)   translateY(0px)   rotate(-0.3deg); }
-  to   { transform: translateX(120px) translateY(-8px)  rotate( 0.4deg); }
+  from { transform: translateY(0px)   rotate(-0.3deg); }
+  to   { transform: translateY(-8px)  rotate( 0.4deg); }
 }
 @keyframes pcloud2 {
-  from { transform: translateX(0px)   translateY(0px)   rotate( 0.5deg); }
-  to   { transform: translateX(90px)  translateY( 6px)  rotate(-0.3deg); }
+  from { transform: translateY(0px)   rotate( 0.5deg); }
+  to   { transform: translateY( 6px)  rotate(-0.3deg); }
 }
 @keyframes pcloud3 {
-  from { transform: translateX(0px)   translateY(0px)   rotate(-0.2deg); }
-  to   { transform: translateX(150px) translateY(-4px)  rotate( 0.6deg); }
+  from { transform: translateY(0px)   rotate(-0.2deg); }
+  to   { transform: translateY(-4px)  rotate( 0.6deg); }
 }
 @keyframes pcloud4 {
-  from { transform: translateX(0px)   translateY(0px)   rotate( 0.4deg); }
-  to   { transform: translateX(70px)  translateY( 10px) rotate(-0.5deg); }
+  from { transform: translateY(0px)   rotate( 0.4deg); }
+  to   { transform: translateY( 10px) rotate(-0.5deg); }
 }
 @keyframes pcloud5 {
-  from { transform: translateX(0px)   translateY(0px)   rotate(-0.6deg); }
-  to   { transform: translateX(110px) translateY( 4px)  rotate( 0.2deg); }
+  from { transform: translateY(0px)   rotate(-0.6deg); }
+  to   { transform: translateY( 4px)  rotate( 0.2deg); }
 }
 @keyframes pcloud6 {
-  from { transform: translateX(0px)   translateY(0px)   rotate( 0.3deg); }
-  to   { transform: translateX(80px)  translateY(-12px) rotate(-0.4deg); }
+  from { transform: translateY(0px)   rotate( 0.3deg); }
+  to   { transform: translateY(-12px) rotate(-0.4deg); }
 }
 
 @media (max-width: 1024px) {

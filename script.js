@@ -28,9 +28,11 @@ const nombresEspeciales = {
 let posY = 0;
 let posX = 3;
 let dataCache = null;
-const DEFAULT_LANG = "es";
 let portfolioMode = "clouds";
 let portfolioAnimating = false;
+let portfolioCloudsNeedLayout = false;
+let portfolioCloudsWereRunning = false;
+let portfolioCloudsRebuilding = false;
 
 // ============================================
 // DATA LOADING
@@ -50,7 +52,14 @@ async function loadData() {
 
 function getData() {
   if (!dataCache) return null;
-  return dataCache[DEFAULT_LANG] || dataCache["es"] || null;
+  if (dataCache.welcome && dataCache.portfolio) return dataCache;
+  if (dataCache.es && dataCache.es.welcome && dataCache.es.portfolio) return dataCache.es;
+
+  for (const key of ["cat", "en"]) {
+    if (dataCache[key]?.welcome && dataCache[key]?.portfolio) return dataCache[key];
+  }
+
+  return null;
 }
 
 // ============================================
@@ -78,30 +87,23 @@ function crearPantallas() {
 
 // ============================================
 // RENDER: WELCOME
-// Un bloque con 3 desplegables
+// Links directos + desplegables
 // ============================================
 
 function renderWelcome(data) {
   const el = document.querySelector(".celda.welcome");
   if (!el || !data) return;
 
-  // Desplegables
+  const staticLinks = [
+    { name: "imgToWeb",            url: "https://meowrhino.github.io/imgToWeb/" },
+    { name: "videoToWeb",          url: "https://meowrhino.github.io/videoToWeb/" },
+    { name: "colorfun",            url: "https://meowrhino.github.io/colorFun/" },
+    { name: "trackr",              url: "https://meowrhino.github.io/trackr/" },
+    { name: "calculadora impuestos", url: "https://meowrhino.github.io/calculadoraInversa/" },
+    { name: "generador facturas",    url: "https://meowrhino.github.io/generadorFacturas/" },
+  ];
+
   const dropdowns = [
-    {
-      name: "herramientas web",
-      items: [
-        { name: "imgToWeb",   url: "https://meowrhino.github.io/imgToWeb/" },
-        { name: "videoToWeb", url: "https://meowrhino.github.io/videoToWeb/" },
-        { name: "colorfun",   url: "https://meowrhino.github.io/colorFun/" },
-      ]
-    },
-    {
-      name: "autónomos",
-      items: [
-        { name: "calculadora impuestos", url: "https://meowrhino.github.io/calculadoraInversa/" },
-        { name: "generador facturas",    url: "https://meowrhino.github.io/generadorFacturas/" },
-      ]
-    },
     {
       name: "formateadores",
       items: [
@@ -111,7 +113,18 @@ function renderWelcome(data) {
         { name: "jaume",   url: "https://meowrhino.github.io/jaumeclotet/formateador.html" },
       ]
     },
+    {
+      name: "webs terminadas",
+      items: (data.portfolio?.proyectos || []).map(p => ({
+        name: p.nombre,
+        url: p.url,
+      })),
+    },
   ];
+
+  const staticLinksHTML = staticLinks.map(item =>
+    `<a class="tool-link" href="${item.url}" target="_blank" rel="noopener">${item.name}</a>`
+  ).join("");
 
   const dropdownsHTML = dropdowns.map((dd, i) => {
     const uid = `dd_${i}`;
@@ -134,7 +147,7 @@ function renderWelcome(data) {
   el.innerHTML = `
     <div class="welcome-content">
       <h1 class="welcome-title">${data.welcome.titulo}</h1>
-      <div class="welcome-tools">${dropdownsHTML}</div>
+      <div class="welcome-tools">${staticLinksHTML}${dropdownsHTML}</div>
     </div>
   `;
 
@@ -261,6 +274,7 @@ function renderPortfolio(data) {
   `;
 
   generarScreenshotsFlotando(proyectos);
+  portfolioCloudsNeedLayout = false;
   document.getElementById("portfolio-switch-btn").addEventListener("click", togglePortfolioMode);
 
   if (portfolioMode === "grid") {
@@ -268,6 +282,8 @@ function renderPortfolio(data) {
     document.getElementById("portfolio-clouds").style.opacity = "0";
     document.getElementById("portfolio-switch-btn").textContent = "dispersar";
   }
+
+  syncPortfolioCloudsState();
 }
 
 // ============================================
@@ -290,9 +306,10 @@ function generarScreenshotsFlotando(proyectos) {
 
   const items = proyectos;
 
-  // Vertical area: leave 15dvh at top (title + minimap) and a bit at the bottom
-  const topMargin  = vh * 0.15;
-  const usableH    = vh * 0.80;   // from 15% to 95%
+  // Vertical area: leave 15dvh at top and 10dvh at bottom
+  const topMargin = vh * 0.15;
+  const bottomMargin = vh * 0.10;
+  const usableH = Math.max(0, vh - topMargin - bottomMargin);
   const numBandas  = isMobile ? 4 : 5;
   const bandaH     = usableH / numBandas;
 
@@ -311,13 +328,18 @@ function generarScreenshotsFlotando(proyectos) {
   }
 
   function randomizarNube(el, banda, firstRun, xSlot) {
+    if (!el.isConnected) return;
+
     const w = Math.round(minW + Math.random() * (maxW - minW));
     const h = Math.round(w * 0.68);
 
     // Y: centered in band + small random jitter (max ±30% of bandaH)
     const yBase = topMargin + banda * bandaH + bandaH * 0.5;
     const yOff  = (Math.random() - 0.5) * bandaH * 0.6;
-    const y     = Math.round(yBase + yOff);
+    const minY = Math.round(topMargin);
+    const maxY = Math.round(Math.max(minY, vh - bottomMargin - h));
+    const yUnclamped = Math.round(yBase + yOff);
+    const y = Math.max(minY, Math.min(maxY, yUnclamped));
 
     const speedFactor = 1 - (w - minW) / (maxW - minW);
     const pxPerSec    = 20 + speedFactor * 30 + Math.random() * 15;
@@ -351,7 +373,10 @@ function generarScreenshotsFlotando(proyectos) {
         ],
         { duration: duration * 1000, delay: delay * 1000, iterations: 1, easing: "linear", fill: "forwards" }
       );
-      anim.onfinish = () => randomizarNube(el, banda, false, null);
+      anim.onfinish = () => {
+        if (!el.isConnected) return;
+        randomizarNube(el, banda, false, null);
+      };
     } else {
       // Re-entry: start from just off the left edge
       el.style.left   = `${-w}px`;
@@ -367,7 +392,10 @@ function generarScreenshotsFlotando(proyectos) {
         ],
         { duration: duration * 1000, delay: 0, iterations: 1, easing: "linear", fill: "forwards" }
       );
-      anim.onfinish = () => randomizarNube(el, banda, false, null);
+      anim.onfinish = () => {
+        if (!el.isConnected) return;
+        randomizarNube(el, banda, false, null);
+      };
     }
   }
 
@@ -375,6 +403,10 @@ function generarScreenshotsFlotando(proyectos) {
     const banda     = i % numBandas;
     const driftAnim = driftAnims[i % driftAnims.length];
     const driftDur  = 8 + Math.random() * 10;
+
+    const track = document.createElement("div");
+    track.classList.add("portfolio-cloud-track");
+    track.style.left = "0px";
 
     const a = document.createElement("a");
     a.classList.add("portfolio-cloud-item");
@@ -395,7 +427,8 @@ function generarScreenshotsFlotando(proyectos) {
     const img = document.createElement("img");
     img.src     = p.imagen;
     img.alt     = p.nombre;
-    img.loading = "lazy";
+    img.loading = "eager";
+    img.decoding = "async";
     a.appendChild(img);
 
     const name = document.createElement("span");
@@ -403,9 +436,67 @@ function generarScreenshotsFlotando(proyectos) {
     name.textContent = p.nombre;
     a.appendChild(name);
 
-    container.appendChild(a);
-    randomizarNube(a, banda, true, xSlots[i]);
+    track.appendChild(a);
+    container.appendChild(track);
+    randomizarNube(track, banda, true, xSlots[i]);
   });
+
+  syncPortfolioCloudsState();
+}
+
+function isPortfolioCellActive() {
+  const portfolioCell = document.querySelector(".celda.portfolio");
+  return !!portfolioCell?.classList.contains("activa");
+}
+
+function shouldRunPortfolioClouds() {
+  return isPortfolioCellActive() && portfolioMode === "clouds";
+}
+
+function ensurePortfolioCloudsLayoutIfNeeded() {
+  if (!portfolioCloudsNeedLayout || !shouldRunPortfolioClouds()) return;
+  const proyectos = getData()?.portfolio?.proyectos;
+  if (!proyectos || !document.getElementById("portfolio-clouds")) return;
+  portfolioCloudsNeedLayout = false;
+  generarScreenshotsFlotando(proyectos);
+}
+
+function syncPortfolioCloudsState() {
+  const cloudsEl = document.getElementById("portfolio-clouds");
+  if (!cloudsEl) return;
+
+  const shouldRun = shouldRunPortfolioClouds();
+  const isResuming = shouldRun && !portfolioCloudsWereRunning;
+
+  if (portfolioCloudsNeedLayout && shouldRun && !portfolioCloudsRebuilding) {
+    portfolioCloudsRebuilding = true;
+    ensurePortfolioCloudsLayoutIfNeeded();
+    portfolioCloudsRebuilding = false;
+    portfolioCloudsWereRunning = shouldRunPortfolioClouds();
+    return;
+  }
+
+  cloudsEl.querySelectorAll(".portfolio-cloud-item").forEach(item => {
+    item.style.animationPlayState = shouldRun ? "running" : "paused";
+  });
+  cloudsEl.querySelectorAll(".portfolio-cloud-track").forEach(track => {
+    track.getAnimations().forEach(anim => {
+      if (shouldRun) {
+        if (isResuming && anim.playState === "paused") {
+          const timing = anim.effect?.getTiming?.();
+          const duration = Number(timing?.duration);
+          if (Number.isFinite(duration) && duration > 0) {
+            anim.currentTime = Math.random() * duration;
+          }
+        }
+        anim.play();
+      } else {
+        anim.pause();
+      }
+    });
+  });
+
+  portfolioCloudsWereRunning = shouldRun;
 }
 
 function togglePortfolioMode() {
@@ -421,6 +512,7 @@ function togglePortfolioMode() {
     cloudsEl.style.transition = "opacity 0.4s ease";
     cloudsEl.style.opacity = "0";
     cloudsEl.style.pointerEvents = "none";
+    syncPortfolioCloudsState();
     setTimeout(() => {
       gridEl.classList.add("visible");
       if (btn) btn.textContent = "dispersar";
@@ -428,11 +520,13 @@ function togglePortfolioMode() {
     }, 400);
   } else {
     portfolioMode = "clouds";
+    if (portfolioCloudsNeedLayout) ensurePortfolioCloudsLayoutIfNeeded();
     gridEl.classList.remove("visible");
     cloudsEl.style.transition = "opacity 0.5s ease";
     cloudsEl.style.opacity = "1";
     cloudsEl.style.pointerEvents = "auto";
     if (btn) btn.textContent = "ordenar";
+    syncPortfolioCloudsState();
     setTimeout(() => { portfolioAnimating = false; }, 500);
   }
 }
@@ -514,14 +608,13 @@ function onViewportResize() {
   const proyectos = getData()?.portfolio?.proyectos;
   if (!proyectos || !document.getElementById("portfolio-clouds")) return;
 
-  generarScreenshotsFlotando(proyectos);
-  if (portfolioMode === "grid") {
-    const cloudsEl = document.getElementById("portfolio-clouds");
-    if (cloudsEl) {
-      cloudsEl.style.opacity = "0";
-      cloudsEl.style.pointerEvents = "none";
-    }
+  if (isPortfolioCellActive() && portfolioMode === "clouds") {
+    generarScreenshotsFlotando(proyectos);
+    portfolioCloudsNeedLayout = false;
+  } else {
+    portfolioCloudsNeedLayout = true;
   }
+  syncPortfolioCloudsState();
 }
 
 function crearHeader() {
@@ -705,6 +798,7 @@ function actualizarVista() {
   actualizarZoneLabel();
   actualizarMinimapExpandido();
   actualizarHash();
+  syncPortfolioCloudsState();
 }
 
 // ============================================
