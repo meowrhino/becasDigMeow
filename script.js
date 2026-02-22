@@ -350,6 +350,22 @@ function renderPortfolio(data) {
   document.getElementById("portfolio-switch-btn")
     .addEventListener("click", alternarModoPortfolio);
 
+  // Drag-to-push: registrar pointer events con delegación
+  const cloudsContainer = document.getElementById("portfolio-clouds");
+  cloudsContainer.addEventListener("pointerdown", onCloudPointerDown);
+  cloudsContainer.addEventListener("pointermove", onCloudPointerMove);
+  cloudsContainer.addEventListener("pointerup", onCloudPointerUp);
+  cloudsContainer.addEventListener("pointercancel", onCloudPointerUp);
+
+  // Prevenir navegación del <a> si hubo drag
+  cloudsContainer.addEventListener("click", (e) => {
+    if (dragDidMove) {
+      e.preventDefault();
+      e.stopPropagation();
+      dragDidMove = false;
+    }
+  }, true);
+
   // Si ya estaba en modo grid, aplicar ese estado visual
   if (portfolioMode === "grid") {
     document.getElementById("portfolio-grid").classList.add("visible");
@@ -534,6 +550,10 @@ function generarNubesFlotantes(proyectos) {
     track.appendChild(link);
     container.appendChild(track);
 
+    // Guardar metadata para poder reiniciar la nube tras un drag
+    track.dataset.banda = String(banda);
+    track._configurarNube = configurarNube;
+
     // Lanzar la animación inicial
     configurarNube(track, banda, true, xSlots[i]);
   });
@@ -616,6 +636,213 @@ function sincronizarEstadoNubes() {
   portfolioCloudsWereRunning = debeCorrer;
 }
 
+// ============================================
+// 5b. PORTFOLIO: DRAG-TO-PUSH
+// ============================================
+//
+// El usuario puede arrastrar una nube y "empujarla".
+// Al soltar, la nube se desliza con la velocidad del gesto
+// y luego se reincorpora al flujo horizontal normal.
+
+/** Track actualmente siendo arrastrado, o null. */
+let draggedCloud = null;
+
+/** true si hubo movimiento durante el drag (para distinguir click de drag). */
+let dragDidMove = false;
+
+/** Estado interno del drag actual. */
+const dragState = {
+  startX: 0, startY: 0,
+  lastX: 0, lastY: 0, lastTime: 0,
+  velocityX: 0, velocityY: 0,
+  originX: 0, originY: 0,
+  throwRAF: null,
+};
+
+/**
+ * Obtiene la posición visual actual de un track,
+ * combinando style.left + translateX del WAAPI.
+ * @param {HTMLElement} track
+ * @returns {{ x: number, y: number }}
+ */
+function getPosicionVisualNube(track) {
+  const left = parseFloat(track.style.left) || 0;
+  const top  = parseFloat(track.style.top) || 0;
+
+  const ct = getComputedStyle(track).transform;
+  let tx = 0;
+  if (ct && ct !== "none") {
+    const m = ct.match(/matrix\(([^)]+)\)/);
+    if (m) tx = parseFloat(m[1].split(",")[4]) || 0;
+  }
+
+  return { x: left + tx, y: top };
+}
+
+/**
+ * Reinicia la animación normal de una nube tras ser arrastrada/lanzada.
+ * @param {HTMLElement} track
+ */
+function reiniciarNubeTrasDrag(track) {
+  if (!track.isConnected) return;
+  track.style.transform = "";
+  track.style.transformOrigin = "";
+
+  // Reactivar CSS drift
+  const item = track.querySelector(".portfolio-cloud-item");
+  if (item) item.style.animationPlayState = "running";
+
+  const banda = parseInt(track.dataset.banda, 10) || 0;
+  if (typeof track._configurarNube === "function") {
+    track._configurarNube(track, banda, false, null);
+  }
+}
+
+function onCloudPointerDown(e) {
+  if (portfolioMode !== "clouds" || portfolioAnimating) return;
+  const track = e.target.closest(".portfolio-cloud-track");
+  if (!track) return;
+
+  e.preventDefault();
+  track.setPointerCapture(e.pointerId);
+
+  draggedCloud = track;
+  dragDidMove = false;
+
+  // Cancelar throw en curso
+  if (dragState.throwRAF) {
+    cancelAnimationFrame(dragState.throwRAF);
+    dragState.throwRAF = null;
+  }
+
+  // Congelar la nube en su posición visual actual
+  const pos = getPosicionVisualNube(track);
+  track.getAnimations().forEach(a => a.cancel());
+  track.style.left      = `${pos.x}px`;
+  track.style.transform = "none";
+
+  // Pausar CSS drift
+  const item = track.querySelector(".portfolio-cloud-item");
+  if (item) item.style.animationPlayState = "paused";
+
+  dragState.originX = pos.x;
+  dragState.originY = pos.y;
+  dragState.startX  = e.clientX;
+  dragState.startY  = e.clientY;
+  dragState.lastX   = e.clientX;
+  dragState.lastY   = e.clientY;
+  dragState.lastTime = performance.now();
+  dragState.velocityX = 0;
+  dragState.velocityY = 0;
+}
+
+function onCloudPointerMove(e) {
+  if (!draggedCloud) return;
+  e.preventDefault();
+
+  const now = performance.now();
+  const dt  = Math.max(1, now - dragState.lastTime);
+  const dx  = e.clientX - dragState.lastX;
+  const dy  = e.clientY - dragState.lastY;
+
+  // Marcar como drag real si el movimiento supera 5px
+  if (!dragDidMove) {
+    const totalDx = e.clientX - dragState.startX;
+    const totalDy = e.clientY - dragState.startY;
+    if (Math.abs(totalDx) + Math.abs(totalDy) > 5) dragDidMove = true;
+  }
+
+  // Velocidad suavizada (exponential moving average)
+  const a = 0.3;
+  dragState.velocityX = a * (dx / dt * 1000) + (1 - a) * dragState.velocityX;
+  dragState.velocityY = a * (dy / dt * 1000) + (1 - a) * dragState.velocityY;
+  dragState.lastX    = e.clientX;
+  dragState.lastY    = e.clientY;
+  dragState.lastTime = now;
+
+  // Mover la nube
+  const totalDx = e.clientX - dragState.startX;
+  const totalDy = e.clientY - dragState.startY;
+  draggedCloud.style.left = `${dragState.originX + totalDx}px`;
+  draggedCloud.style.top  = `${dragState.originY + totalDy}px`;
+}
+
+function onCloudPointerUp(e) {
+  if (!draggedCloud) return;
+  const track = draggedCloud;
+  draggedCloud = null;
+
+  // Capar velocidad
+  const maxVel = 2000;
+  let vx = Math.max(-maxVel, Math.min(maxVel, dragState.velocityX));
+  let vy = Math.max(-maxVel, Math.min(maxVel, dragState.velocityY));
+
+  const friction = 0.95;
+  const minSpeed = 5;
+  const speed = Math.sqrt(vx * vx + vy * vy);
+
+  if (speed < minSpeed) {
+    reiniciarNubeTrasDrag(track);
+    return;
+  }
+
+  let lastFrame = performance.now();
+
+  function throwStep(now) {
+    const dt = (now - lastFrame) / 1000;
+    lastFrame = now;
+
+    const cx = parseFloat(track.style.left) || 0;
+    const cy = parseFloat(track.style.top) || 0;
+    track.style.left = `${cx + vx * dt}px`;
+    track.style.top  = `${cy + vy * dt}px`;
+
+    vx *= friction;
+    vy *= friction;
+
+    if (Math.sqrt(vx * vx + vy * vy) > minSpeed && track.isConnected) {
+      dragState.throwRAF = requestAnimationFrame(throwStep);
+    } else {
+      reiniciarNubeTrasDrag(track);
+    }
+  }
+
+  dragState.throwRAF = requestAnimationFrame(throwStep);
+}
+
+// ============================================
+// 5c. PORTFOLIO: TRANSICIÓN ANIMADA CLOUDS ↔ GRID
+// ============================================
+//
+// En vez de un fade, cada nube vuela a su posición en el grid (y viceversa).
+// Se usa WAAPI con transform: translate + scale (GPU-composited).
+
+/**
+ * Mide las posiciones de los items del grid forzando un layout temporal.
+ * @returns {DOMRect[]} Bounding rects de cada .portfolio-item.
+ */
+function medirPosicionesGrid() {
+  const gridContainer = document.getElementById("portfolio-grid");
+
+  // Forzar layout sin flash visual
+  gridContainer.style.visibility    = "hidden";
+  gridContainer.style.opacity       = "0";
+  gridContainer.style.pointerEvents = "none";
+  gridContainer.classList.add("visible");
+  gridContainer.offsetHeight; // forzar reflow
+
+  const items = gridContainer.querySelectorAll(".portfolio-item");
+  const rects = Array.from(items).map(item => item.getBoundingClientRect());
+
+  // Restaurar
+  gridContainer.classList.remove("visible");
+  gridContainer.style.visibility    = "";
+  gridContainer.style.opacity       = "";
+  gridContainer.style.pointerEvents = "";
+
+  return rects;
+}
+
 /**
  * Alterna entre modo "clouds" y modo "grid" con transición animada.
  */
@@ -628,29 +855,206 @@ function alternarModoPortfolio() {
   const btn      = document.getElementById("portfolio-switch-btn");
 
   if (portfolioMode === "clouds") {
-    // Clouds → Grid
-    portfolioMode = "grid";
-    cloudsEl.style.transition    = "opacity 0.4s ease";
+    animarNubesAGrid(cloudsEl, gridEl, btn);
+  } else {
+    animarGridANubes(cloudsEl, gridEl, btn);
+  }
+}
+
+/**
+ * Anima cada nube desde su posición flotante hasta su posición en el grid.
+ */
+function animarNubesAGrid(cloudsEl, gridEl, btn) {
+  portfolioMode = "grid";
+
+  const tracks = Array.from(cloudsEl.querySelectorAll(".portfolio-cloud-track"));
+
+  // 1. Pausar CSS drift y congelar posiciones (todo síncrono, sin frames intermedios)
+  const cloudPositions = tracks.map(track => {
+    const item = track.querySelector(".portfolio-cloud-item");
+    if (item) item.style.animationPlayState = "paused";
+
+    const pos = getPosicionVisualNube(track);
+    const w = parseFloat(track.style.width) || track.offsetWidth;
+    const h = parseFloat(track.style.height) || track.offsetHeight;
+
+    // Cancelar WAAPI y fijar posición visual en un solo paso
+    track.getAnimations().forEach(a => a.cancel());
+    track.style.left            = `${pos.x}px`;
+    track.style.top             = `${pos.y}px`;
+    track.style.transformOrigin = "top left";
+
+    return { x: pos.x, y: pos.y, w, h };
+  });
+
+  // 2. Medir posiciones target del grid
+  const gridRects     = medirPosicionesGrid();
+  const portfolioRect = document.querySelector(".celda.portfolio").getBoundingClientRect();
+
+  // 3. Marcar como en transición
+  cloudsEl.classList.add("transitioning");
+
+  // 4. Animar cada nube a su posición en el grid
+  //    Arrancamos con transform en la identidad (posición ya fijada por left/top)
+  const duration     = 700;
+  const staggerDelay = 40;
+  const animations   = [];
+
+  tracks.forEach((track, i) => {
+    const from = cloudPositions[i];
+    const to   = gridRects[i];
+    if (!from || !to) return;
+
+    const targetX = to.left - portfolioRect.left;
+    const targetY = to.top - portfolioRect.top;
+    const dx = targetX - from.x;
+    const dy = targetY - from.y;
+    const sx = to.width / from.w;
+    const sy = to.height / from.h;
+
+    const anim = track.animate([
+      { transform: "translate(0px, 0px) scale(1, 1)" },
+      { transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})` },
+    ], {
+      duration,
+      delay: i * staggerDelay,
+      easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+      fill: "forwards",
+    });
+
+    animations.push(anim);
+  });
+
+  // 5. Al completar, mostrar grid real y ocultar nubes
+  Promise.all(animations.map(a => a.finished)).then(() => {
+    cloudsEl.classList.remove("transitioning");
+    gridEl.classList.add("visible");
     cloudsEl.style.opacity       = "0";
     cloudsEl.style.pointerEvents = "none";
-    sincronizarEstadoNubes();
-    setTimeout(() => {
-      gridEl.classList.add("visible");
-      if (btn) btn.textContent = "dispersar";
+    if (btn) btn.textContent = "dispersar";
+    portfolioAnimating = false;
+  });
+}
+
+/**
+ * Anima cada nube desde su posición en el grid a una posición flotante aleatoria,
+ * y luego reinicia el flujo horizontal normal.
+ */
+function animarGridANubes(cloudsEl, gridEl, btn) {
+  portfolioMode = "clouds";
+
+  const tracks = Array.from(cloudsEl.querySelectorAll(".portfolio-cloud-track"));
+
+  // 1. Medir posiciones del grid (aún visible)
+  const gridRects     = medirPosicionesGrid();
+  const portfolioRect = document.querySelector(".celda.portfolio").getBoundingClientRect();
+
+  // 2. Generar posiciones random de destino
+  const vw       = window.innerWidth;
+  const vh       = window.innerHeight;
+  const esMobile = vw <= 600;
+  const numBandas      = esMobile ? 4 : 5;
+  const margenSuperior = vh * 0.15;
+  const margenInferior = vh * 0.10;
+  const alturaUtil     = Math.max(0, vh - margenSuperior - margenInferior);
+  const alturaBanda    = alturaUtil / numBandas;
+  const anchoMin = esMobile ? 80 : 120;
+  const anchoMax = esMobile ? 150 : 220;
+
+  const targets = tracks.map((_, i) => {
+    const banda = i % numBandas;
+    const ancho = Math.round(anchoMin + Math.random() * (anchoMax - anchoMin));
+    const alto  = Math.round(ancho * 0.68);
+    const yCentro = margenSuperior + banda * alturaBanda + alturaBanda * 0.5;
+    const yJitter = (Math.random() - 0.5) * alturaBanda * 0.6;
+    const y = Math.max(margenSuperior, Math.min(vh - margenInferior - alto, Math.round(yCentro + yJitter)));
+    const x = Math.random() * (vw - ancho);
+    return { x, y, w: ancho, h: alto };
+  });
+
+  // 3. ANTES de hacer visibles las nubes: cancelar animaciones previas y
+  //    posicionar cada track exactamente donde estaba su grid item.
+  //    Así cuando se hagan visibles ya están en la posición correcta.
+  tracks.forEach((track, i) => {
+    track.getAnimations().forEach(a => a.cancel());
+    track.style.transform       = "";
+    track.style.transformOrigin = "top left";
+
+    const fromRect = gridRects[i];
+    if (!fromRect) return;
+
+    track.style.left   = `${fromRect.left - portfolioRect.left}px`;
+    track.style.top    = `${fromRect.top - portfolioRect.top}px`;
+    track.style.width  = `${fromRect.width}px`;
+    track.style.height = `${fromRect.height}px`;
+  });
+
+  // 4. Ahora sí: hacer nubes visibles y ocultar grid (sin flash, ya están posicionadas)
+  gridEl.classList.remove("visible");
+  cloudsEl.style.opacity       = "1";
+  cloudsEl.style.pointerEvents = "auto";
+  cloudsEl.classList.add("transitioning");
+
+  // 5. Animar cada nube de posición-grid a posición-random
+  const duration     = 700;
+  const staggerDelay = 40;
+  const animations   = [];
+
+  tracks.forEach((track, i) => {
+    const fromRect = gridRects[i];
+    if (!fromRect) return;
+
+    const fromX = fromRect.left - portfolioRect.left;
+    const fromY = fromRect.top - portfolioRect.top;
+    const fromW = fromRect.width;
+    const fromH = fromRect.height;
+    const to    = targets[i];
+
+    const dx = to.x - fromX;
+    const dy = to.y - fromY;
+    const sx = to.w / fromW;
+    const sy = to.h / fromH;
+
+    const anim = track.animate([
+      { transform: "translate(0, 0) scale(1, 1)" },
+      { transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})` },
+    ], {
+      duration,
+      delay: i * staggerDelay,
+      easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+      fill: "forwards",
+    });
+
+    animations.push(anim);
+  });
+
+  if (btn) btn.textContent = "ordenar";
+
+  // 6. Al completar, rebuildir nubes con animación normal.
+  //    Ocultar temporalmente para evitar flash durante el rebuild.
+  Promise.all(animations.map(a => a.finished)).then(() => {
+    cloudsEl.classList.remove("transitioning");
+
+    // Ocultar nubes durante el rebuild para evitar parpadeo
+    cloudsEl.style.opacity = "0";
+
+    // Cancelar fill:forwards y limpiar
+    tracks.forEach(track => {
+      track.getAnimations().forEach(a => a.cancel());
+      track.style.transform       = "";
+      track.style.transformOrigin = "";
+    });
+
+    // Rebuildir nubes desde cero para que retomen el flujo horizontal
+    const proyectos = obtenerDatos()?.portfolio?.proyectos;
+    if (proyectos) generarNubesFlotantes(proyectos);
+
+    // Mostrar nubes ya rebuildeadas en el siguiente frame
+    requestAnimationFrame(() => {
+      cloudsEl.style.opacity = "1";
       portfolioAnimating = false;
-    }, 400);
-  } else {
-    // Grid → Clouds
-    portfolioMode = "clouds";
-    if (portfolioCloudsNeedLayout) reconstruirNubesSiNecesario();
-    gridEl.classList.remove("visible");
-    cloudsEl.style.transition    = "opacity 0.5s ease";
-    cloudsEl.style.opacity       = "1";
-    cloudsEl.style.pointerEvents = "auto";
-    if (btn) btn.textContent = "ordenar";
-    sincronizarEstadoNubes();
-    setTimeout(() => { portfolioAnimating = false; }, 500);
-  }
+    });
+  });
 }
 
 // ============================================

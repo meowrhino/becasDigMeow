@@ -689,6 +689,16 @@ p, h1, h2, h3 {
   opacity: 1;
 }
 
+/* Durante la transición clouds↔grid, desactivar interacciones en los links */
+.portfolio-clouds-container.transitioning .portfolio-cloud-item {
+  pointer-events: none;
+}
+
+/* Nube siendo arrastrada: cursor de agarre */
+.portfolio-cloud-track:active {
+  cursor: grabbing;
+}
+
 /* Animaciones de deriva vertical + rotación leve.
    Cada nube usa una de estas 6 variantes para evitar sincronización. */
 @keyframes pcloud1 {
