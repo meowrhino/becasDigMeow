@@ -1,7 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700&display=swap");
 
 /* ============================================
-   RESET & BASE
+   0. RESET & BASE
+   Normalización y estilos base globales.
+   Fuente: Inknut Antiqua (serif).
    ============================================ */
 
 html, body {
@@ -31,7 +33,9 @@ p, h1, h2, h3 {
 }
 
 /* ============================================
-   CONTAINER
+   1. CONTENEDOR PRINCIPAL
+   Ocupa todo el viewport. Las celdas se apilan
+   dentro con position:absolute.
    ============================================ */
 
 #content {
@@ -41,7 +45,10 @@ p, h1, h2, h3 {
 }
 
 /* ============================================
-   CELDAS (PAGES)
+   2. CELDAS (PÁGINAS)
+   Cada celda ocupa el 100% del viewport.
+   Solo la celda con .activa es visible (opacity 1)
+   y recibe pointer-events.
    ============================================ */
 
 .celda {
@@ -70,7 +77,9 @@ p, h1, h2, h3 {
 }
 
 /* ============================================
-   ZONE LABEL (large background text)
+   3. ZONE LABEL
+   Texto grande semi-transparente de fondo que
+   muestra el nombre de la página actual.
    ============================================ */
 
 .zone-label-bg {
@@ -93,7 +102,9 @@ p, h1, h2, h3 {
 }
 
 /* ============================================
-   TOP-RIGHT HEADER (minimap inline)
+   4. MINIMAP INLINE (esquina superior derecha)
+   Cuadrícula pequeña que muestra la posición
+   actual en el grid. Click abre el overlay.
    ============================================ */
 
 .header-topright {
@@ -134,7 +145,9 @@ p, h1, h2, h3 {
 }
 
 /* ============================================
-   EXPANDED MINIMAP (overlay)
+   5. MINIMAP EXPANDIDO (overlay)
+   Overlay a pantalla completa con celdas
+   clickeables para navegar directamente.
    ============================================ */
 
 .minimap-overlay {
@@ -192,7 +205,10 @@ p, h1, h2, h3 {
 }
 
 /* ============================================
-   NAVIGATION LABELS (side text)
+   6. NAV LABELS (botones de navegación)
+   Texto en los bordes de la celda activa
+   que indica las celdas vecinas navegables.
+   Posiciones: top, bottom, left, right.
    ============================================ */
 
 .nav-label {
@@ -239,8 +255,16 @@ p, h1, h2, h3 {
   transform: translateX(-50%);
 }
 
+@media (max-width: 768px) {
+  .nav-label {
+    font-size: clamp(0.6rem, 2.5dvw, 0.8rem);
+  }
+}
+
 /* ============================================
-   PAGE: WELCOME
+   7. PAGE: WELCOME
+   Título centrado fijo + lista vertical de links
+   estilo linktree con dropdowns desplegables.
    ============================================ */
 
 .celda.welcome {
@@ -259,6 +283,7 @@ p, h1, h2, h3 {
   justify-content: center;
 }
 
+/* Título fijo en la parte superior */
 .welcome-title {
   position: fixed;
   top: 18dvh;
@@ -273,6 +298,7 @@ p, h1, h2, h3 {
   z-index: 2;
 }
 
+/* Contenedor de la lista de herramientas */
 .welcome-tools {
   position: relative;
   z-index: 3;
@@ -284,7 +310,7 @@ p, h1, h2, h3 {
   gap: 0.5rem;
 }
 
-/* Link button — tarjeta como en el linktree */
+/* Link tipo tarjeta (cada herramienta/proyecto) */
 .tool-link {
   display: block;
   width: 100%;
@@ -314,7 +340,8 @@ p, h1, h2, h3 {
   transform: translateY(0);
 }
 
-/* Dropdown — mismo tamaño exacto que tool-link */
+/* --- Dropdowns (formateadores, webs terminadas) --- */
+
 .tools-dropdown-group {
   display: flex;
   flex-direction: column;
@@ -322,6 +349,7 @@ p, h1, h2, h3 {
   width: 100%;
 }
 
+/* Botón del dropdown: mismo estilo visual que .tool-link */
 .tools-dropdown-btn {
   display: flex;
   align-items: center;
@@ -356,6 +384,7 @@ p, h1, h2, h3 {
   background: #f7f7f7;
 }
 
+/* Flecha del dropdown: rota 180deg al abrir */
 .tools-dropdown-icon {
   width: 12px;
   height: 12px;
@@ -368,7 +397,7 @@ p, h1, h2, h3 {
   transform: rotate(180deg);
 }
 
-/* Contenido desplegable */
+/* Contenido desplegable: animado con grid-template-rows 0fr→1fr */
 .tools-dropdown-content {
   display: grid;
   grid-template-rows: 0fr;
@@ -396,7 +425,195 @@ p, h1, h2, h3 {
 }
 
 /* ============================================
-   PAGE: PORTFOLIO — screenshots flotando
+   8. PAGE: STATEMENT
+   Manifiesto del estudio: texto centrado.
+   ============================================ */
+
+.statement-content {
+  text-align: center;
+  max-width: 800px;
+  line-height: 1.6;
+  font-size: clamp(0.85rem, 1.2dvw, 1.15rem);
+}
+
+.statement-content p {
+  margin-bottom: 0.5em;
+}
+
+/* ============================================
+   9. PAGE: METODOLOGÍA
+   Proceso en 5 semanas.
+   Desktop: layout zigzag con CSS grid de 10 columnas.
+   Mobile: stack vertical con semana rotada a la izquierda.
+   ============================================ */
+
+.metodologia-content {
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* Grid zigzag: 10 columnas, los pasos se colocan
+   en filas alternas (posición definida por data.json gridPos) */
+.metodo-zigzag {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: auto auto auto;
+  gap: 0;
+  align-items: start;
+}
+
+.metodo-paso {
+  text-align: center;
+  overflow: visible;
+}
+
+/* En desktop la semana se muestra en el timeline inferior, no aquí */
+.metodo-paso .metodo-semana {
+  display: none;
+}
+
+.metodo-paso h3 {
+  font-size: clamp(0.75rem, 1dvw, 1rem);
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+
+.metodo-paso p {
+  font-size: clamp(0.6rem, 0.8dvw, 0.82rem);
+  color: #444;
+  line-height: 1.6;
+}
+
+/* Barra de timeline: fila inferior del grid con las semanas */
+.metodo-timeline-bar {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding-top: 3dvh;
+  margin-top: 2dvh;
+}
+
+.metodo-timeline-bar span {
+  font-size: clamp(0.6rem, 0.75dvw, 0.78rem);
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Mobile: el zigzag colapsa a un stack vertical */
+@media (max-width: 768px) {
+  .celda.metodologia {
+    padding: 12dvh 8dvw;
+  }
+
+  .metodo-zigzag {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5dvh;
+  }
+
+  .metodo-paso {
+    text-align: center;
+    padding-left: 2em;
+    position: relative;
+    width: 75%;
+    max-width: 320px;
+  }
+
+  /* En mobile la semana se muestra rotada a la izquierda de cada paso */
+  .metodo-paso .metodo-semana {
+    display: block;
+    font-size: clamp(0.55rem, 2dvw, 0.7rem);
+    font-weight: 700;
+    white-space: nowrap;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: rotate(90deg);
+    transform-origin: top left;
+  }
+
+  /* El timeline inferior no se muestra en mobile */
+  .metodo-timeline-bar {
+    display: none;
+  }
+}
+
+/* ============================================
+   10. PAGE: PRICING
+   Rango de precios, nota y lista de lo incluido.
+   ============================================ */
+
+.pricing-content {
+  text-align: center;
+  max-width: 680px;
+  line-height: 1.6;
+}
+
+.pricing-content .precio-rango {
+  font-size: clamp(1.4rem, 2.5dvw, 2.4rem);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.4em;
+}
+
+.pricing-content .precio-nota {
+  font-size: clamp(0.65rem, 0.85dvw, 0.8rem);
+  color: #999;
+  margin-bottom: 2.5em;
+  line-height: 1.8;
+}
+
+.pricing-content .incluye-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pricing-content .incluye-item {
+  font-size: clamp(0.75rem, 1dvw, 0.95rem);
+  margin-bottom: 0.5em;
+  color: #333;
+}
+
+.pricing-content .incluye-item::before {
+  content: "\00B7"; /* · */
+  margin-right: 0.6em;
+  color: #999;
+}
+
+/* ============================================
+   11. PAGE: POLÍTICAS
+   Términos de pago y condiciones del estudio.
+   ============================================ */
+
+.politicas-content {
+  text-align: center;
+  max-width: 720px;
+  line-height: 1.9;
+  font-size: clamp(0.8rem, 1.05dvw, 1rem);
+}
+
+.politicas-content p {
+  margin-bottom: 2em;
+  color: #333;
+}
+
+/* Último párrafo más tenue (valores del estudio) */
+.politicas-content p:last-child {
+  margin-bottom: 0;
+  color: #888;
+  font-size: 0.88em;
+}
+
+/* ============================================
+   12. PAGE: PORTFOLIO
+   Dos modos de visualización:
+     - Nubes flotantes (clouds): screenshots que
+       se desplazan horizontalmente con WAAPI
+       + deriva vertical con CSS keyframes.
+     - Grid: cuadrícula estática ordenada.
    ============================================ */
 
 .celda.portfolio {
@@ -405,6 +622,9 @@ p, h1, h2, h3 {
   background: transparent;
 }
 
+/* --- Modo Clouds --- */
+
+/* Contenedor de todas las nubes */
 .portfolio-clouds-container {
   position: absolute;
   top: 0;
@@ -414,13 +634,13 @@ p, h1, h2, h3 {
   overflow: hidden;
 }
 
-/* Capa horizontal (WAAPI) */
+/* Track: capa que se mueve horizontalmente (WAAPI) */
 .portfolio-cloud-track {
   position: absolute;
   will-change: transform;
 }
 
-/* Cada item es la screenshot flotando directamente */
+/* Item: screenshot flotando con deriva CSS */
 .portfolio-cloud-item {
   position: relative;
   width: 100%;
@@ -447,6 +667,7 @@ p, h1, h2, h3 {
   opacity: 0.88;
 }
 
+/* Nombre del proyecto: visible al hover */
 .portfolio-cloud-item .pcloud-name {
   position: absolute;
   bottom: -1.4em;
@@ -467,7 +688,35 @@ p, h1, h2, h3 {
   opacity: 1;
 }
 
-/* Portfolio: grid mode */
+/* Animaciones de deriva vertical + rotación leve.
+   Cada nube usa una de estas 6 variantes para evitar sincronización. */
+@keyframes pcloud1 {
+  from { transform: translateY(0px)   rotate(-0.3deg); }
+  to   { transform: translateY(-8px)  rotate( 0.4deg); }
+}
+@keyframes pcloud2 {
+  from { transform: translateY(0px)   rotate( 0.5deg); }
+  to   { transform: translateY( 6px)  rotate(-0.3deg); }
+}
+@keyframes pcloud3 {
+  from { transform: translateY(0px)   rotate(-0.2deg); }
+  to   { transform: translateY(-4px)  rotate( 0.6deg); }
+}
+@keyframes pcloud4 {
+  from { transform: translateY(0px)   rotate( 0.4deg); }
+  to   { transform: translateY( 10px) rotate(-0.5deg); }
+}
+@keyframes pcloud5 {
+  from { transform: translateY(0px)   rotate(-0.6deg); }
+  to   { transform: translateY( 4px)  rotate( 0.2deg); }
+}
+@keyframes pcloud6 {
+  from { transform: translateY(0px)   rotate( 0.3deg); }
+  to   { transform: translateY(-12px) rotate(-0.4deg); }
+}
+
+/* --- Modo Grid --- */
+
 .portfolio-grid-container {
   position: absolute;
   top: 0;
@@ -516,7 +765,21 @@ p, h1, h2, h3 {
   display: block;
 }
 
-/* Switch button */
+/* Responsive: portfolio grid columns */
+@media (max-width: 1024px) {
+  .portfolio-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .portfolio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --- Botón switch (alternar clouds/grid) --- */
+
 .portfolio-switch {
   position: absolute;
   bottom: 3dvh;
@@ -537,221 +800,4 @@ p, h1, h2, h3 {
 
 .portfolio-switch:hover {
   color: #000;
-}
-
-/* Float animations — deriva vertical leve + rotación mínima */
-@keyframes pcloud1 {
-  from { transform: translateY(0px)   rotate(-0.3deg); }
-  to   { transform: translateY(-8px)  rotate( 0.4deg); }
-}
-@keyframes pcloud2 {
-  from { transform: translateY(0px)   rotate( 0.5deg); }
-  to   { transform: translateY( 6px)  rotate(-0.3deg); }
-}
-@keyframes pcloud3 {
-  from { transform: translateY(0px)   rotate(-0.2deg); }
-  to   { transform: translateY(-4px)  rotate( 0.6deg); }
-}
-@keyframes pcloud4 {
-  from { transform: translateY(0px)   rotate( 0.4deg); }
-  to   { transform: translateY( 10px) rotate(-0.5deg); }
-}
-@keyframes pcloud5 {
-  from { transform: translateY(0px)   rotate(-0.6deg); }
-  to   { transform: translateY( 4px)  rotate( 0.2deg); }
-}
-@keyframes pcloud6 {
-  from { transform: translateY(0px)   rotate( 0.3deg); }
-  to   { transform: translateY(-12px) rotate(-0.4deg); }
-}
-
-@media (max-width: 1024px) {
-  .portfolio-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .portfolio-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* ============================================
-   PAGE: STATEMENT
-   ============================================ */
-
-.statement-content {
-  text-align: center;
-  max-width: 800px;
-  line-height: 1.6;
-  font-size: clamp(0.85rem, 1.2dvw, 1.15rem);
-}
-
-.statement-content p {
-  margin-bottom: 0.5em;
-}
-
-/* ============================================
-   PAGE: METODOLOGIA (zigzag)
-   ============================================ */
-
-.metodologia-content {
-  width: 100%;
-  max-width: 1000px;
-}
-
-.metodo-zigzag {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: auto auto auto;
-  gap: 0;
-  align-items: start;
-}
-
-.metodo-paso {
-  text-align: center;
-  overflow: visible;
-}
-
-.metodo-paso .metodo-semana {
-  display: none;
-}
-
-.metodo-paso h3 {
-  font-size: clamp(0.75rem, 1dvw, 1rem);
-  font-weight: 700;
-  margin-bottom: 0.5em;
-}
-
-.metodo-paso p {
-  font-size: clamp(0.6rem, 0.8dvw, 0.82rem);
-  color: #444;
-  line-height: 1.6;
-}
-
-.metodo-timeline-bar {
-  grid-column: 1 / -1;
-  grid-row: 3;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  padding-top: 3dvh;
-  margin-top: 2dvh;
-}
-
-.metodo-timeline-bar span {
-  font-size: clamp(0.6rem, 0.75dvw, 0.78rem);
-  font-weight: 700;
-  text-align: center;
-}
-
-@media (max-width: 768px) {
-  .celda.metodologia {
-    padding: 12dvh 8dvw;
-  }
-
-  .metodo-zigzag {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2.5dvh;
-  }
-
-  .metodo-paso {
-    text-align: center;
-    padding-left: 2em;
-    position: relative;
-    width: 75%;
-    max-width: 320px;
-  }
-
-  .metodo-paso .metodo-semana {
-    display: block;
-    font-size: clamp(0.55rem, 2dvw, 0.7rem);
-    font-weight: 700;
-    white-space: nowrap;
-    position: absolute;
-    left: 0;
-    top: 0;
-    transform: rotate(90deg);
-    transform-origin: top left;
-  }
-
-  .metodo-timeline-bar {
-    display: none;
-  }
-}
-
-/* ============================================
-   PAGE: PRICING
-   ============================================ */
-
-.pricing-content {
-  text-align: center;
-  max-width: 680px;
-  line-height: 1.6;
-}
-
-.pricing-content .precio-rango {
-  font-size: clamp(1.4rem, 2.5dvw, 2.4rem);
-  font-weight: 300;
-  letter-spacing: 0.04em;
-  margin-bottom: 0.4em;
-}
-
-.pricing-content .precio-nota {
-  font-size: clamp(0.65rem, 0.85dvw, 0.8rem);
-  color: #999;
-  margin-bottom: 2.5em;
-  line-height: 1.8;
-}
-
-.pricing-content .incluye-lista {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.pricing-content .incluye-item {
-  font-size: clamp(0.75rem, 1dvw, 0.95rem);
-  margin-bottom: 0.5em;
-  color: #333;
-}
-
-.pricing-content .incluye-item::before {
-  content: "·";
-  margin-right: 0.6em;
-  color: #999;
-}
-
-/* ============================================
-   PAGE: POLITICAS
-   ============================================ */
-
-.politicas-content {
-  text-align: center;
-  max-width: 720px;
-  line-height: 1.9;
-  font-size: clamp(0.8rem, 1.05dvw, 1rem);
-}
-
-.politicas-content p {
-  margin-bottom: 2em;
-  color: #333;
-}
-
-.politicas-content p:last-child {
-  margin-bottom: 0;
-  color: #888;
-  font-size: 0.88em;
-}
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-
-@media (max-width: 768px) {
-  .nav-label {
-    font-size: clamp(0.6rem, 2.5dvw, 0.8rem);
-  }
 }
