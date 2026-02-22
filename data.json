@@ -60,21 +60,15 @@
       }
     ]
   },
-  "pricing": {
-    "rango": "425 – 600 €",
-    "nota": "sin IVA · precio según complejidad y capacidad de pago",
-    "incluye": [
-      "3 reuniones presenciales de máximo 2 horas",
-      "diseño web personalizado",
-      "elaboración y entrega de código",
-      "sesión formativa de mantenimiento"
-    ]
-  },
   "politicas": {
     "parrafos": [
-      "los pagos se dividen en dos mitades: la primera al cerrar el diseño, la segunda al finalizar la programación. no hay cuotas ni suscripciones.",
-      "tras la entrega, el cliente dispone de 10 días hábiles para revisiones incluidas. pasado ese plazo, cualquier cambio se cobra por hora de trabajo.",
-      "no aceptamos proyectos que contradigan nuestros valores: internet abierto, accesible y sin dependencias de plataformas de pago."
+      "los pagos se dividen en dos mitades: la primera al cerrar el diseño y la segunda al finalizar la programación. si el proyecto se cancela después de cerrar diseño, la primera mitad no se devuelve; si se cancela antes, se cobra solo el trabajo realizado hasta ese momento.",
+      "el presupuesto cubre el alcance acordado y hasta 3 rondas de cambios durante la fase de diseño.",
+      "una vez se cierra el diseño y empieza la programación, no se aceptan cambios de diseño. cualquier cambio estructural o nueva funcionalidad fuera del alcance inicial se presupuesta aparte como una nueva fase.",
+      "trabajamos con código abierto",
+      "el cliente puede acceder, modificar y reutilizar el código libremente.",
+      "podemos mostrar el proyecto en nuestro portfolio, pero el cliente puede solicitar en cualquier momento la anonimización o retirada de datos sensibles y la actualización se aplicará.",
+      "evaluamos cada proyecto caso por caso para asegurar un encaje real y una colaboración sostenible para ambas partes."
     ]
   },
   "portfolio": {
@@ -117,7 +111,7 @@
       {
         "nombre": "paula barjau",
         "imagen": "img/paulabarjau.png",
-        "url": "https://meowrhino.github.io/paulabarjau/"
+        "url": "https://paulabarjau.studio"
       },
       {
         "nombre": "jaume clotet",

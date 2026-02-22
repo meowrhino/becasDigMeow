@@ -9,8 +9,8 @@
 //   - El portfolio tiene dos modos: nubes flotantes (WAAPI) y cuadrícula
 //
 // Mapa del grid:
-//   Fila 0: [pricing] [politicas] [metodologia] [welcome] [statement]
-//   Fila 1:                                     [portfolio]
+//   Fila 0: [políticas] [metodología] [welcome] [statement]
+//   Fila 1:                           [portfolio]
 //
 // ============================================
 
@@ -26,23 +26,22 @@ const app = document.getElementById("content");
  * 1 = celda activa, 0 = celda vacía (no navegable).
  */
 const GRID = [
-  [1, 1, 1, 1, 1], // fila 0: pricing, politicas, metodologia, welcome, statement
-  [0, 0, 0, 1, 0], // fila 1: _, _, _, portfolio, _
+  [1, 1, 1, 1], // fila 0: políticas, metodología, welcome, statement
+  [0, 0, 1, 0], // fila 1: _, _, portfolio, _
 ];
 
 /** Mapa de coordenadas "fila_columna" → nombre legible de la celda. */
 const NOMBRES_CELDAS = {
-  "0_0": "pricing",
-  "0_1": "politicas",
-  "0_2": "metodologia",
-  "0_3": "welcome",
-  "0_4": "statement",
-  "1_3": "portfolio",
+  "0_0": "políticas",
+  "0_1": "metodología",
+  "0_2": "welcome",
+  "0_3": "statement",
+  "1_2": "portfolio",
 };
 
 /** Posición actual del usuario en el grid. */
 let posY = 0;
-let posX = 3; // empieza en "welcome"
+let posX = 2; // empieza en "welcome"
 
 // ============================================
 // 2. CARGA DE DATOS (data.json)
@@ -92,6 +91,18 @@ function obtenerDatos() {
 // ============================================
 
 /**
+ * Mapa de nombre con tildes → clase CSS sin tildes.
+ * Las clases CSS no llevan tildes para evitar problemas de encoding.
+ */
+const CLASE_CSS = {
+  "políticas":   "politicas",
+  "metodología": "metodologia",
+  "welcome":     "welcome",
+  "statement":   "statement",
+  "portfolio":   "portfolio",
+};
+
+/**
  * Genera un div.celda por cada posición activa del GRID
  * y lo añade al contenedor principal.
  */
@@ -107,7 +118,8 @@ function crearCeldas() {
 
       const nombre = NOMBRES_CELDAS[`${y}_${x}`];
       if (nombre) {
-        celda.classList.add(nombre);
+        const claseCss = CLASE_CSS[nombre] || nombre;
+        celda.classList.add(claseCss);
         celda.dataset.nombre = nombre;
       }
 
@@ -254,32 +266,7 @@ function renderMetodologia(data) {
   `;
 }
 
-// --- 4d. Pricing ---
-// Rango de precios, nota explicativa y lista de lo que incluye.
-
-/**
- * Renderiza la página de precios.
- * @param {Object} data - Datos del JSON.
- */
-function renderPricing(data) {
-  const el = document.querySelector(".celda.pricing");
-  if (!el || !data?.pricing) return;
-
-  const d = data.pricing;
-  const incluyeHTML = d.incluye
-    .map(item => `<li class="incluye-item">${item}</li>`)
-    .join("");
-
-  el.innerHTML = `
-    <div class="pricing-content">
-      <p class="precio-rango">${d.rango}</p>
-      <p class="precio-nota">${d.nota.replace(/\n/g, "<br>")}</p>
-      <ul class="incluye-lista">${incluyeHTML}</ul>
-    </div>
-  `;
-}
-
-// --- 4e. Políticas ---
+// --- 4d. Políticas ---
 // Términos de pago y condiciones.
 
 /**
@@ -680,6 +667,82 @@ function getPosicionVisualNube(track) {
 }
 
 /**
+ * Obtiene los anchos mínimo/máximo de nubes según viewport.
+ * @returns {{ anchoMin: number, anchoMax: number }}
+ */
+function obtenerRangoAnchoNubes() {
+  const esMobile = window.innerWidth <= 600;
+  return {
+    anchoMin: esMobile ? 80 : 120,
+    anchoMax: esMobile ? 150 : 220,
+  };
+}
+
+/**
+ * Calcula la velocidad horizontal de una nube en px/s en función de su ancho.
+ * Nubes más pequeñas se mueven más rápido.
+ * @param {number} ancho
+ * @returns {number}
+ */
+function calcularVelocidadNube(ancho) {
+  const { anchoMin, anchoMax } = obtenerRangoAnchoNubes();
+  const rango = Math.max(1, anchoMax - anchoMin);
+  const factorVelocidad = 1 - (ancho - anchoMin) / rango;
+  const factor = Math.max(0, Math.min(1, factorVelocidad));
+  return 20 + factor * 30 + Math.random() * 15;
+}
+
+/**
+ * Reanuda una nube desde su X actual hacia la derecha y,
+ * al terminar, la devuelve al flujo normal de re-entrada.
+ * @param {HTMLElement} track
+ */
+function reanudarNubeDesdePosicionActual(track) {
+  if (!track?.isConnected) return;
+
+  const vw    = window.innerWidth;
+  const banda = parseInt(track.dataset.banda, 10) || 0;
+  const ancho = parseFloat(track.style.width) || track.offsetWidth || 0;
+  const x     = parseFloat(track.style.left) || 0;
+  const destinoX = vw + ancho;
+  const distancia = Math.max(0, destinoX - x);
+
+  track.getAnimations().forEach(a => a.cancel());
+  track.style.transform = "none";
+
+  // Si ya está prácticamente fuera, reiniciar ciclo normal directamente.
+  if (distancia < 1) {
+    if (typeof track._configurarNube === "function") {
+      track._configurarNube(track, banda, false, null);
+    }
+    return;
+  }
+
+  const velocidad = calcularVelocidadNube(ancho);
+  const duracionMs = (distancia / velocidad) * 1000;
+
+  const anim = track.animate(
+    [
+      { transform: "translateX(0px)" },
+      { transform: `translateX(${distancia}px)` },
+    ],
+    {
+      duration: duracionMs,
+      iterations: 1,
+      easing: "linear",
+      fill: "forwards",
+    }
+  );
+
+  anim.onfinish = () => {
+    if (!track.isConnected) return;
+    if (typeof track._configurarNube === "function") {
+      track._configurarNube(track, banda, false, null);
+    }
+  };
+}
+
+/**
  * Reinicia la animación normal de una nube tras ser arrastrada/lanzada.
  * @param {HTMLElement} track
  */
@@ -823,6 +886,7 @@ function onCloudPointerUp(e) {
  */
 function medirPosicionesGrid() {
   const gridContainer = document.getElementById("portfolio-grid");
+  const wasVisible = gridContainer.classList.contains("visible");
 
   // Forzar layout sin flash visual
   gridContainer.style.visibility    = "hidden";
@@ -835,7 +899,7 @@ function medirPosicionesGrid() {
   const rects = Array.from(items).map(item => item.getBoundingClientRect());
 
   // Restaurar
-  gridContainer.classList.remove("visible");
+  gridContainer.classList.toggle("visible", wasVisible);
   gridContainer.style.visibility    = "";
   gridContainer.style.opacity       = "";
   gridContainer.style.pointerEvents = "";
@@ -928,10 +992,18 @@ function animarNubesAGrid(cloudsEl, gridEl, btn) {
   // 5. Al completar, mostrar grid real y ocultar nubes
   Promise.all(animations.map(a => a.finished)).then(() => {
     cloudsEl.classList.remove("transitioning");
+
+    // Swap instantáneo para evitar blink entre fin de vuelo y fade del grid.
+    const prevTransition = gridEl.style.transition;
+    gridEl.style.transition = "none";
     gridEl.classList.add("visible");
+    gridEl.offsetHeight;
+    gridEl.style.transition = prevTransition;
+
     cloudsEl.style.opacity       = "0";
     cloudsEl.style.pointerEvents = "none";
     if (btn) btn.textContent = "dispersar";
+    sincronizarEstadoNubes();
     portfolioAnimating = false;
   });
 }
@@ -958,8 +1030,7 @@ function animarGridANubes(cloudsEl, gridEl, btn) {
   const margenInferior = vh * 0.10;
   const alturaUtil     = Math.max(0, vh - margenSuperior - margenInferior);
   const alturaBanda    = alturaUtil / numBandas;
-  const anchoMin = esMobile ? 80 : 120;
-  const anchoMax = esMobile ? 150 : 220;
+  const { anchoMin, anchoMax } = obtenerRangoAnchoNubes();
 
   const targets = tracks.map((_, i) => {
     const banda = i % numBandas;
@@ -990,7 +1061,11 @@ function animarGridANubes(cloudsEl, gridEl, btn) {
   });
 
   // 4. Ahora sí: hacer nubes visibles y ocultar grid (sin flash, ya están posicionadas)
+  const prevTransition = gridEl.style.transition;
+  gridEl.style.transition = "none";
   gridEl.classList.remove("visible");
+  gridEl.offsetHeight;
+  gridEl.style.transition = prevTransition;
   cloudsEl.style.opacity       = "1";
   cloudsEl.style.pointerEvents = "auto";
   cloudsEl.classList.add("transitioning");
@@ -1030,30 +1105,33 @@ function animarGridANubes(cloudsEl, gridEl, btn) {
 
   if (btn) btn.textContent = "ordenar";
 
-  // 6. Al completar, rebuildir nubes con animación normal.
-  //    Ocultar temporalmente para evitar flash durante el rebuild.
+  // 6. Al completar, reenganchar cada nube al flujo horizontal sin rebuild.
   Promise.all(animations.map(a => a.finished)).then(() => {
     cloudsEl.classList.remove("transitioning");
 
-    // Ocultar nubes durante el rebuild para evitar parpadeo
-    cloudsEl.style.opacity = "0";
-
-    // Cancelar fill:forwards y limpiar
-    tracks.forEach(track => {
+    // Fijar estado final visual y reanudar animación horizontal desde ahí.
+    tracks.forEach((track, i) => {
       track.getAnimations().forEach(a => a.cancel());
-      track.style.transform       = "";
+      track.style.transform = "";
       track.style.transformOrigin = "";
+
+      const to = targets[i];
+      if (!to) return;
+
+      track.style.left   = `${to.x}px`;
+      track.style.top    = `${to.y}px`;
+      track.style.width  = `${to.w}px`;
+      track.style.height = `${to.h}px`;
+
+      const item = track.querySelector(".portfolio-cloud-item");
+      if (item) item.style.animationPlayState = "running";
+
+      reanudarNubeDesdePosicionActual(track);
     });
 
-    // Rebuildir nubes desde cero para que retomen el flujo horizontal
-    const proyectos = obtenerDatos()?.portfolio?.proyectos;
-    if (proyectos) generarNubesFlotantes(proyectos);
-
-    // Mostrar nubes ya rebuildeadas en el siguiente frame
-    requestAnimationFrame(() => {
-      cloudsEl.style.opacity = "1";
-      portfolioAnimating = false;
-    });
+    portfolioCloudsNeedLayout = false;
+    sincronizarEstadoNubes();
+    portfolioAnimating = false;
   });
 }
 
@@ -1072,7 +1150,6 @@ async function renderizarContenido() {
   renderWelcome(data);
   renderStatement(data);
   renderMetodologia(data);
-  renderPricing(data);
   renderPoliticas(data);
   renderPortfolio(data);
 }
