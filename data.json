@@ -18,12 +18,12 @@
   },
   "statement": {
     "lineas": [
-      "meowrhino studio es un estudio de diseño web basado en Barcelona",
+      "somos un estudio de diseño web en Barcelona",
       "hacemos webs porque queremos conseguir un internet más común, cercano y divertido",
       "capacitamos al cliente para el mantenimiento de su proyecto",
       "buscamos un vínculo distinto con nuestros espacios digitales",
-      "trabajamos con código abierto",
-      "por un internet sin feudos ni rentas"
+      "pensamos fuera de la caja",
+      "evitamos las mensualidades innecesarias"
     ]
   },
   "metodologia": {
@@ -31,44 +31,43 @@
       {
         "semana": "semana 0",
         "titulo": "puesta en contacto",
-        "descripcion": "se estima una estructura de web\ny una línea estética\nse elabora un presupuesto",
+        "descripcion": "estructura, línea estética\ny presupuesto",
         "gridPos": "grid-row:1; grid-column:1 / span 2;"
       },
       {
         "semana": "semana 1",
         "titulo": "reunión presencial",
-        "descripcion": "puesta en común de referentes e ideas\nelaboración de un concepto con cliente\nse planea, prepara y decide\nla forma y el contenido de la web\n(primera propuesta de diseño).",
+        "descripcion": "referentes, concepto\ny primera propuesta de diseño",
         "gridPos": "grid-row:2; grid-column:2 / span 4;"
       },
       {
         "semana": "semana 2",
         "titulo": "cierre de diseño",
-        "descripcion": "revisión de diseño\nprimer pago",
+        "descripcion": "revisión de diseño\ny primer pago",
         "gridPos": "grid-row:1; grid-column:5 / span 2;"
       },
       {
         "semana": "semana 3",
         "titulo": "reunión presencial",
-        "descripcion": "preparación del ordenador\npara la actualización de la web",
+        "descripcion": "preparamos tu ordenador\npara actualizar la web",
         "gridPos": "grid-row:2; grid-column:6 / span 4;"
       },
       {
         "semana": "semana 4",
         "titulo": "cierre del proyecto",
-        "descripcion": "se da por testeada la web\ncualquier cambio se deberá abonar",
+        "descripcion": "web testeada y entregada\ncambios posteriores se presupuestan aparte",
         "gridPos": "grid-row:1; grid-column:9 / span 2;"
       }
     ]
   },
   "politicas": {
     "parrafos": [
-      "los pagos se dividen en dos mitades: la primera al cerrar el diseño y la segunda al finalizar la programación. si el proyecto se cancela después de cerrar diseño, la primera mitad no se devuelve; si se cancela antes, se cobra solo el trabajo realizado hasta ese momento.",
-      "el presupuesto cubre el alcance acordado y hasta 3 rondas de cambios durante la fase de diseño.",
-      "una vez se cierra el diseño y empieza la programación, no se aceptan cambios de diseño. cualquier cambio estructural o nueva funcionalidad fuera del alcance inicial se presupuesta aparte como una nueva fase.",
-      "trabajamos con código abierto",
-      "el cliente puede acceder, modificar y reutilizar el código libremente.",
-      "podemos mostrar el proyecto en nuestro portfolio, pero el cliente puede solicitar en cualquier momento la anonimización o retirada de datos sensibles y la actualización se aplicará.",
-      "evaluamos cada proyecto caso por caso para asegurar un encaje real y una colaboración sostenible para ambas partes."
+      "pago en dos fases: 50% al cerrar diseño, 50% al finalizar programación. si el proyecto se suspende, se abona proporcionalmente al trabajo invertido en cada fase. al iniciar programación, el diseño queda cerrado.",
+      "el presupuesto incluye el alcance acordado y hasta 3 rondas de cambios en fase de diseño.",
+      "cambios fuera del alcance inicial se presupuestan aparte.",
+      "trabajamos con código abierto: el cliente puede acceder, modificar y reutilizar el código libremente.",
+      "el proyecto se muestra en portfolio. un proyecto entregado no se retira salvo acuerdo y pago adicional.",
+      "elaboramos presupuestos personalizados según proyecto."
     ]
   },
   "portfolio": {

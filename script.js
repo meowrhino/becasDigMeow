@@ -305,6 +305,39 @@ let portfolioCloudsWereRunning = false;
 let portfolioCloudsRebuilding = false;
 
 /**
+ * @param {number} valor
+ * @param {number} min
+ * @param {number} max
+ * @returns {number}
+ */
+function clamp(valor, min, max) {
+  return Math.max(min, Math.min(max, valor));
+}
+
+/**
+ * Ajusta columnas y ratio del grid del portfolio según:
+ * - cantidad de proyectos
+ * - ancho/alto útil real del contenedor
+ * Solo se aplica en móvil/tablet; en desktop usa el CSS base.
+ */
+function ajustarLayoutGridPortfolio() {
+  const gridContainer = document.getElementById("portfolio-grid");
+  const grid = gridContainer?.querySelector(".portfolio-grid");
+  if (!grid || !gridContainer) return;
+
+  // Mantener CSS base en desktop.
+  if (window.innerWidth > 768) {
+    grid.style.removeProperty("--portfolio-columns");
+    grid.style.removeProperty("--portfolio-gap");
+    return;
+  }
+
+  // En mobile, el CSS ya define columnas y gap; solo ajustar si hace falta.
+  // Las imágenes determinan su propia altura (height: auto), así que no necesitamos
+  // calcular ratios — el contenedor scrollea si no cabe.
+}
+
+/**
  * Renderiza la estructura base del portfolio (contenedores + botón switch).
  * @param {Object} data - Datos del JSON.
  */
@@ -360,6 +393,7 @@ function renderPortfolio(data) {
     document.getElementById("portfolio-switch-btn").textContent = "dispersar";
   }
 
+  ajustarLayoutGridPortfolio();
   sincronizarEstadoNubes();
 }
 
@@ -761,6 +795,9 @@ function reiniciarNubeTrasDrag(track) {
   }
 }
 
+/** true si la nube ha sido congelada (animaciones canceladas) durante el drag. */
+let dragFrozen = false;
+
 function onCloudPointerDown(e) {
   if (portfolioMode !== "clouds" || portfolioAnimating) return;
   const track = e.target.closest(".portfolio-cloud-track");
@@ -771,6 +808,7 @@ function onCloudPointerDown(e) {
 
   draggedCloud = track;
   dragDidMove = false;
+  dragFrozen = false;
 
   // Cancelar throw en curso
   if (dragState.throwRAF) {
@@ -778,7 +816,21 @@ function onCloudPointerDown(e) {
     dragState.throwRAF = null;
   }
 
-  // Congelar la nube en su posición visual actual
+  // Guardar posición inicial del pointer (sin congelar la nube aún)
+  dragState.startX  = e.clientX;
+  dragState.startY  = e.clientY;
+  dragState.lastX   = e.clientX;
+  dragState.lastY   = e.clientY;
+  dragState.lastTime = performance.now();
+  dragState.velocityX = 0;
+  dragState.velocityY = 0;
+}
+
+/**
+ * Congela la nube en su posición visual actual (solo se llama al iniciar drag real).
+ * @param {HTMLElement} track
+ */
+function congelarNubeParaDrag(track) {
   const pos = getPosicionVisualNube(track);
   track.getAnimations().forEach(a => a.cancel());
   track.style.left      = `${pos.x}px`;
@@ -790,13 +842,7 @@ function onCloudPointerDown(e) {
 
   dragState.originX = pos.x;
   dragState.originY = pos.y;
-  dragState.startX  = e.clientX;
-  dragState.startY  = e.clientY;
-  dragState.lastX   = e.clientX;
-  dragState.lastY   = e.clientY;
-  dragState.lastTime = performance.now();
-  dragState.velocityX = 0;
-  dragState.velocityY = 0;
+  dragFrozen = true;
 }
 
 function onCloudPointerMove(e) {
@@ -813,6 +859,19 @@ function onCloudPointerMove(e) {
     const totalDx = e.clientX - dragState.startX;
     const totalDy = e.clientY - dragState.startY;
     if (Math.abs(totalDx) + Math.abs(totalDy) > 5) dragDidMove = true;
+  }
+
+  // Si es un drag real pero aún no hemos congelado la nube, congelarla ahora
+  if (dragDidMove && !dragFrozen) {
+    congelarNubeParaDrag(draggedCloud);
+  }
+
+  // Si la nube no está congelada, no moverla todavía
+  if (!dragFrozen) {
+    dragState.lastX    = e.clientX;
+    dragState.lastY    = e.clientY;
+    dragState.lastTime = now;
+    return;
   }
 
   // Velocidad suavizada (exponential moving average)
@@ -834,6 +893,9 @@ function onCloudPointerUp(e) {
   if (!draggedCloud) return;
   const track = draggedCloud;
   draggedCloud = null;
+
+  // Si no hubo drag real, no tocar la nube (dejar que siga su animación normal)
+  if (!dragFrozen) return;
 
   // Capar velocidad
   const maxVel = 2000;
@@ -887,6 +949,8 @@ function onCloudPointerUp(e) {
 function medirPosicionesGrid() {
   const gridContainer = document.getElementById("portfolio-grid");
   const wasVisible = gridContainer.classList.contains("visible");
+
+  ajustarLayoutGridPortfolio();
 
   // Forzar layout sin flash visual
   gridContainer.style.visibility    = "hidden";
@@ -1478,6 +1542,7 @@ let resizeTimeoutId = null;
 function alResizarViewport() {
   actualizarTamanoMinimapInline();
   actualizarTamanoMinimapExpandido();
+  ajustarLayoutGridPortfolio();
 
   // Reconstruir nubes si el portfolio está visible, o marcar para rebuild posterior
   const proyectos = obtenerDatos()?.portfolio?.proyectos;
