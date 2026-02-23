@@ -441,12 +441,12 @@ p, h1, h2, h3 {
 .statement-content {
   text-align: center;
   max-width: 800px;
-  line-height: 1.6;
+
   font-size: clamp(0.85rem, 1.2dvw, 1.15rem);
 }
 
 .statement-content p {
-  margin-bottom: 0.5em;
+  margin-bottom: 2em;
 }
 
 /* ============================================
