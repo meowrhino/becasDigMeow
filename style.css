@@ -606,6 +606,16 @@ p, h1, h2, h3 {
   will-change: transform;
 }
 
+/* Hover lock: una sola nube activa hasta salir de ella */
+.portfolio-clouds-container.has-hover-lock .portfolio-cloud-track {
+  pointer-events: none;
+}
+
+.portfolio-clouds-container.has-hover-lock .portfolio-cloud-track.is-hover-active {
+  pointer-events: auto;
+  z-index: 5 !important;
+}
+
 /* Item: screenshot flotando con deriva CSS */
 .portfolio-cloud-item {
   position: relative;
@@ -627,10 +637,6 @@ p, h1, h2, h3 {
   height: 100%;
   object-fit: cover;
   transition: opacity 0.3s ease;
-}
-
-.portfolio-cloud-item:hover img {
-  opacity: 0.88;
 }
 
 /* Nombre del proyecto: visible al hover */
@@ -728,16 +734,36 @@ p, h1, h2, h3 {
   cursor: pointer;
   transition: transform 0.3s ease;
   display: block;
+  position: relative;
 }
 
 .portfolio-item:hover {
   transform: translateY(-3px);
 }
 
-.portfolio-item img {
-  width: 100%;
-  height: auto;
+.portfolio-stack {
+  position: relative;
   display: block;
+}
+
+.portfolio-layer {
+  width: 100%;
+  display: block;
+}
+
+.portfolio-layer.is-primary {
+  position: relative;
+  z-index: 5;
+  height: auto;
+}
+
+.portfolio-layer.is-secondary {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
 }
 
 /* Responsive: portfolio grid columns */

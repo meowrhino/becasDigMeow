@@ -315,6 +315,83 @@ function clamp(valor, min, max) {
 }
 
 /**
+ * Devuelve el listado de imágenes de un proyecto.
+ *
+ * Convenciones soportadas:
+ * - Sin índice:  imagen = "img/web.png", imagenesSecundarias = 2
+ *   → ["img/web.png", "img/web1.png", "img/web2.png"]
+ * - Con índice 0: imagen = "img/web0.png", imagenesSecundarias = 2
+ *   → ["img/web0.png", "img/web1.png", "img/web2.png"]
+ *
+ * @param {{ imagen?: string, imagenesSecundarias?: number|string }} proyecto
+ * @returns {string[]}
+ */
+function obtenerImagenesProyecto(proyecto) {
+  const principal = typeof proyecto?.imagen === "string" ? proyecto.imagen.trim() : "";
+  if (!principal) return [];
+
+  const secundariasRaw = Number.parseInt(proyecto.imagenesSecundarias, 10);
+  const secundarias = Number.isFinite(secundariasRaw) ? Math.max(0, secundariasRaw) : 0;
+  if (secundarias === 0) return [principal];
+
+  const match = principal.match(/^(.*?)(\.[^./]+)$/);
+  if (!match) return [principal];
+
+  const base = match[1];
+  const ext = match[2];
+  const baseSinIndice = base.replace(/\d+$/, "");
+  const tieneIndice = baseSinIndice !== base;
+
+  if (tieneIndice) {
+    return Array.from(
+      { length: secundarias + 1 },
+      (_, i) => `${baseSinIndice}${i}${ext}`
+    );
+  }
+
+  const extras = Array.from(
+    { length: secundarias },
+    (_, i) => `${base}${i + 1}${ext}`
+  );
+  return [principal, ...extras];
+}
+
+/**
+ * Devuelve todas las "nubes" a renderizar en modo clouds:
+ * una entrada por cada imagen de cada proyecto.
+ *
+ * @param {{ nombre: string, imagen?: string, imagenesSecundarias?: number|string, url: string }[]} proyectos
+ * @returns {{ nombre: string, url: string, imagen: string, projectIndex: number, variantIndex: number }[]}
+ */
+function obtenerNubesPortfolio(proyectos) {
+  return proyectos.flatMap((proyecto, projectIndex) => {
+    const imagenesProyecto = obtenerImagenesProyecto(proyecto);
+    const imagenes = (imagenesProyecto.length ? imagenesProyecto : [proyecto.imagen || ""])
+      .filter(Boolean);
+
+    return imagenes.map((imagen, variantIndex) => ({
+      nombre: proyecto.nombre,
+      url: proyecto.url,
+      imagen,
+      projectIndex,
+      variantIndex,
+    }));
+  });
+}
+
+/**
+ * @param {HTMLElement} track
+ * @param {number} totalProyectos
+ * @returns {number}
+ */
+function obtenerIndiceProyectoTrack(track, totalProyectos) {
+  const raw = Number.parseInt(track?.dataset?.projectIndex, 10);
+  const max = Math.max(0, totalProyectos - 1);
+  if (!Number.isFinite(raw)) return 0;
+  return clamp(raw, 0, max);
+}
+
+/**
  * Ajusta columnas y ratio del grid del portfolio según:
  * - cantidad de proyectos
  * - ancho/alto útil real del contenedor
@@ -346,18 +423,29 @@ function renderPortfolio(data) {
   if (!el || !data?.portfolio) return;
 
   const proyectos = data.portfolio.proyectos;
+  const gridItemsHTML = proyectos.map(p => {
+    const imagenes = obtenerImagenesProyecto(p);
+    const capasHTML = imagenes.map((src, i) => {
+      const claseCapa = i === 0 ? "is-primary" : "is-secondary";
+      const alt = i === 0 ? p.nombre : "";
+      const ariaHidden = i === 0 ? "" : ` aria-hidden="true"`;
+      return `
+        <img class="portfolio-layer ${claseCapa}" src="${src}" alt="${alt}" loading="lazy"${ariaHidden}>
+      `;
+    }).join("");
+
+    return `
+      <a class="portfolio-item" href="${p.url}" target="_blank" rel="noopener" title="${p.nombre}">
+        <div class="portfolio-stack">${capasHTML}</div>
+      </a>
+    `;
+  }).join("");
 
   // Crear los dos contenedores (nubes y grid) + botón de cambio
   el.innerHTML = `
     <div class="portfolio-clouds-container" id="portfolio-clouds"></div>
     <div class="portfolio-grid-container" id="portfolio-grid">
-      <div class="portfolio-grid">${
-        proyectos.map(p => `
-          <a class="portfolio-item" href="${p.url}" target="_blank" rel="noopener" title="${p.nombre}">
-            <img src="${p.imagen}" alt="${p.nombre}" loading="lazy">
-          </a>
-        `).join("")
-      }</div>
+      <div class="portfolio-grid">${gridItemsHTML}</div>
     </div>
     <button class="portfolio-switch" id="portfolio-switch-btn">ordenar</button>
   `;
@@ -370,21 +458,11 @@ function renderPortfolio(data) {
   document.getElementById("portfolio-switch-btn")
     .addEventListener("click", alternarModoPortfolio);
 
-  // Drag-to-push: registrar pointer events con delegación
+  // Interacciones en nubes: hover lock (sin drag para no bloquear clicks)
   const cloudsContainer = document.getElementById("portfolio-clouds");
-  cloudsContainer.addEventListener("pointerdown", onCloudPointerDown);
+  cloudsContainer.addEventListener("pointerenter", onCloudPointerEnter);
   cloudsContainer.addEventListener("pointermove", onCloudPointerMove);
-  cloudsContainer.addEventListener("pointerup", onCloudPointerUp);
-  cloudsContainer.addEventListener("pointercancel", onCloudPointerUp);
-
-  // Prevenir navegación del <a> si hubo drag
-  cloudsContainer.addEventListener("click", (e) => {
-    if (dragDidMove) {
-      e.preventDefault();
-      e.stopPropagation();
-      dragDidMove = false;
-    }
-  }, true);
+  cloudsContainer.addEventListener("pointerleave", onCloudPointerLeave);
 
   // Si ya estaba en modo grid, aplicar ese estado visual
   if (portfolioMode === "grid") {
@@ -426,12 +504,14 @@ function shuffle(arr) {
 
 /**
  * Crea y anima las nubes flotantes del portfolio.
- * @param {{ nombre: string, imagen: string, url: string }[]} proyectos
+ * @param {{ nombre: string, imagen: string, imagenesSecundarias?: number|string, url: string }[]} proyectos
  */
 function generarNubesFlotantes(proyectos) {
   const container = document.getElementById("portfolio-clouds");
   if (!container) return;
   container.innerHTML = "";
+  const nubes = obtenerNubesPortfolio(proyectos);
+  if (!nubes.length) return;
 
   const vw = window.innerWidth;
   const vh = window.innerHeight;
@@ -449,7 +529,7 @@ function generarNubesFlotantes(proyectos) {
   const anchoMax = esMobile ? 150 : 220;
 
   // --- Anti-colisión: slots de X distribuidos uniformemente ---
-  const numItems = proyectos.length;
+  const numItems = nubes.length;
   const xSlots = Array.from({ length: numItems }, (_, i) => i);
   shuffle(xSlots);
 
@@ -488,18 +568,20 @@ function generarNubesFlotantes(proyectos) {
     track.style.top    = `${y}px`;
     track.style.width  = `${ancho}px`;
     track.style.height = `${alto}px`;
-    track.style.zIndex = 1 + Math.floor(Math.random() * 4);
+    track.style.zIndex = Math.floor(Math.random() * 5);
 
     // Calcular delay para posición inicial
     let delay = 0;
     if (esPrimeraVez) {
-      // Distribuir uniformemente en el viewport
-      const slotAncho = vw / numItems;
-      const slotX     = xSlot * slotAncho + Math.random() * slotAncho * 0.6;
-      const xInicial  = Math.max(0, Math.min(vw - ancho, Math.round(slotX)));
-      track.style.left = "0px";
-      // Delay negativo: la nube aparece en xInicial al tiempo 0
-      delay = -(xInicial / recorrido) * duracion;
+      // Distribución uniforme por progreso de animación para evitar "clusters"
+      // extraños en el primer render.
+      const progresoBase = (xSlot + 0.5) / numItems;
+      const jitterProgreso = (Math.random() - 0.5) * (0.35 / numItems);
+      const progresoInicial = clamp(progresoBase + jitterProgreso, 0, 1);
+      track.style.left = `${-ancho}px`;
+
+      // Delay negativo: la nube arranca en un punto distribuido del recorrido.
+      delay = -progresoInicial * duracion;
     } else {
       // Re-entrada desde el borde izquierdo
       track.style.left = `${-ancho}px`;
@@ -526,8 +608,8 @@ function generarNubesFlotantes(proyectos) {
     };
   }
 
-  // --- Crear elementos DOM para cada proyecto ---
-  proyectos.forEach((proyecto, i) => {
+  // --- Crear elementos DOM para cada imagen de cada proyecto ---
+  nubes.forEach((nube, i) => {
     const banda     = i % numBandas;
     const driftAnim = DRIFT_ANIMATIONS[i % DRIFT_ANIMATIONS.length];
     const driftDur  = 8 + Math.random() * 10;
@@ -540,10 +622,10 @@ function generarNubesFlotantes(proyectos) {
     // Link con imagen: tiene la animación de deriva vertical (CSS)
     const link = document.createElement("a");
     link.classList.add("portfolio-cloud-item");
-    link.href   = proyecto.url;
+    link.href   = nube.url;
     link.target = "_blank";
     link.rel    = "noopener";
-    link.title  = proyecto.nombre;
+    link.title  = nube.nombre;
     link.style.left = "0px";
 
     // Animación CSS de deriva vertical + rotación leve
@@ -554,18 +636,18 @@ function generarNubesFlotantes(proyectos) {
     link.style.animationIterationCount = "infinite";
     link.style.animationDirection      = "alternate";
 
-    // Imagen del screenshot
+    // Imagen única por nube (sin stack visual en movimiento)
     const img = document.createElement("img");
-    img.src      = proyecto.imagen;
-    img.alt      = proyecto.nombre;
-    img.loading  = "eager";
+    img.src = nube.imagen;
+    img.alt = nube.nombre;
+    img.loading = "eager";
     img.decoding = "async";
     link.appendChild(img);
 
     // Nombre visible al hover
     const nombre = document.createElement("span");
     nombre.classList.add("pcloud-name");
-    nombre.textContent = proyecto.nombre;
+    nombre.textContent = nube.nombre;
     link.appendChild(nombre);
 
     track.appendChild(link);
@@ -573,7 +655,10 @@ function generarNubesFlotantes(proyectos) {
 
     // Guardar metadata para poder reiniciar la nube tras un drag
     track.dataset.banda = String(banda);
+    track.dataset.projectIndex = String(nube.projectIndex);
+    track.dataset.variantIndex = String(nube.variantIndex);
     track._configurarNube = configurarNube;
+    track._cloudVariantSrc = nube.imagen;
 
     // Lanzar la animación inicial
     configurarNube(track, banda, true, xSlots[i]);
@@ -621,6 +706,13 @@ function sincronizarEstadoNubes() {
   const debeCorrer  = debenCorrerNubes();
   const estaResumiendo = debeCorrer && !portfolioCloudsWereRunning;
 
+  if (!debeCorrer) {
+    detenerMonitorHoverNubes();
+    limpiarHoverNubeActiva();
+  } else if (hoverPointerInside) {
+    iniciarMonitorHoverNubes();
+  }
+
   // Si necesita rebuild y debe correr, hacerlo primero
   if (portfolioCloudsNeedLayout && debeCorrer && !portfolioCloudsRebuilding) {
     portfolioCloudsRebuilding = true;
@@ -664,6 +756,197 @@ function sincronizarEstadoNubes() {
 // El usuario puede arrastrar una nube y "empujarla".
 // Al soltar, la nube se desliza con la velocidad del gesto
 // y luego se reincorpora al flujo horizontal normal.
+
+/** Track actualmente en hover lock, o null. */
+let hoverLockedCloud = null;
+
+/** Última posición conocida del puntero para resolver hover de forma estable. */
+let hoverPointerX = 0;
+let hoverPointerY = 0;
+let hoverPointerInside = false;
+let hoverMonitorRAF = null;
+
+/** @returns {boolean} true si el dispositivo soporta hover fino (mouse/trackpad). */
+function puedeUsarHoverNubes() {
+  return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+}
+
+/**
+ * @param {HTMLElement} track
+ * @returns {number}
+ */
+function obtenerZIndexTrack(track) {
+  const inlineZ = Number.parseInt(track?.style?.zIndex, 10);
+  if (Number.isFinite(inlineZ)) return inlineZ;
+  const computedZ = Number.parseInt(getComputedStyle(track).zIndex, 10);
+  if (Number.isFinite(computedZ)) return computedZ;
+  return 0;
+}
+
+/**
+ * Devuelve el track preferido bajo el puntero:
+ * el de z-index más alto entre los tracks que contienen ese punto.
+ *
+ * @param {number} clientX
+ * @param {number} clientY
+ * @param {HTMLElement} container
+ * @returns {HTMLElement|null}
+ */
+function obtenerTrackHoverPreferido(clientX, clientY, container) {
+  const tracks = Array.from(container.querySelectorAll(".portfolio-cloud-track"))
+    .filter(track => {
+      const r = track.getBoundingClientRect();
+      return (
+        r.width > 0 &&
+        r.height > 0 &&
+        clientX >= r.left &&
+        clientX <= r.right &&
+        clientY >= r.top &&
+        clientY <= r.bottom
+      );
+    });
+
+  if (!tracks.length) return null;
+
+  return tracks.reduce((preferido, candidato) => {
+    if (!preferido) return candidato;
+    const zPreferido = obtenerZIndexTrack(preferido);
+    const zCandidato = obtenerZIndexTrack(candidato);
+    if (zCandidato > zPreferido) return candidato;
+    return preferido;
+  }, null);
+}
+
+/**
+ * Activa el hover lock de una nube.
+ * @param {HTMLElement} track
+ */
+function activarHoverNube(track) {
+  const container = document.getElementById("portfolio-clouds");
+  if (!container || !track || !track.isConnected) return;
+
+  limpiarHoverNubeActiva();
+  hoverLockedCloud = track;
+  track.classList.add("is-hover-active");
+  container.classList.add("has-hover-lock");
+}
+
+/** Limpia el hover lock actual. */
+function limpiarHoverNubeActiva() {
+  const container = document.getElementById("portfolio-clouds");
+  if (container) container.classList.remove("has-hover-lock");
+
+  if (hoverLockedCloud?.isConnected) {
+    hoverLockedCloud.classList.remove("is-hover-active");
+  }
+
+  if (container) {
+    container
+      .querySelectorAll(".portfolio-cloud-track.is-hover-active")
+      .forEach(track => track.classList.remove("is-hover-active"));
+  }
+
+  hoverLockedCloud = null;
+}
+
+/**
+ * @param {HTMLElement} track
+ * @param {number} clientX
+ * @param {number} clientY
+ * @returns {boolean}
+ */
+function puntoDentroTrack(track, clientX, clientY) {
+  if (!track?.isConnected) return false;
+  const r = track.getBoundingClientRect();
+  return (
+    r.width > 0 &&
+    r.height > 0 &&
+    clientX >= r.left &&
+    clientX <= r.right &&
+    clientY >= r.top &&
+    clientY <= r.bottom
+  );
+}
+
+/**
+ * Actualiza el hover lock según la posición del puntero.
+ * - Solo una nube puede estar activa.
+ * - Si el puntero sigue dentro de la activa, no cambia.
+ * - Si sale, se elige otra (priorizando z-index más alto).
+ *
+ * @param {number} clientX
+ * @param {number} clientY
+ */
+function actualizarHoverNubesEnPunto(clientX, clientY) {
+  if (!puedeUsarHoverNubes()) return;
+  if (portfolioMode !== "clouds" || portfolioAnimating || draggedCloud) return;
+
+  const container = document.getElementById("portfolio-clouds");
+  if (!container) return;
+
+  if (hoverLockedCloud && puntoDentroTrack(hoverLockedCloud, clientX, clientY)) {
+    return;
+  }
+
+  limpiarHoverNubeActiva();
+  const preferida = obtenerTrackHoverPreferido(clientX, clientY, container);
+  if (!preferida) return;
+  activarHoverNube(preferida);
+}
+
+/** Limpia hover lock al salir del contenedor de nubes. */
+function onCloudPointerLeave() {
+  hoverPointerInside = false;
+  detenerMonitorHoverNubes();
+  limpiarHoverNubeActiva();
+}
+
+/**
+ * @returns {boolean}
+ */
+function debeMonitorearHoverNubes() {
+  return (
+    hoverPointerInside &&
+    puedeUsarHoverNubes() &&
+    portfolioMode === "clouds" &&
+    esPortfolioActivo() &&
+    !portfolioAnimating &&
+    !draggedCloud
+  );
+}
+
+/** Inicia el monitor de hover continuo (RAF) si aplica. */
+function iniciarMonitorHoverNubes() {
+  if (hoverMonitorRAF !== null) return;
+
+  const tick = () => {
+    hoverMonitorRAF = null;
+    if (!debeMonitorearHoverNubes()) return;
+    actualizarHoverNubesEnPunto(hoverPointerX, hoverPointerY);
+    hoverMonitorRAF = requestAnimationFrame(tick);
+  };
+
+  hoverMonitorRAF = requestAnimationFrame(tick);
+}
+
+/** Detiene el monitor de hover continuo. */
+function detenerMonitorHoverNubes() {
+  if (hoverMonitorRAF === null) return;
+  cancelAnimationFrame(hoverMonitorRAF);
+  hoverMonitorRAF = null;
+}
+
+/**
+ * Registra entrada del puntero en el contenedor de nubes.
+ * @param {PointerEvent} e
+ */
+function onCloudPointerEnter(e) {
+  hoverPointerInside = true;
+  hoverPointerX = e.clientX;
+  hoverPointerY = e.clientY;
+  actualizarHoverNubesEnPunto(hoverPointerX, hoverPointerY);
+  iniciarMonitorHoverNubes();
+}
 
 /** Track actualmente siendo arrastrado, o null. */
 let draggedCloud = null;
@@ -803,6 +1086,12 @@ function onCloudPointerDown(e) {
   const track = e.target.closest(".portfolio-cloud-track");
   if (!track) return;
 
+  hoverPointerInside = true;
+  hoverPointerX = e.clientX;
+  hoverPointerY = e.clientY;
+  detenerMonitorHoverNubes();
+  limpiarHoverNubeActiva();
+
   e.preventDefault();
   track.setPointerCapture(e.pointerId);
 
@@ -846,7 +1135,14 @@ function congelarNubeParaDrag(track) {
 }
 
 function onCloudPointerMove(e) {
-  if (!draggedCloud) return;
+  if (!draggedCloud) {
+    hoverPointerInside = true;
+    hoverPointerX = e.clientX;
+    hoverPointerY = e.clientY;
+    actualizarHoverNubesEnPunto(e.clientX, e.clientY);
+    iniciarMonitorHoverNubes();
+    return;
+  }
   e.preventDefault();
 
   const now = performance.now();
@@ -894,8 +1190,16 @@ function onCloudPointerUp(e) {
   const track = draggedCloud;
   draggedCloud = null;
 
+  hoverPointerInside = true;
+  hoverPointerX = e.clientX;
+  hoverPointerY = e.clientY;
+
   // Si no hubo drag real, no tocar la nube (dejar que siga su animación normal)
-  if (!dragFrozen) return;
+  if (!dragFrozen) {
+    actualizarHoverNubesEnPunto(e.clientX, e.clientY);
+    iniciarMonitorHoverNubes();
+    return;
+  }
 
   // Capar velocidad
   const maxVel = 2000;
@@ -908,6 +1212,7 @@ function onCloudPointerUp(e) {
 
   if (speed < minSpeed) {
     reiniciarNubeTrasDrag(track);
+    iniciarMonitorHoverNubes();
     return;
   }
 
@@ -933,6 +1238,7 @@ function onCloudPointerUp(e) {
   }
 
   dragState.throwRAF = requestAnimationFrame(throwStep);
+  iniciarMonitorHoverNubes();
 }
 
 // ============================================
@@ -977,6 +1283,8 @@ function medirPosicionesGrid() {
 function alternarModoPortfolio() {
   if (portfolioAnimating) return;
   portfolioAnimating = true;
+  detenerMonitorHoverNubes();
+  limpiarHoverNubeActiva();
 
   const cloudsEl = document.getElementById("portfolio-clouds");
   const gridEl   = document.getElementById("portfolio-grid");
@@ -996,6 +1304,20 @@ function animarNubesAGrid(cloudsEl, gridEl, btn) {
   portfolioMode = "grid";
 
   const tracks = Array.from(cloudsEl.querySelectorAll(".portfolio-cloud-track"));
+  const proyectos = obtenerDatos()?.portfolio?.proyectos || [];
+
+  // Forzar imagen principal al ordenar (siempre la primera del proyecto)
+  tracks.forEach(track => {
+    const projectIndex = obtenerIndiceProyectoTrack(track, proyectos.length);
+    const proyecto = proyectos[projectIndex];
+    if (!proyecto) return;
+
+    const imagenPrincipal = obtenerImagenesProyecto(proyecto)[0] || proyecto.imagen || "";
+    if (!imagenPrincipal) return;
+
+    const img = track.querySelector(".portfolio-cloud-item img");
+    if (img) img.src = imagenPrincipal;
+  });
 
   // 1. Pausar CSS drift y congelar posiciones (todo síncrono, sin frames intermedios)
   const cloudPositions = tracks.map(track => {
@@ -1027,10 +1349,12 @@ function animarNubesAGrid(cloudsEl, gridEl, btn) {
   const duration     = 700;
   const staggerDelay = 40;
   const animations   = [];
+  const totalProyectos = gridRects.length;
 
   tracks.forEach((track, i) => {
     const from = cloudPositions[i];
-    const to   = gridRects[i];
+    const projectIndex = obtenerIndiceProyectoTrack(track, totalProyectos);
+    const to = gridRects[projectIndex];
     if (!from || !to) return;
 
     const targetX = to.left - portfolioRect.left;
@@ -1081,9 +1405,18 @@ function animarGridANubes(cloudsEl, gridEl, btn) {
 
   const tracks = Array.from(cloudsEl.querySelectorAll(".portfolio-cloud-track"));
 
+  // Recuperar la imagen variante de cada nube al volver a dispersar.
+  tracks.forEach(track => {
+    const variante = track._cloudVariantSrc;
+    if (!variante) return;
+    const img = track.querySelector(".portfolio-cloud-item img");
+    if (img) img.src = variante;
+  });
+
   // 1. Medir posiciones del grid (aún visible)
   const gridRects     = medirPosicionesGrid();
   const portfolioRect = document.querySelector(".celda.portfolio").getBoundingClientRect();
+  const totalProyectos = gridRects.length;
 
   // 2. Generar posiciones random de destino
   const vw       = window.innerWidth;
@@ -1110,12 +1443,13 @@ function animarGridANubes(cloudsEl, gridEl, btn) {
   // 3. ANTES de hacer visibles las nubes: cancelar animaciones previas y
   //    posicionar cada track exactamente donde estaba su grid item.
   //    Así cuando se hagan visibles ya están en la posición correcta.
-  tracks.forEach((track, i) => {
+  tracks.forEach((track) => {
     track.getAnimations().forEach(a => a.cancel());
     track.style.transform       = "";
     track.style.transformOrigin = "top left";
 
-    const fromRect = gridRects[i];
+    const projectIndex = obtenerIndiceProyectoTrack(track, totalProyectos);
+    const fromRect = gridRects[projectIndex];
     if (!fromRect) return;
 
     track.style.left   = `${fromRect.left - portfolioRect.left}px`;
@@ -1140,7 +1474,8 @@ function animarGridANubes(cloudsEl, gridEl, btn) {
   const animations   = [];
 
   tracks.forEach((track, i) => {
-    const fromRect = gridRects[i];
+    const projectIndex = obtenerIndiceProyectoTrack(track, totalProyectos);
+    const fromRect = gridRects[projectIndex];
     if (!fromRect) return;
 
     const fromX = fromRect.left - portfolioRect.left;
@@ -1563,8 +1898,89 @@ function programarResize() {
   resizeTimeoutId = setTimeout(alResizarViewport, 120);
 }
 
+let resumeCloudsTimeoutId = null;
+let lastHiddenAt = 0;
+
+/**
+ * Reanuda nubes tras volver de background sin recolocarlas aleatoriamente.
+ * Si una nube perdió su animación WAAPI, continúa desde su posición actual.
+ */
+function reanudarNubesTrasRetornoSinRecolocar() {
+  const cloudsEl = document.getElementById("portfolio-clouds");
+  if (!cloudsEl) return;
+
+  const tracks = Array.from(cloudsEl.querySelectorAll(".portfolio-cloud-track"));
+  tracks.forEach(track => {
+    const item = track.querySelector(".portfolio-cloud-item");
+    if (item) item.style.animationPlayState = "running";
+
+    const animaciones = track.getAnimations();
+    if (animaciones.length > 0) return;
+
+    const left = parseFloat(track.style.left);
+    const top = parseFloat(track.style.top);
+    const tienePosicion = Number.isFinite(left) && Number.isFinite(top);
+
+    if (tienePosicion) {
+      reanudarNubeDesdePosicionActual(track);
+      return;
+    }
+
+    const banda = parseInt(track.dataset.banda, 10) || 0;
+    if (typeof track._configurarNube === "function") {
+      track._configurarNube(track, banda, false, null);
+    }
+  });
+}
+
+/**
+ * Rehidrata el estado de nubes tras volver desde background/BFCache.
+ * Esto evita estados colapsados si el navegador suspende WAAPI.
+ */
+function rehidratarPortfolioTrasRetorno(forzarRebuild = false) {
+  if (resumeCloudsTimeoutId) clearTimeout(resumeCloudsTimeoutId);
+
+  resumeCloudsTimeoutId = setTimeout(() => {
+    const proyectos = obtenerDatos()?.portfolio?.proyectos;
+    const cloudsEl = document.getElementById("portfolio-clouds");
+    if (!proyectos || !cloudsEl) return;
+
+    if (portfolioMode === "clouds") {
+      if (esPortfolioActivo()) {
+        if (forzarRebuild) {
+          generarNubesFlotantes(proyectos);
+          portfolioCloudsNeedLayout = false;
+        } else {
+          reanudarNubesTrasRetornoSinRecolocar();
+        }
+      } else {
+        portfolioCloudsNeedLayout = true;
+      }
+    }
+
+    sincronizarEstadoNubes();
+  }, 80);
+}
+
+/** Sincroniza/reconstruye nubes cuando la pestaña cambia de visibilidad. */
+function onVisibilityChange() {
+  if (document.hidden) {
+    lastHiddenAt = Date.now();
+    hoverPointerInside = false;
+    detenerMonitorHoverNubes();
+    limpiarHoverNubeActiva();
+    sincronizarEstadoNubes();
+    return;
+  }
+
+  const hiddenMs = lastHiddenAt > 0 ? Date.now() - lastHiddenAt : 0;
+  const forzarRebuild = hiddenMs > 90_000;
+  rehidratarPortfolioTrasRetorno(forzarRebuild);
+}
+
 window.addEventListener("resize", programarResize);
 window.addEventListener("orientationchange", programarResize);
+document.addEventListener("visibilitychange", onVisibilityChange);
 
 // ============================================
 // 11. INICIALIZACIÓN
