@@ -797,12 +797,20 @@ p, h1, h2, h3 {
 
 /* --- Botón switch (alternar clouds/grid) --- */
 
-.portfolio-switch {
+/* Grupo bottom en portfolio: switch + nav label apilados */
+.nav-label-group.bottom {
   position: absolute;
   bottom: 3dvh;
   left: 50%;
   transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2em;
   z-index: 25;
+}
+
+.portfolio-switch {
   font-family: "Inknut Antiqua", serif;
   font-size: clamp(0.7rem, 1dvw, 1rem);
   color: #999;
@@ -816,5 +824,64 @@ p, h1, h2, h3 {
 }
 
 .portfolio-switch:hover {
+  color: #000;
+}
+
+.nav-label-inline {
+  font-family: "Inknut Antiqua", serif;
+  font-size: clamp(0.7rem, 1dvw, 1rem);
+  color: #999;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  letter-spacing: 0.05em;
+}
+
+.nav-label-inline:hover {
+  color: #000;
+}
+
+/* ============================================
+   12. PAGE: CONTACTO
+   Página minimalista de contacto: email + Instagram.
+   ============================================ */
+
+.celda.contacto {
+  align-items: center;
+  justify-content: center;
+}
+
+.contacto-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5em;
+}
+
+.contacto-email {
+  font-size: clamp(1rem, 2dvw, 1.6rem);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: #000;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contacto-email:hover {
+  color: #999;
+}
+
+.contacto-instagram {
+  font-size: clamp(0.7rem, 1dvw, 0.95rem);
+  font-weight: 400;
+  color: #999;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: color 0.3s ease;
+}
+
+.contacto-instagram:hover {
   color: #000;
 }

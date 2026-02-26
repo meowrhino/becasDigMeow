@@ -139,5 +139,12 @@
         "url": "https://meowrhino.github.io/maxito/"
       }
     ]
+  },
+  "contacto": {
+    "email": "hola@meowrhino.studio",
+    "instagram": {
+      "usuario": "@meowrhino.studio",
+      "url": "https://instagram.com/meowrhino.studio"
+    }
   }
 }

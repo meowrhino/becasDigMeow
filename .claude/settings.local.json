@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(node -c:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "mcp__Claude_Preview__preview_start"
     ]
   }
 }

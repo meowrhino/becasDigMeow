@@ -28,6 +28,7 @@ const app = document.getElementById("content");
 const GRID = [
   [1, 1, 1, 1], // fila 0: políticas, metodología, welcome, statement
   [0, 0, 1, 0], // fila 1: _, _, portfolio, _
+  [0, 0, 1, 0], // fila 2: _, _, contacto, _
 ];
 
 /** Mapa de coordenadas "fila_columna" → nombre legible de la celda. */
@@ -37,6 +38,7 @@ const NOMBRES_CELDAS = {
   "0_2": "welcome",
   "0_3": "statement",
   "1_2": "portfolio",
+  "2_2": "contacto",
 };
 
 /** Posición actual del usuario en el grid. */
@@ -100,6 +102,7 @@ const CLASE_CSS = {
   "welcome":     "welcome",
   "statement":   "statement",
   "portfolio":   "portfolio",
+  "contacto":    "contacto",
 };
 
 /**
@@ -441,22 +444,17 @@ function renderPortfolio(data) {
     `;
   }).join("");
 
-  // Crear los dos contenedores (nubes y grid) + botón de cambio
+  // Crear los dos contenedores (nubes y grid)
   el.innerHTML = `
     <div class="portfolio-clouds-container" id="portfolio-clouds"></div>
     <div class="portfolio-grid-container" id="portfolio-grid">
       <div class="portfolio-grid">${gridItemsHTML}</div>
     </div>
-    <button class="portfolio-switch" id="portfolio-switch-btn">ordenar</button>
   `;
 
   // Generar animación de nubes
   generarNubesFlotantes(proyectos);
   portfolioCloudsNeedLayout = false;
-
-  // Botón para alternar entre modos
-  document.getElementById("portfolio-switch-btn")
-    .addEventListener("click", alternarModoPortfolio);
 
   // Interacciones en nubes: hover lock (sin drag para no bloquear clicks)
   const cloudsContainer = document.getElementById("portfolio-clouds");
@@ -468,7 +466,6 @@ function renderPortfolio(data) {
   if (portfolioMode === "grid") {
     document.getElementById("portfolio-grid").classList.add("visible");
     document.getElementById("portfolio-clouds").style.opacity = "0";
-    document.getElementById("portfolio-switch-btn").textContent = "dispersar";
   }
 
   ajustarLayoutGridPortfolio();
@@ -1319,7 +1316,7 @@ function animarNubesAGrid(cloudsEl, gridEl, btn) {
     if (img) img.src = imagenPrincipal;
   });
 
-  // 1. Pausar CSS drift y congelar posiciones (todo síncrono, sin frames intermedios)
+  // 1. Pausar CSS drift, compensar su offset y congelar posiciones (todo síncrono)
   const cloudPositions = tracks.map(track => {
     const item = track.querySelector(".portfolio-cloud-item");
     if (item) item.style.animationPlayState = "paused";
@@ -1328,13 +1325,25 @@ function animarNubesAGrid(cloudsEl, gridEl, btn) {
     const w = parseFloat(track.style.width) || track.offsetWidth;
     const h = parseFloat(track.style.height) || track.offsetHeight;
 
-    // Cancelar WAAPI y fijar posición visual en un solo paso
+    // Obtener offset vertical del drift CSS pausado (translateY de la animación)
+    let driftTy = 0;
+    if (item) {
+      const ct = getComputedStyle(item).transform;
+      if (ct && ct !== "none") {
+        const m = ct.match(/matrix\(([^)]+)\)/);
+        if (m) driftTy = parseFloat(m[1].split(",")[5]) || 0;
+      }
+      // Eliminar drift para que no interfiera con la transición
+      item.style.animationName = "none";
+    }
+
+    // Cancelar WAAPI y fijar posición visual compensando el drift
     track.getAnimations().forEach(a => a.cancel());
     track.style.left            = `${pos.x}px`;
-    track.style.top             = `${pos.y}px`;
-    track.style.transformOrigin = "top left";
+    track.style.top             = `${pos.y + driftTy}px`;
+    track.style.transformOrigin = "center center";
 
-    return { x: pos.x, y: pos.y, w, h };
+    return { x: pos.x, y: pos.y + driftTy, w, h };
   });
 
   // 2. Medir posiciones target del grid
@@ -1347,7 +1356,8 @@ function animarNubesAGrid(cloudsEl, gridEl, btn) {
   // 4. Animar cada nube a su posición en el grid
   //    Arrancamos con transform en la identidad (posición ya fijada por left/top)
   const duration     = 700;
-  const staggerDelay = 40;
+  const maxStagger   = 350;
+  const staggerDelay = Math.min(40, maxStagger / Math.max(1, tracks.length));
   const animations   = [];
   const totalProyectos = gridRects.length;
 
@@ -1359,10 +1369,11 @@ function animarNubesAGrid(cloudsEl, gridEl, btn) {
 
     const targetX = to.left - portfolioRect.left;
     const targetY = to.top - portfolioRect.top;
-    const dx = targetX - from.x;
-    const dy = targetY - from.y;
     const sx = to.width / from.w;
     const sy = to.height / from.h;
+    // Centro-a-centro para escalar desde el centro de cada nube
+    const dx = (targetX + to.width / 2) - (from.x + from.w / 2);
+    const dy = (targetY + to.height / 2) - (from.y + from.h / 2);
 
     const anim = track.animate([
       { transform: "translate(0px, 0px) scale(1, 1)" },
@@ -1446,7 +1457,11 @@ function animarGridANubes(cloudsEl, gridEl, btn) {
   tracks.forEach((track) => {
     track.getAnimations().forEach(a => a.cancel());
     track.style.transform       = "";
-    track.style.transformOrigin = "top left";
+    track.style.transformOrigin = "center center";
+
+    // Limpiar drift CSS del child para alinear exactamente con el grid
+    const item = track.querySelector(".portfolio-cloud-item");
+    if (item) item.style.animationName = "none";
 
     const projectIndex = obtenerIndiceProyectoTrack(track, totalProyectos);
     const fromRect = gridRects[projectIndex];
@@ -1470,7 +1485,8 @@ function animarGridANubes(cloudsEl, gridEl, btn) {
 
   // 5. Animar cada nube de posición-grid a posición-random
   const duration     = 700;
-  const staggerDelay = 40;
+  const maxStagger   = 350;
+  const staggerDelay = Math.min(40, maxStagger / Math.max(1, tracks.length));
   const animations   = [];
 
   tracks.forEach((track, i) => {
@@ -1484,10 +1500,11 @@ function animarGridANubes(cloudsEl, gridEl, btn) {
     const fromH = fromRect.height;
     const to    = targets[i];
 
-    const dx = to.x - fromX;
-    const dy = to.y - fromY;
     const sx = to.w / fromW;
     const sy = to.h / fromH;
+    // Centro-a-centro para escalar desde el centro
+    const dx = (to.x + to.w / 2) - (fromX + fromW / 2);
+    const dy = (to.y + to.h / 2) - (fromY + fromH / 2);
 
     const anim = track.animate([
       { transform: "translate(0, 0) scale(1, 1)" },
@@ -1522,8 +1539,19 @@ function animarGridANubes(cloudsEl, gridEl, btn) {
       track.style.width  = `${to.w}px`;
       track.style.height = `${to.h}px`;
 
+      // Re-establecer drift CSS con parámetros frescos
       const item = track.querySelector(".portfolio-cloud-item");
-      if (item) item.style.animationPlayState = "running";
+      if (item) {
+        const driftAnim = DRIFT_ANIMATIONS[i % DRIFT_ANIMATIONS.length];
+        const driftDur  = 8 + Math.random() * 10;
+        item.style.animationName           = driftAnim;
+        item.style.animationDuration       = `${driftDur}s`;
+        item.style.animationDelay          = `${-(Math.random() * driftDur)}s`;
+        item.style.animationTimingFunction = "ease-in-out";
+        item.style.animationIterationCount = "infinite";
+        item.style.animationDirection      = "alternate";
+        item.style.animationPlayState      = "running";
+      }
 
       reanudarNubeDesdePosicionActual(track);
     });
@@ -1551,6 +1579,24 @@ async function renderizarContenido() {
   renderMetodologia(data);
   renderPoliticas(data);
   renderPortfolio(data);
+  renderContacto(data);
+}
+
+/**
+ * Renderiza la página de contacto.
+ * @param {Object} data - Datos del JSON.
+ */
+function renderContacto(data) {
+  const el = document.querySelector(".celda.contacto");
+  if (!el || !data?.contacto) return;
+
+  const { email, instagram } = data.contacto;
+  el.innerHTML = `
+    <div class="contacto-content">
+      <a class="contacto-email" href="mailto:${email}">${email}</a>
+      <a class="contacto-instagram" href="${instagram.url}" target="_blank" rel="noopener">${instagram.usuario}</a>
+    </div>
+  `;
 }
 
 // ============================================
@@ -1756,10 +1802,17 @@ function getVecinos() {
  * @param {HTMLElement} celda - La celda activa.
  */
 function crearNavLabels(celda) {
-  // Limpiar labels anteriores
+  // Limpiar labels y grupos anteriores
   celda.querySelectorAll(".nav-label").forEach(l => l.remove());
+  celda.querySelectorAll(".nav-label-group").forEach(l => l.remove());
 
-  Object.entries(getVecinos()).forEach(([pos, info]) => {
+  const isPortfolio = celda.classList.contains("portfolio");
+  const vecinos = getVecinos();
+
+  Object.entries(vecinos).forEach(([pos, info]) => {
+    // En portfolio, el bottom se gestiona aparte (grupo con switch + nav)
+    if (isPortfolio && pos === "bottom") return;
+
     const label = document.createElement("button");
     label.classList.add("nav-label", pos);
     label.textContent = info.nombre;
@@ -1770,6 +1823,33 @@ function crearNavLabels(celda) {
     });
     celda.appendChild(label);
   });
+
+  // En portfolio: crear grupo bottom con botón switch + nav label contacto
+  if (isPortfolio) {
+    const group = document.createElement("div");
+    group.classList.add("nav-label-group", "bottom");
+
+    const switchBtn = document.createElement("button");
+    switchBtn.classList.add("portfolio-switch");
+    switchBtn.id = "portfolio-switch-btn";
+    switchBtn.textContent = portfolioMode === "clouds" ? "ordenar" : "dispersar";
+    switchBtn.addEventListener("click", alternarModoPortfolio);
+    group.appendChild(switchBtn);
+
+    if (vecinos.bottom) {
+      const navBtn = document.createElement("button");
+      navBtn.classList.add("nav-label-inline");
+      navBtn.textContent = vecinos.bottom.nombre;
+      navBtn.addEventListener("click", () => {
+        posY = vecinos.bottom.y;
+        posX = vecinos.bottom.x;
+        actualizarVista();
+      });
+      group.appendChild(navBtn);
+    }
+
+    celda.appendChild(group);
+  }
 }
 
 // ============================================
