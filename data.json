@@ -81,7 +81,7 @@
       {
         "nombre": "andrea carilla",
         "imagen": "img/andreacarilla.webp",
-        "imagenesSecundarias": 2,
+        "imagenesSecundarias": 1,
         "url": "https://andreacarilla.work"
       },
       {
@@ -93,7 +93,7 @@
       {
         "nombre": "mike bros",
         "imagen": "img/mikebros.webp",
-        "imagenesSecundarias": 2,
+        "imagenesSecundarias": 1,
         "url": "https://mikebros.com"
       },
       {
@@ -111,40 +111,41 @@
       {
         "nombre": "berta esteve",
         "imagen": "img/bertaesteve.webp",
-        "imagenesSecundarias": 2,
+        "imagenesSecundarias": 1,
         "url": "https://bertaesteve.cat"
       },
       {
         "nombre": "paula barjau",
         "imagen": "img/paulabarjau.webp",
-        "imagenesSecundarias": 2,
+        "imagenesSecundarias": 1,
         "url": "https://paulabarjau.studio"
       },
       {
         "nombre": "jaume clotet",
         "imagen": "img/jaumeclotet.webp",
-        "imagenesSecundarias": 2,
+        "imagenesSecundarias": 1,
         "url": "https://jaumeclotet.com"
       },
       {
         "nombre": "el mundo de las jordis",
         "imagen": "img/elmundodelasjordis.webp",
-        "imagenesSecundarias": 2,
+        "imagenesSecundarias": 1,
         "url": "https://elmundodelasjordis.com"
       },
       {
         "nombre": "maxito",
         "imagen": "img/maxito.webp",
-        "imagenesSecundarias": 2,
+        "imagenesSecundarias": 0,
         "url": "https://meowrhino.github.io/maxito/"
       }
     ]
   },
   "contacto": {
     "email": "hola@meowrhino.studio",
+    "asunto": "consulta sobre proyecto web",
     "instagram": {
-      "usuario": "@meowrhino.studio",
-      "url": "https://instagram.com/meowrhino.studio"
+      "usuario": "@meowrhino",
+      "url": "https://instagram.com/meowrhino"
     }
   }
 }

@@ -516,7 +516,7 @@ function generarNubesFlotantes(proyectos) {
 
   // --- Distribución vertical en bandas ---
   const margenSuperior = vh * 0.15;
-  const margenInferior = vh * 0.10;
+  const margenInferior = vh * 0.15;
   const alturaUtil     = Math.max(0, vh - margenSuperior - margenInferior);
   const numBandas      = esMobile ? 4 : 5;
   const alturaBanda    = alturaUtil / numBandas;
@@ -1590,10 +1590,15 @@ function renderContacto(data) {
   const el = document.querySelector(".celda.contacto");
   if (!el || !data?.contacto) return;
 
-  const { email, instagram } = data.contacto;
+  const { email, instagram, asunto, cuerpo } = data.contacto;
+  const params = new URLSearchParams();
+  if (asunto) params.set("subject", asunto);
+  if (cuerpo) params.set("body", cuerpo);
+  const mailtoHref = `mailto:${email}${params.toString() ? `?${params.toString()}` : ""}`;
+
   el.innerHTML = `
     <div class="contacto-content">
-      <a class="contacto-email" href="mailto:${email}">${email}</a>
+      <a class="contacto-email" href="${mailtoHref}">${email}</a>
       <a class="contacto-instagram" href="${instagram.url}" target="_blank" rel="noopener">${instagram.usuario}</a>
     </div>
   `;
