@@ -26,23 +26,24 @@ const app = document.getElementById("content");
  * 1 = celda activa, 0 = celda vacía (no navegable).
  */
 const GRID = [
-  [1, 1, 1, 1], // fila 0: políticas, metodología, welcome, statement
-  [0, 0, 1, 0], // fila 1: _, _, portfolio, _
-  [0, 0, 1, 0], // fila 2: _, _, contacto, _
+  [0, 0, 1, 0], // fila 0: _, _, tools, _
+  [1, 1, 1, 1], // fila 1: metodología, políticas, welcome, statement
+  [0, 1, 1, 0], // fila 2: _, contacto, portfolio, _
 ];
 
 /** Mapa de coordenadas "fila_columna" → nombre legible de la celda. */
 const NOMBRES_CELDAS = {
-  "0_0": "políticas",
-  "0_1": "metodología",
-  "0_2": "welcome",
-  "0_3": "statement",
-  "1_2": "portfolio",
-  "2_2": "contacto",
+  "0_2": "tools",
+  "1_0": "metodología",
+  "1_1": "políticas",
+  "1_2": "welcome",
+  "1_3": "statement",
+  "2_1": "contacto",
+  "2_2": "portfolio",
 };
 
 /** Posición actual del usuario en el grid. */
-let posY = 0;
+let posY = 1;
 let posX = 2; // empieza en "welcome"
 
 // ============================================
@@ -97,6 +98,7 @@ function obtenerDatos() {
  * Las clases CSS no llevan tildes para evitar problemas de encoding.
  */
 const CLASE_CSS = {
+  "tools":       "tools",
   "políticas":   "politicas",
   "metodología": "metodologia",
   "welcome":     "welcome",
@@ -135,18 +137,90 @@ function crearCeldas() {
 // 4. RENDERIZADO DE PÁGINAS
 // ============================================
 
-// --- 4a. Welcome ---
-// Muestra el título del estudio y una lista de herramientas/links
-// con secciones desplegables (formateadores, webs terminadas).
-// Todos los datos se leen de data.json (welcome.herramientas, welcome.formateadores, portfolio.proyectos).
+// --- 4a. Tools ---
+// Página de herramientas internas del estudio.
+
+/**
+ * Renderiza la página de herramientas.
+ * @param {Object} data - Datos del JSON.
+ */
+function renderTools(data) {
+  const el = document.querySelector(".celda.tools");
+  if (!el || !data?.tools) return;
+
+  const herramientas  = data.tools.herramientas || [];
+  const conversores   = data.tools.conversores || [];
+  const formateadores = data.welcome?.formateadores || [];
+  const websTerminadas = (data.portfolio?.proyectos || []).map(p => ({ nombre: p.nombre, url: p.url }));
+
+  const linksHTML = herramientas.map(crearLinkHTML).join("");
+  const dropdownsHTML = [
+    crearDropdownHTML("conversores", conversores, "dd_conversores"),
+    crearDropdownHTML("formateadores", formateadores, "dd_formateadores"),
+    crearDropdownHTML("webs terminadas", websTerminadas, "dd_webs"),
+  ].join("");
+
+  el.innerHTML = `
+    <div class="politicas-top-hint politicas-scroll-hint hidden">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <polyline points="4,10 8,6 12,10"/>
+      </svg>
+    </div>
+    <div class="tools-content">
+      <div class="tools-list">${linksHTML}${dropdownsHTML}</div>
+    </div>
+    <div class="politicas-scroll-hint tools-bottom-hint">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <polyline points="4,6 8,10 12,6"/>
+      </svg>
+    </div>
+  `;
+
+  // Lógica de abrir/cerrar desplegables (accordion)
+  el.querySelectorAll(".tools-dropdown-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const target = document.getElementById(btn.dataset.target);
+      if (!target) return;
+      const willOpen = !target.classList.contains("open");
+      el.querySelectorAll(".tools-dropdown-content.open").forEach(d => d.classList.remove("open"));
+      el.querySelectorAll(".tools-dropdown-btn.active").forEach(b => b.classList.remove("active"));
+      target.classList.toggle("open", willOpen);
+      btn.classList.toggle("active", willOpen);
+    });
+  });
+
+  // Scroll hints
+  const content = el.querySelector(".tools-content");
+  const topHint = el.querySelector(".politicas-top-hint");
+  const bottomHint = el.querySelector(".tools-bottom-hint");
+  if (content) {
+    const checkScroll = () => {
+      const atTop = content.scrollTop <= 10;
+      const atBottom = content.scrollTop + content.clientHeight >= content.scrollHeight - 10;
+      const noScroll = content.scrollHeight <= content.clientHeight;
+      if (topHint) topHint.classList.toggle("hidden", atTop || noScroll);
+      if (bottomHint) bottomHint.classList.toggle("hidden", atBottom || noScroll);
+    };
+    content.addEventListener("scroll", checkScroll);
+    checkScroll();
+    new ResizeObserver(() => checkScroll()).observe(content);
+  }
+}
+
+// --- 4b. Welcome ---
+// Solo el título del estudio.
 
 /**
  * Genera el HTML de un enlace tipo tarjeta.
  * @param {{ nombre: string, url: string }} item
  * @returns {string} HTML del enlace.
  */
+/** true si el viewport es táctil / móvil. */
+const esMovil = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
 function crearLinkHTML(item) {
-  return `<a class="tool-link" href="${item.url}" target="_blank" rel="noopener">${item.nombre}</a>`;
+  const target = esMovil ? "" : ' target="_blank"';
+  return `<a class="tool-link" href="${item.url}"${target} rel="noopener">${item.nombre}</a>`;
 }
 
 /**
@@ -175,47 +249,18 @@ function crearDropdownHTML(titulo, items, uid) {
 }
 
 /**
- * Renderiza la página de bienvenida con el título y los links/herramientas.
+ * Renderiza la página de bienvenida (solo título).
  * @param {Object} data - Datos del JSON.
  */
 function renderWelcome(data) {
   const el = document.querySelector(".celda.welcome");
   if (!el || !data) return;
 
-  const herramientas  = data.welcome?.herramientas || [];
-  const formateadores = data.welcome?.formateadores || [];
-  const websTerminadas = (data.portfolio?.proyectos || []).map(p => ({ nombre: p.nombre, url: p.url }));
-
-  const linksHTML = herramientas.map(crearLinkHTML).join("");
-  const dropdownsHTML = [
-    crearDropdownHTML("formateadores", formateadores, "dd_formateadores"),
-    crearDropdownHTML("webs terminadas", websTerminadas, "dd_webs"),
-  ].join("");
-
   el.innerHTML = `
     <div class="welcome-content">
       <h1 class="welcome-title">${data.welcome.titulo}</h1>
-      <div class="welcome-tools">${linksHTML}${dropdownsHTML}</div>
     </div>
   `;
-
-  // Lógica de abrir/cerrar desplegables (accordion)
-  el.querySelectorAll(".tools-dropdown-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const target = document.getElementById(btn.dataset.target);
-      if (!target) return;
-
-      const willOpen = !target.classList.contains("open");
-
-      // Cerrar todos los desplegables abiertos
-      el.querySelectorAll(".tools-dropdown-content.open").forEach(d => d.classList.remove("open"));
-      el.querySelectorAll(".tools-dropdown-btn.active").forEach(b => b.classList.remove("active"));
-
-      // Abrir el seleccionado (si no estaba abierto)
-      target.classList.toggle("open", willOpen);
-      btn.classList.toggle("active", willOpen);
-    });
-  });
 }
 
 // --- 4b. Statement ---
@@ -284,7 +329,29 @@ function renderPoliticas(data) {
     .map(p => `<p>${p.replace(/\n/g, "<br>")}</p>`)
     .join("");
 
-  el.innerHTML = `<div class="politicas-content">${html}</div>`;
+  const nota = data.politicas.nota
+    ? `<p class="politicas-nota">${data.politicas.nota}</p>`
+    : "";
+
+  el.innerHTML = `
+    <div class="politicas-content">${html}${nota}</div>
+    <div class="politicas-bottom-bar">
+      <button class="politicas-font-btn" data-action="decrease">−</button>
+      <button class="politicas-font-btn" data-action="increase">+</button>
+    </div>
+  `;
+
+  const content = el.querySelector(".politicas-content");
+
+  // Botones +/- tamaño de texto
+  let fontScale = 1;
+  el.querySelectorAll(".politicas-font-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const step = btn.dataset.action === "increase" ? 0.1 : -0.1;
+      fontScale = Math.max(0.7, Math.min(1.5, fontScale + step));
+      content.style.fontSize = `calc(0.88rem * ${fontScale})`;
+    });
+  });
 }
 
 // --- 4f. Portfolio ---
@@ -438,7 +505,7 @@ function renderPortfolio(data) {
     }).join("");
 
     return `
-      <a class="portfolio-item" href="${p.url}" target="_blank" rel="noopener" title="${p.nombre}">
+      <a class="portfolio-item" href="${p.url}"${esMovil ? "" : ' target="_blank"'} rel="noopener" title="${p.nombre}">
         <div class="portfolio-stack">${capasHTML}</div>
       </a>
     `;
@@ -620,7 +687,7 @@ function generarNubesFlotantes(proyectos) {
     const link = document.createElement("a");
     link.classList.add("portfolio-cloud-item");
     link.href   = nube.url;
-    link.target = "_blank";
+    if (!esMovil) link.target = "_blank";
     link.rel    = "noopener";
     link.title  = nube.nombre;
     link.style.left = "0px";
@@ -1574,6 +1641,7 @@ async function renderizarContenido() {
   const data = obtenerDatos();
   if (!data) return;
 
+  renderTools(data);
   renderWelcome(data);
   renderStatement(data);
   renderMetodologia(data);
@@ -1599,7 +1667,7 @@ function renderContacto(data) {
   el.innerHTML = `
     <div class="contacto-content">
       <a class="contacto-email" href="${mailtoHref}">${email}</a>
-      <a class="contacto-instagram" href="${instagram.url}" target="_blank" rel="noopener">${instagram.usuario}</a>
+      <a class="contacto-instagram" href="${instagram.url}"${esMovil ? "" : ' target="_blank"'} rel="noopener">${instagram.usuario}</a>
     </div>
   `;
 }
@@ -1876,7 +1944,7 @@ function actualizarHash() {
  * @returns {boolean} true si se encontró una celda válida en el hash.
  */
 function leerHash() {
-  const hash = window.location.hash.replace("#", "").toLowerCase().trim();
+  const hash = decodeURIComponent(window.location.hash.replace("#", "")).toLowerCase().trim();
   if (!hash) return false;
 
   for (const [key, nombre] of Object.entries(NOMBRES_CELDAS)) {

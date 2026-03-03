@@ -262,22 +262,20 @@ p, h1, h2, h3 {
 }
 
 /* ============================================
-   7. PAGE: WELCOME
-   Título centrado fijo + lista vertical de links
-   estilo linktree con dropdowns desplegables.
+   7. PAGE: TOOLS
+   Herramientas internas del estudio.
+   Reutiliza los estilos de .tool-link y .tools-dropdown-*.
    ============================================ */
 
-.celda.welcome {
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  padding: 0 10dvw;
-  background-color: transparent;
+.celda.tools {
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
-.welcome-content {
-  width: 100%;
-  max-height: 85dvh;
+.tools-content {
+  width: 90dvw;
+  max-width: 1000px;
+  height: 80dvh;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
@@ -287,34 +285,38 @@ p, h1, h2, h3 {
   align-items: center;
 }
 
-/* Título fijo en la parte superior */
-.welcome-title {
-  position: fixed;
-  top: 18dvh;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: clamp(1.6rem, 3.5dvw, 3rem);
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  text-align: center;
-  white-space: nowrap;
-  pointer-events: none;
-  z-index: 2;
-}
-
-/* Contenedor de la lista de herramientas */
-.welcome-tools {
-  position: relative;
-  z-index: 3;
-  width: 70vw;
+.tools-list {
   width: 70dvw;
   max-width: 800px;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin-top: auto;
-  margin-bottom: auto;
-  padding: 1rem 0;
+}
+
+/* ============================================
+   8. PAGE: WELCOME
+   Solo el título del estudio, centrado.
+   ============================================ */
+
+.celda.welcome {
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.welcome-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome-title {
+  font-size: clamp(1.6rem, 3.5dvw, 3rem);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-align: center;
+  white-space: nowrap;
 }
 
 /* Link tipo tarjeta (cada herramienta/proyecto) */
@@ -556,9 +558,16 @@ p, h1, h2, h3 {
 
 .politicas-content {
   text-align: center;
+  width: 80dvw;
   max-width: 720px;
+  height: 80dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
   line-height: 1.7;
-  font-size: clamp(0.7rem, 0.85dvw, 0.88rem);
+  font-size: 0.88rem;
+  padding-bottom: 5dvh;
 }
 
 .politicas-content p {
@@ -566,11 +575,76 @@ p, h1, h2, h3 {
   color: #333;
 }
 
-/* Último párrafo más tenue (valores del estudio) */
+/* Último párrafo más tenue (compromiso del estudio) */
 .politicas-content p:last-child {
   margin-bottom: 0;
   color: #888;
   font-size: 0.88em;
+}
+
+/* Nota final: "aceptar el presupuesto..." */
+.politicas-nota {
+  margin-top: 2em;
+  font-weight: 600;
+  color: #000 !important;
+  font-size: 1em !important;
+}
+
+/* Wrapper para centrar contenedor + barra verticalmente */
+.celda.politicas {
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* Barra inferior: − + en una sola fila */
+.politicas-bottom-bar {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+/* Hints de scroll: parpadeo suave */
+.politicas-scroll-hint {
+  opacity: 0;
+  display: flex;
+  animation: politicas-pulse 3s ease-in-out infinite;
+}
+
+.politicas-scroll-hint.hidden {
+  animation: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.politicas-scroll-hint svg {
+  width: 18px;
+  height: 18px;
+  color: rgba(0,0,0,0.3);
+}
+
+@keyframes politicas-pulse {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.35; }
+}
+
+.politicas-font-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: none;
+  color: rgba(0,0,0,0.35);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+  padding: 0;
+}
+
+.politicas-font-btn:hover {
+  color: rgba(0,0,0,0.7);
 }
 
 /* ============================================

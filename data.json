@@ -1,19 +1,23 @@
 {
   "welcome": {
     "titulo": "meowrhino studio",
-    "herramientas": [
-      { "nombre": "imgToWeb",               "url": "https://meowrhino.github.io/imgToWeb/" },
-      { "nombre": "videoToWeb",             "url": "https://meowrhino.github.io/videoToWeb/" },
-      { "nombre": "colorfun",               "url": "https://meowrhino.github.io/colorFun/" },
-      { "nombre": "trackr",                 "url": "https://meowrhino.github.io/trackr/" },
-      { "nombre": "calculadora impuestos",  "url": "https://meowrhino.github.io/calculadoraInversa/" },
-      { "nombre": "generador facturas",     "url": "https://meowrhino.github.io/generadorFacturas/" }
-    ],
     "formateadores": [
       { "nombre": "paula",   "url": "https://meowrhino.github.io/paulabarjau/formateador.html" },
       { "nombre": "miranda", "url": "https://meowrhino.github.io/mirandaperezhita/formateador.html" },
       { "nombre": "andrea",  "url": "https://meowrhino.github.io/andreacarilla/formateador.html" },
       { "nombre": "jaume",   "url": "https://meowrhino.github.io/jaumeclotet/formateador.html" }
+    ]
+  },
+  "tools": {
+    "herramientas": [
+      { "nombre": "trackr",                 "url": "https://meowrhino.github.io/trackr/" },
+      { "nombre": "colorfun",               "url": "https://meowrhino.github.io/colorFun/" },
+      { "nombre": "calculadora impuestos",  "url": "https://meowrhino.github.io/calculadoraInversa/" },
+      { "nombre": "generador facturas",     "url": "https://meowrhino.github.io/generadorFacturas/" }
+    ],
+    "conversores": [
+      { "nombre": "imgToWeb",   "url": "https://meowrhino.github.io/imgToWeb/" },
+      { "nombre": "videoToWeb", "url": "https://meowrhino.github.io/videoToWeb/" }
     ]
   },
   "statement": {
@@ -62,13 +66,16 @@
   },
   "politicas": {
     "parrafos": [
-      "pago en dos fases: 50% al cerrar diseño, 50% al finalizar programación. si el proyecto se suspende, se abona proporcionalmente al trabajo invertido en cada fase. al iniciar programación, el diseño queda cerrado.",
-      "el presupuesto incluye el alcance acordado y hasta 3 rondas de cambios en fase de diseño.",
-      "cambios fuera del alcance inicial se presupuestan aparte.",
-      "trabajamos con código abierto: el cliente puede acceder, modificar y reutilizar el código libremente.",
-      "el proyecto se muestra en portfolio. un proyecto entregado no se retira salvo acuerdo y pago adicional.",
-      "elaboramos presupuestos personalizados según proyecto."
-    ]
+      "diseñamos y desarrollamos páginas web a medida con tecnología jamstack. los datos de tu web los gestiona un archivo que aprendes a leer y modificar: puedes añadir, eliminar y cambiar textos, imágenes y archivos sin depender de nadie.",
+      "el código es tuyo. puedes usarlo, transformarlo, continuarlo o dárselo a quien quieras. meowrhino.studio conserva una copia de cada proyecto como registro de autoría y para garantizar que el código sea siempre libre y accesible.",
+      "para iniciar un proyecto necesitamos todo el material listo: textos, imágenes y contenido. también una identidad visual mínima (logo, paleta de color, tipografía). si no se dispone de ella, se puede presupuestar como parte del proyecto. no trabajamos con placeholders.",
+      "cada proyecto incluye 2 entregas (diseño y código) y hasta 3 rondas de revisiones. cada ronda puede incluir varios cambios, pero una vez enviada, los siguientes cambios pertenecen a la siguiente ronda. cualquier cambio derivado de trabajar con material incompleto cuenta como revisión. las rondas extra se presupuestan a 60€/hora.",
+      "pago en dos fases: 50% al cerrar diseño, 50% al finalizar programación.",
+      "la primera reunión es gratuita. a partir de la primera entrega se consume parte del presupuesto. puedes parar el proyecto en cualquier momento abonando la parte proporcional de lo trabajado. si se retoma más adelante, se abre un nuevo presupuesto.",
+      "nos reservamos la posibilidad de publicar el proyecto en nuestro portfolio y redes sociales. a la finalización de la web, planteamos la posibilidad de un post conjunto en instagram.",
+      "nuestro compromiso es diseñar una web que entiendas, que puedas mantener y que pueda crecer contigo."
+    ],
+    "nota": "aceptar el presupuesto significa aceptar estas condiciones."
   },
   "portfolio": {
     "proyectos": [
