@@ -325,21 +325,29 @@ function renderPoliticas(data) {
   const el = document.querySelector(".celda.politicas");
   if (!el || !data?.politicas) return;
 
-  const html = data.politicas.parrafos
-    .map(p => `<p>${p.replace(/\n/g, "<br>")}</p>`)
-    .join("");
+  let politicasLang = "es";
+  const langs = ["es", "en", "cat"];
 
-  const nota = data.politicas.nota
-    ? `<p class="politicas-nota">${data.politicas.nota}</p>`
-    : "";
+  const buildContent = (lang) => {
+    const d = data.politicas[lang];
+    if (!d) return "";
+    const html = d.parrafos.map(p => `<p>${p.replace(/\n/g, "<br>")}</p>`).join("");
+    const nota = d.nota ? `<p class="politicas-nota">${d.nota}</p>` : "";
+    return html + nota;
+  };
 
   el.innerHTML = `
     <div class="politicas-scroll-wrapper">
-      <div class="politicas-content">${html}${nota}</div>
+      <div class="politicas-content">${buildContent(politicasLang)}</div>
     </div>
     <div class="politicas-bottom-bar">
-      <button class="politicas-font-btn" data-action="increase">+</button>
-      <button class="politicas-font-btn" data-action="decrease">−</button>
+      <div class="politicas-font-group">
+        <button class="politicas-font-btn" data-action="increase">+</button>
+        <button class="politicas-font-btn" data-action="decrease">−</button>
+      </div>
+      <div class="politicas-lang-group">
+        ${langs.map(l => `<button class="politicas-lang-btn${l === politicasLang ? " active" : ""}" data-lang="${l}">${l}</button>`).join("")}
+      </div>
     </div>
   `;
 
@@ -368,6 +376,30 @@ function renderPoliticas(data) {
       fontScale = Math.max(0.7, Math.min(1.5, fontScale + step));
       content.style.fontSize = `calc(0.88rem * ${fontScale})`;
       requestAnimationFrame(checkScroll);
+    });
+  });
+
+  // Selector de idioma con fade
+  el.querySelectorAll(".politicas-lang-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const lang = btn.dataset.lang;
+      if (lang === politicasLang) return;
+      politicasLang = lang;
+
+      // Fade out
+      content.style.opacity = "0";
+      setTimeout(() => {
+        content.innerHTML = buildContent(lang);
+        content.scrollTop = 0;
+        content.style.fontSize = `calc(0.88rem * ${fontScale})`;
+        checkScroll();
+        // Fade in
+        content.style.opacity = "1";
+      }, 250);
+
+      // Actualizar botón activo
+      el.querySelectorAll(".politicas-lang-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
     });
   });
 }

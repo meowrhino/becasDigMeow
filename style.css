@@ -600,6 +600,7 @@ p, h1, h2, h3 {
   line-height: 1.7;
   font-size: 0.88rem;
   padding-bottom: 5dvh;
+  transition: opacity 0.25s ease;
 }
 
 .politicas-content p {
@@ -628,14 +629,45 @@ p, h1, h2, h3 {
   gap: 0.6rem;
 }
 
-/* Barra inferior: − + en una sola fila */
+/* Barra inferior: +/- a la izquierda, idiomas a la derecha */
 .politicas-bottom-bar {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   width: 70dvw;
   max-width: 720px;
+}
+
+.politicas-font-group {
+  display: flex;
+  align-items: center;
   gap: 0;
+}
+
+.politicas-lang-group {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.politicas-lang-btn {
+  border: none;
+  background: none;
+  color: rgba(0,0,0,0.3);
+  font-family: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0.2rem 0.3rem;
+  transition: color 0.2s ease;
+}
+
+.politicas-lang-btn:hover {
+  color: rgba(0,0,0,0.6);
+}
+
+.politicas-lang-btn.active {
+  font-weight: 600;
+  color: #000;
 }
 
 /* Hints de scroll: parpadeo suave */
