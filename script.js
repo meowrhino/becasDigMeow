@@ -27,15 +27,15 @@ const app = document.getElementById("content");
  */
 const GRID = [
   [0, 0, 1, 0], // fila 0: _, _, tools, _
-  [1, 1, 1, 1], // fila 1: metodología, políticas, welcome, statement
+  [1, 1, 1, 1], // fila 1: políticas, metodología, welcome, statement
   [0, 1, 1, 0], // fila 2: _, contacto, portfolio, _
 ];
 
 /** Mapa de coordenadas "fila_columna" → nombre legible de la celda. */
 const NOMBRES_CELDAS = {
   "0_2": "tools",
-  "1_0": "metodología",
-  "1_1": "políticas",
+  "1_0": "políticas",
+  "1_1": "metodología",
   "1_2": "welcome",
   "1_3": "statement",
   "2_1": "contacto",
@@ -1496,6 +1496,22 @@ function cambiarColumnasPortfolio(delta) {
       easing: "cubic-bezier(0.4, 0, 0.2, 1)",
     });
   });
+
+  // Actualizar gradientes del scroll wrapper (tras completar animación FLIP)
+  setTimeout(() => grid.dispatchEvent(new Event("scroll")), 420);
+
+  actualizarBotonesColumnas();
+}
+
+/** Habilita/deshabilita los botones +/- según el nº actual de columnas. */
+function actualizarBotonesColumnas() {
+  const grid = document.querySelector(".portfolio-grid");
+  if (!grid) return;
+  const current = portfolioUserColumns || parseInt(getComputedStyle(grid).getPropertyValue("--portfolio-columns")) || 3;
+  const plusBtn = document.getElementById("portfolio-col-plus");
+  const minusBtn = document.getElementById("portfolio-col-minus");
+  if (plusBtn) plusBtn.disabled = current <= 1;
+  if (minusBtn) minusBtn.disabled = current >= 3;
 }
 
 function medirPosicionesGrid() {
@@ -1622,15 +1638,15 @@ function animarNubesAGrid(cloudsEl, gridEl, btn) {
 
     const targetX = to.left - portfolioRect.left;
     const targetY = to.top - portfolioRect.top;
-    const sx = to.width / from.w;
-    const sy = to.height / from.h;
+    // Escala uniforme (por ancho) para no distorsionar durante el vuelo
+    const s = to.width / from.w;
     // Centro-a-centro para escalar desde el centro de cada nube
     const dx = (targetX + to.width / 2) - (from.x + from.w / 2);
     const dy = (targetY + to.height / 2) - (from.y + from.h / 2);
 
     const anim = track.animate([
-      { transform: "translate(0px, 0px) scale(1, 1)" },
-      { transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})` },
+      { transform: "translate(0px, 0px) scale(1)" },
+      { transform: `translate(${dx}px, ${dy}px) scale(${s})` },
     ], {
       duration,
       delay: i * staggerDelay,
@@ -1657,6 +1673,9 @@ function animarNubesAGrid(cloudsEl, gridEl, btn) {
     if (btn) btn.textContent = "dispersar";
     const colBar = document.getElementById("portfolio-col-bar");
     if (colBar) colBar.style.display = "flex";
+    // Forzar check de gradientes del scroll wrapper (esperar al layout)
+    const gridScroll = gridEl.querySelector(".portfolio-grid");
+    if (gridScroll) setTimeout(() => gridScroll.dispatchEvent(new Event("scroll")), 50);
     sincronizarEstadoNubes();
     portfolioAnimating = false;
   });
@@ -1755,15 +1774,15 @@ function animarGridANubes(cloudsEl, gridEl, btn) {
     const fromH = fromRect.height;
     const to    = targets[i];
 
-    const sx = to.w / fromW;
-    const sy = to.h / fromH;
+    // Escala uniforme para no distorsionar
+    const s = to.w / fromW;
     // Centro-a-centro para escalar desde el centro
     const dx = (to.x + to.w / 2) - (fromX + fromW / 2);
     const dy = (to.y + to.h / 2) - (fromY + fromH / 2);
 
     const anim = track.animate([
-      { transform: "translate(0, 0) scale(1, 1)" },
-      { transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})` },
+      { transform: "translate(0, 0) scale(1)" },
+      { transform: `translate(${dx}px, ${dy}px) scale(${s})` },
     ], {
       duration,
       delay: i * staggerDelay,
@@ -2098,17 +2117,20 @@ function crearNavLabels(celda) {
 
     const plusBtn = document.createElement("button");
     plusBtn.classList.add("portfolio-col-btn");
+    plusBtn.id = "portfolio-col-plus";
     plusBtn.textContent = "+";
-    plusBtn.addEventListener("click", () => cambiarColumnasPortfolio(1));
+    plusBtn.addEventListener("click", () => cambiarColumnasPortfolio(-1));
 
     const minusBtn = document.createElement("button");
     minusBtn.classList.add("portfolio-col-btn");
+    minusBtn.id = "portfolio-col-minus";
     minusBtn.textContent = "\u2212";
-    minusBtn.addEventListener("click", () => cambiarColumnasPortfolio(-1));
+    minusBtn.addEventListener("click", () => cambiarColumnasPortfolio(1));
 
     colBar.appendChild(plusBtn);
     colBar.appendChild(minusBtn);
     celda.appendChild(colBar);
+    actualizarBotonesColumnas();
 
     const group = document.createElement("div");
     group.classList.add("nav-label-group", "bottom");

@@ -868,9 +868,10 @@ p, h1, h2, h3 {
   right: 0;
   height: 3rem;
   pointer-events: none;
-  z-index: 1;
+  z-index: 10;
   opacity: 0;
   transition: opacity 0.4s ease;
+  transform: translateZ(0);
 }
 
 .portfolio-grid-scroll-wrapper::before {
@@ -1033,8 +1034,14 @@ p, h1, h2, h3 {
   padding: 0;
 }
 
-.portfolio-col-btn:hover {
+.portfolio-col-btn:hover:not(:disabled) {
   color: rgba(0,0,0,0.7);
+}
+
+.portfolio-col-btn:disabled {
+  opacity: 0.2;
+  cursor: default;
+  pointer-events: none;
 }
 
 /* ============================================
