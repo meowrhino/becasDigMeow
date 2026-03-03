@@ -483,6 +483,9 @@ let portfolioMode = "clouds";
 /** Previene doble-click durante la transición entre modos. */
 let portfolioAnimating = false;
 
+/** Número de columnas seleccionado por el usuario (null = CSS default). */
+let portfolioUserColumns = null;
+
 /** true si el layout de las nubes necesita reconstruirse (ej: tras un resize). */
 let portfolioCloudsNeedLayout = false;
 
@@ -590,9 +593,9 @@ function ajustarLayoutGridPortfolio() {
   const grid = gridContainer?.querySelector(".portfolio-grid");
   if (!grid || !gridContainer) return;
 
-  // Mantener CSS base en desktop.
+  // Mantener CSS base en desktop (respetar columnas del usuario si las cambió).
   if (window.innerWidth > 768) {
-    grid.style.removeProperty("--portfolio-columns");
+    if (!portfolioUserColumns) grid.style.removeProperty("--portfolio-columns");
     grid.style.removeProperty("--portfolio-gap");
     return;
   }
@@ -633,7 +636,9 @@ function renderPortfolio(data) {
   el.innerHTML = `
     <div class="portfolio-clouds-container" id="portfolio-clouds"></div>
     <div class="portfolio-grid-container" id="portfolio-grid">
-      <div class="portfolio-grid">${gridItemsHTML}</div>
+      <div class="portfolio-grid-scroll-wrapper">
+        <div class="portfolio-grid">${gridItemsHTML}</div>
+      </div>
     </div>
   `;
 
@@ -655,6 +660,27 @@ function renderPortfolio(data) {
 
   ajustarLayoutGridPortfolio();
   sincronizarEstadoNubes();
+
+  // Restaurar columnas del usuario si las había cambiado
+  const gridEl = el.querySelector(".portfolio-grid");
+  if (portfolioUserColumns && gridEl) {
+    gridEl.style.setProperty("--portfolio-columns", portfolioUserColumns);
+  }
+
+  // Gradientes de scroll para el grid (mismo patrón que metodología)
+  const gridWrapper = el.querySelector(".portfolio-grid-scroll-wrapper");
+  if (gridEl && gridWrapper) {
+    const checkGridScroll = () => {
+      const atTop = gridEl.scrollTop <= 10;
+      const atBottom = gridEl.scrollTop + gridEl.clientHeight >= gridEl.scrollHeight - 10;
+      const noScroll = gridEl.scrollHeight <= gridEl.clientHeight;
+      gridWrapper.classList.toggle("can-scroll-up", !atTop && !noScroll);
+      gridWrapper.classList.toggle("can-scroll-down", !atBottom && !noScroll);
+    };
+    gridEl.addEventListener("scroll", checkGridScroll);
+    checkGridScroll();
+    new ResizeObserver(() => checkGridScroll()).observe(gridEl);
+  }
 }
 
 // ============================================
@@ -1434,11 +1460,53 @@ function onCloudPointerUp(e) {
  * Mide las posiciones de los items del grid forzando un layout temporal.
  * @returns {DOMRect[]} Bounding rects de cada .portfolio-item.
  */
+/**
+ * Cambia el número de columnas del grid del portfolio.
+ * @param {number} delta - +1 para más columnas, -1 para menos.
+ */
+function cambiarColumnasPortfolio(delta) {
+  const grid = document.querySelector(".portfolio-grid");
+  if (!grid) return;
+  const current = portfolioUserColumns || parseInt(getComputedStyle(grid).getPropertyValue("--portfolio-columns")) || 3;
+  const next = Math.max(1, Math.min(3, current + delta));
+  if (next === current) return;
+
+  // FLIP: capturar posiciones y tamaños antes del cambio
+  const items = Array.from(grid.querySelectorAll(".portfolio-item"));
+  const oldRects = items.map(item => item.getBoundingClientRect());
+
+  // Aplicar cambio
+  portfolioUserColumns = next;
+  grid.style.setProperty("--portfolio-columns", next);
+  grid.offsetHeight; // forzar reflow
+
+  // FLIP: animar desde posición antigua a nueva
+  items.forEach((item, i) => {
+    const newRect = item.getBoundingClientRect();
+    const dx = oldRects[i].left - newRect.left;
+    const dy = oldRects[i].top - newRect.top;
+    const sx = oldRects[i].width / newRect.width;
+    const sy = oldRects[i].height / newRect.height;
+
+    item.animate([
+      { transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`, transformOrigin: "top left" },
+      { transform: "translate(0, 0) scale(1, 1)", transformOrigin: "top left" },
+    ], {
+      duration: 400,
+      easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+    });
+  });
+}
+
 function medirPosicionesGrid() {
   const gridContainer = document.getElementById("portfolio-grid");
   const wasVisible = gridContainer.classList.contains("visible");
 
   ajustarLayoutGridPortfolio();
+
+  // Resetear scroll del grid antes de medir posiciones
+  const gridScroll = gridContainer.querySelector(".portfolio-grid");
+  if (gridScroll) gridScroll.scrollTop = 0;
 
   // Forzar layout sin flash visual
   gridContainer.style.visibility    = "hidden";
@@ -1587,6 +1655,8 @@ function animarNubesAGrid(cloudsEl, gridEl, btn) {
     cloudsEl.style.opacity       = "0";
     cloudsEl.style.pointerEvents = "none";
     if (btn) btn.textContent = "dispersar";
+    const colBar = document.getElementById("portfolio-col-bar");
+    if (colBar) colBar.style.display = "flex";
     sincronizarEstadoNubes();
     portfolioAnimating = false;
   });
@@ -1705,6 +1775,8 @@ function animarGridANubes(cloudsEl, gridEl, btn) {
   });
 
   if (btn) btn.textContent = "ordenar";
+  const colBar = document.getElementById("portfolio-col-bar");
+  if (colBar) colBar.style.display = "none";
 
   // 6. Al completar, reenganchar cada nube al flujo horizontal sin rebuild.
   Promise.all(animations.map(a => a.finished)).then(() => {
@@ -1993,9 +2065,10 @@ function getVecinos() {
  * @param {HTMLElement} celda - La celda activa.
  */
 function crearNavLabels(celda) {
-  // Limpiar labels y grupos anteriores
+  // Limpiar labels, grupos y barras anteriores
   celda.querySelectorAll(".nav-label").forEach(l => l.remove());
   celda.querySelectorAll(".nav-label-group").forEach(l => l.remove());
+  celda.querySelectorAll(".portfolio-bottom-bar").forEach(l => l.remove());
 
   const isPortfolio = celda.classList.contains("portfolio");
   const vecinos = getVecinos();
@@ -2017,6 +2090,26 @@ function crearNavLabels(celda) {
 
   // En portfolio: crear grupo bottom con botón switch + nav label contacto
   if (isPortfolio) {
+    // Barra +/- columnas (solo visible en modo grid)
+    const colBar = document.createElement("div");
+    colBar.classList.add("portfolio-bottom-bar");
+    colBar.id = "portfolio-col-bar";
+    if (portfolioMode !== "grid") colBar.style.display = "none";
+
+    const plusBtn = document.createElement("button");
+    plusBtn.classList.add("portfolio-col-btn");
+    plusBtn.textContent = "+";
+    plusBtn.addEventListener("click", () => cambiarColumnasPortfolio(1));
+
+    const minusBtn = document.createElement("button");
+    minusBtn.classList.add("portfolio-col-btn");
+    minusBtn.textContent = "\u2212";
+    minusBtn.addEventListener("click", () => cambiarColumnasPortfolio(-1));
+
+    colBar.appendChild(plusBtn);
+    colBar.appendChild(minusBtn);
+    celda.appendChild(colBar);
+
     const group = document.createElement("div");
     group.classList.add("nav-label-group", "bottom");
 
