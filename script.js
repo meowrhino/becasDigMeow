@@ -47,6 +47,51 @@ let posY = 1;
 let posX = 2; // empieza en "welcome"
 
 // ============================================
+// 1b. IDIOMA GLOBAL
+// ============================================
+
+const LANGS = ["es", "en", "cat"];
+let currentLang = localStorage.getItem("lang") || "es";
+if (!LANGS.includes(currentLang)) currentLang = "es";
+
+/** Callbacks de cada sección para actualizar su contenido al cambiar idioma. */
+const langUpdateCallbacks = [];
+
+/** Genera el HTML de los botones de idioma. */
+function buildLangButtons() {
+  return `<div class="lang-group">${LANGS.map(l =>
+    `<button class="lang-btn${l === currentLang ? " active" : ""}" data-lang="${l}">${l}</button>`
+  ).join("")}</div>`;
+}
+
+/** Sincroniza el estado visual de TODOS los .lang-btn en la página. */
+function syncAllLangButtons() {
+  document.querySelectorAll(".lang-btn").forEach(b => {
+    b.classList.toggle("active", b.dataset.lang === currentLang);
+  });
+}
+
+/**
+ * Conecta los botones de idioma dentro de un contenedor.
+ * @param {HTMLElement} container - Elemento que contiene los .lang-btn
+ * @param {Function} onLangChange - Callback(lang) para actualizar el contenido local con fade
+ */
+function attachLangListeners(container, onLangChange) {
+  langUpdateCallbacks.push(onLangChange);
+
+  container.querySelectorAll(".lang-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const lang = btn.dataset.lang;
+      if (lang === currentLang) return;
+      currentLang = lang;
+      localStorage.setItem("lang", lang);
+      syncAllLangButtons();
+      langUpdateCallbacks.forEach(cb => cb(lang));
+    });
+  });
+}
+
+// ============================================
 // 2. CARGA DE DATOS (data.json)
 // ============================================
 
@@ -161,18 +206,10 @@ function renderTools(data) {
   ].join("");
 
   el.innerHTML = `
-    <div class="politicas-top-hint politicas-scroll-hint hidden">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <polyline points="4,10 8,6 12,10"/>
-      </svg>
-    </div>
-    <div class="tools-content">
-      <div class="tools-list">${linksHTML}${dropdownsHTML}</div>
-    </div>
-    <div class="politicas-scroll-hint tools-bottom-hint">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <polyline points="4,6 8,10 12,6"/>
-      </svg>
+    <div class="tools-scroll-wrapper">
+      <div class="tools-content">
+        <div class="tools-list">${linksHTML}${dropdownsHTML}</div>
+      </div>
     </div>
   `;
 
@@ -189,17 +226,16 @@ function renderTools(data) {
     });
   });
 
-  // Scroll hints
+  // Gradientes de scroll
+  const wrapper = el.querySelector(".tools-scroll-wrapper");
   const content = el.querySelector(".tools-content");
-  const topHint = el.querySelector(".politicas-top-hint");
-  const bottomHint = el.querySelector(".tools-bottom-hint");
-  if (content) {
+  if (content && wrapper) {
     const checkScroll = () => {
       const atTop = content.scrollTop <= 10;
       const atBottom = content.scrollTop + content.clientHeight >= content.scrollHeight - 10;
       const noScroll = content.scrollHeight <= content.clientHeight;
-      if (topHint) topHint.classList.toggle("hidden", atTop || noScroll);
-      if (bottomHint) bottomHint.classList.toggle("hidden", atBottom || noScroll);
+      wrapper.classList.toggle("can-scroll-up", !atTop && !noScroll);
+      wrapper.classList.toggle("can-scroll-down", !atBottom && !noScroll);
     };
     content.addEventListener("scroll", checkScroll);
     checkScroll();
@@ -274,44 +310,88 @@ function renderStatement(data) {
   const el = document.querySelector(".celda.statement");
   if (!el || !data?.statement) return;
 
-  const lineas = data.statement.lineas.map(l => `<p>${l}</p>`).join("");
-  el.innerHTML = `<div class="statement-content">${lineas}</div>`;
+  const buildContent = (lang) => {
+    const d = data.statement[lang];
+    if (!d) return "";
+    return d.lineas.map(l => `<p>${l}</p>`).join("");
+  };
+
+  el.innerHTML = `
+    <div class="statement-content">${buildContent(currentLang)}</div>
+    ${buildLangButtons()}
+  `;
+
+  const content = el.querySelector(".statement-content");
+
+  attachLangListeners(el, (lang) => {
+    const isActive = el.classList.contains("activa");
+    if (isActive) {
+      content.style.opacity = "0";
+      setTimeout(() => {
+        content.innerHTML = buildContent(lang);
+        content.style.opacity = "1";
+      }, 250);
+    } else {
+      content.innerHTML = buildContent(lang);
+    }
+  });
 }
 
 // --- 4c. Metodología ---
-// Proceso de trabajo en 5 semanas, mostrado en zigzag (desktop) o stack (mobile).
-// La posición de cada paso en el grid CSS viene de data.json (paso.gridPos).
+// Proceso de trabajo en 5 pasos, mismo formato que statement.
 
 /**
- * Renderiza la página de metodología con el timeline de semanas.
+ * Renderiza la página de metodología.
  * @param {Object} data - Datos del JSON.
  */
 function renderMetodologia(data) {
   const el = document.querySelector(".celda.metodologia");
   if (!el || !data?.metodologia) return;
 
-  const pasosHTML = data.metodologia.pasos.map(paso => `
-    <div class="metodo-paso" style="${paso.gridPos || ""}">
-      <span class="metodo-semana">${paso.semana}</span>
-      <div class="metodo-texto">
-        <h3>${paso.titulo}</h3>
-        <p>${paso.descripcion.replace(/\n/g, "<br>")}</p>
-      </div>
-    </div>
-  `).join("");
-
-  const timelineHTML = data.metodologia.pasos
-    .map(p => `<span>${p.semana}</span>`)
-    .join("");
+  const buildContent = (lang) => {
+    const d = data.metodologia[lang];
+    if (!d) return "";
+    return d.lineas.map(l => `<p>${l}</p>`).join("");
+  };
 
   el.innerHTML = `
-    <div class="metodologia-content">
-      <div class="metodo-zigzag">
-        ${pasosHTML}
-        <div class="metodo-timeline-bar">${timelineHTML}</div>
-      </div>
+    <div class="metodologia-scroll-wrapper">
+      <div class="metodologia-content">${buildContent(currentLang)}</div>
     </div>
+    ${buildLangButtons()}
   `;
+
+  const wrapper = el.querySelector(".metodologia-scroll-wrapper");
+  const content = el.querySelector(".metodologia-content");
+
+  // Gradientes de scroll
+  const checkScroll = () => {
+    if (!content || !wrapper) return;
+    const atTop = content.scrollTop <= 10;
+    const atBottom = content.scrollTop + content.clientHeight >= content.scrollHeight - 10;
+    const noScroll = content.scrollHeight <= content.clientHeight;
+    wrapper.classList.toggle("can-scroll-up", !atTop && !noScroll);
+    wrapper.classList.toggle("can-scroll-down", !atBottom && !noScroll);
+  };
+
+  content.addEventListener("scroll", checkScroll);
+  checkScroll();
+  new ResizeObserver(() => checkScroll()).observe(content);
+
+  attachLangListeners(el, (lang) => {
+    const isActive = el.classList.contains("activa");
+    if (isActive) {
+      content.style.opacity = "0";
+      setTimeout(() => {
+        content.innerHTML = buildContent(lang);
+        content.style.opacity = "1";
+        requestAnimationFrame(checkScroll);
+      }, 250);
+    } else {
+      content.innerHTML = buildContent(lang);
+      requestAnimationFrame(checkScroll);
+    }
+  });
 }
 
 // --- 4d. Políticas ---
@@ -325,9 +405,6 @@ function renderPoliticas(data) {
   const el = document.querySelector(".celda.politicas");
   if (!el || !data?.politicas) return;
 
-  let politicasLang = "es";
-  const langs = ["es", "en", "cat"];
-
   const buildContent = (lang) => {
     const d = data.politicas[lang];
     if (!d) return "";
@@ -338,17 +415,13 @@ function renderPoliticas(data) {
 
   el.innerHTML = `
     <div class="politicas-scroll-wrapper">
-      <div class="politicas-content">${buildContent(politicasLang)}</div>
+      <div class="politicas-content">${buildContent(currentLang)}</div>
     </div>
     <div class="politicas-bottom-bar">
-      <div class="politicas-font-group">
-        <button class="politicas-font-btn" data-action="increase">+</button>
-        <button class="politicas-font-btn" data-action="decrease">−</button>
-      </div>
-      <div class="politicas-lang-group">
-        ${langs.map(l => `<button class="politicas-lang-btn${l === politicasLang ? " active" : ""}" data-lang="${l}">${l}</button>`).join("")}
-      </div>
+      <button class="politicas-font-btn" data-action="increase">+</button>
+      <button class="politicas-font-btn" data-action="decrease">−</button>
     </div>
+    ${buildLangButtons()}
   `;
 
   const wrapper = el.querySelector(".politicas-scroll-wrapper");
@@ -379,28 +452,23 @@ function renderPoliticas(data) {
     });
   });
 
-  // Selector de idioma con fade
-  el.querySelectorAll(".politicas-lang-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const lang = btn.dataset.lang;
-      if (lang === politicasLang) return;
-      politicasLang = lang;
-
-      // Fade out
+  attachLangListeners(el, (lang) => {
+    const isActive = el.classList.contains("activa");
+    if (isActive) {
       content.style.opacity = "0";
       setTimeout(() => {
         content.innerHTML = buildContent(lang);
         content.scrollTop = 0;
         content.style.fontSize = `calc(0.88rem * ${fontScale})`;
         checkScroll();
-        // Fade in
         content.style.opacity = "1";
       }, 250);
-
-      // Actualizar botón activo
-      el.querySelectorAll(".politicas-lang-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-    });
+    } else {
+      content.innerHTML = buildContent(lang);
+      content.scrollTop = 0;
+      content.style.fontSize = `calc(0.88rem * ${fontScale})`;
+      checkScroll();
+    }
   });
 }
 

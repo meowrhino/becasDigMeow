@@ -269,13 +269,44 @@ p, h1, h2, h3 {
 
 .celda.tools {
   flex-direction: column;
-  gap: 0.6rem;
 }
 
-.tools-content {
+.tools-scroll-wrapper {
+  position: relative;
   width: 90dvw;
   max-width: 1000px;
   height: 80dvh;
+}
+
+.tools-scroll-wrapper::before,
+.tools-scroll-wrapper::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3rem;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.tools-scroll-wrapper::before {
+  top: 0;
+  background: linear-gradient(to bottom, #fff, transparent);
+}
+
+.tools-scroll-wrapper::after {
+  bottom: 0;
+  background: linear-gradient(to top, #fff, transparent);
+}
+
+.tools-scroll-wrapper.can-scroll-up::before { opacity: 1; }
+.tools-scroll-wrapper.can-scroll-down::after { opacity: 1; }
+
+.tools-content {
+  width: 100%;
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
@@ -316,7 +347,12 @@ p, h1, h2, h3 {
   font-weight: 400;
   letter-spacing: 0.05em;
   text-align: center;
-  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .welcome-title {
+    max-width: 60dvw;
+  }
 }
 
 /* Link tipo tarjeta (cada herramienta/proyecto) */
@@ -440,115 +476,90 @@ p, h1, h2, h3 {
    Manifiesto del estudio: texto centrado.
    ============================================ */
 
+.celda.statement {
+  flex-direction: column;
+}
+
 .statement-content {
   text-align: center;
-  max-width: 800px;
-
+  max-width: 720px;
+  width: 70dvw;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.2em;
+  line-height: 1.7;
   font-size: clamp(0.85rem, 1.2dvw, 1.15rem);
+  transition: opacity 0.25s ease;
 }
 
 .statement-content p {
-  margin-bottom: 2em;
+  margin: 0;
+  color: #333;
 }
+
 
 /* ============================================
    9. PAGE: METODOLOGÍA
-   Proceso en 5 semanas.
-   Desktop: layout zigzag con CSS grid de 10 columnas.
-   Mobile: stack vertical con semana rotada a la izquierda.
+   Proceso de trabajo en 5 pasos, mismo formato que statement.
    ============================================ */
 
+.celda.metodologia {
+  flex-direction: column;
+}
+
+.metodologia-scroll-wrapper {
+  position: relative;
+  width: 70dvw;
+  max-width: 720px;
+  height: 80dvh;
+}
+
+.metodologia-scroll-wrapper::before,
+.metodologia-scroll-wrapper::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3rem;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.metodologia-scroll-wrapper::before {
+  top: 0;
+  background: linear-gradient(to bottom, #fff, transparent);
+}
+
+.metodologia-scroll-wrapper::after {
+  bottom: 0;
+  background: linear-gradient(to top, #fff, transparent);
+}
+
+.metodologia-scroll-wrapper.can-scroll-up::before { opacity: 1; }
+.metodologia-scroll-wrapper.can-scroll-down::after { opacity: 1; }
+
 .metodologia-content {
+  text-align: center;
   width: 100%;
-  max-width: 1000px;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  line-height: 1.7;
+  font-size: clamp(0.85rem, 1.2dvw, 1.15rem);
+  padding-top: 20dvh;
+  padding-bottom: 20dvh;
+  transition: opacity 0.25s ease;
 }
 
-/* Grid zigzag: 10 columnas, los pasos se colocan
-   en filas alternas (posición definida por data.json gridPos) */
-.metodo-zigzag {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: auto auto auto;
-  gap: 0;
-  align-items: start;
-}
-
-.metodo-paso {
-  text-align: center;
-  overflow: visible;
-}
-
-/* En desktop la semana se muestra en el timeline inferior, no aquí */
-.metodo-paso .metodo-semana {
-  display: none;
-}
-
-.metodo-paso h3 {
-  font-size: clamp(0.75rem, 1dvw, 1rem);
-  font-weight: 700;
-  margin-bottom: 0.5em;
-}
-
-.metodo-paso p {
-  font-size: clamp(0.6rem, 0.8dvw, 0.82rem);
-  color: #444;
-  line-height: 1.6;
-}
-
-/* Barra de timeline: fila inferior del grid con las semanas */
-.metodo-timeline-bar {
-  grid-column: 1 / -1;
-  grid-row: 3;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  padding-top: 3dvh;
-  margin-top: 2dvh;
-}
-
-.metodo-timeline-bar span {
-  font-size: clamp(0.6rem, 0.75dvw, 0.78rem);
-  font-weight: 700;
-  text-align: center;
-}
-
-/* Mobile: el zigzag colapsa a un stack vertical */
-@media (max-width: 768px) {
-  .celda.metodologia {
-    padding: 12dvh 8dvw;
-  }
-
-  .metodo-zigzag {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2.5dvh;
-  }
-
-  .metodo-paso {
-    text-align: center;
-    padding-left: 2em;
-    position: relative;
-    width: 75%;
-    max-width: 320px;
-  }
-
-  /* En mobile la semana se muestra rotada a la izquierda de cada paso */
-  .metodo-paso .metodo-semana {
-    display: block;
-    font-size: clamp(0.55rem, 2dvw, 0.7rem);
-    font-weight: 700;
-    white-space: nowrap;
-    position: absolute;
-    left: 0;
-    top: 0;
-    transform: rotate(90deg);
-    transform-origin: top left;
-  }
-
-  /* El timeline inferior no se muestra en mobile */
-  .metodo-timeline-bar {
-    display: none;
-  }
+.metodologia-content p {
+  margin-bottom: 1.4em;
+  color: #333;
 }
 
 /* ============================================
@@ -599,7 +610,8 @@ p, h1, h2, h3 {
   overscroll-behavior-y: contain;
   line-height: 1.7;
   font-size: 0.88rem;
-  padding-bottom: 5dvh;
+  padding-top: 20dvh;
+  padding-bottom: 20dvh;
   transition: opacity 0.25s ease;
 }
 
@@ -626,16 +638,16 @@ p, h1, h2, h3 {
 /* Wrapper para centrar contenedor + barra verticalmente */
 .celda.politicas {
   flex-direction: column;
-  gap: 0.6rem;
 }
 
-/* Barra inferior: +/- a la izquierda, idiomas a la derecha */
+/* Barra inferior: +/- tamaño de fuente */
 .politicas-bottom-bar {
+  position: absolute;
+  bottom: 3dvh;
+  left: 3dvw;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 70dvw;
-  max-width: 720px;
+  gap: 0;
 }
 
 .politicas-font-group {
@@ -644,13 +656,17 @@ p, h1, h2, h3 {
   gap: 0;
 }
 
-.politicas-lang-group {
+.lang-group {
+  position: absolute;
+  bottom: 3dvh;
+  right: 3dvw;
   display: flex;
   align-items: center;
   gap: 0.3rem;
+  z-index: 10;
 }
 
-.politicas-lang-btn {
+.lang-btn {
   border: none;
   background: none;
   color: rgba(0,0,0,0.3);
@@ -661,38 +677,15 @@ p, h1, h2, h3 {
   transition: color 0.2s ease;
 }
 
-.politicas-lang-btn:hover {
+.lang-btn:hover {
   color: rgba(0,0,0,0.6);
 }
 
-.politicas-lang-btn.active {
+.lang-btn.active {
   font-weight: 600;
   color: #000;
 }
 
-/* Hints de scroll: parpadeo suave */
-.politicas-scroll-hint {
-  opacity: 0;
-  display: flex;
-  animation: politicas-pulse 3s ease-in-out infinite;
-}
-
-.politicas-scroll-hint.hidden {
-  animation: none;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.politicas-scroll-hint svg {
-  width: 18px;
-  height: 18px;
-  color: rgba(0,0,0,0.3);
-}
-
-@keyframes politicas-pulse {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 0.35; }
-}
 
 .politicas-font-btn {
   width: 32px;
