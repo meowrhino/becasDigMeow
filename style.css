@@ -556,11 +556,43 @@ p, h1, h2, h3 {
    Términos de pago y condiciones del estudio.
    ============================================ */
 
-.politicas-content {
-  text-align: center;
-  width: 80dvw;
+.politicas-scroll-wrapper {
+  position: relative;
+  width: 70dvw;
   max-width: 720px;
   height: 80dvh;
+}
+
+.politicas-scroll-wrapper::before,
+.politicas-scroll-wrapper::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3rem;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.politicas-scroll-wrapper::before {
+  top: 0;
+  background: linear-gradient(to bottom, #fff, transparent);
+}
+
+.politicas-scroll-wrapper::after {
+  bottom: 0;
+  background: linear-gradient(to top, #fff, transparent);
+}
+
+.politicas-scroll-wrapper.can-scroll-up::before { opacity: 1; }
+.politicas-scroll-wrapper.can-scroll-down::after { opacity: 1; }
+
+.politicas-content {
+  text-align: center;
+  width: 100%;
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
@@ -600,7 +632,10 @@ p, h1, h2, h3 {
 .politicas-bottom-bar {
   display: flex;
   align-items: center;
-  gap: 1.2rem;
+  justify-content: flex-start;
+  width: 70dvw;
+  max-width: 720px;
+  gap: 0;
 }
 
 /* Hints de scroll: parpadeo suave */

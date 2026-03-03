@@ -334,14 +334,31 @@ function renderPoliticas(data) {
     : "";
 
   el.innerHTML = `
-    <div class="politicas-content">${html}${nota}</div>
+    <div class="politicas-scroll-wrapper">
+      <div class="politicas-content">${html}${nota}</div>
+    </div>
     <div class="politicas-bottom-bar">
-      <button class="politicas-font-btn" data-action="decrease">−</button>
       <button class="politicas-font-btn" data-action="increase">+</button>
+      <button class="politicas-font-btn" data-action="decrease">−</button>
     </div>
   `;
 
+  const wrapper = el.querySelector(".politicas-scroll-wrapper");
   const content = el.querySelector(".politicas-content");
+
+  // Gradientes de scroll: aparecen/desaparecen según posición
+  const checkScroll = () => {
+    if (!content || !wrapper) return;
+    const atTop = content.scrollTop <= 10;
+    const atBottom = content.scrollTop + content.clientHeight >= content.scrollHeight - 10;
+    const noScroll = content.scrollHeight <= content.clientHeight;
+    wrapper.classList.toggle("can-scroll-up", !atTop && !noScroll);
+    wrapper.classList.toggle("can-scroll-down", !atBottom && !noScroll);
+  };
+
+  content.addEventListener("scroll", checkScroll);
+  checkScroll();
+  new ResizeObserver(() => checkScroll()).observe(content);
 
   // Botones +/- tamaño de texto
   let fontScale = 1;
@@ -350,6 +367,7 @@ function renderPoliticas(data) {
       const step = btn.dataset.action === "increase" ? 0.1 : -0.1;
       fontScale = Math.max(0.7, Math.min(1.5, fontScale + step));
       content.style.fontSize = `calc(0.88rem * ${fontScale})`;
+      requestAnimationFrame(checkScroll);
     });
   });
 }
