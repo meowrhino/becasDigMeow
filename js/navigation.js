@@ -2,14 +2,7 @@
 // NAVIGATION — Grid, celdas, minimaps, nav labels, hash
 // ============================================
 
-import {
-  portfolioMode,
-  portfolioAnimating,
-  alternarModoPortfolio,
-  cambiarColumnasPortfolio,
-  actualizarBotonesColumnas,
-  sincronizarEstadoNubes,
-} from "./portfolio.js";
+import { sincronizarEstadoNubes } from "./portfolio.js";
 
 // --- Elemento raíz ---
 const app = document.getElementById("content");
@@ -251,16 +244,10 @@ function getVecinos() {
 
 function crearNavLabels(celda) {
   celda.querySelectorAll(".nav-label").forEach(l => l.remove());
-  celda.querySelectorAll(".nav-label-group").forEach(l => l.remove());
-  celda.querySelectorAll(".portfolio-bottom-bar").forEach(l => l.remove());
 
-  const isPortfolio = celda.classList.contains("portfolio");
   const vecinos = getVecinos();
 
   Object.entries(vecinos).forEach(([pos, info]) => {
-    // En portfolio, el bottom se gestiona aparte (grupo con switch + nav)
-    if (isPortfolio && pos === "bottom") return;
-
     const label = document.createElement("button");
     label.classList.add("nav-label", pos);
     label.textContent = info.nombre;
@@ -270,55 +257,6 @@ function crearNavLabels(celda) {
     });
     celda.appendChild(label);
   });
-
-  // En portfolio: crear grupo bottom con botón switch + nav label contacto
-  if (isPortfolio) {
-    // Barra +/- columnas (solo visible en modo grid)
-    const colBar = document.createElement("div");
-    colBar.classList.add("portfolio-bottom-bar");
-    colBar.id = "portfolio-col-bar";
-    if (portfolioMode !== "grid") colBar.style.display = "none";
-
-    const plusBtn = document.createElement("button");
-    plusBtn.classList.add("portfolio-col-btn");
-    plusBtn.id = "portfolio-col-plus";
-    plusBtn.textContent = "+";
-    plusBtn.addEventListener("click", () => cambiarColumnasPortfolio(-1));
-
-    const minusBtn = document.createElement("button");
-    minusBtn.classList.add("portfolio-col-btn");
-    minusBtn.id = "portfolio-col-minus";
-    minusBtn.textContent = "\u2212";
-    minusBtn.addEventListener("click", () => cambiarColumnasPortfolio(1));
-
-    colBar.appendChild(plusBtn);
-    colBar.appendChild(minusBtn);
-    celda.appendChild(colBar);
-    actualizarBotonesColumnas();
-
-    const group = document.createElement("div");
-    group.classList.add("nav-label-group", "bottom");
-
-    const switchBtn = document.createElement("button");
-    switchBtn.classList.add("portfolio-switch");
-    switchBtn.id = "portfolio-switch-btn";
-    switchBtn.textContent = portfolioMode === "clouds" ? "ordenar" : "dispersar";
-    switchBtn.addEventListener("click", alternarModoPortfolio);
-    group.appendChild(switchBtn);
-
-    if (vecinos.bottom) {
-      const navBtn = document.createElement("button");
-      navBtn.classList.add("nav-label-inline");
-      navBtn.textContent = vecinos.bottom.nombre;
-      navBtn.addEventListener("click", () => {
-        setPosicion(vecinos.bottom.y, vecinos.bottom.x);
-        actualizarVista();
-      });
-      group.appendChild(navBtn);
-    }
-
-    celda.appendChild(group);
-  }
 }
 
 // --- Hash ---
