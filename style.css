@@ -45,6 +45,50 @@
 }
 
 /* ============================================
+   TEMA OSCURO
+   ============================================ */
+
+[data-theme="dark"] {
+  /* Backgrounds */
+  --bg: #121212;
+  --bg-hover: #1e1e1e;
+
+  /* Text */
+  --text: #e0e0e0;
+  --text-content: #cccccc;
+  --text-secondary: #777777;
+  --text-muted: #666666;
+
+  /* Borders */
+  --border: rgba(255, 255, 255, 0.1);
+  --border-hover: rgba(255, 255, 255, 0.25);
+
+  /* Shadows */
+  --shadow-sm: rgba(0, 0, 0, 0.2);
+  --shadow-md: rgba(0, 0, 0, 0.35);
+
+  /* Zone label */
+  --zone-label: rgba(255, 255, 255, 0.04);
+
+  /* Minimap */
+  --minimap-cell: #444444;
+  --minimap-active: #e0e0e0;
+  --minimap-expanded-bg: #555555;
+  --minimap-expanded-hover: #999999;
+  --minimap-expanded-text: #121212;
+  --overlay-bg: rgba(18, 18, 18, 0.97);
+
+  /* Buttons (subtle) */
+  --btn-subtle: rgba(255, 255, 255, 0.3);
+  --btn-subtle-hover: rgba(255, 255, 255, 0.6);
+  --btn-subtle-strong: rgba(255, 255, 255, 0.35);
+  --btn-subtle-strong-hover: rgba(255, 255, 255, 0.7);
+
+  /* Gradient (scroll fade) */
+  --gradient-color: #121212;
+}
+
+/* ============================================
    0. RESET & BASE
    Normalización y estilos base globales.
    Fuente: Inknut Antiqua (serif).
