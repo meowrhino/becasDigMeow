@@ -1,11 +1,11 @@
 // ============================================
-// PORTFOLIO — Nubes flotantes
+// PORTFOLIO — Nubes flotantes con crossfade
 // ============================================
 //
-// Screenshots de proyectos flotando horizontalmente con WAAPI
+// Una nube por proyecto, flotando horizontalmente con WAAPI
 // + deriva vertical con CSS keyframes.
+// Cada nube cicla sus imágenes con crossfade suave.
 //
-// TODO (Fase 2b): Una sola nube por proyecto con crossfade de imágenes.
 // TODO (Fase 2c): Click en nube → vista scroll vertical con links como texto.
 
 import { obtenerDatos } from "./data.js";
@@ -62,22 +62,26 @@ export function obtenerImagenesProyecto(proyecto) {
 }
 
 /**
- * Devuelve todas las "nubes" a renderizar: una entrada por cada imagen de cada proyecto.
+ * Devuelve UNA nube por proyecto, con todas sus imágenes para crossfade.
  */
 function obtenerNubesPortfolio(proyectos) {
-  return proyectos.flatMap((proyecto, projectIndex) => {
-    const imagenesProyecto = obtenerImagenesProyecto(proyecto);
-    const imagenes = (imagenesProyecto.length ? imagenesProyecto : [proyecto.imagen || ""])
-      .filter(Boolean);
-
-    return imagenes.map((imagen, variantIndex) => ({
+  return proyectos.map((proyecto, projectIndex) => {
+    const imagenes = obtenerImagenesProyecto(proyecto).filter(Boolean);
+    return {
       nombre: proyecto.nombre,
       url: proyecto.url,
-      imagen,
+      imagenes: imagenes.length ? imagenes : [proyecto.imagen || ""].filter(Boolean),
       projectIndex,
-      variantIndex,
-    }));
-  });
+    };
+  }).filter(n => n.imagenes.length > 0);
+}
+
+/** Timers de crossfade activos (para limpiar al reconstruir). */
+let crossfadeTimers = [];
+
+function limpiarCrossfadeTimers() {
+  crossfadeTimers.forEach(id => clearInterval(id));
+  crossfadeTimers = [];
 }
 
 // --- Renderizado base ---
@@ -118,6 +122,7 @@ function generarNubesFlotantes(proyectos) {
   const container = document.getElementById("portfolio-clouds");
   if (!container) return;
   container.innerHTML = "";
+  limpiarCrossfadeTimers();
   const nubes = obtenerNubesPortfolio(proyectos);
   if (!nubes.length) return;
 
@@ -131,8 +136,8 @@ function generarNubesFlotantes(proyectos) {
   const numBandas      = esMobile ? 4 : 5;
   const alturaBanda    = alturaUtil / numBandas;
 
-  const anchoMin = esMobile ? 80 : 120;
-  const anchoMax = esMobile ? 150 : 220;
+  const anchoMin = esMobile ? 100 : 160;
+  const anchoMax = esMobile ? 180 : 300;
 
   const numItems = nubes.length;
   const xSlots = Array.from({ length: numItems }, (_, i) => i);
@@ -216,12 +221,47 @@ function generarNubesFlotantes(proyectos) {
     link.style.animationIterationCount = "infinite";
     link.style.animationDirection      = "alternate";
 
-    const img = document.createElement("img");
-    img.src = nube.imagen;
-    img.alt = nube.nombre;
-    img.loading = "eager";
-    img.decoding = "async";
-    link.appendChild(img);
+    // — Imagen principal (capa A) —
+    const imgA = document.createElement("img");
+    imgA.classList.add("pcloud-img", "pcloud-img-a");
+    imgA.src = nube.imagenes[0];
+    imgA.alt = nube.nombre;
+    imgA.loading = "eager";
+    imgA.decoding = "async";
+    link.appendChild(imgA);
+
+    // — Crossfade (capa B): solo si hay varias imágenes —
+    if (nube.imagenes.length > 1) {
+      const imgB = document.createElement("img");
+      imgB.classList.add("pcloud-img", "pcloud-img-b");
+      imgB.src = nube.imagenes[1];
+      imgB.alt = nube.nombre;
+      imgB.loading = "lazy";
+      imgB.decoding = "async";
+      link.appendChild(imgB);
+
+      let currentIndex = 0;
+      let showingA = true;
+      const intervalo = 5000 + Math.random() * 3000; // 5–8s por imagen
+      const retraso   = 2000 + Math.random() * 4000; // stagger inicial
+
+      const delayId = setTimeout(() => {
+        const timerId = setInterval(() => {
+          if (!track.isConnected) { clearInterval(timerId); return; }
+          currentIndex = (currentIndex + 1) % nube.imagenes.length;
+          if (showingA) {
+            imgB.src = nube.imagenes[currentIndex];
+            link.classList.add("crossfade-flip");
+          } else {
+            imgA.src = nube.imagenes[currentIndex];
+            link.classList.remove("crossfade-flip");
+          }
+          showingA = !showingA;
+        }, intervalo);
+        crossfadeTimers.push(timerId);
+      }, retraso);
+      crossfadeTimers.push(delayId);
+    }
 
     const nombre = document.createElement("span");
     nombre.classList.add("pcloud-name");
@@ -233,9 +273,7 @@ function generarNubesFlotantes(proyectos) {
 
     track.dataset.banda = String(banda);
     track.dataset.projectIndex = String(nube.projectIndex);
-    track.dataset.variantIndex = String(nube.variantIndex);
     track._configurarNube = configurarNube;
-    track._cloudVariantSrc = nube.imagen;
 
     configurarNube(track, banda, true, xSlots[i]);
   });
@@ -465,8 +503,8 @@ function getPosicionVisualNube(track) {
 function obtenerRangoAnchoNubes() {
   const esMobile = window.innerWidth <= 600;
   return {
-    anchoMin: esMobile ? 80 : 120,
-    anchoMax: esMobile ? 150 : 220,
+    anchoMin: esMobile ? 100 : 160,
+    anchoMax: esMobile ? 180 : 300,
   };
 }
 

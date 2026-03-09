@@ -853,12 +853,32 @@ p, h1, h2, h3 {
   animation-timing-function: linear;
 }
 
-.portfolio-cloud-item img {
+/* Crossfade: dos capas de imagen apiladas */
+.pcloud-img {
+  position: absolute;
+  top: 0;
+  left: 0;
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: opacity 0.3s ease;
+  transition: opacity 2s ease;
+}
+
+.pcloud-img-a {
+  opacity: 1;
+}
+
+.pcloud-img-b {
+  opacity: 0;
+}
+
+.portfolio-cloud-item.crossfade-flip .pcloud-img-a {
+  opacity: 0;
+}
+
+.portfolio-cloud-item.crossfade-flip .pcloud-img-b {
+  opacity: 1;
 }
 
 /* Nombre del proyecto: visible al hover */
