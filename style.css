@@ -820,6 +820,7 @@ p, h1, h2, h3 {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  transition: opacity 0.4s ease;
 }
 
 /* Track: capa que se mueve horizontalmente (WAAPI) */
@@ -940,6 +941,113 @@ p, h1, h2, h3 {
   }
 }
 
+/* --- Clouds hidden (mientras la vista detalle está abierta) --- */
+.portfolio-clouds-container.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+/* --- Vista detalle (scroll vertical de proyectos) --- */
+
+.portfolio-detail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0s 0.5s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.portfolio-detail.visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease, visibility 0s 0s;
+}
+
+.portfolio-detail-scroll-wrapper {
+  position: relative;
+  width: 70dvw;
+  max-width: 800px;
+  height: 80dvh;
+}
+
+.portfolio-detail-scroll-wrapper::before,
+.portfolio-detail-scroll-wrapper::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3rem;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.portfolio-detail-scroll-wrapper::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--gradient-color), transparent);
+}
+
+.portfolio-detail-scroll-wrapper::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--gradient-color), transparent);
+}
+
+.portfolio-detail-scroll-wrapper.can-scroll-up::before { opacity: 1; }
+.portfolio-detail-scroll-wrapper.can-scroll-down::after { opacity: 1; }
+
+.portfolio-detail-content {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  padding-top: 10dvh;
+  padding-bottom: 10dvh;
+}
+
+.portfolio-detail-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6em;
+  width: 100%;
+  max-width: 600px;
+}
+
+.portfolio-detail-item img {
+  width: 100%;
+  display: block;
+}
+
+.portfolio-detail-link {
+  font-size: clamp(0.85rem, 1.2dvw, 1.1rem);
+  font-weight: 400;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  text-align: center;
+  letter-spacing: 0.03em;
+}
+
+.portfolio-detail-link:hover {
+  color: var(--text);
+}
+
 /* ============================================
    12. PAGE: CONTACTO
    Página minimalista de contacto: email + Instagram.
@@ -991,15 +1099,15 @@ p, h1, h2, h3 {
 
 .theme-toggle {
   position: fixed;
-  top: 3dvh;
-  left: 3dvw;
+  top: 6dvh;
+  left: 6dvw;
   z-index: 100;
   border: none;
   background: none;
   cursor: pointer;
   padding: 0;
-  width: clamp(16px, 1.4dvw, 22px);
-  height: clamp(16px, 1.4dvw, 22px);
+  width: clamp(18px, 2.8dvw, 30px);
+  height: clamp(18px, 2.8dvw, 30px);
   color: var(--btn-subtle);
   transition: color 0.2s ease;
   user-select: none;

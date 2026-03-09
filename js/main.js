@@ -35,6 +35,8 @@ import {
   rehidratarPortfolioTrasRetorno,
   onCloudPointerDown,
   onCloudPointerUp,
+  cerrarVistaDetalle,
+  esVistaDetalleAbierta,
 } from "./portfolio.js";
 import { crearThemeToggle } from "./theme.js";
 
@@ -62,11 +64,20 @@ async function renderizarContenido() {
 
 // --- Navegación por teclado ---
 document.addEventListener("keydown", e => {
-  const overlay = getOverlayEl();
-  if (e.key === "Escape" && overlay?.classList.contains("visible")) {
-    cerrarMinimapExpandido();
-    return;
+  if (e.key === "Escape") {
+    const overlay = getOverlayEl();
+    if (overlay?.classList.contains("visible")) {
+      cerrarMinimapExpandido();
+      return;
+    }
+    if (esVistaDetalleAbierta()) {
+      cerrarVistaDetalle();
+      return;
+    }
   }
+
+  // No navegar con flechas si la vista detalle está abierta
+  if (esVistaDetalleAbierta()) return;
 
   const { posY: curY, posX: curX } = getPosicion();
   let newY = curY;

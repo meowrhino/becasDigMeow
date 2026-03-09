@@ -9,7 +9,6 @@
 // TODO (Fase 2c): Click en nube → vista scroll vertical con links como texto.
 
 import { obtenerDatos } from "./data.js";
-import { esMovil } from "./pages.js";
 
 // --- Estado del portfolio ---
 
@@ -21,6 +20,9 @@ let portfolioCloudsWereRunning = false;
 
 /** Guard para evitar rebuilds recursivos. */
 let portfolioCloudsRebuilding = false;
+
+/** true si la vista detalle (scroll) está abierta. */
+let portfolioDetailOpen = false;
 
 // --- Utilidades ---
 
@@ -94,10 +96,47 @@ export function renderPortfolio(data) {
 
   el.innerHTML = `
     <div class="portfolio-clouds-container" id="portfolio-clouds"></div>
+    <div class="portfolio-detail" id="portfolio-detail">
+      <div class="portfolio-detail-scroll-wrapper">
+        <div class="portfolio-detail-content" id="portfolio-detail-content"></div>
+      </div>
+    </div>
   `;
+
+  // Click fuera del scroll → cerrar
+  document.getElementById("portfolio-detail").addEventListener("click", (e) => {
+    if (!e.target.closest(".portfolio-detail-scroll-wrapper")) {
+      cerrarVistaDetalle();
+    }
+  });
+
+  // Poblar vista detalle
+  const detailContent = document.getElementById("portfolio-detail-content");
+  proyectos.forEach((proyecto, idx) => {
+    const item = document.createElement("div");
+    item.classList.add("portfolio-detail-item");
+    item.dataset.projectIndex = String(idx);
+
+    const img = document.createElement("img");
+    img.src = proyecto.imagen;
+    img.alt = proyecto.nombre;
+    img.loading = "lazy";
+    item.appendChild(img);
+
+    const link = document.createElement("a");
+    link.classList.add("portfolio-detail-link");
+    link.href = proyecto.url;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.textContent = proyecto.url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+    item.appendChild(link);
+
+    detailContent.appendChild(item);
+  });
 
   generarNubesFlotantes(proyectos);
   portfolioCloudsNeedLayout = false;
+  portfolioDetailOpen = false;
 
   const cloudsContainer = document.getElementById("portfolio-clouds");
   cloudsContainer.addEventListener("pointerenter", onCloudPointerEnter);
@@ -105,6 +144,139 @@ export function renderPortfolio(data) {
   cloudsContainer.addEventListener("pointerleave", onCloudPointerLeave);
 
   sincronizarEstadoNubes();
+}
+
+// --- Vista detalle (scroll vertical) ---
+
+function abrirVistaDetalle(projectIndex) {
+  if (portfolioDetailOpen) return;
+  portfolioDetailOpen = true;
+
+  const clouds = document.getElementById("portfolio-clouds");
+  const detail = document.getElementById("portfolio-detail");
+  if (!clouds || !detail) return;
+
+  const tracks = Array.from(clouds.querySelectorAll(".portfolio-cloud-track"));
+  const centerX = window.innerWidth / 2;
+  const centerY = window.innerHeight / 2;
+
+  // 1. Capturar posición visual y congelar cada nube
+  tracks.forEach(track => {
+    const rect = track.getBoundingClientRect();
+    track.getAnimations().forEach(a => a.cancel());
+    track.style.left = `${rect.left}px`;
+    track.style.top  = `${rect.top}px`;
+    track.style.transform = "none";
+    const item = track.querySelector(".portfolio-cloud-item");
+    if (item) item.style.animationPlayState = "paused";
+  });
+
+  // 2. Animar nubes hacia el centro + fade out (stagger)
+  const promises = tracks.map((track, i) => {
+    const w = parseFloat(track.style.width) || 200;
+    const h = parseFloat(track.style.height) || 136;
+    return track.animate(
+      [
+        { opacity: 1 },
+        { left: `${centerX - w / 2}px`, top: `${centerY - h / 2}px`, opacity: 0 },
+      ],
+      { duration: 450, easing: "ease-in", fill: "forwards", delay: i * 15 }
+    ).finished;
+  });
+
+  // 3. Mostrar vista detalle en paralelo (con ligero delay)
+  setTimeout(() => {
+    detail.classList.add("visible");
+
+    const content = document.getElementById("portfolio-detail-content");
+    if (content) {
+      if (typeof projectIndex === "number") {
+        const target = content.querySelector(`[data-project-index="${projectIndex}"]`);
+        if (target) target.scrollIntoView({ behavior: "instant", block: "start" });
+      } else {
+        content.scrollTop = 0;
+      }
+      actualizarGradientesDetalle(content);
+      content.addEventListener("scroll", onDetailScroll, { passive: true });
+    }
+  }, 200);
+
+  // 4. Ocultar contenedor de nubes al acabar la animación
+  Promise.allSettled(promises).then(() => {
+    clouds.classList.add("hidden");
+  });
+}
+
+function cerrarVistaDetalle() {
+  if (!portfolioDetailOpen) return;
+  portfolioDetailOpen = false;
+
+  const detail = document.getElementById("portfolio-detail");
+  if (detail) detail.classList.remove("visible");
+
+  const content = document.getElementById("portfolio-detail-content");
+  if (content) content.removeEventListener("scroll", onDetailScroll);
+
+  // Regenerar nubes frescas y animarlas DESDE el centro hacia sus posiciones
+  const proyectos = obtenerDatos()?.portfolio?.proyectos;
+  const clouds = document.getElementById("portfolio-clouds");
+  if (!proyectos || !clouds) return;
+
+  clouds.classList.remove("hidden");
+  generarNubesFlotantes(proyectos);
+
+  const tracks = Array.from(clouds.querySelectorAll(".portfolio-cloud-track"));
+  const centerX = window.innerWidth / 2;
+  const centerY = window.innerHeight / 2;
+
+  tracks.forEach((track, i) => {
+    const w = parseFloat(track.style.width) || 200;
+    const h = parseFloat(track.style.height) || 136;
+
+    // Capturar posición visual real (WAAPI ya en marcha)
+    const rect = track.getBoundingClientRect();
+    const realLeft = rect.left;
+    const realTop = rect.top;
+
+    // Congelar en posición real
+    track.getAnimations().forEach(a => a.cancel());
+    track.style.left = `${realLeft}px`;
+    track.style.top  = `${realTop}px`;
+    track.style.transform = "none";
+    const item = track.querySelector(".portfolio-cloud-item");
+    if (item) item.style.animationPlayState = "paused";
+
+    // Volar desde centro → posición real (inverso del enter)
+    const anim = track.animate(
+      [
+        { left: `${centerX - w / 2}px`, top: `${centerY - h / 2}px`, opacity: 0 },
+        { left: `${realLeft}px`, top: `${realTop}px`, opacity: 1 },
+      ],
+      { duration: 450, easing: "ease-out", fill: "forwards", delay: i * 15 }
+    );
+
+    anim.onfinish = () => {
+      anim.cancel();
+      track.style.left = `${realLeft}px`;
+      track.style.top  = `${realTop}px`;
+      track.style.transform = "none";
+      if (item) item.style.animationPlayState = "running";
+      reanudarNubeDesdePosicionActual(track);
+    };
+  });
+}
+
+function onDetailScroll() {
+  const content = document.getElementById("portfolio-detail-content");
+  if (content) actualizarGradientesDetalle(content);
+}
+
+function actualizarGradientesDetalle(content) {
+  const wrapper = content.closest(".portfolio-detail-scroll-wrapper");
+  if (!wrapper) return;
+  const { scrollTop, scrollHeight, clientHeight } = content;
+  wrapper.classList.toggle("can-scroll-up", scrollTop > 2);
+  wrapper.classList.toggle("can-scroll-down", scrollTop + clientHeight < scrollHeight - 2);
 }
 
 // --- Nubes flotantes ---
@@ -206,11 +378,8 @@ function generarNubesFlotantes(proyectos) {
     track.classList.add("portfolio-cloud-track");
     track.style.left = "0px";
 
-    const link = document.createElement("a");
+    const link = document.createElement("div");
     link.classList.add("portfolio-cloud-item");
-    link.href   = nube.url;
-    if (!esMovil) link.target = "_blank";
-    link.rel    = "noopener";
     link.title  = nube.nombre;
     link.style.left = "0px";
 
@@ -302,6 +471,13 @@ function reconstruirNubesSiNecesario() {
 export function sincronizarEstadoNubes() {
   const cloudsEl = document.getElementById("portfolio-clouds");
   if (!cloudsEl) return;
+
+  // Auto-cerrar vista detalle si se navega fuera del portfolio
+  if (portfolioDetailOpen && !esPortfolioActivo()) {
+    portfolioDetailOpen = false;
+    cloudsEl.classList.remove("hidden");
+    document.getElementById("portfolio-detail")?.classList.remove("visible");
+  }
 
   const debeCorrer  = debenCorrerNubes();
   const estaResumiendo = debeCorrer && !portfolioCloudsWereRunning;
@@ -669,8 +845,9 @@ export function onCloudPointerUp(e) {
   hoverPointerY = e.clientY;
 
   if (!dragFrozen) {
-    actualizarHoverNubesEnPunto(e.clientX, e.clientY);
-    iniciarMonitorHoverNubes();
+    // Click sin drag → abrir vista detalle del proyecto clicado
+    const idx = parseInt(track.dataset.projectIndex, 10);
+    abrirVistaDetalle(Number.isFinite(idx) ? idx : undefined);
     return;
   }
 
@@ -769,5 +946,9 @@ export function rehidratarPortfolioTrasRetorno(forzarRebuild = false) {
   }, 80);
 }
 
-// Re-exportar funciones de evento que necesita onCloudPointerMove
-export { onCloudPointerMove, onCloudPointerLeave };
+// Re-exportar funciones
+export { onCloudPointerMove, onCloudPointerLeave, cerrarVistaDetalle };
+
+export function esVistaDetalleAbierta() {
+  return portfolioDetailOpen;
+}
