@@ -1,6 +1,50 @@
 @import url("https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700&display=swap");
 
 /* ============================================
+   VARIABLES — Sistema de colores
+   ============================================ */
+
+:root {
+  /* Backgrounds */
+  --bg: #ffffff;
+  --bg-hover: #f7f7f7;
+
+  /* Text */
+  --text: #000000;
+  --text-content: #333333;
+  --text-secondary: #999999;
+  --text-muted: #888888;
+
+  /* Borders */
+  --border: rgba(0, 0, 0, 0.12);
+  --border-hover: rgba(0, 0, 0, 0.35);
+
+  /* Shadows */
+  --shadow-sm: rgba(0, 0, 0, 0.05);
+  --shadow-md: rgba(0, 0, 0, 0.08);
+
+  /* Zone label */
+  --zone-label: rgba(0, 0, 0, 0.055);
+
+  /* Minimap */
+  --minimap-cell: #d0d0d0;
+  --minimap-active: #000000;
+  --minimap-expanded-bg: #c0c0c0;
+  --minimap-expanded-hover: #555555;
+  --minimap-expanded-text: #ffffff;
+  --overlay-bg: rgba(255, 255, 255, 0.97);
+
+  /* Buttons (subtle) */
+  --btn-subtle: rgba(0, 0, 0, 0.3);
+  --btn-subtle-hover: rgba(0, 0, 0, 0.6);
+  --btn-subtle-strong: rgba(0, 0, 0, 0.35);
+  --btn-subtle-strong-hover: rgba(0, 0, 0, 0.7);
+
+  /* Gradient (scroll fade) */
+  --gradient-color: #ffffff;
+}
+
+/* ============================================
    0. RESET & BASE
    Normalización y estilos base globales.
    Fuente: Inknut Antiqua (serif).
@@ -14,8 +58,8 @@ html, body {
   font-family: "Inknut Antiqua", serif;
   font-weight: 400;
   line-height: 1.3;
-  background: #ffffff;
-  color: #000000;
+  background: var(--bg);
+  color: var(--text);
 }
 
 *, *::before, *::after {
@@ -61,7 +105,7 @@ p, h1, h2, h3 {
   padding: 10dvh 10dvw;
   box-sizing: border-box;
   background-color: transparent;
-  color: #000000;
+  color: var(--text);
   opacity: 0;
   visibility: hidden;               /* bloquea clicks en hijos aunque tengan pointer-events:auto */
   transition: opacity 0.6s ease-in-out, visibility 0s 0.6s; /* visibility se oculta tras el fade-out */
@@ -91,7 +135,7 @@ p, h1, h2, h3 {
   font-family: "Inknut Antiqua", serif;
   font-size: clamp(5rem, 18dvw, 16rem);
   font-weight: 300;
-  color: rgba(0, 0, 0, 0.055);
+  color: var(--zone-label);
   text-transform: lowercase;
   letter-spacing: -0.03em;
   pointer-events: none;
@@ -132,12 +176,12 @@ p, h1, h2, h3 {
 }
 
 .minimap-inline-cell {
-  background: #d0d0d0;
+  background: var(--minimap-cell);
   transition: background 0.2s ease;
 }
 
 .minimap-inline-cell.activa {
-  background: #000;
+  background: var(--minimap-active);
 }
 
 .minimap-inline-cell.invisible {
@@ -156,7 +200,7 @@ p, h1, h2, h3 {
   left: 0;
   width: 100dvw;
   height: 100dvh;
-  background: rgba(255, 255, 255, 0.97);
+  background: var(--overlay-bg);
   z-index: 200;
   display: flex;
   align-items: center;
@@ -177,7 +221,7 @@ p, h1, h2, h3 {
 }
 
 .minimap-expanded-cell {
-  background: #c0c0c0;
+  background: var(--minimap-expanded-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -186,18 +230,18 @@ p, h1, h2, h3 {
   padding: 0;
   font-family: "Inknut Antiqua", serif;
   font-size: clamp(0.5rem, 1dvw, 0.85rem);
-  color: #ffffff;
+  color: var(--minimap-expanded-text);
   transition: background 0.3s ease, transform 0.3s ease;
   text-transform: lowercase;
 }
 
 .minimap-expanded-cell:hover {
   transform: scale(1.06);
-  background: #555;
+  background: var(--minimap-expanded-hover);
 }
 
 .minimap-expanded-cell.activa {
-  background: #000000;
+  background: var(--minimap-active);
 }
 
 .minimap-expanded-cell.invisible {
@@ -214,7 +258,7 @@ p, h1, h2, h3 {
 .nav-label {
   position: absolute;
   font-size: clamp(0.7rem, 1dvw, 1rem);
-  color: #999;
+  color: var(--text-secondary);
   cursor: pointer;
   z-index: 10;
   transition: color 0.3s ease;
@@ -226,7 +270,7 @@ p, h1, h2, h3 {
 }
 
 .nav-label:hover {
-  color: #000;
+  color: var(--text);
 }
 
 .nav-label.left {
@@ -293,12 +337,12 @@ p, h1, h2, h3 {
 
 .tools-scroll-wrapper::before {
   top: 0;
-  background: linear-gradient(to bottom, #fff, transparent);
+  background: linear-gradient(to bottom, var(--gradient-color), transparent);
 }
 
 .tools-scroll-wrapper::after {
   bottom: 0;
-  background: linear-gradient(to top, #fff, transparent);
+  background: linear-gradient(to top, var(--gradient-color), transparent);
 }
 
 .tools-scroll-wrapper.can-scroll-up::before { opacity: 1; }
@@ -360,25 +404,25 @@ p, h1, h2, h3 {
   display: block;
   width: 100%;
   text-align: center;
-  background: #ffffff;
-  border: 1px solid rgba(0,0,0,0.12);
+  background: var(--bg);
+  border: 1px solid var(--border);
   border-radius: 4px;
   padding: 0.4rem 1rem;
   font-family: "Inknut Antiqua", serif;
   font-size: clamp(0.7rem, 0.95dvw, 0.9rem);
   font-weight: 600;
-  color: #000;
+  color: var(--text);
   text-decoration: none;
   transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 2px var(--shadow-sm);
   position: relative;
 }
 
 .tool-link:hover {
-  border-color: rgba(0,0,0,0.35);
-  background: #f7f7f7;
+  border-color: var(--border-hover);
+  background: var(--bg-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 8px var(--shadow-md);
 }
 
 .tool-link:active {
@@ -403,30 +447,30 @@ p, h1, h2, h3 {
   width: 100%;
   appearance: none;
   -webkit-appearance: none;
-  background: #ffffff;
-  border: 1px solid rgba(0,0,0,0.12);
+  background: var(--bg);
+  border: 1px solid var(--border);
   border-radius: 4px;
   padding: 0.4rem 1rem;
   font-family: "Inknut Antiqua", serif;
   font-size: clamp(0.7rem, 0.95dvw, 0.9rem);
   font-weight: 600;
-  color: #000;
+  color: var(--text);
   cursor: pointer;
   transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 2px var(--shadow-sm);
   text-align: center;
 }
 
 .tools-dropdown-btn:hover {
-  border-color: rgba(0,0,0,0.35);
-  background: #f7f7f7;
+  border-color: var(--border-hover);
+  background: var(--bg-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 8px var(--shadow-md);
 }
 
 .tools-dropdown-btn.active {
-  border-color: rgba(0,0,0,0.35);
-  background: #f7f7f7;
+  border-color: var(--border-hover);
+  background: var(--bg-hover);
 }
 
 /* Flecha del dropdown: rota 180deg al abrir */
@@ -449,7 +493,7 @@ p, h1, h2, h3 {
   transition: grid-template-rows 0.3s ease;
   overflow: hidden;
   width: 100%;
-  background: #ffffff;
+  background: var(--bg);
 }
 
 .tools-dropdown-content.open {
@@ -496,7 +540,7 @@ p, h1, h2, h3 {
 
 .statement-content p {
   margin: 0;
-  color: #333;
+  color: var(--text-content);
 }
 
 
@@ -531,12 +575,12 @@ p, h1, h2, h3 {
 
 .metodologia-scroll-wrapper::before {
   top: 0;
-  background: linear-gradient(to bottom, #fff, transparent);
+  background: linear-gradient(to bottom, var(--gradient-color), transparent);
 }
 
 .metodologia-scroll-wrapper::after {
   bottom: 0;
-  background: linear-gradient(to top, #fff, transparent);
+  background: linear-gradient(to top, var(--gradient-color), transparent);
 }
 
 .metodologia-scroll-wrapper.can-scroll-up::before { opacity: 1; }
@@ -559,7 +603,7 @@ p, h1, h2, h3 {
 
 .metodologia-content p {
   margin-bottom: 1.4em;
-  color: #333;
+  color: var(--text-content);
 }
 
 /* ============================================
@@ -589,12 +633,12 @@ p, h1, h2, h3 {
 
 .politicas-scroll-wrapper::before {
   top: 0;
-  background: linear-gradient(to bottom, #fff, transparent);
+  background: linear-gradient(to bottom, var(--gradient-color), transparent);
 }
 
 .politicas-scroll-wrapper::after {
   bottom: 0;
-  background: linear-gradient(to top, #fff, transparent);
+  background: linear-gradient(to top, var(--gradient-color), transparent);
 }
 
 .politicas-scroll-wrapper.can-scroll-up::before { opacity: 1; }
@@ -617,13 +661,13 @@ p, h1, h2, h3 {
 
 .politicas-content p {
   margin-bottom: 1.4em;
-  color: #333;
+  color: var(--text-content);
 }
 
 /* Último párrafo más tenue (compromiso del estudio) */
 .politicas-content p:last-child {
   margin-bottom: 0;
-  color: #888;
+  color: var(--text-muted);
   font-size: 0.88em;
 }
 
@@ -631,7 +675,7 @@ p, h1, h2, h3 {
 .politicas-nota {
   margin-top: 2em;
   font-weight: 600;
-  color: #000 !important;
+  color: var(--text) !important;
   font-size: 1em !important;
 }
 
@@ -669,7 +713,7 @@ p, h1, h2, h3 {
 .lang-btn {
   border: none;
   background: none;
-  color: rgba(0,0,0,0.3);
+  color: var(--btn-subtle);
   font-family: inherit;
   font-size: 0.8rem;
   cursor: pointer;
@@ -678,12 +722,12 @@ p, h1, h2, h3 {
 }
 
 .lang-btn:hover {
-  color: rgba(0,0,0,0.6);
+  color: var(--btn-subtle-hover);
 }
 
 .lang-btn.active {
   font-weight: 600;
-  color: #000;
+  color: var(--text);
 }
 
 
@@ -692,7 +736,7 @@ p, h1, h2, h3 {
   height: 32px;
   border: none;
   background: none;
-  color: rgba(0,0,0,0.35);
+  color: var(--btn-subtle-strong);
   font-size: 1.2rem;
   line-height: 1;
   cursor: pointer;
@@ -704,7 +748,7 @@ p, h1, h2, h3 {
 }
 
 .politicas-font-btn:hover {
-  color: rgba(0,0,0,0.7);
+  color: var(--btn-subtle-strong-hover);
 }
 
 /* ============================================
@@ -786,7 +830,7 @@ p, h1, h2, h3 {
   opacity: 0;
   transition: opacity 0.2s;
   pointer-events: none;
-  color: #999;
+  color: var(--text-secondary);
   letter-spacing: 0.04em;
 }
 
@@ -876,12 +920,12 @@ p, h1, h2, h3 {
 
 .portfolio-grid-scroll-wrapper::before {
   top: 0;
-  background: linear-gradient(to bottom, #fff, transparent);
+  background: linear-gradient(to bottom, var(--gradient-color), transparent);
 }
 
 .portfolio-grid-scroll-wrapper::after {
   bottom: 0;
-  background: linear-gradient(to top, #fff, transparent);
+  background: linear-gradient(to top, var(--gradient-color), transparent);
 }
 
 .portfolio-grid-scroll-wrapper.can-scroll-up::before { opacity: 1; }
@@ -976,7 +1020,7 @@ p, h1, h2, h3 {
 .portfolio-switch {
   font-family: "Inknut Antiqua", serif;
   font-size: clamp(0.7rem, 1dvw, 1rem);
-  color: #999;
+  color: var(--text-secondary);
   background: none;
   border: none;
   padding: 0;
@@ -987,13 +1031,13 @@ p, h1, h2, h3 {
 }
 
 .portfolio-switch:hover {
-  color: #000;
+  color: var(--text);
 }
 
 .nav-label-inline {
   font-family: "Inknut Antiqua", serif;
   font-size: clamp(0.7rem, 1dvw, 1rem);
-  color: #999;
+  color: var(--text-secondary);
   background: none;
   border: none;
   padding: 0;
@@ -1003,7 +1047,7 @@ p, h1, h2, h3 {
 }
 
 .nav-label-inline:hover {
-  color: #000;
+  color: var(--text);
 }
 
 /* --- Botones +/- columnas del grid --- */
@@ -1023,7 +1067,7 @@ p, h1, h2, h3 {
   height: 32px;
   border: none;
   background: none;
-  color: rgba(0,0,0,0.35);
+  color: var(--btn-subtle-strong);
   font-size: 1.2rem;
   line-height: 1;
   cursor: pointer;
@@ -1035,7 +1079,7 @@ p, h1, h2, h3 {
 }
 
 .portfolio-col-btn:hover:not(:disabled) {
-  color: rgba(0,0,0,0.7);
+  color: var(--btn-subtle-strong-hover);
 }
 
 .portfolio-col-btn:disabled {
@@ -1065,24 +1109,24 @@ p, h1, h2, h3 {
   font-size: clamp(1rem, 2dvw, 1.6rem);
   font-weight: 400;
   letter-spacing: 0.03em;
-  color: #000;
+  color: var(--text);
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .contacto-email:hover {
-  color: #999;
+  color: var(--text-secondary);
 }
 
 .contacto-instagram {
   font-size: clamp(0.7rem, 1dvw, 0.95rem);
   font-weight: 400;
-  color: #999;
+  color: var(--text-secondary);
   text-decoration: none;
   letter-spacing: 0.04em;
   transition: color 0.3s ease;
 }
 
 .contacto-instagram:hover {
-  color: #000;
+  color: var(--text);
 }
