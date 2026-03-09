@@ -6,6 +6,7 @@
 
 import { cargarDatos, obtenerDatos } from "./data.js";
 import {
+  configurarNavegacion,
   crearCeldas,
   crearZoneLabel,
   crearHeader,
@@ -16,7 +17,7 @@ import {
   actualizarTamanoMinimapExpandido,
   cerrarMinimapExpandido,
   getOverlayEl,
-  GRID,
+  getGrid,
   getPosicion,
   setPosicion,
 } from "./navigation.js";
@@ -90,6 +91,7 @@ document.addEventListener("keydown", e => {
     default: return;
   }
 
+  const GRID = getGrid();
   if (GRID[newY]?.[newX] === 1) {
     setPosicion(newY, newX);
     actualizarVista();
@@ -136,6 +138,34 @@ document.addEventListener("visibilitychange", onVisibilityChange);
 // ============================================
 // Inicialización
 // ============================================
+
+configurarNavegacion({
+  grid: [
+    [0, 0, 1, 0], // fila 0: _, _, tools, _
+    [1, 1, 1, 1], // fila 1: políticas, metodología, welcome, statement
+    [0, 1, 1, 0], // fila 2: _, contacto, portfolio, _
+  ],
+  nombres: {
+    "0_2": "tools",
+    "1_0": "políticas",
+    "1_1": "metodología",
+    "1_2": "welcome",
+    "1_3": "statement",
+    "2_1": "contacto",
+    "2_2": "portfolio",
+  },
+  clasesCss: {
+    "tools": "tools",
+    "políticas": "politicas",
+    "metodología": "metodologia",
+    "welcome": "welcome",
+    "statement": "statement",
+    "portfolio": "portfolio",
+    "contacto": "contacto",
+  },
+  posInicial: { y: 1, x: 2 },
+  onUpdate: sincronizarEstadoNubes,
+});
 
 crearCeldas();
 crearZoneLabel();

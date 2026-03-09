@@ -1,43 +1,38 @@
 // ============================================
 // NAVIGATION — Grid, celdas, minimaps, nav labels, hash
 // ============================================
-
-import { sincronizarEstadoNubes } from "./portfolio.js";
+//
+// Configurable: cada página (studio, archive) pasa su
+// propio grid, nombres y callbacks mediante configurarNavegacion().
 
 // --- Elemento raíz ---
 const app = document.getElementById("content");
 
-// --- Grid config ---
+// --- Estado configurable ---
 
-export const GRID = [
-  [0, 0, 1, 0], // fila 0: _, _, tools, _
-  [1, 1, 1, 1], // fila 1: políticas, metodología, welcome, statement
-  [0, 1, 1, 0], // fila 2: _, contacto, portfolio, _
-];
+let GRID = [];
+let NOMBRES_CELDAS = {};
+let CLASE_CSS = {};
+let posY = 0;
+let posX = 0;
+let onVistaActualizadaCb = null;
 
-export const NOMBRES_CELDAS = {
-  "0_2": "tools",
-  "1_0": "políticas",
-  "1_1": "metodología",
-  "1_2": "welcome",
-  "1_3": "statement",
-  "2_1": "contacto",
-  "2_2": "portfolio",
-};
+/**
+ * Configura el grid de navegación.
+ * Debe llamarse ANTES de crearCeldas().
+ */
+export function configurarNavegacion({ grid, nombres, clasesCss, posInicial, onUpdate }) {
+  GRID = grid;
+  NOMBRES_CELDAS = nombres;
+  CLASE_CSS = clasesCss || {};
+  posY = posInicial?.y ?? 0;
+  posX = posInicial?.x ?? 0;
+  onVistaActualizadaCb = onUpdate || null;
+}
 
-const CLASE_CSS = {
-  "tools":       "tools",
-  "políticas":   "politicas",
-  "metodología": "metodologia",
-  "welcome":     "welcome",
-  "statement":   "statement",
-  "portfolio":   "portfolio",
-  "contacto":    "contacto",
-};
-
-/** Posición actual del usuario en el grid. */
-let posY = 1;
-let posX = 2; // empieza en "welcome"
+export function getGrid() {
+  return GRID;
+}
 
 export function getPosicion() {
   return { posY, posX };
@@ -293,5 +288,5 @@ export function actualizarVista() {
   actualizarZoneLabel();
   actualizarMinimapExpandido();
   actualizarHash();
-  sincronizarEstadoNubes();
+  if (onVistaActualizadaCb) onVistaActualizadaCb();
 }
