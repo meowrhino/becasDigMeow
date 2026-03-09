@@ -1099,8 +1099,8 @@ p, h1, h2, h3 {
 
 .theme-toggle {
   position: fixed;
-  top: 6dvh;
-  left: 6dvw;
+  top: 3dvh;
+  left: 3dvw;
   z-index: 100;
   border: none;
   background: none;
