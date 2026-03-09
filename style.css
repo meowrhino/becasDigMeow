@@ -1174,3 +1174,31 @@ p, h1, h2, h3 {
 .contacto-instagram:hover {
   color: var(--text);
 }
+
+/* ============================================
+   13. THEME TOGGLE
+   Botón ☽/☼ en la esquina superior izquierda,
+   simétrico al minimap (top-right).
+   ============================================ */
+
+.theme-toggle {
+  position: fixed;
+  top: 3dvh;
+  left: 3dvw;
+  z-index: 100;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: clamp(1rem, 1.4dvw, 1.3rem);
+  line-height: 1;
+  color: var(--btn-subtle);
+  transition: color 0.2s ease, transform 0.3s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.theme-toggle:hover {
+  color: var(--btn-subtle-hover);
+  transform: scale(1.1);
+}
