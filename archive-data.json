@@ -3,347 +3,279 @@
     "titulo": "meowrhino archive",
     "studioUrl": "index.html"
   },
-  "proyectos": [
+  "tools": [
+    { "nombre": "trackr", "url": "https://meowrhino.github.io/trackr/" },
+    { "nombre": "webP converter", "url": "https://meowrhino.github.io/imgToWeb/" },
+    { "nombre": "imgTo1600x900", "url": "https://meowrhino.github.io/imgTo1600x900/" },
+    { "nombre": "webM converter", "url": "https://meowrhino.github.io/videoToWeb/" },
+    { "nombre": "calculadora Impuestos", "url": "https://meowrhino.github.io/calculadoraInversa/" },
+    { "nombre": "facture generator", "url": "https://meowrhino.github.io/generadorFacturas/" },
+    { "nombre": "colorFun", "url": "https://meowrhino.github.io/colorFun/" },
+    { "nombre": "encuesta satisfacción", "url": "https://meowrhino.github.io/encuestaClientes/" },
+    { "nombre": "navicon converter", "url": "https://meowrhino.github.io/imgToNavicon/" },
+    { "nombre": "meowrhino tarifas", "url": "https://meowrhino.github.io/tarifasCalculadora/" },
+    { "nombre": "copiar y pegar sin formato", "url": "https://meowrhino.github.io/fcyp/" },
+    { "nombre": "IG follower checker", "url": "https://meowrhino.github.io/igChecker/" },
+    { "nombre": "IG @ generator", "url": "https://meowrhino.github.io/instagramNameGenerator/" },
+    { "nombre": "etymodict", "url": "https://meowrhino.github.io/etymodict/" },
+    { "nombre": "write", "url": "https://meowrhino.github.io/writingapp/" },
+    { "nombre": "guia setup github pages", "url": "https://meowrhino.github.io/guiaSetupGithubPages/" },
+    { "nombre": "faqAutonomos", "url": "https://meowrhino.github.io/faqAutonomos/" }
+  ],
+  "misc": [
     {
-      "nombre": "CV01",
-      "url": "https://meowrhino.neocities.org/projects/cv01/cv_0.png",
-      "descripcion": "a 3D space where you'll see screenshots of songs, most of them starring hatsune miku. the player can walk around and just let the lyrics talk to them",
-      "categoria": "arte",
-      "tags": ["3d", "videojuego", "miku"]
+      "nombre": "AI (art direction)",
+      "url": "https://www.youtube.com/watch?v=S9Nv0K8pjLo"
     },
     {
       "nombre": "bichi",
-      "url": "https://meowrhino.gitlab.io/bichi/",
-      "descripcion": "a project about relationships and how three characters mingle in their everyday. their language is a mixture of catalan, english and spanish",
-      "categoria": "arte",
-      "tags": ["narrativa", "personajes"]
+      "url": "https://meowrhino.gitlab.io/bichi/"
     },
     {
-      "nombre": "entierro",
-      "url": "https://meowrhino.neocities.org/projects/entierro/velatori_2.png",
-      "descripcion": "about bonds, respect and taking care of dear ones. rethinking non-human affections and how to cherish them. a valediction to a beloved phonecase",
-      "categoria": "arte",
-      "tags": ["conceptual", "ritual"]
-    },
-    {
-      "nombre": "casco",
-      "url": "https://meowrhino.neocities.org/projects/casco/DSC_0059%20copia2.png",
-      "descripcion": "an utterly useless and beautiful object: a helmet made of crochet mixing many colors, made to look sort of like a medieval helmet",
-      "categoria": "arte",
-      "tags": ["craft", "objeto"]
-    },
-    {
-      "nombre": "joyicidios",
-      "url": "https://meowrhino.neocities.org/projects/joyicidios/Joyicidios_Manuel_Latour1.pdf",
-      "descripcion": "a spanish play on words mixing 'jewel' (joya) and 'suicide' (suicidio). a series of 5 pieces created with lead, lingering between pretty and dangerous",
-      "categoria": "arte",
-      "tags": ["escultura", "joyeria"]
-    },
-    {
-      "nombre": "yamigotchi",
-      "url": "https://meowrhino.neocities.org/projects/yamigotchi/LATOUR_MANUEL_MEMORIAFINAL.pdf",
-      "descripcion": "a design for a sentient art object with 4 types of personalities determined by the jelly's colour, each with a different take on how it feels to live as an 'art object'",
-      "categoria": "arte",
-      "tags": ["producto", "interactivo"]
-    },
-    {
-      "nombre": "cubito",
-      "url": "https://meowrhino.neocities.org/projects/cubito/IMG_9318.png",
-      "descripcion": "mixed media art piece",
-      "categoria": "arte",
-      "tags": ["mixta"]
-    },
-    {
-      "nombre": "ASAV",
-      "url": "https://meowrhino.neocities.org/projects/ASAV/1.png",
-      "descripcion": "design series, 4 pieces",
-      "categoria": "arte",
-      "tags": ["diseno", "serie"]
-    },
-    {
-      "nombre": "palomas",
-      "url": "https://meowrhino.neocities.org/projects/palomas/0.png",
-      "descripcion": "pigeon illustration series, 6 pieces",
-      "categoria": "arte",
-      "tags": ["ilustracion", "serie"]
-    },
-    {
-      "nombre": "paradians",
-      "url": "https://meowrhino.neocities.org/img/paradians/parade_all.png",
-      "descripcion": "character parade animation sequence",
-      "categoria": "personajes",
-      "tags": ["animacion", "personajes"]
-    },
-    {
-      "nombre": "vernisas",
-      "url": "https://meowrhino.neocities.org/img/vernisas.png",
-      "descripcion": "illustration, cloudy version",
-      "categoria": "arte",
-      "tags": ["ilustracion"]
-    },
-    {
-      "nombre": "AI (art direction)",
-      "url": "https://www.youtube.com/watch?v=S9Nv0K8pjLo",
-      "descripcion": "art direction for BALMA music video",
-      "categoria": "arte",
-      "tags": ["video", "direccion"]
-    },
-    {
-      "nombre": "la torra manel",
-      "url": "https://www.indiexpo.net/es/games/la-torra-manel",
-      "descripcion": "RPG Maker MV game trilogy",
-      "categoria": "juegos",
-      "tags": ["rpg", "narrativa"],
+      "nombre": "CV01",
       "links": [
-        { "label": "I", "url": "https://www.indiexpo.net/es/games/la-torra-manel" },
-        { "label": "II", "url": "https://www.indiexpo.net/es/games/la-2a-torre-manel" },
-        { "label": "III", "url": "https://www.indiexpo.net/es/games/la-3era-torra-manel-2" }
+        { "label": "01", "url": "https://meowrhino.neocities.org/projects/cv01/cv_0.png" },
+        { "label": "02", "url": "https://meowrhino.neocities.org/projects/cv01/cv_1.png" },
+        { "label": "03", "url": "https://meowrhino.neocities.org/projects/cv01/cv_2.png" },
+        { "label": "download (mac)", "url": "https://mega.nz/#F!dlQWlIJK!f65Tz161WhWqD1TsYVSXTA" },
+        { "label": "gameplay", "url": "https://youtu.be/F_NGUAMIREI" }
       ]
     },
     {
-      "nombre": "barcelona per eixample",
-      "url": "https://meowrhino.neocities.org/barcelona.html",
-      "descripcion": "city exploration game",
-      "categoria": "juegos",
-      "tags": ["explorar", "barcelona"]
+      "nombre": "cubito",
+      "links": [
+        { "label": "video", "url": "https://mega.nz/#!BswTyShJ!3_w2PiNZnDeKSV2Lpe7MLNbrISanoJcDz9hsUccwof4" },
+        { "label": "joan", "url": "https://mega.nz/#!84g3zYDY!_D2w_dw216gmrz1KQUhw3EobnasxlCbQ3EmcPEP5Yto" },
+        { "label": "3", "url": "https://meowrhino.neocities.org/projects/cubito/IMG_9318.png" },
+        { "label": "portfolio", "url": "https://meowrhino.neocities.org/projects/cubito/Sin%20t%C3%ADtulo-12.pdf" }
+      ]
     },
     {
-      "nombre": "la festa",
-      "url": "https://meowrhino.neocities.org/lafesta.html",
-      "descripcion": "party game, extended version",
-      "categoria": "juegos",
-      "tags": ["fiesta"]
+      "nombre": "limon",
+      "url": "https://meowrhino.neocities.org/projects/cubito/IMG_9318.png"
     },
     {
-      "nombre": "joc de la vida",
-      "url": "https://meowrhino.github.io/gameOfLife/",
-      "descripcion": "conway's game of life implementation",
-      "categoria": "juegos",
-      "tags": ["simulacion", "clasico"]
+      "nombre": "entierro",
+      "links": [
+        { "label": "1", "url": "https://meowrhino.neocities.org/projects/entierro/velatori_2.png" },
+        { "label": "2", "url": "https://meowrhino.neocities.org/projects/entierro/enterrament_1.png" },
+        { "label": "3", "url": "https://meowrhino.neocities.org/projects/entierro/enterrament_2.png" },
+        { "label": "4", "url": "https://meowrhino.neocities.org/projects/entierro/enterrat_1.png" },
+        { "label": "5", "url": "https://meowrhino.neocities.org/projects/entierro/enterrat_2.png" },
+        { "label": "portfolio", "url": "https://meowrhino.neocities.org/projects/entierro/Sin%20t%C3%ADtulo-13.pdf" },
+        { "label": "bonus", "url": "https://mega.nz/#!s1YBhCzZ!bCFO8BC2voApKtSAZzMtOhltAi_w0YyEIhZd2agfqys" }
+      ]
     },
     {
-      "nombre": "minesweeper",
-      "url": "https://meowrhino.github.io/minesweeperV2/",
-      "descripcion": "minesweeper, version 2",
-      "categoria": "juegos",
-      "tags": ["clasico"]
+      "nombre": "casco",
+      "links": [
+        { "label": "0", "url": "https://meowrhino.neocities.org/projects/casco/DSC_0059%20copia2.png" },
+        { "label": "eura", "url": "https://meowrhino.neocities.org/projects/casco/DSC_0072%20copia.jpg" },
+        { "label": "casco", "url": "https://meowrhino.neocities.org/projects/casco/DSC_0512.jpeg" },
+        { "label": "dossier", "url": "https://meowrhino.neocities.org/projects/casco/Casco.pdf" }
+      ]
     },
     {
-      "nombre": "rockPaperScissors",
-      "url": "https://meowrhino.github.io/rockPaperScissors/",
-      "descripcion": "rock paper scissors",
-      "categoria": "juegos",
-      "tags": ["clasico"]
+      "nombre": "jungle",
+      "url": "https://mega.nz/fm/Q4gBXJYa"
     },
     {
-      "nombre": "5cards",
-      "url": "https://meowrhino.github.io/5cards/",
-      "descripcion": "card game",
-      "categoria": "juegos",
-      "tags": ["cartas"]
+      "nombre": "joyicidios",
+      "links": [
+        { "label": "object", "url": "https://meowrhino.neocities.org/projects/joyicidios/Joyicidios_Manuel_Latour1.pdf" },
+        { "label": "human", "url": "https://meowrhino.neocities.org/projects/joyicidios/Joyicidios_Manuel_Latour2.pdf" }
+      ]
     },
     {
-      "nombre": "cards1",
-      "url": "https://meowrhino.github.io/cards1/",
-      "descripcion": "card game variant",
-      "categoria": "juegos",
-      "tags": ["cartas"]
+      "nombre": "verdi",
+      "url": "https://www.figma.com/proto/yQE0i2BeTxN55QMbRtfIMA/verdi-manue-latour?page-id=109%3A10&type=design&node-id=109-11&viewport=102%2C367%2C0.25&t=CFAM2Go2Sb6FfnpI-1&scaling=scale-down&starting-point-node-id=109%3A11&show-proto-sidebar=1&mode=design"
     },
     {
-      "nombre": "letterSoup",
-      "url": "https://meowrhino.github.io/letterSoup/",
-      "descripcion": "word search puzzle",
-      "categoria": "juegos",
-      "tags": ["letras", "puzzle"]
+      "nombre": "ASAV",
+      "links": [
+        { "label": "1", "url": "https://meowrhino.neocities.org/projects/ASAV/1.png" },
+        { "label": "2", "url": "https://meowrhino.neocities.org/projects/ASAV/2.png" },
+        { "label": "3", "url": "https://meowrhino.neocities.org/projects/ASAV/3.png" },
+        { "label": "4", "url": "https://meowrhino.neocities.org/projects/ASAV/4.png" }
+      ]
     },
     {
-      "nombre": "horseLife",
-      "url": "https://meowrhino.github.io/horseLife/",
-      "descripcion": "horse life simulator",
-      "categoria": "juegos",
-      "tags": ["simulacion"]
+      "nombre": "yamigotchi",
+      "links": [
+        { "label": "portfolio", "url": "https://meowrhino.neocities.org/projects/yamigotchi/LATOUR_MANUEL_MEMORIAFINAL.pdf" },
+        { "label": "shop", "url": "https://mega.nz/#!lo5ShIoY!VtHiCccCkk5vApziwP1H3Y2ebebEkZcRJZQumQaq3Q0" },
+        { "label": "code", "url": "https://latourtilla.hotglue.me/?blanki_cody" }
+      ]
     },
     {
-      "nombre": "stars generator",
-      "url": "https://meowrhino.github.io/randomStars/",
-      "descripcion": "random star field generator",
-      "categoria": "experimentos",
-      "tags": ["generativo", "visual"]
+      "nombre": "palomas",
+      "links": [
+        { "label": "0", "url": "https://meowrhino.neocities.org/projects/palomas/0.png" },
+        { "label": "1", "url": "https://meowrhino.neocities.org/projects/palomas/1.png" },
+        { "label": "2", "url": "https://meowrhino.neocities.org/projects/palomas/2.png" },
+        { "label": "3", "url": "https://meowrhino.neocities.org/projects/palomas/3.png" },
+        { "label": "4", "url": "https://meowrhino.neocities.org/projects/palomas/4.png" },
+        { "label": "5", "url": "https://meowrhino.neocities.org/projects/palomas/5.png" }
+      ]
     },
     {
-      "nombre": "buddhabrot",
-      "url": "https://meowrhino.github.io/buddhabrot/",
-      "descripcion": "buddhabrot fractal generator",
-      "categoria": "experimentos",
-      "tags": ["fractal", "generativo"]
+      "nombre": "paradians",
+      "links": [
+        { "label": "0", "url": "https://meowrhino.neocities.org/img/paradians/paradians_01.png" },
+        { "label": "1", "url": "https://meowrhino.neocities.org/img/paradians/paradians_02.png" },
+        { "label": "2", "url": "https://meowrhino.neocities.org/img/paradians/paradians_03.png" },
+        { "label": "3", "url": "https://meowrhino.neocities.org/img/paradians/paradians_04.png" },
+        { "label": "4", "url": "https://meowrhino.neocities.org/img/paradians/paradians_05.png" },
+        { "label": "5", "url": "https://meowrhino.neocities.org/img/paradians/paradians_06.png" },
+        { "label": "6", "url": "https://meowrhino.neocities.org/img/paradians/paradians_07.png" },
+        { "label": "7", "url": "https://meowrhino.neocities.org/img/paradians/paradians_08.png" },
+        { "label": "8", "url": "https://meowrhino.neocities.org/img/paradians/paradians_09.png" },
+        { "label": "9", "url": "https://meowrhino.neocities.org/img/paradians/paradians_10.png" },
+        { "label": "dance", "url": "https://meowrhino.neocities.org/img/paradians/parade_all.png" }
+      ]
     },
+    {
+      "nombre": "img",
+      "links": [
+        { "label": "_", "url": "https://meowrhino.neocities.org/projects/insta/_.png" },
+        { "label": "why", "url": "https://meowrhino.neocities.org/projects/insta/why.png" },
+        { "label": "boat", "url": "https://meowrhino.neocities.org/projects/insta/barquito.png" },
+        { "label": "luna", "url": "https://mega.nz/file/R9wjlDaJ#n-8pm9jIMkgBDtg8HTmzHCcWTubNJYuR4-vjLT88aD0" },
+        { "label": "o", "url": "https://meowrhino.neocities.org/projects/insta/o.png" },
+        { "label": "boog", "url": "https://mega.nz/file/lxQFzZLA#mppVtvYamSo7fndY0VYNUBkx2_VNWi7dsHZYDU1ZzDI" },
+        { "label": "kiwi", "url": "https://meowrhino.neocities.org/projects/insta/kiwi2.jpg" },
+        { "label": "b5", "url": "https://meowrhino.neocities.org/projects/insta/b5_2.png" },
+        { "label": "tiburón", "url": "https://mega.nz/file/QxI2lbQA#A0DfMmgQjMQvLpuhWPJvGa0GssNyjvMqFMB0rSGUQb0" },
+        { "label": "glub", "url": "https://meowrhino.neocities.org/img/glub.png" },
+        { "label": "4444", "url": "https://meowrhino.neocities.org/projects/insta/4444.png" }
+      ]
+    },
+    {
+      "nombre": "odin-recipes",
+      "url": "https://meowrhino.github.io/odin-recipes/"
+    }
+  ],
+  "meowrhino": [
+    { "nombre": "profilePics", "url": "https://meowrhino.github.io/profilePics/" },
+    { "nombre": "arxiu.pdf", "url": "https://meowrhino.github.io/arxiu/" },
+    {
+      "nombre": "meowrhino clouds",
+      "links": [
+        { "label": "v1", "url": "https://meowrhino.github.io/clouds/" },
+        { "label": "v0", "url": "https://meowrhino.github.io/cloudsv0/" }
+      ]
+    },
+    { "nombre": "meowrhino archive", "url": "https://meowrhino.neocities.org/" },
+    { "nombre": "archivo kung fú", "url": "https://meowrhino.github.io/arwuchivo/" },
+    { "nombre": "cielo en barcelona", "url": "https://meowrhino.github.io/cielo/" },
+    {
+      "nombre": "becas digMeow",
+      "links": [
+        { "label": "v1", "url": "https://meowrhino.github.io/becasDigMeow_v1/" },
+        { "label": "v0", "url": "https://meowrhino.github.io/becasDigMeow_v0/" }
+      ]
+    }
+  ],
+  "games": [
+    { "nombre": "barcelona per eixample", "url": "https://meowrhino.neocities.org/barcelona.html" },
+    {
+      "nombre": "festa",
+      "links": [
+        { "label": "link", "url": "https://meowrhino.neocities.org/lafesta_old.html" },
+        { "label": "extended", "url": "https://meowrhino.neocities.org/lafesta.html" }
+      ]
+    },
+    { "nombre": "joc de la vida", "url": "https://meowrhino.github.io/gameOfLife/" },
+    { "nombre": "minesweeper v0", "url": "https://meowrhino.github.io/etchASketch/" },
+    { "nombre": "minesweeperV2", "url": "https://meowrhino.github.io/minesweeperV2/" },
+    { "nombre": "rockPaperScissors", "url": "https://meowrhino.github.io/rockPaperScissors/" },
+    { "nombre": "5cards", "url": "https://meowrhino.github.io/5cards/" },
+    { "nombre": "cards1", "url": "https://meowrhino.github.io/cards1/" },
+    { "nombre": "letterSoup", "url": "https://meowrhino.github.io/letterSoup/" },
+    { "nombre": "horseLife", "url": "https://meowrhino.github.io/horseLife/" }
+  ],
+  "experiments": [
+    { "nombre": "diego3", "url": "https://meowrhino.github.io/diego3/" },
+    { "nombre": "stars generator", "url": "https://meowrhino.github.io/randomStars/" },
+    { "nombre": "buddhabrot generator", "url": "https://meowrhino.github.io/buddhabrot/" },
     {
       "nombre": "iching",
-      "url": "https://meowrhino.github.io/trigrama/",
-      "descripcion": "i ching explorations: music, future reading and trigrams",
-      "categoria": "experimentos",
-      "tags": ["mistico", "generativo"],
       "links": [
         { "label": "music", "url": "https://meowrhino.github.io/8guamusic1" },
         { "label": "future", "url": "https://meowrhino.github.io/8guafuture1/" },
         { "label": "trigrama", "url": "https://meowrhino.github.io/trigrama/" }
       ]
     },
-    {
-      "nombre": "ichingPic",
-      "url": "https://meowrhino.github.io/ichingPic/",
-      "descripcion": "i ching visual oracle",
-      "categoria": "experimentos",
-      "tags": ["mistico", "visual"]
-    },
-    {
-      "nombre": "zodiac chart",
-      "url": "https://meowrhino.github.io/wholeSignHouseChart/",
-      "descripcion": "whole sign house zodiac chart generator",
-      "categoria": "experimentos",
-      "tags": ["astrologia", "generativo"]
-    },
-    {
-      "nombre": "html day 2025",
-      "url": "https://meowrhino.github.io/htmlDay2025/",
-      "descripcion": "vim intro for html day 2025",
-      "categoria": "experimentos",
-      "tags": ["educativo", "vim"]
-    },
-    {
-      "nombre": "mediocre learner",
-      "url": "https://meowrhino.gitlab.io/mediocre-learner/",
-      "descripcion": "learning experiment",
-      "categoria": "experimentos",
-      "tags": ["educativo"]
-    },
-    {
-      "nombre": "atalanta library",
-      "url": "https://meowrhino.github.io/atalanta/",
-      "descripcion": "digital library experiment",
-      "categoria": "experimentos",
-      "tags": ["biblioteca"]
-    },
-    {
-      "nombre": "apoloASCII",
-      "url": "https://meowrhino.github.io/apoloASCII/",
-      "descripcion": "ASCII art experiment",
-      "categoria": "experimentos",
-      "tags": ["ascii", "arte"]
-    },
-    {
-      "nombre": "neolib10",
-      "url": "https://meowrhino.github.io/neolib10/",
-      "descripcion": "web experiment",
-      "categoria": "experimentos",
-      "tags": ["web"]
-    },
-    {
-      "nombre": "solar5",
-      "url": "https://meowrhino.github.io/solar5/",
-      "descripcion": "solar system experiment",
-      "categoria": "experimentos",
-      "tags": ["espacio", "visual"]
-    },
-    {
-      "nombre": "fake matcha cafe",
-      "url": "https://matchacafe.manus.space",
-      "descripcion": "fictional matcha cafe website",
-      "categoria": "experimentos",
-      "tags": ["web", "ficticio"]
-    },
+    { "nombre": "ichingPic", "url": "https://meowrhino.github.io/ichingPic/" },
+    { "nombre": "zodiac chart", "url": "https://meowrhino.github.io/wholeSignHouseChart/" },
+    { "nombre": "html day 2025", "url": "https://meowrhino.github.io/htmlDay2025/" },
+    { "nombre": "mediocre learner", "url": "https://meowrhino.gitlab.io/mediocre-learner/" },
+    { "nombre": "atalanta library", "url": "https://meowrhino.github.io/atalanta/" },
+    { "nombre": "apoloASCII", "url": "https://meowrhino.github.io/apoloASCII/" },
+    { "nombre": "neolib10", "url": "https://meowrhino.github.io/neolib10/" },
+    { "nombre": "solar5", "url": "https://meowrhino.github.io/solar5/" },
+    { "nombre": "a", "url": "https://meowrhino.github.io/a/" },
+    { "nombre": "fake matcha cafe", "url": "https://matchacafe.manus.space" },
+    { "nombre": "ryf", "url": "https://meowrhino.github.io/ryf/" },
     {
       "nombre": "investigaciones",
-      "url": "https://meowrhino.github.io/investigaciones_001/",
-      "descripcion": "visual investigation series",
-      "categoria": "experimentos",
-      "tags": ["investigacion", "serie"],
       "links": [
         { "label": "001", "url": "https://meowrhino.github.io/investigaciones_001/" },
         { "label": "002", "url": "https://meowrhino.github.io/investigaciones_002/" },
         { "label": "003", "url": "https://meowrhino.github.io/investigaciones_003/" },
         { "label": "004", "url": "https://meowrhino.github.io/investigaciones_004/" }
       ]
-    },
+    }
+  ],
+  "social": [
+    { "nombre": "piupiu", "url": "https://piulerv2.manuellatourf.workers.dev/" },
+    { "nombre": "piuler", "url": "https://piuler.onrender.com/" },
+    { "nombre": "gridChat", "url": "https://meowrhino.github.io/gridChat/" },
+    { "nombre": "messagePark", "url": "https://meowrhino.github.io/messagePark/" },
+    { "nombre": "projectChat", "url": "https://meowrhino.github.io/projectChat/" }
+  ],
+  "unfinished": [
+    { "nombre": "rikamichieCard", "url": "https://meowrhino.github.io/rikamichiev0/" },
+    { "nombre": "zumiño.ppt", "url": "https://meowrhino.github.io/zumino/" },
     {
-      "nombre": "meowrhino clouds",
-      "url": "https://meowrhino.github.io/clouds/",
-      "descripcion": "cloud experiment, predecessor of the studio portfolio",
-      "categoria": "experimentos",
-      "tags": ["nubes", "web"],
+      "nombre": "plantitas",
       "links": [
-        { "label": "v1", "url": "https://meowrhino.github.io/clouds/" },
-        { "label": "v0", "url": "https://meowrhino.github.io/cloudsv0/" }
+        { "label": "test", "url": "https://meowrhino.github.io/plantitas/" },
+        { "label": "prototype", "url": "https://meowrhino.github.io/latrini/" }
       ]
     },
     {
-      "nombre": "piupiu",
-      "url": "https://piulerv2.manuellatourf.workers.dev/",
-      "descripcion": "social microblogging platform",
-      "categoria": "apps",
-      "tags": ["social", "red"]
+      "nombre": "safeamorx",
+      "links": [
+        { "label": "WIP", "url": "https://meowrhino.github.io/safeAmorx/" },
+        { "label": "v2", "url": "https://meowrhino.github.io/safeAmorxV2/" }
+      ]
     },
-    {
-      "nombre": "gridChat",
-      "url": "https://meowrhino.github.io/gridChat/",
-      "descripcion": "spatial chatroom on a grid",
-      "categoria": "apps",
-      "tags": ["social", "chat"]
-    },
-    {
-      "nombre": "messagePark",
-      "url": "https://meowrhino.github.io/messagePark/",
-      "descripcion": "message park, leave notes in a virtual space",
-      "categoria": "apps",
-      "tags": ["social", "mensajes"]
-    },
-    {
-      "nombre": "projectChat",
-      "url": "https://meowrhino.github.io/projectChat/",
-      "descripcion": "project-based chat tool",
-      "categoria": "apps",
-      "tags": ["social", "colaboracion"]
-    },
-    {
-      "nombre": "paintOnline",
-      "url": "https://meowrhino.github.io/paintOnline/",
-      "descripcion": "online collaborative paint tool",
-      "categoria": "apps",
-      "tags": ["dibujo", "colaboracion"]
-    },
-    {
-      "nombre": "profilePics",
-      "url": "https://meowrhino.github.io/profilePics/",
-      "descripcion": "collection of profile pictures and avatars",
-      "categoria": "personajes",
-      "tags": ["avatares", "coleccion"]
-    },
-    {
-      "nombre": "arxiu.pdf",
-      "url": "https://meowrhino.github.io/arxiu/",
-      "descripcion": "personal PDF archive",
-      "categoria": "experimentos",
-      "tags": ["archivo", "pdf"]
-    },
-    {
-      "nombre": "cielo en barcelona",
-      "url": "https://meowrhino.github.io/cielo/",
-      "descripcion": "sky photography archive, barcelona",
-      "categoria": "experimentos",
-      "tags": ["fotografia", "barcelona"]
-    },
-    {
-      "nombre": "archivo kung fu",
-      "url": "https://meowrhino.github.io/arwuchivo/",
-      "descripcion": "kung fu moves archive",
-      "categoria": "experimentos",
-      "tags": ["kungfu", "archivo"]
-    }
+    { "nombre": "first tarifas (deprecated)", "url": "https://meowrhino.github.io/tarifas_DEPRECATED/" },
+    { "nombre": "linktree", "url": "https://meowrhino.github.io/linktree/" },
+    { "nombre": "tinnitusRelief", "url": "https://meowrhino.github.io/tinnitusRelief/" },
+    { "nombre": "discriminationTEST", "url": "https://meowrhino.github.io/discriminationtest/" },
+    { "nombre": "ableme", "url": "https://meowrhino.github.io/ableme/admin.html" },
+    { "nombre": "ethereal TEM", "url": "https://meowrhino.github.io/TEM/" },
+    { "nombre": "oca", "url": "https://meowrhino.github.io/oca/" },
+    { "nombre": "las xordxs", "url": "https://meowrhino.github.io/jordiyordiyordyiordi/" },
+    { "nombre": "directorioLD", "url": "https://meowrhino.github.io/directorio/" },
+    { "nombre": "tarifas2026 (deprecated)", "url": "https://meowrhino.github.io/tarifas2026_DEPRECATED/" },
+    { "nombre": "videoToLilVideo (deprecated)", "url": "https://meowrhino.github.io/videoToLilVideo_DEPRECATED/" },
+    { "nombre": "trackerTest", "url": "https://meowrhino.github.io/trackerTest/" },
+    { "nombre": "quests", "url": "https://meowrhino.github.io/quests/" },
+    { "nombre": "registro", "url": "https://meowrhino.github.io/registro/" },
+    { "nombre": "MTC", "url": "https://meowrhino.github.io/MTC/" },
+    { "nombre": "receptesdelapats", "url": "https://meowrhino.github.io/receptesdelapats/" },
+    { "nombre": "txttohtml", "url": "https://meowrhino.github.io/txttohtml/" },
+    { "nombre": "taxrhino", "url": "https://meowrhino.github.io/taxrhino/" },
+    { "nombre": "grid-web-generator", "url": "https://meowrhino.github.io/grid-web-generator/" },
+    { "nombre": "paintOnline", "url": "https://meowrhino.github.io/paintOnline/" },
+    { "nombre": "pdfs", "url": "https://meowrhino.github.io/pdfs/" }
   ],
-  "textos": [
+  "texts": [
     {
       "nombre": "notas",
-      "descripcion": "personal notes, 5 volumes",
       "links": [
         { "label": "notas5", "url": "https://meowrhino.github.io/notas5/" },
         { "label": "notas4", "url": "https://meowrhino.github.io/notas4/" },
@@ -352,33 +284,58 @@
         { "label": "notas", "url": "https://meowrhino.github.io/notas/" }
       ]
     },
-    {
-      "nombre": "TFG",
-      "url": "https://meowrhino.cargo.site/tfg",
-      "descripcion": "thesis / final degree project"
-    },
+    { "nombre": "TFG", "url": "https://meowrhino.cargo.site/tfg" },
     {
       "nombre": "hopeko",
-      "descripcion": "writing project, 2 versions",
       "links": [
         { "label": "hopeko2", "url": "https://meowrhino.github.io/hopeko2/" },
         { "label": "hopeko", "url": "https://meowrhino.github.io/hopeko/" }
       ]
     },
     {
-      "nombre": "login essay",
-      "url": "https://mega.nz/file/JwZk3IIB#_vWw1ZMt0IV4vBIcd989K7yB7eJTfJriNk5PCnykViQ",
-      "descripcion": "essay about login/authentication"
+      "nombre": "la torra manel",
+      "links": [
+        { "label": "I", "url": "https://www.indiexpo.net/es/games/la-torra-manel" },
+        { "label": "II", "url": "https://www.indiexpo.net/es/games/la-2a-torre-manel" },
+        { "label": "III", "url": "https://www.indiexpo.net/es/games/la-3era-torra-manel-2" }
+      ]
+    },
+    { "nombre": "login essay", "url": "https://mega.nz/file/JwZk3IIB#_vWw1ZMt0IV4vBIcd989K7yB7eJTfJriNk5PCnykViQ" },
+    { "nombre": "somnis", "url": "https://meowrhino.github.io/somnis/" },
+    { "nombre": "historias", "url": "https://meowrhino.github.io/historias/" }
+  ],
+  "WIP": [
+    {
+      "nombre": "barbara wong",
+      "url": "https://meowrhino.github.io/barbaraWong/"
     },
     {
-      "nombre": "somnis",
-      "url": "https://meowrhino.github.io/somnis/",
-      "descripcion": "dream journal"
+      "nombre": "viciostorpes",
+      "links": [
+        { "label": "WIP", "url": "https://meowrhino.github.io/viciostorpes/" },
+        { "label": "v2", "url": "https://meowrhino.github.io/viciostorpesV2/" }
+      ]
     },
     {
-      "nombre": "historias",
-      "url": "https://meowrhino.github.io/historias/",
-      "descripcion": "short stories collection"
+      "nombre": "ladiega",
+      "url": "https://meowrhino.github.io/ladiega/"
+    },
+    {
+      "nombre": "christine",
+      "url": "https://meowrhino.github.io/christine/"
+    }
+  ],
+  "hidden": [
+    {
+      "nombre": "blogs adolescentes",
+      "links": [
+        { "label": "1", "url": "https://aheartthatrescueshearts.blogspot.com/" },
+        { "label": "2", "url": "https://freefromninepointeight.blogspot.com/" }
+      ]
+    },
+    {
+      "nombre": "mi primera web",
+      "url": "https://lethe0.tumblr.com/"
     }
   ],
   "facts": [
@@ -401,15 +358,5 @@
     "me he pasado las 100 mazmorras del Paper Mario",
     "he entrado en Berghain",
     "la historia del nombre 'meowrhino' viene de cuando un amigo comentó 'manumeorino' en instagram y evolucionó hasta perder el manu"
-  ],
-  "personajes": {
-    "profilePics": {
-      "url": "https://meowrhino.github.io/profilePics/",
-      "descripcion": "avatar collection"
-    },
-    "paradians": {
-      "url": "https://meowrhino.neocities.org/img/paradians/parade_all.png",
-      "descripcion": "character parade animation"
-    }
-  }
+  ]
 }

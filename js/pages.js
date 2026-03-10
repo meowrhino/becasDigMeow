@@ -241,10 +241,17 @@ export function renderContacto(data) {
   if (cuerpo) params.set("body", cuerpo);
   const mailtoHref = `mailto:${email}${params.toString() ? `?${params.toString()}` : ""}`;
 
+  const cvHtml = data.contacto.cv
+    ? `<a class="contacto-cv" href="${data.contacto.cv}" target="_blank" rel="noopener">CV</a>`
+    : "";
+
   el.innerHTML = `
     <div class="contacto-content">
       <a class="contacto-email" href="${mailtoHref}">${email}</a>
-      <a class="contacto-instagram" href="${instagram.url}"${esMovil ? "" : ' target="_blank"'} rel="noopener">${instagram.usuario}</a>
+      <div class="contacto-row">
+        <a class="contacto-instagram" href="${instagram.url}"${esMovil ? "" : ' target="_blank"'} rel="noopener">${instagram.usuario}</a>
+        ${cvHtml}
+      </div>
     </div>
   `;
 }

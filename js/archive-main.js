@@ -2,7 +2,7 @@
 // ARCHIVE MAIN — Inicialización del archive
 // ============================================
 //
-// Orquesta la carga del archive: grid en cruz 3×3,
+// Orquesta la carga del archive: grid diamante 4×4,
 // dark por defecto, comparte navigation.js y theme.js.
 
 import {
@@ -22,13 +22,7 @@ import {
   setPosicion,
 } from "./navigation.js";
 import { crearThemeToggle } from "./theme.js";
-import {
-  renderWelcome,
-  renderProyectos,
-  renderTextos,
-  renderFacts,
-  renderPersonajes,
-} from "./archive-pages.js";
+import { renderWelcome, renderSeccion } from "./archive-pages.js";
 
 // ============================================
 // Datos del archive
@@ -51,15 +45,21 @@ async function cargarDatosArchive() {
 // Renderizado
 // ============================================
 
+// Categorías que se renderizan como secciones shooter
+const SECCIONES = [
+  "tools", "misc", "meowrhino", "games",
+  "experiments", "social", "unfinished",
+  "texts", "WIP", "hidden",
+];
+
 async function renderizarContenido() {
   const data = await cargarDatosArchive();
   if (!data) return;
 
   renderWelcome(data);
-  renderProyectos(data);
-  renderTextos(data);
-  renderFacts(data);
-  renderPersonajes(data);
+  SECCIONES.forEach(key => {
+    if (data[key]) renderSeccion(key, data[key]);
+  });
 }
 
 // ============================================
@@ -116,25 +116,38 @@ window.addEventListener("orientationchange", programarResize);
 
 configurarNavegacion({
   grid: [
-    [0, 1, 0], // fila 0: _, textos, _
-    [1, 1, 1], // fila 1: facts, hub, proyectos
-    [0, 1, 0], // fila 2: _, personajes, _
+    [0, 1, 0, 0], // fila 0: _, tools, _, _
+    [1, 1, 1, 0], // fila 1: misc, meowrhino, games, _
+    [1, 1, 1, 1], // fila 2: texts, welcome, experiments, social
+    [1, 1, 1, 0], // fila 3: WIP, unfinished, hidden, _
   ],
   nombres: {
-    "0_1": "textos",
-    "1_0": "facts",
-    "1_1": "welcome",
-    "1_2": "proyectos",
-    "2_1": "personajes",
+    "0_1": "tools",
+    "1_0": "misc",
+    "1_1": "meowrhino",
+    "1_2": "games",
+    "2_0": "texts",
+    "2_1": "welcome",
+    "2_2": "experiments",
+    "2_3": "social",
+    "3_0": "WIP",
+    "3_1": "unfinished",
+    "3_2": "hidden",
   },
   clasesCss: {
-    "textos":     "archive-textos",
-    "facts":      "archive-facts",
-    "welcome":        "archive-welcome",
-    "proyectos":  "archive-proyectos",
-    "personajes": "archive-personajes",
+    "tools":       "archive-tools",
+    "misc":        "archive-misc",
+    "meowrhino":   "archive-meowrhino",
+    "games":       "archive-games",
+    "texts":       "archive-texts",
+    "welcome":     "archive-welcome",
+    "experiments": "archive-experiments",
+    "social":      "archive-social",
+    "WIP":         "archive-wip",
+    "unfinished":  "archive-unfinished",
+    "hidden":      "archive-hidden",
   },
-  posInicial: { y: 1, x: 1 },
+  posInicial: { y: 2, x: 1 },
 });
 
 crearCeldas();
