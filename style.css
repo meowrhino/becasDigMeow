@@ -311,10 +311,18 @@ p, h1, h2, h3 {
   border: none;
   background: none;
   padding: 0;
+  text-decoration: none;
+  line-height: normal;
 }
 
-.nav-label:hover {
+.nav-label:hover,
+a.nav-label:hover {
   color: var(--text);
+}
+
+a.nav-label,
+a.nav-label:visited {
+  color: var(--text-secondary);
 }
 
 .nav-label.left {
@@ -903,9 +911,9 @@ p, h1, h2, h3 {
   opacity: 1;
 }
 
-/* Nube siendo arrastrada: cursor de agarre */
-.portfolio-cloud-track:active {
-  cursor: grabbing;
+/* Nube clickable */
+.portfolio-cloud-track {
+  cursor: pointer;
 }
 
 /* Animaciones de deriva vertical + rotación leve.
@@ -1048,6 +1056,7 @@ p, h1, h2, h3 {
   color: var(--text);
 }
 
+
 /* ============================================
    12. PAGE: CONTACTO
    Página minimalista de contacto: email + Instagram.
@@ -1142,28 +1151,28 @@ p, h1, h2, h3 {
    del studio. Grid en cruz 3×3.
    ============================================ */
 
-/* --- Hub --- */
+/* --- Welcome (archive) --- */
 
-.celda.archive-hub {
+.celda.archive-welcome {
   align-items: center;
   justify-content: center;
 }
 
-.archive-hub-content {
+.archive-welcome-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.5em;
 }
 
-.archive-hub-title {
+.archive-welcome-title {
   font-size: clamp(1.6rem, 3.5dvw, 3rem);
   font-weight: 400;
   letter-spacing: 0.05em;
   text-align: center;
 }
 
-.archive-hub-studio-link {
+.archive-welcome-studio-link {
   font-size: clamp(0.7rem, 1dvw, 0.95rem);
   color: var(--text-secondary);
   text-decoration: none;
@@ -1171,7 +1180,7 @@ p, h1, h2, h3 {
   transition: color 0.3s ease;
 }
 
-.archive-hub-studio-link:hover {
+.archive-welcome-studio-link:hover {
   color: var(--text);
 }
 

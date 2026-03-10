@@ -6,6 +6,8 @@
 // Tools, Welcome, Statement, Metodología, Políticas, Contacto.
 
 import { currentLang, buildLangButtons, attachLangListeners } from "./data.js";
+import { setupZoom } from "./zoom.js";
+import { setupScrollGradients } from "./scroll-gradients.js";
 
 /** true si el viewport es táctil / móvil. */
 export const esMovil = "ontouchstart" in window || navigator.maxTouchPoints > 0;
@@ -87,18 +89,7 @@ export function renderTools(data) {
   // Gradientes de scroll
   const wrapper = el.querySelector(".tools-scroll-wrapper");
   const content = el.querySelector(".tools-content");
-  if (content && wrapper) {
-    const checkScroll = () => {
-      const atTop = content.scrollTop <= 10;
-      const atBottom = content.scrollTop + content.clientHeight >= content.scrollHeight - 10;
-      const noScroll = content.scrollHeight <= content.clientHeight;
-      wrapper.classList.toggle("can-scroll-up", !atTop && !noScroll);
-      wrapper.classList.toggle("can-scroll-down", !atBottom && !noScroll);
-    };
-    content.addEventListener("scroll", checkScroll);
-    checkScroll();
-    new ResizeObserver(() => checkScroll()).observe(content);
-  }
+  if (content && wrapper) setupScrollGradients(wrapper, content);
 }
 
 // --- Welcome ---
@@ -132,6 +123,7 @@ export function renderStatement(data) {
   `;
 
   const content = el.querySelector(".statement-content");
+  const applyScale = setupZoom(el, content);
 
   attachLangListeners(el, (lang) => {
     const isActive = el.classList.contains("activa");
@@ -139,10 +131,12 @@ export function renderStatement(data) {
       content.style.opacity = "0";
       setTimeout(() => {
         content.innerHTML = buildContent(lang);
+        applyScale();
         content.style.opacity = "1";
       }, 250);
     } else {
       content.innerHTML = buildContent(lang);
+      applyScale();
     }
   });
 }
@@ -168,19 +162,8 @@ export function renderMetodologia(data) {
 
   const wrapper = el.querySelector(".metodologia-scroll-wrapper");
   const content = el.querySelector(".metodologia-content");
-
-  const checkScroll = () => {
-    if (!content || !wrapper) return;
-    const atTop = content.scrollTop <= 10;
-    const atBottom = content.scrollTop + content.clientHeight >= content.scrollHeight - 10;
-    const noScroll = content.scrollHeight <= content.clientHeight;
-    wrapper.classList.toggle("can-scroll-up", !atTop && !noScroll);
-    wrapper.classList.toggle("can-scroll-down", !atBottom && !noScroll);
-  };
-
-  content.addEventListener("scroll", checkScroll);
-  checkScroll();
-  new ResizeObserver(() => checkScroll()).observe(content);
+  const checkScroll = setupScrollGradients(wrapper, content);
+  const applyScale = setupZoom(el, content, checkScroll);
 
   attachLangListeners(el, (lang) => {
     const isActive = el.classList.contains("activa");
@@ -188,11 +171,13 @@ export function renderMetodologia(data) {
       content.style.opacity = "0";
       setTimeout(() => {
         content.innerHTML = buildContent(lang);
+        applyScale();
         content.style.opacity = "1";
         requestAnimationFrame(checkScroll);
       }, 250);
     } else {
       content.innerHTML = buildContent(lang);
+      applyScale();
       requestAnimationFrame(checkScroll);
     }
   });
@@ -216,38 +201,13 @@ export function renderPoliticas(data) {
     <div class="politicas-scroll-wrapper">
       <div class="politicas-content">${buildContent(currentLang)}</div>
     </div>
-    <div class="politicas-bottom-bar">
-      <button class="politicas-font-btn" data-action="increase">+</button>
-      <button class="politicas-font-btn" data-action="decrease">\u2212</button>
-    </div>
     ${buildLangButtons()}
   `;
 
   const wrapper = el.querySelector(".politicas-scroll-wrapper");
   const content = el.querySelector(".politicas-content");
-
-  const checkScroll = () => {
-    if (!content || !wrapper) return;
-    const atTop = content.scrollTop <= 10;
-    const atBottom = content.scrollTop + content.clientHeight >= content.scrollHeight - 10;
-    const noScroll = content.scrollHeight <= content.clientHeight;
-    wrapper.classList.toggle("can-scroll-up", !atTop && !noScroll);
-    wrapper.classList.toggle("can-scroll-down", !atBottom && !noScroll);
-  };
-
-  content.addEventListener("scroll", checkScroll);
-  checkScroll();
-  new ResizeObserver(() => checkScroll()).observe(content);
-
-  let fontScale = 1;
-  el.querySelectorAll(".politicas-font-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const step = btn.dataset.action === "increase" ? 0.1 : -0.1;
-      fontScale = Math.max(0.7, Math.min(1.5, fontScale + step));
-      content.style.fontSize = `calc(0.88rem * ${fontScale})`;
-      requestAnimationFrame(checkScroll);
-    });
-  });
+  const checkScroll = setupScrollGradients(wrapper, content);
+  const applyScale = setupZoom(el, content, checkScroll);
 
   attachLangListeners(el, (lang) => {
     const isActive = el.classList.contains("activa");
@@ -256,14 +216,14 @@ export function renderPoliticas(data) {
       setTimeout(() => {
         content.innerHTML = buildContent(lang);
         content.scrollTop = 0;
-        content.style.fontSize = `calc(0.88rem * ${fontScale})`;
+        applyScale();
         checkScroll();
         content.style.opacity = "1";
       }, 250);
     } else {
       content.innerHTML = buildContent(lang);
       content.scrollTop = 0;
-      content.style.fontSize = `calc(0.88rem * ${fontScale})`;
+      applyScale();
       checkScroll();
     }
   });

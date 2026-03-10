@@ -238,11 +238,17 @@ function getVecinos() {
 }
 
 function crearNavLabels(celda) {
-  celda.querySelectorAll(".nav-label").forEach(l => l.remove());
+  celda.querySelectorAll(".nav-label:not([data-permanent])").forEach(l => l.remove());
 
   const vecinos = getVecinos();
+  // Posiciones ya ocupadas por labels permanentes
+  const permanentes = new Set(
+    Array.from(celda.querySelectorAll(".nav-label[data-permanent]"))
+      .flatMap(l => ["top","bottom","left","right"].filter(d => l.classList.contains(d)))
+  );
 
   Object.entries(vecinos).forEach(([pos, info]) => {
+    if (permanentes.has(pos)) return;
     const label = document.createElement("button");
     label.classList.add("nav-label", pos);
     label.textContent = info.nombre;

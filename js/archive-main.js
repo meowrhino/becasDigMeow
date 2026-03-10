@@ -23,7 +23,7 @@ import {
 } from "./navigation.js";
 import { crearThemeToggle } from "./theme.js";
 import {
-  renderHub,
+  renderWelcome,
   renderProyectos,
   renderTextos,
   renderFacts,
@@ -55,7 +55,7 @@ async function renderizarContenido() {
   const data = await cargarDatosArchive();
   if (!data) return;
 
-  renderHub(data);
+  renderWelcome(data);
   renderProyectos(data);
   renderTextos(data);
   renderFacts(data);
@@ -123,14 +123,14 @@ configurarNavegacion({
   nombres: {
     "0_1": "textos",
     "1_0": "facts",
-    "1_1": "hub",
+    "1_1": "welcome",
     "1_2": "proyectos",
     "2_1": "personajes",
   },
   clasesCss: {
     "textos":     "archive-textos",
     "facts":      "archive-facts",
-    "hub":        "archive-hub",
+    "welcome":        "archive-welcome",
     "proyectos":  "archive-proyectos",
     "personajes": "archive-personajes",
   },

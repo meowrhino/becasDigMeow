@@ -2,18 +2,31 @@
 // ARCHIVE PAGES — Renderizado de secciones del archive
 // ============================================
 
-// --- Hub ---
+import { setupScrollGradients } from "./scroll-gradients.js";
 
-export function renderHub(data) {
-  const el = document.querySelector(".celda.archive-hub");
+// --- Welcome ---
+
+export function renderWelcome(data) {
+  const el = document.querySelector(".celda.archive-welcome");
   if (!el) return;
 
   el.innerHTML = `
-    <div class="archive-hub-content">
-      <h1 class="archive-hub-title">${data.hub.titulo}</h1>
-      <a class="archive-hub-studio-link" href="${data.hub.studioUrl}">meowrhino.studio</a>
+    <div class="archive-welcome-content">
+      <h1 class="archive-welcome-title">${data.welcome.titulo}</h1>
     </div>
   `;
+
+  // Nav-label "studio" permanente abajo
+  const studioLabel = document.createElement("a");
+  studioLabel.href = data.welcome.studioUrl;
+  studioLabel.classList.add("nav-label", "bottom");
+  studioLabel.dataset.permanent = "true";
+  studioLabel.textContent = "studio";
+  studioLabel.addEventListener("click", () => {
+    const current = localStorage.getItem("meowrhino-theme") || "dark";
+    localStorage.setItem("meowrhino-theme", current === "dark" ? "light" : "dark");
+  });
+  el.appendChild(studioLabel);
 }
 
 // --- Proyectos ---
@@ -71,7 +84,9 @@ export function renderProyectos(data) {
     </div>
   `;
 
-  setupScrollGradients(el, "archive-proyectos-content");
+  const wrapper = el.querySelector(".archive-scroll-wrapper");
+  const content = document.getElementById("archive-proyectos-content");
+  if (wrapper && content) setupScrollGradients(wrapper, content);
 }
 
 // --- Textos ---
@@ -106,7 +121,9 @@ export function renderTextos(data) {
     </div>
   `;
 
-  setupScrollGradients(el, "archive-textos-content");
+  const wrapper = el.querySelector(".archive-scroll-wrapper");
+  const content = document.getElementById("archive-textos-content");
+  if (wrapper && content) setupScrollGradients(wrapper, content);
 }
 
 // --- Facts ---
@@ -157,22 +174,3 @@ export function renderPersonajes(data) {
   `;
 }
 
-// --- Scroll gradients (reutilizado) ---
-
-function setupScrollGradients(celda, contentId) {
-  const content = document.getElementById(contentId);
-  if (!content) return;
-
-  const wrapper = content.closest(".archive-scroll-wrapper");
-  if (!wrapper) return;
-
-  function update() {
-    const { scrollTop, scrollHeight, clientHeight } = content;
-    wrapper.classList.toggle("can-scroll-up", scrollTop > 2);
-    wrapper.classList.toggle("can-scroll-down", scrollTop + clientHeight < scrollHeight - 2);
-  }
-
-  content.addEventListener("scroll", update, { passive: true });
-  // Primer check tras render
-  requestAnimationFrame(update);
-}

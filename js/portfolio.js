@@ -134,6 +134,18 @@ export function renderPortfolio(data) {
     detailContent.appendChild(item);
   });
 
+  // Nav-label "archive" en la parte inferior de la celda portfolio
+  const archiveLabel = document.createElement("a");
+  archiveLabel.href = "archive.html";
+  archiveLabel.classList.add("nav-label", "bottom");
+  archiveLabel.dataset.permanent = "true";
+  archiveLabel.textContent = "archive";
+  archiveLabel.addEventListener("click", () => {
+    const current = localStorage.getItem("meowrhino-theme") || "light";
+    localStorage.setItem("meowrhino-theme", current === "dark" ? "light" : "dark");
+  });
+  el.appendChild(archiveLabel);
+
   generarNubesFlotantes(proyectos);
   portfolioCloudsNeedLayout = false;
   portfolioDetailOpen = false;
@@ -600,7 +612,6 @@ function puntoDentroTrack(track, clientX, clientY) {
 
 function actualizarHoverNubesEnPunto(clientX, clientY) {
   if (!puedeUsarHoverNubes()) return;
-  if (draggedCloud) return;
   const container = document.getElementById("portfolio-clouds");
   if (!container) return;
   if (hoverLockedCloud && puntoDentroTrack(hoverLockedCloud, clientX, clientY)) return;
@@ -620,8 +631,7 @@ function debeMonitorearHoverNubes() {
   return (
     hoverPointerInside &&
     puedeUsarHoverNubes() &&
-    esPortfolioActivo() &&
-    !draggedCloud
+    esPortfolioActivo()
   );
 }
 
@@ -650,46 +660,22 @@ function onCloudPointerEnter(e) {
   iniciarMonitorHoverNubes();
 }
 
-// --- Drag ---
+// --- Click en nube ---
 
-let draggedCloud = null;
-let dragDidMove = false;
-let dragFrozen = false;
-
-const dragState = {
-  startX: 0, startY: 0,
-  lastX: 0, lastY: 0, lastTime: 0,
-  velocityX: 0, velocityY: 0,
-  originX: 0, originY: 0,
-  throwRAF: null,
-};
-
-function getPosicionVisualNube(track) {
-  const left = parseFloat(track.style.left) || 0;
-  const top  = parseFloat(track.style.top) || 0;
-  const ct = getComputedStyle(track).transform;
-  let tx = 0;
-  if (ct && ct !== "none") {
-    const m = ct.match(/matrix\(([^)]+)\)/);
-    if (m) tx = parseFloat(m[1].split(",")[4]) || 0;
-  }
-  return { x: left + tx, y: top };
+export function onCloudPointerDown(e) {
+  const track = e.target.closest(".portfolio-cloud-track");
+  if (!track) return;
+  e.preventDefault();
+  const idx = parseInt(track.dataset.projectIndex, 10);
+  abrirVistaDetalle(Number.isFinite(idx) ? idx : undefined);
 }
 
-function obtenerRangoAnchoNubes() {
-  const esMobile = window.innerWidth <= 600;
-  return {
-    anchoMin: esMobile ? 100 : 160,
-    anchoMax: esMobile ? 180 : 300,
-  };
-}
-
-function calcularVelocidadNube(ancho) {
-  const { anchoMin, anchoMax } = obtenerRangoAnchoNubes();
-  const rango = Math.max(1, anchoMax - anchoMin);
-  const factorVelocidad = 1 - (ancho - anchoMin) / rango;
-  const factor = Math.max(0, Math.min(1, factorVelocidad));
-  return 20 + factor * 30 + Math.random() * 15;
+function onCloudPointerMove(e) {
+  hoverPointerInside = true;
+  hoverPointerX = e.clientX;
+  hoverPointerY = e.clientY;
+  actualizarHoverNubesEnPunto(e.clientX, e.clientY);
+  iniciarMonitorHoverNubes();
 }
 
 function reanudarNubeDesdePosicionActual(track) {
@@ -711,7 +697,12 @@ function reanudarNubeDesdePosicionActual(track) {
     return;
   }
 
-  const velocidad = calcularVelocidadNube(ancho);
+  const { anchoMin, anchoMax } = (window.innerWidth <= 600)
+    ? { anchoMin: 100, anchoMax: 180 }
+    : { anchoMin: 160, anchoMax: 300 };
+  const rango = Math.max(1, anchoMax - anchoMin);
+  const factor = Math.max(0, Math.min(1, 1 - (ancho - anchoMin) / rango));
+  const velocidad = 20 + factor * 30 + Math.random() * 15;
   const duracionMs = (distancia / velocidad) * 1000;
 
   const anim = track.animate(
@@ -719,12 +710,7 @@ function reanudarNubeDesdePosicionActual(track) {
       { transform: "translateX(0px)" },
       { transform: `translateX(${distancia}px)` },
     ],
-    {
-      duration: duracionMs,
-      iterations: 1,
-      easing: "linear",
-      fill: "forwards",
-    }
+    { duration: duracionMs, iterations: 1, easing: "linear", fill: "forwards" }
   );
 
   anim.onfinish = () => {
@@ -733,158 +719,6 @@ function reanudarNubeDesdePosicionActual(track) {
       track._configurarNube(track, banda, false, null);
     }
   };
-}
-
-function reiniciarNubeTrasDrag(track) {
-  if (!track.isConnected) return;
-  track.style.transform = "";
-  track.style.transformOrigin = "";
-  const item = track.querySelector(".portfolio-cloud-item");
-  if (item) item.style.animationPlayState = "running";
-  const banda = parseInt(track.dataset.banda, 10) || 0;
-  if (typeof track._configurarNube === "function") {
-    track._configurarNube(track, banda, false, null);
-  }
-}
-
-function congelarNubeParaDrag(track) {
-  const pos = getPosicionVisualNube(track);
-  track.getAnimations().forEach(a => a.cancel());
-  track.style.left      = `${pos.x}px`;
-  track.style.transform = "none";
-  const item = track.querySelector(".portfolio-cloud-item");
-  if (item) item.style.animationPlayState = "paused";
-  dragState.originX = pos.x;
-  dragState.originY = pos.y;
-  dragFrozen = true;
-}
-
-export function onCloudPointerDown(e) {
-  const track = e.target.closest(".portfolio-cloud-track");
-  if (!track) return;
-
-  hoverPointerInside = true;
-  hoverPointerX = e.clientX;
-  hoverPointerY = e.clientY;
-  detenerMonitorHoverNubes();
-  limpiarHoverNubeActiva();
-
-  e.preventDefault();
-  track.setPointerCapture(e.pointerId);
-
-  draggedCloud = track;
-  dragDidMove = false;
-  dragFrozen = false;
-
-  if (dragState.throwRAF) {
-    cancelAnimationFrame(dragState.throwRAF);
-    dragState.throwRAF = null;
-  }
-
-  dragState.startX  = e.clientX;
-  dragState.startY  = e.clientY;
-  dragState.lastX   = e.clientX;
-  dragState.lastY   = e.clientY;
-  dragState.lastTime = performance.now();
-  dragState.velocityX = 0;
-  dragState.velocityY = 0;
-}
-
-function onCloudPointerMove(e) {
-  if (!draggedCloud) {
-    hoverPointerInside = true;
-    hoverPointerX = e.clientX;
-    hoverPointerY = e.clientY;
-    actualizarHoverNubesEnPunto(e.clientX, e.clientY);
-    iniciarMonitorHoverNubes();
-    return;
-  }
-  e.preventDefault();
-
-  const now = performance.now();
-  const dt  = Math.max(1, now - dragState.lastTime);
-  const dx  = e.clientX - dragState.lastX;
-
-  if (!dragDidMove) {
-    const totalDx = e.clientX - dragState.startX;
-    const totalDy = e.clientY - dragState.startY;
-    if (Math.abs(totalDx) + Math.abs(totalDy) > 5) dragDidMove = true;
-  }
-
-  if (dragDidMove && !dragFrozen) {
-    congelarNubeParaDrag(draggedCloud);
-  }
-
-  if (!dragFrozen) {
-    dragState.lastX    = e.clientX;
-    dragState.lastY    = e.clientY;
-    dragState.lastTime = now;
-    return;
-  }
-
-  const a = 0.3;
-  dragState.velocityX = a * (dx / dt * 1000) + (1 - a) * dragState.velocityX;
-  dragState.velocityY = a * ((e.clientY - dragState.lastY) / dt * 1000) + (1 - a) * dragState.velocityY;
-  dragState.lastX    = e.clientX;
-  dragState.lastY    = e.clientY;
-  dragState.lastTime = now;
-
-  const totalDx = e.clientX - dragState.startX;
-  const totalDy = e.clientY - dragState.startY;
-  draggedCloud.style.left = `${dragState.originX + totalDx}px`;
-  draggedCloud.style.top  = `${dragState.originY + totalDy}px`;
-}
-
-export function onCloudPointerUp(e) {
-  if (!draggedCloud) return;
-  const track = draggedCloud;
-  draggedCloud = null;
-
-  hoverPointerInside = true;
-  hoverPointerX = e.clientX;
-  hoverPointerY = e.clientY;
-
-  if (!dragFrozen) {
-    // Click sin drag → abrir vista detalle del proyecto clicado
-    const idx = parseInt(track.dataset.projectIndex, 10);
-    abrirVistaDetalle(Number.isFinite(idx) ? idx : undefined);
-    return;
-  }
-
-  const maxVel = 2000;
-  let vx = Math.max(-maxVel, Math.min(maxVel, dragState.velocityX));
-  let vy = Math.max(-maxVel, Math.min(maxVel, dragState.velocityY));
-
-  const friction = 0.95;
-  const minSpeed = 5;
-  const speed = Math.sqrt(vx * vx + vy * vy);
-
-  if (speed < minSpeed) {
-    reiniciarNubeTrasDrag(track);
-    iniciarMonitorHoverNubes();
-    return;
-  }
-
-  let lastFrame = performance.now();
-
-  function throwStep(now) {
-    const dt = (now - lastFrame) / 1000;
-    lastFrame = now;
-    const cx = parseFloat(track.style.left) || 0;
-    const cy = parseFloat(track.style.top) || 0;
-    track.style.left = `${cx + vx * dt}px`;
-    track.style.top  = `${cy + vy * dt}px`;
-    vx *= friction;
-    vy *= friction;
-    if (Math.sqrt(vx * vx + vy * vy) > minSpeed && track.isConnected) {
-      dragState.throwRAF = requestAnimationFrame(throwStep);
-    } else {
-      reiniciarNubeTrasDrag(track);
-    }
-  }
-
-  dragState.throwRAF = requestAnimationFrame(throwStep);
-  iniciarMonitorHoverNubes();
 }
 
 // --- Resize y visibilidad ---

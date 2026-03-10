@@ -35,7 +35,6 @@ import {
   alResizarPortfolio,
   rehidratarPortfolioTrasRetorno,
   onCloudPointerDown,
-  onCloudPointerUp,
   cerrarVistaDetalle,
   esVistaDetalleAbierta,
 } from "./portfolio.js";
@@ -98,9 +97,8 @@ document.addEventListener("keydown", e => {
   }
 });
 
-// --- Drag de nubes (pointer global) ---
+// --- Click en nubes ---
 document.addEventListener("pointerdown", onCloudPointerDown);
-document.addEventListener("pointerup", onCloudPointerUp);
 
 // --- Resize ---
 let resizeTimeoutId = null;
