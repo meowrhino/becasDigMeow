@@ -1135,3 +1135,282 @@ p, h1, h2, h3 {
 /* Dark mode: sun visible, moon oculto */
 .theme-toggle.is-dark .toggle-moon { opacity: 0; }
 .theme-toggle.is-dark .toggle-sun  { opacity: 1; }
+
+/* ============================================
+   14. ARCHIVE — Páginas del archivo personal
+   Comparte el sistema de grid, minimap y tema
+   del studio. Grid en cruz 3×3.
+   ============================================ */
+
+/* --- Hub --- */
+
+.celda.archive-hub {
+  align-items: center;
+  justify-content: center;
+}
+
+.archive-hub-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5em;
+}
+
+.archive-hub-title {
+  font-size: clamp(1.6rem, 3.5dvw, 3rem);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+.archive-hub-studio-link {
+  font-size: clamp(0.7rem, 1dvw, 0.95rem);
+  color: var(--text-secondary);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: color 0.3s ease;
+}
+
+.archive-hub-studio-link:hover {
+  color: var(--text);
+}
+
+/* --- Scroll wrapper compartido --- */
+
+.archive-scroll-wrapper {
+  position: relative;
+  width: 70dvw;
+  max-width: 800px;
+  height: 80dvh;
+}
+
+.archive-scroll-wrapper::before,
+.archive-scroll-wrapper::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3rem;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.archive-scroll-wrapper::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--gradient-color), transparent);
+}
+
+.archive-scroll-wrapper::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--gradient-color), transparent);
+}
+
+.archive-scroll-wrapper.can-scroll-up::before { opacity: 1; }
+.archive-scroll-wrapper.can-scroll-down::after { opacity: 1; }
+
+.archive-scroll-content {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  padding-top: 10dvh;
+  padding-bottom: 10dvh;
+}
+
+/* --- Proyectos --- */
+
+.celda.archive-proyectos {
+  flex-direction: column;
+}
+
+.archive-project-group {
+  margin-bottom: 2.5em;
+}
+
+.archive-project-category {
+  font-size: clamp(0.65rem, 0.9dvw, 0.85rem);
+  font-weight: 300;
+  color: var(--text-muted);
+  text-transform: lowercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.8em;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.3em;
+}
+
+.archive-project-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  margin-bottom: 0.8em;
+  padding-left: 0.5em;
+}
+
+.archive-project-name {
+  font-size: clamp(0.75rem, 1dvw, 0.95rem);
+  font-weight: 400;
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.archive-project-name:hover {
+  color: var(--text-secondary);
+}
+
+.archive-project-sublinks {
+  display: flex;
+  gap: 0.6em;
+}
+
+.archive-project-sublink {
+  font-size: clamp(0.6rem, 0.8dvw, 0.75rem);
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.archive-project-sublink:hover {
+  color: var(--text);
+}
+
+.archive-project-desc {
+  font-size: clamp(0.55rem, 0.75dvw, 0.7rem);
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* --- Textos --- */
+
+.celda.archive-textos {
+  flex-direction: column;
+}
+
+.archive-text-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  margin-bottom: 1.2em;
+  text-align: center;
+}
+
+.archive-text-name {
+  font-size: clamp(0.8rem, 1.1dvw, 1rem);
+  font-weight: 400;
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a.archive-text-name:hover {
+  color: var(--text-secondary);
+}
+
+.archive-text-sublinks {
+  display: flex;
+  justify-content: center;
+  gap: 0.6em;
+}
+
+.archive-text-sublink {
+  font-size: clamp(0.6rem, 0.8dvw, 0.75rem);
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.archive-text-sublink:hover {
+  color: var(--text);
+}
+
+.archive-text-desc {
+  font-size: clamp(0.55rem, 0.75dvw, 0.7rem);
+  color: var(--text-muted);
+}
+
+/* --- Facts --- */
+
+.celda.archive-facts {
+  align-items: center;
+  justify-content: center;
+}
+
+.archive-facts-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5em;
+  max-width: 600px;
+  text-align: center;
+}
+
+.archive-facts-number {
+  font-size: clamp(0.65rem, 0.9dvw, 0.85rem);
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+.archive-facts-text {
+  font-size: clamp(0.85rem, 1.2dvw, 1.1rem);
+  line-height: 1.6;
+  color: var(--text-content);
+}
+
+.archive-facts-btn {
+  border: 1px solid var(--border);
+  background: none;
+  color: var(--text-secondary);
+  font-family: "Inknut Antiqua", serif;
+  font-size: clamp(0.6rem, 0.8dvw, 0.75rem);
+  padding: 0.4em 1.2em;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.archive-facts-btn:hover {
+  border-color: var(--border-hover);
+  color: var(--text);
+}
+
+/* --- Personajes --- */
+
+.celda.archive-personajes {
+  align-items: center;
+  justify-content: center;
+}
+
+.archive-personajes-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2em;
+}
+
+.archive-personaje-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3em;
+}
+
+.archive-personaje-name {
+  font-size: clamp(0.85rem, 1.2dvw, 1.1rem);
+  font-weight: 400;
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.archive-personaje-name:hover {
+  color: var(--text-secondary);
+}
+
+.archive-personaje-desc {
+  font-size: clamp(0.55rem, 0.75dvw, 0.7rem);
+  color: var(--text-muted);
+}
