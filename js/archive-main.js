@@ -116,38 +116,38 @@ window.addEventListener("orientationchange", programarResize);
 
 configurarNavegacion({
   grid: [
-    [0, 1, 0, 0], // fila 0: _, tools, _, _
-    [1, 1, 1, 0], // fila 1: misc, meowrhino, games, _
-    [1, 1, 1, 1], // fila 2: texts, welcome, experiments, social
-    [1, 1, 1, 0], // fila 3: WIP, unfinished, hidden, _
+    [0, 0, 1, 0, 0], // fila 0: _, _, tools, _, _
+    [0, 1, 1, 1, 0], // fila 1: _, misc, meowrhino, experiments, _
+    [1, 1, 1, 1, 1], // fila 2: texts, social, welcome, games, unfinished
+    [0, 1, 0, 1, 0], // fila 3: _, WIP, _, hidden, _
   ],
   nombres: {
-    "0_1": "tools",
-    "1_0": "misc",
-    "1_1": "meowrhino",
-    "1_2": "games",
+    "0_2": "tools",
+    "1_1": "misc",
+    "1_2": "meowrhino",
+    "1_3": "experiments",
     "2_0": "texts",
-    "2_1": "welcome",
-    "2_2": "experiments",
-    "2_3": "social",
-    "3_0": "WIP",
-    "3_1": "unfinished",
-    "3_2": "hidden",
+    "2_1": "social",
+    "2_2": "welcome",
+    "2_3": "games",
+    "2_4": "unfinished",
+    "3_1": "WIP",
+    "3_3": "hidden",
   },
   clasesCss: {
     "tools":       "archive-tools",
     "misc":        "archive-misc",
     "meowrhino":   "archive-meowrhino",
-    "games":       "archive-games",
-    "texts":       "archive-texts",
-    "welcome":     "archive-welcome",
     "experiments": "archive-experiments",
+    "texts":       "archive-texts",
     "social":      "archive-social",
-    "WIP":         "archive-wip",
+    "welcome":     "archive-welcome",
+    "games":       "archive-games",
     "unfinished":  "archive-unfinished",
+    "WIP":         "archive-wip",
     "hidden":      "archive-hidden",
   },
-  posInicial: { y: 2, x: 1 },
+  posInicial: { y: 2, x: 2 },
 });
 
 crearCeldas();

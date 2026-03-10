@@ -12,28 +12,11 @@ export function renderWelcome(data) {
   const el = document.querySelector(".celda.archive-welcome");
   if (!el) return;
 
-  // Fun fact aleatorio
-  const facts = data.facts || [];
-  const idx = facts.length ? Math.floor(Math.random() * facts.length) : -1;
-  const factHtml = idx >= 0
-    ? `<p class="archive-welcome-fact">${facts[idx]}</p>`
-    : "";
-
   el.innerHTML = `
     <div class="archive-welcome-content">
       <h1 class="archive-welcome-title">${data.welcome.titulo}</h1>
-      ${factHtml}
     </div>
   `;
-
-  // Click en fact → otro aleatorio
-  if (idx >= 0) {
-    const factEl = el.querySelector(".archive-welcome-fact");
-    factEl.addEventListener("click", () => {
-      const newIdx = Math.floor(Math.random() * facts.length);
-      factEl.textContent = facts[newIdx];
-    });
-  }
 
   // Nav-label "studio" permanente abajo
   const studioLabel = document.createElement("a");
