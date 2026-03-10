@@ -338,6 +338,24 @@
       "url": "https://lethe0.tumblr.com/"
     }
   ],
+  "sidequests": [
+    { "nombre": "diegosanmarcos", "url": "https://meowrhino.github.io/diegosanmarcos/" },
+    { "nombre": "maxito", "url": "https://meowrhino.github.io/maxito/" },
+    { "nombre": "rikamichie", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/rikamichie/" }, { "label": "web", "url": "https://rikamichie.com" }] },
+    { "nombre": "mikesx cd's", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/mikesx/" }, { "label": "web", "url": "https://mikebros.com" }] },
+    { "nombre": "jaume clotet", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/jaumeclotet/" }, { "label": "web", "url": "https://jaumeclotet.com" }] },
+    { "nombre": "conor", "url": "https://meowrhino.github.io/conor/" },
+    { "nombre": "paula barjau", "url": "https://meowrhino.github.io/paulabarjau/" },
+    { "nombre": "miranda", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/mirandaperezhita/" }, { "label": "web", "url": "https://mirandaperezhita.com" }] },
+    { "nombre": "andrea carilla", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/andreacarilla/" }, { "label": "web", "url": "https://andreacarilla.work" }] },
+    { "nombre": "mokakopa", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/mokakopa/" }, { "label": "web", "url": "https://mokakopa.com" }] },
+    { "nombre": "ana lópez serrano", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/twinMokakopa/" }, { "label": "web", "url": "https://analopezserrano.com" }] },
+    { "nombre": "e3000", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/e300/" }, { "label": "web", "url": "https://estructuras3000.com" }] },
+    { "nombre": "elmundodelasjordis", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/jordis/" }, { "label": "web", "url": "https://elmundodelasjordis.com" }] },
+    { "nombre": "berta esteve", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/snerta/" }, { "label": "web", "url": "https://bertaesteve.cat" }] },
+    { "nombre": "hifas studio", "url": "https://meowrhino.github.io/anakatana/" },
+    { "nombre": "villa granota", "url": "https://meowrhino.github.io/villagranota/" }
+  ],
   "facts": [
     "Al videojuego al que más he jugado es al Pokémon Zafiro (282 horas)",
     "me gustan mucho los animes de chicas con superpoderes",

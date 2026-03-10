@@ -2,34 +2,8 @@
 // ARCHIVE PAGES — Renderizado de secciones del archive
 // ============================================
 //
-// Dos funciones: renderWelcome() para el hub central,
-// y renderSeccion() genérico para todas las categorías
+// renderSeccion() genérico para todas las categorías
 // con estilo "shooter" (items aparecen y crecen).
-
-// --- Welcome ---
-
-export function renderWelcome(data) {
-  const el = document.querySelector(".celda.archive-welcome");
-  if (!el) return;
-
-  el.innerHTML = `
-    <div class="archive-welcome-content">
-      <h1 class="archive-welcome-title">${data.welcome.titulo}</h1>
-    </div>
-  `;
-
-  // Nav-label "studio" permanente abajo
-  const studioLabel = document.createElement("a");
-  studioLabel.href = data.welcome.studioUrl;
-  studioLabel.classList.add("nav-label", "bottom");
-  studioLabel.dataset.permanent = "true";
-  studioLabel.textContent = "studio";
-  studioLabel.addEventListener("click", () => {
-    const current = localStorage.getItem("meowrhino-theme") || "dark";
-    localStorage.setItem("meowrhino-theme", current === "dark" ? "light" : "dark");
-  });
-  el.appendChild(studioLabel);
-}
 
 // --- Sección genérica (shooter) ---
 
