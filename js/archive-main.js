@@ -141,6 +141,6 @@ crearCeldas();
 crearZoneLabel();
 crearHeader();
 crearOverlay();
-crearThemeToggle();
+crearThemeToggle(getOverlayEl());
 leerHash();
 renderizarContenido().then(() => actualizarVista());

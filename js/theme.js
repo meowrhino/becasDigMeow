@@ -44,8 +44,8 @@ function alternarTema() {
   aplicarTema(getTema() === "dark" ? "light" : "dark");
 }
 
-/** Crea el botón toggle de tema (SVG moon/sun) en la esquina superior izquierda. */
-export function crearThemeToggle() {
+/** Crea el botón toggle de tema (SVG moon/sun) dentro del contenedor dado. */
+export function crearThemeToggle(parent = document.body) {
   toggleEl = document.createElement("button");
   toggleEl.classList.add("theme-toggle");
   toggleEl.innerHTML = SVG_MOON + SVG_SUN;
@@ -58,5 +58,5 @@ export function crearThemeToggle() {
     temaActual === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"
   );
 
-  document.body.appendChild(toggleEl);
+  parent.appendChild(toggleEl);
 }
