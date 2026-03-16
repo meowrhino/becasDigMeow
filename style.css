@@ -1039,10 +1039,29 @@ a.nav-label:visited {
   max-width: 600px;
 }
 
-.portfolio-detail-item img {
+/* Contenedor de imagen con crossfade (detalle) */
+.portfolio-detail-img-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.pdetail-img {
   width: 100%;
   display: block;
+  transition: opacity 2s ease;
 }
+
+.pdetail-img-a { opacity: 1; }
+.pdetail-img-b {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.portfolio-detail-img-container.crossfade-flip .pdetail-img-a { opacity: 0; }
+.portfolio-detail-img-container.crossfade-flip .pdetail-img-b { opacity: 1; }
 
 .portfolio-detail-link {
   font-size: clamp(0.85rem, 1.2dvw, 1.1rem);

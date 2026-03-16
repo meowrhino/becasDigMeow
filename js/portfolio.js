@@ -24,6 +24,59 @@ let portfolioCloudsRebuilding = false;
 /** true si la vista detalle (scroll) está abierta. */
 let portfolioDetailOpen = false;
 
+// --- Estado centralizado de cycling de imágenes ---
+// Cada proyecto tiene su propio "reloj" independiente.
+// Tanto las nubes como la vista detalle leen de aquí.
+
+/** @type {Map<number, {currentIndex: number, imagenes: string[], intervalo: number, timerId: number|null, listeners: Set<Function>}>} */
+const imageCycleState = new Map();
+
+function iniciarCiclosImagenes(proyectos) {
+  detenerCiclosImagenes();
+  proyectos.forEach((proyecto, idx) => {
+    const imagenes = obtenerImagenesProyecto(proyecto).filter(Boolean);
+    if (imagenes.length <= 1) return;
+
+    const intervalo = 5000 + Math.random() * 3000;
+    const retraso   = 2000 + Math.random() * 4000;
+    const state = { currentIndex: 0, imagenes, intervalo, timerId: null, listeners: new Set() };
+
+    const delayId = setTimeout(() => {
+      state.timerId = setInterval(() => {
+        state.currentIndex = (state.currentIndex + 1) % state.imagenes.length;
+        state.listeners.forEach(fn => fn(state.currentIndex, state.imagenes));
+      }, intervalo);
+    }, retraso);
+    state._delayId = delayId;
+
+    imageCycleState.set(idx, state);
+  });
+}
+
+function detenerCiclosImagenes() {
+  imageCycleState.forEach(state => {
+    if (state._delayId) clearTimeout(state._delayId);
+    if (state.timerId) clearInterval(state.timerId);
+    state.listeners.clear();
+  });
+  imageCycleState.clear();
+}
+
+/** Suscribe un listener al ciclo de un proyecto. Devuelve función de unsub. */
+function suscribirCiclo(projectIndex, listener) {
+  const state = imageCycleState.get(projectIndex);
+  if (!state) return () => {};
+  state.listeners.add(listener);
+  return () => state.listeners.delete(listener);
+}
+
+/** Devuelve la imagen actual de un proyecto. */
+function imagenActual(projectIndex) {
+  const state = imageCycleState.get(projectIndex);
+  if (!state) return null;
+  return state.imagenes[state.currentIndex];
+}
+
 // --- Utilidades ---
 
 function clamp(valor, min, max) {
@@ -78,12 +131,12 @@ function obtenerNubesPortfolio(proyectos) {
   }).filter(n => n.imagenes.length > 0);
 }
 
-/** Timers de crossfade activos (para limpiar al reconstruir). */
-let crossfadeTimers = [];
+/** Unsub functions de nubes suscritas al ciclo central. */
+let cloudCycleUnsubs = [];
 
-function limpiarCrossfadeTimers() {
-  crossfadeTimers.forEach(id => clearInterval(id));
-  crossfadeTimers = [];
+function limpiarSuscripcionesNubes() {
+  cloudCycleUnsubs.forEach(fn => fn());
+  cloudCycleUnsubs = [];
 }
 
 // --- Renderizado base ---
@@ -110,18 +163,51 @@ export function renderPortfolio(data) {
     }
   });
 
-  // Poblar vista detalle
+  // Iniciar ciclos centrales ANTES de crear suscriptores
+  iniciarCiclosImagenes(proyectos);
+
+  // Poblar vista detalle (con crossfade suscrita al ciclo central)
   const detailContent = document.getElementById("portfolio-detail-content");
   proyectos.forEach((proyecto, idx) => {
+    const imagenes = obtenerImagenesProyecto(proyecto).filter(Boolean);
+    const tieneCiclo = imagenes.length > 1;
+
     const item = document.createElement("div");
     item.classList.add("portfolio-detail-item");
     item.dataset.projectIndex = String(idx);
 
-    const img = document.createElement("img");
-    img.src = proyecto.imagen;
-    img.alt = proyecto.nombre;
-    img.loading = "lazy";
-    item.appendChild(img);
+    const imgContainer = document.createElement("div");
+    imgContainer.classList.add("portfolio-detail-img-container");
+
+    const imgA = document.createElement("img");
+    imgA.classList.add("pdetail-img", "pdetail-img-a");
+    imgA.src = proyecto.imagen;
+    imgA.alt = proyecto.nombre;
+    imgA.loading = "lazy";
+    imgContainer.appendChild(imgA);
+
+    if (tieneCiclo) {
+      const imgB = document.createElement("img");
+      imgB.classList.add("pdetail-img", "pdetail-img-b");
+      imgB.src = imagenes.length > 1 ? imagenes[1] : proyecto.imagen;
+      imgB.alt = proyecto.nombre;
+      imgB.loading = "lazy";
+      imgContainer.appendChild(imgB);
+
+      let showingA = true;
+      suscribirCiclo(idx, (newIndex, imgs) => {
+        if (showingA) {
+          imgB.src = imgs[newIndex];
+          imgContainer.classList.add("crossfade-flip");
+        } else {
+          imgA.src = imgs[newIndex];
+          imgContainer.classList.remove("crossfade-flip");
+        }
+        showingA = !showingA;
+      });
+    }
+
+    item.appendChild(imgContainer);
 
     const link = document.createElement("a");
     link.classList.add("portfolio-detail-link");
@@ -306,7 +392,7 @@ function generarNubesFlotantes(proyectos) {
   const container = document.getElementById("portfolio-clouds");
   if (!container) return;
   container.innerHTML = "";
-  limpiarCrossfadeTimers();
+  limpiarSuscripcionesNubes();
   const nubes = obtenerNubesPortfolio(proyectos);
   if (!nubes.length) return;
 
@@ -411,7 +497,7 @@ function generarNubesFlotantes(proyectos) {
     imgA.decoding = "async";
     link.appendChild(imgA);
 
-    // — Crossfade (capa B): solo si hay varias imágenes —
+    // — Crossfade (capa B): suscrita al ciclo central —
     if (nube.imagenes.length > 1) {
       const imgB = document.createElement("img");
       imgB.classList.add("pcloud-img", "pcloud-img-b");
@@ -421,27 +507,19 @@ function generarNubesFlotantes(proyectos) {
       imgB.decoding = "async";
       link.appendChild(imgB);
 
-      let currentIndex = 0;
       let showingA = true;
-      const intervalo = 5000 + Math.random() * 3000; // 5–8s por imagen
-      const retraso   = 2000 + Math.random() * 4000; // stagger inicial
-
-      const delayId = setTimeout(() => {
-        const timerId = setInterval(() => {
-          if (!track.isConnected) { clearInterval(timerId); return; }
-          currentIndex = (currentIndex + 1) % nube.imagenes.length;
-          if (showingA) {
-            imgB.src = nube.imagenes[currentIndex];
-            link.classList.add("crossfade-flip");
-          } else {
-            imgA.src = nube.imagenes[currentIndex];
-            link.classList.remove("crossfade-flip");
-          }
-          showingA = !showingA;
-        }, intervalo);
-        crossfadeTimers.push(timerId);
-      }, retraso);
-      crossfadeTimers.push(delayId);
+      const unsub = suscribirCiclo(nube.projectIndex, (newIndex, imagenes) => {
+        if (!track.isConnected) { unsub(); return; }
+        if (showingA) {
+          imgB.src = imagenes[newIndex];
+          link.classList.add("crossfade-flip");
+        } else {
+          imgA.src = imagenes[newIndex];
+          link.classList.remove("crossfade-flip");
+        }
+        showingA = !showingA;
+      });
+      cloudCycleUnsubs.push(unsub);
     }
 
     const nombre = document.createElement("span");
