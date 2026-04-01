@@ -6,7 +6,6 @@
 // + deriva vertical con CSS keyframes.
 // Cada nube cicla sus imágenes con crossfade suave.
 //
-// TODO (Fase 2c): Click en nube → vista scroll vertical con links como texto.
 
 import { obtenerDatos } from "./data.js";
 
