@@ -83,6 +83,8 @@ export function renderTools(data) {
   `;
 
   // Lógica de abrir/cerrar desplegables (accordion)
+  const toolsList = el.querySelector(".tools-list");
+  const lastDropdown = el.querySelector(".tools-dropdown-group:last-child .tools-dropdown-content");
   el.querySelectorAll(".tools-dropdown-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const target = document.getElementById(btn.dataset.target);
@@ -92,13 +94,19 @@ export function renderTools(data) {
       el.querySelectorAll(".tools-dropdown-btn.active").forEach(b => b.classList.remove("active"));
       target.classList.toggle("open", willOpen);
       btn.classList.toggle("active", willOpen);
+      toolsList?.classList.toggle("has-open-last-dropdown", willOpen && target === lastDropdown);
     });
   });
 
   // Gradientes de scroll
   const wrapper = el.querySelector(".tools-scroll-wrapper");
   const content = el.querySelector(".tools-content");
-  if (content && wrapper) setupScrollGradients(wrapper, content);
+  if (content && wrapper) {
+    const list = el.querySelector(".tools-list");
+    setupScrollGradients(wrapper, content, {
+      bottomMargin: () => list ? parseFloat(getComputedStyle(list).paddingBottom) || 0 : 0,
+    });
+  }
 }
 
 // --- Welcome ---

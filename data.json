@@ -159,49 +159,49 @@
     "proyectos": [
       {
         "nombre": "rikamichie",
-        "imagen": "img/rikamichie.webp",
+        "imagen": "img/rikamichie_0.webp",
         "imagenesSecundarias": 2,
         "url": "https://rikamichie.com"
       },
       {
         "nombre": "andrea carilla",
-        "imagen": "img/andreacarilla.webp",
+        "imagen": "img/andreacarilla_0.webp",
         "imagenesSecundarias": 1,
         "url": "https://andreacarilla.work"
       },
       {
         "nombre": "diego san marcos",
-        "imagen": "img/diegosanmarcos.webp",
+        "imagen": "img/diegosanmarcos_0.webp",
         "imagenesSecundarias": 2,
         "url": "https://diegosanmarcos.com"
       },
       {
         "nombre": "mike bros",
-        "imagen": "img/mikebros.webp",
+        "imagen": "img/mikebros_0.webp",
         "imagenesSecundarias": 1,
         "url": "https://mikebros.com"
       },
       {
         "nombre": "miranda",
-        "imagen": "img/miranda.webp",
+        "imagen": "img/miranda_0.webp",
         "imagenesSecundarias": 2,
         "url": "https://mirandaperezhita.com"
       },
       {
         "nombre": "conor",
-        "imagen": "img/conor.webp",
+        "imagen": "img/conor_0.webp",
         "imagenesSecundarias": 2,
         "url": "https://conorashlee.com"
       },
       {
         "nombre": "maxito",
-        "imagen": "img/maxito.webp",
+        "imagen": "img/maxito_0.webp",
         "imagenesSecundarias": 0,
         "url": "https://maxazemar.com"
       },
       {
         "nombre": "mokakopaTwins",
-        "imagen": "img/mokakopaTwins.webp",
+        "imagen": "img/mokakopatwins_0.webp",
         "imagenesSecundarias": 3,
         "urls": [
           { "nombre": "ana lópez", "url": "https://analopezserrano.com" },
@@ -210,31 +210,31 @@
       },
       {
         "nombre": "paula barjau",
-        "imagen": "img/paulabarjau.webp",
+        "imagen": "img/paulabarjau_0.webp",
         "imagenesSecundarias": 1,
         "url": "https://paulabarjau.studio"
       },
       {
         "nombre": "estructuras3000",
-        "imagen": "img/estructuras3000.webp",
-        "imagenesSecundarias": 0,
+        "imagen": "img/estructuras3000_0.webp",
+        "imagenesSecundarias": 2,
         "url": "https://estructuras3000.com"
       },
       {
         "nombre": "berta esteve",
-        "imagen": "img/bertaesteve.webp",
+        "imagen": "img/bertaesteve_0.webp",
         "imagenesSecundarias": 1,
         "url": "https://bertaesteve.cat"
       },
       {
         "nombre": "jaume clotet",
-        "imagen": "img/jaumeclotet.webp",
+        "imagen": "img/jaumeclotet_0.webp",
         "imagenesSecundarias": 1,
         "url": "https://jaumeclotet.com"
       },
       {
         "nombre": "el mundo de las jordis",
-        "imagen": "img/elmundodelasjordis.webp",
+        "imagen": "img/elmundodelasjordis_0.webp",
         "imagenesSecundarias": 1,
         "url": "https://elmundodelasjordis.com"
       }

@@ -422,6 +422,10 @@ a.nav-label:visited {
   gap: 0.5rem;
 }
 
+.tools-list.has-open-last-dropdown {
+  padding-bottom: 30dvh;
+}
+
 /* ============================================
    8. PAGE: WELCOME
    Solo el título del estudio, centrado.
@@ -493,6 +497,14 @@ a.nav-label:visited {
 .tool-link-dual .tool-link {
   flex: 1;
   min-width: 0;
+}
+
+.tool-link-dual .tool-link:first-child {
+  text-align: right;
+}
+
+.tool-link-dual .tool-link:last-child {
+  text-align: left;
 }
 
 /* --- Dropdowns (formateadores, webs terminadas) --- */
@@ -578,6 +590,7 @@ a.nav-label:visited {
 .tools-dropdown-content.open .tools-dropdown-inner {
   margin-top: 0.5rem;
 }
+
 
 /* El scroll del contenido de dropdowns lo gestiona .welcome-content */
 
