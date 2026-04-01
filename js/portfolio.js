@@ -124,7 +124,7 @@ function obtenerNubesPortfolio(proyectos) {
     const imagenes = obtenerImagenesProyecto(proyecto).filter(Boolean);
     return {
       nombre: proyecto.nombre,
-      url: proyecto.url,
+      url: proyecto.url || (proyecto.urls ? proyecto.urls[0].url : ""),
       imagenes: imagenes.length ? imagenes : [proyecto.imagen || ""].filter(Boolean),
       projectIndex,
     };
@@ -209,13 +209,28 @@ export function renderPortfolio(data) {
 
     item.appendChild(imgContainer);
 
-    const link = document.createElement("a");
-    link.classList.add("portfolio-detail-link");
-    link.href = proyecto.url;
-    link.target = "_blank";
-    link.rel = "noopener";
-    link.textContent = proyecto.url.replace(/^https?:\/\//, "").replace(/\/$/, "");
-    item.appendChild(link);
+    if (proyecto.urls) {
+      const dualContainer = document.createElement("div");
+      dualContainer.classList.add("portfolio-detail-dual-links");
+      proyecto.urls.forEach(u => {
+        const a = document.createElement("a");
+        a.classList.add("portfolio-detail-link");
+        a.href = u.url;
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.textContent = u.url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+        dualContainer.appendChild(a);
+      });
+      item.appendChild(dualContainer);
+    } else {
+      const link = document.createElement("a");
+      link.classList.add("portfolio-detail-link");
+      link.href = proyecto.url;
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.textContent = proyecto.url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+      item.appendChild(link);
+    }
 
     detailContent.appendChild(item);
   });

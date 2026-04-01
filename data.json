@@ -170,10 +170,10 @@
         "url": "https://andreacarilla.work"
       },
       {
-        "nombre": "conor",
-        "imagen": "img/conor.webp",
+        "nombre": "diego san marcos",
+        "imagen": "img/diegosanmarcos.webp",
         "imagenesSecundarias": 2,
-        "url": "https://conorashlee.com"
+        "url": "https://diegosanmarcos.com"
       },
       {
         "nombre": "mike bros",
@@ -182,28 +182,49 @@
         "url": "https://mikebros.com"
       },
       {
-        "nombre": "diego san marcos",
-        "imagen": "img/diegosanmarcos.webp",
-        "imagenesSecundarias": 2,
-        "url": "https://meowrhino.github.io/diegosanmarcos/"
-      },
-      {
         "nombre": "miranda",
         "imagen": "img/miranda.webp",
         "imagenesSecundarias": 2,
         "url": "https://mirandaperezhita.com"
       },
       {
-        "nombre": "berta esteve",
-        "imagen": "img/bertaesteve.webp",
-        "imagenesSecundarias": 1,
-        "url": "https://bertaesteve.cat"
+        "nombre": "conor",
+        "imagen": "img/conor.webp",
+        "imagenesSecundarias": 2,
+        "url": "https://conorashlee.com"
+      },
+      {
+        "nombre": "maxito",
+        "imagen": "img/maxito.webp",
+        "imagenesSecundarias": 0,
+        "url": "https://maxazemar.com"
+      },
+      {
+        "nombre": "mokakopaTwins",
+        "imagen": "img/mokakopaTwins.webp",
+        "imagenesSecundarias": 3,
+        "urls": [
+          { "nombre": "ana lópez", "url": "https://analopezserrano.com" },
+          { "nombre": "mokakopa", "url": "https://mokakopa.com" }
+        ]
       },
       {
         "nombre": "paula barjau",
         "imagen": "img/paulabarjau.webp",
         "imagenesSecundarias": 1,
         "url": "https://paulabarjau.studio"
+      },
+      {
+        "nombre": "estructuras3000",
+        "imagen": "img/estructuras3000.webp",
+        "imagenesSecundarias": 0,
+        "url": "https://estructuras3000.com"
+      },
+      {
+        "nombre": "berta esteve",
+        "imagen": "img/bertaesteve.webp",
+        "imagenesSecundarias": 1,
+        "url": "https://bertaesteve.cat"
       },
       {
         "nombre": "jaume clotet",
@@ -216,12 +237,6 @@
         "imagen": "img/elmundodelasjordis.webp",
         "imagenesSecundarias": 1,
         "url": "https://elmundodelasjordis.com"
-      },
-      {
-        "nombre": "maxito",
-        "imagen": "img/maxito.webp",
-        "imagenesSecundarias": 0,
-        "url": "https://maxazemar.com"
       }
     ]
   },

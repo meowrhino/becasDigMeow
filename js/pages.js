@@ -29,8 +29,15 @@ function crearLinkHTML(item) {
  * @param {string} uid
  * @returns {string}
  */
+function crearDualLinkHTML(item) {
+  const target = esMovil ? "" : ' target="_blank"';
+  return `<div class="tool-link-dual">${item.urls.map(u =>
+    `<a class="tool-link" href="${u.url}"${target} rel="noopener">${u.nombre}</a>`
+  ).join("")}</div>`;
+}
+
 function crearDropdownHTML(titulo, items, uid) {
-  const linksHTML = items.map(crearLinkHTML).join("");
+  const linksHTML = items.map(i => i.urls ? crearDualLinkHTML(i) : crearLinkHTML(i)).join("");
   return `
     <div class="tools-dropdown-group">
       <button class="tools-dropdown-btn" data-target="${uid}">
@@ -56,7 +63,9 @@ export function renderTools(data) {
   const herramientas  = data.tools.herramientas || [];
   const conversores   = data.tools.conversores || [];
   const formateadores = data.welcome?.formateadores || [];
-  const websTerminadas = (data.portfolio?.proyectos || []).map(p => ({ nombre: p.nombre, url: p.url }));
+  const websTerminadas = (data.portfolio?.proyectos || []).map(p =>
+    p.urls ? { urls: p.urls } : { nombre: p.nombre, url: p.url }
+  );
 
   const linksHTML = herramientas.map(crearLinkHTML).join("");
   const dropdownsHTML = [
