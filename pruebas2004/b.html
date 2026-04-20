@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>B · bandas</title>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700&display=swap");
+
+  :root { --bg: #fff; --text: #000; --muted: #888; --border: rgba(0,0,0,.12); --border-strong: rgba(0,0,0,.45); }
+
+  html, body { margin: 0; padding: 0; height: 100%; background: var(--bg); color: var(--text); font-family: "Inknut Antiqua", serif; overflow: hidden; }
+
+  .stage { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+
+  .header { position: absolute; top: 1.2rem; left: 0; right: 0; text-align: center; z-index: 10; pointer-events: none; }
+  .header h1 { font-size: 1.1rem; font-weight: 400; margin: 0; letter-spacing: .05em; }
+  .header small { display: block; color: var(--muted); font-size: .7rem; margin-top: .3rem; letter-spacing: .05em; }
+
+  /* Bandas horizontales */
+  .band { position: absolute; left: 0; right: 0; height: 20%; overflow: hidden; }
+  .band .track { display: flex; gap: 1.5rem; height: 100%; align-items: center; padding: 0 1.5rem; width: max-content; will-change: transform; animation: scroll var(--dur, 60s) linear infinite; }
+  .band:hover .track { animation-play-state: paused; }
+  .band:nth-child(odd) .track { animation-direction: reverse; }
+
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .card { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: .5rem; cursor: pointer; text-decoration: none; color: var(--text); transition: transform .25s; }
+  .card:hover { transform: translateY(-4px); }
+  .card .frame { position: relative; width: var(--w, 180px); aspect-ratio: 4/3; overflow: hidden; border: 1px solid var(--border); background: #f3f3f3; border-radius: 2px; transition: border-color .25s, box-shadow .25s; }
+  .card:hover .frame { border-color: var(--border-strong); box-shadow: 0 6px 18px rgba(0,0,0,.1); }
+  .card .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .7s ease; }
+  .card .frame img.show { opacity: 1; }
+  .card .name { font-size: .82rem; font-weight: 500; text-align: center; }
+  .card .url { font-size: .68rem; color: var(--muted); letter-spacing: .02em; }
+
+  /* Banda 1-5 posiciones */
+  .band.b1 { top: 10%; }
+  .band.b2 { top: 30%; }
+  .band.b3 { top: 50%; }
+  .band.b4 { top: 70%; }
+
+  .hint { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); font-size: .7rem; color: var(--muted); z-index: 10; pointer-events: none; }
+
+  .foot { position: fixed; bottom: 1rem; right: 1.2rem; font-size: .7rem; color: var(--muted); z-index: 11; }
+  .foot a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (max-width: 700px) {
+    .card .frame { width: 130px; }
+    .card .name { font-size: .72rem; }
+    .card .url { display: none; }
+    .band.b1 { top: 6%; } .band.b2 { top: 29%; } .band.b3 { top: 52%; } .band.b4 { top: 75%; }
+    .band { height: 22%; }
+  }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div class="header">
+      <h1>portfolio</h1>
+      <small>opción B — bandas con título siempre visible · hover pausa la banda</small>
+    </div>
+
+    <div class="band b1" data-band="0"></div>
+    <div class="band b2" data-band="1"></div>
+    <div class="band b3" data-band="2"></div>
+    <div class="band b4" data-band="3"></div>
+
+    <div class="hint">pasa el ratón por encima para pausar</div>
+    <div class="foot"><a href="index.html">← volver</a></div>
+  </div>
+
+<script type="module">
+const proyectos = [
+  { nombre: "rikamichie", imagenes: ["rikamichie_0","rikamichie_1","rikamichie_2"], url: "https://rikamichie.com" },
+  { nombre: "andrea carilla", imagenes: ["andreacarilla_0","andreacarilla_1"], url: "https://andreacarilla.work" },
+  { nombre: "diego san marcos", imagenes: ["diegosanmarcos_0","diegosanmarcos_1","diegosanmarcos_2"], url: "https://diegosanmarcos.com" },
+  { nombre: "mike bros", imagenes: ["mikebros_0","mikebros_1"], url: "https://mikebros.com" },
+  { nombre: "miranda", imagenes: ["miranda_0","miranda_1","miranda_2"], url: "https://mirandaperezhita.com" },
+  { nombre: "conor", imagenes: ["conor_0","conor_1","conor_2"], url: "https://conorashlee.com" },
+  { nombre: "maxito", imagenes: ["maxito_0"], url: "https://maxazemar.com" },
+  { nombre: "mokakopaTwins", imagenes: ["mokakopatwins_0","mokakopatwins_1","mokakopatwins_2","mokakopatwins_3"], url: "https://mokakopa.com" },
+  { nombre: "paula barjau", imagenes: ["paulabarjau_0","paulabarjau_1"], url: "https://paulabarjau.studio" },
+  { nombre: "estructuras3000", imagenes: ["estructuras3000_0","estructuras3000_1","estructuras3000_2"], url: "https://estructuras3000.com" },
+  { nombre: "berta esteve", imagenes: ["bertaesteve_0","bertaesteve_1"], url: "https://bertaesteve.cat" },
+  { nombre: "jaume clotet", imagenes: ["jaumeclotet_0","jaumeclotet_1"], url: "https://jaumeclotet.com" },
+  { nombre: "el mundo de las jordis", imagenes: ["elmundodelasjordis_0","elmundodelasjordis_1"], url: "https://elmundodelasjordis.com" },
+];
+
+const IMG = (name) => `../img/${name}.webp`;
+const cleanUrl = (u) => u.replace(/^https?:\/\//, "").replace(/\/$/, "");
+
+// Reparto por bandas
+const numBandas = 4;
+const porBanda = Array.from({ length: numBandas }, () => []);
+proyectos.forEach((p, i) => porBanda[i % numBandas].push(p));
+
+const bandas = document.querySelectorAll(".band");
+bandas.forEach((banda, bi) => {
+  const track = document.createElement("div");
+  track.className = "track";
+  // duplicamos para loop infinito sin cortes
+  const lista = [...porBanda[bi], ...porBanda[bi]];
+  lista.forEach(p => {
+    const anchos = [150, 180, 200, 170, 220];
+    const w = anchos[Math.floor(Math.random() * anchos.length)];
+    const card = document.createElement("a");
+    card.className = "card";
+    card.href = p.url;
+    card.target = "_blank";
+    card.rel = "noopener";
+    card.style.setProperty("--w", w + "px");
+    card.innerHTML = `
+      <div class="frame">
+        ${p.imagenes.map((n, i) => `<img src="${IMG(n)}" alt="${p.nombre}" class="${i === 0 ? "show" : ""}" loading="lazy" />`).join("")}
+      </div>
+      <div class="name">${p.nombre}</div>
+      <div class="url">${cleanUrl(p.url)}</div>
+    `;
+    track.appendChild(card);
+
+    if (p.imagenes.length > 1) {
+      const imgs = card.querySelectorAll(".frame img");
+      let idx = 0;
+      setInterval(() => {
+        imgs[idx].classList.remove("show");
+        idx = (idx + 1) % imgs.length;
+        imgs[idx].classList.add("show");
+      }, 4000 + Math.random() * 3000);
+    }
+  });
+  banda.appendChild(track);
+  // duración proporcional al número de items (velocidad constante)
+  const dur = 30 + porBanda[bi].length * 6 + Math.random() * 8;
+  track.style.setProperty("--dur", dur + "s");
+});
+</script>
+</body>
+</html>

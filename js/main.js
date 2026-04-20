@@ -29,15 +29,7 @@ import {
   renderPoliticas,
   renderContacto,
 } from "./pages.js";
-import {
-  renderPortfolio,
-  sincronizarEstadoNubes,
-  alResizarPortfolio,
-  rehidratarPortfolioTrasRetorno,
-  onCloudPointerDown,
-  cerrarVistaDetalle,
-  esVistaDetalleAbierta,
-} from "./portfolio.js";
+import { renderPortfolio } from "./portfolio.js";
 import { crearThemeToggle } from "./theme.js";
 
 // ============================================
@@ -70,14 +62,7 @@ document.addEventListener("keydown", e => {
       cerrarMinimapExpandido();
       return;
     }
-    if (esVistaDetalleAbierta()) {
-      cerrarVistaDetalle();
-      return;
-    }
   }
-
-  // No navegar con flechas si la vista detalle está abierta
-  if (esVistaDetalleAbierta()) return;
 
   const { posY: curY, posX: curX } = getPosicion();
   let newY = curY;
@@ -97,16 +82,12 @@ document.addEventListener("keydown", e => {
   }
 });
 
-// --- Click en nubes ---
-document.addEventListener("pointerdown", onCloudPointerDown);
-
 // --- Resize ---
 let resizeTimeoutId = null;
 
 function alResizarViewport() {
   actualizarTamanoMinimapInline();
   actualizarTamanoMinimapExpandido();
-  alResizarPortfolio();
 }
 
 function programarResize() {
@@ -116,22 +97,6 @@ function programarResize() {
 
 window.addEventListener("resize", programarResize);
 window.addEventListener("orientationchange", programarResize);
-
-// --- Visibilidad ---
-let lastHiddenAt = 0;
-
-function onVisibilityChange() {
-  if (document.hidden) {
-    lastHiddenAt = Date.now();
-    sincronizarEstadoNubes();
-    return;
-  }
-  const hiddenMs = lastHiddenAt > 0 ? Date.now() - lastHiddenAt : 0;
-  const forzarRebuild = hiddenMs > 90_000;
-  rehidratarPortfolioTrasRetorno(forzarRebuild);
-}
-
-document.addEventListener("visibilitychange", onVisibilityChange);
 
 // ============================================
 // Inicialización
@@ -162,7 +127,6 @@ configurarNavegacion({
     "contacto": "contacto",
   },
   posInicial: { y: 1, x: 2 },
-  onUpdate: sincronizarEstadoNubes,
 });
 
 crearCeldas();

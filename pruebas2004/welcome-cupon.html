@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>welcome + cupón · pruebas 2026-04-20</title>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700&display=swap");
+
+  :root {
+    --bg: #ffffff;
+    --bg-hover: #f7f7f7;
+    --text: #000000;
+    --text-content: #333333;
+    --text-muted: #888888;
+    --border: rgba(0, 0, 0, 0.12);
+    --border-hover: rgba(0, 0, 0, 0.35);
+    --accent: #000;
+    --card: #ffffff;
+    --gradient-color: #ffffff;
+  }
+  [data-theme="dark"] {
+    --bg: #121212;
+    --bg-hover: #1e1e1e;
+    --text: #e0e0e0;
+    --text-content: #cccccc;
+    --text-muted: #666666;
+    --border: rgba(255, 255, 255, 0.12);
+    --border-hover: rgba(255, 255, 255, 0.35);
+    --accent: #e0e0e0;
+    --card: #1a1a1a;
+    --gradient-color: #121212;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: "Inknut Antiqua", serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.35;
+    min-height: 100dvh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  /* Toolbar de pruebas (solo para este entorno de prototipo) */
+  .toolbar {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; gap: 1rem; align-items: center; justify-content: space-between;
+    padding: 0.9rem 1.5rem;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    font-size: 0.75rem;
+  }
+  .toolbar .title { font-weight: 500; letter-spacing: 0.03em; }
+  .toolbar .controls { display: flex; gap: 0.5rem; }
+  .toolbar button {
+    font-family: inherit;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.3rem 0.7rem;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .toolbar button:hover { border-color: var(--border-hover); background: var(--bg-hover); }
+  .toolbar button.active { border-color: var(--text); }
+
+  /* Sección de cada variante */
+  .variant {
+    min-height: 100dvh;
+    padding: 5rem 2rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    border-bottom: 1px dashed var(--border);
+  }
+  .variant-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: -0.5rem;
+  }
+
+  /* Welcome base (igual que el studio) */
+  .welcome-title {
+    font-size: clamp(1.6rem, 3.5dvw, 3rem);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-align: center;
+    margin: 0;
+  }
+
+  /* ============================================
+     VARIANTE A — Tarjeta clásica estilo encuestaClientes
+     ============================================ */
+  .cupon-a {
+    background: var(--card);
+    border: 1.5px solid var(--text);
+    border-radius: 6px;
+    padding: 2rem 2.2rem;
+    text-align: center;
+    max-width: 380px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  }
+  .cupon-a .precio {
+    font-size: 2.4rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.4rem;
+    line-height: 1;
+  }
+  .cupon-a .precio small {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 0.35rem;
+    letter-spacing: 0.05em;
+    font-weight: 400;
+  }
+  .cupon-a .label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.3rem;
+  }
+  .cupon-a .codigo {
+    font-family: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    padding: 0.55rem 0;
+    border-top: 1px dashed var(--border);
+    border-bottom: 1px dashed var(--border);
+    margin-bottom: 1.2rem;
+  }
+  .cupon-a .caduca {
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.05em;
+  }
+  .cupon-a button {
+    font-family: inherit;
+    background: var(--text);
+    color: var(--bg);
+    border: none;
+    padding: 0.65rem 1.6rem;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .cupon-a button:hover { opacity: 0.8; }
+
+  /* ============================================
+     VARIANTE B — Cupón estilo ticket con perforación
+     ============================================ */
+  .cupon-b {
+    position: relative;
+    background: var(--card);
+    border: 1.5px solid var(--text);
+    max-width: 440px;
+    width: 90%;
+    display: flex;
+    align-items: stretch;
+  }
+  .cupon-b::before, .cupon-b::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: var(--bg);
+    border: 1.5px solid var(--text);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .cupon-b::before { left: -9px; }
+  .cupon-b::after { right: -9px; }
+  .cupon-b .stub {
+    flex: 0 0 110px;
+    border-right: 1.5px dashed var(--text);
+    padding: 1.2rem 0.8rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.3rem;
+  }
+  .cupon-b .stub .precio-num {
+    font-size: 1.7rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .cupon-b .stub .precio-lbl {
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .cupon-b .body {
+    flex: 1;
+    padding: 1.2rem 1.2rem 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .cupon-b .body .concepto {
+    font-size: 0.95rem;
+    letter-spacing: 0.03em;
+  }
+  .cupon-b .body .codigo {
+    font-family: ui-monospace, monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+  }
+  .cupon-b .body .caduca {
+    font-size: 0.58rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+  }
+  .cupon-b .body button {
+    font-family: inherit;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--text);
+    padding: 0.4rem 1rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    align-self: center;
+    margin-top: 0.25rem;
+    transition: background 0.2s, color 0.2s;
+  }
+  .cupon-b .body button:hover { background: var(--text); color: var(--bg); }
+
+  /* ============================================
+     VARIANTE C — Minimalista en línea (sin tarjeta)
+     ============================================ */
+  .cupon-c {
+    text-align: center;
+    max-width: 460px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    align-items: center;
+  }
+  .cupon-c .oferta {
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    color: var(--text-content);
+  }
+  .cupon-c .oferta strong {
+    font-weight: 500;
+    color: var(--text);
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+  }
+  .cupon-c .codigo {
+    font-family: ui-monospace, monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    color: var(--text-muted);
+  }
+  .cupon-c .caduca {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+  }
+  .cupon-c button {
+    font-family: inherit;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    padding: 0.3rem;
+    transition: color 0.2s;
+  }
+  .cupon-c button:hover { color: var(--text); }
+
+  .notes {
+    max-width: 680px;
+    margin: 3rem auto;
+    padding: 2rem;
+    font-size: 0.78rem;
+    color: var(--text-content);
+    line-height: 1.6;
+    border-top: 1px solid var(--border);
+  }
+  .notes h2 { font-size: 0.9rem; font-weight: 500; margin: 0 0 1rem; }
+  .notes ul { padding-left: 1.2rem; margin: 0; }
+  .notes li { margin-bottom: 0.4rem; }
+  .notes code {
+    background: var(--bg-hover);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 0.85em;
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="title">welcome + cupón · prototipo</span>
+  <div class="controls">
+    <button data-lang="es" class="active">ES</button>
+    <button data-lang="en">EN</button>
+    <button data-lang="cat">CAT</button>
+    <span style="width: 1px; background: var(--border); margin: 0 0.4rem;"></span>
+    <button id="themeToggle">☽ / ☼</button>
+  </div>
+</div>
+
+<!-- VARIANTE A -->
+<section class="variant">
+  <span class="variant-label">variante a · tarjeta</span>
+  <h1 class="welcome-title">meowrhino studio</h1>
+  <div class="cupon-a">
+    <div class="precio">
+      485&nbsp;€
+      <small data-i18n="iva">iva no incluido</small>
+    </div>
+    <div class="label" data-i18n="ofertaA">web completa · oferta de verano</div>
+    <div class="codigo" id="codigoA">MEOW-485-AGO</div>
+    <div class="caduca" data-i18n="caduca">válido hasta el 31 agosto 2026</div>
+    <button data-action="download" data-variant="a" data-i18n="descargar">descargar cupón</button>
+  </div>
+</section>
+
+<!-- VARIANTE B -->
+<section class="variant">
+  <span class="variant-label">variante b · ticket</span>
+  <h1 class="welcome-title">meowrhino studio</h1>
+  <div class="cupon-b">
+    <div class="stub">
+      <div class="precio-num">485€</div>
+      <div class="precio-lbl" data-i18n="sinIva">sin iva</div>
+    </div>
+    <div class="body">
+      <div class="concepto" data-i18n="conceptoB">una web a medida</div>
+      <div class="codigo" id="codigoB">MEOW-485-AGO</div>
+      <div class="caduca" data-i18n="caducaCorta">hasta 31 ago 2026</div>
+      <button data-action="download" data-variant="b" data-i18n="descargar">descargar</button>
+    </div>
+  </div>
+</section>
+
+<!-- VARIANTE C -->
+<section class="variant">
+  <span class="variant-label">variante c · minimal</span>
+  <h1 class="welcome-title">meowrhino studio</h1>
+  <div class="cupon-c">
+    <div class="oferta" data-i18n="ofertaC">oferta de verano — web por <strong>485 €</strong> <span style="color:var(--text-muted); font-size:0.75em">(iva no incluido)</span></div>
+    <div class="codigo" id="codigoC">MEOW-485-AGO</div>
+    <div class="caduca" data-i18n="caduca">válido hasta el 31 agosto 2026</div>
+    <button data-action="download" data-variant="c" data-i18n="descargarMin">↓ descargar cupón</button>
+  </div>
+</section>
+
+<div class="notes">
+  <h2>notas del prototipo</h2>
+  <ul>
+    <li><strong>A (tarjeta):</strong> más visible, igual que el patrón de <code>encuestaClientes</code>. Mejor para quien visita por primera vez — comunica claro y rápido.</li>
+    <li><strong>B (ticket):</strong> juega con la metáfora del cupón físico (perforación + stub). Más divertido, encaja con la estética más expresiva del studio.</li>
+    <li><strong>C (minimal):</strong> respeta el minimalismo extremo de la celda actual. Casi un "susurro" debajo del título. Menor fricción pero también menos reclamo.</li>
+    <li>Los tres soportan <strong>tema claro/oscuro</strong> y <strong>i18n</strong> (botones arriba).</li>
+    <li>El <strong>código</strong> es fijo por ahora (<code>MEOW-485-AGO</code>). Si decidimos generarlo por visitante lo guardaremos en <code>localStorage</code> para que sea persistente.</li>
+    <li>El botón <strong>descargar</strong> aún no genera PNG — es el placeholder. Lo dibujaremos con canvas cuando elijas variante (misma técnica que <code>encuestaClientes/script.js</code>).</li>
+    <li>La fecha <strong>31 agosto 2026</strong> está hardcodeada — dime si el año es correcto.</li>
+  </ul>
+</div>
+
+<script>
+  // --- i18n ---
+  const i18n = {
+    es: {
+      iva: "iva no incluido",
+      sinIva: "sin iva",
+      ofertaA: "web completa · oferta de verano",
+      conceptoB: "una web a medida",
+      ofertaC: 'oferta de verano — web por <strong>485 €</strong> <span style="color:var(--text-muted); font-size:0.75em">(iva no incluido)</span>',
+      caduca: "válido hasta el 31 agosto 2026",
+      caducaCorta: "hasta 31 ago 2026",
+      descargar: "descargar cupón",
+      descargarMin: "↓ descargar cupón",
+    },
+    en: {
+      iva: "vat not included",
+      sinIva: "ex. vat",
+      ofertaA: "full website · summer offer",
+      conceptoB: "a custom website",
+      ofertaC: 'summer offer — website for <strong>€485</strong> <span style="color:var(--text-muted); font-size:0.75em">(ex. vat)</span>',
+      caduca: "valid until august 31, 2026",
+      caducaCorta: "until aug 31, 2026",
+      descargar: "download coupon",
+      descargarMin: "↓ download coupon",
+    },
+    cat: {
+      iva: "iva no inclòs",
+      sinIva: "sense iva",
+      ofertaA: "web completa · oferta d'estiu",
+      conceptoB: "una web a mida",
+      ofertaC: 'oferta d\'estiu — web per <strong>485 €</strong> <span style="color:var(--text-muted); font-size:0.75em">(iva no inclòs)</span>',
+      caduca: "vàlid fins el 31 d'agost de 2026",
+      caducaCorta: "fins 31 ago 2026",
+      descargar: "descarregar cupó",
+      descargarMin: "↓ descarregar cupó",
+    },
+  };
+
+  function applyLang(lang) {
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const k = el.getAttribute("data-i18n");
+      if (i18n[lang] && i18n[lang][k]) el.innerHTML = i18n[lang][k];
+    });
+    document.querySelectorAll(".toolbar [data-lang]").forEach(b => {
+      b.classList.toggle("active", b.dataset.lang === lang);
+    });
+  }
+  document.querySelectorAll(".toolbar [data-lang]").forEach(b => {
+    b.addEventListener("click", () => applyLang(b.dataset.lang));
+  });
+
+  // --- Theme toggle ---
+  const saved = localStorage.getItem("pruebas-theme");
+  if (saved === "dark") document.documentElement.setAttribute("data-theme", "dark");
+  document.getElementById("themeToggle").addEventListener("click", () => {
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+    if (isDark) {
+      document.documentElement.removeAttribute("data-theme");
+      localStorage.setItem("pruebas-theme", "light");
+    } else {
+      document.documentElement.setAttribute("data-theme", "dark");
+      localStorage.setItem("pruebas-theme", "dark");
+    }
+  });
+
+  // --- Download placeholder (genera PNG simple con canvas) ---
+  document.querySelectorAll('[data-action="download"]').forEach(btn => {
+    btn.addEventListener("click", () => {
+      const v = btn.dataset.variant;
+      const code = document.getElementById("codigo" + v.toUpperCase()).textContent;
+      const c = document.createElement("canvas");
+      c.width = 800; c.height = 400;
+      const ctx = c.getContext("2d");
+      ctx.fillStyle = "#fff"; ctx.fillRect(0,0,800,400);
+      ctx.strokeStyle = "#000"; ctx.lineWidth = 3; ctx.strokeRect(20,20,760,360);
+      ctx.fillStyle = "#000"; ctx.textAlign = "center";
+      ctx.font = "500 64px 'Inknut Antiqua', serif";
+      ctx.fillText("485 €", 400, 150);
+      ctx.font = "400 18px 'Inknut Antiqua', serif";
+      ctx.fillStyle = "#666";
+      ctx.fillText("iva no incluido · web completa", 400, 190);
+      ctx.font = "600 22px monospace";
+      ctx.fillStyle = "#000";
+      ctx.fillText(code, 400, 260);
+      ctx.font = "400 16px 'Inknut Antiqua', serif";
+      ctx.fillStyle = "#999";
+      ctx.fillText("válido hasta el 31 agosto 2026", 400, 300);
+      ctx.fillText("meowrhino.studio", 400, 350);
+      const a = document.createElement("a");
+      a.download = `cupon-meowrhino-${code}.png`;
+      a.href = c.toDataURL("image/png");
+      a.click();
+    });
+  });
+</script>
+
+</body>
+</html>
