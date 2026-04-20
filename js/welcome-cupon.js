@@ -63,15 +63,13 @@ export function renderWelcomeCupon(celda, cuponData) {
 function iniciarRebote(celda, cupon) {
   const reducirMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const velocidad = esMovil ? 60 : 90;   // px/s
-  const easingRotacion = 0.09;           // lerp rotacion → rotacionTarget
   const diag = Math.SQRT1_2;             // componente x,y de un vector unitario a 45º
 
   // Estado de la animación
   let vx = (Math.random() < 0.5 ? -1 : 1) * diag;
   let vy = (Math.random() < 0.5 ? -1 : 1) * diag;
   let x = 0, y = 0;
-  let rotacion = 0;
-  let rotacionTarget = Math.random() * 6 - 3;   // giro inicial leve (-3º..+3º)
+  let rotacion = Math.random() * 6 - 3;  // giro inicial leve (-3º..+3º)
   let hoverPausa = false;
   let lastTs = 0;
 
@@ -83,9 +81,21 @@ function iniciarRebote(celda, cupon) {
     h: celda.clientHeight - cupon.offsetHeight,
   });
 
-  // Cada choque suma ±(6..16)º al target. Sin límite: gira libre.
-  const bumpRotacion = () => {
-    rotacionTarget += (Math.random() * 10 + 6) * (Math.random() < 0.5 ? -1 : 1);
+  // Cada choque suma un golpe de rotación de golpe (sin easing): 8..22º.
+  // Entre choques el ángulo se queda quieto — así cada impacto "se nota".
+  // El ángulo total queda acotado a ±LIMITE_ROT: si un lado se pasa, el golpe
+  // va hacia el otro, así nunca queda "pegado" al tope.
+  const LIMITE_ROT = 10;
+  const golpearRotacion = () => {
+    const delta = Math.random() * 14 + 8;
+    const cabeSubir = rotacion + delta <= LIMITE_ROT;
+    const cabeBajar = rotacion - delta >= -LIMITE_ROT;
+    let signo;
+    if (cabeSubir && cabeBajar) signo = Math.random() < 0.5 ? -1 : 1;
+    else if (cabeSubir) signo = 1;
+    else if (cabeBajar) signo = -1;
+    else signo = rotacion > 0 ? -1 : 1;   // ninguno cabe: tira hacia el centro
+    rotacion = Math.max(-LIMITE_ROT, Math.min(LIMITE_ROT, rotacion + delta * signo));
   };
 
   const render = () => {
@@ -96,7 +106,6 @@ function iniciarRebote(celda, cupon) {
     const b = bounds();
     x = b.w > 0 ? Math.random() * b.w : 0;
     y = b.h > 0 ? Math.random() * b.h : 0;
-    rotacion = rotacionTarget;
     render();
   };
 
@@ -116,10 +125,8 @@ function iniciarRebote(celda, cupon) {
       else if (x >= b.w) { x = b.w; vx = -vx; boto = true; }
       if (y <= 0)        { y = 0;   vy = -vy; boto = true; }
       else if (y >= b.h) { y = b.h; vy = -vy; boto = true; }
-      if (boto) bumpRotacion();
+      if (boto) golpearRotacion();
 
-      // Easing: rotacion persigue a rotacionTarget suavemente
-      rotacion += (rotacionTarget - rotacion) * easingRotacion;
       render();
     }
     requestAnimationFrame(tick);

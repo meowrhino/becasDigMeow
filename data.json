@@ -243,6 +243,12 @@
         "url": "https://noancittadino.com"
       },
       {
+        "nombre": "930blurberrie",
+        "imagen": "img/blurberrie/1.webp",
+        "imagenesSecundarias": 2,
+        "url": "https://930blurberrie.com"
+      },
+      {
         "nombre": "paula barjau",
         "imagen": "img/paulabarjau/1.webp",
         "imagenesSecundarias": 2,
