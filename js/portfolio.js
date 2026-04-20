@@ -3,6 +3,7 @@
 // ============================================
 
 import { obtenerDatos } from "./data.js";
+import { setupScrollGradients } from "./scroll-gradients.js";
 
 // --- Estado centralizado de cycling de imágenes ---
 
@@ -55,6 +56,8 @@ function limpiarUrl(u) {
 
 /**
  * Devuelve el listado de imágenes de un proyecto.
+ * Estructura esperada: img/<slug>/1.webp, img/<slug>/2.webp, ...
+ * El campo `imagen` apunta a la primera, `imagenesSecundarias` cuenta las extras.
  */
 export function obtenerImagenesProyecto(proyecto) {
   const principal = typeof proyecto?.imagen === "string" ? proyecto.imagen.trim() : "";
@@ -64,26 +67,13 @@ export function obtenerImagenesProyecto(proyecto) {
   const secundarias = Number.isFinite(secundariasRaw) ? Math.max(0, secundariasRaw) : 0;
   if (secundarias === 0) return [principal];
 
-  const match = principal.match(/^(.*?)(\.[^./]+)$/);
+  const match = principal.match(/^(.*\/)(\d+)(\.[^./]+)$/);
   if (!match) return [principal];
 
-  const base = match[1];
-  const ext = match[2];
-  const baseSinIndice = base.replace(/\d+$/, "");
-  const tieneIndice = baseSinIndice !== base;
-
-  if (tieneIndice) {
-    return Array.from(
-      { length: secundarias + 1 },
-      (_, i) => `${baseSinIndice}${i}${ext}`
-    );
-  }
-
-  const extras = Array.from(
-    { length: secundarias },
-    (_, i) => `${base}${i + 1}${ext}`
-  );
-  return [principal, ...extras];
+  const dir = match[1];
+  const ext = match[3];
+  const total = secundarias + 1;
+  return Array.from({ length: total }, (_, i) => `${dir}${i + 1}${ext}`);
 }
 
 // --- Renderizado ---
@@ -95,13 +85,19 @@ export function renderPortfolio(data) {
   const proyectos = data.portfolio.proyectos;
 
   el.innerHTML = `
-    <div class="portfolio-grid-wrapper">
-      <div class="portfolio-grid" id="portfolio-grid"></div>
+    <div class="portfolio-scroll-wrapper">
+      <div class="portfolio-scroll-content">
+        <div class="portfolio-grid" id="portfolio-grid"></div>
+      </div>
     </div>
   `;
 
   iniciarCiclosImagenes(proyectos);
   renderGridProyectos(proyectos);
+
+  const wrapper = el.querySelector(".portfolio-scroll-wrapper");
+  const content = el.querySelector(".portfolio-scroll-content");
+  setupScrollGradients(wrapper, content);
 
   // Nav-label "archive" en la parte inferior
   const archiveLabel = document.createElement("a");
