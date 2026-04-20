@@ -8,6 +8,7 @@
 import { currentLang, buildLangButtons, attachLangListeners } from "./data.js";
 import { setupZoom } from "./zoom.js";
 import { setupScrollGradients } from "./scroll-gradients.js";
+import { renderWelcomeCupon } from "./welcome-cupon.js";
 
 /** true si el viewport es táctil / móvil. */
 export const esMovil = "ontouchstart" in window || navigator.maxTouchPoints > 0;
@@ -113,124 +114,16 @@ export function renderTools(data) {
 
 export function renderWelcome(data) {
   const el = document.querySelector(".celda.welcome");
-  if (!el || !data) return;
+  if (!el || !data?.welcome) return;
 
-  const cupon = data.welcome?.cupon;
-
+  // El título siempre se pinta; el cupón va detrás (posicionado absoluto)
   el.innerHTML = `
     <div class="welcome-content">
       <h1 class="welcome-title">${data.welcome.titulo}</h1>
     </div>
-    ${cupon ? `
-      <a class="welcome-cupon" id="welcomeCupon" href="#" rel="noopener">
-        <span class="welcome-cupon-hazte"></span>
-        <span class="welcome-cupon-precio">${cupon.precio}</span>
-        <span class="welcome-cupon-iva"></span>
-        <span class="welcome-cupon-caduca"></span>
-      </a>
-    ` : ""}
   `;
 
-  if (!cupon) return;
-
-  const cuponEl = el.querySelector("#welcomeCupon");
-  const hazteEl = cuponEl.querySelector(".welcome-cupon-hazte");
-  const ivaEl = cuponEl.querySelector(".welcome-cupon-iva");
-  const caducaEl = cuponEl.querySelector(".welcome-cupon-caduca");
-  const email = cupon.email || "hola@meowrhino.studio";
-
-  const applyLang = (lang) => {
-    const t = cupon[lang] || cupon.es || {};
-    hazteEl.textContent = t.hazte || "";
-    ivaEl.textContent = t.iva || "";
-    caducaEl.textContent = t.caduca || "";
-    const subject = encodeURIComponent(t.subject || "");
-    cuponEl.href = `mailto:${email}?subject=${subject}`;
-  };
-  applyLang(currentLang);
-  attachLangListeners(el, applyLang);
-
-  iniciarRebote(el, cuponEl);
-}
-
-/**
- * Anima el cupón rebotando dentro de la celda welcome (estilo DVD a 45º).
- * En cada choque acumula una rotación (animada con easing).
- * Solo corre cuando la celda está activa; hover pausa para poder clicar.
- */
-function iniciarRebote(celda, cupon) {
-  const reducirMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const velocidad = esMovil ? 60 : 90;        // px/s
-  const easingRotacion = 0.09;                // interpolación rotacion → rotacionTarget
-  const diag = Math.SQRT1_2;
-
-  let vx = (Math.random() < 0.5 ? -1 : 1) * diag;
-  let vy = (Math.random() < 0.5 ? -1 : 1) * diag;
-  let x = 0, y = 0;
-  let rotacion = 0;
-  let rotacionTarget = Math.random() * 6 - 3; // inicio leve entre -3º y +3º
-  let hoverPausa = false;
-  let lastTs = 0;
-
-  // Usamos offsetWidth/Height (tamaño sin rotar) para que los rebotes sean
-  // estables. getBoundingClientRect devolvería la AABB rotada y bota antes.
-  const bounds = () => ({
-    w: celda.clientWidth - cupon.offsetWidth,
-    h: celda.clientHeight - cupon.offsetHeight,
-  });
-
-  const bumpRotacion = () => {
-    // Delta amplio y aleatorio — sin cap, que gire libre
-    rotacionTarget += (Math.random() * 10 + 6) * (Math.random() < 0.5 ? -1 : 1);
-  };
-
-  const render = () => {
-    cupon.style.transform = `translate(${x}px, ${y}px) rotate(${rotacion}deg)`;
-  };
-
-  const colocarInicial = () => {
-    const b = bounds();
-    x = b.w > 0 ? Math.random() * b.w : 0;
-    y = b.h > 0 ? Math.random() * b.h : 0;
-    rotacion = rotacionTarget;
-    render();
-  };
-
-  const tick = (ts) => {
-    const dt = Math.min(50, ts - lastTs) / 1000;
-    lastTs = ts;
-
-    if (celda.classList.contains("activa") && !hoverPausa && !reducirMovimiento) {
-      const b = bounds();
-      x += vx * velocidad * dt;
-      y += vy * velocidad * dt;
-
-      let boto = false;
-      if (x <= 0)       { x = 0;   vx = -vx; boto = true; }
-      else if (x >= b.w){ x = b.w; vx = -vx; boto = true; }
-      if (y <= 0)       { y = 0;   vy = -vy; boto = true; }
-      else if (y >= b.h){ y = b.h; vy = -vy; boto = true; }
-      if (boto) bumpRotacion();
-
-      rotacion += (rotacionTarget - rotacion) * easingRotacion;
-      render();
-    }
-    requestAnimationFrame(tick);
-  };
-
-  cupon.addEventListener("mouseenter", () => { hoverPausa = true; });
-  cupon.addEventListener("mouseleave", () => { hoverPausa = false; });
-  window.addEventListener("resize", () => {
-    const b = bounds();
-    x = Math.min(Math.max(0, x), b.w);
-    y = Math.min(Math.max(0, y), b.h);
-  });
-
-  document.fonts.ready.then(() => {
-    colocarInicial();
-    lastTs = performance.now();
-    requestAnimationFrame(tick);
-  });
+  renderWelcomeCupon(el, data.welcome.cupon);
 }
 
 // --- Statement ---

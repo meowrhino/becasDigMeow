@@ -13,9 +13,11 @@
   <link rel="icon" href="favicon/favicon.ico">
   <link rel="stylesheet" href="style.css">
   <script>
-    // Anti-flash: aplica el tema guardado antes del primer render.
+    // Anti-flash: resuelve el tema antes del primer render.
+    // Prioridad: localStorage > prefers-color-scheme > light (default studio).
     (function() {
       var t = localStorage.getItem("meowrhino-theme");
+      if (!t && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";
       if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
     })();
   </script>

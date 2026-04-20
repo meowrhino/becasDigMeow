@@ -13,11 +13,12 @@
   <link rel="icon" href="favicon/favicon.ico">
   <link rel="stylesheet" href="style.css">
   <script>
-    // Anti-flash: dark por defecto en el archive.
+    // Anti-flash: resuelve el tema antes del primer render.
+    // Prioridad: localStorage > prefers-color-scheme > dark (default archive).
     (function() {
       var t = localStorage.getItem("meowrhino-theme");
-      if (!t) document.documentElement.setAttribute("data-theme", "dark");
-      else if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+      if (!t) t = (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) ? "light" : "dark";
+      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
     })();
   </script>
 </head>
