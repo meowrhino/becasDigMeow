@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>3 opciones de cupón · pruebas 2026-04-20</title>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700&display=swap");
+
+  :root {
+    --bg: #ffffff;
+    --bg-hover: #f7f7f7;
+    --text: #000000;
+    --text-muted: #888888;
+    --border: rgba(0, 0, 0, 0.12);
+    --border-hover: rgba(0, 0, 0, 0.35);
+    --shadow-sm: rgba(0, 0, 0, 0.05);
+    --accent: #f5efe4;
+  }
+  [data-theme="dark"] {
+    --bg: #121212;
+    --bg-hover: #1e1e1e;
+    --text: #e0e0e0;
+    --text-muted: #666666;
+    --border: rgba(255, 255, 255, 0.12);
+    --border-hover: rgba(255, 255, 255, 0.35);
+    --shadow-sm: rgba(0, 0, 0, 0.3);
+    --accent: #2a2620;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: "Inknut Antiqua", serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .toolbar {
+    position: sticky; top: 0;
+    display: flex; gap: 1rem; align-items: center; justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    font-size: 0.72rem;
+  }
+  .toolbar .title { font-weight: 500; letter-spacing: 0.03em; opacity: 0.7; }
+  .toolbar .controls { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .toolbar button {
+    font-family: inherit;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.25rem 0.6rem;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .toolbar button:hover { border-color: var(--border-hover); background: var(--bg-hover); }
+  .toolbar button.active { border-color: var(--text); }
+
+  .zona {
+    position: relative;
+    height: 85dvh;
+    min-height: 520px;
+    border-bottom: 1px dashed var(--border);
+    overflow: hidden;
+  }
+  .zona-label {
+    position: absolute;
+    top: 1rem;
+    left: 1.25rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    z-index: 2;
+    pointer-events: none;
+  }
+  .zona-desc {
+    position: absolute;
+    top: 1rem;
+    right: 1.25rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
+    color: var(--text-muted);
+    z-index: 2;
+    pointer-events: none;
+    max-width: 60%;
+    text-align: right;
+    line-height: 1.4;
+  }
+  .zona-bg-title {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(3rem, 10dvw, 8rem);
+    font-weight: 300;
+    color: var(--border);
+    letter-spacing: -0.02em;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    white-space: nowrap;
+  }
+
+  /* ============================================
+     Base común: el cupón es un <a> rebotando
+     ============================================ */
+  .cupon {
+    position: absolute;
+    top: 0; left: 0;
+    color: var(--text);
+    text-decoration: none;
+    line-height: 1.3;
+    white-space: nowrap;
+    user-select: none;
+    z-index: 5;
+    will-change: transform;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.3s ease;
+  }
+
+  /* --------------------------------------------
+     A · SELLO artesanal — doble borde + rotación
+     -------------------------------------------- */
+  .cupon-a {
+    padding: 1.3rem 2.6rem;
+    background: var(--bg);
+    border: 1px solid var(--text);
+    outline: 1px solid var(--text);
+    outline-offset: 4px;
+    transform-origin: center;
+    rotate: -2deg;
+    text-align: center;
+    gap: 0.35rem;
+  }
+  .cupon-a:hover { background: var(--text); color: var(--bg); outline-color: var(--text); rotate: 0deg; }
+  .cupon-a .hazte {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .cupon-a .corona {
+    display: flex; align-items: center; gap: 0.8rem;
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    letter-spacing: 0.4em;
+  }
+  .cupon-a .precio {
+    font-size: 3.2rem;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.01em;
+  }
+  .cupon-a .iva {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 0.2rem;
+  }
+  .cupon-a .caduca {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 0.4rem;
+  }
+  .cupon-a:hover .hazte,
+  .cupon-a:hover .corona,
+  .cupon-a:hover .iva,
+  .cupon-a:hover .caduca { color: var(--bg); opacity: 0.8; }
+
+  /* --------------------------------------------
+     B · TICKET troquelado — horizontal, stub izq.
+     -------------------------------------------- */
+  .cupon-b {
+    flex-direction: row;
+    align-items: stretch;
+    background: var(--bg);
+    box-shadow: 0 2px 14px var(--shadow-sm);
+    position: absolute;
+  }
+  .cupon-b::before, .cupon-b::after {
+    content: "";
+    position: absolute;
+    width: 18px; height: 18px;
+    background: var(--bg);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: inset 0 0 0 1px var(--border);
+  }
+  .cupon-b::before { left: -9px; }
+  .cupon-b::after { right: -9px; }
+  .cupon-b .stub {
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    padding: 1rem 1.4rem;
+    border-right: 1px dashed var(--border);
+    gap: 0.3rem;
+  }
+  .cupon-b .stub .precio {
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .cupon-b .stub .iva {
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  .cupon-b .body {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 1rem 1.6rem;
+    gap: 0.4rem;
+    text-align: left;
+  }
+  .cupon-b .body .hazte {
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+  }
+  .cupon-b .body .caduca {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    font-style: italic;
+  }
+  .cupon-b:hover { background: var(--text); color: var(--bg); }
+  .cupon-b:hover::before,
+  .cupon-b:hover::after { background: var(--bg-hover); }
+  .cupon-b:hover .stub { border-right-color: rgba(255,255,255,0.25); }
+  .cupon-b:hover .iva, .cupon-b:hover .caduca { color: var(--bg); opacity: 0.75; }
+
+  /* --------------------------------------------
+     C · PURO tipográfico — sin caja, jerarquía
+     -------------------------------------------- */
+  .cupon-c {
+    text-align: center;
+    background: transparent;
+    padding: 0.5rem;
+    gap: 0.3rem;
+  }
+  .cupon-c .hazte {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  .cupon-c .precio {
+    font-size: 4rem;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    position: relative;
+  }
+  .cupon-c .precio::after {
+    content: "";
+    position: absolute;
+    left: 15%; right: 15%;
+    bottom: -2px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.25;
+  }
+  .cupon-c .iva {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 0.35rem;
+  }
+  .cupon-c .caduca {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.03em;
+    margin-top: 0.1rem;
+  }
+  .cupon-c:hover .precio { letter-spacing: 0.04em; }
+
+  /* --------------------------------------------
+     D · TAG colgante (bonus) — etiqueta con agujero
+     -------------------------------------------- */
+  .cupon-d {
+    background: var(--accent);
+    padding: 1rem 1.4rem 1rem 2.2rem;
+    position: relative;
+    clip-path: polygon(1.2rem 0, 100% 0, 100% 100%, 1.2rem 100%, 0 50%);
+    gap: 0.25rem;
+    text-align: center;
+    max-width: min(320px, 80%);
+  }
+  .cupon-d::before {
+    content: "";
+    position: absolute;
+    left: 1.2rem;
+    top: 50%;
+    width: 10px; height: 10px;
+    background: var(--bg);
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+  .cupon-d .hazte {
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+  }
+  .cupon-d .precio {
+    font-size: 2.4rem;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .cupon-d .iva {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  .cupon-d .caduca {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+  }
+  .cupon-d:hover { filter: brightness(0.96); }
+
+  .notes {
+    max-width: 680px;
+    margin: 2rem auto 3rem;
+    padding: 0 2rem;
+    font-size: 0.78rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .notes h2 { font-size: 0.9rem; font-weight: 500; margin: 0 0 1rem; }
+  .notes ul { padding-left: 1.2rem; margin: 0; }
+  .notes li { margin-bottom: 0.5rem; }
+
+  @media (max-width: 620px) {
+    .cupon-a .precio { font-size: 2.4rem; }
+    .cupon-c .precio { font-size: 3rem; }
+    .cupon-b .stub .precio { font-size: 1.5rem; }
+    .cupon-d .precio { font-size: 1.9rem; }
+    .zona-desc { font-size: 0.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="title">3 (+ 1) opciones de cupón · pruebas</span>
+  <div class="controls">
+    <button data-lang="es" class="active">ES</button>
+    <button data-lang="en">EN</button>
+    <button data-lang="cat">CAT</button>
+    <span style="width: 1px; background: var(--border); margin: 0 0.3rem;"></span>
+    <button id="themeToggle">☽ / ☼</button>
+    <button id="pauseToggle">❚❚ pausa</button>
+  </div>
+</div>
+
+<!-- ZONA A · SELLO -->
+<section class="zona">
+  <span class="zona-label">A · sello</span>
+  <span class="zona-desc">doble borde + rotación leve. clásico, artesanal, encaja con inknut. endereza al hover.</span>
+  <span class="zona-bg-title">sello</span>
+  <a class="cupon cupon-a" data-variant="a" href="#">
+    <span class="hazte" data-i18n="hazte">tu web para siempre por</span>
+    <span class="precio">485 €</span>
+    <span class="iva" data-i18n="iva">(iva no incluido)</span>
+    <span class="caduca" data-i18n="caduca">válido hasta finales de agosto</span>
+  </a>
+</section>
+
+<!-- ZONA B · TICKET TROQUELADO -->
+<section class="zona">
+  <span class="zona-label">B · ticket</span>
+  <span class="zona-desc">formato horizontal, stub recortable, círculos troquelados laterales. el más "cupón".</span>
+  <span class="zona-bg-title">ticket</span>
+  <a class="cupon cupon-b" data-variant="b" href="#">
+    <div class="stub">
+      <span class="precio">485 €</span>
+      <span class="iva" data-i18n="iva">(iva no incluido)</span>
+    </div>
+    <div class="body">
+      <span class="hazte" data-i18n="hazte">tu web para siempre por</span>
+      <span class="caduca" data-i18n="caduca">válido hasta finales de agosto</span>
+    </div>
+  </a>
+</section>
+
+<!-- ZONA C · PURO TIPOGRÁFICO -->
+<section class="zona">
+  <span class="zona-label">C · tipográfico</span>
+  <span class="zona-desc">sin caja, sin fondo. solo jerarquía. el precio como hero suelto. el más minimal.</span>
+  <span class="zona-bg-title">tipo</span>
+  <a class="cupon cupon-c" data-variant="c" href="#">
+    <span class="hazte" data-i18n="hazte">tu web para siempre por</span>
+    <span class="precio">485 €</span>
+    <span class="iva" data-i18n="iva">(iva no incluido)</span>
+    <span class="caduca" data-i18n="caduca">válido hasta finales de agosto</span>
+  </a>
+</section>
+
+<!-- ZONA D · BONUS: TAG COLGANTE -->
+<section class="zona">
+  <span class="zona-label">D · tag (bonus)</span>
+  <span class="zona-desc">etiqueta con punta + agujero. color acento suave. el más expresivo.</span>
+  <span class="zona-bg-title">tag</span>
+  <a class="cupon cupon-d" data-variant="d" href="#">
+    <span class="hazte" data-i18n="hazte">tu web para siempre por</span>
+    <span class="precio">485 €</span>
+    <span class="iva" data-i18n="iva">(iva no incluido)</span>
+    <span class="caduca" data-i18n="caduca">válido hasta finales de agosto</span>
+  </a>
+</section>
+
+<div class="notes">
+  <h2>notas</h2>
+  <ul>
+    <li>Los 4 rebotan simultáneamente en su zona a <strong>90 px/s en diagonales de 45º</strong>.</li>
+    <li>Hover pausa el rebote en cada uno (para poder clicar).</li>
+    <li>Click abre <code>mailto:hola@meowrhino.studio</code> con asunto traducido al idioma activo.</li>
+    <li>Botones arriba: <strong>ES/EN/CAT</strong>, toggle <strong>tema claro/oscuro</strong>, <strong>pausa global</strong> para inspeccionar en detalle.</li>
+    <li>Para ver mejor cada uno: usa "pausa" y pasa el ratón por encima para ver los hovers.</li>
+  </ul>
+</div>
+
+<script>
+  // --- i18n ---
+  const i18n = {
+    es: { hazte: "tu web para siempre por", iva: "(iva no incluido)", caduca: "válido hasta finales de agosto", subject: "quiero una web" },
+    en: { hazte: "your website forever for", iva: "(vat not included)", caduca: "valid until end of august", subject: "I want a website" },
+    cat: { hazte: "la teva web per sempre per", iva: "(iva no inclòs)", caduca: "vàlid fins a finals d'agost", subject: "vull una web" },
+  };
+  let currentLang = "es";
+
+  function applyLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const k = el.getAttribute("data-i18n");
+      if (i18n[lang]?.[k]) el.textContent = i18n[lang][k];
+    });
+    const subject = encodeURIComponent(i18n[lang].subject);
+    document.querySelectorAll(".cupon").forEach(c => {
+      c.href = `mailto:hola@meowrhino.studio?subject=${subject}`;
+    });
+    document.querySelectorAll(".toolbar [data-lang]").forEach(b => {
+      b.classList.toggle("active", b.dataset.lang === lang);
+    });
+  }
+  document.querySelectorAll(".toolbar [data-lang]").forEach(b => {
+    b.addEventListener("click", () => applyLang(b.dataset.lang));
+  });
+
+  // --- Theme ---
+  const saved = localStorage.getItem("pruebas-theme");
+  if (saved === "dark") document.documentElement.setAttribute("data-theme", "dark");
+  document.getElementById("themeToggle").addEventListener("click", () => {
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+    if (isDark) { document.documentElement.removeAttribute("data-theme"); localStorage.setItem("pruebas-theme", "light"); }
+    else { document.documentElement.setAttribute("data-theme", "dark"); localStorage.setItem("pruebas-theme", "dark"); }
+  });
+
+  // --- Pausa global ---
+  let globalPause = false;
+  const pauseBtn = document.getElementById("pauseToggle");
+  pauseBtn.addEventListener("click", () => {
+    globalPause = !globalPause;
+    pauseBtn.textContent = globalPause ? "▶ reanudar" : "❚❚ pausa";
+    pauseBtn.classList.toggle("active", globalPause);
+  });
+
+  // --- Bouncing animation per cupon ---
+  function iniciarRebote(cupon) {
+    const zona = cupon.closest(".zona");
+    const speed = 90;
+    const s = Math.SQRT1_2;
+    let vx = (Math.random() < 0.5 ? -1 : 1) * s;
+    let vy = (Math.random() < 0.5 ? -1 : 1) * s;
+    let x = 0, y = 0;
+    let hoverPausa = false;
+    let lastTs = 0;
+
+    const bounds = () => {
+      const rz = zona.getBoundingClientRect();
+      const rc = cupon.getBoundingClientRect();
+      return { w: rz.width - rc.width, h: rz.height - rc.height };
+    };
+
+    const placeInitial = () => {
+      const b = bounds();
+      x = b.w > 0 ? Math.random() * b.w : 0;
+      y = b.h > 0 ? Math.random() * b.h : 0;
+      cupon.style.transform = `translate(${x}px, ${y}px)`;
+    };
+
+    const tick = (ts) => {
+      const dt = Math.min(50, ts - lastTs) / 1000;
+      lastTs = ts;
+      if (!hoverPausa && !globalPause) {
+        const b = bounds();
+        x += vx * speed * dt;
+        y += vy * speed * dt;
+        if (x <= 0) { x = 0; vx = Math.abs(vx); }
+        else if (x >= b.w) { x = b.w; vx = -Math.abs(vx); }
+        if (y <= 0) { y = 0; vy = Math.abs(vy); }
+        else if (y >= b.h) { y = b.h; vy = -Math.abs(vy); }
+        cupon.style.transform = `translate(${x}px, ${y}px)`;
+      }
+      requestAnimationFrame(tick);
+    };
+
+    cupon.addEventListener("mouseenter", () => { hoverPausa = true; });
+    cupon.addEventListener("mouseleave", () => { hoverPausa = false; });
+    window.addEventListener("resize", () => {
+      const b = bounds();
+      x = Math.min(Math.max(0, x), b.w);
+      y = Math.min(Math.max(0, y), b.h);
+    });
+
+    // Cupon-a necesita conservar la rotación al aplicar el transform
+    if (cupon.classList.contains("cupon-a")) {
+      const origTick = tick;
+      const tickWithRotate = (ts) => {
+        const dt = Math.min(50, ts - lastTs) / 1000;
+        lastTs = ts;
+        if (!hoverPausa && !globalPause) {
+          const b = bounds();
+          x += vx * speed * dt;
+          y += vy * speed * dt;
+          if (x <= 0) { x = 0; vx = Math.abs(vx); }
+          else if (x >= b.w) { x = b.w; vx = -Math.abs(vx); }
+          if (y <= 0) { y = 0; vy = Math.abs(vy); }
+          else if (y >= b.h) { y = b.h; vy = -Math.abs(vy); }
+          cupon.style.transform = `translate(${x}px, ${y}px)`;
+        }
+        requestAnimationFrame(tickWithRotate);
+      };
+      document.fonts?.ready.then(() => { placeInitial(); lastTs = performance.now(); requestAnimationFrame(tickWithRotate); });
+      return;
+    }
+
+    document.fonts?.ready.then(() => { placeInitial(); lastTs = performance.now(); requestAnimationFrame(tick); });
+  }
+
+  applyLang("es");
+  document.querySelectorAll(".cupon").forEach(iniciarRebote);
+</script>
+
+</body>
+</html>

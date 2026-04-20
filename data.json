@@ -1,6 +1,28 @@
 {
   "welcome": {
     "titulo": "meowrhino studio",
+    "cupon": {
+      "precio": "485 €",
+      "email": "hola@meowrhino.studio",
+      "es": {
+        "hazte": "tu web para siempre por",
+        "iva": "(iva no incluido)",
+        "caduca": "válido hasta finales de agosto",
+        "subject": "quiero una web"
+      },
+      "en": {
+        "hazte": "your website forever for",
+        "iva": "(vat not included)",
+        "caduca": "valid until end of august",
+        "subject": "I want a website"
+      },
+      "cat": {
+        "hazte": "la teva web per sempre per",
+        "iva": "(iva no inclòs)",
+        "caduca": "vàlid fins a finals d'agost",
+        "subject": "vull una web"
+      }
+    },
     "formateadores": [
       {
         "nombre": "paula",

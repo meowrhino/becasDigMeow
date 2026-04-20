@@ -6,6 +6,12 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["serve", "."],
       "port": 3000
+    },
+    {
+      "name": "visualizer",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "/Users/manu/Documents/GitHub/visualizer"],
+      "port": 5555
     }
   ]
 }
