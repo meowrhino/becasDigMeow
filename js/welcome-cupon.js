@@ -1,19 +1,22 @@
 // ============================================
-// WELCOME CUPÓN — Tarjeta rebotando estilo DVD
+// WELCOME CUPÓN — Tarjeta rebotando estilo DVD + flip al hacer click
 // ============================================
 //
-// Renderiza el cupón de la celda welcome y lo anima rebotando en
-// diagonales de 45º dentro de los límites de la celda. Cada choque
-// añade un giro acumulado (easing suave hacia un target rotatorio).
+// Renderiza el cupón de la celda welcome. Rebota en diagonales de 45º
+// dentro de la celda y, al hacer click en cualquier parte (excepto el CTA),
+// gira la tarjeta mostrando el dorso con lo que incluye + un CTA mailto.
+//
+// Estructura DOM:
+//  .welcome-cupon-wrapper   ← recibe translate/rotate del rebote
+//    .welcome-cupon-inner   ← recibe rotateY(180deg) en `.flipped`
+//      .welcome-cupon-face.welcome-cupon-front  (sello con precio)
+//      .welcome-cupon-face.welcome-cupon-back   (incluye + CTA)
 //
 // Puntos clave:
-//  - Solo anima cuando la celda está activa y no hay hover (para clicar)
-//  - Respeta `prefers-reduced-motion`
-//  - Los rebotes se calculan contra offsetWidth/Height (tamaño sin rotar)
-//    para que la rotación no desplace los bordes de colisión
-//  - El mailto se genera con el subject traducido según idioma actual
-//
-// Entrada: la celda .welcome y el objeto `data.welcome.cupon` de data.json
+//  - Solo anima cuando la celda está activa, sin hover y sin flip.
+//  - Respeta `prefers-reduced-motion`.
+//  - Bounds contra offsetWidth/Height (sin rotar) para rebotes estables.
+//  - Click en el CTA → mailto (no toggle); click en el resto del cupón → flip.
 
 import { currentLang, attachLangListeners } from "./data.js";
 import { esMovil } from "./pages.js";
@@ -26,34 +29,56 @@ import { esMovil } from "./pages.js";
 export function renderWelcomeCupon(celda, cuponData) {
   if (!celda || !cuponData) return;
 
-  // --- DOM del cupón (sello postal) ---
   celda.insertAdjacentHTML("beforeend", `
-    <a class="welcome-cupon" id="welcomeCupon" href="#" rel="noopener">
-      <span class="welcome-cupon-hazte"></span>
-      <span class="welcome-cupon-precio">${cuponData.precio}</span>
-      <span class="welcome-cupon-iva"></span>
-      <span class="welcome-cupon-caduca"></span>
-    </a>
+    <div class="welcome-cupon-wrapper" id="welcomeCupon">
+      <div class="welcome-cupon-inner">
+        <div class="welcome-cupon-face welcome-cupon-front">
+          <span class="welcome-cupon-hazte"></span>
+          <span class="welcome-cupon-precio">${cuponData.precio}</span>
+          <span class="welcome-cupon-iva"></span>
+          <span class="welcome-cupon-caduca"></span>
+        </div>
+        <div class="welcome-cupon-face welcome-cupon-back">
+          <p class="welcome-cupon-incluye"></p>
+          <span class="welcome-cupon-primera"></span>
+          <a class="welcome-cupon-cta" href="#" rel="noopener"></a>
+        </div>
+      </div>
+    </div>
   `);
 
-  const cuponEl = celda.querySelector("#welcomeCupon");
-  const hazteEl = cuponEl.querySelector(".welcome-cupon-hazte");
-  const ivaEl   = cuponEl.querySelector(".welcome-cupon-iva");
-  const caducaEl = cuponEl.querySelector(".welcome-cupon-caduca");
+  const wrapperEl = celda.querySelector("#welcomeCupon");
+  const hazteEl   = wrapperEl.querySelector(".welcome-cupon-hazte");
+  const ivaEl     = wrapperEl.querySelector(".welcome-cupon-iva");
+  const caducaEl  = wrapperEl.querySelector(".welcome-cupon-caduca");
+  const incluyeEl = wrapperEl.querySelector(".welcome-cupon-incluye");
+  const primeraEl = wrapperEl.querySelector(".welcome-cupon-primera");
+  const ctaEl     = wrapperEl.querySelector(".welcome-cupon-cta");
   const email = cuponData.email || "hola@meowrhino.studio";
 
-  // --- i18n: al cambiar idioma, re-pinta textos y mailto ---
+  // --- i18n: al cambiar idioma, re-pinta todo (front + back + mailto) ---
   const applyLang = (lang) => {
     const t = cuponData[lang] || cuponData.es || {};
-    hazteEl.textContent = t.hazte || "";
-    ivaEl.textContent = t.iva || "";
-    caducaEl.textContent = t.caduca || "";
-    cuponEl.href = `mailto:${email}?subject=${encodeURIComponent(t.subject || "")}`;
+    hazteEl.textContent   = t.hazte   || "";
+    ivaEl.textContent     = t.iva     || "";
+    caducaEl.textContent  = t.caduca  || "";
+    primeraEl.textContent = t.primera || "";
+    ctaEl.textContent     = t.cta     || "";
+    incluyeEl.textContent = t.incluye || "";
+    ctaEl.href = `mailto:${email}?subject=${encodeURIComponent(t.subject || "")}`;
   };
   applyLang(currentLang);
   attachLangListeners(celda, applyLang);
 
-  iniciarRebote(celda, cuponEl);
+  // Click en el cupón → flip. Excepto si el click es en el CTA (deja que el
+  // mailto siga su curso sin toggle). El stopPropagation tampoco hace falta:
+  // basta con early-return al detectar que el target está dentro del CTA.
+  wrapperEl.addEventListener("click", (e) => {
+    if (e.target.closest(".welcome-cupon-cta")) return;
+    wrapperEl.classList.toggle("flipped");
+  });
+
+  iniciarRebote(celda, wrapperEl);
 }
 
 /**
@@ -65,25 +90,20 @@ function iniciarRebote(celda, cupon) {
   const velocidad = esMovil ? 60 : 90;   // px/s
   const diag = Math.SQRT1_2;             // componente x,y de un vector unitario a 45º
 
-  // Estado de la animación
   let vx = (Math.random() < 0.5 ? -1 : 1) * diag;
   let vy = (Math.random() < 0.5 ? -1 : 1) * diag;
   let x = 0, y = 0;
-  let rotacion = Math.random() * 6 - 3;  // giro inicial leve (-3º..+3º)
+  let rotacion = Math.random() * 6 - 3;
   let hoverPausa = false;
   let lastTs = 0;
 
-  // Usamos offsetWidth/Height (sin rotar) para que los rebotes sean
-  // estables. getBoundingClientRect devolvería la AABB rotada y botaría
-  // antes a ciertos ángulos.
   const bounds = () => ({
     w: celda.clientWidth - cupon.offsetWidth,
     h: celda.clientHeight - cupon.offsetHeight,
   });
 
   // Cada choque suma un golpe de rotación de golpe (sin easing): 8..22º.
-  // Entre choques el ángulo se queda quieto — así cada impacto "se nota".
-  // El ángulo total queda acotado a ±LIMITE_ROT: si un lado se pasa, el golpe
+  // El ángulo queda acotado a ±LIMITE_ROT: si un lado se pasa, el golpe
   // va hacia el otro, así nunca queda "pegado" al tope.
   const LIMITE_ROT = 10;
   const golpearRotacion = () => {
@@ -94,7 +114,7 @@ function iniciarRebote(celda, cupon) {
     if (cabeSubir && cabeBajar) signo = Math.random() < 0.5 ? -1 : 1;
     else if (cabeSubir) signo = 1;
     else if (cabeBajar) signo = -1;
-    else signo = rotacion > 0 ? -1 : 1;   // ninguno cabe: tira hacia el centro
+    else signo = rotacion > 0 ? -1 : 1;
     rotacion = Math.max(-LIMITE_ROT, Math.min(LIMITE_ROT, rotacion + delta * signo));
   };
 
@@ -110,16 +130,15 @@ function iniciarRebote(celda, cupon) {
   };
 
   const tick = (ts) => {
-    // dt clampeado a 50ms para tabs en background / frames largos
     const dt = Math.min(50, ts - lastTs) / 1000;
     lastTs = ts;
 
-    if (celda.classList.contains("activa") && !hoverPausa && !reducirMovimiento) {
+    const girado = cupon.classList.contains("flipped");
+    if (celda.classList.contains("activa") && !hoverPausa && !reducirMovimiento && !girado) {
       const b = bounds();
       x += vx * velocidad * dt;
       y += vy * velocidad * dt;
 
-      // Colisión contra los 4 bordes — invierte la componente y marca rebote
       let boto = false;
       if (x <= 0)        { x = 0;   vx = -vx; boto = true; }
       else if (x >= b.w) { x = b.w; vx = -vx; boto = true; }
@@ -132,18 +151,15 @@ function iniciarRebote(celda, cupon) {
     requestAnimationFrame(tick);
   };
 
-  // Hover pausa el bucle para que el cupón se pueda clicar
   cupon.addEventListener("mouseenter", () => { hoverPausa = true; });
   cupon.addEventListener("mouseleave", () => { hoverPausa = false; });
 
-  // En resize recolocamos dentro de los nuevos límites (no resetea rotación)
   window.addEventListener("resize", () => {
     const b = bounds();
     x = Math.min(Math.max(0, x), b.w);
     y = Math.min(Math.max(0, y), b.h);
   });
 
-  // Esperamos a que las fuentes carguen para medir el cupón con su tamaño final
   document.fonts.ready.then(() => {
     colocarInicial();
     lastTs = performance.now();

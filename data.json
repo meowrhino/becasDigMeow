@@ -5,22 +5,31 @@
       "precio": "485 €",
       "email": "hola@meowrhino.studio",
       "es": {
-        "hazte": "tu web para siempre por",
+        "hazte": "tu web por",
         "iva": "(iva no incluido)",
         "caduca": "válido hasta finales de agosto",
-        "subject": "quiero una web"
+        "subject": "quiero una web!",
+        "incluye": "diseño a medida, sin servidores ni suscripciones. te enseñamos a mantenerla tú mismo.",
+        "primera": "primera reunión gratis",
+        "cta": "escríbeme"
       },
       "en": {
-        "hazte": "your website forever for",
+        "hazte": "your own website for",
         "iva": "(vat not included)",
-        "caduca": "valid until end of august",
-        "subject": "I want a website"
+        "caduca": "valid until the end of august",
+        "subject": "I want a website!",
+        "incluye": "custom design, no servers or subscriptions. we teach you to maintain it yourself.",
+        "primera": "first meeting free",
+        "cta": "let's talk"
       },
       "cat": {
-        "hazte": "la teva web per sempre per",
+        "hazte": "la teva web per",
         "iva": "(iva no inclòs)",
         "caduca": "vàlid fins a finals d'agost",
-        "subject": "vull una web"
+        "subject": "vull una web!",
+        "incluye": "disseny a mida, sense servidors ni subscripcions. t'ensenyem a mantenir-la tu mateix.",
+        "primera": "primera reunió gratis",
+        "cta": "escriu-me"
       }
     },
     "formateadores": [
@@ -282,11 +291,19 @@
   },
   "contacto": {
     "email": "hola@meowrhino.studio",
-    "asunto": "consulta sobre proyecto web",
+    "asunto": {
+      "es": "quiero una web!",
+      "en": "I want a website!",
+      "cat": "vull una web!"
+    },
     "instagram": {
       "usuario": "@meowrhino",
       "url": "https://instagram.com/meowrhino"
     },
-    "cv": "cv_manu.pdf"
+    "cv": {
+      "es": "cv_manu_es.pdf",
+      "en": "cv_manu_en.pdf",
+      "cat": "cv_manu_ca.pdf"
+    }
   }
 }

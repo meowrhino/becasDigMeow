@@ -5,8 +5,24 @@
 // --- Idioma global ---
 
 export const LANGS = ["es", "en", "cat"];
-export let currentLang = localStorage.getItem("lang") || "es";
-if (!LANGS.includes(currentLang)) currentLang = "es";
+
+/**
+ * Detecta idioma desde `navigator.language(s)`. Catalán se mapea a "cat"
+ * (tanto `ca` como `ca-ES`). Cualquier otro → "es".
+ */
+function detectarIdiomaNavegador() {
+  const nav = (navigator.languages?.[0] || navigator.language || "").toLowerCase();
+  if (nav.startsWith("ca")) return "cat";
+  if (nav.startsWith("en")) return "en";
+  if (nav.startsWith("es")) return "es";
+  return "es";
+}
+
+// Preferencia guardada manda sobre autodetección del navegador.
+const idiomaGuardado = localStorage.getItem("lang");
+export let currentLang = idiomaGuardado && LANGS.includes(idiomaGuardado)
+  ? idiomaGuardado
+  : detectarIdiomaNavegador();
 
 /** Callbacks de cada sección para actualizar su contenido al cambiar idioma. */
 export const langUpdateCallbacks = [];

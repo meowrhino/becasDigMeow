@@ -116,11 +116,14 @@ export function renderWelcome(data) {
   const el = document.querySelector(".celda.welcome");
   if (!el || !data?.welcome) return;
 
-  // El título siempre se pinta; el cupón va detrás (posicionado absoluto)
+  // El título siempre se pinta; el cupón va detrás (posicionado absoluto).
+  // Los lang-btn quedan sobre el cupón (z-index mayor) y `renderWelcomeCupon`
+  // engancha los listeners al recorrer los .lang-btn dentro de la celda.
   el.innerHTML = `
     <div class="welcome-content">
       <h1 class="welcome-title">${data.welcome.titulo}</h1>
     </div>
+    ${buildLangButtons()}
   `;
 
   renderWelcomeCupon(el, data.welcome.cupon);
@@ -256,23 +259,43 @@ export function renderContacto(data) {
   const el = document.querySelector(".celda.contacto");
   if (!el || !data?.contacto) return;
 
-  const { email, instagram, asunto, cuerpo } = data.contacto;
-  const params = new URLSearchParams();
-  if (asunto) params.set("subject", asunto);
-  if (cuerpo) params.set("body", cuerpo);
-  const mailtoHref = `mailto:${email}${params.toString() ? `?${params.toString()}` : ""}`;
+  const { email, instagram, asunto, cuerpo, cv } = data.contacto;
 
-  const cvHtml = data.contacto.cv
-    ? `<a class="contacto-cv" href="${data.contacto.cv}" target="_blank" rel="noopener">CV</a>`
+  // asunto y cv pueden ser string (legacy) o objeto por idioma
+  const pickLang = (val, lang) => {
+    if (val == null) return "";
+    if (typeof val === "string") return val;
+    return val[lang] || val.es || "";
+  };
+
+  const buildMailto = (lang) => {
+    const subject = pickLang(asunto, lang);
+    const params = new URLSearchParams();
+    if (subject) params.set("subject", subject);
+    if (cuerpo) params.set("body", pickLang(cuerpo, lang));
+    return `mailto:${email}${params.toString() ? `?${params.toString()}` : ""}`;
+  };
+
+  const cvHrefInicial = pickLang(cv, currentLang);
+  const cvHtml = cvHrefInicial
+    ? `<a class="contacto-cv" href="${cvHrefInicial}" target="_blank" rel="noopener">CV</a>`
     : "";
 
   el.innerHTML = `
     <div class="contacto-content">
-      <a class="contacto-email" href="${mailtoHref}">${email}</a>
+      <a class="contacto-email" href="${buildMailto(currentLang)}">${email}</a>
       <div class="contacto-row">
         <a class="contacto-instagram" href="${instagram.url}"${esMovil ? "" : ' target="_blank"'} rel="noopener">${instagram.usuario}</a>
         ${cvHtml}
       </div>
     </div>
   `;
+
+  const emailEl = el.querySelector(".contacto-email");
+  const cvEl = el.querySelector(".contacto-cv");
+
+  attachLangListeners(el, (lang) => {
+    if (emailEl) emailEl.href = buildMailto(lang);
+    if (cvEl) cvEl.href = pickLang(cv, lang);
+  });
 }
