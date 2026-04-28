@@ -49,6 +49,14 @@
 - [ ] Numeración de secciones rota: "8. WELCOME" y "8. STATEMENT" — renumerar
 - [ ] Comentario `style.css:595` dice `.welcome-content` pero es `.tools-content`
 
+### i18n — strings hardcodeados
+
+- [ ] **Labels de dropdowns en tools** — `"conversores"`, `"formateadores"`, `"webs terminadas"` hardcodeados en español (`pages.js:73-75`). Mover a data.json con variantes es/en/cat (2026-04-21)
+- [ ] **aria-labels del theme toggle** — `"Cambiar a modo claro/oscuro"` hardcoded en `theme.js:31,58`, sin traducción en/cat (2026-04-21)
+- [ ] **Zone labels del grid** — `nombres` en `main.js:111-119` se muestran como zone-labels en los bordes. Algunos cambian entre idiomas (políticas→policies/polítiques, metodología→methodology, contacto→contact, welcome→benvinguda). Considerar i18n (2026-04-21)
+- [ ] **Link "archive" del portfolio** — `portfolio.js:107`. En español sería "archivo"; en cat "arxiu". Decidir si se traduce o queda como palabra universal (2026-04-21)
+- [ ] **`<meta description>` solo en ES** — `index.html:6`. Para SEO multilingüe setearlo vía JS según idioma detectado (2026-04-21)
+
 ### Accesibilidad
 
 - [ ] `<html lang="es">` hardcoded — actualizar dinámicamente al cambiar idioma
