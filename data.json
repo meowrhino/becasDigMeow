@@ -2,10 +2,10 @@
   "welcome": {
     "titulo": "meowrhino studio",
     "cupon": {
-      "precio": "485 €",
+      "precio": "700 €",
       "email": "hola@meowrhino.studio",
       "es": {
-        "hazte": "tu web por",
+        "hazte": "tu propia web por",
         "iva": "(iva no incluido)",
         "caduca": "válido hasta finales de agosto",
         "subject": "quiero una web!",
@@ -23,7 +23,7 @@
         "cta": "let's talk"
       },
       "cat": {
-        "hazte": "la teva web per",
+        "hazte": "la teva pròpia web per",
         "iva": "(iva no inclòs)",
         "caduca": "vàlid fins a finals d'agost",
         "subject": "vull una web!",
