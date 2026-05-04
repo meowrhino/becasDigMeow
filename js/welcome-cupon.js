@@ -96,6 +96,8 @@ function iniciarRebote(celda, cupon) {
   let rotacion = Math.random() * 6 - 3;
   let hoverPausa = false;
   let lastTs = 0;
+  let running = true;
+  let visible = true;
 
   const bounds = () => ({
     w: celda.clientWidth - cupon.offsetWidth,
@@ -148,7 +150,8 @@ function iniciarRebote(celda, cupon) {
 
       render();
     }
-    requestAnimationFrame(tick);
+    if (visible) requestAnimationFrame(tick);
+    else running = false;
   };
 
   cupon.addEventListener("mouseenter", () => { hoverPausa = true; });
@@ -159,6 +162,18 @@ function iniciarRebote(celda, cupon) {
     x = Math.min(Math.max(0, x), b.w);
     y = Math.min(Math.max(0, y), b.h);
   });
+
+  if (typeof IntersectionObserver !== "undefined") {
+    const obs = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible && !running) {
+        running = true;
+        lastTs = performance.now();
+        requestAnimationFrame(tick);
+      }
+    });
+    obs.observe(celda);
+  }
 
   document.fonts.ready.then(() => {
     colocarInicial();

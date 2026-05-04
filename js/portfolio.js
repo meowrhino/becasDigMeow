@@ -7,8 +7,17 @@ import { setupScrollGradients } from "./scroll-gradients.js";
 
 // --- Estado centralizado de cycling de imágenes ---
 
-/** @type {Map<number, {currentIndex: number, imagenes: string[], intervalo: number, timerId: number|null, listeners: Set<Function>}>} */
+/** @type {Map<number, {currentIndex: number, imagenes: string[], intervalo: number, timerId: number|null, listeners: Set<Function>, paused: boolean}>} */
 const imageCycleState = new Map();
+
+let visibilityObserver = null;
+
+function arrancarTimer(state) {
+  state.timerId = setInterval(() => {
+    state.currentIndex = (state.currentIndex + 1) % state.imagenes.length;
+    state.listeners.forEach(fn => fn(state.currentIndex, state.imagenes));
+  }, state.intervalo);
+}
 
 function iniciarCiclosImagenes(proyectos) {
   detenerCiclosImagenes();
@@ -18,18 +27,17 @@ function iniciarCiclosImagenes(proyectos) {
 
     const intervalo = 5000 + Math.random() * 3000;
     const retraso   = 2000 + Math.random() * 4000;
-    const state = { currentIndex: 0, imagenes, intervalo, timerId: null, listeners: new Set() };
+    const state = { currentIndex: 0, imagenes, intervalo, timerId: null, listeners: new Set(), paused: false };
 
-    const delayId = setTimeout(() => {
-      state.timerId = setInterval(() => {
-        state.currentIndex = (state.currentIndex + 1) % state.imagenes.length;
-        state.listeners.forEach(fn => fn(state.currentIndex, state.imagenes));
-      }, intervalo);
+    state._delayId = setTimeout(() => {
+      state._delayId = null;
+      if (!state.paused) arrancarTimer(state);
     }, retraso);
-    state._delayId = delayId;
 
     imageCycleState.set(idx, state);
   });
+
+  observarVisibilidadPortfolio();
 }
 
 function detenerCiclosImagenes() {
@@ -39,6 +47,40 @@ function detenerCiclosImagenes() {
     state.listeners.clear();
   });
   imageCycleState.clear();
+
+  if (visibilityObserver) {
+    visibilityObserver.disconnect();
+    visibilityObserver = null;
+  }
+}
+
+function pausarCiclos() {
+  imageCycleState.forEach(state => {
+    if (state.paused) return;
+    state.paused = true;
+    if (state._delayId) { clearTimeout(state._delayId); state._delayId = null; }
+    if (state.timerId)  { clearInterval(state.timerId); state.timerId = null; }
+  });
+}
+
+function reanudarCiclos() {
+  imageCycleState.forEach(state => {
+    if (!state.paused) return;
+    state.paused = false;
+    if (!state.timerId) arrancarTimer(state);
+  });
+}
+
+function observarVisibilidadPortfolio() {
+  const celda = document.querySelector(".celda.portfolio");
+  if (!celda || typeof IntersectionObserver === "undefined") return;
+  visibilityObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) reanudarCiclos();
+      else pausarCiclos();
+    });
+  });
+  visibilityObserver.observe(celda);
 }
 
 function suscribirCiclo(projectIndex, listener) {
@@ -143,7 +185,6 @@ function renderGridProyectos(proyectos) {
     if (tieneCiclo) {
       const imgB = document.createElement("img");
       imgB.classList.add("pgrid-img", "pgrid-img-b");
-      imgB.src = imagenes[1];
       imgB.alt = proyecto.nombre;
       imgB.loading = "lazy";
       thumb.appendChild(imgB);
