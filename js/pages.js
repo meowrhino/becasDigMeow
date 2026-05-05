@@ -5,11 +5,10 @@
 // Cada función renderiza una celda/página específica:
 // Tools, Welcome, Statement, Metodología, Políticas, Contacto.
 
-import { currentLang, buildLangButtons, attachLangListeners, langUpdateCallbacks } from "./data.js";
+import { currentLang, buildLangButtons, attachLangListeners } from "./data.js";
 import { setupZoom } from "./zoom.js";
 import { setupScrollGradients } from "./scroll-gradients.js";
 import { renderWelcomeCupon } from "./welcome-cupon.js";
-import { openLegalModal, getLegalLinkLabel } from "./legal-modal.js";
 
 /** true si el viewport es táctil / móvil. */
 export const esMovil = "ontouchstart" in window || navigator.maxTouchPoints > 0;
@@ -120,22 +119,12 @@ export function renderWelcome(data) {
   // El título siempre se pinta; el cupón va detrás (posicionado absoluto).
   // Los lang-btn quedan sobre el cupón (z-index mayor) y `renderWelcomeCupon`
   // engancha los listeners al recorrer los .lang-btn dentro de la celda.
-  const legalLabel = getLegalLinkLabel(data.legal);
   el.innerHTML = `
     <div class="welcome-content">
       <h1 class="welcome-title">${data.welcome.titulo}</h1>
     </div>
-    ${data.legal ? `<button type="button" class="welcome-legal-link">${legalLabel}</button>` : ""}
     ${buildLangButtons()}
   `;
-
-  const legalLink = el.querySelector(".welcome-legal-link");
-  if (legalLink && data.legal) {
-    legalLink.addEventListener("click", openLegalModal);
-    langUpdateCallbacks.push(() => {
-      legalLink.textContent = getLegalLinkLabel(data.legal);
-    });
-  }
 
   renderWelcomeCupon(el, data.welcome.cupon);
 }
@@ -229,7 +218,13 @@ export function renderPoliticas(data) {
     if (!d) return "";
     const html = d.parrafos.map(p => `<p>${p.replace(/\n/g, "<br>")}</p>`).join("");
     const nota = d.nota ? `<p class="politicas-nota">${d.nota}</p>` : "";
-    return html + nota;
+    const cookies = d.cookies
+      ? `<section class="politicas-cookies">
+           <h3 class="politicas-cookies-title">${d.cookies.titulo}</h3>
+           ${d.cookies.parrafos.map(p => `<p>${p}</p>`).join("")}
+         </section>`
+      : "";
+    return html + nota + cookies;
   };
 
   el.innerHTML = `

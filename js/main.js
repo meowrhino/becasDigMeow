@@ -31,7 +31,6 @@ import {
 } from "./pages.js";
 import { renderPortfolio } from "./portfolio.js";
 import { crearThemeToggle } from "./theme.js";
-import { setupLegalModal } from "./legal-modal.js";
 
 // ============================================
 // Orquestador de renderizado
@@ -42,7 +41,6 @@ async function renderizarContenido() {
   const data = obtenerDatos();
   if (!data) return;
 
-  setupLegalModal(data.legal);
   renderTools(data);
   renderWelcome(data);
   renderStatement(data);

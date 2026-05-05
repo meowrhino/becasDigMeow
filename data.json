@@ -155,7 +155,16 @@
         "nos reservamos la posibilidad de publicar el proyecto en nuestro portfolio y redes sociales. a la finalización de la web, planteamos la posibilidad de un post conjunto en instagram.",
         "nuestro compromiso es diseñar una web que entiendas, que puedas mantener y que pueda crecer contigo."
       ],
-      "nota": "aceptar el presupuesto significa aceptar estas condiciones."
+      "nota": "aceptar el presupuesto significa aceptar estas condiciones.",
+      "cookies": {
+        "titulo": "política de cookies",
+        "parrafos": [
+          "manuel latour · meowrhino studio · barcelona · <a href=\"mailto:hola@meowrhino.studio\">hola@meowrhino.studio</a>",
+          "esta web pasa por <a href=\"https://www.cloudflare.com/web-analytics/\" target=\"_blank\" rel=\"noopener\">cloudflare</a> como cdn. cookies estrictamente necesarias (__cf_bm, cf_clearance, __cflb), exentas de consentimiento bajo <a href=\"https://www.boe.es/buscar/act.php?id=BOE-A-2002-13758#a22\" target=\"_blank\" rel=\"noopener\">lssi-ce art. 22.2</a>.",
+          "analítica con cloudflare web analytics: sin cookies, sin fingerprinting, agregada y anonimizada. base legal: interés legítimo (<a href=\"https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32016R0679\" target=\"_blank\" rel=\"noopener\">gdpr art. 6.1.f</a>).",
+          "derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad → <a href=\"mailto:hola@meowrhino.studio\">hola@meowrhino.studio</a>. reclamación ante <a href=\"https://www.aepd.es\" target=\"_blank\" rel=\"noopener\">aepd</a>."
+        ]
+      }
     },
     "en": {
       "parrafos": [
@@ -169,7 +178,16 @@
         "we reserve the option to publish the project in our portfolio and social media. upon completion of the website, we'll suggest a joint instagram post.",
         "our commitment is to design a website you understand, can maintain, and that can grow with you."
       ],
-      "nota": "accepting the quote means accepting these conditions."
+      "nota": "accepting the quote means accepting these conditions.",
+      "cookies": {
+        "titulo": "cookie policy",
+        "parrafos": [
+          "manuel latour · meowrhino studio · barcelona · <a href=\"mailto:hola@meowrhino.studio\">hola@meowrhino.studio</a>",
+          "this site is served through <a href=\"https://www.cloudflare.com/web-analytics/\" target=\"_blank\" rel=\"noopener\">cloudflare</a> as cdn. strictly-necessary cookies (__cf_bm, cf_clearance, __cflb), exempt from consent under the <a href=\"https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32002L0058\" target=\"_blank\" rel=\"noopener\">eu eprivacy directive</a>.",
+          "analytics by cloudflare web analytics: cookieless, fingerprint-free, aggregated and anonymous. legal basis: legitimate interest (<a href=\"https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32016R0679\" target=\"_blank\" rel=\"noopener\">gdpr art. 6.1.f</a>).",
+          "rights of access, rectification, erasure, objection, restriction and portability → <a href=\"mailto:hola@meowrhino.studio\">hola@meowrhino.studio</a>. complaints: <a href=\"https://www.aepd.es\" target=\"_blank\" rel=\"noopener\">spanish dpa (aepd)</a>."
+        ]
+      }
     },
     "cat": {
       "parrafos": [
@@ -183,7 +201,16 @@
         "ens reservem la possibilitat de publicar el projecte al nostre portfolio i xarxes socials. en finalitzar la web, plantegem la possibilitat d'un post conjunt a instagram.",
         "el nostre compromís és dissenyar una web que entenguis, que puguis mantenir i que pugui créixer amb tu."
       ],
-      "nota": "acceptar el pressupost significa acceptar aquestes condicions."
+      "nota": "acceptar el pressupost significa acceptar aquestes condicions.",
+      "cookies": {
+        "titulo": "política de cookies",
+        "parrafos": [
+          "manuel latour · meowrhino studio · barcelona · <a href=\"mailto:hola@meowrhino.studio\">hola@meowrhino.studio</a>",
+          "aquesta web passa per <a href=\"https://www.cloudflare.com/web-analytics/\" target=\"_blank\" rel=\"noopener\">cloudflare</a> com a cdn. cookies estrictament necessàries (__cf_bm, cf_clearance, __cflb), exemptes de consentiment sota <a href=\"https://www.boe.es/buscar/act.php?id=BOE-A-2002-13758#a22\" target=\"_blank\" rel=\"noopener\">lssi-ce art. 22.2</a>.",
+          "analítica amb cloudflare web analytics: sense cookies, sense fingerprinting, agregada i anonimitzada. base legal: interès legítim (<a href=\"https://eur-lex.europa.eu/legal-content/CA/TXT/?uri=CELEX:32016R0679\" target=\"_blank\" rel=\"noopener\">gdpr art. 6.1.f</a>).",
+          "drets d'accés, rectificació, supressió, oposició, limitació i portabilitat → <a href=\"mailto:hola@meowrhino.studio\">hola@meowrhino.studio</a>. reclamació davant <a href=\"https://www.aepd.es\" target=\"_blank\" rel=\"noopener\">aepd</a>."
+        ]
+      }
     }
   },
   "portfolio": {
@@ -304,85 +331,6 @@
       "es": "cv_manu_es.pdf",
       "en": "cv_manu_en.pdf",
       "cat": "cv_manu_ca.pdf"
-    }
-  },
-  "legal": {
-    "linkLabel": {
-      "es": "ver política de cookies",
-      "en": "view cookie policy",
-      "cat": "veure política de cookies"
-    },
-    "es": {
-      "titulo": "política de cookies",
-      "secciones": [
-        {
-          "titulo": "responsable",
-          "parrafos": [
-            "manuel latour · meowrhino studio · barcelona · <a href=\"mailto:hola@meowrhino.studio\">hola@meowrhino.studio</a>"
-          ]
-        },
-        {
-          "titulo": "cookies y analítica",
-          "parrafos": [
-            "esta web pasa por <a href=\"https://www.cloudflare.com/web-analytics/\" target=\"_blank\" rel=\"noopener\">cloudflare</a> como cdn. cookies estrictamente necesarias (__cf_bm, cf_clearance, __cflb), exentas de consentimiento bajo <a href=\"https://www.boe.es/buscar/act.php?id=BOE-A-2002-13758#a22\" target=\"_blank\" rel=\"noopener\">lssi-ce art. 22.2</a>.",
-            "analítica con cloudflare web analytics: sin cookies, sin fingerprinting, agregada y anonimizada. base legal: interés legítimo (<a href=\"https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32016R0679\" target=\"_blank\" rel=\"noopener\">gdpr art. 6.1.f</a>)."
-          ]
-        },
-        {
-          "titulo": "derechos",
-          "parrafos": [
-            "acceso, rectificación, supresión, oposición, limitación y portabilidad → <a href=\"mailto:hola@meowrhino.studio\">hola@meowrhino.studio</a>. reclamación ante <a href=\"https://www.aepd.es\" target=\"_blank\" rel=\"noopener\">aepd</a>."
-          ]
-        }
-      ]
-    },
-    "en": {
-      "titulo": "cookie policy",
-      "secciones": [
-        {
-          "titulo": "controller",
-          "parrafos": [
-            "manuel latour · meowrhino studio · barcelona · <a href=\"mailto:hola@meowrhino.studio\">hola@meowrhino.studio</a>"
-          ]
-        },
-        {
-          "titulo": "cookies and analytics",
-          "parrafos": [
-            "this site is served through <a href=\"https://www.cloudflare.com/web-analytics/\" target=\"_blank\" rel=\"noopener\">cloudflare</a> as cdn. strictly-necessary cookies (__cf_bm, cf_clearance, __cflb), exempt from consent under the <a href=\"https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32002L0058\" target=\"_blank\" rel=\"noopener\">eu eprivacy directive</a>.",
-            "analytics by cloudflare web analytics: cookieless, fingerprint-free, aggregated and anonymous. legal basis: legitimate interest (<a href=\"https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32016R0679\" target=\"_blank\" rel=\"noopener\">gdpr art. 6.1.f</a>)."
-          ]
-        },
-        {
-          "titulo": "rights",
-          "parrafos": [
-            "access, rectification, erasure, objection, restriction and portability → <a href=\"mailto:hola@meowrhino.studio\">hola@meowrhino.studio</a>. complaints: <a href=\"https://www.aepd.es\" target=\"_blank\" rel=\"noopener\">spanish dpa (aepd)</a>."
-          ]
-        }
-      ]
-    },
-    "cat": {
-      "titulo": "política de cookies",
-      "secciones": [
-        {
-          "titulo": "responsable",
-          "parrafos": [
-            "manuel latour · meowrhino studio · barcelona · <a href=\"mailto:hola@meowrhino.studio\">hola@meowrhino.studio</a>"
-          ]
-        },
-        {
-          "titulo": "cookies i analítica",
-          "parrafos": [
-            "aquesta web passa per <a href=\"https://www.cloudflare.com/web-analytics/\" target=\"_blank\" rel=\"noopener\">cloudflare</a> com a cdn. cookies estrictament necessàries (__cf_bm, cf_clearance, __cflb), exemptes de consentiment sota <a href=\"https://www.boe.es/buscar/act.php?id=BOE-A-2002-13758#a22\" target=\"_blank\" rel=\"noopener\">lssi-ce art. 22.2</a>.",
-            "analítica amb cloudflare web analytics: sense cookies, sense fingerprinting, agregada i anonimitzada. base legal: interès legítim (<a href=\"https://eur-lex.europa.eu/legal-content/CA/TXT/?uri=CELEX:32016R0679\" target=\"_blank\" rel=\"noopener\">gdpr art. 6.1.f</a>)."
-          ]
-        },
-        {
-          "titulo": "drets",
-          "parrafos": [
-            "accés, rectificació, supressió, oposició, limitació i portabilitat → <a href=\"mailto:hola@meowrhino.studio\">hola@meowrhino.studio</a>. reclamació davant <a href=\"https://www.aepd.es\" target=\"_blank\" rel=\"noopener\">aepd</a>."
-          ]
-        }
-      ]
     }
   }
 }
