@@ -490,6 +490,29 @@ a.nav-label:visited {
     0 0 36px var(--bg);
 }
 
+.welcome-legal-link {
+  position: absolute;
+  top: 85%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  white-space: nowrap;
+  pointer-events: auto;
+  background: none;
+  border: none;
+  padding: 0.2rem 0.4rem;
+  font-family: "Inknut Antiqua", serif;
+  font-size: clamp(0.7rem, 1dvw, 1rem);
+  letter-spacing: 0.05em;
+  color: var(--btn-subtle);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.welcome-legal-link:hover {
+  color: var(--btn-subtle-hover);
+}
+
 @media (max-width: 768px) {
   .welcome-title {
     max-width: 60dvw;
@@ -1427,4 +1450,122 @@ a.nav-label:visited {
 
 .archive-item-link:hover {
   color: var(--text);
+}
+
+/* ============================================
+   LEGAL MODAL — Política de cookies / aviso legal
+   Modal global que se abre desde el link gris bajo
+   el título de la welcome.
+   ============================================ */
+
+.legal-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;          /* nunca bloquea: clicks pasan a la celda */
+  transition: opacity 0.3s ease;
+}
+
+.legal-modal.visible {
+  opacity: 1;
+}
+
+.legal-modal-card {
+  --legal-rotation: 0deg;
+  position: relative;
+  background: var(--bg);
+  border: 1px solid var(--text);
+  outline: 1px solid var(--text);
+  outline-offset: 4px;
+  width: min(480px, 75dvw);
+  max-height: 70dvh;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;          /* solo captura clicks cuando .visible */
+  transform: rotate(var(--legal-rotation)) scale(0.96);
+  opacity: 0;
+  transition: transform 0.35s cubic-bezier(0.5, 0, 0.3, 1), opacity 0.3s ease;
+}
+
+.legal-modal.visible .legal-modal-card {
+  pointer-events: auto;
+  transform: rotate(var(--legal-rotation)) scale(1);
+  opacity: 1;
+}
+
+.legal-modal-close {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.6rem;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  font-family: inherit;
+  z-index: 2;
+}
+
+.legal-modal-close:hover {
+  color: var(--text-secondary);
+}
+
+.legal-modal-scroll {
+  overflow-y: auto;
+  padding: 2.2rem 2rem 3rem;
+}
+
+.legal-modal-body {
+  color: var(--text-content);
+  font-size: clamp(0.75rem, 0.95dvw, 0.9rem);
+  line-height: 1.55;
+}
+
+.legal-modal-title {
+  font-size: clamp(1rem, 1.4dvw, 1.2rem);
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 1.2rem;
+  letter-spacing: 0.02em;
+}
+
+.legal-modal-section {
+  margin-bottom: 1.2rem;
+}
+
+.legal-modal-section:last-child {
+  margin-bottom: 0;
+}
+
+.legal-modal-section h3 {
+  font-size: clamp(0.8rem, 1dvw, 0.95rem);
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 0.4rem;
+  letter-spacing: 0.02em;
+}
+
+.legal-modal-section p {
+  margin: 0 0 0.4rem;
+}
+
+.legal-modal-section p:last-child {
+  margin-bottom: 0;
+}
+
+.legal-modal-body a {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s ease;
+}
+
+.legal-modal-body a:hover {
+  color: var(--text-secondary);
 }
