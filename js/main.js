@@ -104,18 +104,18 @@ window.addEventListener("orientationchange", programarResize);
 
 configurarNavegacion({
   grid: [
-    [0, 0, 1, 0], // fila 0: _, _, tools, _
-    [1, 1, 1, 1], // fila 1: políticas, metodología, welcome, statement
-    [0, 1, 1, 0], // fila 2: _, contacto, portfolio, _
+    [0, 1, 0, 0], // fila 0: _, tools, _, _
+    [1, 1, 1, 1], // fila 1: políticas, welcome, metodología, statement
+    [0, 1, 1, 0], // fila 2: _, portfolio, contacto, _
   ],
   nombres: {
-    "0_2": "tools",
+    "0_1": "tools",
     "1_0": "políticas",
-    "1_1": "metodología",
-    "1_2": "welcome",
+    "1_1": "welcome",
+    "1_2": "metodología",
     "1_3": "statement",
-    "2_1": "contacto",
-    "2_2": "portfolio",
+    "2_1": "portfolio",
+    "2_2": "contacto",
   },
   clasesCss: {
     "tools": "tools",
@@ -126,7 +126,7 @@ configurarNavegacion({
     "portfolio": "portfolio",
     "contacto": "contacto",
   },
-  posInicial: { y: 1, x: 2 },
+  posInicial: { y: 1, x: 1 },
 });
 
 crearCeldas();
