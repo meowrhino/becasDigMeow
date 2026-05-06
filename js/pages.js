@@ -208,23 +208,59 @@ export function renderMetodologia(data) {
 }
 
 // --- Políticas ---
+//
+// Hub con N secciones (data.politicas[lang].secciones[]).
+// Vista inicial: lista de botones (uno por sección).
+// Click en botón → vista de la sección + botón "← volver".
+// Click en volver → regresa al hub. El idioma actualiza ambas vistas.
 
 export function renderPoliticas(data) {
   const el = document.querySelector(".celda.politicas");
   if (!el || !data?.politicas) return;
 
-  const buildContent = (lang) => {
+  // Estado: índice de sección activa, o null = hub
+  let activeIdx = null;
+
+  const buildHub = (lang) => {
     const d = data.politicas[lang];
-    if (!d) return "";
-    const html = d.parrafos.map(p => `<p>${p.replace(/\n/g, "<br>")}</p>`).join("");
-    const nota = d.nota ? `<p class="politicas-nota">${d.nota}</p>` : "";
-    const cookies = d.cookies
-      ? `<section class="politicas-cookies">
-           <h3 class="politicas-cookies-title">${d.cookies.titulo}</h3>
-           ${d.cookies.parrafos.map(p => `<p>${p}</p>`).join("")}
-         </section>`
-      : "";
-    return html + nota + cookies;
+    const secciones = d?.secciones || [];
+    return `
+      <div class="politicas-hub">
+        ${secciones.map((s, i) => `
+          <button type="button" class="politicas-hub-btn" data-idx="${i}">${s.label}</button>
+        `).join("")}
+      </div>
+    `;
+  };
+
+  const buildSeccion = (lang, idx) => {
+    const d = data.politicas[lang];
+    const s = d?.secciones?.[idx];
+    if (!s) return "";
+
+    let body = "";
+    if (s.tipo === "texto") {
+      body = (s.parrafos || []).map(p => `<p>${p.replace(/\n/g, "<br>")}</p>`).join("");
+      if (s.nota) body += `<p class="politicas-nota">${s.nota}</p>`;
+    } else if (s.tipo === "subvencion") {
+      const intro = s.intro ? `<p>${s.intro}</p>` : "";
+      const logos = (s.logos || []).length
+        ? `<div class="politicas-logos">${s.logos.map(l =>
+            `<img src="${l.src}" alt="${l.alt || ''}" class="politicas-logo">`
+          ).join("")}</div>`
+        : "";
+      const frase = s.frase ? `<p class="politicas-frase">${s.frase}</p>` : "";
+      body = intro + logos + frase;
+    }
+
+    return `
+      <button type="button" class="politicas-back" aria-label="volver">← volver</button>
+      <div class="politicas-seccion">${body}</div>
+    `;
+  };
+
+  const buildContent = (lang) => {
+    return activeIdx === null ? buildHub(lang) : buildSeccion(lang, activeIdx);
   };
 
   el.innerHTML = `
@@ -239,9 +275,10 @@ export function renderPoliticas(data) {
   const checkScroll = setupScrollGradients(wrapper, content);
   const applyScale = setupZoom(el, content, checkScroll);
 
-  attachLangListeners(el, (lang) => {
-    const isActive = el.classList.contains("activa");
-    if (isActive) {
+  // Re-pinta y re-engancha listeners. Usamos delegación para no perder
+  // los handlers cuando el innerHTML se reemplaza.
+  const repintar = (lang, withFade = true) => {
+    if (withFade && el.classList.contains("activa")) {
       content.style.opacity = "0";
       setTimeout(() => {
         content.innerHTML = buildContent(lang);
@@ -256,7 +293,24 @@ export function renderPoliticas(data) {
       applyScale();
       checkScroll();
     }
+  };
+
+  // Delegación de clicks (hub-btn y back)
+  content.addEventListener("click", (e) => {
+    const hubBtn = e.target.closest(".politicas-hub-btn");
+    if (hubBtn) {
+      activeIdx = parseInt(hubBtn.dataset.idx, 10);
+      repintar(currentLang);
+      return;
+    }
+    const backBtn = e.target.closest(".politicas-back");
+    if (backBtn) {
+      activeIdx = null;
+      repintar(currentLang);
+    }
   });
+
+  attachLangListeners(el, (lang) => repintar(lang));
 }
 
 // --- Contacto ---

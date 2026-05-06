@@ -1431,38 +1431,94 @@ a.nav-label:visited {
 }
 
 /* ============================================
-   POLÍTICAS — sección de cookies (al final)
-   Bloque de privacidad/cookies después del nota
-   "aceptar el presupuesto significa…".
+   POLÍTICAS — hub con secciones
+   Vista inicial: lista de botones (condiciones,
+   cookies, financiación). Click → contenido de la
+   sección + botón "← volver".
    ============================================ */
 
-.politicas-cookies {
-  margin-top: 2.5rem;
+.politicas-hub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  min-height: 100%;
+  padding: 2rem 0;
 }
 
-.politicas-cookies-title {
-  font-size: inherit;
-  font-weight: inherit;
-  color: inherit;
-  margin: 0 0 0.6rem;
-  letter-spacing: inherit;
+.politicas-hub-btn {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-family: "Inknut Antiqua", serif;
+  font-size: clamp(1.2rem, 2dvw, 1.8rem);
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  padding: 0.3rem 0.8rem;
+  transition: color 0.2s ease;
 }
 
-.politicas-cookies p {
-  margin: 0 0 0.6rem;
+.politicas-hub-btn:hover {
+  color: var(--text-secondary);
 }
 
-.politicas-cookies p:last-child {
+.politicas-back {
+  display: inline-block;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-family: "Inknut Antiqua", serif;
+  font-size: clamp(0.7rem, 0.9dvw, 0.85rem);
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem 0.2rem 0;
+  margin-bottom: 1.2rem;
+  transition: color 0.2s ease;
+}
+
+.politicas-back:hover {
+  color: var(--text);
+}
+
+.politicas-seccion p {
+  margin: 0 0 0.7rem;
+}
+
+.politicas-seccion p:last-child {
   margin-bottom: 0;
 }
 
-.politicas-cookies a {
+.politicas-seccion a {
   color: var(--text);
   text-decoration: underline;
   text-underline-offset: 2px;
   transition: color 0.2s ease;
 }
 
-.politicas-cookies a:hover {
+.politicas-seccion a:hover {
   color: var(--text-secondary);
+}
+
+/* Subvención: logos en fila + frase oficial */
+.politicas-logos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  align-items: center;
+  justify-content: center;
+  margin: 1.8rem 0 1.5rem;
+}
+
+.politicas-logo {
+  height: clamp(40px, 5dvh, 60px);
+  width: auto;
+  display: block;
+}
+
+.politicas-frase {
+  font-style: italic;
+  text-align: center;
+  margin-top: 1.2rem !important;
+  color: var(--text-content);
 }
