@@ -80,6 +80,10 @@
 - [ ] Sanitizar innerHTML de data.json (XSS) — 17 usos sin sanitizar
 - [ ] TODO obsoleto en `portfolio.js:9` ("Fase 2c") — ya implementado, borrar
 
+### Subvención FSE+ (justificación final 18m)
+
+- [ ] **Recortar/recomprimir `sepe.webp`** — el archivo oficial empaqueta Ministerio + SEPE en una caja muy ancha (900×220), así el "SEPE" queda ilegible a la altura del footer. Cumplimiento actual válido (los 4 logos están), pero de cara a la justificación final conviene tener el SEPE legible. Material de partida ya recuperado: [img/LOGOS/NEGRO/sepe-bruto.png](img/LOGOS/NEGRO/sepe-bruto.png) y [img/LOGOS/BLANCO/sepe-bruto.png](img/LOGOS/BLANCO/sepe-bruto.png) (2040×500, pre-compresión, recuperados de `f6da0b0~1`). Workflow: recortar márgenes en GIMP para que SEPE+Ministerio ocupen más caja útil → reexportar a `.webp` mismas dimensiones que el actual → borrar los `-bruto.png` (2026-05-07)
+
 ### Welcome (ideas, baja prioridad)
 
 - [ ] Tagline/subtítulo tipo "estudio de diseño web en Barcelona" con cambio de idioma automático
