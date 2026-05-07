@@ -180,6 +180,9 @@ function renderGridProyectos(proyectos) {
     imgA.src = proyecto.imagen;
     imgA.alt = proyecto.nombre;
     imgA.loading = "lazy";
+    imgA.decoding = "async";
+    imgA.width = 800;          // aspect-ratio 4:3, el CSS reescala al 100%
+    imgA.height = 600;
     thumb.appendChild(imgA);
 
     if (tieneCiclo) {
@@ -187,6 +190,9 @@ function renderGridProyectos(proyectos) {
       imgB.classList.add("pgrid-img", "pgrid-img-b");
       imgB.alt = proyecto.nombre;
       imgB.loading = "lazy";
+      imgB.decoding = "async";
+      imgB.width = 800;
+      imgB.height = 600;
       thumb.appendChild(imgB);
 
       let showingA = true;

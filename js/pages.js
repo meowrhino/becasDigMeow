@@ -214,10 +214,11 @@ export function renderPoliticas(data) {
       if (s.nota) body += `<p class="politicas-nota">${s.nota}</p>`;
     } else if (s.tipo === "subvencion") {
       const intro = s.intro ? `<p>${s.intro}</p>` : "";
+      const logoAttrs = `loading="lazy" decoding="async"`;
       const logos = (s.logos || []).length
         ? `<div class="politicas-logos">${s.logos.map(l =>
-            `<img src="img/LOGOS/NEGRO/${l.name}.png" alt="${l.alt || ''}" class="politicas-logo politicas-logo--light">` +
-            `<img src="img/LOGOS/BLANCO/${l.name}.png" alt="${l.alt || ''}" class="politicas-logo politicas-logo--dark">`
+            `<img src="img/LOGOS/NEGRO/${l.name}.png" alt="${l.alt || ''}" class="politicas-logo politicas-logo--light" ${logoAttrs}>` +
+            `<img src="img/LOGOS/BLANCO/${l.name}.png" alt="${l.alt || ''}" class="politicas-logo politicas-logo--dark" ${logoAttrs}>`
           ).join("")}</div>`
         : "";
       const frase = s.frase ? `<p class="politicas-frase">${s.frase}</p>` : "";
