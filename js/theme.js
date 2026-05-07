@@ -31,6 +31,10 @@ function aplicarTema(tema) {
       tema === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"
     );
   }
+  const tone = tema === "dark" ? "BLANCO" : "NEGRO";
+  document.querySelectorAll(".politicas-logo[data-logo-name]").forEach(img => {
+    img.src = `img/LOGOS/${tone}/${img.dataset.logoName}.webp`;
+  });
 }
 
 /** Alterna entre claro y oscuro con animación de rotación. */

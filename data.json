@@ -180,7 +180,8 @@
           "logos": [
             { "name": "gene", "alt": "Generalitat de Catalunya — Departament d'Empresa i Treball" },
             { "name": "eu", "alt": "Cofinanciado por la Unión Europea" },
-            { "name": "sepe", "alt": "Ministerio de Trabajo y Economía Social, SEPE, Sistema Nacional de Garantía Juvenil" }
+            { "name": "sepe", "alt": "Ministerio de Trabajo y Economía Social, SEPE" },
+            { "name": "garantia", "alt": "Sistema Nacional de Garantía Juvenil" }
           ],
           "frase": "Aquesta actuació està impulsada i subvencionada pel Departament d'Empresa i Treball i cofinançada per la Unió Europea mitjançant el Fons Social Europeu Plus."
         }

@@ -1422,9 +1422,6 @@ a.nav-label:visited {
   display: block;
 }
 
-:root:not([data-theme="dark"]) .politicas-logo--dark { display: none; }
-[data-theme="dark"] .politicas-logo--light { display: none; }
-
 /* Nav inferior: tabs entre secciones (auto-rotación).
    Mismo estilo que .lang-btn para coherencia visual.
    En móvil sube una fila para no solapar con +/- y es/en/cat. */
