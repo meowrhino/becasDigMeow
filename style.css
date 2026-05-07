@@ -74,6 +74,29 @@
 
   /* Gradient (scroll fade) */
   --gradient-color: #ffffff;
+
+  /* Tipografía */
+  --font-serif: "Inknut Antiqua", serif;
+
+  /* Transitions reutilizables (la mayoría — algunas componentes
+     usan duraciones específicas distintas). */
+  --transition-fast: 0.2s ease;
+  --transition-med: 0.3s ease;
+  --transition-slow: 0.4s ease;
+
+  /* Padding desde el borde del viewport para nav-labels, lang/font
+     buttons, theme toggle, etc. */
+  --edge-pad-y: 3dvh;
+  --edge-pad-x: 3dvw;
+
+  /* Escala de z-index */
+  --z-base: 1;          /* zone-label-bg, scroll gradients */
+  --z-cell: 2;          /* celda */
+  --z-cupon: 5;         /* cupón flotante (welcome) */
+  --z-nav: 10;          /* nav-labels, lang/font/theme buttons, section-nav */
+  --z-overlay-img: 30;  /* overlay sobre imagen (portfolio grid) */
+  --z-header: 100;      /* header fijo (minimapa inline) */
+  --z-modal: 200;       /* overlay modal (minimapa expandido) */
 }
 
 /* ============================================
@@ -131,7 +154,7 @@ html, body {
   padding: 0;
   overflow: hidden;
   box-sizing: border-box;
-  font-family: "Inknut Antiqua", serif;
+  font-family: var(--font-serif);
   font-weight: 400;
   line-height: 1.3;
   background: var(--bg);
@@ -188,7 +211,7 @@ p, h1, h2, h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2;
+  z-index: var(--z-cell);
 }
 
 .celda.activa {
@@ -208,14 +231,14 @@ p, h1, h2, h3 {
   top: 80%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-family: "Inknut Antiqua", serif;
+  font-family: var(--font-serif);
   font-size: clamp(5rem, 18dvw, 16rem);
   font-weight: 400;
   color: var(--zone-label);
   text-transform: lowercase;
   letter-spacing: -0.03em;
   pointer-events: none;
-  z-index: 1;
+  z-index: var(--z-base);
   white-space: nowrap;
   user-select: none;
   transition: opacity 0.6s ease;
@@ -232,7 +255,7 @@ p, h1, h2, h3 {
   position: fixed;
   top: 3dvh;
   right: 3dvw;
-  z-index: 100;
+  z-index: var(--z-header);
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
@@ -277,7 +300,7 @@ p, h1, h2, h3 {
   width: 100dvw;
   height: 100dvh;
   background: var(--overlay-bg);
-  z-index: 200;
+  z-index: var(--z-modal);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -306,7 +329,7 @@ p, h1, h2, h3 {
   cursor: pointer;
   border: none;
   padding: 0;
-  font-family: "Inknut Antiqua", serif;
+  font-family: var(--font-serif);
   font-size: clamp(0.5rem, 1dvw, 0.85rem);
   color: var(--minimap-expanded-text);
   transition: background 0.3s ease, transform 0.3s ease;
@@ -338,9 +361,9 @@ p, h1, h2, h3 {
   font-size: clamp(0.7rem, 1dvw, 1rem);
   color: var(--text-secondary);
   cursor: pointer;
-  z-index: 10;
+  z-index: var(--z-nav);
   transition: color 0.3s ease;
-  font-family: "Inknut Antiqua", serif;
+  font-family: var(--font-serif);
   letter-spacing: 0.05em;
   border: none;
   background: none;
@@ -392,7 +415,7 @@ a.nav-label:visited {
 }
 
 /* ============================================
-   SCROLL WRAPPER / CONTENT (compartido)
+   7. SCROLL WRAPPER / CONTENT (compartido)
    Gradientes top/bottom que aparecen cuando el
    contenido es scrolleable. JS añade .can-scroll-*
    según la posición. Cada página puede sobreescribir
@@ -411,7 +434,7 @@ a.nav-label:visited {
   right: 0;
   height: 3rem;
   pointer-events: none;
-  z-index: 1;
+  z-index: var(--z-base);
   opacity: 0;
   transition: opacity 0.4s ease;
 }
@@ -440,7 +463,7 @@ a.nav-label:visited {
 }
 
 /* ============================================
-   7. PAGE: TOOLS
+   8. PAGE: TOOLS
    Herramientas internas del estudio.
    Reutiliza los estilos de .tool-link y .tools-dropdown-*.
    ============================================ */
@@ -474,7 +497,7 @@ a.nav-label:visited {
 }
 
 /* ============================================
-   8. PAGE: WELCOME
+   9. PAGE: WELCOME
    Solo el título del estudio, centrado.
    ============================================ */
 
@@ -490,7 +513,7 @@ a.nav-label:visited {
   align-items: center;
   justify-content: center;
   position: relative;
-  z-index: 10;
+  z-index: var(--z-nav);
   pointer-events: none;
 }
 
@@ -521,7 +544,7 @@ a.nav-label:visited {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 5;
+  z-index: var(--z-cupon);
   perspective: 1200px;
   will-change: transform;
   transform-origin: center;
@@ -717,7 +740,7 @@ a.nav-label:visited {
   border: 1px solid var(--border);
   border-radius: 4px;
   padding: 0.4rem 1rem;
-  font-family: "Inknut Antiqua", serif;
+  font-family: var(--font-serif);
   font-size: clamp(0.7rem, 0.95dvw, 0.9rem);
   font-weight: 600;
   color: var(--text);
@@ -780,7 +803,7 @@ a.nav-label:visited {
   border: 1px solid var(--border);
   border-radius: 4px;
   padding: 0.4rem 1rem;
-  font-family: "Inknut Antiqua", serif;
+  font-family: var(--font-serif);
   font-size: clamp(0.7rem, 0.95dvw, 0.9rem);
   font-weight: 600;
   color: var(--text);
@@ -846,7 +869,7 @@ a.nav-label:visited {
 /* El scroll del contenido de dropdowns lo gestiona .welcome-content */
 
 /* ============================================
-   8. PAGE: STATEMENT
+   10. PAGE: STATEMENT
    Manifiesto del estudio: texto centrado.
    ============================================ */
 
@@ -875,7 +898,7 @@ a.nav-label:visited {
 
 
 /* ============================================
-   9. PAGE: METODOLOGÍA
+   11. PAGE: METODOLOGÍA
    Proceso de trabajo en 5 pasos, mismo formato que statement.
    ============================================ */
 
@@ -903,7 +926,7 @@ a.nav-label:visited {
 }
 
 /* ============================================
-   10. PAGE: POLÍTICAS
+   12. PAGE: POLÍTICAS
    Términos de pago y condiciones del estudio.
    ============================================ */
 
@@ -969,7 +992,7 @@ a.nav-label:visited {
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  z-index: 10;
+  z-index: var(--z-nav);
 }
 
 .lang-btn {
@@ -1014,7 +1037,7 @@ a.nav-label:visited {
 }
 
 /* ============================================
-   11. PAGE: PORTFOLIO
+   13. PAGE: PORTFOLIO
    Dos modos de visualización:
      - Nubes flotantes (clouds): screenshots que
        se desplazan horizontalmente con WAAPI
@@ -1149,7 +1172,7 @@ a.nav-label:visited {
 
 @media (max-width: 768px) {
   .celda.portfolio .nav-label {
-    z-index: 30;
+    z-index: var(--z-overlay-img);
   }
   .portfolio-scroll-wrapper {
     padding: 0 10dvw;
@@ -1161,7 +1184,7 @@ a.nav-label:visited {
 
 
 /* ============================================
-   12. PAGE: CONTACTO
+   14. PAGE: CONTACTO
    Página minimalista de contacto: email + Instagram.
    ============================================ */
 
@@ -1224,7 +1247,7 @@ a.nav-label:visited {
 }
 
 /* ============================================
-   13. THEME TOGGLE
+   15. THEME TOGGLE
    SVG morph sun↔moon centrado abajo del minimap
    expandido (dentro de .minimap-overlay).
    ============================================ */
@@ -1267,7 +1290,7 @@ a.nav-label:visited {
 .theme-toggle.is-dark .toggle-moon { opacity: 1; }
 
 /* ============================================
-   14. ARCHIVE — Páginas del archivo personal
+   16. ARCHIVE — Páginas del archivo personal
    Comparte el sistema de grid, minimap y tema
    del studio. Grid diamante 4×4, estilo shooter.
    ============================================ */
@@ -1405,7 +1428,7 @@ a.nav-label:visited {
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  z-index: 10;
+  z-index: var(--z-nav);
 }
 
 .politicas-section-tab {
