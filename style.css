@@ -1437,50 +1437,6 @@ a.nav-label:visited {
    sección + botón "← volver".
    ============================================ */
 
-.politicas-hub {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.2rem;
-  min-height: 100%;
-  padding: 2rem 0;
-}
-
-.politicas-hub-btn {
-  background: none;
-  border: none;
-  color: var(--text);
-  font-family: "Inknut Antiqua", serif;
-  font-size: clamp(1.2rem, 2dvw, 1.8rem);
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  padding: 0.3rem 0.8rem;
-  transition: color 0.2s ease;
-}
-
-.politicas-hub-btn:hover {
-  color: var(--text-secondary);
-}
-
-.politicas-back {
-  display: inline-block;
-  background: none;
-  border: none;
-  color: var(--text-secondary);
-  font-family: "Inknut Antiqua", serif;
-  font-size: clamp(0.7rem, 0.9dvw, 0.85rem);
-  letter-spacing: 0.03em;
-  cursor: pointer;
-  padding: 0.2rem 0.4rem 0.2rem 0;
-  margin-bottom: 1.2rem;
-  transition: color 0.2s ease;
-}
-
-.politicas-back:hover {
-  color: var(--text);
-}
-
 .politicas-seccion p {
   margin: 0 0 0.7rem;
 }
@@ -1519,57 +1475,62 @@ a.nav-label:visited {
 :root:not([data-theme="dark"]) .politicas-logo--dark { display: none; }
 [data-theme="dark"] .politicas-logo--light { display: none; }
 
-/* Subvención: carrusel — un logo a la vez con tabs debajo */
-.politicas-logos--carrusel {
-  position: relative;
-  min-height: clamp(50px, 6dvh, 70px);
-  margin: 1.8rem 0 0.8rem;
-}
-
-.politicas-logo-slide {
+/* Nav inferior: tabs entre secciones (auto-rotación).
+   Mismo estilo que .lang-btn para coherencia visual.
+   En móvil sube una fila para no solapar con +/- y es/en/cat. */
+.politicas-section-nav {
   position: absolute;
-  inset: 0;
+  bottom: 3dvh;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
+  gap: 0.3rem;
+  z-index: 10;
 }
 
-.politicas-logo-slide.is-active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.politicas-logos-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 1.2rem;
-  justify-content: center;
-  margin: 0.4rem 0 1.2rem;
-}
-
-.politicas-logo-tab {
-  background: none;
+.politicas-section-tab {
   border: none;
-  padding: 0.15rem 0;
+  background: none;
+  color: var(--btn-subtle);
   font-family: inherit;
-  font-size: 0.78em;
-  color: var(--text-secondary);
+  font-size: 0.8rem;
   cursor: pointer;
-  font-weight: 400;
-  transition: color 0.25s ease;
-  letter-spacing: 0.02em;
+  padding: 0.2rem 0.3rem;
+  transition: color 0.2s ease;
 }
 
-.politicas-logo-tab:hover {
-  color: var(--text);
+.politicas-section-tab:hover {
+  color: var(--btn-subtle-hover);
 }
 
-.politicas-logo-tab.is-active {
-  color: var(--text);
+.politicas-section-tab.is-active {
   font-weight: 600;
+  color: var(--text);
+}
+
+@media (max-width: 768px) {
+  .politicas-section-nav {
+    --tab-fs: clamp(0.6rem, 2.5dvw, 0.8rem);
+    --tab-h: calc(var(--tab-fs) * 1.4);
+    --tab-gap: calc(var(--tab-fs) * 0.3);
+    bottom: 3dvh;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--tab-gap);
+    max-width: 92dvw;
+    /* alinea el centro óptico del tab medio con el de un .nav-label.bottom.
+       .nav-label usa line-height:normal (Inknut Antiqua ≈ 2.5×), el tab usa 1.4.
+       Offset base (border inferior tab medio en 3dvh) = tab_h + gap = 1.7·fs.
+       Compensamos la diferencia de line-boxes: (2.5 − 1.4)/2 = 0.55·fs.
+       Total = 1.15·fs. */
+    transform: translateX(-50%) translateY(calc(var(--tab-fs) * 1.15));
+  }
+  .politicas-section-tab {
+    padding: 0;
+    font-size: var(--tab-fs);
+    line-height: 1.4;
+  }
 }
 
 .politicas-frase {

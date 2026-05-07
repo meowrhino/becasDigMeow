@@ -147,6 +147,7 @@
       "secciones": [
         {
           "label": "condiciones",
+          "rotateMs": 20000,
           "tipo": "texto",
           "parrafos": [
             "diseñamos y desarrollamos páginas web a medida con tecnología jamstack. los datos de tu web los gestiona un archivo que aprendes a leer y modificar: puedes añadir, eliminar y cambiar textos, imágenes y archivos sin depender de nadie.",
@@ -163,6 +164,7 @@
         },
         {
           "label": "cookies",
+          "rotateMs": 10000,
           "tipo": "texto",
           "parrafos": [
             "esta web pasa por <a href=\"https://www.cloudflare.com/web-analytics/\" target=\"_blank\" rel=\"noopener\">cloudflare</a> como cdn. cookies estrictamente necesarias (__cf_bm, cf_clearance, __cflb), exentas de consentimiento bajo <a href=\"https://www.boe.es/buscar/act.php?id=BOE-A-2002-13758#a22\" target=\"_blank\" rel=\"noopener\">lssi-ce art. 22.2</a>.",
@@ -172,12 +174,13 @@
         },
         {
           "label": "financiación",
+          "rotateMs": 8000,
           "tipo": "subvencion",
           "intro": "esta web es posible gracias al apoyo de:",
           "logos": [
-            { "name": "gene", "tab": "generalitat", "alt": "Generalitat de Catalunya — Departament d'Empresa i Treball" },
-            { "name": "eu", "tab": "unión europea", "alt": "Cofinanciado por la Unión Europea" },
-            { "name": "sepe", "tab": "sepe", "alt": "Ministerio de Trabajo y Economía Social, SEPE, Sistema Nacional de Garantía Juvenil" }
+            { "name": "gene", "alt": "Generalitat de Catalunya — Departament d'Empresa i Treball" },
+            { "name": "eu", "alt": "Cofinanciado por la Unión Europea" },
+            { "name": "sepe", "alt": "Ministerio de Trabajo y Economía Social, SEPE, Sistema Nacional de Garantía Juvenil" }
           ],
           "frase": "Aquesta actuació està impulsada i subvencionada pel Departament d'Empresa i Treball i cofinançada per la Unió Europea mitjançant el Fons Social Europeu Plus."
         }
@@ -187,6 +190,7 @@
       "secciones": [
         {
           "label": "terms",
+          "rotateMs": 20000,
           "tipo": "texto",
           "parrafos": [
             "we design and develop custom websites using jamstack technology. your website data is managed through a file you learn to read and edit: you can add, remove and change texts, images and files without depending on anyone.",
@@ -203,6 +207,7 @@
         },
         {
           "label": "cookies",
+          "rotateMs": 10000,
           "tipo": "texto",
           "parrafos": [
             "this site is served through <a href=\"https://www.cloudflare.com/web-analytics/\" target=\"_blank\" rel=\"noopener\">cloudflare</a> as cdn. strictly-necessary cookies (__cf_bm, cf_clearance, __cflb), exempt from consent under the <a href=\"https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32002L0058\" target=\"_blank\" rel=\"noopener\">eu eprivacy directive</a>.",
@@ -212,12 +217,13 @@
         },
         {
           "label": "funding",
+          "rotateMs": 8000,
           "tipo": "subvencion",
           "intro": "this site is made possible thanks to:",
           "logos": [
-            { "name": "gene", "tab": "generalitat", "alt": "Generalitat de Catalunya — Department of Enterprise and Labour" },
-            { "name": "eu", "tab": "european union", "alt": "Co-funded by the European Union" },
-            { "name": "sepe", "tab": "sepe", "alt": "Ministry of Labour and Social Economy, SEPE, National Youth Guarantee System" }
+            { "name": "gene", "alt": "Generalitat de Catalunya — Department of Enterprise and Labour" },
+            { "name": "eu", "alt": "Co-funded by the European Union" },
+            { "name": "sepe", "alt": "Ministry of Labour and Social Economy, SEPE, National Youth Guarantee System" }
           ],
           "frase": "Aquesta actuació està impulsada i subvencionada pel Departament d'Empresa i Treball i cofinançada per la Unió Europea mitjançant el Fons Social Europeu Plus."
         }
@@ -227,6 +233,7 @@
       "secciones": [
         {
           "label": "condicions",
+          "rotateMs": 20000,
           "tipo": "texto",
           "parrafos": [
             "dissenyem i desenvolupem pàgines web a mida amb tecnologia jamstack. les dades de la teva web les gestiona un arxiu que aprens a llegir i modificar: pots afegir, eliminar i canviar textos, imatges i arxius sense dependre de ningú.",
@@ -243,6 +250,7 @@
         },
         {
           "label": "cookies",
+          "rotateMs": 10000,
           "tipo": "texto",
           "parrafos": [
             "aquesta web passa per <a href=\"https://www.cloudflare.com/web-analytics/\" target=\"_blank\" rel=\"noopener\">cloudflare</a> com a cdn. cookies estrictament necessàries (__cf_bm, cf_clearance, __cflb), exemptes de consentiment sota <a href=\"https://www.boe.es/buscar/act.php?id=BOE-A-2002-13758#a22\" target=\"_blank\" rel=\"noopener\">lssi-ce art. 22.2</a>.",
@@ -252,12 +260,13 @@
         },
         {
           "label": "finançament",
+          "rotateMs": 8000,
           "tipo": "subvencion",
           "intro": "aquesta web és possible gràcies al suport de:",
           "logos": [
-            { "name": "gene", "tab": "generalitat", "alt": "Generalitat de Catalunya — Departament d'Empresa i Treball" },
-            { "name": "eu", "tab": "unió europea", "alt": "Cofinançat per la Unió Europea" },
-            { "name": "sepe", "tab": "sepe", "alt": "Ministeri de Treball i Economia Social, SEPE, Sistema Nacional de Garantia Juvenil" }
+            { "name": "gene", "alt": "Generalitat de Catalunya — Departament d'Empresa i Treball" },
+            { "name": "eu", "alt": "Cofinançat per la Unió Europea" },
+            { "name": "sepe", "alt": "Ministeri de Treball i Economia Social, SEPE, Sistema Nacional de Garantia Juvenil" }
           ],
           "frase": "Aquesta actuació està impulsada i subvencionada pel Departament d'Empresa i Treball i cofinançada per la Unió Europea mitjançant el Fons Social Europeu Plus."
         }
