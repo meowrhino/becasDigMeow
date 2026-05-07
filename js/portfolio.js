@@ -127,8 +127,8 @@ export function renderPortfolio(data) {
   const proyectos = data.portfolio.proyectos;
 
   el.innerHTML = `
-    <div class="portfolio-scroll-wrapper">
-      <div class="portfolio-scroll-content">
+    <div class="scroll-wrapper portfolio-scroll-wrapper">
+      <div class="scroll-content portfolio-scroll-content">
         <div class="portfolio-grid" id="portfolio-grid"></div>
       </div>
     </div>

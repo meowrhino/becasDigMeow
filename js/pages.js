@@ -76,8 +76,8 @@ export function renderTools(data) {
   ].join("");
 
   el.innerHTML = `
-    <div class="tools-scroll-wrapper">
-      <div class="tools-content">
+    <div class="scroll-wrapper tools-scroll-wrapper">
+      <div class="scroll-content tools-content">
         <div class="tools-list">${linksHTML}${dropdownsHTML}</div>
       </div>
     </div>
@@ -178,8 +178,8 @@ export function renderMetodologia(data) {
   };
 
   el.innerHTML = `
-    <div class="metodologia-scroll-wrapper">
-      <div class="metodologia-content">${buildContent(currentLang)}</div>
+    <div class="scroll-wrapper metodologia-scroll-wrapper">
+      <div class="scroll-content metodologia-content">${buildContent(currentLang)}</div>
     </div>
     ${buildLangButtons()}
   `;
@@ -252,8 +252,8 @@ export function renderPoliticas(data) {
   };
 
   el.innerHTML = `
-    <div class="politicas-scroll-wrapper">
-      <div class="politicas-content">${buildSeccion(currentLang, activeIdx)}</div>
+    <div class="scroll-wrapper politicas-scroll-wrapper">
+      <div class="scroll-content politicas-content">${buildSeccion(currentLang, activeIdx)}</div>
     </div>
     ${buildSectionNav(currentLang)}
     ${buildLangButtons()}

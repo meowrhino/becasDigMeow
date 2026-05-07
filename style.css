@@ -392,24 +392,19 @@ a.nav-label:visited {
 }
 
 /* ============================================
-   7. PAGE: TOOLS
-   Herramientas internas del estudio.
-   Reutiliza los estilos de .tool-link y .tools-dropdown-*.
+   SCROLL WRAPPER / CONTENT (compartido)
+   Gradientes top/bottom que aparecen cuando el
+   contenido es scrolleable. JS añade .can-scroll-*
+   según la posición. Cada página puede sobreescribir
+   width/height/padding sin repetir el patrón.
    ============================================ */
 
-.celda.tools {
-  flex-direction: column;
-}
-
-.tools-scroll-wrapper {
+.scroll-wrapper {
   position: relative;
-  width: 90dvw;
-  max-width: 1000px;
-  height: 80dvh;
 }
 
-.tools-scroll-wrapper::before,
-.tools-scroll-wrapper::after {
+.scroll-wrapper::before,
+.scroll-wrapper::after {
   content: "";
   position: absolute;
   left: 0;
@@ -421,26 +416,46 @@ a.nav-label:visited {
   transition: opacity 0.4s ease;
 }
 
-.tools-scroll-wrapper::before {
+.scroll-wrapper::before {
   top: 0;
   background: linear-gradient(to bottom, var(--gradient-color), transparent);
 }
 
-.tools-scroll-wrapper::after {
+.scroll-wrapper::after {
   bottom: 0;
   background: linear-gradient(to top, var(--gradient-color), transparent);
 }
 
-.tools-scroll-wrapper.can-scroll-up::before { opacity: 1; }
-.tools-scroll-wrapper.can-scroll-down::after { opacity: 1; }
+.scroll-wrapper.can-scroll-up::before { opacity: 1; }
+.scroll-wrapper.can-scroll-down::after { opacity: 1; }
 
-.tools-content {
+.scroll-content {
   width: 100%;
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
+  transition: opacity 0.25s ease;
+}
+
+/* ============================================
+   7. PAGE: TOOLS
+   Herramientas internas del estudio.
+   Reutiliza los estilos de .tool-link y .tools-dropdown-*.
+   ============================================ */
+
+.celda.tools {
+  flex-direction: column;
+}
+
+.tools-scroll-wrapper {
+  width: 90dvw;
+  max-width: 1000px;
+  height: 80dvh;
+}
+
+.tools-content {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -869,51 +884,17 @@ a.nav-label:visited {
 }
 
 .metodologia-scroll-wrapper {
-  position: relative;
   width: 70dvw;
   max-width: 720px;
   height: 80dvh;
 }
 
-.metodologia-scroll-wrapper::before,
-.metodologia-scroll-wrapper::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 3rem;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.metodologia-scroll-wrapper::before {
-  top: 0;
-  background: linear-gradient(to bottom, var(--gradient-color), transparent);
-}
-
-.metodologia-scroll-wrapper::after {
-  bottom: 0;
-  background: linear-gradient(to top, var(--gradient-color), transparent);
-}
-
-.metodologia-scroll-wrapper.can-scroll-up::before { opacity: 1; }
-.metodologia-scroll-wrapper.can-scroll-down::after { opacity: 1; }
-
 .metodologia-content {
   text-align: center;
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: contain;
   line-height: 1.7;
   font-size: clamp(0.85rem, 1.2dvw, 1.15rem);
   padding-top: 20dvh;
   padding-bottom: 20dvh;
-  transition: opacity 0.25s ease;
 }
 
 .metodologia-content p {
@@ -927,51 +908,17 @@ a.nav-label:visited {
    ============================================ */
 
 .politicas-scroll-wrapper {
-  position: relative;
   width: 70dvw;
   max-width: 720px;
   height: 80dvh;
 }
 
-.politicas-scroll-wrapper::before,
-.politicas-scroll-wrapper::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 3rem;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.politicas-scroll-wrapper::before {
-  top: 0;
-  background: linear-gradient(to bottom, var(--gradient-color), transparent);
-}
-
-.politicas-scroll-wrapper::after {
-  bottom: 0;
-  background: linear-gradient(to top, var(--gradient-color), transparent);
-}
-
-.politicas-scroll-wrapper.can-scroll-up::before { opacity: 1; }
-.politicas-scroll-wrapper.can-scroll-down::after { opacity: 1; }
-
 .politicas-content {
   text-align: center;
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: contain;
   line-height: 1.7;
   font-size: 0.88rem;
   padding-top: 20dvh;
   padding-bottom: 20dvh;
-  transition: opacity 0.25s ease;
 }
 
 .politicas-content p {
@@ -1085,7 +1032,6 @@ a.nav-label:visited {
 /* --- Grid de proyectos --- */
 
 .portfolio-scroll-wrapper {
-  position: relative;
   width: 100%;
   height: 100%;
   padding: 0 8dvw;
@@ -1094,37 +1040,10 @@ a.nav-label:visited {
 
 .portfolio-scroll-wrapper::before,
 .portfolio-scroll-wrapper::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
   height: 4rem;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 0.4s ease;
 }
-
-.portfolio-scroll-wrapper::before {
-  top: 0;
-  background: linear-gradient(to bottom, var(--gradient-color), transparent);
-}
-
-.portfolio-scroll-wrapper::after {
-  bottom: 0;
-  background: linear-gradient(to top, var(--gradient-color), transparent);
-}
-
-.portfolio-scroll-wrapper.can-scroll-up::before { opacity: 1; }
-.portfolio-scroll-wrapper.can-scroll-down::after { opacity: 1; }
 
 .portfolio-scroll-content {
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: contain;
   padding: 5rem 0 6rem;
   box-sizing: border-box;
 }
