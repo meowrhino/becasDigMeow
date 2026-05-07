@@ -995,7 +995,8 @@ a.nav-label:visited {
   z-index: var(--z-nav);
 }
 
-.lang-btn {
+.lang-btn,
+.politicas-section-tab {
   border: none;
   background: none;
   color: var(--btn-subtle);
@@ -1006,11 +1007,13 @@ a.nav-label:visited {
   transition: color 0.2s ease;
 }
 
-.lang-btn:hover {
+.lang-btn:hover,
+.politicas-section-tab:hover {
   color: var(--btn-subtle-hover);
 }
 
-.lang-btn.active {
+.lang-btn.is-active,
+.politicas-section-tab.is-active {
   font-weight: 600;
   color: var(--text);
 }
@@ -1429,26 +1432,6 @@ a.nav-label:visited {
   align-items: center;
   gap: 0.3rem;
   z-index: var(--z-nav);
-}
-
-.politicas-section-tab {
-  border: none;
-  background: none;
-  color: var(--btn-subtle);
-  font-family: inherit;
-  font-size: 0.8rem;
-  cursor: pointer;
-  padding: 0.2rem 0.3rem;
-  transition: color 0.2s ease;
-}
-
-.politicas-section-tab:hover {
-  color: var(--btn-subtle-hover);
-}
-
-.politicas-section-tab.is-active {
-  font-weight: 600;
-  color: var(--text);
 }
 
 @media (max-width: 768px) {

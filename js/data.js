@@ -32,14 +32,14 @@ export const langUpdateCallbacks = [];
 /** Genera el HTML de los botones de idioma. */
 export function buildLangButtons() {
   return `<div class="lang-group">${LANGS.map(l =>
-    `<button class="lang-btn${l === currentLang ? " active" : ""}" data-lang="${l}">${l}</button>`
+    `<button class="lang-btn${l === currentLang ? " is-active" : ""}" data-lang="${l}">${l}</button>`
   ).join("")}</div>`;
 }
 
 /** Sincroniza el estado visual de TODOS los .lang-btn en la página. */
 export function syncAllLangButtons() {
   document.querySelectorAll(".lang-btn").forEach(b => {
-    b.classList.toggle("active", b.dataset.lang === currentLang);
+    b.classList.toggle("is-active", b.dataset.lang === currentLang);
   });
 }
 
