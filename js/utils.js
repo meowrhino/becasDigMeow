@@ -6,7 +6,7 @@
  * Re-pinta el contenido de una celda con fade de opacidad si la celda
  * está activa (visible). Si no, re-pinta sin fade.
  *
- * Patrón usado en cada cambio de idioma para statement/metodologia/politicas.
+ * Patrón usado en cada cambio de idioma para statement/metodologia/footer.
  *
  * @param {HTMLElement} cellEl     — la .celda
  * @param {HTMLElement} contentEl  — el contenedor scrollable interior

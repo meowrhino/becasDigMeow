@@ -937,17 +937,17 @@ a.nav-label:visited {
 }
 
 /* ============================================
-   12. PAGE: POLÍTICAS
+   12. PAGE: FOOTER
    Términos de pago y condiciones del estudio.
    ============================================ */
 
-.politicas-scroll-wrapper {
+.footer-scroll-wrapper {
   width: 70dvw;
   max-width: 720px;
   height: 80dvh;
 }
 
-.politicas-content {
+.footer-content {
   text-align: center;
   line-height: 1.7;
   font-size: 0.88rem;
@@ -955,20 +955,29 @@ a.nav-label:visited {
   padding-bottom: 20dvh;
 }
 
-.politicas-content p {
+/* Cuando la sección no necesita scroll, centrar vertical y descartar el padding 20dvh */
+.footer-scroll-wrapper.is-short .footer-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.footer-content p {
   margin-bottom: 1.4em;
   color: var(--text-content);
 }
 
 /* Último párrafo más tenue (compromiso del estudio) */
-.politicas-content p:last-child {
+.footer-content p:last-child {
   margin-bottom: 0;
   color: var(--text-muted);
   font-size: 0.88em;
 }
 
 /* Nota final: "aceptar el presupuesto..." */
-.politicas-nota {
+.footer-nota {
   margin-top: 2em;
   font-weight: 600;
   color: var(--text) !important;
@@ -976,12 +985,12 @@ a.nav-label:visited {
 }
 
 /* Wrapper para centrar contenedor + barra verticalmente */
-.celda.politicas {
+.celda.footer {
   flex-direction: column;
 }
 
 /* Barra inferior: +/- tamaño de fuente */
-.politicas-bottom-bar {
+.footer-bottom-bar {
   position: absolute;
   bottom: 3dvh;
   left: 3dvw;
@@ -1001,7 +1010,7 @@ a.nav-label:visited {
 }
 
 .lang-btn,
-.politicas-section-tab {
+.footer-section-tab {
   border: none;
   background: none;
   color: var(--btn-subtle);
@@ -1013,18 +1022,18 @@ a.nav-label:visited {
 }
 
 .lang-btn:hover,
-.politicas-section-tab:hover {
+.footer-section-tab:hover {
   color: var(--btn-subtle-hover);
 }
 
 .lang-btn.is-active,
-.politicas-section-tab.is-active {
+.footer-section-tab.is-active {
   font-weight: 600;
   color: var(--text);
 }
 
 
-.politicas-font-btn {
+.footer-font-btn {
   width: 32px;
   height: 32px;
   border: none;
@@ -1040,7 +1049,7 @@ a.nav-label:visited {
   padding: 0;
 }
 
-.politicas-font-btn:hover {
+.footer-font-btn:hover {
   color: var(--btn-subtle-strong-hover);
 }
 
@@ -1381,33 +1390,32 @@ a.nav-label:visited {
 }
 
 /* ============================================
-   POLÍTICAS — hub con secciones
+   FOOTER — hub con secciones
    Vista inicial: lista de botones (condiciones,
-   cookies, financiación). Click → contenido de la
-   sección + botón "← volver".
+   cookies, financiación).
    ============================================ */
 
-.politicas-seccion p {
+.footer-seccion p {
   margin: 0 0 0.7rem;
 }
 
-.politicas-seccion p:last-child {
+.footer-seccion p:last-child {
   margin-bottom: 0;
 }
 
-.politicas-seccion a {
+.footer-seccion a {
   color: var(--text);
   text-decoration: underline;
   text-underline-offset: 2px;
   transition: color 0.2s ease;
 }
 
-.politicas-seccion a:hover {
+.footer-seccion a:hover {
   color: var(--text-secondary);
 }
 
 /* Subvención: logos + frase oficial */
-.politicas-logos {
+.footer-logos {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem 1.5rem;
@@ -1416,7 +1424,7 @@ a.nav-label:visited {
   margin: 1.8rem 0 1.5rem;
 }
 
-.politicas-logo {
+.footer-logo {
   height: clamp(40px, 5dvh, 60px);
   width: auto;
   display: block;
@@ -1425,7 +1433,7 @@ a.nav-label:visited {
 /* Nav inferior: tabs entre secciones (auto-rotación).
    Mismo estilo que .lang-btn para coherencia visual.
    En móvil sube una fila para no solapar con +/- y es/en/cat. */
-.politicas-section-nav {
+.footer-section-nav {
   position: absolute;
   bottom: 3dvh;
   left: 50%;
@@ -1437,7 +1445,7 @@ a.nav-label:visited {
 }
 
 @media (max-width: 768px) {
-  .politicas-section-nav {
+  .footer-section-nav {
     --tab-fs: clamp(0.6rem, 2.5dvw, 0.8rem);
     --tab-h: calc(var(--tab-fs) * 1.4);
     --tab-gap: calc(var(--tab-fs) * 0.3);
@@ -1453,14 +1461,14 @@ a.nav-label:visited {
        Total = 1.15·fs. */
     transform: translateX(-50%) translateY(calc(var(--tab-fs) * 1.15));
   }
-  .politicas-section-tab {
+  .footer-section-tab {
     padding: 0;
     font-size: var(--tab-fs);
     line-height: 1.4;
   }
 }
 
-.politicas-frase {
+.footer-frase {
   font-style: italic;
   text-align: center;
   margin-top: 1.2rem !important;

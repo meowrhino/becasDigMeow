@@ -3,7 +3,7 @@
 // ============================================
 //
 // Cada función renderiza una celda/página específica:
-// Tools, Welcome, Statement, Metodología, Políticas, Contacto.
+// Tools, Welcome, Statement, Metodología, Footer, Contacto.
 
 import { currentLang, buildLangButtons, attachLangListeners } from "./data.js";
 import { setupZoom } from "./zoom.js";
@@ -194,61 +194,61 @@ export function renderMetodologia(data) {
   });
 }
 
-// --- Políticas ---
+// --- Footer ---
 //
-// Vista única con auto-rotación entre N secciones (data.politicas[lang].secciones[]).
+// Vista única con auto-rotación entre N secciones (data.footer[lang].secciones[]).
 // Cada sección define su propio rotateMs. Nav inferior con botones (activo en bold).
 // Hover sobre el contenido pausa la rotación; mouseleave la reanuda.
 
-export function renderPoliticas(data) {
-  const el = document.querySelector(".celda.politicas");
-  if (!el || !data?.politicas) return;
+export function renderFooter(data) {
+  const el = document.querySelector(".celda.footer");
+  if (!el || !data?.footer) return;
 
   // Estado: índice de sección activa (auto-rota entre las secciones)
   let activeIdx = 0;
   let sectionTimeout = null;
 
   const buildSeccion = (lang, idx) => {
-    const s = data.politicas[lang]?.secciones?.[idx];
+    const s = data.footer[lang]?.secciones?.[idx];
     if (!s) return "";
 
     let body = "";
     if (s.tipo === "texto") {
       body = (s.parrafos || []).map(p => `<p>${p.replace(/\n/g, "<br>")}</p>`).join("");
-      if (s.nota) body += `<p class="politicas-nota">${s.nota}</p>`;
+      if (s.nota) body += `<p class="footer-nota">${s.nota}</p>`;
     } else if (s.tipo === "subvencion") {
       const intro = s.intro ? `<p>${s.intro}</p>` : "";
       const logoAttrs = `loading="lazy" decoding="async"`;
       const tone = document.documentElement.getAttribute("data-theme") === "dark" ? "BLANCO" : "NEGRO";
       const logos = (s.logos || []).length
-        ? `<div class="politicas-logos">${s.logos.map(l =>
-            `<img src="img/LOGOS/${tone}/${l.name}.webp" alt="${l.alt || ''}" class="politicas-logo" data-logo-name="${l.name}" ${logoAttrs}>`
+        ? `<div class="footer-logos">${s.logos.map(l =>
+            `<img src="img/LOGOS/${tone}/${l.name}.webp" alt="${l.alt || ''}" class="footer-logo" data-logo-name="${l.name}" ${logoAttrs}>`
           ).join("")}</div>`
         : "";
-      const frase = s.frase ? `<p class="politicas-frase">${s.frase}</p>` : "";
+      const frase = s.frase ? `<p class="footer-frase">${s.frase}</p>` : "";
       body = intro + logos + frase;
     }
-    return `<div class="politicas-seccion">${body}</div>`;
+    return `<div class="footer-seccion">${body}</div>`;
   };
 
   const buildSectionNav = (lang) => {
-    const secciones = data.politicas[lang]?.secciones || [];
+    const secciones = data.footer[lang]?.secciones || [];
     if (secciones.length < 2) return "";
-    return `<div class="politicas-section-nav">${secciones.map((s, i) =>
-      `<button type="button" class="politicas-section-tab${i === activeIdx ? ' is-active' : ''}" data-idx="${i}">${s.label}</button>`
+    return `<div class="footer-section-nav">${secciones.map((s, i) =>
+      `<button type="button" class="footer-section-tab${i === activeIdx ? ' is-active' : ''}" data-idx="${i}">${s.label}</button>`
     ).join("")}</div>`;
   };
 
   el.innerHTML = `
-    <div class="scroll-wrapper politicas-scroll-wrapper">
-      <div class="scroll-content politicas-content">${buildSeccion(currentLang, activeIdx)}</div>
+    <div class="scroll-wrapper footer-scroll-wrapper">
+      <div class="scroll-content footer-content">${buildSeccion(currentLang, activeIdx)}</div>
     </div>
     ${buildSectionNav(currentLang)}
     ${buildLangButtons()}
   `;
 
-  const wrapper = el.querySelector(".politicas-scroll-wrapper");
-  const content = el.querySelector(".politicas-content");
+  const wrapper = el.querySelector(".footer-scroll-wrapper");
+  const content = el.querySelector(".footer-content");
   const checkScroll = setupScrollGradients(wrapper, content);
   const applyScale = setupZoom(el, content, checkScroll);
 
@@ -261,7 +261,7 @@ export function renderPoliticas(data) {
 
   const scheduleNext = () => {
     stopSectionRotator();
-    const secciones = data.politicas[currentLang]?.secciones || [];
+    const secciones = data.footer[currentLang]?.secciones || [];
     const ms = secciones[activeIdx]?.rotateMs;
     if (!ms || secciones.length < 2) return;
     sectionTimeout = setTimeout(() => {
@@ -271,13 +271,13 @@ export function renderPoliticas(data) {
   };
 
   const updateNavActive = () => {
-    el.querySelectorAll(".politicas-section-tab").forEach((tab, i) =>
+    el.querySelectorAll(".footer-section-tab").forEach((tab, i) =>
       tab.classList.toggle("is-active", i === activeIdx)
     );
   };
 
   const repintarNav = (lang) => {
-    const oldNav = el.querySelector(".politicas-section-nav");
+    const oldNav = el.querySelector(".footer-section-nav");
     const tmp = document.createElement("div");
     tmp.innerHTML = buildSectionNav(lang);
     const newNav = tmp.firstElementChild;
@@ -304,7 +304,7 @@ export function renderPoliticas(data) {
 
   // Click delegation: tabs del nav (que está fuera del content)
   el.addEventListener("click", (e) => {
-    const tabBtn = e.target.closest(".politicas-section-tab");
+    const tabBtn = e.target.closest(".footer-section-tab");
     if (!tabBtn) return;
     const idx = parseInt(tabBtn.dataset.idx, 10);
     if (idx !== activeIdx) {
@@ -317,16 +317,28 @@ export function renderPoliticas(data) {
 
   // Pause on hover sobre el contenido o el nav (mouseover burbujea)
   el.addEventListener("mouseover", (e) => {
-    if (e.target.closest(".politicas-content, .politicas-section-nav")) {
+    if (e.target.closest(".footer-content, .footer-section-nav")) {
       stopSectionRotator();
     }
   });
   el.addEventListener("mouseout", (e) => {
     const to = e.relatedTarget;
-    if (!to || !to.closest?.(".politicas-content, .politicas-section-nav")) {
+    if (!to || !to.closest?.(".footer-content, .footer-section-nav")) {
       scheduleNext();
     }
   });
+
+  // Pause on touch / scroll: reanudar tras 3 s de inactividad
+  const pauseAndResume = () => {
+    stopSectionRotator();
+    sectionTimeout = setTimeout(scheduleNext, 3000);
+  };
+  el.addEventListener("touchstart", (e) => {
+    if (e.target.closest(".footer-content, .footer-section-nav")) {
+      pauseAndResume();
+    }
+  }, { passive: true });
+  wrapper.addEventListener("scroll", pauseAndResume, { passive: true });
 
   scheduleNext();
 

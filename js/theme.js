@@ -32,7 +32,7 @@ function aplicarTema(tema) {
     );
   }
   const tone = tema === "dark" ? "BLANCO" : "NEGRO";
-  document.querySelectorAll(".politicas-logo[data-logo-name]").forEach(img => {
+  document.querySelectorAll(".footer-logo[data-logo-name]").forEach(img => {
     img.src = `img/LOGOS/${tone}/${img.dataset.logoName}.webp`;
   });
 }

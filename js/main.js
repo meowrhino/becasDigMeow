@@ -26,7 +26,7 @@ import {
   renderWelcome,
   renderStatement,
   renderMetodologia,
-  renderPoliticas,
+  renderFooter,
   renderContacto,
 } from "./pages.js";
 import { renderPortfolio } from "./portfolio.js";
@@ -46,7 +46,7 @@ async function renderizarContenido() {
   renderWelcome(data);
   renderStatement(data);
   renderMetodologia(data);
-  renderPoliticas(data);
+  renderFooter(data);
   renderPortfolio(data);
   renderContacto(data);
 }
@@ -71,12 +71,12 @@ setupResizeDebounce({
 configurarNavegacion({
   grid: [
     [0, 1, 0, 0], // fila 0: _, tools, _, _
-    [1, 1, 1, 1], // fila 1: políticas, welcome, metodología, statement
+    [1, 1, 1, 1], // fila 1: footer, welcome, metodología, statement
     [0, 1, 1, 0], // fila 2: _, portfolio, contacto, _
   ],
   nombres: {
     "0_1": "tools",
-    "1_0": "políticas",
+    "1_0": "footer",
     "1_1": "welcome",
     "1_2": "metodología",
     "1_3": "statement",
@@ -85,7 +85,7 @@ configurarNavegacion({
   },
   clasesCss: {
     "tools": "tools",
-    "políticas": "politicas",
+    "footer": "footer",
     "metodología": "metodologia",
     "welcome": "welcome",
     "statement": "statement",

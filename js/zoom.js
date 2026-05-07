@@ -8,16 +8,16 @@
  */
 export function setupZoom(container, contentEl, onResize) {
   const bar = document.createElement("div");
-  bar.className = "politicas-bottom-bar";
+  bar.className = "footer-bottom-bar";
   bar.innerHTML = `
-    <button class="politicas-font-btn" data-action="increase" aria-label="aumentar tama\u00f1o de texto">+</button>
-    <button class="politicas-font-btn" data-action="decrease" aria-label="reducir tama\u00f1o de texto">\u2212</button>
+    <button class="footer-font-btn" data-action="increase" aria-label="aumentar tama\u00f1o de texto">+</button>
+    <button class="footer-font-btn" data-action="decrease" aria-label="reducir tama\u00f1o de texto">\u2212</button>
   `;
   container.appendChild(bar);
 
   let fontScale = 1;
 
-  bar.querySelectorAll(".politicas-font-btn").forEach(btn => {
+  bar.querySelectorAll(".footer-font-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const step = btn.dataset.action === "increase" ? 0.1 : -0.1;
       fontScale = Math.max(0.7, Math.min(1.5, fontScale + step));

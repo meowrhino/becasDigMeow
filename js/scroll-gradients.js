@@ -20,6 +20,7 @@ export function setupScrollGradients(wrapper, content, opts) {
     const noScroll = content.scrollHeight - margin <= content.clientHeight;
     wrapper.classList.toggle("can-scroll-up", !atTop && !noScroll);
     wrapper.classList.toggle("can-scroll-down", !atBottom && !noScroll);
+    wrapper.classList.toggle("is-short", noScroll);
   };
 
   content.addEventListener("scroll", checkScroll);
