@@ -24,6 +24,7 @@ import {
 import { crearThemeToggle } from "./theme.js";
 import { renderSeccion } from "./archive-pages.js";
 import { fetchJson } from "./utils.js";
+import { setupKeyboardNav, setupResizeDebounce } from "./shell.js";
 
 // ============================================
 // Datos del archive
@@ -72,52 +73,17 @@ async function renderizarContenido() {
 }
 
 // ============================================
-// Event Listeners
+// Event Listeners (shell compartido)
 // ============================================
 
-// --- Navegación por teclado ---
-document.addEventListener("keydown", e => {
-  if (e.key === "Escape") {
-    const overlay = getOverlayEl();
-    if (overlay?.classList.contains("visible")) {
-      cerrarMinimapExpandido();
-      return;
-    }
-  }
-
-  const { posY: curY, posX: curX } = getPosicion();
-  let newY = curY;
-  let newX = curX;
-  switch (e.key) {
-    case "ArrowUp":    newY--; break;
-    case "ArrowDown":  newY++; break;
-    case "ArrowLeft":  newX--; break;
-    case "ArrowRight": newX++; break;
-    default: return;
-  }
-
-  const GRID = getGrid();
-  if (GRID[newY]?.[newX] === 1) {
-    setPosicion(newY, newX);
-    actualizarVista();
-  }
+setupKeyboardNav({
+  getOverlayEl, cerrarMinimapExpandido,
+  getGrid, getPosicion, setPosicion, actualizarVista,
 });
-
-// --- Resize ---
-let resizeTimeoutId = null;
-
-function alResizarViewport() {
-  actualizarTamanoMinimapInline();
-  actualizarTamanoMinimapExpandido();
-}
-
-function programarResize() {
-  if (resizeTimeoutId) clearTimeout(resizeTimeoutId);
-  resizeTimeoutId = setTimeout(alResizarViewport, 120);
-}
-
-window.addEventListener("resize", programarResize);
-window.addEventListener("orientationchange", programarResize);
+setupResizeDebounce({
+  actualizarTamanoMinimapInline,
+  actualizarTamanoMinimapExpandido,
+});
 
 // ============================================
 // Inicialización
