@@ -10,8 +10,8 @@ export function setupZoom(container, contentEl, onResize) {
   const bar = document.createElement("div");
   bar.className = "politicas-bottom-bar";
   bar.innerHTML = `
-    <button class="politicas-font-btn" data-action="increase">+</button>
-    <button class="politicas-font-btn" data-action="decrease">\u2212</button>
+    <button class="politicas-font-btn" data-action="increase" aria-label="aumentar tama\u00f1o de texto">+</button>
+    <button class="politicas-font-btn" data-action="decrease" aria-label="reducir tama\u00f1o de texto">\u2212</button>
   `;
   container.appendChild(bar);
 

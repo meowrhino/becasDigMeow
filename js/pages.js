@@ -42,10 +42,10 @@ function crearDropdownHTML(titulo, items, uid) {
   const linksHTML = items.map(i => i.urls ? crearDualLinkHTML(i) : crearLinkHTML(i)).join("");
   return `
     <div class="tools-dropdown-group">
-      <button class="tools-dropdown-btn" data-target="${uid}">
+      <button class="tools-dropdown-btn" data-target="${uid}" aria-expanded="false">
         ${titulo}
         <svg class="tools-dropdown-icon" viewBox="0 0 16 16" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round">
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
           <polyline points="4,6 8,10 12,6"/>
         </svg>
       </button>
@@ -93,9 +93,13 @@ export function renderTools(data) {
       if (!target) return;
       const willOpen = !target.classList.contains("open");
       el.querySelectorAll(".tools-dropdown-content.open").forEach(d => d.classList.remove("open"));
-      el.querySelectorAll(".tools-dropdown-btn.active").forEach(b => b.classList.remove("active"));
+      el.querySelectorAll(".tools-dropdown-btn.active").forEach(b => {
+        b.classList.remove("active");
+        b.setAttribute("aria-expanded", "false");
+      });
       target.classList.toggle("open", willOpen);
       btn.classList.toggle("active", willOpen);
+      btn.setAttribute("aria-expanded", String(willOpen));
       toolsList?.classList.toggle("has-open-last-dropdown", willOpen && target === lastDropdown);
     });
   });
