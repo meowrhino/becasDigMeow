@@ -221,6 +221,11 @@ export function renderPoliticas(data) {
   // Estado: índice de sección activa, o null = hub
   let activeIdx = null;
 
+  // Estado del carrusel de logos (sección "subvencion")
+  const LOGO_ROTATION_MS = 5000;
+  let logoIdx = 0;
+  let logoInterval = null;
+
   const buildHub = (lang) => {
     const d = data.politicas[lang];
     const secciones = d?.secciones || [];
@@ -244,10 +249,21 @@ export function renderPoliticas(data) {
       if (s.nota) body += `<p class="politicas-nota">${s.nota}</p>`;
     } else if (s.tipo === "subvencion") {
       const intro = s.intro ? `<p>${s.intro}</p>` : "";
-      const logos = (s.logos || []).length
-        ? `<div class="politicas-logos">${s.logos.map(l =>
-            `<img src="${l.src}" alt="${l.alt || ''}" class="politicas-logo">`
-          ).join("")}</div>`
+      const logosArr = s.logos || [];
+      const logos = logosArr.length
+        ? `<div class="politicas-logos politicas-logos--carrusel">
+             ${logosArr.map((l, i) => `
+               <div class="politicas-logo-slide${i === 0 ? ' is-active' : ''}" data-idx="${i}">
+                 <img src="img/LOGOS/NEGRO/${l.name}.png" alt="${l.alt || ''}" class="politicas-logo politicas-logo--light">
+                 <img src="img/LOGOS/BLANCO/${l.name}.png" alt="${l.alt || ''}" class="politicas-logo politicas-logo--dark">
+               </div>
+             `).join("")}
+           </div>
+           <div class="politicas-logos-nav">
+             ${logosArr.map((l, i) => `
+               <button type="button" class="politicas-logo-tab${i === 0 ? ' is-active' : ''}" data-idx="${i}">${l.tab || l.name}</button>
+             `).join("")}
+           </div>`
         : "";
       const frase = s.frase ? `<p class="politicas-frase">${s.frase}</p>` : "";
       body = intro + logos + frase;
@@ -275,27 +291,65 @@ export function renderPoliticas(data) {
   const checkScroll = setupScrollGradients(wrapper, content);
   const applyScale = setupZoom(el, content, checkScroll);
 
+  const stopLogoCarrusel = () => {
+    if (logoInterval) {
+      clearInterval(logoInterval);
+      logoInterval = null;
+    }
+  };
+
+  const setLogoActive = (idx) => {
+    const slides = content.querySelectorAll(".politicas-logo-slide");
+    const tabs = content.querySelectorAll(".politicas-logo-tab");
+    if (!slides.length) return;
+    logoIdx = ((idx % slides.length) + slides.length) % slides.length;
+    slides.forEach((s, i) => s.classList.toggle("is-active", i === logoIdx));
+    tabs.forEach((t, i) => t.classList.toggle("is-active", i === logoIdx));
+  };
+
+  const startLogoCarrusel = () => {
+    stopLogoCarrusel();
+    const slides = content.querySelectorAll(".politicas-logo-slide");
+    if (slides.length < 2) return;
+    logoInterval = setInterval(() => setLogoActive(logoIdx + 1), LOGO_ROTATION_MS);
+  };
+
+  const setupLogoHoverPause = () => {
+    const carrusel = content.querySelector(".politicas-logos--carrusel");
+    const nav = content.querySelector(".politicas-logos-nav");
+    [carrusel, nav].forEach(node => {
+      if (!node) return;
+      node.addEventListener("mouseenter", stopLogoCarrusel);
+      node.addEventListener("mouseleave", startLogoCarrusel);
+    });
+  };
+
   // Re-pinta y re-engancha listeners. Usamos delegación para no perder
   // los handlers cuando el innerHTML se reemplaza.
   const repintar = (lang, withFade = true) => {
+    stopLogoCarrusel();
+    logoIdx = 0;
+    const afterRender = () => {
+      content.scrollTop = 0;
+      applyScale();
+      checkScroll();
+      setupLogoHoverPause();
+      startLogoCarrusel();
+    };
     if (withFade && el.classList.contains("activa")) {
       content.style.opacity = "0";
       setTimeout(() => {
         content.innerHTML = buildContent(lang);
-        content.scrollTop = 0;
-        applyScale();
-        checkScroll();
+        afterRender();
         content.style.opacity = "1";
       }, 250);
     } else {
       content.innerHTML = buildContent(lang);
-      content.scrollTop = 0;
-      applyScale();
-      checkScroll();
+      afterRender();
     }
   };
 
-  // Delegación de clicks (hub-btn y back)
+  // Delegación de clicks (hub-btn, back, logo-tab)
   content.addEventListener("click", (e) => {
     const hubBtn = e.target.closest(".politicas-hub-btn");
     if (hubBtn) {
@@ -307,8 +361,18 @@ export function renderPoliticas(data) {
     if (backBtn) {
       activeIdx = null;
       repintar(currentLang);
+      return;
+    }
+    const tabBtn = e.target.closest(".politicas-logo-tab");
+    if (tabBtn) {
+      stopLogoCarrusel();
+      setLogoActive(parseInt(tabBtn.dataset.idx, 10));
+      startLogoCarrusel();
     }
   });
+
+  setupLogoHoverPause();
+  startLogoCarrusel();
 
   attachLangListeners(el, (lang) => repintar(lang));
 }

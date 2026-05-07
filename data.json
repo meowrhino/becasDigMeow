@@ -174,7 +174,11 @@
           "label": "financiación",
           "tipo": "subvencion",
           "intro": "esta web es posible gracias al apoyo de:",
-          "logos": [],
+          "logos": [
+            { "name": "gene", "tab": "generalitat", "alt": "Generalitat de Catalunya — Departament d'Empresa i Treball" },
+            { "name": "eu", "tab": "unión europea", "alt": "Cofinanciado por la Unión Europea" },
+            { "name": "sepe", "tab": "sepe", "alt": "Ministerio de Trabajo y Economía Social, SEPE, Sistema Nacional de Garantía Juvenil" }
+          ],
           "frase": "Aquesta actuació està impulsada i subvencionada pel Departament d'Empresa i Treball i cofinançada per la Unió Europea mitjançant el Fons Social Europeu Plus."
         }
       ]
@@ -210,7 +214,11 @@
           "label": "funding",
           "tipo": "subvencion",
           "intro": "this site is made possible thanks to:",
-          "logos": [],
+          "logos": [
+            { "name": "gene", "tab": "generalitat", "alt": "Generalitat de Catalunya — Department of Enterprise and Labour" },
+            { "name": "eu", "tab": "european union", "alt": "Co-funded by the European Union" },
+            { "name": "sepe", "tab": "sepe", "alt": "Ministry of Labour and Social Economy, SEPE, National Youth Guarantee System" }
+          ],
           "frase": "Aquesta actuació està impulsada i subvencionada pel Departament d'Empresa i Treball i cofinançada per la Unió Europea mitjançant el Fons Social Europeu Plus."
         }
       ]
@@ -246,7 +254,11 @@
           "label": "finançament",
           "tipo": "subvencion",
           "intro": "aquesta web és possible gràcies al suport de:",
-          "logos": [],
+          "logos": [
+            { "name": "gene", "tab": "generalitat", "alt": "Generalitat de Catalunya — Departament d'Empresa i Treball" },
+            { "name": "eu", "tab": "unió europea", "alt": "Cofinançat per la Unió Europea" },
+            { "name": "sepe", "tab": "sepe", "alt": "Ministeri de Treball i Economia Social, SEPE, Sistema Nacional de Garantia Juvenil" }
+          ],
           "frase": "Aquesta actuació està impulsada i subvencionada pel Departament d'Empresa i Treball i cofinançada per la Unió Europea mitjançant el Fons Social Europeu Plus."
         }
       ]
