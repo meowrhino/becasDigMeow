@@ -990,12 +990,6 @@ a.nav-label:visited {
   gap: 0;
 }
 
-.politicas-font-group {
-  display: flex;
-  align-items: center;
-  gap: 0;
-}
-
 .lang-group {
   position: absolute;
   bottom: 3dvh;

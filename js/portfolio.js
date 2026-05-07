@@ -101,7 +101,7 @@ function limpiarUrl(u) {
  * Estructura esperada: img/<slug>/1.webp, img/<slug>/2.webp, ...
  * El campo `imagen` apunta a la primera, `imagenesSecundarias` cuenta las extras.
  */
-export function obtenerImagenesProyecto(proyecto) {
+function obtenerImagenesProyecto(proyecto) {
   const principal = typeof proyecto?.imagen === "string" ? proyecto.imagen.trim() : "";
   if (!principal) return [];
 
