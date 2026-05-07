@@ -2,6 +2,8 @@
 // DATA — Carga de datos, caché e idioma global
 // ============================================
 
+import { fetchJson } from "./utils.js";
+
 // --- Idioma global ---
 
 export const LANGS = ["es", "en", "cat"];
@@ -72,14 +74,8 @@ let dataCache = null;
  */
 export async function cargarDatos() {
   if (dataCache) return dataCache;
-  try {
-    const res = await fetch("data.json");
-    dataCache = await res.json();
-    return dataCache;
-  } catch (err) {
-    console.error("Error cargando data.json:", err);
-    return null;
-  }
+  dataCache = await fetchJson("data.json");
+  return dataCache;
 }
 
 /**

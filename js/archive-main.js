@@ -23,6 +23,7 @@ import {
 } from "./navigation.js";
 import { crearThemeToggle } from "./theme.js";
 import { renderSeccion } from "./archive-pages.js";
+import { fetchJson } from "./utils.js";
 
 // ============================================
 // Datos del archive
@@ -31,14 +32,8 @@ import { renderSeccion } from "./archive-pages.js";
 let archiveData = null;
 
 async function cargarDatosArchive() {
-  try {
-    const res = await fetch("archive-data.json");
-    archiveData = await res.json();
-    return archiveData;
-  } catch (err) {
-    console.error("Error cargando archive-data.json:", err);
-    return null;
-  }
+  archiveData = await fetchJson("archive-data.json");
+  return archiveData;
 }
 
 // ============================================

@@ -9,6 +9,7 @@ import { currentLang, buildLangButtons, attachLangListeners } from "./data.js";
 import { setupZoom } from "./zoom.js";
 import { setupScrollGradients } from "./scroll-gradients.js";
 import { renderWelcomeCupon } from "./welcome-cupon.js";
+import { repaintWithFade } from "./utils.js";
 
 /** true si el viewport es táctil / móvil. */
 export const esMovil = "ontouchstart" in window || navigator.maxTouchPoints > 0;
@@ -150,18 +151,10 @@ export function renderStatement(data) {
   const applyScale = setupZoom(el, content);
 
   attachLangListeners(el, (lang) => {
-    const isActive = el.classList.contains("activa");
-    if (isActive) {
-      content.style.opacity = "0";
-      setTimeout(() => {
-        content.innerHTML = buildContent(lang);
-        applyScale();
-        content.style.opacity = "1";
-      }, 250);
-    } else {
-      content.innerHTML = buildContent(lang);
-      applyScale();
-    }
+    repaintWithFade(el, content,
+      () => { content.innerHTML = buildContent(lang); },
+      applyScale
+    );
   });
 }
 
@@ -190,20 +183,10 @@ export function renderMetodologia(data) {
   const applyScale = setupZoom(el, content, checkScroll);
 
   attachLangListeners(el, (lang) => {
-    const isActive = el.classList.contains("activa");
-    if (isActive) {
-      content.style.opacity = "0";
-      setTimeout(() => {
-        content.innerHTML = buildContent(lang);
-        applyScale();
-        content.style.opacity = "1";
-        requestAnimationFrame(checkScroll);
-      }, 250);
-    } else {
-      content.innerHTML = buildContent(lang);
-      applyScale();
-      requestAnimationFrame(checkScroll);
-    }
+    repaintWithFade(el, content,
+      () => { content.innerHTML = buildContent(lang); },
+      () => { applyScale(); requestAnimationFrame(checkScroll); }
+    );
   });
 }
 
@@ -298,23 +281,19 @@ export function renderPoliticas(data) {
 
   const repintar = (lang, withFade = true) => {
     stopSectionRotator();
-    const afterRender = () => {
+    const render = () => { content.innerHTML = buildSeccion(lang, activeIdx); };
+    const after = () => {
       content.scrollTop = 0;
       applyScale();
       checkScroll();
       updateNavActive();
       scheduleNext();
     };
-    if (withFade && el.classList.contains("activa")) {
-      content.style.opacity = "0";
-      setTimeout(() => {
-        content.innerHTML = buildSeccion(lang, activeIdx);
-        afterRender();
-        content.style.opacity = "1";
-      }, 250);
+    if (withFade) {
+      repaintWithFade(el, content, render, after);
     } else {
-      content.innerHTML = buildSeccion(lang, activeIdx);
-      afterRender();
+      render();
+      after();
     }
   };
 
