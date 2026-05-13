@@ -22,13 +22,11 @@
     { "nombre": "etymodict", "url": "https://meowrhino.github.io/etymodict/" },
     { "nombre": "write", "url": "https://meowrhino.github.io/writingapp/" },
     { "nombre": "guia setup github pages", "url": "https://meowrhino.github.io/guiaSetupGithubPages/" },
-    { "nombre": "guia setup cloudflare pages", "url": "https://meowrhino.github.io/guiaSetupCloudflarePages/" },
     { "nombre": "faqAutonomos", "url": "https://meowrhino.github.io/faqAutonomos/" },
-    { "nombre": "chords", "url": "https://meowrhino.github.io/chords/" },
     { "nombre": "VNGenerator", "url": "https://meowrhino.github.io/VNGenerator/" },
     { "nombre": "ajutsCat", "url": "https://meowrhino.github.io/ajutscat/" },
-    { "nombre": "contarTexto", "url": "https://meowrhino.github.io/contarTexto/" },
-    { "nombre": "limpiatexto", "url": "https://meowrhino.github.io/limpiatexto/" }
+    { "nombre": "chords", "url": "https://meowrhino.github.io/chords/" },
+    { "nombre": "poporingGenerator", "url": "https://meowrhino.github.io/poporingGenerator/" }
   ],
   "misc": [
     {
@@ -216,9 +214,6 @@
     },
     { "nombre": "ichingPic", "url": "https://meowrhino.github.io/ichingPic/" },
     { "nombre": "zodiac chart", "url": "https://meowrhino.github.io/wholeSignHouseChart/" },
-    { "nombre": "hexagrama nacimiento", "url": "https://meowrhino.github.io/hexagramaNacimiento/" },
-    { "nombre": "animeTest", "url": "https://meowrhino.github.io/animeTest/" },
-    { "nombre": "poporingGenerator", "url": "https://meowrhino.github.io/poporingGenerator/" },
     { "nombre": "html day 2025", "url": "https://meowrhino.github.io/htmlDay2025/" },
     { "nombre": "mediocre learner", "url": "https://meowrhino.gitlab.io/mediocre-learner/" },
     { "nombre": "atalanta library", "url": "https://meowrhino.github.io/atalanta/" },
