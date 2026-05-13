@@ -16,14 +16,12 @@ export const esMovil = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
 /**
  * Genera el HTML de un enlace tipo tarjeta.
- * @param {{ nombre: string, url: string, wip?: boolean }} item
+ * @param {{ nombre: string, url: string }} item
  * @returns {string}
  */
 function crearLinkHTML(item) {
   const target = esMovil ? "" : ' target="_blank"';
-  const wipBadge = item.wip ? '<sup class="tool-wip">WIP</sup>' : '';
-  const wipClass = item.wip ? ' is-wip' : '';
-  return `<a class="tool-link${wipClass}" href="${item.url}"${target} rel="noopener">${item.nombre}${wipBadge}</a>`;
+  return `<a class="tool-link" href="${item.url}"${target} rel="noopener">${item.nombre}</a>`;
 }
 
 /**
@@ -65,6 +63,7 @@ export function renderTools(data) {
   if (!el || !data?.tools) return;
 
   const herramientas  = data.tools.herramientas || [];
+  const wip           = data.tools.wip || [];
   const conversores   = data.tools.conversores || [];
   const formateadores = data.welcome?.formateadores || [];
   const websTerminadas = (data.portfolio?.proyectos || []).map(p =>
@@ -73,6 +72,7 @@ export function renderTools(data) {
 
   const linksHTML = herramientas.map(crearLinkHTML).join("");
   const dropdownsHTML = [
+    crearDropdownHTML("WIP", wip, "dd_wip"),
     crearDropdownHTML("conversores", conversores, "dd_conversores"),
     crearDropdownHTML("formateadores", formateadores, "dd_formateadores"),
     crearDropdownHTML("webs terminadas", websTerminadas, "dd_webs"),

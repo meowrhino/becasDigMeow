@@ -54,51 +54,6 @@
   "tools": {
     "herramientas": [
       {
-        "nombre": "moixi",
-        "url": "https://meowrhino.github.io/moixi/",
-        "wip": true
-      },
-      {
-        "nombre": "retals",
-        "url": "https://meowrhino.github.io/retals/",
-        "wip": true
-      },
-      {
-        "nombre": "VNGenerator",
-        "url": "https://meowrhino.github.io/VNGenerator/",
-        "wip": true
-      },
-      {
-        "nombre": "miaumiau",
-        "url": "https://meowrhino.github.io/miaumiau/",
-        "wip": true
-      },
-      {
-        "nombre": "ajutsCat",
-        "url": "https://meowrhino.github.io/ajutscat/",
-        "wip": true
-      },
-      {
-        "nombre": "arxiu",
-        "url": "https://arxiu.meowrhino.studio"
-      },
-      {
-        "nombre": "chords",
-        "url": "https://meowrhino.github.io/chords/"
-      },
-      {
-        "nombre": "poporingGenerator",
-        "url": "https://meowrhino.github.io/poporingGenerator/"
-      },
-      {
-        "nombre": "diarioBarbara",
-        "url": "https://meowrhino.github.io/diarioBarbara/"
-      },
-      {
-        "nombre": "piulerv2",
-        "url": "https://piulerv2.manuellatourf.workers.dev/"
-      },
-      {
         "nombre": "trackr",
         "url": "https://meowrhino.github.io/trackr/"
       },
@@ -113,6 +68,44 @@
       {
         "nombre": "generador facturas",
         "url": "https://meowrhino.github.io/generadorFacturas/"
+      },
+      {
+        "nombre": "piuler",
+        "url": "https://piuler.onrender.com/"
+      },
+      {
+        "nombre": "arxiu",
+        "url": "https://arxiu.meowrhino.studio"
+      },
+      {
+        "nombre": "chords",
+        "url": "https://meowrhino.github.io/chords/"
+      }
+    ],
+    "wip": [
+      {
+        "nombre": "moixi",
+        "url": "https://meowrhino.github.io/moixi/"
+      },
+      {
+        "nombre": "retals",
+        "url": "https://meowrhino.github.io/retals/"
+      },
+      {
+        "nombre": "VNGenerator",
+        "url": "https://meowrhino.github.io/VNGenerator/"
+      },
+      {
+        "nombre": "miaumiau",
+        "url": "https://meowrhino.github.io/miaumiau/"
+      },
+      {
+        "nombre": "ajutsCat",
+        "url": "https://meowrhino.github.io/ajutscat/"
+      },
+      {
+        "nombre": "poporingGenerator",
+        "url": "https://meowrhino.github.io/poporingGenerator/"
       }
     ],
     "conversores": [
