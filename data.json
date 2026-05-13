@@ -55,15 +55,48 @@
     "herramientas": [
       {
         "nombre": "moixi",
-        "url": "https://meowrhino.github.io/moixi/"
+        "url": "https://meowrhino.github.io/moixi/",
+        "wip": true
       },
       {
         "nombre": "retals",
-        "url": "https://meowrhino.github.io/retals/"
+        "url": "https://meowrhino.github.io/retals/",
+        "wip": true
+      },
+      {
+        "nombre": "VNGenerator",
+        "url": "https://meowrhino.github.io/VNGenerator/",
+        "wip": true
+      },
+      {
+        "nombre": "miaumiau",
+        "url": "https://meowrhino.github.io/miaumiau/",
+        "wip": true
+      },
+      {
+        "nombre": "ajutsCat",
+        "url": "https://meowrhino.github.io/ajutscat/",
+        "wip": true
       },
       {
         "nombre": "arxiu",
         "url": "https://arxiu.meowrhino.studio"
+      },
+      {
+        "nombre": "chords",
+        "url": "https://meowrhino.github.io/chords/"
+      },
+      {
+        "nombre": "poporingGenerator",
+        "url": "https://meowrhino.github.io/poporingGenerator/"
+      },
+      {
+        "nombre": "diarioBarbara",
+        "url": "https://meowrhino.github.io/diarioBarbara/"
+      },
+      {
+        "nombre": "piulerv2",
+        "url": "https://piulerv2.manuellatourf.workers.dev/"
       },
       {
         "nombre": "trackr",

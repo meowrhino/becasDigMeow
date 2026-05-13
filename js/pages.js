@@ -16,12 +16,14 @@ export const esMovil = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
 /**
  * Genera el HTML de un enlace tipo tarjeta.
- * @param {{ nombre: string, url: string }} item
+ * @param {{ nombre: string, url: string, wip?: boolean }} item
  * @returns {string}
  */
 function crearLinkHTML(item) {
   const target = esMovil ? "" : ' target="_blank"';
-  return `<a class="tool-link" href="${item.url}"${target} rel="noopener">${item.nombre}</a>`;
+  const wipBadge = item.wip ? '<sup class="tool-wip">WIP</sup>' : '';
+  const wipClass = item.wip ? ' is-wip' : '';
+  return `<a class="tool-link${wipClass}" href="${item.url}"${target} rel="noopener">${item.nombre}${wipBadge}</a>`;
 }
 
 /**
