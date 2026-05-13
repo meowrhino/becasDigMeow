@@ -22,7 +22,13 @@
     { "nombre": "etymodict", "url": "https://meowrhino.github.io/etymodict/" },
     { "nombre": "write", "url": "https://meowrhino.github.io/writingapp/" },
     { "nombre": "guia setup github pages", "url": "https://meowrhino.github.io/guiaSetupGithubPages/" },
-    { "nombre": "faqAutonomos", "url": "https://meowrhino.github.io/faqAutonomos/" }
+    { "nombre": "guia setup cloudflare pages", "url": "https://meowrhino.github.io/guiaSetupCloudflarePages/" },
+    { "nombre": "faqAutonomos", "url": "https://meowrhino.github.io/faqAutonomos/" },
+    { "nombre": "chords", "url": "https://meowrhino.github.io/chords/" },
+    { "nombre": "VNGenerator", "url": "https://meowrhino.github.io/VNGenerator/" },
+    { "nombre": "ajutsCat", "url": "https://meowrhino.github.io/ajutscat/" },
+    { "nombre": "contarTexto", "url": "https://meowrhino.github.io/contarTexto/" },
+    { "nombre": "limpiatexto", "url": "https://meowrhino.github.io/limpiatexto/" }
   ],
   "misc": [
     {
@@ -210,6 +216,9 @@
     },
     { "nombre": "ichingPic", "url": "https://meowrhino.github.io/ichingPic/" },
     { "nombre": "zodiac chart", "url": "https://meowrhino.github.io/wholeSignHouseChart/" },
+    { "nombre": "hexagrama nacimiento", "url": "https://meowrhino.github.io/hexagramaNacimiento/" },
+    { "nombre": "animeTest", "url": "https://meowrhino.github.io/animeTest/" },
+    { "nombre": "poporingGenerator", "url": "https://meowrhino.github.io/poporingGenerator/" },
     { "nombre": "html day 2025", "url": "https://meowrhino.github.io/htmlDay2025/" },
     { "nombre": "mediocre learner", "url": "https://meowrhino.gitlab.io/mediocre-learner/" },
     { "nombre": "atalanta library", "url": "https://meowrhino.github.io/atalanta/" },
@@ -230,6 +239,7 @@
     }
   ],
   "social": [
+    { "nombre": "miaumiau", "url": "https://meowrhino.github.io/miaumiau/" },
     { "nombre": "piupiu", "url": "https://piulerv2.manuellatourf.workers.dev/" },
     { "nombre": "piuler", "url": "https://piuler.onrender.com/" },
     { "nombre": "gridChat", "url": "https://meowrhino.github.io/gridChat/" },
@@ -344,6 +354,8 @@
     { "nombre": "diegosanmarcos", "url": "https://meowrhino.github.io/diegosanmarcos/" },
     { "nombre": "maxito", "url": "https://meowrhino.github.io/maxito/" },
     { "nombre": "rikamichie", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/rikamichie/" }, { "label": "web", "url": "https://rikamichie.com" }] },
+    { "nombre": "valentin", "links": [{ "label": "repo3", "url": "https://meowrhino.github.io/valentin3/" }, { "label": "repo2", "url": "https://meowrhino.github.io/valentin2/" }, { "label": "repo1", "url": "https://meowrhino.github.io/valentin/" }, { "label": "web", "url": "https://valentinbarrio.com" }] },
+    { "nombre": "polroig", "links": [{ "label": "web", "url": "https://meowrhino.github.io/polroig4/" }, { "label": "repo3", "url": "https://meowrhino.github.io/polroig3/" }, { "label": "repo2", "url": "https://meowrhino.github.io/polroig2/" }, { "label": "repo", "url": "https://meowrhino.github.io/polroig/" }] },
     { "nombre": "mikesx cd's", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/mikesx/" }, { "label": "web", "url": "https://mikebros.com" }] },
     { "nombre": "jaume clotet", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/jaumeclotet/" }, { "label": "web", "url": "https://jaumeclotet.com" }] },
     { "nombre": "conor", "url": "https://meowrhino.github.io/conor/" },
@@ -357,8 +369,9 @@
     { "nombre": "berta esteve", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/snerta/" }, { "label": "web", "url": "https://bertaesteve.cat" }] },
     { "nombre": "hifas studio", "url": "https://meowrhino.github.io/anakatana/" },
     { "nombre": "villa granota", "url": "https://meowrhino.github.io/villagranota/" },
-    { "nombre": "noan cittadino", "url": "https://noancittadino.com" },
-    { "nombre": "930blurberrie", "url": "https://930blurberrie.com" }
+    { "nombre": "noan cittadino", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/noan/" }, { "label": "web", "url": "https://noancittadino.com" }] },
+    { "nombre": "930blurberrie", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/blurberri/" }, { "label": "web", "url": "https://930blurberrie.com" }] },
+    { "nombre": "diarioBarbara", "url": "https://meowrhino.github.io/diarioBarbara/" }
   ],
   "facts": [
     "Al videojuego al que más he jugado es al Pokémon Zafiro (282 horas)",
