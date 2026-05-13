@@ -54,6 +54,18 @@
   "tools": {
     "herramientas": [
       {
+        "nombre": "moixi",
+        "url": "https://meowrhino.github.io/moixi/"
+      },
+      {
+        "nombre": "retals",
+        "url": "https://meowrhino.github.io/retals/"
+      },
+      {
+        "nombre": "arxiu",
+        "url": "https://arxiu.meowrhino.studio"
+      },
+      {
         "nombre": "trackr",
         "url": "https://meowrhino.github.io/trackr/"
       },
