@@ -225,7 +225,7 @@ function renderGridProyectos(proyectos) {
     } else {
       const url = document.createElement("span");
       url.classList.add("pgrid-url");
-      url.textContent = limpiarUrl(proyecto.url);
+      url.textContent = proyecto.urlLabel || limpiarUrl(proyecto.url);
       meta.appendChild(url);
     }
     item.appendChild(meta);

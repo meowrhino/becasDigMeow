@@ -452,6 +452,26 @@
         "imagen": "img/elmundodelasjordis/1.webp",
         "imagenesSecundarias": 1,
         "url": "https://elmundodelasjordis.com"
+      },
+      {
+        "nombre": "christine",
+        "imagen": "img/christine/1.webp",
+        "imagenesSecundarias": 2,
+        "url": "https://meowrhino.github.io/christine/",
+        "urlLabel": "christine"
+      },
+      {
+        "nombre": "valentin",
+        "imagen": "img/valentin/1.webp",
+        "imagenesSecundarias": 1,
+        "url": "https://valentinbarrio.com"
+      },
+      {
+        "nombre": "villagranota",
+        "imagen": "img/villagranota/1.webp",
+        "imagenesSecundarias": 0,
+        "url": "https://meowrhino.github.io/villagranota/",
+        "urlLabel": "villagranota"
       }
     ]
   },
