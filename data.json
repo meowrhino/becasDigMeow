@@ -54,6 +54,10 @@
   "links": {
     "herramientas": [
       {
+        "nombre": "trackr",
+        "url": "https://meowrhino.github.io/trackr/"
+      },
+      {
         "nombre": "piuler",
         "url": "https://piuler.meowrhino.studio/"
       },
@@ -71,10 +75,6 @@
       }
     ],
     "tools": [
-      {
-        "nombre": "trackr",
-        "url": "https://meowrhino.github.io/trackr/"
-      },
       {
         "nombre": "colorfun",
         "url": "https://meowrhino.github.io/colorFun/"
@@ -101,7 +101,7 @@
       },
       {
         "nombre": "limpiatexto",
-        "url": "https://meowrhino.github.io/limpiatexto/"
+        "url": "https://meowrhino.github.io/fcyp/"
       },
       {
         "nombre": "guia setup cloudflare pages",
@@ -135,7 +135,7 @@
       },
       {
         "nombre": "miaumiau",
-        "url": "https://meowrhino.github.io/miaumiau/"
+        "url": "https://miaumiauonline.com"
       },
       {
         "nombre": "ajutsCat",

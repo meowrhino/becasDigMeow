@@ -73,8 +73,8 @@ export function renderTools(data) {
   const linksHTML = herramientas.map(crearLinkHTML).join("");
   const dropdownsHTML = [
     crearDropdownHTML("tools", tools, "dd_tools"),
-    crearDropdownHTML("formateadores", formateadores, "dd_formateadores"),
     crearDropdownHTML("WIP", wip, "dd_wip"),
+    crearDropdownHTML("formateadores", formateadores, "dd_formateadores"),
     crearDropdownHTML("webs terminadas", websTerminadas, "dd_webs"),
   ].join("");
 
