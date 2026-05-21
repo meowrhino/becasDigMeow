@@ -94,6 +94,30 @@
       {
         "nombre": "videoToWeb",
         "url": "https://meowrhino.github.io/videoToWeb/"
+      },
+      {
+        "nombre": "contarTexto",
+        "url": "https://meowrhino.github.io/contarTexto/"
+      },
+      {
+        "nombre": "limpiatexto",
+        "url": "https://meowrhino.github.io/limpiatexto/"
+      },
+      {
+        "nombre": "guia setup cloudflare pages",
+        "url": "https://meowrhino.github.io/guiaSetupCloudflarePages/"
+      },
+      {
+        "nombre": "animeTest",
+        "url": "https://meowrhino.github.io/animeTest/"
+      },
+      {
+        "nombre": "carta astral (zodiaco)",
+        "url": "https://meowrhino.github.io/wholeSignHouseChart/"
+      },
+      {
+        "nombre": "carta astral (i-ching)",
+        "url": "https://meowrhino.github.io/hexagramaNacimiento/"
       }
     ],
     "wip": [
@@ -120,32 +144,6 @@
       {
         "nombre": "poporingGenerator",
         "url": "https://meowrhino.github.io/poporingGenerator/"
-      }
-    ],
-    "misc": [
-      {
-        "nombre": "contarTexto",
-        "url": "https://meowrhino.github.io/contarTexto/"
-      },
-      {
-        "nombre": "limpiatexto",
-        "url": "https://meowrhino.github.io/limpiatexto/"
-      },
-      {
-        "nombre": "guia setup cloudflare pages",
-        "url": "https://meowrhino.github.io/guiaSetupCloudflarePages/"
-      },
-      {
-        "nombre": "animeTest",
-        "url": "https://meowrhino.github.io/animeTest/"
-      },
-      {
-        "nombre": "carta astral (zodiaco)",
-        "url": "https://meowrhino.github.io/wholeSignHouseChart/"
-      },
-      {
-        "nombre": "carta astral (i-ching)",
-        "url": "https://meowrhino.github.io/hexagramaNacimiento/"
       }
     ]
   },

@@ -65,7 +65,6 @@ export function renderTools(data) {
   const herramientas  = data.links.herramientas || [];
   const tools         = data.links.tools || [];
   const wip           = data.links.wip || [];
-  const misc          = data.links.misc || [];
   const formateadores = data.welcome?.formateadores || [];
   const websTerminadas = (data.portfolio?.proyectos || []).map(p =>
     p.urls ? { urls: p.urls } : { nombre: p.nombre, url: p.url }
@@ -74,7 +73,6 @@ export function renderTools(data) {
   const linksHTML = herramientas.map(crearLinkHTML).join("");
   const dropdownsHTML = [
     crearDropdownHTML("tools", tools, "dd_tools"),
-    crearDropdownHTML("misc", misc, "dd_misc"),
     crearDropdownHTML("formateadores", formateadores, "dd_formateadores"),
     crearDropdownHTML("WIP", wip, "dd_wip"),
     crearDropdownHTML("webs terminadas", websTerminadas, "dd_webs"),
