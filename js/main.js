@@ -70,12 +70,12 @@ setupResizeDebounce({
 
 configurarNavegacion({
   grid: [
-    [0, 1, 0, 0], // fila 0: _, tools, _, _
+    [0, 1, 0, 0], // fila 0: _, links, _, _
     [1, 1, 1, 1], // fila 1: footer, welcome, metodología, statement
     [0, 1, 1, 0], // fila 2: _, portfolio, contacto, _
   ],
   nombres: {
-    "0_1": "tools",
+    "0_1": "links",
     "1_0": "footer",
     "1_1": "welcome",
     "1_2": "metodología",
@@ -84,13 +84,16 @@ configurarNavegacion({
     "2_2": "contacto",
   },
   clasesCss: {
-    "tools": "tools",
+    "links": "tools",
     "footer": "footer",
     "metodología": "metodologia",
     "welcome": "welcome",
     "statement": "statement",
     "portfolio": "portfolio",
     "contacto": "contacto",
+  },
+  redirects: {
+    "links": ["tools"],
   },
   posInicial: { y: 1, x: 1 },
 });

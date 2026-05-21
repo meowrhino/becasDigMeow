@@ -60,12 +60,12 @@ function crearDropdownHTML(titulo, items, uid) {
 
 export function renderTools(data) {
   const el = document.querySelector(".celda.tools");
-  if (!el || !data?.tools) return;
+  if (!el || !data?.links) return;
 
-  const herramientas  = data.tools.herramientas || [];
-  const wip           = data.tools.wip || [];
-  const conversores   = data.tools.conversores || [];
-  const misc          = data.tools.misc || [];
+  const herramientas  = data.links.herramientas || [];
+  const tools         = data.links.tools || [];
+  const wip           = data.links.wip || [];
+  const misc          = data.links.misc || [];
   const formateadores = data.welcome?.formateadores || [];
   const websTerminadas = (data.portfolio?.proyectos || []).map(p =>
     p.urls ? { urls: p.urls } : { nombre: p.nombre, url: p.url }
@@ -73,7 +73,7 @@ export function renderTools(data) {
 
   const linksHTML = herramientas.map(crearLinkHTML).join("");
   const dropdownsHTML = [
-    crearDropdownHTML("conversores", conversores, "dd_conversores"),
+    crearDropdownHTML("tools", tools, "dd_tools"),
     crearDropdownHTML("misc", misc, "dd_misc"),
     crearDropdownHTML("formateadores", formateadores, "dd_formateadores"),
     crearDropdownHTML("WIP", wip, "dd_wip"),

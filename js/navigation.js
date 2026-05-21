@@ -13,6 +13,7 @@ const app = document.getElementById("content");
 let GRID = [];
 let NOMBRES_CELDAS = {};
 let CLASE_CSS = {};
+let REDIRECTS = {};
 let posY = 0;
 let posX = 0;
 let onVistaActualizadaCb = null;
@@ -20,14 +21,30 @@ let onVistaActualizadaCb = null;
 /**
  * Configura el grid de navegación.
  * Debe llamarse ANTES de crearCeldas().
+ *
+ * `redirects` mapea destino → [aliases]. Resuelve en cadena:
+ * { macarrones: ["links"], links: ["tools"] } hace que #tools → #links → #macarrones.
  */
-export function configurarNavegacion({ grid, nombres, clasesCss, posInicial, onUpdate }) {
+export function configurarNavegacion({ grid, nombres, clasesCss, posInicial, onUpdate, redirects }) {
   GRID = grid;
   NOMBRES_CELDAS = nombres;
   CLASE_CSS = clasesCss || {};
+  REDIRECTS = redirects || {};
   posY = posInicial?.y ?? 0;
   posX = posInicial?.x ?? 0;
   onVistaActualizadaCb = onUpdate || null;
+}
+
+function resolverAlias(hash) {
+  let actual = hash;
+  const vistos = new Set();
+  while (!vistos.has(actual)) {
+    vistos.add(actual);
+    const destino = Object.keys(REDIRECTS).find(k => REDIRECTS[k].includes(actual));
+    if (!destino) break;
+    actual = destino;
+  }
+  return actual;
 }
 
 export function getGrid() {
@@ -271,8 +288,9 @@ function actualizarHash() {
 export function leerHash() {
   const hash = decodeURIComponent(window.location.hash.replace("#", "")).toLowerCase().trim();
   if (!hash) return false;
+  const resolved = resolverAlias(hash);
   for (const [key, nombre] of Object.entries(NOMBRES_CELDAS)) {
-    if (nombre === hash) {
+    if (nombre === resolved) {
       const [y, x] = key.split("_").map(Number);
       setPosicion(y, x);
       return true;

@@ -51,8 +51,26 @@
       }
     ]
   },
-  "tools": {
+  "links": {
     "herramientas": [
+      {
+        "nombre": "piuler",
+        "url": "https://piuler.meowrhino.studio/"
+      },
+      {
+        "nombre": "arxiu",
+        "url": "https://arxiu.meowrhino.studio"
+      },
+      {
+        "nombre": "twoitter",
+        "url": "https://twoitter.meowrhino.studio/"
+      },
+      {
+        "nombre": "chords",
+        "url": "https://chords.meowrhino.studio/"
+      }
+    ],
+    "tools": [
       {
         "nombre": "trackr",
         "url": "https://meowrhino.github.io/trackr/"
@@ -70,16 +88,12 @@
         "url": "https://meowrhino.github.io/generadorFacturas/"
       },
       {
-        "nombre": "piuler",
-        "url": "https://piuler.meowrhino.studio/"
+        "nombre": "imgToWeb",
+        "url": "https://meowrhino.github.io/imgToWeb/"
       },
       {
-        "nombre": "arxiu",
-        "url": "https://arxiu.meowrhino.studio"
-      },
-      {
-        "nombre": "chords",
-        "url": "https://chords.meowrhino.studio/"
+        "nombre": "videoToWeb",
+        "url": "https://meowrhino.github.io/videoToWeb/"
       }
     ],
     "wip": [
@@ -106,16 +120,6 @@
       {
         "nombre": "poporingGenerator",
         "url": "https://meowrhino.github.io/poporingGenerator/"
-      }
-    ],
-    "conversores": [
-      {
-        "nombre": "imgToWeb",
-        "url": "https://meowrhino.github.io/imgToWeb/"
-      },
-      {
-        "nombre": "videoToWeb",
-        "url": "https://meowrhino.github.io/videoToWeb/"
       }
     ],
     "misc": [
