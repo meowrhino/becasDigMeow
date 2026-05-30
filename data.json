@@ -435,10 +435,10 @@
         "url": "https://930blurberrie.com"
       },
       {
-        "nombre": "conor",
-        "imagen": "img/conor/1.webp",
+        "nombre": "barbara wong",
+        "imagen": "img/barbarawong/1.webp",
         "imagenesSecundarias": 2,
-        "url": "https://conorashlee.com"
+        "url": "https://barbarawong.info"
       },
       {
         "nombre": "mokakopaTwins",
@@ -466,6 +466,12 @@
         "imagen": "img/valentin/1.webp",
         "imagenesSecundarias": 1,
         "url": "https://valentinbarrio.com"
+      },
+      {
+        "nombre": "conor",
+        "imagen": "img/conor/1.webp",
+        "imagenesSecundarias": 2,
+        "url": "https://conorashlee.com"
       },
       {
         "nombre": "maxito",
