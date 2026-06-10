@@ -70,6 +70,10 @@
         "url": "https://twoitter.meowrhino.studio/"
       },
       {
+        "nombre": "profilePics",
+        "url": "https://meowrhino.github.io/profilePics/"
+      },
+      {
         "nombre": "chords",
         "url": "https://chords.meowrhino.studio/"
       }
