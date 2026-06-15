@@ -183,27 +183,30 @@
   "metodologia": {
     "es": {
       "lineas": [
-        "empezamos con una primera reunión gratuita. trae 3–5 referentes de cosas que te gusten o no te gusten: pueden ser webs, otras interfaces o incluso bocetos. revisamos juntos el material y hablamos de estructura, estética y presupuesto.",
+        "empezamos con una primera reunión gratuita. trae 3–5 referentes de cosas que te gusten o no te gusten: pueden ser webs, otras interfaces o incluso bocetos. revisamos juntos el material y hablamos de estructura, estética y presupuesto. antes de despedirnos dejamos agendada la segunda reunión y una lista de lo que necesitamos de ti: textos, imágenes y tu identidad visual.",
+        "tu web está lista en un mes, que empieza a contar desde la primera reunión. la segunda reunión está incluida si la hacemos en las dos semanas siguientes y con tu material enviado. si pasan más de dos semanas sin contenido, el proyecto entra en pausa y reactivarlo tiene una tarifa del 10% del coste acordado.",
         "a partir de ahí elaboramos una propuesta de diseño. te damos tiempo para pensarlo con calma. cuando estés conforme y se haga el primer pago (50%), empezamos a programar.",
-        "a lo largo del proyecto tienes hasta 3 rondas de revisiones. cada ronda puede incluir varios ajustes. el diseño también se adapta cuando pasa del boceto a una web funcional que se vea bien en distintos dispositivos. solemos tardar 1–2 semanas en diseño y 1–2 semanas en programación.",
+        "a lo largo del proyecto tienes hasta 3 rondas de revisiones. cada ronda puede incluir varios ajustes. el diseño también se adapta cuando pasa del boceto a una web funcional que se vea bien en distintos dispositivos. solemos tardar 1–2 semanas en diseño y 1–2 semanas en programación: con el material a tiempo, un mes de principio a fin.",
         "con el código aprobado y el segundo pago (50%), nos vemos en una última reunión para preparar tu dispositivo: aprenderás a actualizar la web tú mismo. si lo necesitas, también configuramos tu dominio (recomendamos cloudflare).",
         "tras la entrega tienes 2 semanas para reportar errores o usar las rondas de revisión que te queden. pasado ese periodo, los cambios se facturan a 60€/hora."
       ]
     },
     "en": {
       "lineas": [
-        "we start with a free first meeting. bring 3–5 references of things you like or don't like: they can be websites, other interfaces, or even sketches. we go through the material together and talk about structure, aesthetics, and budget.",
+        "we start with a free first meeting. bring 3–5 references of things you like or don't like: they can be websites, other interfaces, or even sketches. we go through the material together and talk about structure, aesthetics, and budget. before we say goodbye, we schedule the second meeting and a list of what we need from you: texts, images and your visual identity.",
+        "your website is ready in a month, counting from the first meeting. the second meeting is included as long as we hold it within the next two weeks and you've sent your material. if more than two weeks pass without content, the project is paused and restarting it carries a fee of 10% of the agreed price.",
         "from there, we put together a design proposal. we give you time to think it over. once you're happy with it and the first payment is made (50%), we start coding.",
-        "throughout the project you have up to 3 rounds of revisions. each round can include several adjustments. the design also adapts as it goes from mockup to a working website that looks good on different devices. we usually take 1–2 weeks for design and 1–2 weeks for development.",
+        "throughout the project you have up to 3 rounds of revisions. each round can include several adjustments. the design also adapts as it goes from mockup to a working website that looks good on different devices. we usually take 1–2 weeks for design and 1–2 weeks for development: with your material on time, a month from start to finish.",
         "once the code is approved and the second payment is made (50%), we meet one last time to set up your device: you'll learn to update the website yourself. if you need it, we also configure your domain (we recommend cloudflare).",
         "after delivery you have 2 weeks to report bugs or use any remaining revision rounds. after that period, changes are billed at 60€/hour."
       ]
     },
     "cat": {
       "lineas": [
-        "comencem amb una primera reunió gratuïta. porta 3–5 referents de coses que t'agradin o no t'agradin: poden ser webs, altres interfícies o fins i tot esbossos. revisem junts el material i parlem d'estructura, estètica i pressupost.",
+        "comencem amb una primera reunió gratuïta. porta 3–5 referents de coses que t'agradin o no t'agradin: poden ser webs, altres interfícies o fins i tot esbossos. revisem junts el material i parlem d'estructura, estètica i pressupost. abans d'acomiadar-nos deixem agendada la segona reunió i una llista del que necessitem de tu: textos, imatges i la teva identitat visual.",
+        "la teva web està llesta en un mes, que comença a comptar des de la primera reunió. la segona reunió està inclosa si la fem dins de les dues setmanes següents i amb el teu material enviat. si passen més de dues setmanes sense contingut, el projecte queda en pausa i reactivar-lo té una tarifa del 10% del cost acordat.",
         "a partir d'aquí elaborem una proposta de disseny. et donem temps per pensar-ho amb calma. quan estiguis conforme i es faci el primer pagament (50%), comencem a programar.",
-        "al llarg del projecte tens fins a 3 rondes de revisions. cada ronda pot incloure diversos ajustos. el disseny també s'adapta quan passa de l'esbós a una web funcional que es vegi bé en diferents dispositius. solem trigar 1–2 setmanes en disseny i 1–2 setmanes en programació.",
+        "al llarg del projecte tens fins a 3 rondes de revisions. cada ronda pot incloure diversos ajustos. el disseny també s'adapta quan passa de l'esbós a una web funcional que es vegi bé en diferents dispositius. solem trigar 1–2 setmanes en disseny i 1–2 setmanes en programació: amb el material a temps, un mes de principi a fi.",
         "amb el codi aprovat i el segon pagament (50%), ens veiem en una última reunió per preparar el teu dispositiu: aprendràs a actualitzar la web tu mateix. si ho necessites, també configurem el teu domini (recomanem cloudflare).",
         "després del lliurament tens 2 setmanes per reportar errors o fer servir les rondes de revisió que et quedin. passat aquest període, els canvis es facturen a 60€/hora."
       ]
@@ -223,7 +226,7 @@
             "no trabajamos con placeholders.",
             "cada proyecto incluye 2 entregas (diseño y código) y hasta 3 rondas de revisiones. cada ronda puede incluir varios cambios, pero una vez enviada, los siguientes cambios pertenecen a la siguiente ronda. cualquier cambio derivado de trabajar con material incompleto cuenta como revisión. las rondas extra se presupuestan a 60€/hora.",
             "pago en dos fases: 50% al cerrar diseño, 50% al finalizar programación.",
-            "la primera reunión es gratuita. a partir de la primera entrega se consume parte del presupuesto. puedes parar el proyecto en cualquier momento abonando la parte proporcional de lo trabajado. si se retoma más adelante, se abre un nuevo presupuesto.",
+            "la primera reunión es gratuita, y la segunda también si la hacemos dentro de las dos semanas siguientes y con tu material listo. pasado ese plazo sin contenido, el proyecto queda en pausa y reactivarlo conlleva una tarifa del 10% del presupuesto. a partir de la primera entrega se consume parte del presupuesto. puedes parar el proyecto en cualquier momento abonando la parte proporcional de lo trabajado; si se retoma más adelante, se abre un nuevo presupuesto.",
             "nos reservamos la posibilidad de publicar el proyecto en nuestro portfolio y redes sociales. a la finalización de la web, planteamos la posibilidad de un post conjunto en instagram.",
             "nuestro compromiso es diseñar una web que entiendas, que puedas mantener y que pueda crecer contigo."
           ],
@@ -283,7 +286,7 @@
             "we don't work with placeholders.",
             "each project includes 2 deliveries (design and code) and up to 3 rounds of revisions. each round may include several changes, but once submitted, subsequent changes belong to the next round. any change resulting from working with incomplete material counts as a revision. extra rounds are billed at 60€/hour.",
             "payment in two phases: 50% upon design sign-off, 50% upon completing development.",
-            "the first meeting is free. from the first delivery onwards, part of the budget is used. you can stop the project at any time by paying the proportional share of the work done. if resumed later, a new quote is provided.",
+            "the first meeting is free, and so is the second as long as we hold it within the next two weeks and your material is ready. after that period without content, the project is paused and restarting it carries a fee of 10% of the budget. from the first delivery onwards, part of the budget is used. you can stop the project at any time by paying the proportional share of the work done; if resumed later, a new quote is provided.",
             "we reserve the option to publish the project in our portfolio and social media. upon completion of the website, we'll suggest a joint instagram post.",
             "our commitment is to design a website you understand, can maintain, and that can grow with you."
           ],
@@ -343,7 +346,7 @@
             "no treballem amb placeholders.",
             "cada projecte inclou 2 lliuraments (disseny i codi) i fins a 3 rondes de revisions. cada ronda pot incloure diversos canvis, però un cop enviada, els canvis següents pertanyen a la ronda següent. qualsevol canvi derivat de treballar amb material incomplet compta com a revisió. les rondes extra es pressuposten a 60€/hora.",
             "pagament en dues fases: 50% en tancar disseny, 50% en finalitzar programació.",
-            "la primera reunió és gratuïta. a partir del primer lliurament es consumeix part del pressupost. pots aturar el projecte en qualsevol moment abonant la part proporcional del treball fet. si es reprèn més endavant, s'obre un nou pressupost.",
+            "la primera reunió és gratuïta, i la segona també si la fem dins de les dues setmanes següents i amb el teu material llest. passat aquest termini sense contingut, el projecte queda en pausa i reactivar-lo comporta una tarifa del 10% del pressupost. a partir del primer lliurament es consumeix part del pressupost. pots aturar el projecte en qualsevol moment abonant la part proporcional del treball fet; si es reprèn més endavant, s'obre un nou pressupost.",
             "ens reservem la possibilitat de publicar el projecte al nostre portfolio i xarxes socials. en finalitzar la web, plantegem la possibilitat d'un post conjunt a instagram.",
             "el nostre compromís és dissenyar una web que entenguis, que puguis mantenir i que pugui créixer amb tu."
           ],
