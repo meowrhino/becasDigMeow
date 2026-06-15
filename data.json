@@ -5,29 +5,29 @@
       "precio": "600 €",
       "email": "hola@meowrhino.studio",
       "es": {
-        "hazte": "tu propia web por",
+        "hazte": "tu web en un mes por",
         "iva": "(iva no incluido)",
         "caduca": "válido hasta finales de agosto",
         "subject": "quiero una web!",
-        "incluye": "diseño a medida, sin servidores ni suscripciones. te enseñamos a mantenerla tú mismo.",
+        "incluye": "diseño a medida. sin servidores, sin suscripciones, sin tasas mensuales. te enseñamos a mantenerla tú mismo.",
         "primera": "primera reunión gratis",
         "cta": "escríbeme"
       },
       "en": {
-        "hazte": "your own website for",
+        "hazte": "your website in a month for",
         "iva": "(vat not included)",
         "caduca": "valid until the end of august",
         "subject": "I want a website!",
-        "incluye": "custom design, no servers or subscriptions. we teach you to maintain it yourself.",
+        "incluye": "custom design. no servers, no subscriptions, no monthly fees. we teach you to maintain it yourself.",
         "primera": "first meeting free",
         "cta": "let's talk"
       },
       "cat": {
-        "hazte": "la teva pròpia web per",
+        "hazte": "la teva web en un mes per",
         "iva": "(iva no inclòs)",
         "caduca": "vàlid fins a finals d'agost",
         "subject": "vull una web!",
-        "incluye": "disseny a mida, sense servidors ni subscripcions. t'ensenyem a mantenir-la tu mateix.",
+        "incluye": "disseny a mida. sense servidors, sense subscripcions, sense quotes mensuals. t'ensenyem a mantenir-la tu mateix.",
         "primera": "primera reunió gratis",
         "cta": "escriu-me"
       }
