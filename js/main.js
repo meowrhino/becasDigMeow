@@ -40,7 +40,18 @@ import { setupKeyboardNav, setupResizeDebounce } from "./shell.js";
 async function renderizarContenido() {
   await cargarDatos();
   const data = obtenerDatos();
-  if (!data) return;
+  if (!data) {
+    const cont = document.getElementById("content");
+    if (cont) {
+      cont.innerHTML = `
+        <div style="max-width:38rem;margin:12vh auto;padding:0 1.5rem;text-align:center;line-height:1.6;">
+          <h1>meowrhino studio</h1>
+          <p>No se ha podido cargar el contenido. Recarga la página o escríbeme a
+             <a href="mailto:hola@meowrhino.studio">hola@meowrhino.studio</a>.</p>
+        </div>`;
+    }
+    return;
+  }
 
   renderTools(data);
   renderWelcome(data);
