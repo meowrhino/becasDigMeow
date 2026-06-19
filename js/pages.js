@@ -128,7 +128,7 @@ export function renderWelcome(data) {
   // engancha los listeners al recorrer los .lang-btn dentro de la celda.
   el.innerHTML = `
     <div class="welcome-content">
-      <h1 class="welcome-title">${data.welcome.titulo}</h1>
+      <h1 class="welcome-title"><a href="easy.html" class="welcome-title-link" aria-label="${data.welcome.titulo} — versión en una página">${data.welcome.titulo}</a></h1>
     </div>
     ${buildLangButtons()}
   `;

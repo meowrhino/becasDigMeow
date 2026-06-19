@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es" class="easy">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="meowrhino studio — estudio de diseño web en Barcelona. Webs con código abierto, sin cuotas de mantenimiento.">
+  <!-- Modo fácil: misma info que el grid, en scroll lineal. Prototipo: noindex
+       para no competir con index.html por contenido duplicado hasta decidir. -->
+  <meta name="robots" content="noindex,follow">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+  <title>meowrhino studio — modo fácil</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+  <link rel="icon" href="favicon/favicon.ico">
+  <link rel="preload" href="fonts/inknut-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem("meowrhino-theme");
+      if (!t && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";
+      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+    })();
+  </script>
+</head>
+<body class="easy-mode">
+  <main id="easy" role="main"></main>
+  <noscript>
+    <div style="max-width:38rem;margin:12vh auto;padding:0 1.5rem;text-align:center;line-height:1.6;">
+      <h1>meowrhino studio</h1>
+      <p>estudio de diseño web en Barcelona. Webs con código abierto, sin cuotas de mantenimiento.</p>
+      <p>Escríbeme a <a href="mailto:hola@meowrhino.studio">hola@meowrhino.studio</a></p>
+    </div>
+  </noscript>
+  <script type="module" src="js/easy-main.js"></script>
+</body>
+</html>
