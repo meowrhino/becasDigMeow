@@ -40,17 +40,25 @@ function aplicarTema(tema) {
 
 /**
  * iOS Safari no repinta las capas compuestas por GPU cuando solo cambian
- * variables CSS (--bg, --text, --minimap-*). El cupón de la welcome vive
- * permanentemente en una de esas capas por su animación de rebote, así que al
- * cambiar de tema se quedaba con los colores del tema anterior — el clásico
- * "solo cambia una parte de la página". Destruir y recrear la capa (display
- * none→reflow→'') la re-rasteriza con los colores nuevos. Es síncrono, antes
- * del próximo paint, así que no parpadea.
+ * variables CSS (--bg, --text, --minimap-*, --overlay-bg). Esos elementos se
+ * quedan con los colores del tema anterior — el clásico "solo cambia una parte
+ * de la página". Destruir y recrear la capa (display none→reflow→'') la
+ * re-rasteriza con los colores nuevos. Es síncrono, antes del próximo paint,
+ * así que no parpadea.
+ *
+ * Capas afectadas:
+ *  - .minimap-overlay  → es position:fixed y, además, contiene el propio toggle
+ *    de tema, así que es la superficie que el usuario está mirando al cambiar.
+ *    Recrearla re-rasteriza también sus celdas hijas (--minimap-*).
+ *  - .zone-label-bg    → position:fixed + transform permanente (--zone-label).
+ *  - .welcome-cupon-wrapper → capa permanente por su animación de rebote.
  */
 function forzarRepaintCapasCompuestas() {
-  document.querySelectorAll(".welcome-cupon-wrapper").forEach(el => {
+  document.querySelectorAll(
+    ".minimap-overlay, .zone-label-bg, .welcome-cupon-wrapper"
+  ).forEach(el => {
     el.style.display = "none";
-    void el.offsetHeight; // fuerza reflow
+    void el.offsetHeight; // fuerza reflow → re-rasteriza al volver
     el.style.display = "";
   });
 }

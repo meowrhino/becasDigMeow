@@ -55,6 +55,9 @@
   --shadow-sm: rgba(0, 0, 0, 0.05);
   --shadow-md: rgba(0, 0, 0, 0.08);
 
+  /* Scrollbar */
+  --scrollbar-thumb: rgba(0, 0, 0, 0.2);
+
   /* Zone label */
   --zone-label: rgba(0, 0, 0, 0.055);
 
@@ -121,6 +124,9 @@
   /* Shadows */
   --shadow-sm: rgba(0, 0, 0, 0.2);
   --shadow-md: rgba(0, 0, 0, 0.35);
+
+  /* Scrollbar */
+  --scrollbar-thumb: rgba(255, 255, 255, 0.2);
 
   /* Zone label */
   --zone-label: rgba(255, 255, 255, 0.04);
@@ -1092,7 +1098,7 @@ a.nav-label:visited {
 }
 
 .portfolio-scroll-content::-webkit-scrollbar { width: 6px; }
-.portfolio-scroll-content::-webkit-scrollbar-thumb { background: rgba(0,0,0,.2); border-radius: 3px; }
+.portfolio-scroll-content::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 3px; }
 
 .portfolio-grid {
   max-width: 1600px;
