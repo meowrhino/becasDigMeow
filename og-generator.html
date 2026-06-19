@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>og-generator — meowrhino studio</title>
+  <meta name="robots" content="noindex">
+  <!-- Generador de la imagen Open Graph (1200×630). No es una página pública:
+       se abre a mano, se elige tema y se descarga el PNG para favicon/og-image.png.
+       Dibuja en <canvas> con la misma tipografía/colores que el sitio. -->
+  <style>
+    @font-face {
+      font-family: "Inknut Antiqua"; font-style: normal; font-weight: 400; font-display: block;
+      src: url("fonts/inknut-400-latin.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Inknut Antiqua"; font-style: normal; font-weight: 600; font-display: block;
+      src: url("fonts/inknut-600-latin.woff2") format("woff2");
+    }
+    body {
+      margin: 0; min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 1.2rem;
+      background: #444; font-family: "Inknut Antiqua", serif;
+    }
+    canvas { width: min(90vw, 600px); height: auto; box-shadow: 0 6px 30px rgba(0,0,0,.4); }
+    .controls { display: flex; gap: .8rem; }
+    button {
+      font-family: inherit; font-size: .9rem; padding: .5rem 1rem; cursor: pointer;
+      border: 1px solid #888; background: #fff; border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="og" width="1200" height="630"></canvas>
+  <div class="controls">
+    <button id="toggle">Cambiar a oscuro</button>
+    <button id="download">Descargar PNG</button>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("og");
+    const ctx = canvas.getContext("2d");
+
+    const TEMAS = {
+      light: { bg: "#ffffff", text: "#000000", muted: "#717171", frame: "#000000" },
+      dark:  { bg: "#121212", text: "#e0e0e0", muted: "#808080", frame: "#e0e0e0" },
+    };
+    let temaActual = "light";
+
+    // Las 4 secciones de contenido, como los nav-labels del sitio.
+    const SECCIONES = ["portfolio", "metodología", "statement", "contacto"];
+
+    function dibujar(tema) {
+      const c = TEMAS[tema];
+      const W = canvas.width, H = canvas.height;
+
+      // Fondo (sin marco)
+      ctx.fillStyle = c.bg;
+      ctx.fillRect(0, 0, W, H);
+
+      ctx.textAlign = "center";
+      ctx.textBaseline = "alphabetic";
+
+      // Bloque central: wordmark + tagline, centrado vertical y horizontalmente.
+      ctx.fillStyle = c.text;
+      ctx.letterSpacing = "-2px";
+      ctx.font = '600 74px "Inknut Antiqua"';
+      ctx.fillText("meowrhino studio", W / 2, 306);
+      ctx.letterSpacing = "0px";
+
+      ctx.fillStyle = c.muted;
+      ctx.font = '400 32px "Inknut Antiqua"';
+      ctx.fillText("estudio de diseño web · Barcelona", W / 2, 370);
+
+      // Secciones ancladas abajo, separadas por espacio (sin puntos).
+      ctx.font = '400 27px "Inknut Antiqua"';
+      ctx.fillText(SECCIONES.join("      "), W / 2, 568);
+
+      // Exponer para extracción automática (preview eval) y para el botón
+      window.__ogDataURL = canvas.toDataURL("image/png");
+    }
+
+    function render(tema) {
+      temaActual = tema;
+      document.getElementById("toggle").textContent =
+        tema === "light" ? "Cambiar a oscuro" : "Cambiar a claro";
+      dibujar(tema);
+    }
+
+    document.getElementById("toggle").addEventListener("click", () => {
+      render(temaActual === "light" ? "dark" : "light");
+    });
+
+    document.getElementById("download").addEventListener("click", () => {
+      const a = document.createElement("a");
+      a.download = "og-image.png";
+      a.href = window.__ogDataURL;
+      a.click();
+    });
+
+    // Dibuja cuando la fuente esté lista (canvas necesita la fuente cargada)
+    Promise.all([
+      document.fonts.load('600 112px "Inknut Antiqua"'),
+      document.fonts.load('400 34px "Inknut Antiqua"'),
+    ]).then(() => render("light")).catch(() => render("light"));
+  </script>
+</body>
+</html>
