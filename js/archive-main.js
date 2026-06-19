@@ -75,9 +75,10 @@ async function renderizarContenido() {
     studioLabel.classList.add("nav-label", "bottom");
     studioLabel.dataset.permanent = "true";
     studioLabel.textContent = "studio";
+    // El estudio se siente claro por defecto: fija el tema destino en vez de
+    // invertir el actual (determinista; no pisa de forma rara una elección manual).
     studioLabel.addEventListener("click", () => {
-      const current = localStorage.getItem("meowrhino-theme") || "dark";
-      localStorage.setItem("meowrhino-theme", current === "dark" ? "light" : "dark");
+      localStorage.setItem("meowrhino-theme", "light");
     });
     meowEl.appendChild(studioLabel);
   }

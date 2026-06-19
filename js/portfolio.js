@@ -147,9 +147,10 @@ export function renderPortfolio(data) {
   archiveLabel.classList.add("nav-label", "bottom");
   archiveLabel.dataset.permanent = "true";
   archiveLabel.textContent = "archive";
+  // El archivo se siente oscuro por defecto: fija el tema destino en vez de
+  // invertir el actual (determinista; no pisa de forma rara una elección manual).
   archiveLabel.addEventListener("click", () => {
-    const current = localStorage.getItem("meowrhino-theme") || "light";
-    localStorage.setItem("meowrhino-theme", current === "dark" ? "light" : "dark");
+    localStorage.setItem("meowrhino-theme", "dark");
   });
   el.appendChild(archiveLabel);
 }
