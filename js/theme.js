@@ -35,6 +35,24 @@ function aplicarTema(tema) {
   document.querySelectorAll(".footer-logo[data-logo-name]").forEach(img => {
     img.src = `img/LOGOS/${tone}/${img.dataset.logoName}.webp`;
   });
+  forzarRepaintCapasCompuestas();
+}
+
+/**
+ * iOS Safari no repinta las capas compuestas por GPU cuando solo cambian
+ * variables CSS (--bg, --text, --minimap-*). El cupón de la welcome vive
+ * permanentemente en una de esas capas por su animación de rebote, así que al
+ * cambiar de tema se quedaba con los colores del tema anterior — el clásico
+ * "solo cambia una parte de la página". Destruir y recrear la capa (display
+ * none→reflow→'') la re-rasteriza con los colores nuevos. Es síncrono, antes
+ * del próximo paint, así que no parpadea.
+ */
+function forzarRepaintCapasCompuestas() {
+  document.querySelectorAll(".welcome-cupon-wrapper").forEach(el => {
+    el.style.display = "none";
+    void el.offsetHeight; // fuerza reflow
+    el.style.display = "";
+  });
 }
 
 /** Alterna entre claro y oscuro con animación de rotación. */

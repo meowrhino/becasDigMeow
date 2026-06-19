@@ -126,8 +126,8 @@
   --zone-label: rgba(255, 255, 255, 0.04);
 
   /* Minimap */
-  --minimap-cell: #444444;
-  --minimap-active: #e0e0e0;
+  --minimap-cell: #3a3a3a;
+  --minimap-active: #f2f2f2;
   --minimap-expanded-bg: #555555;
   --minimap-expanded-hover: #999999;
   --minimap-expanded-text: #121212;
@@ -277,7 +277,7 @@ p, h1, h2, h3 {
   /* columnas y filas se definen en JS según GRID.length */
   gap: 3px;
   cursor: pointer;
-  opacity: 0.7;
+  opacity: 0.85;
   transition: opacity 0.2s ease;
 }
 
@@ -292,6 +292,9 @@ p, h1, h2, h3 {
 
 .minimap-inline-cell.activa {
   background: var(--minimap-active);
+  /* Anillo sutil para que la sección actual sea inequívoca también en celdas
+     pequeñas de móvil, sin depender solo del brillo. */
+  box-shadow: 0 0 0 1px var(--minimap-active);
 }
 
 .minimap-inline-cell.invisible {
