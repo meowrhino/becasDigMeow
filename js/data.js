@@ -26,6 +26,12 @@ export let currentLang = idiomaGuardado && LANGS.includes(idiomaGuardado)
   ? idiomaGuardado
   : detectarIdiomaNavegador();
 
+/** Refleja el idioma activo en <html lang> (catalán → código BCP-47 "ca"). */
+function sincronizarLangDocumento(lang) {
+  document.documentElement.lang = lang === "cat" ? "ca" : lang;
+}
+sincronizarLangDocumento(currentLang);
+
 /** Callbacks de cada sección para actualizar su contenido al cambiar idioma. */
 export const langUpdateCallbacks = [];
 
@@ -57,6 +63,7 @@ export function attachLangListeners(container, onLangChange) {
       if (lang === currentLang) return;
       currentLang = lang;
       localStorage.setItem("lang", lang);
+      sincronizarLangDocumento(lang);
       syncAllLangButtons();
       langUpdateCallbacks.forEach(cb => cb(lang));
     });

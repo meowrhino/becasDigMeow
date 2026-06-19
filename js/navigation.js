@@ -128,6 +128,9 @@ export function crearHeader() {
 
   minimapInlineEl = document.createElement("div");
   minimapInlineEl.classList.add("minimap-inline");
+  minimapInlineEl.setAttribute("role", "button");
+  minimapInlineEl.setAttribute("tabindex", "0");
+  minimapInlineEl.setAttribute("aria-label", "Abrir mapa de navegación");
   minimapInlineEl.style.gridTemplateColumns = `repeat(${GRID[0].length}, 1fr)`;
   minimapInlineEl.style.gridTemplateRows    = `repeat(${GRID.length}, 1fr)`;
 
@@ -144,6 +147,12 @@ export function crearHeader() {
 
   actualizarTamanoMinimapInline();
   minimapInlineEl.addEventListener("click", () => abrirMinimapExpandido());
+  minimapInlineEl.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      abrirMinimapExpandido();
+    }
+  });
   headerEl.appendChild(minimapInlineEl);
   document.body.appendChild(headerEl);
   actualizarHeader();
