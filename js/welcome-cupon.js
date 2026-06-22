@@ -61,6 +61,7 @@ export function renderWelcomeCupon(celda, cuponData) {
     const t = cuponData[lang] || cuponData.es || {};
     hazteEl.textContent   = t.hazte   || "";
     ivaEl.textContent     = t.iva     || "";
+    ivaEl.style.display   = t.iva ? "" : "none";   // aparcado en data.json (_iva)
     caducaEl.textContent  = t.caduca  || "";
     primeraEl.textContent = t.primera || "";
     ctaEl.textContent     = t.cta     || "";

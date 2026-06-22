@@ -1559,9 +1559,9 @@ html.easy, html.easy body {
 
 #easy { display: block; }
 
-.easy-section, .easy-hero, .easy-footer { scroll-margin-top: 80px; }
+.easy-section, .easy-hero, .easy-footer { scroll-margin-top: 56px; }
 
-/* --- Header --- */
+/* --- Header (compacto: wordmark + idiomas en una fila a la izquierda) --- */
 .easy-header {
   position: sticky;
   top: 0;
@@ -1570,18 +1570,19 @@ html.easy, html.easy body {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1.1rem clamp(1.2rem, 4dvw, 3rem);
+  padding: 0.55rem clamp(1rem, 4dvw, 2.5rem);
   background: var(--bg);
   border-bottom: 1px solid var(--border);
 }
-/* Columna izquierda: wordmark con los idiomas debajo */
-.easy-header-id { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-.easy-logo { font-size: 1.3rem; letter-spacing: -0.02em; color: var(--text); }
+/* Fila izquierda: wordmark con los idiomas al lado */
+.easy-header-id { display: flex; flex-direction: row; align-items: baseline; gap: 0.9rem; }
+.easy-logo { font-size: 1.02rem; letter-spacing: -0.02em; color: var(--text); }
 /* Reubicar controles reutilizados (vienen posicionados absolutos para el grid).
    El toggle usa relative (no static) para seguir siendo el contexto de sus
    iconos SVG absolutos; inset:auto anula el bottom:10dvh del overlay. */
-.easy-header .lang-group { position: static; inset: auto; gap: 0.5rem; }
-.easy-header .theme-toggle { position: relative; inset: auto; flex: none; }
+.easy-header .lang-group { position: static; inset: auto; gap: 0.35rem; }
+.easy-header .lang-btn { font-size: 0.72rem; }
+.easy-header .theme-toggle { position: relative; inset: auto; flex: none; width: 26px; height: 26px; }
 
 /* --- Hero --- */
 .easy-hero {
@@ -1594,7 +1595,7 @@ html.easy, html.easy body {
   font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--text-muted); margin-bottom: 1.4rem;
 }
-.easy-hero-title { font-size: clamp(2.2rem, 6dvw, 3.4rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; }
+.easy-hero-title { font-size: clamp(1.85rem, 4.6dvw, 2.5rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; max-width: 26rem; margin: 0 auto; }
 .easy-ticket {
   display: inline-block;
   margin: 2.2rem auto 0;
@@ -1619,42 +1620,111 @@ html.easy, html.easy body {
 .easy-btn:hover { opacity: 0.85; }
 .easy-hero-primera { font-size: 0.75rem; color: var(--text-muted); }
 
-/* --- Secciones genéricas --- */
-.easy-section { padding: clamp(2.5rem, 7dvh, 4.5rem) clamp(1.5rem, 5dvw, 4rem); max-width: 64rem; margin: 0 auto; }
-.easy-section--alt { max-width: none; background: var(--bg-hover); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.easy-section--alt > * { max-width: 64rem; margin-left: auto; margin-right: auto; }
+/* --- Secciones genéricas (ritmo vertical consistente) --- */
+.easy-section { padding: clamp(3.5rem, 9dvh, 6rem) clamp(1.5rem, 5dvw, 4rem); max-width: 64rem; margin: 0 auto; }
 .easy-h { font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.8rem; font-weight: 400; }
 
-/* --- Portfolio (sin recuadros, fotos un poco "tiradas" que se enderezan) --- */
-.easy-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 2.2rem 1.6rem; }
-.easy-card { display: block; color: var(--text); transition: transform 0.3s ease; }
-.easy-card:nth-child(2n+1) { transform: rotate(-1.5deg); }
-.easy-card:nth-child(2n)   { transform: rotate(1.3deg); }
-.easy-card:nth-child(3n)   { transform: rotate(0.6deg); }
-.easy-card:hover { transform: rotate(0) scale(1.05); position: relative; z-index: 2; }
-.easy-card-thumb { display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--bg-hover); }
-.easy-card-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.easy-card-name { display: block; margin-top: 0.6rem; font-size: 0.85rem; color: var(--text-content); text-align: center; }
-
-/* --- Metodología (timeline con números grandes) --- */
-.easy-steps { list-style: none; padding: 0; margin: 0; max-width: 46rem; }
-.easy-step {
-  display: grid; grid-template-columns: 3.4rem 1fr; gap: 1.6rem; align-items: baseline;
-  padding: 1.7rem 0; border-top: 1px solid var(--border);
+/* --- Portfolio (visor a sangre tipo carrusel + miniaturas para elegir) --- */
+/* La sección pierde el quicio lateral para que el visor llegue de borde a borde;
+   título, pie y miniaturas se vuelven a centrar en la columna de 64rem. */
+.easy-portfolio { max-width: none; padding-left: 0; padding-right: 0; }
+.easy-portfolio > .easy-h,
+.easy-pf-caption,
+.easy-pf-thumbs {
+  box-sizing: border-box;
+  width: 100%; max-width: 64rem; margin-left: auto; margin-right: auto;
+  padding-left: clamp(1.5rem, 5dvw, 4rem); padding-right: clamp(1.5rem, 5dvw, 4rem);
 }
-.easy-step:first-child { border-top: none; padding-top: 0; }
-.easy-step-num { font-size: 2.1rem; font-weight: 600; letter-spacing: -0.02em; color: var(--text); line-height: 1; }
-.easy-step-text { font-size: 1rem; color: var(--text-content); line-height: 1.65; }
+.easy-pf { display: flex; flex-direction: column; gap: 1.3rem; }
+.easy-pf-viewer { position: relative; }
+.easy-pf-stage {
+  display: flex;
+  gap: clamp(0.8rem, 2.5dvw, 1.6rem);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;                 /* Firefox */
+  -webkit-overflow-scrolling: touch;
+  /* gutter lateral = mitad del hueco sobrante, para poder centrar la 1ª/última */
+  padding: 0 max(1rem, calc(50vw - 27rem)) 0.4rem;
+}
+.easy-pf-stage::-webkit-scrollbar { display: none; }   /* WebKit */
+.easy-pf-stage:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+.easy-pf-slide {
+  flex: 0 0 min(84vw, 54rem);
+  scroll-snap-align: center;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 4px;
+}
+.easy-pf-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-/* --- Statement (manifiesto grande) --- */
-.easy-statement { text-align: center; padding-top: clamp(3.5rem, 9dvh, 6rem); padding-bottom: clamp(3.5rem, 9dvh, 6rem); }
-.easy-statement-line { font-size: clamp(1.4rem, 3.6dvw, 2.15rem); line-height: 1.4; letter-spacing: -0.02em; color: var(--text); margin: 0 auto 0.45rem; max-width: 42rem; }
+/* Flechas: discretas, superpuestas en los bordes de la pantalla */
+.easy-pf-nav {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+  width: 2.6rem; height: 2.6rem; display: grid; place-items: center;
+  border: none; border-radius: 50%; cursor: pointer;
+  background: var(--bg); color: var(--text); opacity: 0.85;
+  font-size: 1.5rem; line-height: 1;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.18);
+  transition: opacity 0.2s ease;
+}
+.easy-pf-nav:hover { opacity: 1; }
+.easy-pf-prev { left: clamp(0.5rem, 2vw, 1.6rem); }
+.easy-pf-next { right: clamp(0.5rem, 2vw, 1.6rem); }
 
-/* --- Contacto (grande) --- */
-.easy-contacto { text-align: center; padding-top: clamp(3.5rem, 9dvh, 6rem); padding-bottom: clamp(3.5rem, 9dvh, 6rem); }
-.easy-email { font-size: clamp(1.9rem, 6.5dvw, 3.4rem); letter-spacing: -0.02em; color: var(--text); }
+.easy-pf-caption { display: flex; justify-content: center; align-items: baseline; gap: 1rem; min-height: 1.5em; margin: 0 auto; }
+.easy-pf-name { font-size: 1rem; color: var(--text); }
+.easy-pf-visitar { font-size: 0.82rem; letter-spacing: 0.02em; color: var(--text-muted); }
+.easy-pf-visitar:hover { color: var(--text); }
+
+.easy-pf-thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  gap: 0.5rem;
+}
+.easy-pf-thumb {
+  padding: 0; border: none; background: none; cursor: pointer;
+  aspect-ratio: 1; overflow: hidden; border-radius: 3px;
+  opacity: 0.4; outline: 2px solid transparent; outline-offset: 2px;
+  transition: opacity 0.2s ease, outline-color 0.2s ease;
+}
+.easy-pf-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.easy-pf-thumb:hover { opacity: 0.75; }
+.easy-pf-thumb.is-active { opacity: 1; outline-color: var(--text); }
+
+/* --- Metodología (timeline refinado: nº en insignia sobre el raíl) --- */
+.easy-steps { list-style: none; margin: 0; max-width: 46rem; padding: 0 0 0 3rem; border-left: 1px solid var(--border); }
+.easy-step { position: relative; padding: 0 0 2.4rem; }
+.easy-step:last-child { padding-bottom: 0; }
+.easy-step-num {
+  position: absolute; left: -3rem; top: -0.1rem; transform: translateX(-50%);
+  width: 2.4rem; height: 2.4rem; display: grid; place-items: center;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 50%;
+  font-size: 0.92rem; font-weight: 600; color: var(--text); line-height: 1;
+}
+.easy-step-text { font-size: 1.05rem; color: var(--text-content); line-height: 1.65; padding-top: 0.35rem; }
+
+/* --- Statement (manifiesto centrado; resalta la línea del centro al scrollear) --- */
+.easy-statement { text-align: center; padding-top: clamp(5rem, 17dvh, 10rem); padding-bottom: clamp(5rem, 17dvh, 10rem); }
+.easy-statement-line {
+  font-size: clamp(1.3rem, 3.3dvw, 2rem); line-height: 1.5; letter-spacing: -0.01em;
+  color: var(--text); margin: 0 auto 1.7rem; max-width: 40rem;
+  transition: opacity 0.45s ease;
+}
+.easy-statement-line:last-child { margin-bottom: 0; }
+/* Karaoke: con JS, las líneas se atenúan y solo brilla la del centro */
+.easy-statement.is-scrolly .easy-statement-line { opacity: 0.28; }
+.easy-statement.is-scrolly .easy-statement-line.is-active { opacity: 1; }
+
+/* --- Contacto (más pequeño, con aire) --- */
+.easy-contacto { text-align: center; padding-top: clamp(5.5rem, 18dvh, 11rem); padding-bottom: clamp(5.5rem, 18dvh, 11rem); }
+.easy-contacto .easy-h { margin-bottom: 3rem; }
+.easy-email { font-size: clamp(1.6rem, 5dvw, 2.7rem); letter-spacing: -0.02em; color: var(--text); }
 .easy-email:hover { text-decoration: underline; text-underline-offset: 0.12em; }
-.easy-contacto-links { margin-top: 1.8rem; display: flex; gap: 1.6rem; justify-content: center; color: var(--text-secondary); font-size: 0.95rem; }
+.easy-contacto-cta { margin-top: 3rem; }
+.easy-contacto-links { margin-top: 2.8rem; display: flex; gap: 1.8rem; justify-content: center; color: var(--text-secondary); font-size: 0.95rem; }
 .easy-contacto-links a { color: inherit; }
 .easy-contacto-links a:hover { color: var(--text); }
 
@@ -1662,14 +1732,12 @@ html.easy, html.easy body {
 .easy-footer {
   display: flex; justify-content: center;
   padding: 2.6rem clamp(1.5rem, 5dvw, 4rem);
-  border-top: 1px solid var(--border);
   font-size: 0.95rem; color: var(--text-muted);
 }
 .easy-footer a { color: inherit; letter-spacing: -0.01em; }
 .easy-footer a:hover { color: var(--text); }
 
 @media (max-width: 600px) {
-  .easy-logo { font-size: 1.15rem; }
-  .easy-step { grid-template-columns: 2.8rem 1fr; gap: 1rem; }
-  .easy-step-num { font-size: 1.8rem; }
+  .easy-logo { font-size: 0.95rem; }
+  .easy-pf-slide { flex-basis: 90%; }
 }
