@@ -485,7 +485,6 @@ a.nav-label:visited {
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
   transition: opacity 0.25s ease;
 }
@@ -906,7 +905,7 @@ a.nav-label:visited {
 }
 
 
-/* El scroll del contenido de dropdowns lo gestiona .welcome-content */
+/* El scroll del contenido de dropdowns lo gestiona .tools-content */
 
 /* ============================================
    10. PAGE: STATEMENT
@@ -1291,19 +1290,7 @@ a.nav-label:visited {
   color: var(--text-secondary);
 }
 
-.contacto-instagram {
-  font-size: clamp(0.7rem, 1dvw, 0.95rem);
-  font-weight: 400;
-  color: var(--text-secondary);
-  text-decoration: none;
-  letter-spacing: 0.04em;
-  transition: color 0.3s ease;
-}
-
-.contacto-instagram:hover {
-  color: var(--text);
-}
-
+.contacto-instagram,
 .contacto-cv {
   font-size: clamp(0.7rem, 1dvw, 0.95rem);
   font-weight: 400;
@@ -1313,6 +1300,7 @@ a.nav-label:visited {
   transition: color 0.3s ease;
 }
 
+.contacto-instagram:hover,
 .contacto-cv:hover {
   color: var(--text);
 }
@@ -1392,7 +1380,6 @@ a.nav-label:visited {
   max-height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
   padding: 4dvh 2dvw;
 }
@@ -1644,7 +1631,6 @@ html.easy, html.easy body {
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   scrollbar-width: none;                 /* Firefox */
-  -webkit-overflow-scrolling: touch;
   /* gutter lateral = mitad del hueco sobrante, para poder centrar la 1ª/última */
   padding: 0 max(1rem, calc(50vw - 27rem)) 0.4rem;
 }
