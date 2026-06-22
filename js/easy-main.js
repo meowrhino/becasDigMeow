@@ -95,82 +95,93 @@ function portfolioHTML(data) {
 
 // Cablea el carrusel del portfolio tras inyectar el HTML. Se re-llama en cada
 // render (también al cambiar de idioma): por eso primero paramos el autoplay y
-// los observers del render anterior (pfCleanup), o el setInterval seguiría vivo.
+// los listeners del render anterior (pfCleanup), o el setInterval seguiría vivo.
+//
+// Bucle infinito BIDIRECCIONAL con scroll-snap nativo: clonamos la última al
+// inicio y la primera al final, de modo que la última asome a la izquierda de la
+// primera y la primera a la derecha de la última. Cuando el scroll se asienta
+// sobre un clon, saltamos sin animación a su slide real (salto invisible: es la
+// misma imagen). La diapositiva activa se calcula con un único handler de scroll.
 function initPortfolio() {
   if (pfCleanup) { pfCleanup(); pfCleanup = null; }
   const pf = root.querySelector(".easy-pf");
   if (!pf) return;
   const stage = pf.querySelector(".easy-pf-stage");
-  const slides = [...stage.querySelectorAll(".easy-pf-slide")];
+  const real = [...stage.querySelectorAll(".easy-pf-slide")];
   const thumbs = [...pf.querySelectorAll(".easy-pf-thumb")];
   const nameEl = pf.querySelector(".easy-pf-name");
   const visitarEl = pf.querySelector(".easy-pf-visitar");
-  const total = slides.length;
-  if (!total) return;
+  const n = real.length;
+  if (!n) return;
 
-  // Clon de la 1ª diapositiva al final: el autoplay "dobla la esquina" de la
-  // última a la primera deslizando hacia el clon y luego salta sin animación a
-  // la real → bucle infinito sin rebobinado visible.
-  const clone = slides[0].cloneNode(true);
-  clone.setAttribute("aria-hidden", "true");
-  clone.tabIndex = -1;
-  stage.appendChild(clone);
+  const mkClone = (src) => {
+    const c = src.cloneNode(true);
+    c.classList.add("easy-pf-clone");
+    c.setAttribute("aria-hidden", "true");
+    c.tabIndex = -1;
+    return c;
+  };
+  const headClone = stage.insertBefore(mkClone(real[n - 1]), real[0]); // = última
+  const tailClone = stage.appendChild(mkClone(real[0]));               // = primera
 
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let current = 0;
   let navigating = false;
-  let navTimer, wrapTimer, autoTimer;
+  let navTimer, wrapTimer, settleTimer, autoTimer;
 
-  const centerLeft = (el) => el.offsetLeft - (stage.clientWidth - el.clientWidth) / 2;
-  const scrollToLeft = (left, smooth = true) => {
+  const centerOf = (el) => el.offsetLeft - (stage.clientWidth - el.clientWidth) / 2;
+  const scrollToEl = (el, smooth) => {
     stage.style.scrollBehavior = smooth ? "smooth" : "auto";
-    stage.scrollTo({ left });
+    stage.scrollTo({ left: centerOf(el) });
   };
 
   const setActive = (i) => {
     current = i;
     thumbs.forEach((t, j) => t.classList.toggle("is-active", j === i));
-    const s = slides[i];
+    const s = real[i];
     nameEl.textContent = s.dataset.name || "";
     const url = s.getAttribute("href");
     if (url) { visitarEl.hidden = false; visitarEl.href = url; }
     else { visitarEl.hidden = true; }
   };
 
-  // Durante la navegación por código silenciamos el observer para que no pelee.
+  // Silencia el detector de scroll mientras navegamos por código.
   const armNav = (ms) => {
     navigating = true;
     clearTimeout(navTimer);
     navTimer = setTimeout(() => { navigating = false; }, ms);
   };
 
-  const goTo = (i) => { setActive(i); armNav(700); scrollToLeft(centerLeft(slides[i])); };
+  const goTo = (i) => { setActive(i); armNav(700); scrollToEl(real[i], true); };
 
-  const goNext = () => {
-    if (current >= total - 1) {
-      armNav(950);
-      scrollToLeft(centerLeft(clone));                 // desliza hacia el clon...
-      clearTimeout(wrapTimer);
-      wrapTimer = setTimeout(() => {                    // ...y salta a la real sin animar
-        scrollToLeft(centerLeft(slides[0]), false);
-        setActive(0);
-      }, 650);
-    } else {
-      goTo(current + 1);
-    }
+  // Envoltura: desliza hasta el clon (continuación visual) y, al terminar,
+  // salta sin animación al slide real equivalente.
+  const wrap = (clone, realIdx) => {
+    armNav(950);
+    scrollToEl(clone, true);
+    clearTimeout(wrapTimer);
+    wrapTimer = setTimeout(() => { scrollToEl(real[realIdx], false); setActive(realIdx); }, 600);
   };
-  const goPrev = () => { goTo(current <= 0 ? total - 1 : current - 1); };
+  const goNext = () => { current >= n - 1 ? wrap(tailClone, 0) : goTo(current + 1); };
+  const goPrev = () => { current <= 0 ? wrap(headClone, n - 1) : goTo(current - 1); };
 
-  // Scroll manual: la diapositiva más centrada manda (ignorado al navegar).
-  const ratios = new Map();
-  const io = new IntersectionObserver((entries) => {
+  // Scroll manual (swipe/trackpad): al asentarse, si quedó sobre un clon salta a
+  // su real; si no, marca activa la diapositiva real más centrada.
+  const onSettle = () => {
+    const mid = stage.scrollLeft + stage.clientWidth / 2;
+    const dist = (el) => Math.abs(el.offsetLeft + el.clientWidth / 2 - mid);
+    let best = 0, bd = Infinity;
+    real.forEach((s, i) => { const d = dist(s); if (d < bd) { bd = d; best = i; } });
+    if (dist(tailClone) < bd) { scrollToEl(real[0], false); setActive(0); }
+    else if (dist(headClone) < bd) { scrollToEl(real[n - 1], false); setActive(n - 1); }
+    else setActive(best);
+  };
+  const onScroll = () => {
     if (navigating) return;
-    entries.forEach(e => ratios.set(e.target, e.intersectionRatio));
-    let best = -1, bi = current;
-    slides.forEach((s, i) => { const r = ratios.get(s) || 0; if (r > best) { best = r; bi = i; } });
-    if (bi !== current) setActive(bi);
-  }, { root: stage, threshold: [0, 0.25, 0.5, 0.75, 1] });
-  slides.forEach(s => io.observe(s));
+    clearTimeout(settleTimer);
+    settleTimer = setTimeout(onSettle, 120);
+  };
+  stage.addEventListener("scroll", onScroll, { passive: true });
 
   // Autoplay (salvo reduce-motion); pausa en hover, foco y pestaña oculta.
   const startAuto = () => { if (!reduce && !autoTimer) autoTimer = setInterval(goNext, 4500); };
@@ -193,12 +204,14 @@ function initPortfolio() {
 
   pfCleanup = () => {
     stopAuto();
-    io.disconnect();
+    stage.removeEventListener("scroll", onScroll);
     document.removeEventListener("visibilitychange", onVis);
-    clearTimeout(navTimer);
-    clearTimeout(wrapTimer);
+    clearTimeout(navTimer); clearTimeout(wrapTimer); clearTimeout(settleTimer);
   };
 
+  // Posición inicial: centrar la 1ª real deja la última asomando a la izquierda.
+  armNav(500);
+  scrollToEl(real[0], false);
   setActive(0);
   startAuto();
 }
