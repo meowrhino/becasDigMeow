@@ -1611,44 +1611,28 @@ html.easy, html.easy body {
 .easy-section { padding: clamp(3.5rem, 9dvh, 6rem) clamp(1.5rem, 5dvw, 4rem); max-width: 64rem; margin: 0 auto; }
 .easy-h { font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.8rem; font-weight: 400; }
 
-/* --- Portfolio (visor a sangre tipo carrusel + miniaturas para elegir) --- */
-/* La sección pierde el quicio lateral para que el visor llegue de borde a borde;
-   título, pie y miniaturas se vuelven a centrar en la columna de 64rem. */
-.easy-portfolio { max-width: none; padding-left: 0; padding-right: 0; }
-.easy-portfolio > .easy-h,
-.easy-pf-caption,
-.easy-pf-thumbs {
-  box-sizing: border-box;
-  width: 100%; max-width: 64rem; margin-left: auto; margin-right: auto;
-  padding-left: clamp(1.5rem, 5dvw, 4rem); padding-right: clamp(1.5rem, 5dvw, 4rem);
-}
-.easy-pf { display: flex; flex-direction: column; gap: 1.3rem; }
-.easy-pf-viewer { position: relative; }
+/* --- Portfolio (visor con fundido: imágenes apiladas que cambian por opacidad) --- */
+.easy-pf { display: flex; flex-direction: column; gap: 1.4rem; }
+.easy-pf-viewer { position: relative; width: min(92%, 60rem); margin: 0 auto; }
 .easy-pf-stage {
-  display: flex;
-  gap: clamp(0.8rem, 2.5dvw, 1.6rem);
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  scrollbar-width: none;                 /* Firefox */
-  /* gutter lateral = mitad del hueco sobrante, para poder centrar la 1ª/última */
-  padding: 0 max(1rem, calc(50vw - 27rem)) 0.4rem;
-}
-.easy-pf-stage::-webkit-scrollbar { display: none; }   /* WebKit */
-.easy-pf-stage:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
-.easy-pf-slide {
-  flex: 0 0 min(84vw, 54rem);
-  scroll-snap-align: center;
-  display: block;
+  position: relative;
   aspect-ratio: 16 / 10;
   overflow: hidden;
   border-radius: 4px;
 }
-/* contain: la imagen se ve entera, sin recortar (las que no son 16:10 dejan
-   aire alrededor sobre el fondo de la página) */
+.easy-pf-stage:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+/* Cada proyecto es una capa apilada; solo la activa es visible → crossfade. */
+.easy-pf-slide {
+  position: absolute; inset: 0;
+  display: block;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+.easy-pf-slide.is-active { opacity: 1; pointer-events: auto; }
+/* contain: la imagen se ve entera, sin recortar */
 .easy-pf-slide img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
-/* Flechas: discretas, superpuestas en los bordes de la pantalla */
+/* Flechas: discretas, en los bordes del visor */
 .easy-pf-nav {
   position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
   width: 2.6rem; height: 2.6rem; display: grid; place-items: center;
@@ -1659,8 +1643,8 @@ html.easy, html.easy body {
   transition: opacity 0.2s ease;
 }
 .easy-pf-nav:hover { opacity: 1; }
-.easy-pf-prev { left: clamp(0.5rem, 2vw, 1.6rem); }
-.easy-pf-next { right: clamp(0.5rem, 2vw, 1.6rem); }
+.easy-pf-prev { left: 0.6rem; }
+.easy-pf-next { right: 0.6rem; }
 
 .easy-pf-caption { display: flex; justify-content: center; align-items: baseline; gap: 1rem; min-height: 1.5em; margin: 0 auto; }
 .easy-pf-name { font-size: 1rem; color: var(--text); }

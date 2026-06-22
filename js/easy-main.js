@@ -58,9 +58,8 @@ function heroHTML(data, lang) {
     </section>`;
 }
 
-// Portfolio: visor grande tipo carrusel (scroll-snap horizontal + flechas) con
-// una rejilla de miniaturas debajo para saltar a un proyecto concreto. El
-// nombre y el enlace "visitar" se actualizan según la imagen centrada (ver
+// Portfolio: visor grande (imágenes apiladas que se funden por opacidad) + rejilla
+// de miniaturas para elegir. El nombre y "visitar" se actualizan al cambiar (ver
 // initPortfolio). Cada proyecto con url es un enlace; sin url, un div neutro.
 function portfolioHTML(data) {
   const proyectos = data.portfolio?.proyectos || [];
@@ -94,116 +93,52 @@ function portfolioHTML(data) {
     </section>`;
 }
 
-// Cablea el carrusel del portfolio tras inyectar el HTML. Se re-llama en cada
-// render (también al cambiar de idioma): por eso primero paramos el autoplay y
-// los listeners del render anterior (pfCleanup), o el setInterval seguiría vivo.
-//
-// Bucle infinito BIDIRECCIONAL con scroll-snap nativo: clonamos la última al
-// inicio y la primera al final, de modo que la última asome a la izquierda de la
-// primera y la primera a la derecha de la última. Cuando el scroll se asienta
-// sobre un clon, saltamos sin animación a su slide real (salto invisible: es la
-// misma imagen). La diapositiva activa se calcula con un único handler de scroll.
+// Portfolio en modo VISOR con fundido: una imagen grande que cambia por crossfade
+// (opacidad), nunca por scroll → sin saltos, sin clones, sin scroll-snap. El índice
+// es circular ((i+n)%n), y al ser un fundido pasar de la última a la primera es
+// perfectamente continuo. Miniaturas/flechas/teclado eligen; autoplay suave opcional
+// con pausa en hover, foco y pestaña oculta. Se re-llama en cada render (idioma):
+// pfCleanup para el autoplay y el listener global del render anterior.
 function initPortfolio() {
   if (pfCleanup) { pfCleanup(); pfCleanup = null; }
   const pf = root.querySelector(".easy-pf");
   if (!pf) return;
   const stage = pf.querySelector(".easy-pf-stage");
-  const real = [...stage.querySelectorAll(".easy-pf-slide")];
+  const slides = [...pf.querySelectorAll(".easy-pf-slide")];
   const thumbs = [...pf.querySelectorAll(".easy-pf-thumb")];
   const nameEl = pf.querySelector(".easy-pf-name");
   const visitarEl = pf.querySelector(".easy-pf-visitar");
-  const n = real.length;
+  const n = slides.length;
   if (!n) return;
 
-  const mkClone = (src) => {
-    const c = src.cloneNode(true);
-    c.classList.add("easy-pf-clone");
-    c.setAttribute("aria-hidden", "true");
-    c.tabIndex = -1;
-    return c;
-  };
-  const headClone = stage.insertBefore(mkClone(real[n - 1]), real[0]); // = última
-  const tailClone = stage.appendChild(mkClone(real[0]));               // = primera
-
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let current = 0;
-  let navigating = false;
-  let navTimer, wrapFallback, settleTimer, autoTimer;
+  let current = -1;
+  let autoTimer;
 
-  const centerOf = (el) => el.offsetLeft - (stage.clientWidth - el.clientWidth) / 2;
-  const scrollToEl = (el, smooth) => {
-    stage.style.scrollBehavior = smooth ? "smooth" : "auto";
-    stage.scrollTo({ left: centerOf(el) });
-  };
-  const releaseSoon = (ms) => { clearTimeout(navTimer); navTimer = setTimeout(() => { navigating = false; }, ms); };
-
-  const setActive = (i) => {
+  const show = (i) => {
+    i = (i + n) % n;                 // índice circular: tras la última, la primera
+    if (i === current) return;
     current = i;
+    slides.forEach((s, j) => s.classList.toggle("is-active", j === i));
     thumbs.forEach((t, j) => t.classList.toggle("is-active", j === i));
-    const s = real[i];
+    const s = slides[i];
     nameEl.textContent = s.dataset.name || "";
     const url = s.getAttribute("href");
     if (url) { visitarEl.hidden = false; visitarEl.href = url; }
     else { visitarEl.hidden = true; }
   };
 
-  const goTo = (i) => { setActive(i); navigating = true; releaseSoon(800); scrollToEl(real[i], true); };
-
-  // Envoltura en los extremos: desliza un paso hasta el clon contiguo y, EN CUANTO
-  // el scroll se asienta sobre él (scrollend → clon ya centrado = idéntico al real),
-  // salta sin animación al real. Ligar el reset al asentamiento real (no a un tiempo
-  // fijo) es lo que hace el salto invisible. El guard 'navigating' evita que el
-  // detector de scroll se pelee con estos movimientos por código.
-  const wrap = (clone, realIdx) => {
-    setActive(realIdx);
-    navigating = true;
-    clearTimeout(navTimer);
-    scrollToEl(clone, true);
-    let done = false;
-    const finish = () => {
-      if (done) return;
-      done = true;
-      stage.removeEventListener("scrollend", finish);
-      clearTimeout(wrapFallback);
-      scrollToEl(real[realIdx], false);
-      releaseSoon(200);
-    };
-    stage.addEventListener("scrollend", finish);
-    wrapFallback = setTimeout(finish, 900);   // fallback si el navegador no emite scrollend
-  };
-  const goNext = () => { current >= n - 1 ? wrap(tailClone, 0) : goTo(current + 1); };
-  const goPrev = () => { current <= 0 ? wrap(headClone, n - 1) : goTo(current - 1); };
-
-  // Detector SOLO para scroll manual (swipe/trackpad): si quedó sobre un clon, salta
-  // a su real; si no, activa la más centrada. Inhibido durante navegación por código.
-  const onSettle = () => {
-    const mid = stage.scrollLeft + stage.clientWidth / 2;
-    const dist = (el) => Math.abs(el.offsetLeft + el.clientWidth / 2 - mid);
-    let best = 0, bd = Infinity;
-    real.forEach((s, i) => { const d = dist(s); if (d < bd) { bd = d; best = i; } });
-    if (dist(tailClone) < bd) { navigating = true; scrollToEl(real[0], false); setActive(0); releaseSoon(200); }
-    else if (dist(headClone) < bd) { navigating = true; scrollToEl(real[n - 1], false); setActive(n - 1); releaseSoon(200); }
-    else setActive(best);
-  };
-  const onScroll = () => {
-    if (navigating) return;
-    clearTimeout(settleTimer);
-    settleTimer = setTimeout(onSettle, 120);
-  };
-  stage.addEventListener("scroll", onScroll, { passive: true });
-
-  // Autoplay (salvo reduce-motion); pausa en hover, foco y pestaña oculta.
-  const startAuto = () => { if (!reduce && !autoTimer) autoTimer = setInterval(goNext, 4500); };
+  const startAuto = () => { if (!reduce && !autoTimer) autoTimer = setInterval(() => show(current + 1), 4500); };
   const stopAuto = () => { clearInterval(autoTimer); autoTimer = null; };
-  const kickAuto = () => { stopAuto(); startAuto(); };   // reinicia el contador tras interacción
+  const kick = () => { stopAuto(); startAuto(); };   // reinicia el contador tras interactuar
   const onVis = () => { if (document.hidden) stopAuto(); else startAuto(); };
 
-  thumbs.forEach((t, i) => t.addEventListener("click", () => { goTo(i); kickAuto(); }));
-  pf.querySelector(".easy-pf-prev").addEventListener("click", () => { goPrev(); kickAuto(); });
-  pf.querySelector(".easy-pf-next").addEventListener("click", () => { goNext(); kickAuto(); });
+  thumbs.forEach((t, i) => t.addEventListener("click", () => { show(i); kick(); }));
+  pf.querySelector(".easy-pf-prev").addEventListener("click", () => { show(current - 1); kick(); });
+  pf.querySelector(".easy-pf-next").addEventListener("click", () => { show(current + 1); kick(); });
   stage.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowRight") { e.preventDefault(); goNext(); kickAuto(); }
-    else if (e.key === "ArrowLeft") { e.preventDefault(); goPrev(); kickAuto(); }
+    if (e.key === "ArrowRight") { e.preventDefault(); show(current + 1); kick(); }
+    else if (e.key === "ArrowLeft") { e.preventDefault(); show(current - 1); kick(); }
   });
   pf.addEventListener("mouseenter", stopAuto);
   pf.addEventListener("mouseleave", startAuto);
@@ -213,14 +148,10 @@ function initPortfolio() {
 
   pfCleanup = () => {
     stopAuto();
-    stage.removeEventListener("scroll", onScroll);
     document.removeEventListener("visibilitychange", onVis);
-    clearTimeout(settleTimer); clearTimeout(navTimer); clearTimeout(wrapFallback);
   };
 
-  // Posición inicial: centrar la 1ª real deja la última asomando a la izquierda.
-  scrollToEl(real[0], false);
-  setActive(0);
+  show(0);
   startAuto();
 }
 
