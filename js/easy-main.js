@@ -23,6 +23,7 @@ const esc = (s) => String(s ?? "")
 // (si no, el setInterval del autoplay seguiría vivo y se acumularían listeners).
 let pfCleanup = null;
 let stmtCleanup = null;
+let mtdCleanup = null;
 
 // --- Secciones (cuerpo) ---
 
@@ -237,6 +238,34 @@ function initStatement() {
   stmtCleanup = () => io.disconnect();
 }
 
+// Metodología: stepper de progreso. Según scrolleas, los pasos se "encienden"
+// acumulativamente (insignia rellena) y la línea del raíl se llena hasta el paso
+// que cruza el centro de la pantalla. Mismo truco de center-line que el statement.
+function initMetodologia() {
+  if (mtdCleanup) { mtdCleanup(); mtdCleanup = null; }
+  const steps = root.querySelector(".easy-steps");
+  if (!steps) return;
+  const items = [...steps.querySelectorAll(".easy-step")];
+  if (!items.length) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  steps.classList.add("is-scrolly");
+
+  const setActive = (active) => {
+    items.forEach((s, i) => s.classList.toggle("is-on", i <= active));
+    if (active < 0) { steps.style.setProperty("--steps-fill", "0px"); return; }
+    const badge = items[active].querySelector(".easy-step-num");
+    const fill = items[active].offsetTop + badge.offsetTop + badge.offsetHeight / 2;
+    steps.style.setProperty("--steps-fill", fill + "px");
+  };
+
+  // El paso que cruza el centro marca la frontera; todo lo anterior queda encendido.
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) setActive(items.indexOf(e.target)); });
+  }, { rootMargin: "-50% 0px -50% 0px", threshold: 0 });
+  items.forEach(s => io.observe(s));
+  mtdCleanup = () => io.disconnect();
+}
+
 function metodologiaHTML(data, lang) {
   const lineas = (data.metodologia?.[lang] || data.metodologia?.es || {}).lineas || [];
   const pasos = lineas.map((l, i) => `
@@ -300,6 +329,7 @@ function renderBody(data, lang) {
     footerHTML();
   initPortfolio();
   initStatement();
+  initMetodologia();
 }
 
 // --- Cabecera persistente + arranque ---

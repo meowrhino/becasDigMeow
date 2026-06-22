@@ -1683,7 +1683,7 @@ html.easy, html.easy body {
 .easy-pf-thumb.is-active { opacity: 1; outline-color: var(--text); }
 
 /* --- Metodología (timeline refinado: nº en insignia sobre el raíl) --- */
-.easy-steps { list-style: none; margin: 0; max-width: 46rem; padding: 0 0 0 3rem; border-left: 1px solid var(--border); }
+.easy-steps { position: relative; list-style: none; margin: 0; max-width: 46rem; padding: 0 0 0 3rem; border-left: 1px solid var(--border); }
 .easy-step { position: relative; padding: 0 0 2.4rem; }
 .easy-step:last-child { padding-bottom: 0; }
 .easy-step-num {
@@ -1693,6 +1693,20 @@ html.easy, html.easy body {
   font-size: 0.92rem; font-weight: 600; color: var(--text); line-height: 1;
 }
 .easy-step-text { font-size: 1.05rem; color: var(--text-content); line-height: 1.65; padding-top: 0.35rem; }
+
+/* Stepper de progreso al scrollear: la línea se llena hasta el paso del centro y
+   los números se van encendiendo (insignia rellena) de forma acumulativa. */
+.easy-steps.is-scrolly::after {
+  content: ""; position: absolute; left: -1px; top: 0; width: 1px;
+  height: var(--steps-fill, 0); background: var(--text);
+  transition: height 0.5s ease;
+}
+.easy-steps.is-scrolly .easy-step { opacity: 0.35; transition: opacity 0.45s ease; }
+.easy-steps.is-scrolly .easy-step.is-on { opacity: 1; }
+.easy-step-num { transition: background 0.45s ease, color 0.45s ease, border-color 0.45s ease; }
+.easy-steps.is-scrolly .easy-step.is-on .easy-step-num {
+  background: var(--text); color: var(--bg); border-color: var(--text);
+}
 
 /* --- Statement (manifiesto centrado; resalta la línea del centro al scrollear) --- */
 .easy-statement { text-align: center; padding-top: clamp(5rem, 17dvh, 10rem); padding-bottom: clamp(5rem, 17dvh, 10rem); }
