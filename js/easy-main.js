@@ -251,11 +251,10 @@ function initMetodologia() {
   steps.classList.add("is-scrolly");
 
   const setActive = (active) => {
-    items.forEach((s, i) => s.classList.toggle("is-on", i <= active));
-    if (active < 0) { steps.style.setProperty("--steps-fill", "0px"); return; }
-    const badge = items[active].querySelector(".easy-step-num");
-    const fill = items[active].offsetTop + badge.offsetTop + badge.offsetHeight / 2;
-    steps.style.setProperty("--steps-fill", fill + "px");
+    items.forEach((s, i) => {
+      s.classList.toggle("is-on", i <= active);     // nº encendido (insignia rellena)
+      s.classList.toggle("link-on", i < active);    // conector i→i+1 encendido
+    });
   };
 
   // El paso que cruza el centro marca la frontera; todo lo anterior queda encendido.
@@ -323,8 +322,8 @@ function renderBody(data, lang) {
   document.getElementById("easy-body").innerHTML =
     heroHTML(data, lang) +
     portfolioHTML(data) +
-    metodologiaHTML(data, lang) +
     statementHTML(data, lang) +
+    metodologiaHTML(data, lang) +
     contactoHTML(data, lang) +
     footerHTML();
   initPortfolio();
