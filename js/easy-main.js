@@ -18,6 +18,12 @@ const esc = (s) => String(s ?? "")
   .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
   .replace(/"/g, "&quot;");
 
+// Estos inits crean timers/observers globales y se rehacen en cada render por
+// idioma; guardamos una función de limpieza para pararlos antes de re-crearlos
+// (si no, el setInterval del autoplay seguiría vivo y se acumularían listeners).
+let pfCleanup = null;
+let stmtCleanup = null;
+
 // --- Secciones (cuerpo) ---
 
 // Titular de venta por idioma (el wordmark ya vive en el header).
@@ -87,10 +93,11 @@ function portfolioHTML(data) {
     </section>`;
 }
 
-// Cablea el carrusel del portfolio tras inyectar el HTML. Se llama en cada
-// render (también al cambiar de idioma): los observers viven sobre el DOM nuevo
-// y los antiguos se liberan al descartarse sus nodos.
+// Cablea el carrusel del portfolio tras inyectar el HTML. Se re-llama en cada
+// render (también al cambiar de idioma): por eso primero paramos el autoplay y
+// los observers del render anterior (pfCleanup), o el setInterval seguiría vivo.
 function initPortfolio() {
+  if (pfCleanup) { pfCleanup(); pfCleanup = null; }
   const pf = root.querySelector(".easy-pf");
   if (!pf) return;
   const stage = pf.querySelector(".easy-pf-stage");
@@ -98,9 +105,27 @@ function initPortfolio() {
   const thumbs = [...pf.querySelectorAll(".easy-pf-thumb")];
   const nameEl = pf.querySelector(".easy-pf-name");
   const visitarEl = pf.querySelector(".easy-pf-visitar");
-  if (!slides.length) return;
+  const total = slides.length;
+  if (!total) return;
 
+  // Clon de la 1ª diapositiva al final: el autoplay "dobla la esquina" de la
+  // última a la primera deslizando hacia el clon y luego salta sin animación a
+  // la real → bucle infinito sin rebobinado visible.
+  const clone = slides[0].cloneNode(true);
+  clone.setAttribute("aria-hidden", "true");
+  clone.tabIndex = -1;
+  stage.appendChild(clone);
+
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let current = 0;
+  let navigating = false;
+  let navTimer, wrapTimer, autoTimer;
+
+  const centerLeft = (el) => el.offsetLeft - (stage.clientWidth - el.clientWidth) / 2;
+  const scrollToLeft = (left, smooth = true) => {
+    stage.style.scrollBehavior = smooth ? "smooth" : "auto";
+    stage.scrollTo({ left });
+  };
 
   const setActive = (i) => {
     current = i;
@@ -112,15 +137,34 @@ function initPortfolio() {
     else { visitarEl.hidden = true; }
   };
 
-  const irA = (i) => {
-    const j = Math.max(0, Math.min(slides.length - 1, i));
-    const s = slides[j];
-    stage.scrollTo({ left: s.offsetLeft - (stage.clientWidth - s.clientWidth) / 2, behavior: "smooth" });
+  // Durante la navegación por código silenciamos el observer para que no pelee.
+  const armNav = (ms) => {
+    navigating = true;
+    clearTimeout(navTimer);
+    navTimer = setTimeout(() => { navigating = false; }, ms);
   };
 
-  // La diapositiva más visible dentro del stage marca la activa.
+  const goTo = (i) => { setActive(i); armNav(700); scrollToLeft(centerLeft(slides[i])); };
+
+  const goNext = () => {
+    if (current >= total - 1) {
+      armNav(950);
+      scrollToLeft(centerLeft(clone));                 // desliza hacia el clon...
+      clearTimeout(wrapTimer);
+      wrapTimer = setTimeout(() => {                    // ...y salta a la real sin animar
+        scrollToLeft(centerLeft(slides[0]), false);
+        setActive(0);
+      }, 650);
+    } else {
+      goTo(current + 1);
+    }
+  };
+  const goPrev = () => { goTo(current <= 0 ? total - 1 : current - 1); };
+
+  // Scroll manual: la diapositiva más centrada manda (ignorado al navegar).
   const ratios = new Map();
   const io = new IntersectionObserver((entries) => {
+    if (navigating) return;
     entries.forEach(e => ratios.set(e.target, e.intersectionRatio));
     let best = -1, bi = current;
     slides.forEach((s, i) => { const r = ratios.get(s) || 0; if (r > best) { best = r; bi = i; } });
@@ -128,15 +172,35 @@ function initPortfolio() {
   }, { root: stage, threshold: [0, 0.25, 0.5, 0.75, 1] });
   slides.forEach(s => io.observe(s));
 
-  thumbs.forEach((t, i) => t.addEventListener("click", () => irA(i)));
-  pf.querySelector(".easy-pf-prev").addEventListener("click", () => irA(current - 1));
-  pf.querySelector(".easy-pf-next").addEventListener("click", () => irA(current + 1));
+  // Autoplay (salvo reduce-motion); pausa en hover, foco y pestaña oculta.
+  const startAuto = () => { if (!reduce && !autoTimer) autoTimer = setInterval(goNext, 4500); };
+  const stopAuto = () => { clearInterval(autoTimer); autoTimer = null; };
+  const kickAuto = () => { stopAuto(); startAuto(); };   // reinicia el contador tras interacción
+  const onVis = () => { if (document.hidden) stopAuto(); else startAuto(); };
+
+  thumbs.forEach((t, i) => t.addEventListener("click", () => { goTo(i); kickAuto(); }));
+  pf.querySelector(".easy-pf-prev").addEventListener("click", () => { goPrev(); kickAuto(); });
+  pf.querySelector(".easy-pf-next").addEventListener("click", () => { goNext(); kickAuto(); });
   stage.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowRight") { e.preventDefault(); irA(current + 1); }
-    else if (e.key === "ArrowLeft") { e.preventDefault(); irA(current - 1); }
+    if (e.key === "ArrowRight") { e.preventDefault(); goNext(); kickAuto(); }
+    else if (e.key === "ArrowLeft") { e.preventDefault(); goPrev(); kickAuto(); }
   });
+  pf.addEventListener("mouseenter", stopAuto);
+  pf.addEventListener("mouseleave", startAuto);
+  pf.addEventListener("focusin", stopAuto);
+  pf.addEventListener("focusout", startAuto);
+  document.addEventListener("visibilitychange", onVis);
+
+  pfCleanup = () => {
+    stopAuto();
+    io.disconnect();
+    document.removeEventListener("visibilitychange", onVis);
+    clearTimeout(navTimer);
+    clearTimeout(wrapTimer);
+  };
 
   setActive(0);
+  startAuto();
 }
 
 // Statement "karaoke": resalta la línea que cruza el centro de la pantalla.
@@ -144,6 +208,7 @@ function initPortfolio() {
 // así solo intersecta la frase que está justo ahí. Progressive enhancement: sin
 // JS las líneas se ven a opacidad plena; con reduce-motion no se atenúan.
 function initStatement() {
+  if (stmtCleanup) { stmtCleanup(); stmtCleanup = null; }
   const section = root.querySelector(".easy-statement");
   if (!section) return;
   const lines = [...section.querySelectorAll(".easy-statement-line")];
@@ -156,6 +221,7 @@ function initStatement() {
     });
   }, { rootMargin: "-50% 0px -50% 0px", threshold: 0 });
   lines.forEach(l => io.observe(l));
+  stmtCleanup = () => io.disconnect();
 }
 
 function metodologiaHTML(data, lang) {
@@ -260,6 +326,14 @@ async function init() {
   }
   construirHeader(data);
   renderBody(data, currentLang);
+
+  // Deep-link a una sección (#contacto, etc.): como el cuerpo se pinta por JS,
+  // el scroll por hash del navegador llega antes de que exista el destino. Lo
+  // repetimos una vez maquetado.
+  if (location.hash) {
+    const target = document.querySelector(location.hash);
+    if (target) requestAnimationFrame(() => target.scrollIntoView());
+  }
 }
 
 init();
