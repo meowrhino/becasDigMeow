@@ -128,13 +128,14 @@ function initPortfolio() {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let current = 0;
   let navigating = false;
-  let navTimer, wrapTimer, settleTimer, autoTimer;
+  let navTimer, wrapFallback, settleTimer, autoTimer;
 
   const centerOf = (el) => el.offsetLeft - (stage.clientWidth - el.clientWidth) / 2;
   const scrollToEl = (el, smooth) => {
     stage.style.scrollBehavior = smooth ? "smooth" : "auto";
     stage.scrollTo({ left: centerOf(el) });
   };
+  const releaseSoon = (ms) => { clearTimeout(navTimer); navTimer = setTimeout(() => { navigating = false; }, ms); };
 
   const setActive = (i) => {
     current = i;
@@ -146,35 +147,42 @@ function initPortfolio() {
     else { visitarEl.hidden = true; }
   };
 
-  // Silencia el detector de scroll mientras navegamos por código.
-  const armNav = (ms) => {
+  const goTo = (i) => { setActive(i); navigating = true; releaseSoon(800); scrollToEl(real[i], true); };
+
+  // Envoltura en los extremos: desliza un paso hasta el clon contiguo y, EN CUANTO
+  // el scroll se asienta sobre él (scrollend → clon ya centrado = idéntico al real),
+  // salta sin animación al real. Ligar el reset al asentamiento real (no a un tiempo
+  // fijo) es lo que hace el salto invisible. El guard 'navigating' evita que el
+  // detector de scroll se pelee con estos movimientos por código.
+  const wrap = (clone, realIdx) => {
+    setActive(realIdx);
     navigating = true;
     clearTimeout(navTimer);
-    navTimer = setTimeout(() => { navigating = false; }, ms);
-  };
-
-  const goTo = (i) => { setActive(i); armNav(700); scrollToEl(real[i], true); };
-
-  // Envoltura: desliza hasta el clon (continuación visual) y, al terminar,
-  // salta sin animación al slide real equivalente.
-  const wrap = (clone, realIdx) => {
-    armNav(950);
     scrollToEl(clone, true);
-    clearTimeout(wrapTimer);
-    wrapTimer = setTimeout(() => { scrollToEl(real[realIdx], false); setActive(realIdx); }, 600);
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      stage.removeEventListener("scrollend", finish);
+      clearTimeout(wrapFallback);
+      scrollToEl(real[realIdx], false);
+      releaseSoon(200);
+    };
+    stage.addEventListener("scrollend", finish);
+    wrapFallback = setTimeout(finish, 900);   // fallback si el navegador no emite scrollend
   };
   const goNext = () => { current >= n - 1 ? wrap(tailClone, 0) : goTo(current + 1); };
   const goPrev = () => { current <= 0 ? wrap(headClone, n - 1) : goTo(current - 1); };
 
-  // Scroll manual (swipe/trackpad): al asentarse, si quedó sobre un clon salta a
-  // su real; si no, marca activa la diapositiva real más centrada.
+  // Detector SOLO para scroll manual (swipe/trackpad): si quedó sobre un clon, salta
+  // a su real; si no, activa la más centrada. Inhibido durante navegación por código.
   const onSettle = () => {
     const mid = stage.scrollLeft + stage.clientWidth / 2;
     const dist = (el) => Math.abs(el.offsetLeft + el.clientWidth / 2 - mid);
     let best = 0, bd = Infinity;
     real.forEach((s, i) => { const d = dist(s); if (d < bd) { bd = d; best = i; } });
-    if (dist(tailClone) < bd) { scrollToEl(real[0], false); setActive(0); }
-    else if (dist(headClone) < bd) { scrollToEl(real[n - 1], false); setActive(n - 1); }
+    if (dist(tailClone) < bd) { navigating = true; scrollToEl(real[0], false); setActive(0); releaseSoon(200); }
+    else if (dist(headClone) < bd) { navigating = true; scrollToEl(real[n - 1], false); setActive(n - 1); releaseSoon(200); }
     else setActive(best);
   };
   const onScroll = () => {
@@ -207,11 +215,10 @@ function initPortfolio() {
     stopAuto();
     stage.removeEventListener("scroll", onScroll);
     document.removeEventListener("visibilitychange", onVis);
-    clearTimeout(navTimer); clearTimeout(wrapTimer); clearTimeout(settleTimer);
+    clearTimeout(settleTimer); clearTimeout(navTimer); clearTimeout(wrapFallback);
   };
 
   // Posición inicial: centrar la 1ª real deja la última asomando a la izquierda.
-  armNav(500);
   scrollToEl(real[0], false);
   setActive(0);
   startAuto();
