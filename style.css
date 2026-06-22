@@ -1644,7 +1644,9 @@ html.easy, html.easy body {
   overflow: hidden;
   border-radius: 4px;
 }
-.easy-pf-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* contain: la imagen se ve entera, sin recortar (las que no son 16:10 dejan
+   aire alrededor sobre el fondo de la página) */
+.easy-pf-slide img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
 /* Flechas: discretas, superpuestas en los bordes de la pantalla */
 .easy-pf-nav {
