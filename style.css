@@ -1791,46 +1791,40 @@ html.easy, html.easy body {
     0 0 30px var(--bg);
 }
 
-/* Hint de navegación: centrado bajo el título (dentro de .welcome-content),
-   no anclado abajo. Las flechas apuntan hacia afuera para sugerir que se
-   navega con los enlaces de los lados, no con el teclado. */
+/* Hint de navegación: centrado bajo el título (dentro de .welcome-content).
+   Es un botón: al pulsarlo, los enlaces de los bordes parpadean para señalar
+   por dónde se navega. `.welcome-content` tiene pointer-events:none (para que
+   el cupón de detrás reciba clics), así que aquí lo reactivamos. */
 .welcome-hint {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.55em;
-  margin-top: 0.4em;
+  margin-top: 0.5em;
+  border: none;
+  background: none;
+  font-family: inherit;
   font-size: clamp(0.66rem, 1.15dvw, 0.8rem);
   letter-spacing: 0.06em;
   color: var(--text-muted);
   text-align: center;
   text-shadow: 0 0 10px var(--bg), 0 0 20px var(--bg);
-  pointer-events: none;
-  transition: opacity var(--transition-slow), transform var(--transition-slow);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: color var(--transition-fast);
+}
+.welcome-hint:hover,
+.welcome-hint:focus-visible {
+  color: var(--text-secondary);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
 }
 
-/* Flechas: discretas (el texto lleva el mensaje) y con un vaivén suave hacia
-   su lado, gesto hacia los enlaces de los bordes. */
-.welcome-hint-flecha {
-  display: inline-block;
-  opacity: 0.55;
-  animation: welcome-hint-vaiven 1.8s ease-in-out infinite;
+/* Parpadeo de los nav-labels al pulsar el hint. Solo color/brillo: NO tocar
+   `transform`, que es lo que coloca y rota cada label según su borde. */
+@keyframes nav-label-destacar {
+  0%, 100% { color: var(--text-secondary); text-shadow: none; }
+  50%      { color: var(--text); text-shadow: 0 0 8px var(--text), 0 0 16px var(--bg); }
 }
-.welcome-hint-flecha:last-child {
-  animation-name: welcome-hint-vaiven-der;
-}
-
-@keyframes welcome-hint-vaiven {
-  0%, 100% { transform: translateX(0); }
-  50%      { transform: translateX(-0.3em); }
-}
-@keyframes welcome-hint-vaiven-der {
-  0%, 100% { transform: translateX(0); }
-  50%      { transform: translateX(0.3em); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .welcome-hint-flecha { animation: none; }
+.nav-label--destacado {
+  animation: nav-label-destacar 0.55s ease-in-out 2;
 }
 
 /* ============================================

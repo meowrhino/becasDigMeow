@@ -158,11 +158,9 @@ export function renderWelcome(data) {
     <div class="welcome-content">
       <h1 class="welcome-title"><a href="easy.html" class="welcome-title-link" aria-label="${escapeHTML(w.titulo)} — versión en una página">${escapeHTML(w.titulo)}</a></h1>
       <p class="welcome-tagline">${escapeHTML(pick(w.tagline, currentLang))}</p>
-      <p class="welcome-hint" aria-hidden="true">
-        <span class="welcome-hint-flecha">←</span>
+      <button type="button" class="welcome-hint">
         <span class="welcome-hint-txt">${escapeHTML(pick(w.hint, currentLang))}</span>
-        <span class="welcome-hint-flecha">→</span>
-      </p>
+      </button>
     </div>
     ${buildLangButtons()}
   `;
@@ -176,6 +174,23 @@ export function renderWelcome(data) {
     if (taglineEl) taglineEl.textContent = pick(w.tagline, lang);
     if (hintTxtEl) hintTxtEl.textContent = pick(w.hint, lang);
   });
+
+  // Al pulsar el hint, los nav-labels de los bordes parpadean para señalar por
+  // dónde se navega (todos los lados con destino, no solo izq/der). Leemos el
+  // DOM en el momento del click: los nav-labels los crea navigation.js en cada
+  // actualizarVista, así que ya existen para cuando el usuario pulsa.
+  const hintBtn = el.querySelector(".welcome-hint");
+  if (hintBtn) {
+    hintBtn.addEventListener("click", () => {
+      document.querySelectorAll(".celda.activa .nav-label").forEach(label => {
+        label.classList.remove("nav-label--destacado");
+        void label.offsetWidth;            // reinicia la animación si ya estaba activa
+        label.classList.add("nav-label--destacado");
+        label.addEventListener("animationend",
+          () => label.classList.remove("nav-label--destacado"), { once: true });
+      });
+    });
+  }
 
   renderWelcomeCupon(el, w.cupon);
 }
