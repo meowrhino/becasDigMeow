@@ -6,6 +6,10 @@
 
 export const LANGS = ["es", "en", "cat"];
 
+/** Caché de data.json (declarado aquí para que sincronizarMetaDescripcion,
+ * llamado desde el arranque más abajo, pueda leerlo sin TDZ). */
+let dataCache = null;
+
 /**
  * Detecta idioma desde `navigator.language(s)`. Catalán se mapea a "cat"
  * (tanto `ca` como `ca-ES`). Cualquier otro → "es".
@@ -27,8 +31,21 @@ export let currentLang = idiomaGuardado && LANGS.includes(idiomaGuardado)
 /** Refleja el idioma activo en <html lang> (catalán → código BCP-47 "ca"). */
 function sincronizarLangDocumento(lang) {
   document.documentElement.lang = lang === "cat" ? "ca" : lang;
+  sincronizarMetaDescripcion(lang);
 }
 sincronizarLangDocumento(currentLang);
+
+/**
+ * Actualiza <meta name="description"> con la variante del idioma activo.
+ * No-op hasta que data.json está en caché (en el arranque, antes del primer
+ * fetch, y también si data.json no trae `meta.description`).
+ */
+function sincronizarMetaDescripcion(lang) {
+  const desc = dataCache?.meta?.description;
+  if (!desc) return;
+  const metaEl = document.querySelector('meta[name="description"]');
+  if (metaEl) metaEl.setAttribute("content", desc[lang] ?? desc.es ?? "");
+}
 
 /**
  * Callbacks de cada sección para actualizar su contenido al cambiar idioma.
@@ -92,9 +109,6 @@ export function attachLangListeners(container, onLangChange) {
 
 // --- Carga de datos (data.json) ---
 
-/** Caché del JSON para evitar múltiples fetches. */
-let dataCache = null;
-
 /**
  * Carga data.json y lo almacena en caché.
  * @returns {Promise<Object|null>}
@@ -107,6 +121,10 @@ export async function cargarDatos() {
     // fallo confunde (SyntaxError) en vez de decir claramente qué pasó.
     if (!res.ok) throw new Error(`HTTP ${res.status} al cargar data.json`);
     dataCache = await res.json();
+    // En el arranque, sincronizarLangDocumento(currentLang) ya corrió antes de
+    // este fetch (dataCache aún era null), así que la meta description quedó
+    // sin actualizar: la sincronizamos ahora que ya hay datos.
+    sincronizarMetaDescripcion(currentLang);
   } catch (err) {
     console.error("Error cargando data.json:", err);
     dataCache = null;
@@ -115,19 +133,12 @@ export async function cargarDatos() {
 }
 
 /**
- * Obtiene los datos del idioma correcto desde la caché.
+ * Obtiene los datos desde la caché (estructura plana, un único data.json
+ * para todos los idiomas; las variantes por idioma van dentro de cada campo).
  * @returns {Object|null}
  */
 export function obtenerDatos() {
   if (!dataCache) return null;
-
-  // Estructura plana (caso actual)
   if (dataCache.welcome && dataCache.portfolio) return dataCache;
-
-  // Estructura anidada por idioma
-  for (const lang of ["es", "cat", "en"]) {
-    if (dataCache[lang]?.welcome && dataCache[lang]?.portfolio) return dataCache[lang];
-  }
-
   return null;
 }

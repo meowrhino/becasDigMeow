@@ -1,4 +1,17 @@
 {
+  "meta": {
+    "description": {
+      "es": "meowrhino studio — estudio de diseño web en Barcelona. Webs con código abierto, sin cuotas de mantenimiento.",
+      "en": "meowrhino studio — web design studio in Barcelona. Open-source websites, no maintenance fees.",
+      "cat": "meowrhino studio — estudi de disseny web a Barcelona. Webs de codi obert, sense quotes de manteniment."
+    }
+  },
+  "zoneLabels": {
+    "_comment": "Texto VISIBLE de las etiquetas de celda por idioma (zone label, nav labels y minimapa). La clave es el identificador interno de la celda y NO cambia (hash/clase css). Solo se listan las celdas cuyo texto varía entre idiomas; las universales (portfolio, links, footer, statement) se muestran con su identificador.",
+    "welcome": { "es": "bienvenida", "en": "welcome", "cat": "benvinguda" },
+    "metodología": { "es": "metodología", "en": "methodology", "cat": "metodologia" },
+    "contacto": { "es": "contacto", "en": "contact", "cat": "contacte" }
+  },
   "welcome": {
     "titulo": "meowrhino studio",
     "tagline": {
@@ -164,7 +177,19 @@
         "nombre": "poporingGenerator",
         "url": "https://meowrhino.github.io/poporingGenerator/"
       }
-    ]
+    ],
+    "labels": {
+      "formateadores": {
+        "es": "formateadores",
+        "en": "formatters",
+        "cat": "formatadors"
+      },
+      "webs": {
+        "es": "webs terminadas",
+        "en": "finished websites",
+        "cat": "webs acabades"
+      }
+    }
   },
   "statement": {
     "es": {

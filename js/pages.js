@@ -5,14 +5,17 @@
 // Cada función renderiza una celda/página específica:
 // Tools, Welcome, Statement, Metodología, Footer, Contacto.
 
-import { currentLang, buildLangButtons, attachLangListeners } from "./data.js";
+import { currentLang, buildLangButtons, attachLangListeners, onLangChange } from "./data.js";
 import { setupZoom } from "./zoom.js";
 import { setupScrollGradients } from "./scroll-gradients.js";
 import { renderWelcomeCupon } from "./welcome-cupon.js";
-import { repaintWithFade } from "./utils.js";
+import { repaintWithFade, escapeHTML } from "./utils.js";
 
-/** true si el viewport es táctil / móvil. */
-export const esMovil = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+/** true si el viewport es táctil / móvil (mismo criterio que portfolio usa para hover/pointer). */
+export const esMovil = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+
+/** Escoge la variante de idioma (con fallback a es) de un objeto {es,en,cat}. */
+const pick = (obj, lang) => (obj?.[lang] ?? obj?.es ?? "");
 
 /**
  * Genera el HTML de un enlace tipo tarjeta.
@@ -21,7 +24,19 @@ export const esMovil = "ontouchstart" in window || navigator.maxTouchPoints > 0;
  */
 function crearLinkHTML(item) {
   const target = esMovil ? "" : ' target="_blank"';
-  return `<a class="tool-link" href="${item.url}"${target} rel="noopener">${item.nombre}</a>`;
+  return `<a class="tool-link" href="${escapeHTML(item.url)}"${target} rel="noopener">${escapeHTML(item.nombre)}</a>`;
+}
+
+/**
+ * Genera el HTML de un par de enlaces duales (mismo proyecto, varias urls).
+ * @param {{ urls: { nombre: string, url: string }[] }} item
+ * @returns {string}
+ */
+function crearDualLinkHTML(item) {
+  const target = esMovil ? "" : ' target="_blank"';
+  return `<div class="tool-link-dual">${item.urls.map(u =>
+    `<a class="tool-link" href="${escapeHTML(u.url)}"${target} rel="noopener">${escapeHTML(u.nombre)}</a>`
+  ).join("")}</div>`;
 }
 
 /**
@@ -31,19 +46,12 @@ function crearLinkHTML(item) {
  * @param {string} uid
  * @returns {string}
  */
-function crearDualLinkHTML(item) {
-  const target = esMovil ? "" : ' target="_blank"';
-  return `<div class="tool-link-dual">${item.urls.map(u =>
-    `<a class="tool-link" href="${u.url}"${target} rel="noopener">${u.nombre}</a>`
-  ).join("")}</div>`;
-}
-
 function crearDropdownHTML(titulo, items, uid) {
   const linksHTML = items.map(i => i.urls ? crearDualLinkHTML(i) : crearLinkHTML(i)).join("");
   return `
     <div class="tools-dropdown-group">
       <button class="tools-dropdown-btn" data-target="${uid}" aria-expanded="false">
-        ${titulo}
+        <span class="tools-dropdown-label">${escapeHTML(titulo)}</span>
         <svg class="tools-dropdown-icon" viewBox="0 0 16 16" fill="none"
              stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
           <polyline points="4,6 8,10 12,6"/>
@@ -70,12 +78,17 @@ export function renderTools(data) {
     p.urls ? { urls: p.urls } : { nombre: p.nombre, url: p.url }
   );
 
+  // "tools" y "WIP" son términos ya usados igual en los tres idiomas (como el
+  // resto de nombres de celda); "formateadores" y "webs terminadas" sí varían
+  // y viven en data.json (links.labels) con el patrón {es,en,cat} habitual.
+  const labels = data.links.labels || {};
+
   const linksHTML = herramientas.map(crearLinkHTML).join("");
   const dropdownsHTML = [
     crearDropdownHTML("tools", tools, "dd_tools"),
     crearDropdownHTML("WIP", wip, "dd_wip"),
-    crearDropdownHTML("formateadores", formateadores, "dd_formateadores"),
-    crearDropdownHTML("webs terminadas", websTerminadas, "dd_webs"),
+    crearDropdownHTML(pick(labels.formateadores, currentLang), formateadores, "dd_formateadores"),
+    crearDropdownHTML(pick(labels.webs, currentLang), websTerminadas, "dd_webs"),
   ].join("");
 
   el.innerHTML = `
@@ -115,6 +128,17 @@ export function renderTools(data) {
       bottomMargin: () => list ? parseFloat(getComputedStyle(list).paddingBottom) || 0 : 0,
     });
   }
+
+  // Re-traduce los labels de "formateadores" y "webs terminadas" al cambiar
+  // idioma. La celda tools no tiene botones .lang-btn propios (el cambio de
+  // idioma se dispara desde otra celda), así que usamos el callback global
+  // onLangChange (mismo mecanismo que theme.js para su aria-label).
+  const formateadoresLabelEl = el.querySelector('[data-target="dd_formateadores"] .tools-dropdown-label');
+  const websLabelEl = el.querySelector('[data-target="dd_webs"] .tools-dropdown-label');
+  onLangChange((lang) => {
+    if (formateadoresLabelEl) formateadoresLabelEl.textContent = pick(labels.formateadores, lang);
+    if (websLabelEl) websLabelEl.textContent = pick(labels.webs, lang);
+  });
 }
 
 // --- Welcome ---
@@ -124,8 +148,6 @@ export function renderWelcome(data) {
   if (!el || !data?.welcome) return;
 
   const w = data.welcome;
-  // Escoge la variante de idioma (con fallback a es) de un objeto {es,en,cat}.
-  const pick = (obj, lang) => (obj?.[lang] ?? obj?.es ?? "");
 
   // Si el usuario ya navegó alguna vez, el hint no se vuelve a mostrar.
   const hintVisto = localStorage.getItem("mw_hint_visto");
@@ -137,17 +159,17 @@ export function renderWelcome(data) {
   // (efímero) y una línea de estado con la hora de barcelona.
   el.innerHTML = `
     <div class="welcome-content">
-      <h1 class="welcome-title"><a href="easy.html" class="welcome-title-link" aria-label="${w.titulo} — versión en una página">${w.titulo}</a></h1>
-      <p class="welcome-tagline">${pick(w.tagline, currentLang)}</p>
+      <h1 class="welcome-title"><a href="easy.html" class="welcome-title-link" aria-label="${escapeHTML(w.titulo)} — versión en una página">${escapeHTML(w.titulo)}</a></h1>
+      <p class="welcome-tagline">${escapeHTML(pick(w.tagline, currentLang))}</p>
     </div>
     ${hintVisto ? "" : `
     <p class="welcome-hint" aria-hidden="true">
       <span class="welcome-hint-flecha">←</span>
-      <span class="welcome-hint-txt">${pick(w.hint, currentLang)}</span>
+      <span class="welcome-hint-txt">${escapeHTML(pick(w.hint, currentLang))}</span>
       <span class="welcome-hint-flecha">→</span>
     </p>`}
     <p class="welcome-estado">
-      <span class="welcome-estado-txt">${pick(w.estado, currentLang)}</span>
+      <span class="welcome-estado-txt">${escapeHTML(pick(w.estado, currentLang))}</span>
       <span class="welcome-estado-sep">·</span>
       <span class="welcome-reloj"></span>
       <span class="welcome-ciudad">barcelona</span>
@@ -215,7 +237,7 @@ export function renderStatement(data) {
   const buildContent = (lang) => {
     const d = data.statement[lang];
     if (!d) return "";
-    return d.lineas.map(l => `<p>${l}</p>`).join("");
+    return d.lineas.map(l => `<p>${escapeHTML(l)}</p>`).join("");
   };
 
   el.innerHTML = `
@@ -243,7 +265,7 @@ export function renderMetodologia(data) {
   const buildContent = (lang) => {
     const d = data.metodologia[lang];
     if (!d) return "";
-    return d.lineas.map(l => `<p>${l}</p>`).join("");
+    return d.lineas.map(l => `<p>${escapeHTML(l)}</p>`).join("");
   };
 
   el.innerHTML = `
@@ -286,18 +308,20 @@ export function renderFooter(data) {
 
     let body = "";
     if (s.tipo === "texto") {
+      // `parrafos` lleva markup a propósito (la sección de privacidad trae
+      // <strong>/<a>/<em>); NO se escapa. El resto de campos es texto plano.
       body = (s.parrafos || []).map(p => `<p>${p.replace(/\n/g, "<br>")}</p>`).join("");
-      if (s.nota) body += `<p class="footer-nota">${s.nota}</p>`;
+      if (s.nota) body += `<p class="footer-nota">${escapeHTML(s.nota)}</p>`;
     } else if (s.tipo === "subvencion") {
-      const intro = s.intro ? `<p>${s.intro}</p>` : "";
+      const intro = s.intro ? `<p>${escapeHTML(s.intro)}</p>` : "";
       const logoAttrs = `loading="lazy" decoding="async"`;
       const tone = document.documentElement.getAttribute("data-theme") === "dark" ? "BLANCO" : "NEGRO";
       const logos = (s.logos || []).length
         ? `<div class="footer-logos">${s.logos.map(l =>
-            `<img src="img/LOGOS/${tone}/${l.name}.webp" alt="${l.alt || ''}" class="footer-logo" data-logo-name="${l.name}" ${logoAttrs}>`
+            `<img src="img/LOGOS/${tone}/${escapeHTML(l.name)}.webp" alt="${escapeHTML(l.alt || '')}" class="footer-logo" data-logo-name="${escapeHTML(l.name)}" ${logoAttrs}>`
           ).join("")}</div>`
         : "";
-      const frase = s.frase ? `<p class="footer-frase">${s.frase}</p>` : "";
+      const frase = s.frase ? `<p class="footer-frase">${escapeHTML(s.frase)}</p>` : "";
       body = intro + logos + frase;
     }
     return `<div class="footer-seccion">${body}</div>`;
@@ -307,7 +331,7 @@ export function renderFooter(data) {
     const secciones = data.footer[lang]?.secciones || [];
     if (secciones.length < 2) return "";
     return `<div class="footer-section-nav">${secciones.map((s, i) =>
-      `<button type="button" class="footer-section-tab${i === activeIdx ? ' is-active' : ''}" data-idx="${i}">${s.label}</button>`
+      `<button type="button" class="footer-section-tab${i === activeIdx ? ' is-active' : ''}" data-idx="${i}">${escapeHTML(s.label)}</button>`
     ).join("")}</div>`;
   };
 
@@ -426,7 +450,7 @@ export function renderContacto(data) {
   const el = document.querySelector(".celda.contacto");
   if (!el || !data?.contacto) return;
 
-  const { email, instagram, asunto, cuerpo, cv } = data.contacto;
+  const { email, instagram, asunto, cv } = data.contacto;
 
   // asunto y cv pueden ser string (legacy) o objeto por idioma
   const pickLang = (val, lang) => {
@@ -439,20 +463,19 @@ export function renderContacto(data) {
     const subject = pickLang(asunto, lang);
     const params = new URLSearchParams();
     if (subject) params.set("subject", subject);
-    if (cuerpo) params.set("body", pickLang(cuerpo, lang));
     return `mailto:${email}${params.toString() ? `?${params.toString()}` : ""}`;
   };
 
   const cvHrefInicial = pickLang(cv, currentLang);
   const cvHtml = cvHrefInicial
-    ? `<a class="contacto-cv" href="${cvHrefInicial}" target="_blank" rel="noopener">CV</a>`
+    ? `<a class="contacto-cv" href="${escapeHTML(cvHrefInicial)}" target="_blank" rel="noopener">CV</a>`
     : "";
 
   el.innerHTML = `
     <div class="contacto-content">
-      <a class="contacto-email" href="${buildMailto(currentLang)}">${email}</a>
+      <a class="contacto-email" href="${escapeHTML(buildMailto(currentLang))}">${escapeHTML(email)}</a>
       <div class="contacto-row">
-        <a class="contacto-instagram" href="${instagram.url}"${esMovil ? "" : ' target="_blank"'} rel="noopener">${instagram.usuario}</a>
+        <a class="contacto-instagram" href="${escapeHTML(instagram.url)}"${esMovil ? "" : ' target="_blank"'} rel="noopener">${escapeHTML(instagram.usuario)}</a>
         ${cvHtml}
       </div>
     </div>

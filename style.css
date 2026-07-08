@@ -1108,11 +1108,10 @@ a.nav-label:visited {
 
 /* ============================================
    13. PAGE: PORTFOLIO
-   Dos modos de visualización:
-     - Nubes flotantes (clouds): screenshots que
-       se desplazan horizontalmente con WAAPI
-       + deriva vertical con CSS keyframes.
-     - Grid: cuadrícula estática ordenada.
+   Grid de proyectos (cuadrícula estática ordenada).
+   El antiguo modo "nubes flotantes" (WAAPI + deriva
+   vertical) fue reemplazado por este grid; ya no queda
+   código de aquel sistema en este archivo.
    ============================================ */
 
 .celda.portfolio {

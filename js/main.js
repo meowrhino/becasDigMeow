@@ -4,7 +4,7 @@
 //
 // Orquesta la carga de todos los módulos del studio.
 
-import { cargarDatos, obtenerDatos } from "./data.js";
+import { cargarDatos, obtenerDatos, currentLang, onLangChange } from "./data.js";
 import {
   configurarNavegacion,
   crearCeldas,
@@ -16,6 +16,8 @@ import {
   actualizarTamanoMinimapInline,
   actualizarTamanoMinimapExpandido,
   cerrarMinimapExpandido,
+  setTraductorNombres,
+  refrescarTextosCeldas,
   getOverlayEl,
   getGrid,
   getPosicion,
@@ -115,4 +117,17 @@ crearHeader();
 crearOverlay();
 crearThemeToggle(getOverlayEl());
 leerHash();
-renderizarContenido().then(() => actualizarVista());
+renderizarContenido().then(() => {
+  // Zone labels traducibles: los identificadores de celda (hash, clase css)
+  // NO cambian; solo el texto visible. Los que faltan en `zoneLabels` (o los 3
+  // idiomas iguales: portfolio, tools, links…) se muestran con su identificador.
+  const data = obtenerDatos();
+  const zoneLabels = data?.zoneLabels || {};
+  setTraductorNombres((nombre) => {
+    const t = zoneLabels[nombre];
+    return t ? (t[currentLang] ?? t.es ?? nombre) : nombre;
+  });
+  actualizarVista();
+  refrescarTextosCeldas();       // aplica traducción al minimapa expandido
+  onLangChange(refrescarTextosCeldas);
+});

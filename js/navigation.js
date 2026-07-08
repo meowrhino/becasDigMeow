@@ -18,6 +18,21 @@ let posY = 0;
 let posX = 0;
 let onVistaActualizadaCb = null;
 
+// Traductor del TEXTO VISIBLE de las celdas (zone label, nav labels, minimapa).
+// Por defecto es la identidad: se muestra el propio identificador de la celda.
+// Los identificadores internos (NOMBRES_CELDAS: hash, alias, clase css, dataset)
+// NUNCA pasan por aquí; solo el texto que ve el usuario. main.js lo sustituye
+// tras cargar data.json para traducir p. ej. metodología→methodology.
+let traducirNombre = (nombre) => nombre;
+
+/**
+ * Registra la función que traduce el nombre de celda a su texto visible en el
+ * idioma activo. Tras cambiarla, llamar a refrescarTextosCeldas() para re-pintar.
+ */
+export function setTraductorNombres(fn) {
+  traducirNombre = typeof fn === "function" ? fn : ((n) => n);
+}
+
 /**
  * Configura el grid de navegación.
  * Debe llamarse ANTES de crearCeldas().
@@ -100,7 +115,7 @@ export function crearZoneLabel() {
 
 function actualizarZoneLabel() {
   if (!zoneLabelEl) return;
-  zoneLabelEl.textContent = getNombrePagina();
+  zoneLabelEl.textContent = traducirNombre(getNombrePagina());
 }
 
 // --- Minimap inline ---
@@ -201,10 +216,11 @@ export function crearOverlay() {
         cell.classList.add("invisible");
       } else {
         const nombreCelda = NOMBRES_CELDAS[`${y}_${x}`] || "";
-        cell.textContent = nombreCelda;
+        const visible = traducirNombre(nombreCelda);
+        cell.textContent = visible;
         // Ya es un <button> (foco y teclado nativos); el aria-label añade
         // el verbo de la acción, más claro que solo el nombre destino.
-        if (nombreCelda) cell.setAttribute("aria-label", `Ir a ${nombreCelda}`);
+        if (nombreCelda) cell.setAttribute("aria-label", `Ir a ${visible}`);
         cell.addEventListener("click", () => {
           setPosicion(y, x);
           actualizarVista();
@@ -281,7 +297,7 @@ function crearNavLabels(celda) {
     if (permanentes.has(pos)) return;
     const label = document.createElement("button");
     label.classList.add("nav-label", pos);
-    label.textContent = info.nombre;
+    label.textContent = traducirNombre(info.nombre);
     label.addEventListener("click", () => {
       setPosicion(info.y, info.x);
       actualizarVista();
@@ -326,4 +342,27 @@ export function actualizarVista() {
   actualizarMinimapExpandido();
   actualizarHash();
   if (onVistaActualizadaCb) onVistaActualizadaCb();
+}
+
+/**
+ * Re-pinta el TEXTO VISIBLE de las celdas con el traductor actual: zone label,
+ * nav labels de la celda activa y etiquetas del minimapa expandido (cuyo texto
+ * se fija una sola vez al crearlo). Llamar tras setTraductorNombres() y en cada
+ * cambio de idioma. No toca identificadores internos ni el hash.
+ */
+export function refrescarTextosCeldas() {
+  actualizarZoneLabel();
+
+  if (minimapExpandedEl) {
+    minimapExpandedEl.querySelectorAll(".minimap-expanded-cell").forEach(cell => {
+      const nombre = NOMBRES_CELDAS[`${cell.dataset.y}_${cell.dataset.x}`];
+      if (!nombre) return;
+      const visible = traducirNombre(nombre);
+      cell.textContent = visible;
+      cell.setAttribute("aria-label", `Ir a ${visible}`);
+    });
+  }
+
+  const activa = document.querySelector(`.pos_${posY}_${posX}`);
+  if (activa) crearNavLabels(activa);
 }

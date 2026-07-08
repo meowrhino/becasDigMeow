@@ -30,6 +30,30 @@ export function repaintWithFade(cellEl, contentEl, render, after, fadeMs = 250) 
 }
 
 /**
+ * Escapa los cinco caracteres con significado en HTML para que un string de
+ * texto plano se pinte tal cual (sin interpretarse como markup) al interpolarlo
+ * en un template de innerHTML. Cubre también el contexto de atributo entre
+ * comillas dobles: al escapar `"` no se puede romper un `href="…"`/`src="…"`.
+ *
+ * Uso: SOLO sobre valores de data.json que sean texto plano (títulos, nombres,
+ * urls, labels…). NO usarlo sobre campos que llevan markup a propósito, como
+ * `footer.*.secciones[].parrafos` (traen <strong>/<a>/<em>): escaparlos los
+ * rompería. La meta es defensiva: que un futuro editor de data.json no pueda
+ * inyectar un <script> por accidente en un campo de texto plano.
+ *
+ * @param {*} str
+ * @returns {string}
+ */
+export function escapeHTML(str) {
+  return String(str ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+/**
  * Fetch JSON con captura de error y log. Devuelve null si falla.
  *
  * @param {string} url

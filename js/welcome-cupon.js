@@ -20,6 +20,7 @@
 
 import { currentLang, attachLangListeners } from "./data.js";
 import { esMovil } from "./pages.js";
+import { escapeHTML } from "./utils.js";
 
 /**
  * Renderiza el cupón dentro de la celda welcome y arranca la animación.
@@ -34,7 +35,7 @@ export function renderWelcomeCupon(celda, cuponData) {
       <div class="welcome-cupon-inner">
         <div class="welcome-cupon-face welcome-cupon-front">
           <span class="welcome-cupon-hazte"></span>
-          <span class="welcome-cupon-precio">${cuponData.precio}</span>
+          <span class="welcome-cupon-precio">${escapeHTML(cuponData.precio)}</span>
           <span class="welcome-cupon-iva"></span>
           <span class="welcome-cupon-caduca"></span>
         </div>

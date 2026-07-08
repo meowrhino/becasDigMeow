@@ -5,19 +5,21 @@
 // renderSeccion() genérico para todas las categorías
 // con estilo "shooter" (items aparecen y crecen).
 
+import { escapeHTML } from "./utils.js";
+
 // --- Sección genérica (shooter) ---
 
 function renderItem(item, index) {
   const url = item.url || (item.links?.[0]?.url) || "#";
   const linksHtml = item.links
     ? item.links.map(l =>
-        `<a href="${l.url}" target="_blank" rel="noopener" class="archive-item-link">${l.label}</a>`
+        `<a href="${escapeHTML(l.url)}" target="_blank" rel="noopener" class="archive-item-link">${escapeHTML(l.label)}</a>`
       ).join(" ")
     : "";
 
   return `
     <div class="archive-item" style="--i: ${index}">
-      <a href="${url}" target="_blank" rel="noopener" class="archive-item-name">${item.nombre}</a>
+      <a href="${escapeHTML(url)}" target="_blank" rel="noopener" class="archive-item-name">${escapeHTML(item.nombre)}</a>
       ${linksHtml ? `<span class="archive-item-links">${linksHtml}</span>` : ""}
     </div>
   `;
