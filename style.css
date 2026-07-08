@@ -1791,37 +1791,29 @@ html.easy, html.easy body {
     0 0 30px var(--bg);
 }
 
-/* Hint y estado: anclados abajo, centrados, sin capturar el puntero para que
-   los clics lleguen al cupón que rebota por detrás. */
-.welcome-hint,
-.welcome-estado {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: var(--z-nav);
-  pointer-events: none;
-  text-align: center;
-  white-space: nowrap;
-  color: var(--text-secondary);
-  text-shadow: 0 0 10px var(--bg), 0 0 20px var(--bg);
-}
-
+/* Hint de navegación: centrado bajo el título (dentro de .welcome-content),
+   no anclado abajo. Las flechas apuntan hacia afuera para sugerir que se
+   navega con los enlaces de los lados, no con el teclado. */
 .welcome-hint {
-  /* Por encima de la línea de estado, dejando libre el nav-label
-     "portfolio" que vive en bottom: var(--edge-pad-y). */
-  bottom: calc(var(--edge-pad-y) + 3.9em);
   display: flex;
   align-items: center;
-  gap: 0.5em;
-  font-size: clamp(0.68rem, 1.2dvw, 0.82rem);
-  letter-spacing: 0.05em;
+  justify-content: center;
+  gap: 0.55em;
+  margin-top: 0.4em;
+  font-size: clamp(0.66rem, 1.15dvw, 0.8rem);
+  letter-spacing: 0.06em;
   color: var(--text-muted);
+  text-align: center;
+  text-shadow: 0 0 10px var(--bg), 0 0 20px var(--bg);
+  pointer-events: none;
   transition: opacity var(--transition-slow), transform var(--transition-slow);
 }
 
-/* Flechas con un vaivén suave hacia su lado. */
+/* Flechas: discretas (el texto lleva el mensaje) y con un vaivén suave hacia
+   su lado, gesto hacia los enlaces de los bordes. */
 .welcome-hint-flecha {
   display: inline-block;
+  opacity: 0.55;
   animation: welcome-hint-vaiven 1.8s ease-in-out infinite;
 }
 .welcome-hint-flecha:last-child {
@@ -1830,21 +1822,32 @@ html.easy, html.easy body {
 
 @keyframes welcome-hint-vaiven {
   0%, 100% { transform: translateX(0); }
-  50%      { transform: translateX(-0.25em); }
+  50%      { transform: translateX(-0.3em); }
 }
 @keyframes welcome-hint-vaiven-der {
   0%, 100% { transform: translateX(0); }
-  50%      { transform: translateX(0.25em); }
+  50%      { transform: translateX(0.3em); }
 }
 
 /* Estado de salida del hint tras la primera navegación. */
 .welcome-hint--oculto {
   opacity: 0;
-  transform: translateX(-50%) translateY(0.4em);
+  transform: translateY(0.4em);
 }
 
+/* Estado del estudio + hora: anclado abajo, sin capturar el puntero para que
+   los clics lleguen al cupón que rebota por detrás. */
 .welcome-estado {
+  position: absolute;
+  left: 50%;
   bottom: calc(var(--edge-pad-y) + 2.1em);
+  transform: translateX(-50%);
+  z-index: var(--z-nav);
+  pointer-events: none;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--text-secondary);
+  text-shadow: 0 0 10px var(--bg), 0 0 20px var(--bg);
   font-size: clamp(0.66rem, 1.1dvw, 0.8rem);
   letter-spacing: 0.03em;
 }

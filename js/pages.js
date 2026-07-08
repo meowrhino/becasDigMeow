@@ -161,13 +161,13 @@ export function renderWelcome(data) {
     <div class="welcome-content">
       <h1 class="welcome-title"><a href="easy.html" class="welcome-title-link" aria-label="${escapeHTML(w.titulo)} — versión en una página">${escapeHTML(w.titulo)}</a></h1>
       <p class="welcome-tagline">${escapeHTML(pick(w.tagline, currentLang))}</p>
+      ${hintVisto ? "" : `
+      <p class="welcome-hint" aria-hidden="true">
+        <span class="welcome-hint-flecha">←</span>
+        <span class="welcome-hint-txt">${escapeHTML(pick(w.hint, currentLang))}</span>
+        <span class="welcome-hint-flecha">→</span>
+      </p>`}
     </div>
-    ${hintVisto ? "" : `
-    <p class="welcome-hint" aria-hidden="true">
-      <span class="welcome-hint-flecha">←</span>
-      <span class="welcome-hint-txt">${escapeHTML(pick(w.hint, currentLang))}</span>
-      <span class="welcome-hint-flecha">→</span>
-    </p>`}
     <p class="welcome-estado">
       <span class="welcome-estado-txt">${escapeHTML(pick(w.estado, currentLang))}</span>
       <span class="welcome-estado-sep">·</span>
@@ -479,6 +479,7 @@ export function renderContacto(data) {
         ${cvHtml}
       </div>
     </div>
+    ${buildLangButtons()}
   `;
 
   const emailEl = el.querySelector(".contacto-email");
