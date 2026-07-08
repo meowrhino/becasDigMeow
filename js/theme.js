@@ -8,7 +8,16 @@
 // El tema se aplica ANTES del render mediante un script
 // inline en <head> (ver index.html) para evitar flash.
 
+import { currentLang, onLangChange } from "./data.js";
+
 const STORAGE_KEY = "meowrhino-theme";
+
+/** Textos del aria-label del toggle por idioma (claves = LANGS de data.js). */
+const TEXTOS_TOGGLE = {
+  es: { aClaro: "Cambiar a modo claro", aOscuro: "Cambiar a modo oscuro" },
+  en: { aClaro: "Switch to light mode", aOscuro: "Switch to dark mode" },
+  cat: { aClaro: "Canvia a mode clar", aOscuro: "Canvia a mode fosc" },
+};
 
 const SVG_MOON = `<svg class="toggle-icon toggle-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
 
@@ -21,15 +30,21 @@ function getTema() {
   return document.documentElement.getAttribute("data-theme") || "light";
 }
 
+/** Actualiza el aria-label del toggle según tema activo e idioma actual. */
+function actualizarAriaLabelToggle() {
+  if (!toggleEl) return;
+  const textos = TEXTOS_TOGGLE[currentLang] || TEXTOS_TOGGLE.es;
+  const tema = getTema();
+  toggleEl.setAttribute("aria-label", tema === "dark" ? textos.aClaro : textos.aOscuro);
+}
+
 /** Aplica el tema y actualiza los iconos SVG. */
 function aplicarTema(tema) {
   document.documentElement.setAttribute("data-theme", tema);
   localStorage.setItem(STORAGE_KEY, tema);
   if (toggleEl) {
     toggleEl.classList.toggle("is-dark", tema === "dark");
-    toggleEl.setAttribute("aria-label",
-      tema === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"
-    );
+    actualizarAriaLabelToggle();
   }
   const tone = tema === "dark" ? "BLANCO" : "NEGRO";
   document.querySelectorAll(".footer-logo[data-logo-name]").forEach(img => {
@@ -82,11 +97,10 @@ export function crearThemeToggle(parent = document.body) {
   toggleEl.addEventListener("click", alternarTema);
 
   // Sincronizar estado con el tema actual (ya aplicado por el script de <head>)
-  const temaActual = getTema();
-  toggleEl.classList.toggle("is-dark", temaActual === "dark");
-  toggleEl.setAttribute("aria-label",
-    temaActual === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"
-  );
+  toggleEl.classList.toggle("is-dark", getTema() === "dark");
+  actualizarAriaLabelToggle();
+  // Re-traduce el aria-label cuando cambia el idioma (sin depender de pages.js).
+  onLangChange(actualizarAriaLabelToggle);
 
   parent.appendChild(toggleEl);
 }

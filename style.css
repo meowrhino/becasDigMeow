@@ -1763,3 +1763,136 @@ html.easy, html.easy body {
 @media (prefers-reduced-motion: reduce) {
   .pgrid-thumb::before { animation: none; }
 }
+
+/* ============================================
+   WELCOME EXTRAS
+   Tagline bajo el título, hint de navegación efímero
+   y línea de estado con la hora de barcelona.
+   Todo discreto: pequeño, en color secundario, y sin
+   robar protagonismo al título ni bloquear el cupón.
+   ============================================ */
+
+/* El título y su tagline se apilan en columna (la celda ya centra). */
+.welcome-content {
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+/* Tagline pegado al título: pequeño, secundario, mismo halo que el título
+   para leerse por encima del cupón. */
+.welcome-tagline {
+  font-size: clamp(0.7rem, 1.4dvw, 0.95rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: var(--text-secondary);
+  text-shadow:
+    0 0 10px var(--bg),
+    0 0 20px var(--bg),
+    0 0 30px var(--bg);
+}
+
+/* Hint y estado: anclados abajo, centrados, sin capturar el puntero para que
+   los clics lleguen al cupón que rebota por detrás. */
+.welcome-hint,
+.welcome-estado {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-nav);
+  pointer-events: none;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--text-secondary);
+  text-shadow: 0 0 10px var(--bg), 0 0 20px var(--bg);
+}
+
+.welcome-hint {
+  /* Por encima de la línea de estado, dejando libre el nav-label
+     "portfolio" que vive en bottom: var(--edge-pad-y). */
+  bottom: calc(var(--edge-pad-y) + 3.9em);
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: clamp(0.68rem, 1.2dvw, 0.82rem);
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+/* Flechas con un vaivén suave hacia su lado. */
+.welcome-hint-flecha {
+  display: inline-block;
+  animation: welcome-hint-vaiven 1.8s ease-in-out infinite;
+}
+.welcome-hint-flecha:last-child {
+  animation-name: welcome-hint-vaiven-der;
+}
+
+@keyframes welcome-hint-vaiven {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(-0.25em); }
+}
+@keyframes welcome-hint-vaiven-der {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(0.25em); }
+}
+
+/* Estado de salida del hint tras la primera navegación. */
+.welcome-hint--oculto {
+  opacity: 0;
+  transform: translateX(-50%) translateY(0.4em);
+}
+
+.welcome-estado {
+  bottom: calc(var(--edge-pad-y) + 2.1em);
+  font-size: clamp(0.66rem, 1.1dvw, 0.8rem);
+  letter-spacing: 0.03em;
+}
+
+.welcome-estado-sep {
+  margin: 0 0.15em;
+  opacity: 0.6;
+}
+
+.welcome-reloj {
+  font-variant-numeric: tabular-nums;
+}
+
+.welcome-ciudad {
+  margin-left: 0.3em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .welcome-hint-flecha { animation: none; }
+  .welcome-hint { transition: opacity var(--transition-slow); }
+  .welcome-hint--oculto { transform: translateX(-50%); }
+}
+
+/* ============================================
+   ACCESIBILIDAD
+   Skip-link. El :focus-visible global y el
+   @media (prefers-reduced-motion) ya viven junto al RESET
+   (sección 0), aplicándose a toda la página.
+   ============================================ */
+
+/* Oculto hasta recibir foco por teclado; entonces aparece por encima de
+   todo (incluso del overlay del minimapa expandido) en la esquina. */
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 9999;
+  transform: translateY(-150%);
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--text);
+  padding: 0.6rem 1.1rem;
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}

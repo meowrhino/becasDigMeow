@@ -123,17 +123,87 @@ export function renderWelcome(data) {
   const el = document.querySelector(".celda.welcome");
   if (!el || !data?.welcome) return;
 
+  const w = data.welcome;
+  // Escoge la variante de idioma (con fallback a es) de un objeto {es,en,cat}.
+  const pick = (obj, lang) => (obj?.[lang] ?? obj?.es ?? "");
+
+  // Si el usuario ya navegó alguna vez, el hint no se vuelve a mostrar.
+  const hintVisto = localStorage.getItem("mw_hint_visto");
+
   // El título siempre se pinta; el cupón va detrás (posicionado absoluto).
   // Los lang-btn quedan sobre el cupón (z-index mayor) y `renderWelcomeCupon`
   // engancha los listeners al recorrer los .lang-btn dentro de la celda.
+  // Debajo del título: tagline. Abajo de la celda: hint de navegación
+  // (efímero) y una línea de estado con la hora de barcelona.
   el.innerHTML = `
     <div class="welcome-content">
-      <h1 class="welcome-title"><a href="easy.html" class="welcome-title-link" aria-label="${data.welcome.titulo} — versión en una página">${data.welcome.titulo}</a></h1>
+      <h1 class="welcome-title"><a href="easy.html" class="welcome-title-link" aria-label="${w.titulo} — versión en una página">${w.titulo}</a></h1>
+      <p class="welcome-tagline">${pick(w.tagline, currentLang)}</p>
     </div>
+    ${hintVisto ? "" : `
+    <p class="welcome-hint" aria-hidden="true">
+      <span class="welcome-hint-flecha">←</span>
+      <span class="welcome-hint-txt">${pick(w.hint, currentLang)}</span>
+      <span class="welcome-hint-flecha">→</span>
+    </p>`}
+    <p class="welcome-estado">
+      <span class="welcome-estado-txt">${pick(w.estado, currentLang)}</span>
+      <span class="welcome-estado-sep">·</span>
+      <span class="welcome-reloj"></span>
+      <span class="welcome-ciudad">barcelona</span>
+    </p>
     ${buildLangButtons()}
   `;
 
-  renderWelcomeCupon(el, data.welcome.cupon);
+  const taglineEl = el.querySelector(".welcome-tagline");
+  const hintTxtEl = el.querySelector(".welcome-hint-txt");
+  const estadoTxtEl = el.querySelector(".welcome-estado-txt");
+
+  // i18n en sitio: reusa el mecanismo de attachLangListeners (mismo patrón
+  // que el cupón, que registra el suyo aparte sobre la misma celda).
+  attachLangListeners(el, (lang) => {
+    if (taglineEl) taglineEl.textContent = pick(w.tagline, lang);
+    if (hintTxtEl) hintTxtEl.textContent = pick(w.hint, lang);
+    if (estadoTxtEl) estadoTxtEl.textContent = pick(w.estado, lang);
+  });
+
+  // Reloj de barcelona: Intl con timeZone Europe/Madrid, refresco por minuto
+  // (cada 30 s basta para que nunca se vea más de ~30 s desfasado). Limpiamos
+  // un posible interval previo por si renderWelcome se llamara de nuevo.
+  const relojEl = el.querySelector(".welcome-reloj");
+  if (relojEl) {
+    const fmt = new Intl.DateTimeFormat("es-ES", {
+      timeZone: "Europe/Madrid", hour: "2-digit", minute: "2-digit", hour12: false,
+    });
+    const updateReloj = () => { relojEl.textContent = fmt.format(new Date()); };
+    updateReloj();
+    if (el._welcomeRelojTimer) clearInterval(el._welcomeRelojTimer);
+    el._welcomeRelojTimer = setInterval(updateReloj, 30000);
+  }
+
+  // Hint efímero: desaparece con fade en cuanto el usuario navega por primera
+  // vez (la celda deja de ser `.activa` tras haberlo sido) y no vuelve nunca
+  // más (localStorage). Observamos el cambio de clase con MutationObserver.
+  const hintEl = el.querySelector(".welcome-hint");
+  if (hintEl && !hintVisto && typeof MutationObserver !== "undefined") {
+    // En el arranque la celda aún no es `.activa` (actualizarVista corre
+    // después de renderizar), así que esperamos a que lo sea antes de armar
+    // la salida: evita marcar el hint como visto si se entró directo a otra celda.
+    let haSidoActiva = el.classList.contains("activa");
+    const obs = new MutationObserver(() => {
+      if (el.classList.contains("activa")) { haSidoActiva = true; return; }
+      if (!haSidoActiva) return;
+      obs.disconnect();
+      localStorage.setItem("mw_hint_visto", "1");
+      hintEl.classList.add("welcome-hint--oculto");
+      hintEl.addEventListener("transitionend", () => hintEl.remove(), { once: true });
+      // Red de seguridad por si no dispara transitionend (reduced-motion).
+      setTimeout(() => hintEl.remove(), 700);
+    });
+    obs.observe(el, { attributes: true, attributeFilter: ["class"] });
+  }
+
+  renderWelcomeCupon(el, w.cupon);
 }
 
 // --- Statement ---

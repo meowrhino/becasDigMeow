@@ -38,17 +38,29 @@ sincronizarLangDocumento(currentLang);
  */
 export const langUpdateCallbacks = [];
 
+/**
+ * Registra un callback global que se dispara en cada cambio de idioma, sin
+ * requerir un contenedor con botones .lang-btn (p.ej. theme.js, que solo
+ * necesita re-traducir su aria-label). Se vincula a document.body, que
+ * nunca se desconecta del DOM, así que nunca se purga.
+ */
+export function onLangChange(cb) {
+  langUpdateCallbacks.push({ container: document.body, cb });
+}
+
 /** Genera el HTML de los botones de idioma. */
 export function buildLangButtons() {
   return `<div class="lang-group">${LANGS.map(l =>
-    `<button class="lang-btn${l === currentLang ? " is-active" : ""}" data-lang="${l}">${l}</button>`
+    `<button class="lang-btn${l === currentLang ? " is-active" : ""}" data-lang="${l}" aria-pressed="${l === currentLang}">${l}</button>`
   ).join("")}</div>`;
 }
 
 /** Sincroniza el estado visual de TODOS los .lang-btn en la página. */
 export function syncAllLangButtons() {
   document.querySelectorAll(".lang-btn").forEach(b => {
-    b.classList.toggle("is-active", b.dataset.lang === currentLang);
+    const activo = b.dataset.lang === currentLang;
+    b.classList.toggle("is-active", activo);
+    b.setAttribute("aria-pressed", activo ? "true" : "false");
   });
 }
 

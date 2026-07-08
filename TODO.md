@@ -52,21 +52,21 @@
 ### i18n — strings hardcodeados
 
 - [ ] **Labels de dropdowns en tools** — `"conversores"`, `"formateadores"`, `"webs terminadas"` hardcodeados en español (`pages.js:73-75`). Mover a data.json con variantes es/en/cat (2026-04-21)
-- [ ] **aria-labels del theme toggle** — `"Cambiar a modo claro/oscuro"` hardcoded en `theme.js:31,58`, sin traducción en/cat (2026-04-21)
+- [x] **aria-labels del theme toggle** — hecho (2026-07-08): diccionario local es/en/cat en theme.js + `onLangChange(cb)` en data.js, se retraduce al cambiar idioma
 - [ ] **Zone labels del grid** — `nombres` en `main.js:111-119` se muestran como zone-labels en los bordes. Algunos cambian entre idiomas (políticas→policies/polítiques, metodología→methodology, contacto→contact, welcome→benvinguda). Considerar i18n (2026-04-21)
 - [ ] **Link "archive" del portfolio** — `portfolio.js:107`. En español sería "archivo"; en cat "arxiu". Decidir si se traduce o queda como palabra universal (2026-04-21)
 - [ ] **`<meta description>` solo en ES** — `index.html:6`. Para SEO multilingüe setearlo vía JS según idioma detectado (2026-04-21)
 
 ### Accesibilidad
 
-- [ ] `<html lang="es">` hardcoded — actualizar dinámicamente al cambiar idioma
-- [ ] Celdas del minimapa son `<div>` clickeables sin `role="button"` ni `tabindex` (`navigation.js:117-123`)
-- [ ] Nubes clickeables sin accesibilidad teclado/screen reader (`portfolio.js:494-495`)
-- [ ] Botones zoom `+`/`-` sin `aria-label` (`zoom.js:12-15`)
-- [ ] Botones de idioma sin `aria-pressed` (`data.js:16-18`)
-- [ ] Sin `<noscript>` fallback ni skip-nav link
-- [ ] `prefers-reduced-motion` — sin implementar
-- [ ] `:focus-visible` — sin implementar
+- [x] ~~`<html lang="es">` hardcoded~~ — ya estaba implementado (`sincronizarLangDocumento` en data.js, con mapeo cat→ca) (2026-07-08)
+- [x] ~~Celdas del minimapa sin accesibilidad~~ — ya eran `<button>` reales; añadido `aria-label="Ir a {nombre}"` explícito (2026-07-08)
+- [x] ~~Nubes sin accesibilidad teclado~~ — obsoleto: el grid actual usa `<a href>` focusables nativamente (2026-07-08)
+- [x] ~~Botones zoom sin `aria-label`~~ — ya estaban implementados en zoom.js (2026-07-08)
+- [x] Botones de idioma sin `aria-pressed` — hecho (2026-07-08): inicial + sincronizado en cada cambio (`data.js`)
+- [x] `<noscript>` fallback + skip-nav link — hecho (2026-07-08): skip-link con foco a `#content`, noscript enlaza a easy.html como versión estática
+- [x] ~~`prefers-reduced-motion`~~ — ya existía media query global en style.css (2026-07-08)
+- [x] ~~`:focus-visible`~~ — ya existía regla global con `var(--text)` en style.css (2026-07-08)
 
 ### Cleanup general
 
@@ -86,10 +86,10 @@
 
 ### Welcome (ideas, baja prioridad)
 
-- [ ] Tagline/subtítulo tipo "estudio de diseño web en Barcelona" con cambio de idioma automático
+- [x] Tagline/subtítulo con cambio de idioma automático — hecho (2026-07-08): `data.welcome.tagline` {es,en,cat}, bajo el título
 - [ ] Nombres del equipo (paula, miranda, andrea, jaume) con links a formateadores
-- [ ] Hint de navegación para nuevos usuarios (flechas, desaparece tras primera interacción)
-- [ ] Estado del estudio + hora BCN ("disponibles para proyectos" + reloj)
+- [x] Hint de navegación para nuevos usuarios — hecho (2026-07-08): `data.welcome.hint`, flechas con vaivén suave, fade-out al salir de welcome por primera vez, persistido en localStorage (`mw_hint_visto`)
+- [x] Estado del estudio + hora BCN — hecho (2026-07-08): `data.welcome.estado` + reloj Intl (Europe/Madrid) cada 30s, sin acumular timers al cambiar idioma
 - [ ] Animación tipográfica (letras secuenciales, cursor, glitch suave)
 - [ ] Logo / ASCII art del meowrhino
 - [ ] Links rápidos (Instagram, email, portfolio)

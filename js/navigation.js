@@ -200,7 +200,11 @@ export function crearOverlay() {
       if (GRID[y][x] === 0) {
         cell.classList.add("invisible");
       } else {
-        cell.textContent = NOMBRES_CELDAS[`${y}_${x}`] || "";
+        const nombreCelda = NOMBRES_CELDAS[`${y}_${x}`] || "";
+        cell.textContent = nombreCelda;
+        // Ya es un <button> (foco y teclado nativos); el aria-label añade
+        // el verbo de la acción, más claro que solo el nombre destino.
+        if (nombreCelda) cell.setAttribute("aria-label", `Ir a ${nombreCelda}`);
         cell.addEventListener("click", () => {
           setPosicion(y, x);
           actualizarVista();

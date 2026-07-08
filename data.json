@@ -1,6 +1,21 @@
 {
   "welcome": {
     "titulo": "meowrhino studio",
+    "tagline": {
+      "es": "estudio de diseño web en barcelona",
+      "en": "web design studio in barcelona",
+      "cat": "estudi de disseny web a barcelona"
+    },
+    "hint": {
+      "es": "navega con las flechas",
+      "en": "navigate with the arrows",
+      "cat": "navega amb les fletxes"
+    },
+    "estado": {
+      "es": "disponibles para proyectos",
+      "en": "available for projects",
+      "cat": "disponibles per a projectes"
+    },
     "cupon": {
       "precio": "850 €",
       "email": "hola@meowrhino.studio",
