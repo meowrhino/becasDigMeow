@@ -1,0 +1,146 @@
+// ============================================
+// EASY TEMPLATE — plantillas HTML del "modo fácil" (sin DOM).
+// ============================================
+//
+// Funciones puras que devuelven strings de HTML a partir de data.json. Al no
+// tocar el DOM ni depender del navegador, se comparten entre:
+//   - easy-main.js  (navegador: pinta el cuerpo y le engancha los inits vivos)
+//   - build-easy.js (Node: pre-renderiza el cuerpo en easy.html para el SEO)
+// Así el texto que ve Google es EXACTAMENTE el que ve el visitante, sin copias
+// que se desincronicen. Fuente única de contenido: data.json.
+
+export const esc = (s) => String(s ?? "")
+  .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+  .replace(/"/g, "&quot;");
+
+// Titular de venta por idioma (el wordmark ya vive en el header).
+export const HERO = {
+  es:  { eyebrow: "estudio de diseño web · barcelona", titular: "tu web en un mes, con código abierto y sin cuotas." },
+  en:  { eyebrow: "web design studio · barcelona",     titular: "your website in a month — open source, no monthly fees." },
+  cat: { eyebrow: "estudi de disseny web · barcelona", titular: "la teva web en un mes, amb codi obert i sense quotes." },
+};
+
+export function heroHTML(data, lang) {
+  const c = data.welcome.cupon;
+  const t = c[lang] || c.es || {};
+  const h = HERO[lang] || HERO.es;
+  const subject = encodeURIComponent(t.subject || "");
+  const mailto = `mailto:${c.email}?subject=${subject}`;
+  return `
+    <section class="easy-hero" id="top">
+      <p class="easy-eyebrow">${esc(h.eyebrow)}</p>
+      <h1 class="easy-hero-title">${esc(h.titular)}</h1>
+      <div class="easy-ticket">
+        <p class="easy-ticket-hazte">${esc(t.hazte)}</p>
+        <p class="easy-ticket-precio">${esc(c.precio)}</p>
+        ${t.iva ? `<p class="easy-ticket-iva">${esc(t.iva)}</p>` : ""}
+        <p class="easy-ticket-caduca">${esc(t.caduca)}</p>
+      </div>
+      ${t.incluye ? `<p class="easy-hero-incluye">${esc(t.incluye)}</p>` : ""}
+      <div class="easy-hero-cta">
+        <a class="easy-btn" href="${mailto}">${esc(t.cta || "escríbeme")}</a>
+        ${t.primera ? `<span class="easy-hero-primera">${esc(t.primera)}</span>` : ""}
+      </div>
+    </section>`;
+}
+
+// Portfolio: visor grande (imágenes apiladas que se funden por opacidad) + rejilla
+// de miniaturas para elegir. El nombre y "visitar" se actualizan al cambiar (ver
+// initPortfolio en easy-main.js). Cada proyecto con url es un enlace; sin url, un
+// div neutro. El alt describe el proyecto para SEO/accesibilidad: usa el campo
+// `alt` de data.json si existe; si no, genera uno con el nombre + estudio + ciudad.
+export function portfolioHTML(data) {
+  const proyectos = data.portfolio?.proyectos || [];
+  const altFor = (p) => p.alt || `${p.nombre} — web diseñada por meowrhino studio, Barcelona`;
+  const slides = proyectos.map(p => {
+    const href = p.url || p.urls?.[0]?.url || "";
+    const open = href
+      ? `<a class="easy-pf-slide" href="${esc(href)}" target="_blank" rel="noopener" data-name="${esc(p.nombre)}">`
+      : `<div class="easy-pf-slide" data-name="${esc(p.nombre)}">`;
+    const close = href ? "</a>" : "</div>";
+    return `${open}<img src="${esc(p.imagen)}" alt="${esc(altFor(p))}" loading="lazy" decoding="async">${close}`;
+  }).join("");
+  const thumbs = proyectos.map((p, i) => `
+    <button class="easy-pf-thumb" type="button" data-i="${i}" aria-label="${esc(p.nombre)}">
+      <img src="${esc(p.imagen)}" alt="" loading="lazy" decoding="async">
+    </button>`).join("");
+  return `
+    <section class="easy-section easy-portfolio" id="portfolio">
+      <h2 class="easy-h">portfolio</h2>
+      <div class="easy-pf">
+        <div class="easy-pf-viewer">
+          <button class="easy-pf-nav easy-pf-prev" type="button" aria-label="proyecto anterior">‹</button>
+          <div class="easy-pf-stage" tabindex="0" role="group" aria-label="proyectos">${slides}</div>
+          <button class="easy-pf-nav easy-pf-next" type="button" aria-label="proyecto siguiente">›</button>
+        </div>
+        <p class="easy-pf-caption">
+          <span class="easy-pf-name"></span>
+          <a class="easy-pf-visitar" target="_blank" rel="noopener" hidden>visitar ↗</a>
+        </p>
+        <div class="easy-pf-thumbs">${thumbs}</div>
+      </div>
+    </section>`;
+}
+
+export function metodologiaHTML(data, lang) {
+  const lineas = (data.metodologia?.[lang] || data.metodologia?.es || {}).lineas || [];
+  const pasos = lineas.map((l, i) => `
+    <li class="easy-step">
+      <span class="easy-step-num">${String(i + 1).padStart(2, "0")}</span>
+      <p class="easy-step-text">${esc(l)}</p>
+    </li>`).join("");
+  return `
+    <section class="easy-section" id="metodologia">
+      <h2 class="easy-h">metodología</h2>
+      <ol class="easy-steps">${pasos}</ol>
+    </section>`;
+}
+
+export function statementHTML(data, lang) {
+  const lineas = (data.statement?.[lang] || data.statement?.es || {}).lineas || [];
+  const ls = lineas.map(l => `<p class="easy-statement-line">${esc(l)}</p>`).join("");
+  return `
+    <section class="easy-section easy-statement" id="statement">
+      <h2 class="easy-h">statement</h2>
+      ${ls}
+    </section>`;
+}
+
+export function contactoHTML(data, lang) {
+  const co = data.contacto || {};
+  const asunto = encodeURIComponent(co.asunto?.[lang] || co.asunto?.es || "");
+  const mailto = `mailto:${co.email}?subject=${asunto}`;
+  const ig = co.instagram;
+  const cv = co.cv?.[lang] || co.cv?.es;
+  const cta = (data.welcome.cupon[lang] || data.welcome.cupon.es || {}).cta || "escríbeme";
+  return `
+    <section class="easy-section easy-contacto" id="contacto">
+      <h2 class="easy-h">contacto</h2>
+      <a class="easy-email" href="${mailto}">${esc(co.email)}</a>
+      <div class="easy-contacto-cta">
+        <a class="easy-btn" href="${mailto}">${esc(cta)}</a>
+      </div>
+      <div class="easy-contacto-links">
+        ${ig ? `<a href="${esc(ig.url)}" target="_blank" rel="noopener">${esc(ig.usuario)}</a>` : ""}
+        ${cv ? `<a href="${esc(cv)}" target="_blank" rel="noopener">cv</a>` : ""}
+      </div>
+    </section>`;
+}
+
+export function footerHTML() {
+  // Solo el wordmark, centrado. Enlaza al grid (única puerta de vuelta).
+  return `
+    <footer class="easy-footer">
+      <a href="index.html">meowrhino.studio</a>
+    </footer>`;
+}
+
+// Cuerpo completo del modo fácil, en el mismo orden que pinta el navegador.
+export function renderBodyHTML(data, lang) {
+  return heroHTML(data, lang) +
+    portfolioHTML(data) +
+    statementHTML(data, lang) +
+    metodologiaHTML(data, lang) +
+    contactoHTML(data, lang) +
+    footerHTML();
+}

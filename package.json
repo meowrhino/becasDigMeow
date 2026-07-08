@@ -1,0 +1,10 @@
+{
+  "name": "meowrhino-studio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "meowrhino studio — sitio del estudio de diseño web.",
+  "scripts": {
+    "build": "node build-easy.js"
+  }
+}
