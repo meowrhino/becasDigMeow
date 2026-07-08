@@ -20,14 +20,9 @@
       "cat": "estudi de disseny web a barcelona"
     },
     "hint": {
-      "es": "navega con los enlaces de los lados",
-      "en": "navigate with the links on the sides",
-      "cat": "navega amb els enllaços dels costats"
-    },
-    "estado": {
-      "es": "disponibles para proyectos",
-      "en": "available for projects",
-      "cat": "disponibles per a projectes"
+      "es": "navega con los botones de los lados",
+      "en": "navigate with the buttons on the sides",
+      "cat": "navega amb els botons dels costats"
     },
     "cupon": {
       "precio": "850 €",

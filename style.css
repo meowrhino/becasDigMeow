@@ -1829,46 +1829,8 @@ html.easy, html.easy body {
   50%      { transform: translateX(0.3em); }
 }
 
-/* Estado de salida del hint tras la primera navegación. */
-.welcome-hint--oculto {
-  opacity: 0;
-  transform: translateY(0.4em);
-}
-
-/* Estado del estudio + hora: anclado abajo, sin capturar el puntero para que
-   los clics lleguen al cupón que rebota por detrás. */
-.welcome-estado {
-  position: absolute;
-  left: 50%;
-  bottom: calc(var(--edge-pad-y) + 2.1em);
-  transform: translateX(-50%);
-  z-index: var(--z-nav);
-  pointer-events: none;
-  text-align: center;
-  white-space: nowrap;
-  color: var(--text-secondary);
-  text-shadow: 0 0 10px var(--bg), 0 0 20px var(--bg);
-  font-size: clamp(0.66rem, 1.1dvw, 0.8rem);
-  letter-spacing: 0.03em;
-}
-
-.welcome-estado-sep {
-  margin: 0 0.15em;
-  opacity: 0.6;
-}
-
-.welcome-reloj {
-  font-variant-numeric: tabular-nums;
-}
-
-.welcome-ciudad {
-  margin-left: 0.3em;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .welcome-hint-flecha { animation: none; }
-  .welcome-hint { transition: opacity var(--transition-slow); }
-  .welcome-hint--oculto { transform: translateX(-50%); }
 }
 
 /* ============================================

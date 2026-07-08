@@ -89,8 +89,8 @@
 
 - [x] Tagline/subtítulo con cambio de idioma automático — hecho (2026-07-08): `data.welcome.tagline` {es,en,cat}, bajo el título
 - [ ] Nombres del equipo (paula, miranda, andrea, jaume) con links a formateadores
-- [x] Hint de navegación para nuevos usuarios — hecho (2026-07-08): `data.welcome.hint`, flechas con vaivén suave, fade-out al salir de welcome por primera vez, persistido en localStorage (`mw_hint_visto`)
-- [x] Estado del estudio + hora BCN — hecho (2026-07-08): `data.welcome.estado` + reloj Intl (Europe/Madrid) cada 30s, sin acumular timers al cambiar idioma
+- [x] Hint de navegación para nuevos usuarios — hecho (2026-07-08): `data.welcome.hint` ("navega con los botones de los lados", es/en/cat), fijo bajo el tagline, flechas atenuadas con vaivén hacia afuera apuntando a los nav-labels de los bordes. (Iteración: primero fue efímero con localStorage y anclado abajo; el usuario lo quiso permanente y centrado bajo el tagline)
+- [~] ~~Estado del estudio + hora BCN~~ — implementado y luego RETIRADO por decisión del usuario (2026-07-08): recargaba visualmente la celda welcome. Si se recupera: era `data.welcome.estado` + reloj Intl (Europe/Madrid)
 - [ ] Animación tipográfica (letras secuenciales, cursor, glitch suave)
 - [ ] Logo / ASCII art del meowrhino
 - [ ] Links rápidos (Instagram, email, portfolio)
