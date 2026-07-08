@@ -7,16 +7,28 @@ import { setupScrollGradients } from "./scroll-gradients.js";
 
 // --- Estado centralizado de cycling de imágenes ---
 
-/** @type {Map<number, {currentIndex: number, imagenes: string[], intervalo: number, timerId: number|null, listeners: Set<Function>, paused: boolean}>} */
+/** @type {Map<number, {currentIndex: number, imagenes: string[], intervalo: number, timerId: number|null, listeners: Set<Function>, paused: boolean, ready: boolean, _pendiente: boolean}>} */
 const imageCycleState = new Map();
 
 let visibilityObserver = null;
 
 function arrancarTimer(state) {
+  // No arrancar el crossfade hasta que la imagen primaria de la nube
+  // haya cargado; si aún no, dejar la petición pendiente.
+  if (!state.ready) { state._pendiente = true; return; }
+  state._pendiente = false;
   state.timerId = setInterval(() => {
     state.currentIndex = (state.currentIndex + 1) % state.imagenes.length;
     state.listeners.forEach(fn => fn(state.currentIndex, state.imagenes));
   }, state.intervalo);
+}
+
+// Marca la nube como cargada y arranca su ciclo si estaba pendiente.
+function marcarCicloListo(projectIndex) {
+  const state = imageCycleState.get(projectIndex);
+  if (!state) return;
+  state.ready = true;
+  if (state._pendiente && !state.paused) arrancarTimer(state);
 }
 
 function iniciarCiclosImagenes(proyectos) {
@@ -27,8 +39,10 @@ function iniciarCiclosImagenes(proyectos) {
 
     const intervalo = 5000 + Math.random() * 3000;
     const retraso   = 2000 + Math.random() * 4000;
-    const state = { currentIndex: 0, imagenes, intervalo, timerId: null, listeners: new Set(), paused: false };
+    const state = { currentIndex: 0, imagenes, intervalo, timerId: null, listeners: new Set(), paused: false, ready: false, _pendiente: false };
 
+    // El timeout de retraso queda registrado en _delayId: un stop durante el
+    // delay lo cancela y evita que arranque el interval (sin timers huérfanos).
     state._delayId = setTimeout(() => {
       state._delayId = null;
       if (!state.paused) arrancarTimer(state);
@@ -71,16 +85,40 @@ function reanudarCiclos() {
   });
 }
 
+// Las celdas están apiladas en el mismo hueco del viewport (solo cambia su
+// opacidad/visibility vía la clase .activa), así que IntersectionObserver no
+// distingue la celda visible. Observamos la clase .activa: solo entonces se
+// cargan las imágenes (evita descargar las ~13 en el load inicial) y corren
+// los ciclos.
 function observarVisibilidadPortfolio() {
   const celda = document.querySelector(".celda.portfolio");
-  if (!celda || typeof IntersectionObserver === "undefined") return;
-  visibilityObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) reanudarCiclos();
-      else pausarCiclos();
-    });
+  if (!celda) return;
+
+  const sincronizar = () => {
+    if (celda.classList.contains("activa")) {
+      reanudarCiclos();
+      activarCargaPortfolio();
+    } else {
+      pausarCiclos();
+    }
+  };
+
+  if (typeof MutationObserver !== "undefined") {
+    visibilityObserver = new MutationObserver(sincronizar);
+    visibilityObserver.observe(celda, { attributes: true, attributeFilter: ["class"] });
+  }
+  sincronizar(); // estado inicial (p.ej. entrada directa al portfolio por hash)
+}
+
+// Asigna el src real a las imágenes primarias (diferido hasta que el portfolio
+// es visible). loading="lazy" sigue difiriendo las que queden fuera del scroll.
+function activarCargaPortfolio() {
+  const grid = document.getElementById("portfolio-grid");
+  if (!grid) return;
+  grid.querySelectorAll("img[data-src]").forEach(img => {
+    img.src = img.dataset.src;
+    delete img.dataset.src;
   });
-  visibilityObserver.observe(celda);
 }
 
 function suscribirCiclo(projectIndex, listener) {
@@ -178,12 +216,16 @@ function renderGridProyectos(proyectos) {
 
     const imgA = document.createElement("img");
     imgA.classList.add("pgrid-img", "pgrid-img-a");
-    imgA.src = proyecto.imagen;
     imgA.alt = proyecto.nombre;
     imgA.loading = "lazy";
     imgA.decoding = "async";
     imgA.width = 800;          // aspect-ratio 4:3, el CSS reescala al 100%
     imgA.height = 600;
+    // Al cargar (o fallar) la primaria: fade-in de la nube (quita skeleton) y
+    // habilita su ciclo de crossfade. En error se quita igual el skeleton.
+    imgA.addEventListener("load", () => { thumb.classList.add("loaded"); marcarCicloListo(idx); });
+    imgA.addEventListener("error", () => { thumb.classList.add("loaded"); marcarCicloListo(idx); });
+    imgA.dataset.src = proyecto.imagen;  // src diferido: se asigna al activar el portfolio
     thumb.appendChild(imgA);
 
     if (tieneCiclo) {

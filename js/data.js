@@ -2,8 +2,6 @@
 // DATA — Carga de datos, caché e idioma global
 // ============================================
 
-import { fetchJson } from "./utils.js";
-
 // --- Idioma global ---
 
 export const LANGS = ["es", "en", "cat"];
@@ -32,7 +30,12 @@ function sincronizarLangDocumento(lang) {
 }
 sincronizarLangDocumento(currentLang);
 
-/** Callbacks de cada sección para actualizar su contenido al cambiar idioma. */
+/**
+ * Callbacks de cada sección para actualizar su contenido al cambiar idioma.
+ * Cada entrada guarda también el contenedor que registró el callback, para
+ * poder purgar automáticamente los que quedan huérfanos (contenedor ya fuera
+ * del DOM) en vez de acumularlos sin límite y dispararlos sobre nodos muertos.
+ */
 export const langUpdateCallbacks = [];
 
 /** Genera el HTML de los botones de idioma. */
@@ -55,7 +58,7 @@ export function syncAllLangButtons() {
  * @param {Function} onLangChange - Callback(lang)
  */
 export function attachLangListeners(container, onLangChange) {
-  langUpdateCallbacks.push(onLangChange);
+  langUpdateCallbacks.push({ container, cb: onLangChange });
 
   container.querySelectorAll(".lang-btn").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -65,7 +68,12 @@ export function attachLangListeners(container, onLangChange) {
       localStorage.setItem("lang", lang);
       sincronizarLangDocumento(lang);
       syncAllLangButtons();
-      langUpdateCallbacks.forEach(cb => cb(lang));
+      // Purga huérfanos (contenedor ya fuera del DOM) recorriendo hacia atrás
+      // para que el splice no desordene el resto, y dispara el resto en orden.
+      for (let i = langUpdateCallbacks.length - 1; i >= 0; i--) {
+        if (!langUpdateCallbacks[i].container.isConnected) langUpdateCallbacks.splice(i, 1);
+      }
+      langUpdateCallbacks.forEach(({ cb }) => cb(lang));
     });
   });
 }
@@ -81,7 +89,16 @@ let dataCache = null;
  */
 export async function cargarDatos() {
   if (dataCache) return dataCache;
-  dataCache = await fetchJson("data.json");
+  try {
+    const res = await fetch("data.json");
+    // Sin esto, un 404 intenta parsear la página de error como JSON y el
+    // fallo confunde (SyntaxError) en vez de decir claramente qué pasó.
+    if (!res.ok) throw new Error(`HTTP ${res.status} al cargar data.json`);
+    dataCache = await res.json();
+  } catch (err) {
+    console.error("Error cargando data.json:", err);
+    dataCache = null;
+  }
   return dataCache;
 }
 

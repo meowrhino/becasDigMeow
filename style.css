@@ -1730,3 +1730,36 @@ html.easy, html.easy body {
   .easy-logo { font-size: 0.95rem; }
   .easy-pf-slide { flex-basis: 90%; }
 }
+
+/* ============================================
+   PORTFOLIO — Skeleton + blur-up (preloader)
+   Cada nube muestra un shimmer sobre el thumb hasta que su imagen primaria
+   carga; entonces .loaded lo funde para revelar la imagen (fade-in individual).
+   ============================================ */
+
+.pgrid-thumb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;                 /* por encima de las .pgrid-img (sin z-index) */
+  background-color: var(--bg-hover);
+  background-image: linear-gradient(100deg, transparent 20%, var(--bg) 50%, transparent 80%);
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: pgrid-shimmer 1.5s linear infinite;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.pgrid-thumb.loaded::before {
+  opacity: 0;                 /* fade-in de la nube al revelarse la imagen */
+}
+
+@keyframes pgrid-shimmer {
+  from { background-position: 150% 0; }
+  to   { background-position: -50% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pgrid-thumb::before { animation: none; }
+}

@@ -22,20 +22,20 @@
 
 ### Performance e imágenes
 
-- [ ] **Preloader con skeleton + blur-up** — cada nube renderiza con placeholder, `onload` añade `.loaded` con fade-in individual, cycling no empieza hasta que la primaria cargue. Opción recomendada tras análisis de 4 alternativas (2026-04-01)
-- [ ] **Lazy loading nubes** — las 13 imágenes primarias usan `loading="eager"` aunque portfolio no sea la vista activa. Cambiar a eager solo cuando la celda portfolio es visible (`portfolio.js:512`)
-- [ ] **RAF hover loop** — `iniciarMonitorHoverNubes` hace `querySelectorAll` + `getBoundingClientRect` en cada frame a 60fps incluso con pointer quieto. Debounce o solo recalcular al mover (`portfolio.js:731-739`)
-- [ ] **innerHTML = "" en resize** — destruye y recrea todas las nubes. Reusar nodos existentes y solo reposicionar (`portfolio.js:406-409`)
-- [ ] **Google Fonts @import → `<link>`** — `@import url()` en CSS bloquea render. Mover a `<link rel="preload">` en `<head>` (`style.css:1`)
+- [x] **Preloader con skeleton + blur-up** — hecho (2026-07-08) sobre el grid actual: `.pgrid-thumb::before` shimmer con variables de tema, `load`/`error` añaden `.loaded` con fade-in, cycling no empieza hasta que la primaria cargue. Respeta `prefers-reduced-motion`
+- [x] **Lazy loading nubes** — hecho (2026-07-08): `src` diferido vía `data-src` + `MutationObserver` sobre la clase `.activa` de la celda (las celdas están apiladas, IntersectionObserver siempre reportaba visible). 0 imágenes descargadas hasta activar el portfolio; verificado en navegador
+- [x] ~~**RAF hover loop**~~ — obsoleto: `iniciarMonitorHoverNubes` desapareció al reemplazar las nubes flotantes por el grid (`2ce4b31`). El grid usa `:hover` CSS puro (2026-07-08)
+- [x] ~~**innerHTML = "" en resize**~~ — obsoleto: el resize handler de nubes desapareció con el grid (`2ce4b31`) (2026-07-08)
+- [x] ~~**Google Fonts @import → `<link>`**~~ — obsoleto: las fuentes son self-hosted (`@font-face` + `fonts/`) desde `aada0ef`; ya no hay `@import` ni petición externa (2026-07-08)
 - [ ] Evaluar `content-visibility: auto` en celdas no visibles
 - [ ] Thumbnails en nubes, imágenes grandes solo en detalle
 
 ### Bugs
 
-- [ ] **Interval leak en ciclo de imágenes** — si `detenerCiclosImagenes()` se llama durante la fase de delay del `setTimeout`, el `setInterval` puede seguir ejecutándose con referencia huérfana (`portfolio.js:44-52`)
-- [ ] **`langUpdateCallbacks` crece sin límite** — cada `attachLangListeners()` pushea pero nunca limpia. Callbacks viejos disparan sobre DOM eliminado (`data.js:34`)
-- [ ] **`fetch("data.json")` no verifica `res.ok`** — un 404 produce error de JSON parse confuso (`data.js:59-62`)
-- [ ] **`ResizeObserver` nunca se desconecta** — leak si el contenido se recrea (`scroll-gradients.js:27`)
+- [x] **Interval leak en ciclo de imágenes** — ya estaba resuelto en el grid actual (`_delayId` registrado y cancelado en stop/pausa); reforzado con el gating `ready`/`_pendiente` del preloader (2026-07-08)
+- [x] **`langUpdateCallbacks` crece sin límite** — hecho (2026-07-08): cada entrada guarda `{ container, cb }` y al cambiar idioma se purgan las de contenedores desconectados (`isConnected`) antes de disparar
+- [x] **`fetch("data.json")` no verifica `res.ok`** — hecho (2026-07-08): `cargarDatos` lanza Error claro con el status HTTP
+- [x] **`ResizeObserver` nunca se desconecta** — hecho (2026-07-08): `WeakMap` contenido→observer desconecta el anterior al reinstalar; `checkScroll.dispose()` disponible para limpieza explícita
 - [ ] **JSDoc de `crearDropdownHTML` encima de `crearDualLinkHTML`** — documentación engañosa (`pages.js:25-31`)
   > (2026-04-01) `crearDualLinkHTML` se insertó entre el JSDoc y su función. Reubicar el JSDoc.
 
