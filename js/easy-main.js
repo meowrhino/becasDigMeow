@@ -7,7 +7,7 @@
 // de idioma (así no se acumulan listeners ni se reconstruye el toggle).
 //
 // Las plantillas HTML (hero, portfolio, statement…) viven en easy-template.js
-// para compartirse con build-easy.js, que pre-renderiza el mismo cuerpo en el
+// para compartirse con build-seo.js, que pre-renderiza el mismo cuerpo en el
 // HTML estático (SEO). Aquí quedan la carga, el header y los inits interactivos.
 
 import {

@@ -4,11 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Estudio de diseño de páginas web a medida en Barcelona para artistas, fotógrafos, músicos y pequeños negocios. Webs con código abierto, sin cuotas de mantenimiento, listas en un mes.">
-  <!-- Modo fácil: misma info que el grid, en scroll lineal. Es la página
-       indexable de referencia (todo el texto va pre-renderizado por
-       build-easy.js), con canonical propio para no duplicar index.html. -->
+  <!-- Modo fácil: misma info que el grid, en scroll lineal.
+       Desde que la home también va pre-renderizada (build-seo.js), las dos
+       URLs sirven el mismo texto. El canonical apunta a la raíz para que
+       Google consolide ahí las señales en vez de repartirlas entre dos
+       páginas duplicadas: la raíz es la que recibe los enlaces de fuera y la
+       que sale en las búsquedas de marca. Esta página sigue siendo navegable
+       con normalidad; solo deja de competir contra la home. -->
   <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://meowrhino.studio/easy">
+  <link rel="canonical" href="https://meowrhino.studio/">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
   <title>Diseño de páginas web a medida en Barcelona — meowrhino studio</title>

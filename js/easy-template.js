@@ -4,8 +4,8 @@
 //
 // Funciones puras que devuelven strings de HTML a partir de data.json. Al no
 // tocar el DOM ni depender del navegador, se comparten entre:
-//   - easy-main.js  (navegador: pinta el cuerpo y le engancha los inits vivos)
-//   - build-easy.js (Node: pre-renderiza el cuerpo en easy.html para el SEO)
+//   - easy-main.js (navegador: pinta el cuerpo y le engancha los inits vivos)
+//   - build-seo.js (Node: pre-renderiza el contenido en easy.html y en la home)
 // Así el texto que ve Google es EXACTAMENTE el que ve el visitante, sin copias
 // que se desincronicen. Fuente única de contenido: data.json.
 
@@ -143,4 +143,23 @@ export function renderBodyHTML(data, lang) {
     metodologiaHTML(data, lang) +
     contactoHTML(data, lang) +
     footerHTML();
+}
+
+/**
+ * Cuerpo pre-renderizado para la HOME (index.html).
+ *
+ * El grid de index.html se monta por JS, así que su HTML llegaba sin una sola
+ * línea de texto: un rastreador que no ejecuta JS (o que aún no ha hecho la
+ * segunda pasada de render) veía la página vacía. Esto pone el mismo contenido
+ * que pintan las celdas ya en el primer byte.
+ *
+ * Es el cuerpo de /easy sin el footer: ahí el footer es un enlace de vuelta a
+ * index.html, que desde la propia home sería un enlace a sí misma.
+ */
+export function renderHomePrerenderHTML(data, lang) {
+  return heroHTML(data, lang) +
+    portfolioHTML(data) +
+    statementHTML(data, lang) +
+    metodologiaHTML(data, lang) +
+    contactoHTML(data, lang);
 }

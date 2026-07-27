@@ -81,6 +81,12 @@ setupResizeDebounce({
 // Inicialización
 // ============================================
 
+// El HTML llega con el contenido pre-renderizado dentro de #content (SEO, ver
+// build-seo.js). Ya está oculto por CSS desde el primer pintado, pero lo
+// sacamos del DOM antes de montar el grid: crearCeldas() hace appendChild
+// sobre #content, así que si no, el bloque quedaría ahí de por vida.
+document.getElementById("seo-prerender")?.remove();
+
 configurarNavegacion({
   grid: [
     [0, 1, 0, 0], // fila 0: _, links, _, _

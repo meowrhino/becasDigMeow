@@ -1855,3 +1855,40 @@ html.easy, html.easy body {
 .skip-link:focus {
   transform: translateY(0);
 }
+
+/* ============================================
+   PRE-RENDER SEO (index.html)
+   Bloque estático que build-seo.js escribe dentro de
+   #content con el mismo texto que pintan las celdas.
+   Existe para que la home tenga contenido indexable en
+   el primer byte, sin esperar a que el grid se monte.
+   ============================================ */
+
+/* Con JS (la clase `js` la pone el script inline del <head>, antes de que el
+   body se parsee) el bloque no llega a pintarse nunca: el visitante ve el grid
+   directamente. main.js lo saca además del DOM al arrancar. */
+html.js #seo-prerender {
+  display: none;
+}
+
+/* Sin JS es la única versión navegable de la home, así que al menos se lee:
+   una columna centrada y con aire. Las clases `easy-*` que trae dentro solo
+   están estilizadas bajo `html.easy` (sección 17), así que aquí el contenido
+   cae en su HTML semántico, que es exactamente lo que necesita un bot. */
+#seo-prerender {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  line-height: 1.6;
+}
+
+#seo-prerender img {
+  max-width: 100%;
+  height: auto;
+}
+
+.prerender-nota {
+  margin-top: 3rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}

@@ -60,21 +60,166 @@
       var t = localStorage.getItem("meowrhino-theme");
       if (!t && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";
       if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+      // Marca que hay JS ANTES de que el body se parsee, para que el CSS oculte
+      // el bloque pre-renderizado (#seo-prerender) desde el primer pintado: el
+      // visitante ve el grid, nunca un destello del contenido estático. Sin JS
+      // la clase no se pone y el bloque queda visible como fallback real.
+      document.documentElement.classList.add("js");
     })();
   </script>
 </head>
 <body>
   <a href="#content" class="skip-link">saltar al contenido</a>
-  <main id="content" role="main" tabindex="-1"></main>
-  <noscript>
-    <div style="max-width:38rem;margin:12vh auto;padding:0 1.5rem;text-align:center;line-height:1.6;">
-      <h1>meowrhino studio</h1>
-      <p>estudio de diseño web en Barcelona. Webs con código abierto, sin cuotas de mantenimiento.</p>
-      <p>Esta página necesita JavaScript para su navegación interactiva. Puedes ver la
-        <a href="easy.html">versión estática del sitio</a>, sin JavaScript.</p>
-      <p>Escríbeme a <a href="mailto:hola@meowrhino.studio">hola@meowrhino.studio</a></p>
+  <main id="content" role="main" tabindex="-1">
+    <!-- Contenido pre-renderizado por build-seo.js: el mismo texto que pintan
+         las celdas del grid, disponible en el primer byte para los buscadores.
+         Oculto por CSS en cuanto hay JS y eliminado del DOM por main.js; sin JS
+         se queda como versión estática navegable. NO editar a mano: se regenera
+         desde data.json en cada commit que la toque. -->
+    <div id="seo-prerender">
+      <!-- BUILD:home:start -->
+
+    <section class="easy-hero" id="top">
+      <p class="easy-eyebrow">estudio de diseño web · barcelona</p>
+      <h1 class="easy-hero-title">tu web en un mes, con código abierto y sin cuotas.</h1>
+      <div class="easy-ticket">
+        <p class="easy-ticket-hazte">tu web en un mes por</p>
+        <p class="easy-ticket-precio">850 €</p>
+        
+        <p class="easy-ticket-caduca">válido hasta finales de agosto</p>
+      </div>
+      <p class="easy-hero-incluye">diseño a medida. sin servidores, sin suscripciones, sin tasas mensuales. te enseñamos a mantenerla tú mismo.</p>
+      <div class="easy-hero-cta">
+        <a class="easy-btn" href="mailto:hola@meowrhino.studio?subject=quiero%20una%20web!">escríbeme</a>
+        <span class="easy-hero-primera">primera reunión gratis</span>
+      </div>
+    </section>
+    <section class="easy-section easy-portfolio" id="portfolio">
+      <h2 class="easy-h">portfolio</h2>
+      <div class="easy-pf">
+        <div class="easy-pf-viewer">
+          <button class="easy-pf-nav easy-pf-prev" type="button" aria-label="proyecto anterior">‹</button>
+          <div class="easy-pf-stage" tabindex="0" role="group" aria-label="proyectos"><a class="easy-pf-slide" href="https://rikamichie.com" target="_blank" rel="noopener" data-name="rikamichie"><img src="img/rikamichie/1.webp" alt="rikamichie — web diseñada por meowrhino studio, Barcelona" loading="lazy" decoding="async"></a><a class="easy-pf-slide" href="https://andreacarilla.work" target="_blank" rel="noopener" data-name="andrea carilla"><img src="img/andreacarilla/1.webp" alt="andrea carilla — web diseñada por meowrhino studio, Barcelona" loading="lazy" decoding="async"></a><a class="easy-pf-slide" href="https://diegosanmarcos.com" target="_blank" rel="noopener" data-name="diego san marcos"><img src="img/diegosanmarcos/1.webp" alt="diego san marcos — web diseñada por meowrhino studio, Barcelona" loading="lazy" decoding="async"></a><a class="easy-pf-slide" href="https://mikebros.com" target="_blank" rel="noopener" data-name="mike bros"><img src="img/mikebros/1.webp" alt="mike bros — web diseñada por meowrhino studio, Barcelona" loading="lazy" decoding="async"></a><a class="easy-pf-slide" href="https://mirandaperezhita.com" target="_blank" rel="noopener" data-name="miranda"><img src="img/miranda/1.webp" alt="miranda — web diseñada por meowrhino studio, Barcelona" loading="lazy" decoding="async"></a><a class="easy-pf-slide" href="https://noancittadino.com" target="_blank" rel="noopener" data-name="noan cittadino"><img src="img/noan/1.webp" alt="noan cittadino — web diseñada por meowrhino studio, Barcelona" loading="lazy" decoding="async"></a><a class="easy-pf-slide" href="https://930blurberrie.com" target="_blank" rel="noopener" data-name="930blurberrie"><img src="img/blurberrie/1.webp" alt="930blurberrie — web diseñada por meowrhino studio, Barcelona" loading="lazy" decoding="async"></a><a class="easy-pf-slide" href="https://barbarawong.info" target="_blank" rel="noopener" data-name="barbara wong"><img src="img/barbarawong/1.webp" alt="barbara wong — web diseñada por meowrhino studio, Barcelona" loading="lazy" decoding="async"></a><a class="easy-pf-slide" href="https://analopezserrano.com" target="_blank" rel="noopener" data-name="mokakopaTwins"><img src="img/mokakopatwins/1.webp" alt="mokakopaTwins — web diseñada por meowrhino studio, Barcelona" loading="lazy" decoding="async"></a><a class="easy-pf-slide" href="https://viciostorpes.com" target="_blank" rel="noopener" data-name="vicios torpes"><img src="img/viciostorpes/1.webp" alt="vicios torpes — web diseñada por meowrhino studio, Barcelona" loading="lazy" decoding="async"></a><a class="easy-pf-slide" href="https://valentinbarrio.com" target="_blank" rel="noopener" data-name="valentin"><img src="img/valentin/1.webp" alt="valentin — web diseñada por meowrhino studio, Barcelona" loading="lazy" decoding="async"></a><a class="easy-pf-slide" href="https://conorashlee.com" target="_blank" rel="noopener" data-name="conor"><img src="img/conor/1.webp" alt="conor — web diseñada por meowrhino studio, Barcelona" loading="lazy" decoding="async"></a><a class="easy-pf-slide" href="https://maxazemar.com" target="_blank" rel="noopener" data-name="maxito"><img src="img/maxito/1.webp" alt="maxito — web diseñada por meowrhino studio, Barcelona" loading="lazy" decoding="async"></a><a class="easy-pf-slide" href="https://jaumeclotet.com" target="_blank" rel="noopener" data-name="jaume clotet"><img src="img/jaumeclotet/1.webp" alt="jaume clotet — web diseñada por meowrhino studio, Barcelona" loading="lazy" decoding="async"></a><a class="easy-pf-slide" href="https://bertaesteve.cat" target="_blank" rel="noopener" data-name="berta esteve"><img src="img/bertaesteve/1.webp" alt="berta esteve — web diseñada por meowrhino studio, Barcelona" loading="lazy" decoding="async"></a><a class="easy-pf-slide" href="https://estructuras3000.com" target="_blank" rel="noopener" data-name="estructuras3000"><img src="img/estructuras3000/1.webp" alt="estructuras3000 — web diseñada por meowrhino studio, Barcelona" loading="lazy" decoding="async"></a><a class="easy-pf-slide" href="https://paulabarjau.studio" target="_blank" rel="noopener" data-name="paula barjau"><img src="img/paulabarjau/1.webp" alt="paula barjau — web diseñada por meowrhino studio, Barcelona" loading="lazy" decoding="async"></a><a class="easy-pf-slide" href="https://elmundodelasjordis.com" target="_blank" rel="noopener" data-name="el mundo de las jordis"><img src="img/elmundodelasjordis/1.webp" alt="el mundo de las jordis — web diseñada por meowrhino studio, Barcelona" loading="lazy" decoding="async"></a><a class="easy-pf-slide" href="https://meowrhino.github.io/christine/" target="_blank" rel="noopener" data-name="christine"><img src="img/christine/1.webp" alt="christine — web diseñada por meowrhino studio, Barcelona" loading="lazy" decoding="async"></a><a class="easy-pf-slide" href="https://meowrhino.github.io/villagranota/" target="_blank" rel="noopener" data-name="villagranota"><img src="img/villagranota/1.webp" alt="villagranota — web diseñada por meowrhino studio, Barcelona" loading="lazy" decoding="async"></a></div>
+          <button class="easy-pf-nav easy-pf-next" type="button" aria-label="proyecto siguiente">›</button>
+        </div>
+        <p class="easy-pf-caption">
+          <span class="easy-pf-name"></span>
+          <a class="easy-pf-visitar" target="_blank" rel="noopener" hidden>visitar ↗</a>
+        </p>
+        <div class="easy-pf-thumbs">
+    <button class="easy-pf-thumb" type="button" data-i="0" aria-label="rikamichie">
+      <img src="img/rikamichie/1.webp" alt="" loading="lazy" decoding="async">
+    </button>
+    <button class="easy-pf-thumb" type="button" data-i="1" aria-label="andrea carilla">
+      <img src="img/andreacarilla/1.webp" alt="" loading="lazy" decoding="async">
+    </button>
+    <button class="easy-pf-thumb" type="button" data-i="2" aria-label="diego san marcos">
+      <img src="img/diegosanmarcos/1.webp" alt="" loading="lazy" decoding="async">
+    </button>
+    <button class="easy-pf-thumb" type="button" data-i="3" aria-label="mike bros">
+      <img src="img/mikebros/1.webp" alt="" loading="lazy" decoding="async">
+    </button>
+    <button class="easy-pf-thumb" type="button" data-i="4" aria-label="miranda">
+      <img src="img/miranda/1.webp" alt="" loading="lazy" decoding="async">
+    </button>
+    <button class="easy-pf-thumb" type="button" data-i="5" aria-label="noan cittadino">
+      <img src="img/noan/1.webp" alt="" loading="lazy" decoding="async">
+    </button>
+    <button class="easy-pf-thumb" type="button" data-i="6" aria-label="930blurberrie">
+      <img src="img/blurberrie/1.webp" alt="" loading="lazy" decoding="async">
+    </button>
+    <button class="easy-pf-thumb" type="button" data-i="7" aria-label="barbara wong">
+      <img src="img/barbarawong/1.webp" alt="" loading="lazy" decoding="async">
+    </button>
+    <button class="easy-pf-thumb" type="button" data-i="8" aria-label="mokakopaTwins">
+      <img src="img/mokakopatwins/1.webp" alt="" loading="lazy" decoding="async">
+    </button>
+    <button class="easy-pf-thumb" type="button" data-i="9" aria-label="vicios torpes">
+      <img src="img/viciostorpes/1.webp" alt="" loading="lazy" decoding="async">
+    </button>
+    <button class="easy-pf-thumb" type="button" data-i="10" aria-label="valentin">
+      <img src="img/valentin/1.webp" alt="" loading="lazy" decoding="async">
+    </button>
+    <button class="easy-pf-thumb" type="button" data-i="11" aria-label="conor">
+      <img src="img/conor/1.webp" alt="" loading="lazy" decoding="async">
+    </button>
+    <button class="easy-pf-thumb" type="button" data-i="12" aria-label="maxito">
+      <img src="img/maxito/1.webp" alt="" loading="lazy" decoding="async">
+    </button>
+    <button class="easy-pf-thumb" type="button" data-i="13" aria-label="jaume clotet">
+      <img src="img/jaumeclotet/1.webp" alt="" loading="lazy" decoding="async">
+    </button>
+    <button class="easy-pf-thumb" type="button" data-i="14" aria-label="berta esteve">
+      <img src="img/bertaesteve/1.webp" alt="" loading="lazy" decoding="async">
+    </button>
+    <button class="easy-pf-thumb" type="button" data-i="15" aria-label="estructuras3000">
+      <img src="img/estructuras3000/1.webp" alt="" loading="lazy" decoding="async">
+    </button>
+    <button class="easy-pf-thumb" type="button" data-i="16" aria-label="paula barjau">
+      <img src="img/paulabarjau/1.webp" alt="" loading="lazy" decoding="async">
+    </button>
+    <button class="easy-pf-thumb" type="button" data-i="17" aria-label="el mundo de las jordis">
+      <img src="img/elmundodelasjordis/1.webp" alt="" loading="lazy" decoding="async">
+    </button>
+    <button class="easy-pf-thumb" type="button" data-i="18" aria-label="christine">
+      <img src="img/christine/1.webp" alt="" loading="lazy" decoding="async">
+    </button>
+    <button class="easy-pf-thumb" type="button" data-i="19" aria-label="villagranota">
+      <img src="img/villagranota/1.webp" alt="" loading="lazy" decoding="async">
+    </button></div>
+      </div>
+    </section>
+    <section class="easy-section easy-statement" id="statement">
+      <h2 class="easy-h">statement</h2>
+      <p class="easy-statement-line">somos un estudio de diseño web en Barcelona</p><p class="easy-statement-line">hacemos webs para un internet más común, cercano y vivo</p><p class="easy-statement-line">webs desde cero, contigo: únicas por dentro y por fuera</p><p class="easy-statement-line">te enseñamos a mantenerla y personalizarla a tu gusto</p><p class="easy-statement-line">y si no quieres, la mantenemos nosotros</p>
+    </section>
+    <section class="easy-section" id="metodologia">
+      <h2 class="easy-h">metodología</h2>
+      <ol class="easy-steps">
+    <li class="easy-step">
+      <span class="easy-step-num">01</span>
+      <p class="easy-step-text">empezamos con una primera reunión gratuita. trae 3–5 referentes de cosas que te gusten o no te gusten: pueden ser webs, otras interfaces o incluso bocetos. revisamos juntos el material y hablamos de estructura, estética y presupuesto. antes de despedirnos dejamos agendada la segunda reunión y una lista de lo que necesitamos de ti: textos, imágenes y tu identidad visual.</p>
+    </li>
+    <li class="easy-step">
+      <span class="easy-step-num">02</span>
+      <p class="easy-step-text">tu web está lista en un mes, que empieza a contar desde la primera reunión. la segunda reunión está incluida si la hacemos en las dos semanas siguientes y con tu material enviado. si pasan más de dos semanas sin contenido, el proyecto entra en pausa y reactivarlo tiene una tarifa del 10% del coste acordado.</p>
+    </li>
+    <li class="easy-step">
+      <span class="easy-step-num">03</span>
+      <p class="easy-step-text">a partir de ahí elaboramos una propuesta de diseño. te damos tiempo para pensarlo con calma. cuando estés conforme y se haga el primer pago (50%), empezamos a programar.</p>
+    </li>
+    <li class="easy-step">
+      <span class="easy-step-num">04</span>
+      <p class="easy-step-text">a lo largo del proyecto tienes hasta 3 rondas de revisiones. cada ronda puede incluir varios ajustes. el diseño también se adapta cuando pasa del boceto a una web funcional que se vea bien en distintos dispositivos. solemos tardar 1–2 semanas en diseño y 1–2 semanas en programación: con el material a tiempo, un mes de principio a fin.</p>
+    </li>
+    <li class="easy-step">
+      <span class="easy-step-num">05</span>
+      <p class="easy-step-text">con el código aprobado y el segundo pago (50%), nos vemos en una última reunión para preparar tu dispositivo: aprenderás a actualizar la web tú mismo. si lo necesitas, también configuramos tu dominio (recomendamos cloudflare).</p>
+    </li>
+    <li class="easy-step">
+      <span class="easy-step-num">06</span>
+      <p class="easy-step-text">tras la entrega tienes 2 semanas para reportar errores o usar las rondas de revisión que te queden. pasado ese periodo, los cambios se facturan a 60€/hora.</p>
+    </li></ol>
+    </section>
+    <section class="easy-section easy-contacto" id="contacto">
+      <h2 class="easy-h">contacto</h2>
+      <a class="easy-email" href="mailto:hola@meowrhino.studio?subject=quiero%20una%20web!">hola@meowrhino.studio</a>
+      <div class="easy-contacto-cta">
+        <a class="easy-btn" href="mailto:hola@meowrhino.studio?subject=quiero%20una%20web!">escríbeme</a>
+      </div>
+      <div class="easy-contacto-links">
+        <a href="https://instagram.com/meowrhino" target="_blank" rel="noopener">@meowrhino</a>
+        <a href="cv_manu_es.pdf" target="_blank" rel="noopener">cv</a>
+      </div>
+    </section>
+    <!-- BUILD:home:end -->
+      <p class="prerender-nota">
+        Esta página usa JavaScript para su navegación interactiva.
+        Puedes ver la <a href="easy.html">versión en una sola página</a>
+        o escribirme a <a href="mailto:hola@meowrhino.studio">hola@meowrhino.studio</a>.
+      </p>
     </div>
-  </noscript>
+  </main>
   <script type="module" src="js/main.js"></script>
 </body>
 </html>
