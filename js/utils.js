@@ -56,12 +56,17 @@ export function escapeHTML(str) {
 /**
  * Fetch JSON con captura de error y log. Devuelve null si falla.
  *
+ * El chequeo de `res.ok` es importante: sin él, un 404 intenta parsear la
+ * página de error como JSON y el fallo llega como un SyntaxError críptico
+ * en vez de decir claramente qué pasó.
+ *
  * @param {string} url
  * @returns {Promise<Object|null>}
  */
 export async function fetchJson(url) {
   try {
     const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return await res.json();
   } catch (err) {
     console.error(`Error cargando ${url}:`, err);

@@ -2,6 +2,8 @@
 // DATA — Carga de datos, caché e idioma global
 // ============================================
 
+import { fetchJson } from "./utils.js";
+
 // --- Idioma global ---
 
 export const LANGS = ["es", "en", "cat"];
@@ -115,20 +117,11 @@ export function attachLangListeners(container, onLangChange) {
  */
 export async function cargarDatos() {
   if (dataCache) return dataCache;
-  try {
-    const res = await fetch("data.json");
-    // Sin esto, un 404 intenta parsear la página de error como JSON y el
-    // fallo confunde (SyntaxError) en vez de decir claramente qué pasó.
-    if (!res.ok) throw new Error(`HTTP ${res.status} al cargar data.json`);
-    dataCache = await res.json();
-    // En el arranque, sincronizarLangDocumento(currentLang) ya corrió antes de
-    // este fetch (dataCache aún era null), así que la meta description quedó
-    // sin actualizar: la sincronizamos ahora que ya hay datos.
-    sincronizarMetaDescripcion(currentLang);
-  } catch (err) {
-    console.error("Error cargando data.json:", err);
-    dataCache = null;
-  }
+  dataCache = await fetchJson("data.json");
+  // En el arranque, sincronizarLangDocumento(currentLang) ya corrió antes de
+  // este fetch (dataCache aún era null), así que la meta description quedó
+  // sin actualizar: la sincronizamos ahora que ya hay datos.
+  sincronizarMetaDescripcion(currentLang);
   return dataCache;
 }
 

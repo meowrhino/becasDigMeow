@@ -535,10 +535,15 @@ a.nav-label:visited {
   background-color: transparent;
 }
 
+/* Título, tagline y hint apilados en columna (la celda ya los centra).
+   `pointer-events: none` deja pasar los clics al cupón de detrás; los hijos
+   que sí son interactivos (.welcome-title-link, .welcome-hint) lo reactivan. */
 .welcome-content {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.5em;
   position: relative;
   z-index: var(--z-nav);
   pointer-events: none;
@@ -1765,17 +1770,13 @@ html.easy, html.easy body {
 
 /* ============================================
    WELCOME EXTRAS
-   Tagline bajo el título, hint de navegación efímero
-   y línea de estado con la hora de barcelona.
-   Todo discreto: pequeño, en color secundario, y sin
-   robar protagonismo al título ni bloquear el cupón.
+   Tagline bajo el título y, debajo, el hint de
+   navegación (fijo, clicable). Ambos discretos:
+   pequeños, en color secundario, y sin robar
+   protagonismo al título ni bloquear el cupón.
+   El layout en columna vive con .welcome-content
+   en la sección 9.
    ============================================ */
-
-/* El título y su tagline se apilan en columna (la celda ya centra). */
-.welcome-content {
-  flex-direction: column;
-  gap: 0.5em;
-}
 
 /* Tagline pegado al título: pequeño, secundario, mismo halo que el título
    para leerse por encima del cupón. */
