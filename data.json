@@ -37,9 +37,21 @@
   },
   "zoneLabels": {
     "_comment": "Texto VISIBLE de las etiquetas de celda por idioma (zone label, nav labels y minimapa). La clave es el identificador interno de la celda y NO cambia (hash/clase css). Solo se listan las celdas cuyo texto varía entre idiomas; las universales (portfolio, links, footer, statement) se muestran con su identificador.",
-    "welcome": { "es": "bienvenida", "en": "welcome", "cat": "benvinguda" },
-    "metodología": { "es": "metodología", "en": "methodology", "cat": "metodologia" },
-    "contacto": { "es": "contacto", "en": "contact", "cat": "contacte" }
+    "welcome": {
+      "es": "bienvenida",
+      "en": "welcome",
+      "cat": "benvinguda"
+    },
+    "metodología": {
+      "es": "metodología",
+      "en": "methodology",
+      "cat": "metodologia"
+    },
+    "contacto": {
+      "es": "contacto",
+      "en": "contact",
+      "cat": "contacte"
+    }
   },
   "welcome": {
     "titulo": "meowrhino studio",
@@ -59,7 +71,7 @@
       "es": {
         "hazte": "tu web en un mes por",
         "_iva": "(iva no incluido)",
-        "caduca": "válido hasta finales de agosto",
+        "caduca": "",
         "subject": "quiero una web!",
         "incluye": "diseño a medida. sin servidores, sin suscripciones, sin tasas mensuales. te enseñamos a mantenerla tú mismo.",
         "primera": "primera reunión gratis",
@@ -68,7 +80,7 @@
       "en": {
         "hazte": "your website in a month for",
         "_iva": "(vat not included)",
-        "caduca": "valid until the end of august",
+        "caduca": "",
         "subject": "I want a website!",
         "incluye": "custom design. no servers, no subscriptions, no monthly fees. we teach you to maintain it yourself.",
         "primera": "first meeting free",
@@ -77,7 +89,7 @@
       "cat": {
         "hazte": "la teva web en un mes per",
         "_iva": "(iva no inclòs)",
-        "caduca": "vàlid fins a finals d'agost",
+        "caduca": "",
         "subject": "vull una web!",
         "incluye": "disseny a mida. sense servidors, sense subscripcions, sense quotes mensuals. t'ensenyem a mantenir-la tu mateix.",
         "primera": "primera reunió gratis",

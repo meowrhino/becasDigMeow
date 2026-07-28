@@ -37,7 +37,7 @@ export function heroHTML(data, lang) {
         <p class="easy-ticket-hazte">${esc(t.hazte)}</p>
         <p class="easy-ticket-precio">${esc(c.precio)}</p>
         ${t.iva ? `<p class="easy-ticket-iva">${esc(t.iva)}</p>` : ""}
-        <p class="easy-ticket-caduca">${esc(t.caduca)}</p>
+        ${t.caduca ? `<p class="easy-ticket-caduca">${esc(t.caduca)}</p>` : ""}
       </div>
       ${t.incluye ? `<p class="easy-hero-incluye">${esc(t.incluye)}</p>` : ""}
       <div class="easy-hero-cta">
