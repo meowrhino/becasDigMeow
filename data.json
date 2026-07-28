@@ -12,6 +12,29 @@
       "cat": "meowrhino studio — estudi de disseny web a Barcelona. Webs de codi obert, sense quotes de manteniment."
     }
   },
+  "prerender": {
+    "_comment": "Nota al pie del bloque pre-renderizado de la home. Solo la ven los buscadores y quien navegue sin JS; con JS el bloque se oculta y se elimina. Los enlaces los compone easy-template.js (renderHomePrerenderHTML).",
+    "aviso": {
+      "es": "Esta página usa JavaScript para su navegación interactiva. También puedes ver:",
+      "en": "This page uses JavaScript for its interactive navigation. You can also see:",
+      "cat": "Aquesta pàgina fa servir JavaScript per a la navegació interactiva. També pots veure:"
+    },
+    "enlaceEasy": {
+      "es": "la versión en una sola página",
+      "en": "the single-page version",
+      "cat": "la versió en una sola pàgina"
+    },
+    "enlaceArchivo": {
+      "es": "el archivo de proyectos y experimentos",
+      "en": "the archive of projects and experiments",
+      "cat": "l'arxiu de projectes i experiments"
+    },
+    "escribeme": {
+      "es": "o escríbeme a",
+      "en": "or write to me at",
+      "cat": "o escriu-me a"
+    }
+  },
   "zoneLabels": {
     "_comment": "Texto VISIBLE de las etiquetas de celda por idioma (zone label, nav labels y minimapa). La clave es el identificador interno de la celda y NO cambia (hash/clase css). Solo se listan las celdas cuyo texto varía entre idiomas; las universales (portfolio, links, footer, statement) se muestran con su identificador.",
     "welcome": { "es": "bienvenida", "en": "welcome", "cat": "benvinguda" },

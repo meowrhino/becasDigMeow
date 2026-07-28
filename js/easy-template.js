@@ -9,6 +9,9 @@
 // Así el texto que ve Google es EXACTAMENTE el que ve el visitante, sin copias
 // que se desincronicen. Fuente única de contenido: data.json.
 
+/** Escoge la variante de idioma de un objeto {es,en,cat}, con fallback a es. */
+export const pickLang = (obj, lang) => obj?.[lang] ?? obj?.es ?? "";
+
 export const esc = (s) => String(s ?? "")
   .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
   .replace(/"/g, "&quot;");
@@ -161,5 +164,31 @@ export function renderHomePrerenderHTML(data, lang) {
     portfolioHTML(data) +
     statementHTML(data, lang) +
     metodologiaHTML(data, lang) +
-    contactoHTML(data, lang);
+    contactoHTML(data, lang) +
+    notaPrerenderHTML(data, lang);
+}
+
+/**
+ * Nota al pie del bloque pre-renderizado: qué es esta versión y a dónde ir.
+ *
+ * Va aquí y no fija en index.html por dos motivos: se traduce con el resto (si
+ * no, /en y /ca la servirían en castellano), y es el único enlace a /archive que
+ * existe en el HTML crudo — sin él la página quedaba huérfana, alcanzable solo
+ * por el sitemap y por los enlaces que pinta el JS.
+ */
+function notaPrerenderHTML(data, lang) {
+  const t = data.prerender || {};
+  const email = data.contacto?.email || "";
+  const li = (href, texto) => `<li><a href="${esc(href)}">${esc(texto)}</a></li>`;
+
+  return `
+    <nav class="prerender-nota" aria-label="${esc(pickLang(t.aviso, lang))}">
+      <p>${esc(pickLang(t.aviso, lang))}</p>
+      <ul>
+        ${li("easy.html", pickLang(t.enlaceEasy, lang))}
+        ${li("archive.html", pickLang(t.enlaceArchivo, lang))}
+      </ul>
+      <p>${esc(pickLang(t.escribeme, lang))}
+        <a href="mailto:${esc(email)}">${esc(email)}</a>.</p>
+    </nav>`;
 }
