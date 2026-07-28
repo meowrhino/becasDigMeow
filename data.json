@@ -1,5 +1,11 @@
 {
   "meta": {
+    "_comment": "Metadatos de la home por idioma. build-seo.js los escribe en index.html (es), en.html y ca.html; data.js sincroniza la description al cambiar de idioma en vivo.",
+    "title": {
+      "es": "meowrhino studio — diseño de páginas web en Barcelona",
+      "en": "meowrhino studio — web design studio in Barcelona",
+      "cat": "meowrhino studio — disseny de pàgines web a Barcelona"
+    },
     "description": {
       "es": "meowrhino studio — estudio de diseño web en Barcelona. Webs con código abierto, sin cuotas de mantenimiento.",
       "en": "meowrhino studio — web design studio in Barcelona. Open-source websites, no maintenance fees.",

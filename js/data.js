@@ -13,6 +13,13 @@ export const LANGS = ["es", "en", "cat"];
 let dataCache = null;
 
 /**
+ * URL pública de cada idioma. La home se sirve pre-renderizada en tres
+ * variantes (index.html, en.html, ca.html — ver build-seo.js) para que cada
+ * idioma tenga su URL indexable, así que cambiar de idioma es navegar.
+ */
+export const RUTA_IDIOMA = { es: "/", en: "/en", cat: "/ca" };
+
+/**
  * Detecta idioma desde `navigator.language(s)`. Catalán se mapea a "cat"
  * (tanto `ca` como `ca-ES`). Cualquier otro → "es".
  */
@@ -24,11 +31,30 @@ function detectarIdiomaNavegador() {
   return "es";
 }
 
-// Preferencia guardada manda sobre autodetección del navegador.
+/**
+ * Idioma que impone la URL, o null si la página no es una variante por idioma.
+ *
+ * Solo la home lo es (/, /en, /ca). En /easy y /archive devuelve null y manda
+ * la preferencia guardada, como siempre.
+ *
+ * Cuando aplica, manda sobre localStorage y sobre el navegador a propósito: si
+ * alguien llega a /en desde una búsqueda en inglés tiene que ver inglés aunque
+ * en su última visita eligiera otra cosa. Si no, Google indexaría un texto y el
+ * visitante vería otro.
+ */
+function idiomaDeLaRuta() {
+  // Cloudflare sirve en.html como /en, así que normalizamos ambas formas.
+  const ruta = location.pathname.replace(/\.html$/, "").replace(/\/+$/, "") || "/";
+  if (ruta === "/" || ruta === "/index") return "es";
+  if (ruta === "/en") return "en";
+  if (ruta === "/ca") return "cat";
+  return null;
+}
+
+// Prioridad: idioma que impone la URL > preferencia guardada > navegador.
 const idiomaGuardado = localStorage.getItem("lang");
-export let currentLang = idiomaGuardado && LANGS.includes(idiomaGuardado)
-  ? idiomaGuardado
-  : detectarIdiomaNavegador();
+export let currentLang = idiomaDeLaRuta()
+  ?? (idiomaGuardado && LANGS.includes(idiomaGuardado) ? idiomaGuardado : detectarIdiomaNavegador());
 
 /** Refleja el idioma activo en <html lang> (catalán → código BCP-47 "ca"). */
 function sincronizarLangDocumento(lang) {
@@ -95,6 +121,16 @@ export function attachLangListeners(container, onLangChange) {
     btn.addEventListener("click", () => {
       const lang = btn.dataset.lang;
       if (lang === currentLang) return;
+
+      // En la home cada idioma es una URL propia, así que cambiar de idioma es
+      // navegar: si no, la URL diría /en mientras se lee catalán. El hash lleva
+      // la celda activa, así que arrastrarlo conserva dónde estabas.
+      if (idiomaDeLaRuta()) {
+        localStorage.setItem("lang", lang);
+        location.href = RUTA_IDIOMA[lang] + location.hash;
+        return;
+      }
+
       currentLang = lang;
       localStorage.setItem("lang", lang);
       sincronizarLangDocumento(lang);

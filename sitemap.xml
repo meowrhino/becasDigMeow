@@ -1,16 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Solo URLs canónicas: /easy sirve el mismo contenido que la raíz y su
-       canonical apunta ahí, así que listarlo aquí mandaría señales cruzadas. -->
+<!-- Generado por build-seo.js. No editar a mano. -->
+<!-- Solo URLs canónicas: /easy sirve el mismo contenido que la raíz y su
+     canonical apunta ahí, así que listarlo mandaría señales cruzadas. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://meowrhino.studio/</loc>
-    <lastmod>2026-07-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/"/>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/"/>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/"/>
+    <lastmod>2026-07-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/archive</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-07-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
