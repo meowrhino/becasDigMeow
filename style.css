@@ -1936,19 +1936,20 @@ html.js #seo-prerender {
 
 /* --- Galería: una imagen por fila, a lo ancho de la columna --- */
 .proy-galeria { margin-top: clamp(2.5rem, 6dvh, 4rem); display: flex; flex-direction: column; gap: 1.2rem; }
+/* Sin marco: las capturas ya vienen con su propio mockup de navegador, con
+   sombra y esquinas redondeadas. Un borde encima era un segundo marco
+   alrededor del primero. */
 .proy-img {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 4px;
-  border: 1px solid var(--border);
 }
 
 /* --- Pie de navegación --- */
+/* El espacio ya separa; la línea divisoria sobraba. */
 .proy-pie {
   margin-top: clamp(2.5rem, 6dvh, 4rem);
   padding-top: 1.4rem;
-  border-top: 1px solid var(--border);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -1959,11 +1960,10 @@ html.js #seo-prerender {
 .proy-pie a:hover { color: var(--text); }
 
 /* --- Llamada final: el motivo por el que estas páginas existen --- */
+/* También sin caja: el bloque se sostiene con el centrado y el botón. */
 .proy-cta {
   margin-top: clamp(2.5rem, 6dvh, 3.5rem);
   padding: 1.8rem;
-  border: 1px solid var(--border);
-  border-radius: 4px;
   text-align: center;
 }
 .proy-cta p { font-size: 0.95rem; color: var(--text-content); margin-bottom: 1.1rem; }
