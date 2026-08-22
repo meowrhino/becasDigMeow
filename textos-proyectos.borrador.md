@@ -3,12 +3,14 @@
 > **qué es esto**: un borrador por proyecto para las futuras páginas de detalle
 > (`/proyectos/<slug>`), cada una atacando una long-tail distinta. escritos en la voz
 > de la web (minúsculas, cercano, nada corporativo), a partir de lo que dice la web
-> de cada cliente. **lo que falta de ti**: en cada uno hay un hueco `[detalle: …]`
-> para una anécdota real del proyecto — un reto técnico, una decisión de diseño,
-> algo que solo sabes tú. eso es lo que hará que no suenen a plantilla.
+> de cada cliente. **estado (22 ago 2026)**: los 20 llevan ya su anécdota real
+> —contada por manu y redactada aquí—, que es lo que hace que no suenen a plantilla.
+> falta tu repaso: corrige lo que no sea verdad antes de que esto se publique.
 >
 > versiones en/cat: mejor después de validar las keywords con los datos de search
 > console (~1 semana). las keywords de abajo son hipótesis razonables, no datos.
+>
+> **pendiente de decisión**: el mundo de las jordis (ver aviso en su ficha).
 
 ---
 
@@ -31,8 +33,11 @@
 - **meta**: el portfolio de andrea carilla, fotógrafa: editorial, moda, look book y producto. la primera web de meowrhino studio, hecha a medida en barcelona.
 - **borrador**:
   andrea carilla es fotógrafa y se mueve entre registros muy distintos: editorial,
-  fashion story, look book, producto, imagen de artista. [detalle: elige ángulo — ver
-  opciones propuestas] la de andrea fue la primera: la primera web que salió de
+  fashion story, look book, producto, imagen de artista. su web es una galería con
+  menú nebuloso: cada vez que entras es una página distinta. no hay orden fijo ni
+  foto estrella, porque ninguna de sus fotos es la portada de las demás — el que
+  decide qué mirar primero eres tú, y andrea nunca ve la misma web dos veces.
+  la suya fue la primera: la primera web que salió de
   meowrhino studio. gracias andrea, t'estimo. queríamos que el portfolio fuera suyo de verdad,
   desde la estructura hasta el último detalle visual — hecho desde cero, sin
   frameworks ni constructores, y andrea aprendió a actualizarlo ella misma en la
@@ -134,15 +139,17 @@
   un formulario directo. cuando dibuja flash nuevo, lo sube él mismo.
 
 ## valentin — valentinbarrio.com
-- **keyword**: web para fotógrafos barcelona
-- **title**: una web para fotografía de directo y editorial — valentinbarrio.com · meowrhino studio
-- **meta**: el portfolio de valentin barrio, fotógrafo en barcelona: directos, editoriales de moda y retrato. una web a medida donde la imagen manda.
+- **keyword**: web minimalista para fotógrafos y creativos
+- **title**: una web elegante y mínima para un creativo europeo — valentinbarrio.com · meowrhino studio
+- **meta**: el portfolio de valentin barrio, creative based in europe. una web mínima y elegante donde no hay nada que no sea la imagen. hecha a medida, sin plantillas.
 - **borrador**:
-  valentin fotografía la energía cruda de los directos, editoriales de moda y retratos
-  íntimos. en una web de fotógrafo todo compite contra la imagen, así que quitamos
-  todo lo demás: la interfaz aparece cuando la necesitas y desaparece cuando no.
-  él gestiona sus proyectos editando un archivo de datos, sin tocar el código.
-  [detalle: …]
+  valentin no se presenta como fotógrafo de una ciudad: se presenta como creative
+  based in europe, y la web tenía que sostener esa ambición sin ponerse solemne.
+  en una web así todo compite contra la imagen, así que quitamos todo lo demás. su
+  home es su nombre y una lista de trece palabras — ni menú, ni bio, ni introducción.
+  aguantar ese vacío cuesta más que llenarlo, y es exactamente lo que la hace
+  elegante: la interfaz aparece cuando la necesitas y desaparece cuando no. él
+  gestiona sus proyectos editando un archivo de datos, sin tocar el código.
 
 ## conor — conorashlee.com
 - **keyword**: web para fotógrafos con archivo privado (zona protegida por contraseña)
@@ -208,21 +215,33 @@
 ## paula barjau — paulabarjau.studio
 - **keyword**: web para maquilladoras y estilistas barcelona
 - **title**: una web para maquillaje y hairstyling — paulabarjau.studio · meowrhino studio
-- **meta**: el portfolio de paula barjau, maquilladora y hairstylist en barcelona: moda, retrato y audiovisual. web a medida donde su trabajo brilla.
+- **meta**: el portfolio de paula barjau, maquilladora y hairstylist en barcelona: rigoberta bandini, aitana, moda y videoclip. web a medida, sencilla y profesional.
 - **borrador**:
-  paula maquilla y peina para moda, retrato y audiovisual en barcelona. su material
-  vive en las caras y el pelo de otros, así que la web tenía que ser puro escaparate:
-  imagen grande, navegación mínima y su contacto siempre a mano para las producciones
-  que van con prisa. [detalle: …]
+  paula es la maquilladora de las estrellas: rigoberta bandini, aitana, portadas de
+  revista, videoclips. con un curriculum así la tentación es hacer una web que grite,
+  y hicimos justo lo contrario — sencilla y profesional, porque cuando los nombres son
+  esos no hace falta subrayarlos. su material vive en las caras y el pelo de otros,
+  así que la web es puro escaparate: imagen grande, navegación mínima, su contacto
+  siempre a mano para las producciones que van con prisa, y en catalán, castellano e
+  inglés porque sus encargos llegan en los tres.
 
 ## el mundo de las jordis — elmundodelasjordis.com
-- **keyword**: webs de proyectos personales / comunidades (⚠️ cuéntame qué es y afino)
-- **title**: el mundo de las jordis — una web-mundo · meowrhino studio
-- **meta**: el mundo de las jordis: [qué es, en una frase]. una web a medida hecha en barcelona para un proyecto que no cabía en ninguna plantilla.
+- **keyword**: red social privada a medida / diario compartido
+- **title**: un diario a varias manos — el mundo de las jordis · meowrhino studio
+- **meta**: una red social en miniatura para un grupo pequeño: timeline, hashtags y sitios, sin algoritmo ni anuncios. hecha a medida en barcelona.
 - **borrador**:
-  [detalle: qué es el mundo de las jordis y de qué va el proyecto] técnicamente,
+  el mundo de las jordis es un diario a varias manos: una ventanita a su mundo. por
+  fuera tiene lo que tiene una red social — timeline, hashtags, los sitios donde pasan
+  las cosas — y por dentro no tiene nada de lo que las hace insoportables: ni
+  algoritmo que decida qué ves, ni anuncios, ni números que te digan si lo que has
+  escrito vale algo. escriben varias personas y no hay nadie ordenándolo. técnicamente,
   el motor de la web viene de twoitter, un experimento nuestro anterior — nos gusta
   que las piezas de un proyecto encuentren segunda vida en otro.
+
+  > ⚠️ **decisión pendiente antes de publicar esta página**: los posts son íntimos y
+  > llevan ubicaciones reales. publicar una página de proyecto que enlace ahí le manda
+  > desconocidos a un sitio que no parece hecho para eso. opciones: pedir permiso a las
+  > jordis, contar el proyecto sin enlazar, o dejarla fuera de las páginas SEO.
 
 ## christine — meowrhino.github.io/christine
 - **keyword**: web portfolio para diseñadores gráficos (⚠️ ojo: miranda ya ataca «web para diseñadoras gráficas barcelona» — hay que separarlas)
@@ -251,10 +270,12 @@
 ---
 
 ## siguientes pasos (cuando los textos estén validados)
-1. tú rellenas los `[detalle: …]` y corriges lo que no sea verdad — mejor 2 líneas
-   reales tuyas que 10 mías inventadas.
-2. resolvemos los 4 marcados con ⚠️ (andrea, conor, jordis, christine).
-3. decidimos slugs (`/proyectos/rikamichie` o similar) y monto las páginas
+1. ~~rellenar los `[detalle: …]`~~ — hecho (22 ago 2026): los 20 proyectos tienen su
+   anécdota real. queda tu repaso de veracidad antes de publicar.
+2. decidir qué hacemos con el mundo de las jordis (permiso / sin enlace / fuera).
+3. separar las keywords de los tres fotógrafos (andrea, valentin, conor) y las dos
+   de diseño gráfico (miranda, christine) para que no compitan entre ellas.
+4. decidimos slugs (`/proyectos/rikamichie` o similar) y monto las páginas
    pre-renderizadas con el mismo sistema que la home (build-seo.js), con sus
    metadatos, JSON-LD y entrada en el sitemap.
-4. en/cat después de ver qué keywords traen gente en search console.
+5. en/cat después de ver qué keywords traen gente en search console.
