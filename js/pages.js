@@ -154,48 +154,32 @@ export function renderWelcome(data) {
 
   const w = data.welcome;
 
-  // El título es link al modo fácil; el cupón va detrás (posicionado absoluto).
-  // Los lang-btn quedan sobre el cupón (z-index mayor) y `renderWelcomeCupon`
-  // engancha los listeners al recorrer los .lang-btn dentro de la celda.
-  // Bajo el título: tagline y, debajo, el hint de navegación (fijo) que indica
-  // que se navega con los enlaces de los bordes.
+  // Solo wordmark y tagline. El cupón va detrás (posicionado absoluto) y los
+  // lang-btn por encima (z-index mayor); `renderWelcomeCupon` engancha sus
+  // listeners al recorrer los .lang-btn dentro de la celda.
+  //
+  // El título ya no enlaza a /easy: un wordmark significa «inicio» o no
+  // significa nada, y usarlo de puerta a otra maquetación del mismo sitio era
+  // una trampa — nadie pulsa el nombre de un estudio esperando eso. Y debajo
+  // había un hint («navega con los botones de los lados») que explicaba la
+  // interfaz en vez de enseñar trabajo, llamaba «botones» a unas etiquetas de
+  // texto giradas, y era un <button> que nadie sabía que lo era. En su lugar,
+  // más portfolio moviéndose: renderWelcomeCard pinta varias tarjetas.
   el.innerHTML = `
     <div class="welcome-content">
-      <h1 class="welcome-title"><a href="/easy" class="welcome-title-link" aria-label="${escapeHTML(w.titulo)} — versión en una página">${escapeHTML(w.titulo)}</a></h1>
+      <h1 class="welcome-title">${escapeHTML(w.titulo)}</h1>
       <p class="welcome-tagline">${escapeHTML(pick(w.tagline, currentLang))}</p>
-      <button type="button" class="welcome-hint">
-        <span class="welcome-hint-txt">${escapeHTML(pick(w.hint, currentLang))}</span>
-      </button>
     </div>
     ${buildLangButtons()}
   `;
 
   const taglineEl = el.querySelector(".welcome-tagline");
-  const hintTxtEl = el.querySelector(".welcome-hint-txt");
 
   // i18n en sitio: reusa el mecanismo de attachLangListeners (mismo patrón
   // que el cupón, que registra el suyo aparte sobre la misma celda).
   attachLangListeners(el, (lang) => {
     if (taglineEl) taglineEl.textContent = pick(w.tagline, lang);
-    if (hintTxtEl) hintTxtEl.textContent = pick(w.hint, lang);
   });
-
-  // Al pulsar el hint, los nav-labels de los bordes parpadean para señalar por
-  // dónde se navega (todos los lados con destino, no solo izq/der). Leemos el
-  // DOM en el momento del click: los nav-labels los crea navigation.js en cada
-  // actualizarVista, así que ya existen para cuando el usuario pulsa.
-  const hintBtn = el.querySelector(".welcome-hint");
-  if (hintBtn) {
-    hintBtn.addEventListener("click", () => {
-      document.querySelectorAll(".celda.activa .nav-label").forEach(label => {
-        label.classList.remove("nav-label--destacado");
-        void label.offsetWidth;            // reinicia la animación si ya estaba activa
-        label.classList.add("nav-label--destacado");
-        label.addEventListener("animationend",
-          () => label.classList.remove("nav-label--destacado"), { once: true });
-      });
-    });
-  }
 
   renderWelcomeCupon(el, w.cupon);
   renderWelcomeCard(el, data.portfolio?.proyectos);

@@ -1,16 +1,18 @@
 // ============================================
-// WELCOME CARD — tarjeta de proyecto que rebota y va cambiando de web.
+// WELCOME CARD — tarjetas de proyecto que rebotan y van cambiando de web.
 // ============================================
 //
-// Segunda tarjeta rebotante de la celda welcome, junto al cupón. Enseña una
-// captura del portfolio y enlaza a su página de proyecto (/proyectos/<slug>).
+// Las tarjetas rebotantes de la celda welcome, junto al cupón. Cada una enseña
+// una captura del portfolio y enlaza a su página de proyecto.
 //
-// Por qué existe: el welcome era la única pantalla del sitio donde no se veía
+// Por qué existen: el welcome era la única pantalla del sitio donde no se veía
 // trabajo hecho. Esto convierte la portada en una demo silenciosa del portfolio
 // y, de paso, da enlaces internos a las 20 páginas de proyecto, que es lo que
-// necesitan para posicionar.
+// necesitan para posicionar. Son varias porque el hint de navegación que había
+// bajo el título («navega con los botones de los lados») explicaba la interfaz
+// en vez de enseñar trabajo; en su lugar hay más portfolio moviéndose.
 //
-// Tres decisiones que no son obvias:
+// Cinco decisiones que no son obvias:
 //
 //  - El proyecto cambia por TIEMPO (cada CADENCIA ms), no solo al rebotar. Si
 //    dependiera del choque, en una pantalla ancha la tarjeta tardaría muchos
@@ -27,6 +29,17 @@
 //    la tarjeta en un altavoz que interrumpía al lector de pantalla para
 //    siempre. Es un escaparate decorativo, no un aviso de estado: quien navegue
 //    con lector la encuentra como un enlace más cuando le toque.
+//
+//  - Las tarjetas comparten UN barajado y un registro de qué índices están a la
+//    vista. Al avanzar, cada una salta los que ya enseña otra: dos tarjetas con
+//    el mismo proyecto a la vez se lee como un fallo, no como una casualidad.
+//    No basta con arrancarlas separadas y que avancen a la par — los rebotes
+//    hacen avanzar a cada una por su cuenta y el desfase se pierde solo.
+//
+//  - Cada una sale de la esquina más lejana a TODO lo que ya rebota (el cupón y
+//    las tarjetas anteriores), no solo del cupón. Y van a velocidades distintas
+//    a propósito: a la misma velocidad viajarían en paralelo y se leerían como
+//    un bloque en vez de como objetos sueltos.
 
 import { currentLang, attachLangListeners } from "./data.js";
 import { esMovil } from "./pages.js";
@@ -54,7 +67,20 @@ const ALT = {
 };
 
 /**
- * Renderiza la tarjeta de proyecto dentro de la celda welcome y la arranca.
+ * Cuántas tarjetas y con qué carácter. El orden importa: la primera se coloca
+ * antes, así que la segunda ya la esquiva al buscar su esquina.
+ *
+ * Velocidades distintas entre sí y distintas del cupón (que va a 90/60). Nada
+ * de divisores limpios: dos objetos a 66 y 33 px/s vuelven a coincidir cada dos
+ * viajes y se nota el patrón.
+ */
+const TARJETAS = [
+  { velocidad: 66, velocidadMovil: 42, limiteRot: 7 },
+  { velocidad: 51, velocidadMovil: 33, limiteRot: 9 },
+];
+
+/**
+ * Renderiza las tarjetas de proyecto dentro de la celda welcome y las arranca.
  *
  * @param {HTMLElement} celda      elemento .celda.welcome
  * @param {object[]} proyectos     `data.portfolio.proyectos`
@@ -63,12 +89,29 @@ export function renderWelcomeCard(celda, proyectos) {
   if (!celda || !Array.isArray(proyectos) || !proyectos.length) return;
 
   // Se baraja para que no salga siempre el mismo primero: la portada se ve
-  // muchas veces y con un orden fijo el efecto cansa.
+  // muchas veces y con un orden fijo el efecto cansa. UN solo barajado para
+  // todas las tarjetas: es lo que permite repartírselas sin repetir.
   const orden = barajar(proyectos.filter(p => p?.imagen && p?.nombre));
   if (!orden.length) return;
 
+  // Los índices que hay ahora mismo a la vista, compartidos por las tarjetas.
+  const enPantalla = new Set();
+
+  // Con menos proyectos que tarjetas no hay forma de no repetir; en ese caso
+  // sale una sola y ya.
+  const cuantas = Math.min(TARJETAS.length, orden.length);
+
+  TARJETAS.slice(0, cuantas).forEach((config, k) => {
+    // Repartidas por el barajado, no pegadas: si arrancan en 0 y 1 las dos
+    // primeras capturas son vecinas del mismo barajado y parecen relacionadas.
+    crearTarjeta(celda, orden, enPantalla, config, Math.floor(k * orden.length / cuantas));
+  });
+}
+
+/** Una tarjeta: la pinta, la traduce, la hace rotar de proyecto y rebotar. */
+function crearTarjeta(celda, orden, enPantalla, config, inicial) {
   celda.insertAdjacentHTML("beforeend", `
-    <a class="welcome-card" id="welcomeCard" href="#">
+    <a class="welcome-card" href="#">
       <img class="welcome-card-img" alt="" decoding="async">
       <span class="welcome-card-pie">
         <span class="welcome-card-nombre"></span>
@@ -77,13 +120,14 @@ export function renderWelcomeCard(celda, proyectos) {
     </a>
   `);
 
-  const cardEl   = celda.querySelector("#welcomeCard");
+  const cardEl   = celda.lastElementChild;
   const imgEl    = cardEl.querySelector(".welcome-card-img");
   const nombreEl = cardEl.querySelector(".welcome-card-nombre");
   const ctaEl    = cardEl.querySelector(".welcome-card-cta");
 
-  let i = 0;
+  let i = inicial;
   let ultimoCambio = 0;
+  enPantalla.add(i);
 
   const pintar = () => {
     const p = orden[i];
@@ -99,12 +143,14 @@ export function renderWelcomeCard(celda, proyectos) {
     // La siguiente se precarga fuera del DOM: cuando toque, ya está en caché y
     // el cambio no enseña un hueco. Solo una — precargar las 20 en la portada
     // sería tirar ancho de banda del visitante.
-    const siguiente = orden[(i + 1) % orden.length];
+    const siguiente = orden[proximoIndice(i, orden.length, enPantalla)];
     if (siguiente) new Image().src = siguiente.imagen;
   };
 
   const avanzar = () => {
-    i = (i + 1) % orden.length;
+    enPantalla.delete(i);
+    i = proximoIndice(i, orden.length, enPantalla);
+    enPantalla.add(i);
     // El fundido lo hace el CSS al quitar la clase; con movimiento reducido la
     // transición está anulada y el cambio es directo.
     cardEl.classList.add("cambiando");
@@ -131,11 +177,9 @@ export function renderWelcomeCard(celda, proyectos) {
   }, CADENCIA);
 
   iniciarRebote(celda, cardEl, {
-    // Más lenta que el cupón: si fueran iguales viajarían en paralelo y darían
-    // sensación de bloque en vez de dos objetos sueltos.
-    velocidad: esMovil ? 42 : 66,
-    limiteRot: 7,
-    inicio: (b) => esquinaLejosDelCupon(celda, b),
+    velocidad: esMovil ? config.velocidadMovil : config.velocidad,
+    limiteRot: config.limiteRot,
+    inicio: (b) => esquinaMasLibre(celda, b, cardEl),
     alChocar: () => {
       if (performance.now() - ultimoCambio > DWELL_MIN) avanzar();
     },
@@ -143,30 +187,53 @@ export function renderWelcomeCard(celda, proyectos) {
 }
 
 /**
- * La esquina más lejana al cupón.
+ * El siguiente índice del barajado que no esté ya en otra tarjeta.
  *
- * Las dos tarjetas se colocaban al azar y a menudo nacían superpuestas, que es
- * lo que peor se ve: parece un fallo de maquetación en el primer segundo de la
- * portada. Que se crucen luego, en movimiento, no molesta — para eso la card va
- * por debajo (--z-card < --z-cupon) y la oferta nunca queda tapada.
+ * Avanza de uno en uno y salta los ocupados. Con 20 proyectos y 2 tarjetas da
+ * como mucho un salto; el bucle está acotado a una vuelta entera para que no
+ * pueda colgarse si algún día hay tantas tarjetas como proyectos.
  */
-function esquinaLejosDelCupon(celda, b) {
+function proximoIndice(actual, total, enPantalla) {
+  for (let salto = 1; salto <= total; salto++) {
+    const cand = (actual + salto) % total;
+    if (!enPantalla.has(cand)) return cand;
+  }
+  return (actual + 1) % total;
+}
+
+/**
+ * La esquina más lejana a todo lo que ya rebota en la celda.
+ *
+ * Las tarjetas se colocaban al azar y a menudo nacían superpuestas, que es lo
+ * que peor se ve: parece un fallo de maquetación en el primer segundo de la
+ * portada. Que se crucen luego, en movimiento, no molesta — para eso van por
+ * debajo del cupón (--z-card < --z-cupon) y la oferta nunca queda tapada.
+ *
+ * Se mide contra el cupón Y contra las demás tarjetas (`excluir` es la que se
+ * está colocando ahora, que ya está en el DOM). El criterio es maximizar la
+ * distancia al vecino MÁS CERCANO: una esquina lejísimos del cupón pero pegada
+ * a la otra tarjeta no sirve de nada.
+ */
+function esquinaMasLibre(celda, b, excluir) {
   const esquinas = [
     { x: b.minX, y: b.minY }, { x: b.maxX, y: b.minY },
     { x: b.minX, y: b.maxY }, { x: b.maxX, y: b.maxY },
   ];
-  const cupon = celda.querySelector("#welcomeCupon");
-  if (!cupon) return esquinas[Math.floor(Math.random() * esquinas.length)];
 
-  // Centro del cupón en coordenadas de la celda (getBoundingClientRect ya
-  // incluye el transform del rebote, que es justo la posición que nos importa).
   const rc = celda.getBoundingClientRect();
-  const rk = cupon.getBoundingClientRect();
-  const cx = rk.left - rc.left + rk.width / 2;
-  const cy = rk.top - rc.top + rk.height / 2;
+  // getBoundingClientRect ya incluye el transform del rebote, que es justo la
+  // posición que nos importa.
+  const centros = [...celda.querySelectorAll("#welcomeCupon, .welcome-card")]
+    .filter(el => el !== excluir)
+    .map(el => {
+      const r = el.getBoundingClientRect();
+      return { x: r.left - rc.left + r.width / 2, y: r.top - rc.top + r.height / 2 };
+    });
+
+  if (!centros.length) return esquinas[Math.floor(Math.random() * esquinas.length)];
 
   return esquinas.reduce((mejor, e) => {
-    const d = (e.x - cx) ** 2 + (e.y - cy) ** 2;
+    const d = Math.min(...centros.map(c => (e.x - c.x) ** 2 + (e.y - c.y) ** 2));
     return d > mejor.d ? { ...e, d } : mejor;
   }, { ...esquinas[0], d: -1 });
 }
