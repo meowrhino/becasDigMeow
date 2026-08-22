@@ -1977,10 +1977,14 @@ html.js #seo-prerender {
   gap: 1.6rem 1.3rem;
 }
 .proy-card a { display: flex; flex-direction: column; gap: 0.5rem; }
+/* `contain` y no `cover`: recortar una captura de web se come justo la parte que
+   la identifica (la barra del navegador, el titular). La caja es 3/2 porque es
+   la proporción de la mayoría de las capturas, así que las franjas que quedan
+   son mínimas — y al no haber fondo, ni se ven. */
 .proy-card img {
   width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
+  aspect-ratio: 3 / 2;
+  object-fit: contain;
   display: block;
   border-radius: 4px;
   border: 1px solid var(--border);
@@ -2016,13 +2020,17 @@ html.js #seo-prerender {
   text-decoration: none;
 }
 
+/* Sin caja fija ni recorte: las capturas van de 1,34 a 1,56 de proporción, así
+   que cualquier caja única obligaba a recortar (con `cover`) o a dejar franjas
+   (con `contain`). Cada una se muestra entera y a su proporción; la card cambia
+   un poco de alto entre proyectos, que es lo natural cuando enseñas pantallazos
+   de webs distintas. Sin fondo tampoco: al no recortarse, no queda hueco que
+   rellenar. */
 .welcome-card-img {
   width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
+  height: auto;
   display: block;
   border-radius: 3px;
-  background: var(--bg-hover);   /* fondo mientras carga, en vez de un hueco */
 }
 
 .welcome-card-pie {

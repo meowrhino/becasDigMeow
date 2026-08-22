@@ -114,9 +114,13 @@ function jsonLdHTML(data, idioma) {
     founder: { "@type": "Person", name: "Manuel Latour Fernández" },
     inLanguage: idioma.htmlLang,
     knowsLanguage: IDIOMAS.map(i => i.htmlLang),
+    // La ficha de Google Business Profile va en sameAs: es lo que le dice a
+    // Google que esta web y esa ficha son el mismo negocio, y sin ese vínculo el
+    // schema declaraba un negocio local sin nada que lo respaldara.
     sameAs: [
       "https://instagram.com/meowrhino",
       "https://github.com/meowrhino",
+      "https://maps.app.goo.gl/W48ZgTHqYmr4WgYN9",
     ],
     priceRange: "€€",
   };
