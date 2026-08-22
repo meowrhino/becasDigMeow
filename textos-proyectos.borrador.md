@@ -56,16 +56,17 @@
   tono que diego buscaba.
 
 ## mike bros — mikebros.com
-- **keyword**: web para coleccionistas / archivos personales
-- **title**: una web para una colección de cds — mikebros.com · meowrhino studio
-- **meta**: mikesx cd collection: un archivo personal convertido en web navegable. diseño a medida en barcelona, sin base de datos de pago ni cuotas.
+- **keyword**: web para diseñadores de portadas de disco
+- **title**: un portfolio que es una disquetera — mikebros.com · meowrhino studio
+- **meta**: mikesx cd collection: el portfolio de mike, donde cada trabajo es un cd. portadas, merch e imagen para artistas, en una web a medida sin plantillas.
 - **borrador**:
-  la colección de cds de mike merecía algo mejor que una hoja de cálculo. su web
-  convierte el archivo en un espacio navegable, donde cada disco tiene su sitio.
-  es el tipo de encargo que nos gusta: una idea muy personal que no encaja en ningún
-  constructor de webs, hecha a medida y fácil de ampliar cada vez que crece la
-  colección. por dentro es una disquetera infinita: por mucho scroll que hagas, los
-  discos no se acaban nunca.
+  mike firma como mikesx y hace portadas, merch e imagen para artistas — belén
+  aguilera, raoul, laskaar, st. pavlo — además de lo suyo propio. su trabajo vive
+  en un formato muy concreto, así que la web adopta ese formato en vez de meterlo en
+  una cuadrícula: cada proyecto es un cd, y el portfolio entero es una disquetera
+  infinita. por mucho scroll que hagas, los discos no se acaban nunca. es el tipo de
+  idea que no encaja en ningún constructor de webs, y por eso está hecha a medida y
+  es fácil de ampliar cada vez que sale un trabajo nuevo.
 
 ## miranda — mirandaperezhita.com
 - **keyword**: web para diseñadoras gráficas barcelona
@@ -213,16 +214,17 @@
 
 ## paula barjau — paulabarjau.studio
 - **keyword**: web para maquilladoras y estilistas barcelona
-- **title**: una web para maquillaje y hairstyling — paulabarjau.studio · meowrhino studio
-- **meta**: el portfolio de paula barjau, maquilladora y hairstylist en barcelona: rigoberta bandini, aitana, moda y videoclip. web a medida, sencilla y profesional.
+- **title**: una web para maquillaje y estilismo — paulabarjau.studio · meowrhino studio
+- **meta**: el portfolio de paula barjau, maquilladora y estilista en barcelona: rigoberta bandini, aitana, moda y videoclip. web a medida, sencilla y profesional.
 - **borrador**:
-  paula es la maquilladora de las estrellas: rigoberta bandini, aitana, portadas de
-  revista, videoclips. con un curriculum así la tentación es hacer una web que grite,
-  y hicimos justo lo contrario — sencilla y profesional, porque cuando los nombres son
-  esos no hace falta subrayarlos. su material vive en las caras y el pelo de otros,
-  así que la web es puro escaparate: imagen grande, navegación mínima, su contacto
-  siempre a mano para las producciones que van con prisa, y en catalán, castellano e
-  inglés porque sus encargos llegan en los tres.
+  paula barjau es maquilladora y estilista, la maquilladora de las estrellas:
+  rigoberta bandini, aitana, portadas de revista, videoclips. con un curriculum así la
+  tentación es hacer una web que grite, y hicimos justo lo contrario — sencilla y
+  profesional, porque cuando los nombres son esos no hace falta subrayarlos. su
+  trabajo vive en la imagen de otras personas, así que la web es puro escaparate:
+  imagen grande, navegación mínima, su contacto siempre a mano para las producciones
+  que van con prisa, y en catalán, castellano e inglés porque sus encargos llegan en
+  los tres.
 
 ## el mundo de las jordis — elmundodelasjordis.com
 - **keyword**: red social privada a medida / diario compartido
