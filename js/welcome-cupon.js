@@ -17,9 +17,12 @@
 //  - Respeta `prefers-reduced-motion`.
 //  - Bounds contra offsetWidth/Height (sin rotar) para rebotes estables.
 //  - Click en el CTA → mailto (no toggle); click en el resto del cupón → flip.
+//
+// El bucle del rebote vive en rebote.js: lo comparte con la card de proyectos.
 
 import { currentLang, attachLangListeners } from "./data.js";
 import { esMovil } from "./pages.js";
+import { iniciarRebote } from "./rebote.js";
 import { escapeHTML } from "./utils.js";
 
 /**
@@ -80,106 +83,10 @@ export function renderWelcomeCupon(celda, cuponData) {
     wrapperEl.classList.toggle("flipped");
   });
 
-  iniciarRebote(celda, wrapperEl);
-}
-
-/**
- * Bucle de animación estilo DVD: mueve el cupón en diagonales de 45º
- * rebotando contra los bordes de la celda y acumulando rotación.
- */
-function iniciarRebote(celda, cupon) {
-  const reducirMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const velocidad = esMovil ? 60 : 90;   // px/s
-  const diag = Math.SQRT1_2;             // componente x,y de un vector unitario a 45º
-
-  let vx = (Math.random() < 0.5 ? -1 : 1) * diag;
-  let vy = (Math.random() < 0.5 ? -1 : 1) * diag;
-  let x = 0, y = 0;
-  let rotacion = Math.random() * 6 - 3;
-  let hoverPausa = false;
-  let lastTs = 0;
-  let running = true;
-  let visible = true;
-
-  const bounds = () => ({
-    w: celda.clientWidth - cupon.offsetWidth,
-    h: celda.clientHeight - cupon.offsetHeight,
-  });
-
-  // Cada choque suma un golpe de rotación de golpe (sin easing): 8..22º.
-  // El ángulo queda acotado a ±LIMITE_ROT: si un lado se pasa, el golpe
-  // va hacia el otro, así nunca queda "pegado" al tope.
-  const LIMITE_ROT = 10;
-  const golpearRotacion = () => {
-    const delta = Math.random() * 14 + 8;
-    const cabeSubir = rotacion + delta <= LIMITE_ROT;
-    const cabeBajar = rotacion - delta >= -LIMITE_ROT;
-    let signo;
-    if (cabeSubir && cabeBajar) signo = Math.random() < 0.5 ? -1 : 1;
-    else if (cabeSubir) signo = 1;
-    else if (cabeBajar) signo = -1;
-    else signo = rotacion > 0 ? -1 : 1;
-    rotacion = Math.max(-LIMITE_ROT, Math.min(LIMITE_ROT, rotacion + delta * signo));
-  };
-
-  const render = () => {
-    cupon.style.transform = `translate(${x}px, ${y}px) rotate(${rotacion}deg)`;
-  };
-
-  const colocarInicial = () => {
-    const b = bounds();
-    x = b.w > 0 ? Math.random() * b.w : 0;
-    y = b.h > 0 ? Math.random() * b.h : 0;
-    render();
-  };
-
-  const tick = (ts) => {
-    const dt = Math.min(50, ts - lastTs) / 1000;
-    lastTs = ts;
-
-    const girado = cupon.classList.contains("flipped");
-    if (celda.classList.contains("activa") && !hoverPausa && !reducirMovimiento && !girado) {
-      const b = bounds();
-      x += vx * velocidad * dt;
-      y += vy * velocidad * dt;
-
-      let boto = false;
-      if (x <= 0)        { x = 0;   vx = -vx; boto = true; }
-      else if (x >= b.w) { x = b.w; vx = -vx; boto = true; }
-      if (y <= 0)        { y = 0;   vy = -vy; boto = true; }
-      else if (y >= b.h) { y = b.h; vy = -vy; boto = true; }
-      if (boto) golpearRotacion();
-
-      render();
-    }
-    if (visible) requestAnimationFrame(tick);
-    else running = false;
-  };
-
-  cupon.addEventListener("mouseenter", () => { hoverPausa = true; });
-  cupon.addEventListener("mouseleave", () => { hoverPausa = false; });
-
-  window.addEventListener("resize", () => {
-    const b = bounds();
-    x = Math.min(Math.max(0, x), b.w);
-    y = Math.min(Math.max(0, y), b.h);
-  });
-
-  if (typeof IntersectionObserver !== "undefined") {
-    const obs = new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
-      if (visible && !running) {
-        running = true;
-        lastTs = performance.now();
-        requestAnimationFrame(tick);
-      }
-    });
-    obs.observe(celda);
-  }
-
-  document.fonts.ready.then(() => {
-    colocarInicial();
-    lastTs = performance.now();
-    requestAnimationFrame(tick);
+  // Mientras está girado se queda quieto: leer el dorso con la tarjeta
+  // moviéndose es incómodo.
+  iniciarRebote(celda, wrapperEl, {
+    velocidad: esMovil ? 60 : 90,
+    pausar: () => wrapperEl.classList.contains("flipped"),
   });
 }

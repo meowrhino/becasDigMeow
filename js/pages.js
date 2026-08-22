@@ -8,6 +8,7 @@
 import { currentLang, buildLangButtons, attachLangListeners, onLangChange } from "./data.js";
 import { setupZoom } from "./zoom.js";
 import { setupScrollGradients } from "./scroll-gradients.js";
+import { renderWelcomeCard } from "./welcome-card.js";
 import { renderWelcomeCupon } from "./welcome-cupon.js";
 import { repaintWithFade, escapeHTML } from "./utils.js";
 
@@ -193,6 +194,7 @@ export function renderWelcome(data) {
   }
 
   renderWelcomeCupon(el, w.cupon);
+  renderWelcomeCard(el, data.portfolio?.proyectos);
 }
 
 // --- Statement ---

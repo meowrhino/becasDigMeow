@@ -95,6 +95,7 @@
   /* Escala de z-index */
   --z-base: 1;          /* zone-label-bg, scroll gradients */
   --z-cell: 2;          /* celda */
+  --z-card: 4;          /* card de proyecto flotante (welcome), debajo del cupón */
   --z-cupon: 5;         /* cupón flotante (welcome) */
   --z-nav: 10;          /* nav-labels, lang/font/theme buttons, section-nav */
   --z-overlay-img: 30;  /* overlay sobre imagen (portfolio grid) */
@@ -1988,3 +1989,80 @@ html.js #seo-prerender {
 .proy-card a:hover img { border-color: var(--border-hover); }
 .proy-card-nombre { font-size: 0.95rem; color: var(--text); }
 .proy-card-kw { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+
+/* ============================================
+   19. WELCOME CARD — tarjeta de proyecto que rebota
+   Segunda tarjeta rebotante de la welcome, junto al cupón. El movimiento lo
+   pone rebote.js vía transform; aquí solo el aspecto y el fundido del cambio.
+   Va por DEBAJO del cupón (--z-card < --z-cupon): si se cruzan, la oferta
+   nunca queda tapada por una captura.
+   ============================================ */
+
+.welcome-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: var(--z-card);
+  width: clamp(9rem, 17dvw, 14rem);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px var(--shadow-md);
+  will-change: transform;
+  transform-origin: center;
+  pointer-events: auto;
+  text-decoration: none;
+}
+.welcome-card:hover { border-color: var(--border-hover); }
+
+.welcome-card-img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
+  background: var(--bg-hover);   /* fondo mientras carga, en vez de un hueco */
+}
+
+.welcome-card-pie {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1em;
+  padding: 0.5em 0.65em 0.6em;
+}
+.welcome-card-nombre {
+  font-size: 0.78rem;
+  color: var(--text);
+  line-height: 1.25;
+}
+.welcome-card-cta {
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.welcome-card:hover .welcome-card-cta { color: var(--text-secondary); }
+
+/* Cambio de proyecto: se atenúa, se repinta y vuelve. El fundido va en opacity
+   y no en el elemento entero para no pelearse con el transform del rebote. */
+.welcome-card-img,
+.welcome-card-pie { transition: opacity var(--transition-fast); }
+.welcome-card.cambiando .welcome-card-img,
+.welcome-card.cambiando .welcome-card-pie { opacity: 0; }
+
+/* En móvil la celda es estrecha y la tarjeta competiría con el titular y el
+   cupón, que es lo que vende. Se queda pequeña y sin el pie de texto. */
+@media (max-width: 768px) {
+  .welcome-card { width: clamp(6.5rem, 34dvw, 9rem); }
+  .welcome-card-pie { padding: 0.4em 0.5em 0.45em; }
+  .welcome-card-cta { display: none; }
+}
+
+/* Quien pide menos movimiento no rebota (lo corta rebote.js) y tampoco ve el
+   fundido: el proyecto cambia de golpe, sin transición. */
+@media (prefers-reduced-motion: reduce) {
+  .welcome-card-img,
+  .welcome-card-pie { transition: none; }
+}
