@@ -36,13 +36,12 @@
   fashion story, look book, producto, imagen de artista. su web es una galería con
   menú nebuloso: cada vez que entras es una página distinta. no hay orden fijo ni
   foto estrella, porque ninguna de sus fotos es la portada de las demás — el que
-  decide qué mirar primero eres tú, y andrea nunca ve la misma web dos veces.
-  la suya fue la primera: la primera web que salió de
-  meowrhino studio. gracias andrea, t'estimo. queríamos que el portfolio fuera suyo de verdad,
-  desde la estructura hasta el último detalle visual — hecho desde cero, sin
-  frameworks ni constructores, y andrea aprendió a actualizarlo ella misma en la
-  última reunión del proyecto. y pronto será también la primera tienda online del
-  estudio.
+  decide qué mirar primero eres tú, y no hay dos visitas que vean lo mismo.
+  y la suya fue la primera de todas: la primera web que salió de meowrhino studio.
+  gracias andrea, t'estimo. queríamos que el portfolio fuera suyo de verdad, desde
+  la estructura hasta el último detalle visual — hecho desde cero, sin frameworks ni
+  constructores, y andrea aprendió a actualizarlo ella misma en la última reunión del
+  proyecto. y pronto será también la primera tienda online del estudio.
 
 ## diego san marcos — diegosanmarcos.com
 - **keyword**: web para músicos y técnicos de sonido
