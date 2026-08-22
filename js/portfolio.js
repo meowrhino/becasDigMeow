@@ -2,8 +2,18 @@
 // PORTFOLIO — Grid de proyectos con crossfade
 // ============================================
 
-import { obtenerDatos } from "./data.js";
+import { currentLang, obtenerDatos, onLangChange } from "./data.js";
+import { slugify } from "./proyecto-template.js";
 import { setupScrollGradients } from "./scroll-gradients.js";
+
+/** Texto del enlace al caso de estudio, por idioma. */
+const CASO = { es: "ver el caso →", en: "see the case →", cat: "veure el cas →" };
+
+/** Base de la ruta de proyectos en cada idioma (la misma que genera build-seo). */
+const RUTA_PROYECTOS = { es: "/proyectos", en: "/en/projects", cat: "/ca/projectes" };
+
+const pick = (obj, lang) => obj?.[lang] ?? obj?.es ?? "";
+const rutaProyectos = (lang) => RUTA_PROYECTOS[lang] || RUTA_PROYECTOS.es;
 
 // --- Estado centralizado de cycling de imágenes ---
 
@@ -175,6 +185,17 @@ export function renderPortfolio(data) {
   iniciarCiclosImagenes(proyectos);
   renderGridProyectos(proyectos);
 
+  // El enlace al caso cambia de texto Y de ruta con el idioma (/proyectos,
+  // /en/projects, /ca/projectes), así que hay que repintar los dos.
+  onLangChange((lang) => {
+    el.querySelectorAll(".pgrid-caso").forEach((a, i) => {
+      const p = proyectos[i];
+      if (!p) return;
+      a.textContent = pick(CASO, lang);
+      a.href = `${rutaProyectos(lang)}/${slugify(p.nombre)}`;
+    });
+  });
+
   const wrapper = el.querySelector(".portfolio-scroll-wrapper");
   const content = el.querySelector(".portfolio-scroll-content");
   setupScrollGradients(wrapper, content);
@@ -203,16 +224,20 @@ function renderGridProyectos(proyectos) {
     const tieneCiclo = imagenes.length > 1;
     const tieneDualUrls = Array.isArray(proyecto.urls) && proyecto.urls.length > 0;
 
-    const item = document.createElement(tieneDualUrls ? "div" : "a");
+    // El item es SIEMPRE un div y la imagen va dentro de su propio <a>. Antes el
+    // item entero era el enlace, pero desde que la ficha lleva también un enlace
+    // al caso de estudio quedarían anclas anidadas, que el navegador desarma y
+    // rompe la maqueta.
+    const item = document.createElement("div");
     item.classList.add("pgrid-item");
-    if (!tieneDualUrls) {
-      item.href = proyecto.url;
-      item.target = "_blank";
-      item.rel = "noopener";
-    }
 
-    const thumb = document.createElement("div");
+    const thumb = document.createElement(tieneDualUrls ? "div" : "a");
     thumb.classList.add("pgrid-thumb");
+    if (!tieneDualUrls) {
+      thumb.href = proyecto.url;
+      thumb.target = "_blank";
+      thumb.rel = "noopener";
+    }
 
     const imgA = document.createElement("img");
     imgA.classList.add("pgrid-img", "pgrid-img-a");
@@ -266,11 +291,24 @@ function renderGridProyectos(proyectos) {
         meta.appendChild(link);
       });
     } else {
-      const url = document.createElement("span");
+      const url = document.createElement("a");
       url.classList.add("pgrid-url");
+      url.href = proyecto.url;
+      url.target = "_blank";
+      url.rel = "noopener";
       url.textContent = proyecto.urlLabel || limpiarUrl(proyecto.url);
       meta.appendChild(url);
     }
+
+    // Enlace al caso de estudio. Es la única vía desde el grid hacia
+    // /proyectos/<slug>, y de paso le da a esas páginas los enlaces internos que
+    // necesitan para posicionar. El texto se retraduce al cambiar de idioma.
+    const caso = document.createElement("a");
+    caso.classList.add("pgrid-caso");
+    caso.href = `${rutaProyectos(currentLang)}/${slugify(proyecto.nombre)}`;
+    caso.textContent = pick(CASO, currentLang);
+    meta.appendChild(caso);
+
     item.appendChild(meta);
 
     grid.appendChild(item);

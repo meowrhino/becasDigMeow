@@ -2006,31 +2006,32 @@ html.js #seo-prerender {
   width: clamp(13rem, 26dvw, 21rem);
   display: flex;
   flex-direction: column;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 4px;
+  /* Sin marco ni fondo: la captura ya tiene su propio borde (son pantallazos de
+     navegador) y encuadrarla otra vez la convertía en una pegatina. Flotando
+     limpia se lee como una ventana suelta, que es lo que es. */
   overflow: hidden;
-  box-shadow: 0 2px 10px var(--shadow-md);
   will-change: transform;
   transform-origin: center;
   pointer-events: auto;
   text-decoration: none;
 }
-.welcome-card:hover { border-color: var(--border-hover); }
 
 .welcome-card-img {
   width: 100%;
   aspect-ratio: 16 / 10;
   object-fit: cover;
   display: block;
+  border-radius: 3px;
   background: var(--bg-hover);   /* fondo mientras carga, en vez de un hueco */
 }
 
 .welcome-card-pie {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.1em;
-  padding: 0.5em 0.65em 0.6em;
+  padding: 0.55em 0.4em 0;
+  text-align: center;
 }
 .welcome-card-nombre {
   font-size: 0.78rem;
@@ -2044,6 +2045,10 @@ html.js #seo-prerender {
   color: var(--text-muted);
 }
 .welcome-card:hover .welcome-card-cta { color: var(--text-secondary); }
+/* Sin marco que los sostenga, los textos necesitan el mismo halo que el título
+   para leerse por encima de la marca de agua de la celda. */
+.welcome-card-nombre,
+.welcome-card-cta { text-shadow: 0 0 8px var(--bg), 0 0 16px var(--bg); }
 
 /* Cambio de proyecto: se atenúa, se repinta y vuelve. El fundido va en opacity
    y no en el elemento entero para no pelearse con el transform del rebote. */
@@ -2056,7 +2061,7 @@ html.js #seo-prerender {
    cupón, que es lo que vende. Se queda pequeña y sin el pie de texto. */
 @media (max-width: 768px) {
   .welcome-card { width: clamp(8.5rem, 44dvw, 12rem); }
-  .welcome-card-pie { padding: 0.4em 0.5em 0.45em; }
+  .welcome-card-pie { padding: 0.45em 0.3em 0; }
   .welcome-card-cta { display: none; }
 }
 
@@ -2066,3 +2071,16 @@ html.js #seo-prerender {
   .welcome-card-img,
   .welcome-card-pie { transition: none; }
 }
+
+/* Enlace al caso de estudio (/proyectos/<slug>) bajo cada proyecto del grid.
+   Discreto por defecto: el enlace principal de la ficha sigue siendo la web del
+   cliente, y este es el "y además, cómo se hizo". */
+.pgrid-caso {
+  font-size: clamp(0.62rem, 0.8dvw, 0.7rem);
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+.pgrid-item:hover .pgrid-caso { color: var(--text-secondary); }
+.pgrid-caso:hover { color: var(--text); text-decoration: underline; text-underline-offset: 0.16em; }
