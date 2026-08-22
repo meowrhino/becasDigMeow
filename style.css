@@ -1194,12 +1194,20 @@ a.nav-label:visited {
   transition: transform 0.25s ease;
 }
 
-.pgrid-item[href]:hover,
-.pgrid-item:has(.pgrid-url:hover) {
+/* `.pgrid-item[href]` no puede casar nunca: el item es siempre un <div> desde
+   que el enlace bajó al thumb. Quedaba que pasar por encima de la captura no
+   levantaba la ficha y por encima de la url sí. */
+.pgrid-item:hover {
   transform: translateY(-3px);
 }
 
+/* `display: block` NO es decorativo: el thumb es un <a> salvo cuando el
+   proyecto tiene dos urls, y un <a> es inline por defecto. En inline no aplican
+   ni `width: 100%` ni `aspect-ratio`, así que la caja medía 0×0 y las capturas
+   se pintaban a tamaño cero — 19 de 20 invisibles; la única que se veía era la
+   de dos urls, que se renderiza como <div>. */
 .pgrid-thumb {
+  display: block;
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 3;
