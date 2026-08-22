@@ -176,9 +176,13 @@ export function renderHomePrerenderHTML(data, lang) {
  * a /proyectos que existe en el HTML crudo — sin él esas páginas quedaban
  * huérfanas, alcanzables solo por el sitemap y por los enlaces que pinta el JS.
  *
- * /proyectos va en absoluto (y no "proyectos/index.html") porque es la URL
- * canónica que declaran esas páginas; enlazar a otra forma repartiría señales.
+ * El índice de proyectos va en absoluto (y no "proyectos/index.html") porque es
+ * la URL canónica que declaran esas páginas; enlazar a otra forma repartiría
+ * señales. Y cada idioma enlaza al SUYO: mandar /en a /proyectos sería enviar al
+ * visitante inglés a la versión castellana teniendo la suya.
  */
+const RUTA_PROYECTOS = { es: "/proyectos", en: "/en/projects", cat: "/ca/projectes" };
+
 function notaPrerenderHTML(data, lang) {
   const t = data.prerender || {};
   const email = data.contacto?.email || "";
@@ -189,7 +193,7 @@ function notaPrerenderHTML(data, lang) {
       <p>${esc(pickLang(t.aviso, lang))}</p>
       <ul>
         ${li("easy.html", pickLang(t.enlaceEasy, lang))}
-        ${li("/proyectos", pickLang(t.enlaceProyectos, lang))}
+        ${li(RUTA_PROYECTOS[lang] || RUTA_PROYECTOS.es, pickLang(t.enlaceProyectos, lang))}
         ${li("archive.html", pickLang(t.enlaceArchivo, lang))}
       </ul>
       <p>${esc(pickLang(t.escribeme, lang))}

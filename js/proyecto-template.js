@@ -14,7 +14,32 @@
 // debajo de la raíz, así que TODAS las rutas a assets van absolutas (/style.css,
 // /img/…). Con rutas relativas el navegador las buscaría en /proyectos/.
 
-import { esc } from "./easy-template.js";
+import { esc, pickLang } from "./easy-template.js";
+
+/**
+ * Textos de interfaz de estas páginas, por idioma. Van aquí y no en data.json
+ * porque solo los usan estas plantillas; data.json es el contenido del sitio.
+ */
+export const UI = {
+  es:  { eyebrow: "proyecto", visitar: "visitar", todos: "← todos los proyectos",
+         indiceTitulo: "proyectos", indiceEyebrow: "estudio de diseño web · barcelona",
+         ctaTexto: "¿quieres una web así? la primera reunión es gratis.", ctaBoton: "escríbeme",
+         asunto: "quiero una web!", detalle: "detalle", disenada: "web diseñada por meowrhino studio, Barcelona",
+         intro: (n) => `${n} webs hechas a medida, desde cero y sin plantillas, para artistas, fotógrafos, músicos y pequeños negocios. cada una cuenta cómo se hizo y por qué acabó siendo así.`,
+         navegar: "seguir navegando" },
+  en:  { eyebrow: "project", visitar: "visit", todos: "← all projects",
+         indiceTitulo: "projects", indiceEyebrow: "web design studio · barcelona",
+         ctaTexto: "want a website like this? the first meeting is free.", ctaBoton: "write to me",
+         asunto: "i want a website!", detalle: "detail", disenada: "website designed by meowrhino studio, Barcelona",
+         intro: (n) => `${n} websites built from scratch, custom-made and without templates, for artists, photographers, musicians and small businesses. each one tells how it was made and why it ended up like this.`,
+         navegar: "keep browsing" },
+  cat: { eyebrow: "projecte", visitar: "visitar", todos: "← tots els projectes",
+         indiceTitulo: "projectes", indiceEyebrow: "estudi de disseny web · barcelona",
+         ctaTexto: "vols una web així? la primera reunió és gratis.", ctaBoton: "escriu-me",
+         asunto: "vull una web!", detalle: "detall", disenada: "web dissenyada per meowrhino studio, Barcelona",
+         intro: (n) => `${n} webs fetes a mida, des de zero i sense plantilles, per a artistes, fotògrafs, músics i petits negocis. cadascuna explica com es va fer i per què va acabar sent així.`,
+         navegar: "seguir navegant" },
+};
 
 /**
  * Convierte el `nombre` de data.json en slug de URL.
@@ -67,46 +92,47 @@ export function dominioDe(url) {
  * nombre del proyecto porque es lo que la gente busca; la keyword va en el
  * <title> y en el primer párrafo, no forzada en el titular.
  */
-export function renderProyectoHTML(proyecto, seo) {
+export function renderProyectoHTML(proyecto, seo, lang = "es", rutas = {}) {
+  const t = UI[lang] || UI.es;
   const imagenes = imagenesDe(proyecto);
   const enlaces = enlacesDe(proyecto);
 
   const galeria = imagenes.map((src, i) => `
-        <img class="proy-img" src="/${esc(src)}" alt="${esc(altDe(proyecto, i))}"
+        <img class="proy-img" src="/${esc(src)}" alt="${esc(altDe(proyecto, i, t))}"
              loading="${i === 0 ? "eager" : "lazy"}" decoding="async">`).join("");
 
   const visitar = enlaces.length
     ? `
       <p class="proy-visitar">
         ${enlaces.map(e =>
-          `<a class="easy-btn" href="${esc(e.url)}" target="_blank" rel="noopener">visitar ${esc(e.nombre)} ↗</a>`
+          `<a class="easy-btn" href="${esc(e.url)}" target="_blank" rel="noopener">${esc(t.visitar)} ${esc(e.nombre)} ↗</a>`
         ).join("\n        ")}
       </p>`
     : "";
 
   return `
     <article class="proy">
-      <p class="easy-eyebrow">proyecto · ${esc(seo.resumen || seo.keyword)}</p>
+      <p class="easy-eyebrow">${esc(t.eyebrow)} · ${esc(pickLang(seo.resumen, lang))}</p>
       <h1 class="proy-title">${esc(proyecto.nombre)}</h1>
-      <p class="proy-texto">${esc(seo.texto)}</p>${visitar}
+      <p class="proy-texto">${esc(pickLang(seo.texto, lang))}</p>${visitar}
       <div class="proy-galeria">${galeria}
       </div>
-      <nav class="proy-pie" aria-label="seguir navegando">
-        <a href="/proyectos">← todos los proyectos</a>
-        <a href="/">meowrhino studio</a>
+      <nav class="proy-pie" aria-label="${esc(t.navegar)}">
+        <a href="${esc(rutas.indice || "/proyectos")}">${esc(t.todos)}</a>
+        <a href="${esc(rutas.home || "/")}">meowrhino studio</a>
       </nav>
       <aside class="proy-cta">
-        <p>¿quieres una web así? la primera reunión es gratis.</p>
-        <a class="easy-btn" href="mailto:hola@meowrhino.studio?subject=quiero%20una%20web!">escríbeme</a>
+        <p>${esc(t.ctaTexto)}</p>
+        <a class="easy-btn" href="mailto:hola@meowrhino.studio?subject=${encodeURIComponent(t.asunto)}">${esc(t.ctaBoton)}</a>
       </aside>
     </article>`;
 }
 
 /** Alt de cada imagen: descriptivo y distinto entre sí, sin repetir keyword. */
-function altDe(proyecto, i) {
+function altDe(proyecto, i, t) {
   return i === 0
-    ? `${proyecto.nombre} — web diseñada por meowrhino studio, Barcelona`
-    : `${proyecto.nombre} — detalle ${i + 1} de la web`;
+    ? `${proyecto.nombre} — ${t.disenada}`
+    : `${proyecto.nombre} — ${t.detalle} ${i + 1}`;
 }
 
 /**
@@ -118,27 +144,27 @@ function altDe(proyecto, i) {
  * suena a catálogo repetido; el resumen habla de ESE proyecto en concreto
  * («un portfolio que es una disquetera»).
  */
-export function renderIndiceHTML(fichas) {
+export function renderIndiceHTML(fichas, lang = "es", rutas = {}) {
+  const t = UI[lang] || UI.es;
+  const base = rutas.base || "/proyectos";
   const items = fichas.map(({ proyecto, seo }) => `
         <li class="proy-card">
-          <a href="/proyectos/${esc(seo.slug)}">
+          <a href="${esc(base)}/${esc(seo.slug)}">
             <img src="/${esc(proyecto.imagen)}" alt="" loading="lazy" decoding="async">
             <span class="proy-card-nombre">${esc(proyecto.nombre)}</span>
-            <span class="proy-card-kw">${esc(seo.resumen || seo.keyword)}</span>
+            <span class="proy-card-kw">${esc(pickLang(seo.resumen, lang))}</span>
           </a>
         </li>`).join("");
 
   return `
     <section class="proy-indice">
-      <p class="easy-eyebrow">estudio de diseño web · barcelona</p>
-      <h1 class="proy-title">proyectos</h1>
-      <p class="proy-texto">${fichas.length} webs hechas a medida, desde cero y sin plantillas,
-      para artistas, fotógrafos, músicos y pequeños negocios. cada una cuenta cómo se
-      hizo y por qué acabó siendo así.</p>
+      <p class="easy-eyebrow">${esc(t.indiceEyebrow)}</p>
+      <h1 class="proy-title">${esc(t.indiceTitulo)}</h1>
+      <p class="proy-texto">${esc(t.intro(fichas.length))}</p>
       <ul class="proy-grid">${items}
       </ul>
-      <nav class="proy-pie" aria-label="seguir navegando">
-        <a href="/">meowrhino studio</a>
+      <nav class="proy-pie" aria-label="${esc(t.navegar)}">
+        <a href="${esc(rutas.home || "/")}">meowrhino studio</a>
       </nav>
     </section>`;
 }

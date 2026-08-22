@@ -1,185 +1,585 @@
 {
-  "_comment": "Copia de las páginas de proyecto (/proyectos/<slug>). Fuente única: build-seo.js lee de aquí. Se unen con data.json.portfolio.proyectos por el campo `nombre`, que debe coincidir EXACTAMENTE; las imágenes y las urls salen de allí, no de aquí. El borrador original con las anécdotas y el porqué de cada keyword vive en textos-proyectos.borrador.md (no se despliega).",
+  "_comment": "Copia de las páginas de proyecto (/proyectos/<slug> y sus variantes /en y /ca). Cada campo es un objeto {es,en,cat}. Fuente única: build-seo.js lee de aquí. Se unen con data.json.portfolio.proyectos por el campo `nombre`, que debe coincidir EXACTAMENTE; las imágenes y las urls salen de allí, no de aquí. El borrador con las anécdotas y el porqué de cada keyword vive en textos-proyectos.borrador.md (no se despliega).",
   "proyectos": [
     {
       "nombre": "rikamichie",
       "slug": "rikamichie",
-      "keyword": "web para músicos barcelona",
-      "title": "una web para una trobadora moderna — rikamichie.com · meowrhino studio",
-      "description": "la web de erika michi, música y directora criada a las faldas de montjuic. diseñada a medida en barcelona, sin plantillas y sin cuotas mensuales.",
-      "texto": "erika michi es trobadora moderna: música, directora y masajista criada a las faldas de montjuic. su web tenía que sonar como ella — no como una plantilla de artista más. la hicimos desde cero, pensando cada sección con ella: su música, sus proyectos y su manera de contar las cosas caben en una sola web que puede actualizar ella misma, sin pagar suscripciones ni depender de nadie. la navegación va en cruz: cada faceta suya en una dirección, y erika en el centro. porque era la única forma de que ninguna de sus facetas quedara por debajo de otra.",
-      "resumen": "una web para una trobadora moderna"
+      "keyword": {
+        "es": "web para músicos barcelona",
+        "en": "website for musicians barcelona",
+        "cat": "web per a músics barcelona"
+      },
+      "title": {
+        "es": "una web para una trobadora moderna — rikamichie.com · meowrhino studio",
+        "en": "a website for a modern troubadour — rikamichie.com · meowrhino studio",
+        "cat": "una web per a una trobadora moderna — rikamichie.com · meowrhino studio"
+      },
+      "description": {
+        "es": "la web de erika michi, música y directora criada a las faldas de montjuic. diseñada a medida en barcelona, sin plantillas y sin cuotas mensuales.",
+        "en": "erika michi's website: musician and director raised on the slopes of montjuïc. custom-built in barcelona, no templates and no monthly fees.",
+        "cat": "la web d'erika michi, música i directora criada a les faldes de montjuïc. dissenyada a mida a barcelona, sense plantilles i sense quotes mensuals."
+      },
+      "resumen": {
+        "es": "una web para una trobadora moderna",
+        "en": "a website for a modern troubadour",
+        "cat": "una web per a una trobadora moderna"
+      },
+      "texto": {
+        "es": "erika michi es trobadora moderna: música, directora y masajista criada a las faldas de montjuic. su web tenía que sonar como ella — no como una plantilla de artista más. la hicimos desde cero, pensando cada sección con ella: su música, sus proyectos y su manera de contar las cosas caben en una sola web que puede actualizar ella misma, sin pagar suscripciones ni depender de nadie. la navegación va en cruz: cada faceta suya en una dirección, y erika en el centro. porque era la única forma de que ninguna de sus facetas quedara por debajo de otra.",
+        "en": "erika michi is a modern troubadour: musician, director and masseuse, raised on the slopes of montjuïc. her website had to sound like her — not like one more artist template. we built it from scratch, thinking through every section with her: her music, her projects and her way of telling things all fit in a single website she can update herself, without paying subscriptions or depending on anyone. the navigation runs crosswise: each side of her in one direction, and erika in the middle. because it was the only way to keep any one of her sides from ending up beneath the others.",
+        "cat": "l'erika michi és trobadora moderna: música, directora i massatgista criada a les faldes de montjuïc. la seva web havia de sonar com ella — no com una plantilla d'artista més. la vam fer des de zero, pensant cada secció amb ella: la seva música, els seus projectes i la seva manera d'explicar les coses caben en una sola web que pot actualitzar ella mateixa, sense pagar subscripcions ni dependre de ningú. la navegació va en creu: cada faceta seva en una direcció, i l'erika al centre. perquè era l'única manera que cap de les seves facetes quedés per sota d'una altra."
+      }
     },
     {
       "nombre": "andrea carilla",
       "slug": "andrea-carilla",
-      "keyword": "web para fotógrafas de moda y editorial barcelona",
-      "title": "una web para fotografía de moda y editorial — andreacarilla.work · meowrhino studio",
-      "description": "el portfolio de andrea carilla, fotógrafa: editorial, moda, look book y producto. la primera web de meowrhino studio, hecha a medida en barcelona.",
-      "texto": "andrea carilla es fotógrafa y se mueve entre registros muy distintos: editorial, fashion story, look book, producto, imagen de artista. su web es una galería con menú nebuloso: cada vez que entras es una página distinta. no hay orden fijo ni foto estrella, porque ninguna de sus fotos es la portada de las demás — el que decide qué mirar primero eres tú, y no hay dos visitas que vean lo mismo. y la suya fue la primera de todas: la primera web que salió de meowrhino studio. gracias andrea, t'estimo. queríamos que el portfolio fuera suyo de verdad, desde la estructura hasta el último detalle visual — hecho desde cero, sin frameworks ni constructores, y andrea aprendió a actualizarlo ella misma en la última reunión del proyecto. y pronto será también la primera tienda online del estudio.",
-      "resumen": "una web para fotografía de moda y editorial"
+      "keyword": {
+        "es": "web para fotógrafas de moda y editorial barcelona",
+        "en": "website for fashion and editorial photographers barcelona",
+        "cat": "web per a fotògrafes de moda i editorial barcelona"
+      },
+      "title": {
+        "es": "una web para fotografía de moda y editorial — andreacarilla.work · meowrhino studio",
+        "en": "a website for fashion and editorial photography — andreacarilla.work · meowrhino studio",
+        "cat": "una web per a fotografia de moda i editorial — andreacarilla.work · meowrhino studio"
+      },
+      "description": {
+        "es": "el portfolio de andrea carilla, fotógrafa: editorial, moda, look book y producto. la primera web de meowrhino studio, hecha a medida en barcelona.",
+        "en": "andrea carilla's portfolio, photographer: editorial, fashion, look book and product. the first website meowrhino studio ever made, custom-built in barcelona.",
+        "cat": "el portfolio de l'andrea carilla, fotògrafa: editorial, moda, look book i producte. la primera web de meowrhino studio, feta a mida a barcelona."
+      },
+      "resumen": {
+        "es": "una web para fotografía de moda y editorial",
+        "en": "a website for fashion and editorial photography",
+        "cat": "una web per a fotografia de moda i editorial"
+      },
+      "texto": {
+        "es": "andrea carilla es fotógrafa y se mueve entre registros muy distintos: editorial, fashion story, look book, producto, imagen de artista. su web es una galería con menú nebuloso: cada vez que entras es una página distinta. no hay orden fijo ni foto estrella, porque ninguna de sus fotos es la portada de las demás — el que decide qué mirar primero eres tú, y no hay dos visitas que vean lo mismo. y la suya fue la primera de todas: la primera web que salió de meowrhino studio. gracias andrea, t'estimo. queríamos que el portfolio fuera suyo de verdad, desde la estructura hasta el último detalle visual — hecho desde cero, sin frameworks ni constructores, y andrea aprendió a actualizarlo ella misma en la última reunión del proyecto. y pronto será también la primera tienda online del estudio.",
+        "en": "andrea carilla is a photographer and she moves between very different registers: editorial, fashion story, look book, product, artist image. her website is a gallery with a hazy menu: every time you come in it's a different page. there's no fixed order and no star photo, because none of her photos is the cover of the others — you're the one who decides what to look at first, and no two visits see the same thing. and hers was the very first: the first website that came out of meowrhino studio. thank you andrea, t'estimo. we wanted the portfolio to be truly hers, from the structure down to the last visual detail — built from scratch, no frameworks and no site builders, and andrea learned to update it herself in the project's last meeting. and soon it'll also be the studio's first online shop.",
+        "cat": "l'andrea carilla és fotògrafa i es mou entre registres molt diferents: editorial, fashion story, look book, producte, imatge d'artista. la seva web és una galeria amb menú nebulós: cada cop que hi entres és una pàgina diferent. no hi ha ordre fix ni foto estrella, perquè cap de les seves fotos és la portada de les altres — qui decideix què mirar primer ets tu, i no hi ha dues visites que vegin el mateix. i la seva va ser la primera de totes: la primera web que va sortir de meowrhino studio. gràcies andrea, t'estimo. volíem que el portfolio fos seu de debò, des de l'estructura fins a l'últim detall visual — fet des de zero, sense frameworks ni constructors, i l'andrea va aprendre a actualitzar-lo ella mateixa a l'última reunió del projecte. i aviat serà també la primera botiga en línia de l'estudi."
+      }
     },
     {
       "nombre": "diego san marcos",
       "slug": "diego-san-marcos",
-      "keyword": "web para músicos y técnicos de sonido",
-      "title": "una web para música y audio inmersivo — diegosanmarcos.com · meowrhino studio",
-      "description": "el portfolio de diego san marcos: música, mezcla y audio inmersivo. una web a medida con reproductor persistente, hecha en barcelona sin plantillas.",
-      "texto": "diego hace música, mezcla y audio inmersivo, y su web necesitaba algo que casi ninguna plantilla resuelve bien: que el sonido no se corte al navegar. montamos un reproductor persistente que sigue sonando mientras te mueves entre proyectos — y que además genera visuales en directo con lo que está sonando. todo dentro de una interfaz con rollito de windows antiguo, ventanas y cuadrados incluidos, que era justo el tono que diego buscaba.",
-      "resumen": "una web para música y audio inmersivo"
+      "keyword": {
+        "es": "web para músicos y técnicos de sonido",
+        "en": "website for musicians and sound engineers",
+        "cat": "web per a músics i tècnics de so"
+      },
+      "title": {
+        "es": "una web para música y audio inmersivo — diegosanmarcos.com · meowrhino studio",
+        "en": "a website for music and immersive audio — diegosanmarcos.com · meowrhino studio",
+        "cat": "una web per a música i àudio immersiu — diegosanmarcos.com · meowrhino studio"
+      },
+      "description": {
+        "es": "el portfolio de diego san marcos: música, mezcla y audio inmersivo. una web a medida con reproductor persistente, hecha en barcelona sin plantillas.",
+        "en": "diego san marcos's portfolio: music, mixing and immersive audio. a custom website with a persistent player, made in barcelona without templates.",
+        "cat": "el portfolio del diego san marcos: música, mescla i àudio immersiu. una web a mida amb reproductor persistent, feta a barcelona sense plantilles."
+      },
+      "resumen": {
+        "es": "una web para música y audio inmersivo",
+        "en": "a website for music and immersive audio",
+        "cat": "una web per a música i àudio immersiu"
+      },
+      "texto": {
+        "es": "diego hace música, mezcla y audio inmersivo, y su web necesitaba algo que casi ninguna plantilla resuelve bien: que el sonido no se corte al navegar. montamos un reproductor persistente que sigue sonando mientras te mueves entre proyectos — y que además genera visuales en directo con lo que está sonando. todo dentro de una interfaz con rollito de windows antiguo, ventanas y cuadrados incluidos, que era justo el tono que diego buscaba.",
+        "en": "diego makes music, mixes and works with immersive audio, and his website needed something almost no template gets right: that the sound doesn't cut out as you navigate. we built a persistent player that keeps playing while you move between projects — and that also generates live visuals from whatever is playing. all inside an interface with an old-windows feel, windows and squares included, which was exactly the tone diego was after.",
+        "cat": "el diego fa música, mescla i àudio immersiu, i la seva web necessitava una cosa que gairebé cap plantilla resol bé: que el so no es talli en navegar. vam muntar un reproductor persistent que segueix sonant mentre et mous entre projectes — i que a més genera visuals en directe amb el que està sonant. tot dins d'una interfície amb aire de windows antic, finestres i quadrats inclosos, que era just el to que el diego buscava."
+      }
     },
     {
       "nombre": "mike bros",
       "slug": "mike-bros",
-      "keyword": "web para diseñadores de portadas de disco",
-      "title": "un portfolio que es una disquetera — mikebros.com · meowrhino studio",
-      "description": "mikesx cd collection: el portfolio de mike, donde cada trabajo es un cd. portadas, merch e imagen para artistas, en una web a medida sin plantillas.",
-      "texto": "mike firma como mikesx y hace portadas, merch e imagen para artistas — belén aguilera, raoul, laskaar, st. pavlo — además de lo suyo propio. su trabajo vive en un formato muy concreto, así que la web adopta ese formato en vez de meterlo en una cuadrícula: cada proyecto es un cd, y el portfolio entero es una disquetera infinita. por mucho scroll que hagas, los discos no se acaban nunca. es el tipo de idea que no encaja en ningún constructor de webs, y por eso está hecha a medida y es fácil de ampliar cada vez que sale un trabajo nuevo.",
-      "resumen": "un portfolio que es una disquetera"
+      "keyword": {
+        "es": "web para diseñadores de portadas de disco",
+        "en": "website for album cover designers",
+        "cat": "web per a dissenyadors de portades de disc"
+      },
+      "title": {
+        "es": "un portfolio que es una disquetera — mikebros.com · meowrhino studio",
+        "en": "a portfolio that is a cd rack — mikebros.com · meowrhino studio",
+        "cat": "un portfolio que és una discotecària — mikebros.com · meowrhino studio"
+      },
+      "description": {
+        "es": "mikesx cd collection: el portfolio de mike, donde cada trabajo es un cd. portadas, merch e imagen para artistas, en una web a medida sin plantillas.",
+        "en": "mikesx cd collection: mike's portfolio, where every piece of work is a cd. covers, merch and artist image, in a custom website without templates.",
+        "cat": "mikesx cd collection: el portfolio del mike, on cada feina és un cd. portades, marxandatge i imatge per a artistes, en una web a mida sense plantilles."
+      },
+      "resumen": {
+        "es": "un portfolio que es una disquetera",
+        "en": "a portfolio that is a cd rack",
+        "cat": "un portfolio que és una discotecària"
+      },
+      "texto": {
+        "es": "mike firma como mikesx y hace portadas, merch e imagen para artistas — belén aguilera, raoul, laskaar, st. pavlo — además de lo suyo propio. su trabajo vive en un formato muy concreto, así que la web adopta ese formato en vez de meterlo en una cuadrícula: cada proyecto es un cd, y el portfolio entero es una disquetera infinita. por mucho scroll que hagas, los discos no se acaban nunca. es el tipo de idea que no encaja en ningún constructor de webs, y por eso está hecha a medida y es fácil de ampliar cada vez que sale un trabajo nuevo.",
+        "en": "mike signs as mikesx and makes covers, merch and artist image — belén aguilera, raoul, laskaar, st. pavlo — as well as his own work. his work lives in a very specific format, so the website takes on that format instead of stuffing it into a grid: every project is a cd, and the whole portfolio is an endless cd rack. no matter how much you scroll, the discs never run out. it's the kind of idea that doesn't fit any site builder, which is why it's custom-made and easy to extend every time new work comes out.",
+        "cat": "el mike signa com a mikesx i fa portades, marxandatge i imatge per a artistes — belén aguilera, raoul, laskaar, st. pavlo — a més del seu projecte propi. la seva feina viu en un format molt concret, així que la web adopta aquest format en comptes de ficar-lo en una quadrícula: cada projecte és un cd, i el portfolio sencer és una discotecària infinita. per molt scroll que facis, els discos no s'acaben mai. és el tipus d'idea que no encaixa en cap constructor de webs, i per això està feta a mida i és fàcil d'ampliar cada cop que surt una feina nova."
+      }
     },
     {
       "nombre": "miranda",
       "slug": "miranda",
-      "keyword": "web para diseñadoras gráficas barcelona",
-      "title": "una web para diseño editorial — mirandaperezhita.com · meowrhino studio",
-      "description": "el portfolio de miranda pérez-hita, diseñadora gráfica en barcelona: editorial, fanzines y proyectos culturales. web a medida, sin plantillas.",
-      "texto": "miranda es diseñadora gráfica: editorial, publicaciones, fanzines y proyectos culturales. cuando la clienta también diseña, la vara está alta — la web tenía que estar a la altura de su criterio y a la vez ser suya, no nuestra. trabajamos la retícula y el ritmo de las imágenes con el mismo cuidado que ella pone en sus publicaciones. la mejor devolución nos la dio ella: dice que la web parece hecha de papel. viniendo de alguien que trabaja el papel de verdad, no hay mejor piropo.",
-      "resumen": "una web para diseño editorial"
+      "keyword": {
+        "es": "web para diseñadoras gráficas barcelona",
+        "en": "website for graphic designers barcelona",
+        "cat": "web per a dissenyadores gràfiques barcelona"
+      },
+      "title": {
+        "es": "una web para diseño editorial — mirandaperezhita.com · meowrhino studio",
+        "en": "a website for editorial design — mirandaperezhita.com · meowrhino studio",
+        "cat": "una web per a disseny editorial — mirandaperezhita.com · meowrhino studio"
+      },
+      "description": {
+        "es": "el portfolio de miranda pérez-hita, diseñadora gráfica en barcelona: editorial, fanzines y proyectos culturales. web a medida, sin plantillas.",
+        "en": "miranda pérez-hita's portfolio, graphic designer in barcelona: editorial, fanzines and cultural projects. custom website, no templates.",
+        "cat": "el portfolio de la miranda pérez-hita, dissenyadora gràfica a barcelona: editorial, fanzines i projectes culturals. web a mida, sense plantilles."
+      },
+      "resumen": {
+        "es": "una web para diseño editorial",
+        "en": "a website for editorial design",
+        "cat": "una web per a disseny editorial"
+      },
+      "texto": {
+        "es": "miranda es diseñadora gráfica: editorial, publicaciones, fanzines y proyectos culturales. cuando la clienta también diseña, la vara está alta — la web tenía que estar a la altura de su criterio y a la vez ser suya, no nuestra. trabajamos la retícula y el ritmo de las imágenes con el mismo cuidado que ella pone en sus publicaciones. la mejor devolución nos la dio ella: dice que la web parece hecha de papel. viniendo de alguien que trabaja el papel de verdad, no hay mejor piropo.",
+        "en": "miranda is a graphic designer: editorial, publications, fanzines and cultural projects. when the client is a designer too, the bar is high — the website had to live up to her eye and at the same time be hers, not ours. we worked the grid and the rhythm of the images with the same care she puts into her publications. the best feedback came from her: she says the website looks like it's made of paper. coming from someone who works with paper for real, there's no better compliment.",
+        "cat": "la miranda és dissenyadora gràfica: editorial, publicacions, fanzines i projectes culturals. quan la clienta també dissenya, el llistó és alt — la web havia d'estar a l'altura del seu criteri i alhora ser seva, no nostra. vam treballar la retícula i el ritme de les imatges amb la mateixa cura que ella posa a les seves publicacions. el millor retorn ens el va donar ella: diu que la web sembla feta de paper. venint d'algú que treballa el paper de debò, no hi ha millor afalac."
+      }
     },
     {
       "nombre": "noan cittadino",
       "slug": "noan-cittadino",
-      "keyword": "web para compositores y sound designers",
-      "title": "una web para game audio — noancittadino.com · meowrhino studio",
-      "description": "la web de noan cittadino, compositor y sound designer de videojuegos (fmod, wwise). portfolio a medida hecho en barcelona, sin cuotas mensuales.",
-      "texto": "noan compone música y diseña sonido para videojuegos: sistemas de música dinámica, fmod, wwise. su portfolio tenía que hablar dos idiomas a la vez — el de los estudios de videojuegos que buscan un perfil técnico y el de quien solo quiere escuchar su trabajo. lo resolvimos por lo sencillo y lo tierno: un pequeño escritorio donde cada cosa que tocas suena, con soniditos hechos por el propio noan. el portfolio de un sound designer que suena, en vez de contarte que suena.",
-      "resumen": "una web para game audio"
+      "keyword": {
+        "es": "web para compositores y sound designers",
+        "en": "website for composers and sound designers",
+        "cat": "web per a compositors i dissenyadors de so"
+      },
+      "title": {
+        "es": "una web para game audio — noancittadino.com · meowrhino studio",
+        "en": "a website for game audio — noancittadino.com · meowrhino studio",
+        "cat": "una web per a game audio — noancittadino.com · meowrhino studio"
+      },
+      "description": {
+        "es": "la web de noan cittadino, compositor y sound designer de videojuegos (fmod, wwise). portfolio a medida hecho en barcelona, sin cuotas mensuales.",
+        "en": "noan cittadino's website, composer and sound designer for video games (fmod, wwise). custom portfolio made in barcelona, no monthly fees.",
+        "cat": "la web del noan cittadino, compositor i dissenyador de so de videojocs (fmod, wwise). portfolio a mida fet a barcelona, sense quotes mensuals."
+      },
+      "resumen": {
+        "es": "una web para game audio",
+        "en": "a website for game audio",
+        "cat": "una web per a game audio"
+      },
+      "texto": {
+        "es": "noan compone música y diseña sonido para videojuegos: sistemas de música dinámica, fmod, wwise. su portfolio tenía que hablar dos idiomas a la vez — el de los estudios de videojuegos que buscan un perfil técnico y el de quien solo quiere escuchar su trabajo. lo resolvimos por lo sencillo y lo tierno: un pequeño escritorio donde cada cosa que tocas suena, con soniditos hechos por el propio noan. el portfolio de un sound designer que suena, en vez de contarte que suena.",
+        "en": "noan composes music and designs sound for video games: dynamic music systems, fmod, wwise. his portfolio had to speak two languages at once — that of game studios looking for a technical profile, and that of anyone who just wants to hear his work. we solved it through the simple and the tender: a small desktop where everything you touch makes a sound, with little sounds made by noan himself. the portfolio of a sound designer that sounds, instead of telling you that it sounds.",
+        "cat": "el noan compon música i dissenya so per a videojocs: sistemes de música dinàmica, fmod, wwise. el seu portfolio havia de parlar dos idiomes alhora — el dels estudis de videojocs que busquen un perfil tècnic i el de qui només vol escoltar la seva feina. ho vam resoldre per la banda senzilla i tendra: un escriptori petit on cada cosa que toques sona, amb sonets fets pel mateix noan. el portfolio d'un sound designer que sona, en comptes d'explicar-te que sona."
+      }
     },
     {
       "nombre": "930blurberrie",
       "slug": "930blurberrie",
-      "keyword": "web para ilustradoras",
-      "title": "una web para ilustración y animación — 930blurberrie.com · meowrhino studio",
-      "description": "blurberrie, el universo de irene búrdalo: ilustración y animación en una web a medida que explora lo humano. hecha en barcelona, sin plantillas.",
-      "texto": "irene explora lo humano a través de la ilustración y la animación, y firma como blurberrie. su web es más universo que portfolio: un sitio donde el dibujo manda y la interfaz acompaña sin hacer ruido. las plantillas de portfolio aplastan trabajos así; por eso la hicimos desde cero. y escondido dentro hay un minijuego, otra de esas cosas que ningún constructor de webs te va a dar.",
-      "resumen": "una web para ilustración y animación"
+      "keyword": {
+        "es": "web para ilustradoras",
+        "en": "website for illustrators",
+        "cat": "web per a il·lustradores"
+      },
+      "title": {
+        "es": "una web para ilustración y animación — 930blurberrie.com · meowrhino studio",
+        "en": "a website for illustration and animation — 930blurberrie.com · meowrhino studio",
+        "cat": "una web per a il·lustració i animació — 930blurberrie.com · meowrhino studio"
+      },
+      "description": {
+        "es": "blurberrie, el universo de irene búrdalo: ilustración y animación en una web a medida que explora lo humano. hecha en barcelona, sin plantillas.",
+        "en": "blurberrie, irene búrdalo's universe: illustration and animation in a custom website that explores what it is to be human. made in barcelona, no templates.",
+        "cat": "blurberrie, l'univers de la irene búrdalo: il·lustració i animació en una web a mida que explora allò humà. feta a barcelona, sense plantilles."
+      },
+      "resumen": {
+        "es": "una web para ilustración y animación",
+        "en": "a website for illustration and animation",
+        "cat": "una web per a il·lustració i animació"
+      },
+      "texto": {
+        "es": "irene explora lo humano a través de la ilustración y la animación, y firma como blurberrie. su web es más universo que portfolio: un sitio donde el dibujo manda y la interfaz acompaña sin hacer ruido. las plantillas de portfolio aplastan trabajos así; por eso la hicimos desde cero. y escondido dentro hay un minijuego, otra de esas cosas que ningún constructor de webs te va a dar.",
+        "en": "irene explores what it is to be human through illustration and animation, and signs as blurberrie. her website is more universe than portfolio: a place where the drawing leads and the interface follows without making noise. portfolio templates flatten work like this; that's why we built it from scratch. and hidden inside there's a mini-game, another one of those things no site builder is ever going to give you.",
+        "cat": "la irene explora allò humà a través de la il·lustració i l'animació, i signa com a blurberrie. la seva web és més univers que portfolio: un lloc on el dibuix mana i la interfície acompanya sense fer soroll. les plantilles de portfolio aixafen feines així; per això la vam fer des de zero. i amagat a dins hi ha un minijoc, una altra d'aquelles coses que cap constructor de webs et donarà."
+      }
     },
     {
       "nombre": "barbara wong",
       "slug": "barbara-wong",
-      "keyword": "web para artistas visuales",
-      "title": "una web para cine analógico y performance — barbarawong.info · meowrhino studio",
-      "description": "la web de bárbara s. barroso: cine analógico, vídeo-instalación, performance y escritura ecofeminista. obra, noticias y diario en una web a medida.",
-      "texto": "bárbara trabaja con cine analógico, vídeo-instalación, performance y escritura desde una perspectiva ecofeminista. su web reúne obra, noticias y un diario — tres ritmos de publicación distintos en una sola casa. la montamos para que ella la alimente sin tocar código: edita unos archivos de texto y la web se reorganiza sola. son muchos años de trabajo, y con ese volumen la tentación es apretarlo todo. hicimos lo contrario: una web muy clean, con aire, para que cada pieza se vea sola.",
-      "resumen": "una web para cine analógico y performance"
+      "keyword": {
+        "es": "web para artistas visuales",
+        "en": "website for visual artists",
+        "cat": "web per a artistes visuals"
+      },
+      "title": {
+        "es": "una web para cine analógico y performance — barbarawong.info · meowrhino studio",
+        "en": "a website for analogue film and performance — barbarawong.info · meowrhino studio",
+        "cat": "una web per a cinema analògic i performance — barbarawong.info · meowrhino studio"
+      },
+      "description": {
+        "es": "la web de bárbara s. barroso: cine analógico, vídeo-instalación, performance y escritura ecofeminista. obra, noticias y diario en una web a medida.",
+        "en": "bárbara s. barroso's website: analogue film, video installation, performance and ecofeminist writing. work, news and a diary in one custom website.",
+        "cat": "la web de la bárbara s. barroso: cinema analògic, videoinstal·lació, performance i escriptura ecofeminista. obra, notícies i diari en una web a mida."
+      },
+      "resumen": {
+        "es": "una web para cine analógico y performance",
+        "en": "a website for analogue film and performance",
+        "cat": "una web per a cinema analògic i performance"
+      },
+      "texto": {
+        "es": "bárbara trabaja con cine analógico, vídeo-instalación, performance y escritura desde una perspectiva ecofeminista. su web reúne obra, noticias y un diario — tres ritmos de publicación distintos en una sola casa. la montamos para que ella la alimente sin tocar código: edita unos archivos de texto y la web se reorganiza sola. son muchos años de trabajo, y con ese volumen la tentación es apretarlo todo. hicimos lo contrario: una web muy clean, con aire, para que cada pieza se vea sola.",
+        "en": "bárbara works with analogue film, video installation, performance and writing from an ecofeminist perspective. her website brings together work, news and a diary — three different publishing rhythms under one roof. we built it so she can feed it without touching code: she edits a few text files and the website reorganises itself. it's many years of work, and with that much material the temptation is to cram it all in. we did the opposite: a very clean website, with air, so each piece can be seen on its own.",
+        "cat": "la bárbara treballa amb cinema analògic, videoinstal·lació, performance i escriptura des d'una perspectiva ecofeminista. la seva web reuneix obra, notícies i un diari — tres ritmes de publicació diferents en una sola casa. la vam muntar perquè ella la pugui alimentar sense tocar codi: edita uns fitxers de text i la web es reorganitza sola. són molts anys de feina, i amb aquest volum la temptació és estrènyer-ho tot. vam fer el contrari: una web molt neta, amb aire, perquè cada peça es vegi sola."
+      }
     },
     {
       "nombre": "mokakopaTwins",
       "slug": "mokakopa-twins",
-      "keyword": "webs para pintoras / artistas plásticas",
-      "title": "dos webs gemelas para dos pintoras — analopezserrano.com y mokakopa.com · meowrhino studio",
-      "description": "dos artistas, dos webs hermanas: ana lópez (grabado, óleo, acuarela) y monica kopatschek (pintura figurativa). diseñadas a la vez, a medida, en barcelona.",
-      "texto": "un encargo doble: ana lópez investiga la imagen desde el grabado al aguafuerte, el óleo y la acuarela; monica kopatschek pinta figuración donde se cruzan poder, intimidad y ficción. hicimos dos webs gemelas — misma estructura, personalidad distinta — para que cada obra respire sola sin perder el aire de familia. son dos webs espejo: se miran la una a la otra. lo bonito de un encargo así es que la decisión de diseño la tomas dos veces, y las dos tienen que ser la correcta.",
-      "resumen": "dos webs gemelas para dos pintoras"
+      "keyword": {
+        "es": "webs para pintoras / artistas plásticas",
+        "en": "websites for painters and visual artists",
+        "cat": "webs per a pintores i artistes plàstiques"
+      },
+      "title": {
+        "es": "dos webs gemelas para dos pintoras — analopezserrano.com y mokakopa.com · meowrhino studio",
+        "en": "two twin websites for two painters — analopezserrano.com and mokakopa.com · meowrhino studio",
+        "cat": "dues webs bessones per a dues pintores — analopezserrano.com i mokakopa.com · meowrhino studio"
+      },
+      "description": {
+        "es": "dos artistas, dos webs hermanas: ana lópez (grabado, óleo, acuarela) y monica kopatschek (pintura figurativa). diseñadas a la vez, a medida, en barcelona.",
+        "en": "two artists, two sister websites: ana lópez (printmaking, oil, watercolour) and monica kopatschek (figurative painting). designed together, custom-made, in barcelona.",
+        "cat": "dues artistes, dues webs germanes: ana lópez (gravat, oli, aquarel·la) i monica kopatschek (pintura figurativa). dissenyades alhora, a mida, a barcelona."
+      },
+      "resumen": {
+        "es": "dos webs gemelas para dos pintoras",
+        "en": "two twin websites for two painters",
+        "cat": "dues webs bessones per a dues pintores"
+      },
+      "texto": {
+        "es": "un encargo doble: ana lópez investiga la imagen desde el grabado al aguafuerte, el óleo y la acuarela; monica kopatschek pinta figuración donde se cruzan poder, intimidad y ficción. hicimos dos webs gemelas — misma estructura, personalidad distinta — para que cada obra respire sola sin perder el aire de familia. son dos webs espejo: se miran la una a la otra. lo bonito de un encargo así es que la decisión de diseño la tomas dos veces, y las dos tienen que ser la correcta.",
+        "en": "a double commission: ana lópez investigates the image from printmaking and etching through to oil and watercolour; monica kopatschek paints figuration where power, intimacy and fiction cross. we made two twin websites — same structure, different personality — so each body of work could breathe on its own without losing the family resemblance. they're two mirror websites: they look at each other. the lovely thing about a commission like this is that you make every design decision twice, and both times it has to be the right one.",
+        "cat": "un encàrrec doble: l'ana lópez investiga la imatge des del gravat a l'aiguafort, l'oli i l'aquarel·la; la monica kopatschek pinta figuració on es creuen poder, intimitat i ficció. vam fer dues webs bessones — mateixa estructura, personalitat diferent — perquè cada obra respirés sola sense perdre l'aire de família. són dues webs mirall: es miren l'una a l'altra. el bonic d'un encàrrec així és que la decisió de disseny la prens dues vegades, i totes dues han de ser la correcta."
+      }
     },
     {
       "nombre": "vicios torpes",
       "slug": "vicios-torpes",
-      "keyword": "web para tatuadores barcelona",
-      "title": "una web para un estudio de tatuaje — viciostorpes.com · meowrhino studio",
-      "description": "vicios torpes: flashbook, tatuajes y contacto de marc en una web a medida. diseño web para tatuadores en barcelona, sin plantillas ni cuotas.",
-      "texto": "marc necesitaba tres cosas: enseñar su flashbook, enseñar tatuajes curados y que le puedas escribir sin fricción. su web hace exactamente eso, con una estética que es suya y no la de una plantilla de estudio de tatuaje. las imágenes se despliegan en páginas enormes, para que el flash se vea al tamaño que merece, y para la cita hay un formulario directo. cuando dibuja flash nuevo, lo sube él mismo.",
-      "resumen": "una web para un estudio de tatuaje"
+      "keyword": {
+        "es": "web para tatuadores barcelona",
+        "en": "website for tattoo artists barcelona",
+        "cat": "web per a tatuadors barcelona"
+      },
+      "title": {
+        "es": "una web para un estudio de tatuaje — viciostorpes.com · meowrhino studio",
+        "en": "a website for a tattoo studio — viciostorpes.com · meowrhino studio",
+        "cat": "una web per a un estudi de tatuatge — viciostorpes.com · meowrhino studio"
+      },
+      "description": {
+        "es": "vicios torpes: flashbook, tatuajes y contacto de marc en una web a medida. diseño web para tatuadores en barcelona, sin plantillas ni cuotas.",
+        "en": "vicios torpes: marc's flashbook, tattoos and contact in a custom website. web design for tattoo artists in barcelona, no templates and no fees.",
+        "cat": "vicios torpes: flashbook, tatuatges i contacte del marc en una web a mida. disseny web per a tatuadors a barcelona, sense plantilles ni quotes."
+      },
+      "resumen": {
+        "es": "una web para un estudio de tatuaje",
+        "en": "a website for a tattoo studio",
+        "cat": "una web per a un estudi de tatuatge"
+      },
+      "texto": {
+        "es": "marc necesitaba tres cosas: enseñar su flashbook, enseñar tatuajes curados y que le puedas escribir sin fricción. su web hace exactamente eso, con una estética que es suya y no la de una plantilla de estudio de tatuaje. las imágenes se despliegan en páginas enormes, para que el flash se vea al tamaño que merece, y para la cita hay un formulario directo. cuando dibuja flash nuevo, lo sube él mismo.",
+        "en": "marc needed three things: to show his flashbook, to show curated tattoos, and for you to be able to write to him without friction. his website does exactly that, with a look that's his and not that of a tattoo studio template. the images unfold across enormous pages, so the flash is seen at the size it deserves, and for booking there's a direct form. when he draws new flash, he uploads it himself.",
+        "cat": "el marc necessitava tres coses: ensenyar el seu flashbook, ensenyar tatuatges curats i que li puguis escriure sense fricció. la seva web fa exactament això, amb una estètica que és seva i no la d'una plantilla d'estudi de tatuatge. les imatges es despleguen en pàgines enormes, perquè el flash es vegi a la mida que mereix, i per a la cita hi ha un formulari directe. quan dibuixa flash nou, el puja ell mateix."
+      }
     },
     {
       "nombre": "valentin",
       "slug": "valentin",
-      "keyword": "web minimalista para fotógrafos y creativos",
-      "title": "una web elegante y mínima para un creativo europeo — valentinbarrio.com · meowrhino studio",
-      "description": "el portfolio de valentin barrio, creative based in europe. una web mínima y elegante donde no hay nada que no sea la imagen. hecha a medida, sin plantillas.",
-      "texto": "valentin no se presenta como fotógrafo de una ciudad: se presenta como creative based in europe, y la web tenía que sostener esa ambición sin ponerse solemne. en una web así todo compite contra la imagen, así que quitamos todo lo demás. su home es su nombre y una lista de trece palabras — ni menú, ni bio, ni introducción. aguantar ese vacío cuesta más que llenarlo, y es exactamente lo que la hace elegante: la interfaz aparece cuando la necesitas y desaparece cuando no. él gestiona sus proyectos editando un archivo de datos, sin tocar el código.",
-      "resumen": "una web elegante y mínima para un creativo europeo"
+      "keyword": {
+        "es": "web minimalista para fotógrafos y creativos",
+        "en": "minimal website for photographers and creatives",
+        "cat": "web minimalista per a fotògrafs i creatius"
+      },
+      "title": {
+        "es": "una web elegante y mínima para un creativo europeo — valentinbarrio.com · meowrhino studio",
+        "en": "an elegant, minimal website for a european creative — valentinbarrio.com · meowrhino studio",
+        "cat": "una web elegant i mínima per a un creatiu europeu — valentinbarrio.com · meowrhino studio"
+      },
+      "description": {
+        "es": "el portfolio de valentin barrio, creative based in europe. una web mínima y elegante donde no hay nada que no sea la imagen. hecha a medida, sin plantillas.",
+        "en": "valentin barrio's portfolio, creative based in europe. a minimal, elegant website where there's nothing that isn't the image. custom-made, no templates.",
+        "cat": "el portfolio del valentin barrio, creative based in europe. una web mínima i elegant on no hi ha res que no sigui la imatge. feta a mida, sense plantilles."
+      },
+      "resumen": {
+        "es": "una web elegante y mínima para un creativo europeo",
+        "en": "an elegant, minimal website for a european creative",
+        "cat": "una web elegant i mínima per a un creatiu europeu"
+      },
+      "texto": {
+        "es": "valentin no se presenta como fotógrafo de una ciudad: se presenta como creative based in europe, y la web tenía que sostener esa ambición sin ponerse solemne. en una web así todo compite contra la imagen, así que quitamos todo lo demás. su home es su nombre y una lista de trece palabras — ni menú, ni bio, ni introducción. aguantar ese vacío cuesta más que llenarlo, y es exactamente lo que la hace elegante: la interfaz aparece cuando la necesitas y desaparece cuando no. él gestiona sus proyectos editando un archivo de datos, sin tocar el código.",
+        "en": "valentin doesn't introduce himself as a photographer from a city: he introduces himself as a creative based in europe, and the website had to hold up that ambition without getting solemn. in a website like this everything competes against the image, so we took everything else away. his home page is his name and a list of thirteen words — no menu, no bio, no introduction. holding that emptiness costs more than filling it, and it's exactly what makes it elegant: the interface shows up when you need it and disappears when you don't. he manages his projects by editing a data file, without touching the code.",
+        "cat": "el valentin no es presenta com a fotògraf d'una ciutat: es presenta com a creative based in europe, i la web havia de sostenir aquesta ambició sense posar-se solemne. en una web així tot competeix contra la imatge, així que vam treure tota la resta. la seva home és el seu nom i una llista de tretze paraules — ni menú, ni bio, ni introducció. aguantar aquest buit costa més que omplir-lo, i és exactament el que la fa elegant: la interfície apareix quan la necessites i desapareix quan no. ell gestiona els seus projectes editant un fitxer de dades, sense tocar el codi."
+      }
     },
     {
       "nombre": "conor",
       "slug": "conor",
-      "keyword": "web para fotógrafos con archivo privado (zona protegida por contraseña)",
-      "title": "una web de fotografía con archivo privado — conorashlee.com · meowrhino studio",
-      "description": "la web de conor ashlee-purle, fotógrafo: obra, encargos y un archivo familiar protegido por contraseña. hecha a medida en barcelona, en inglés.",
-      "texto": "conor ashlee-purle es fotógrafo. su web abre con una frase que ya dice mucho: \"you can hug them, heavens know they need it\". ese tono — raro, tierno, personal — es imposible de meter en una plantilla. fue la primera web que hicimos íntegramente en inglés, y salió un rinconcito escrito a mano: pequeño, cuidado, sin una sola pieza prefabricada — hasta los botones son dibujos suyos, no tipografía. y tiene algo que casi ningún portfolio resuelve: un archivo familiar detrás de contraseña, para las fotos que quiere guardar sin publicar.",
-      "resumen": "una web de fotografía con archivo privado"
+      "keyword": {
+        "es": "web para fotógrafos con archivo privado (zona protegida por contraseña)",
+        "en": "website for photographers with a private archive",
+        "cat": "web per a fotògrafs amb arxiu privat"
+      },
+      "title": {
+        "es": "una web de fotografía con archivo privado — conorashlee.com · meowrhino studio",
+        "en": "a photography website with a private archive — conorashlee.com · meowrhino studio",
+        "cat": "una web de fotografia amb arxiu privat — conorashlee.com · meowrhino studio"
+      },
+      "description": {
+        "es": "la web de conor ashlee-purle, fotógrafo: obra, encargos y un archivo familiar protegido por contraseña. hecha a medida en barcelona, en inglés.",
+        "en": "conor ashlee-purle's website, photographer: work, commissions and a family archive behind a password. custom-made in barcelona, in english.",
+        "cat": "la web del conor ashlee-purle, fotògraf: obra, encàrrecs i un arxiu familiar protegit amb contrasenya. feta a mida a barcelona, en anglès."
+      },
+      "resumen": {
+        "es": "una web de fotografía con archivo privado",
+        "en": "a photography website with a private archive",
+        "cat": "una web de fotografia amb arxiu privat"
+      },
+      "texto": {
+        "es": "conor ashlee-purle es fotógrafo. su web abre con una frase que ya dice mucho: \"you can hug them, heavens know they need it\". ese tono — raro, tierno, personal — es imposible de meter en una plantilla. fue la primera web que hicimos íntegramente en inglés, y salió un rinconcito escrito a mano: pequeño, cuidado, sin una sola pieza prefabricada — hasta los botones son dibujos suyos, no tipografía. y tiene algo que casi ningún portfolio resuelve: un archivo familiar detrás de contraseña, para las fotos que quiere guardar sin publicar.",
+        "en": "conor ashlee-purle is a photographer. his website opens with a line that already says a lot: \"you can hug them, heavens know they need it\". that tone — odd, tender, personal — is impossible to fit into a template. it was the first website we made entirely in english, and what came out was a little handwritten corner: small, careful, without a single prefabricated piece — even the buttons are his drawings, not type. and it has something almost no portfolio solves: a family archive behind a password, for the photos he wants to keep without publishing.",
+        "cat": "el conor ashlee-purle és fotògraf. la seva web obre amb una frase que ja diu molt: \"you can hug them, heavens know they need it\". aquest to — rar, tendre, personal — és impossible de ficar en una plantilla. va ser la primera web que vam fer íntegrament en anglès, i en va sortir un raconet escrit a mà: petit, cuidat, sense ni una peça prefabricada — fins i tot els botons són dibuixos seus, no tipografia. i té una cosa que gairebé cap portfolio resol: un arxiu familiar darrere una contrasenya, per a les fotos que vol guardar sense publicar."
+      }
     },
     {
       "nombre": "maxito",
       "slug": "maxito",
-      "keyword": "web para artistas de performance",
-      "title": "una web entre el arte y la vida — maxazemar.com · meowrhino studio",
-      "description": "el portfolio de max azemar: proyectos de arte, investigación y prácticas performativas. una web a medida hecha en barcelona.",
-      "texto": "max se mueve entre el arte y la vida: proyectos, investigación y prácticas performativas que no siempre caben en el formato \"obra + título + año\". su web está pensada para ese desborde — documenta procesos, no solo resultados. la montamos como si fuera un ppt, diapositiva a diapositiva, y la llenamos de easter eggs. la primera vez la lees en cinco minutos; la segunda encuentras cosas que no estaban.",
-      "resumen": "una web entre el arte y la vida"
+      "keyword": {
+        "es": "web para artistas de performance",
+        "en": "website for performance artists",
+        "cat": "web per a artistes de performance"
+      },
+      "title": {
+        "es": "una web entre el arte y la vida — maxazemar.com · meowrhino studio",
+        "en": "a website between art and life — maxazemar.com · meowrhino studio",
+        "cat": "una web entre l'art i la vida — maxazemar.com · meowrhino studio"
+      },
+      "description": {
+        "es": "el portfolio de max azemar: proyectos de arte, investigación y prácticas performativas. una web a medida hecha en barcelona.",
+        "en": "max azemar's portfolio: art projects, research and performative practices. a custom website made in barcelona.",
+        "cat": "el portfolio del max azemar: projectes d'art, recerca i pràctiques performatives. una web a mida feta a barcelona."
+      },
+      "resumen": {
+        "es": "una web entre el arte y la vida",
+        "en": "a website between art and life",
+        "cat": "una web entre l'art i la vida"
+      },
+      "texto": {
+        "es": "max se mueve entre el arte y la vida: proyectos, investigación y prácticas performativas que no siempre caben en el formato \"obra + título + año\". su web está pensada para ese desborde — documenta procesos, no solo resultados. la montamos como si fuera un ppt, diapositiva a diapositiva, y la llenamos de easter eggs. la primera vez la lees en cinco minutos; la segunda encuentras cosas que no estaban.",
+        "en": "max moves between art and life: projects, research and performative practices that don't always fit the \"work + title + year\" format. his website is built for that overflow — it documents processes, not just results. we made it as if it were a slide deck, slide by slide, and filled it with easter eggs. the first time you read it in five minutes; the second you find things that weren't there.",
+        "cat": "el max es mou entre l'art i la vida: projectes, recerca i pràctiques performatives que no sempre caben en el format \"obra + títol + any\". la seva web està pensada per a aquest desbordament — documenta processos, no només resultats. la vam muntar com si fos un ppt, diapositiva a diapositiva, i la vam omplir d'easter eggs. el primer cop la llegeixes en cinc minuts; el segon hi trobes coses que no hi eren."
+      }
     },
     {
       "nombre": "jaume clotet",
       "slug": "jaume-clotet",
-      "keyword": "web para artistas multidisciplinares",
-      "title": "una web-mundo para jaume clotet — jaumeclotet.com · meowrhino studio",
-      "description": "alusinasons, cantautot, new ywork, difàcil… el universo de jaume clotet en una web a medida hecha en barcelona, sin plantillas.",
-      "texto": "jaume tiene proyectos con nombres como alusinasons, cantautot o vampirtistes — un universo propio que pedía una web-mundo, no un portfolio de casillas. cada proyecto tiene su espacio y su navegación, y el conjunto se recorre más como se explora un disco que como se lee un cv. jaume eligió seis proyectos, ni uno más, y la web está montada para que se recorran los seis: cuando los has visto todos, aparece un fantasma. no lo anuncia nada — o la recorres entera o no te enteras de que está ahí. eso no sale de ningún constructor de webs; sale de una conversación con jaume.",
-      "resumen": "una web-mundo para jaume clotet"
+      "keyword": {
+        "es": "web para artistas multidisciplinares",
+        "en": "website for multidisciplinary artists",
+        "cat": "web per a artistes multidisciplinaris"
+      },
+      "title": {
+        "es": "una web-mundo para jaume clotet — jaumeclotet.com · meowrhino studio",
+        "en": "a world-website for jaume clotet — jaumeclotet.com · meowrhino studio",
+        "cat": "una web-món per al jaume clotet — jaumeclotet.com · meowrhino studio"
+      },
+      "description": {
+        "es": "alusinasons, cantautot, new ywork, difàcil… el universo de jaume clotet en una web a medida hecha en barcelona, sin plantillas.",
+        "en": "alusinasons, cantautot, new ywork, difàcil… jaume clotet's universe in a custom website made in barcelona, no templates.",
+        "cat": "alusinasons, cantautot, new ywork, difàcil… l'univers del jaume clotet en una web a mida feta a barcelona, sense plantilles."
+      },
+      "resumen": {
+        "es": "una web-mundo para jaume clotet",
+        "en": "a world-website for jaume clotet",
+        "cat": "una web-món per al jaume clotet"
+      },
+      "texto": {
+        "es": "jaume tiene proyectos con nombres como alusinasons, cantautot o vampirtistes — un universo propio que pedía una web-mundo, no un portfolio de casillas. cada proyecto tiene su espacio y su navegación, y el conjunto se recorre más como se explora un disco que como se lee un cv. jaume eligió seis proyectos, ni uno más, y la web está montada para que se recorran los seis: cuando los has visto todos, aparece un fantasma. no lo anuncia nada — o la recorres entera o no te enteras de que está ahí. eso no sale de ningún constructor de webs; sale de una conversación con jaume.",
+        "en": "jaume has projects with names like alusinasons, cantautot or vampirtistes — a universe of his own that called for a world-website, not a portfolio of boxes. every project has its own space and its own navigation, and the whole thing is travelled more like you explore a record than like you read a cv. jaume chose six projects, not one more, and the website is built so that all six get walked through: when you've seen them all, a ghost appears. nothing announces it — either you go through the whole thing or you never find out it's there. that doesn't come out of any site builder; it comes out of a conversation with jaume.",
+        "cat": "el jaume té projectes amb noms com alusinasons, cantautot o vampirtistes — un univers propi que demanava una web-món, no un portfolio de caselles. cada projecte té el seu espai i la seva navegació, i el conjunt es recorre més com s'explora un disc que no pas com es llegeix un cv. el jaume va triar sis projectes, ni un més, i la web està muntada perquè es recorrin els sis: quan els has vist tots, apareix un fantasma. no ho anuncia res — o la recorres sencera o no t'assabentes que hi és. això no surt de cap constructor de webs; surt d'una conversa amb el jaume."
+      }
     },
     {
       "nombre": "berta esteve",
       "slug": "berta-esteve",
-      "keyword": "web para comisarias e investigadoras de arte",
-      "title": "una web para curaduría, expos y jajas — bertaesteve.cat · meowrhino studio",
-      "description": "berta esteve: curadora, investigadora i artista. expos, jajas & internet en una web .cat feta a mida a barcelona.",
-      "texto": "berta es curadora, investigadora y artista, y su bio dice \"expos, jajas & internet\" — con ese briefing, una web seria de cv quedaba descartada. hicimos una web que se toma en serio su trabajo sin tomarse en serio a sí misma, en catalán y con dominio .cat. por dentro es la más compleja que hemos montado: berta produce muchísimo, y todo tenía que caber sin que la navegación se rompiera ni aquello pareciera un archivo muerto.",
-      "resumen": "una web para curaduría, expos y jajas"
+      "keyword": {
+        "es": "web para comisarias e investigadoras de arte",
+        "en": "website for curators and art researchers",
+        "cat": "web per a comissàries i investigadores d'art"
+      },
+      "title": {
+        "es": "una web para curaduría, expos y jajas — bertaesteve.cat · meowrhino studio",
+        "en": "a website for curating, shows and jokes — bertaesteve.cat · meowrhino studio",
+        "cat": "una web per a curadoria, expos i jajas — bertaesteve.cat · meowrhino studio"
+      },
+      "description": {
+        "es": "berta esteve: curadora, investigadora i artista. expos, jajas & internet en una web .cat feta a mida a barcelona.",
+        "en": "berta esteve: curator, researcher and artist. shows, jokes & internet in a .cat website custom-made in barcelona.",
+        "cat": "berta esteve: curadora, investigadora i artista. expos, jajas & internet en una web .cat feta a mida a barcelona."
+      },
+      "resumen": {
+        "es": "una web para curaduría, expos y jajas",
+        "en": "a website for curating, shows and jokes",
+        "cat": "una web per a curadoria, expos i jajas"
+      },
+      "texto": {
+        "es": "berta es curadora, investigadora y artista, y su bio dice \"expos, jajas & internet\" — con ese briefing, una web seria de cv quedaba descartada. hicimos una web que se toma en serio su trabajo sin tomarse en serio a sí misma, en catalán y con dominio .cat. por dentro es la más compleja que hemos montado: berta produce muchísimo, y todo tenía que caber sin que la navegación se rompiera ni aquello pareciera un archivo muerto.",
+        "en": "berta is a curator, researcher and artist, and her bio says \"expos, jajas & internet\" — with that brief, a serious cv website was off the table. we made a website that takes her work seriously without taking itself seriously, in catalan and on a .cat domain. underneath it's the most complex thing we've built: berta produces an enormous amount, and all of it had to fit without the navigation breaking or the whole thing looking like a dead archive.",
+        "cat": "la berta és curadora, investigadora i artista, i la seva bio diu \"expos, jajas & internet\" — amb aquest briefing, una web seriosa de cv quedava descartada. vam fer una web que es pren seriosament la seva feina sense prendre's seriosament a ella mateixa, en català i amb domini .cat. per dins és la més complexa que hem muntat: la berta produeix moltíssim, i tot havia de cabre-hi sense que la navegació es trenqués ni allò semblés un arxiu mort."
+      }
     },
     {
       "nombre": "estructuras3000",
       "slug": "estructuras3000",
-      "keyword": "web para asociaciones y colectivos",
-      "title": "una web para colectivizar materiales — estructuras3000.com · meowrhino studio",
-      "description": "estructuras 3000, associació sense ànim de lucre. una web a medida para un proyecto colectivo, sin cuotas mensuales que pesen en la caja común.",
-      "texto": "estructuras 3000 es una asociación sin ánimo de lucro para la colectivización de materiales. para un proyecto así, que la web no tenga cuotas mensuales no es un eslogan: es presupuesto que se queda en el colectivo. la montamos a medida y les enseñamos a mantenerla, para que no dependa de nadie de fuera. y es un encargo de casa: formo parte del colectivo, así que esta web salió desde dentro.",
-      "resumen": "una web para colectivizar materiales"
+      "keyword": {
+        "es": "web para asociaciones y colectivos",
+        "en": "website for associations and collectives",
+        "cat": "web per a associacions i col·lectius"
+      },
+      "title": {
+        "es": "una web para colectivizar materiales — estructuras3000.com · meowrhino studio",
+        "en": "a website for pooling materials — estructuras3000.com · meowrhino studio",
+        "cat": "una web per a col·lectivitzar materials — estructuras3000.com · meowrhino studio"
+      },
+      "description": {
+        "es": "estructuras 3000, associació sense ànim de lucre. una web a medida para un proyecto colectivo, sin cuotas mensuales que pesen en la caja común.",
+        "en": "estructuras 3000, non-profit association. a custom website for a collective project, with no monthly fees weighing on the common pot.",
+        "cat": "estructuras 3000, associació sense ànim de lucre. una web a mida per a un projecte col·lectiu, sense quotes mensuals que pesin a la caixa comuna."
+      },
+      "resumen": {
+        "es": "una web para colectivizar materiales",
+        "en": "a website for pooling materials",
+        "cat": "una web per a col·lectivitzar materials"
+      },
+      "texto": {
+        "es": "estructuras 3000 es una asociación sin ánimo de lucro para la colectivización de materiales. para un proyecto así, que la web no tenga cuotas mensuales no es un eslogan: es presupuesto que se queda en el colectivo. la montamos a medida y les enseñamos a mantenerla, para que no dependa de nadie de fuera. y es un encargo de casa: formo parte del colectivo, así que esta web salió desde dentro.",
+        "en": "estructuras 3000 is a non-profit association for pooling materials. for a project like this, the website having no monthly fees isn't a slogan: it's budget that stays inside the collective. we built it custom and taught them to maintain it, so it doesn't depend on anyone from outside. and it's a commission from home: i'm part of the collective, so this website came from the inside.",
+        "cat": "estructuras 3000 és una associació sense ànim de lucre per a la col·lectivització de materials. per a un projecte així, que la web no tingui quotes mensuals no és un eslògan: és pressupost que es queda al col·lectiu. la vam muntar a mida i els vam ensenyar a mantenir-la, perquè no depengui de ningú de fora. i és un encàrrec de casa: formo part del col·lectiu, així que aquesta web va sortir des de dins."
+      }
     },
     {
       "nombre": "paula barjau",
       "slug": "paula-barjau",
-      "keyword": "web para maquilladoras y estilistas barcelona",
-      "title": "una web para maquillaje y estilismo — paulabarjau.studio · meowrhino studio",
-      "description": "el portfolio de paula barjau, maquilladora y estilista en barcelona: rigoberta bandini, aitana, moda y videoclip. web a medida, sencilla y profesional.",
-      "texto": "paula barjau es maquilladora y estilista, la maquilladora de las estrellas: rigoberta bandini, aitana, portadas de revista, videoclips. con un curriculum así la tentación es hacer una web que grite, y hicimos justo lo contrario — sencilla y profesional, porque cuando los nombres son esos no hace falta subrayarlos. su trabajo vive en la imagen de otras personas, así que la web es puro escaparate: imagen grande, navegación mínima, su contacto siempre a mano para las producciones que van con prisa, y en catalán, castellano e inglés porque sus encargos llegan en los tres.",
-      "resumen": "una web para maquillaje y estilismo"
+      "keyword": {
+        "es": "web para maquilladoras y estilistas barcelona",
+        "en": "website for makeup artists and stylists barcelona",
+        "cat": "web per a maquilladores i estilistes barcelona"
+      },
+      "title": {
+        "es": "una web para maquillaje y estilismo — paulabarjau.studio · meowrhino studio",
+        "en": "a website for makeup and styling — paulabarjau.studio · meowrhino studio",
+        "cat": "una web per a maquillatge i estilisme — paulabarjau.studio · meowrhino studio"
+      },
+      "description": {
+        "es": "el portfolio de paula barjau, maquilladora y estilista en barcelona: rigoberta bandini, aitana, moda y videoclip. web a medida, sencilla y profesional.",
+        "en": "paula barjau's portfolio, makeup artist and stylist in barcelona: rigoberta bandini, aitana, fashion and music videos. custom website, simple and professional.",
+        "cat": "el portfolio de la paula barjau, maquilladora i estilista a barcelona: rigoberta bandini, aitana, moda i videoclip. web a mida, senzilla i professional."
+      },
+      "resumen": {
+        "es": "una web para maquillaje y estilismo",
+        "en": "a website for makeup and styling",
+        "cat": "una web per a maquillatge i estilisme"
+      },
+      "texto": {
+        "es": "paula barjau es maquilladora y estilista, la maquilladora de las estrellas: rigoberta bandini, aitana, portadas de revista, videoclips. con un curriculum así la tentación es hacer una web que grite, y hicimos justo lo contrario — sencilla y profesional, porque cuando los nombres son esos no hace falta subrayarlos. su trabajo vive en la imagen de otras personas, así que la web es puro escaparate: imagen grande, navegación mínima, su contacto siempre a mano para las producciones que van con prisa, y en catalán, castellano e inglés porque sus encargos llegan en los tres.",
+        "en": "paula barjau is a makeup artist and stylist, the makeup artist to the stars: rigoberta bandini, aitana, magazine covers, music videos. with a cv like that the temptation is to make a website that shouts, and we did exactly the opposite — simple and professional, because when the names are those you don't need to underline them. her work lives on other people's image, so the website is pure shop window: big images, minimal navigation, her contact always within reach for productions in a hurry, and in catalan, spanish and english because her commissions arrive in all three.",
+        "cat": "la paula barjau és maquilladora i estilista, la maquilladora de les estrelles: rigoberta bandini, aitana, portades de revista, videoclips. amb un currículum així la temptació és fer una web que cridi, i vam fer just el contrari — senzilla i professional, perquè quan els noms són aquests no cal subratllar-los. la seva feina viu en la imatge d'altres persones, així que la web és pur aparador: imatge gran, navegació mínima, el seu contacte sempre a mà per a les produccions que van amb pressa, i en català, castellà i anglès perquè els seus encàrrecs arriben en els tres."
+      }
     },
     {
       "nombre": "el mundo de las jordis",
       "slug": "el-mundo-de-las-jordis",
-      "keyword": "red social privada a medida / diario compartido",
-      "title": "un diario a varias manos — el mundo de las jordis · meowrhino studio",
-      "description": "una red social en miniatura para un grupo pequeño: timeline, hashtags y sitios, sin algoritmo ni anuncios. hecha a medida en barcelona.",
-      "texto": "el mundo de las jordis es un diario a varias manos: una ventanita a su mundo. por fuera tiene lo que tiene una red social — timeline, hashtags, los sitios donde pasan las cosas — y por dentro no tiene nada de lo que las hace insoportables: ni algoritmo que decida qué ves, ni anuncios, ni números que te digan si lo que has escrito vale algo. escriben varias personas y no hay nadie ordenándolo. técnicamente, el motor de la web viene de twoitter, un experimento nuestro anterior — nos gusta que las piezas de un proyecto encuentren segunda vida en otro.",
-      "resumen": "un diario a varias manos"
+      "keyword": {
+        "es": "red social privada a medida / diario compartido",
+        "en": "custom private social network / shared diary",
+        "cat": "xarxa social privada a mida / diari compartit"
+      },
+      "title": {
+        "es": "un diario a varias manos — el mundo de las jordis · meowrhino studio",
+        "en": "a diary written by several hands — el mundo de las jordis · meowrhino studio",
+        "cat": "un diari a diverses mans — el mundo de las jordis · meowrhino studio"
+      },
+      "description": {
+        "es": "una red social en miniatura para un grupo pequeño: timeline, hashtags y sitios, sin algoritmo ni anuncios. hecha a medida en barcelona.",
+        "en": "a miniature social network for a small group: timeline, hashtags and places, with no algorithm and no ads. custom-made in barcelona.",
+        "cat": "una xarxa social en miniatura per a un grup petit: timeline, etiquetes i llocs, sense algoritme ni anuncis. feta a mida a barcelona."
+      },
+      "resumen": {
+        "es": "un diario a varias manos",
+        "en": "a diary written by several hands",
+        "cat": "un diari a diverses mans"
+      },
+      "texto": {
+        "es": "el mundo de las jordis es un diario a varias manos: una ventanita a su mundo. por fuera tiene lo que tiene una red social — timeline, hashtags, los sitios donde pasan las cosas — y por dentro no tiene nada de lo que las hace insoportables: ni algoritmo que decida qué ves, ni anuncios, ni números que te digan si lo que has escrito vale algo. escriben varias personas y no hay nadie ordenándolo. técnicamente, el motor de la web viene de twoitter, un experimento nuestro anterior — nos gusta que las piezas de un proyecto encuentren segunda vida en otro.",
+        "en": "el mundo de las jordis is a diary written by several hands: a little window into their world. from the outside it has what a social network has — timeline, hashtags, the places where things happen — and on the inside it has none of what makes them unbearable: no algorithm deciding what you see, no ads, no numbers telling you whether what you wrote is worth anything. several people write in it and nobody is putting it in order. technically, the engine comes from twoitter, an earlier experiment of ours — we like it when the pieces of one project find a second life in another.",
+        "cat": "el mundo de las jordis és un diari a diverses mans: una finestreta al seu món. per fora té el que té una xarxa social — timeline, etiquetes, els llocs on passen les coses — i per dins no té res del que les fa insuportables: ni algoritme que decideixi què veus, ni anuncis, ni números que et diguin si allò que has escrit val alguna cosa. hi escriuen diverses persones i no hi ha ningú ordenant-ho. tècnicament, el motor de la web ve de twoitter, un experiment nostre anterior — ens agrada que les peces d'un projecte trobin segona vida en un altre."
+      }
     },
     {
       "nombre": "christine",
       "slug": "christine",
-      "keyword": "portfolio web interactivo para diseñadores",
-      "title": "un portfolio que se navega con una brújula — christine janjira meyer · meowrhino studio",
-      "description": "la web de christine janjira meyer, diseñadora gráfica: un portfolio que se navega con una brújula hecha a medida. diseño web sin plantillas, desde barcelona.",
-      "texto": "christine janjira meyer es diseñadora gráfica. el corazón de su web es una brújula: una brújula hecha a medida, para navegar y para pasárselo bien. no es un menú disfrazado de brújula — es el mecanismo con el que te mueves por todo el sitio, y no existe en ninguna otra web porque se construyó para esta.",
-      "resumen": "un portfolio que se navega con una brújula"
+      "keyword": {
+        "es": "portfolio web interactivo para diseñadores",
+        "en": "interactive web portfolio for designers",
+        "cat": "portfolio web interactiu per a dissenyadors"
+      },
+      "title": {
+        "es": "un portfolio que se navega con una brújula — christine janjira meyer · meowrhino studio",
+        "en": "a portfolio you navigate with a compass — christine janjira meyer · meowrhino studio",
+        "cat": "un portfolio que es navega amb una brúixola — christine janjira meyer · meowrhino studio"
+      },
+      "description": {
+        "es": "la web de christine janjira meyer, diseñadora gráfica: un portfolio que se navega con una brújula hecha a medida. diseño web sin plantillas, desde barcelona.",
+        "en": "christine janjira meyer's website, graphic designer: a portfolio you navigate with a custom-built compass. web design without templates, from barcelona.",
+        "cat": "la web de la christine janjira meyer, dissenyadora gràfica: un portfolio que es navega amb una brúixola feta a mida. disseny web sense plantilles, des de barcelona."
+      },
+      "resumen": {
+        "es": "un portfolio que se navega con una brújula",
+        "en": "a portfolio you navigate with a compass",
+        "cat": "un portfolio que es navega amb una brúixola"
+      },
+      "texto": {
+        "es": "christine janjira meyer es diseñadora gráfica. el corazón de su web es una brújula: una brújula hecha a medida, para navegar y para pasárselo bien. no es un menú disfrazado de brújula — es el mecanismo con el que te mueves por todo el sitio, y no existe en ninguna otra web porque se construyó para esta.",
+        "en": "christine janjira meyer is a graphic designer. the heart of her website is a compass: a custom-built compass, for finding your way and for having fun. it isn't a menu dressed up as a compass — it's the mechanism you move through the whole site with, and it doesn't exist on any other website because it was built for this one.",
+        "cat": "la christine janjira meyer és dissenyadora gràfica. el cor de la seva web és una brúixola: una brúixola feta a mida, per navegar i per passar-s'ho bé. no és un menú disfressat de brúixola — és el mecanisme amb què et mous per tot el lloc, i no existeix en cap altra web perquè es va construir per a aquesta."
+      }
     },
     {
       "nombre": "villagranota",
       "slug": "villagranota",
-      "keyword": "webs experimentales / proyectos raros",
-      "title": "villagranota 🐸 — una web experimento · meowrhino studio",
-      "description": "villagranota: un experimento web con rana. de los encargos raros que nos gustan. hecho a medida en barcelona.",
-      "texto": "el título de la web es un emoji de rana, y eso ya te dice el espíritu del proyecto. villagranota es un colectivo pequeño de gente que quiere un internet mejor — más raro, más hecho a mano, menos parecido a un centro comercial. es la clase de sitio que solo puede existir si alguien lo hace desde cero. los proyectos así son nuestro laboratorio: lo que aprendemos haciendo webs raras acaba mejorando las webs \"serias\".",
-      "resumen": "una web experimento con rana"
+      "keyword": {
+        "es": "webs experimentales / proyectos raros",
+        "en": "experimental websites / odd projects",
+        "cat": "webs experimentals / projectes rars"
+      },
+      "title": {
+        "es": "villagranota 🐸 — una web experimento · meowrhino studio",
+        "en": "villagranota 🐸 — an experimental website · meowrhino studio",
+        "cat": "villagranota 🐸 — una web experiment · meowrhino studio"
+      },
+      "description": {
+        "es": "villagranota: un experimento web con rana. de los encargos raros que nos gustan. hecho a medida en barcelona.",
+        "en": "villagranota: a web experiment with a frog. one of the odd commissions we like. custom-made in barcelona.",
+        "cat": "villagranota: un experiment web amb granota. dels encàrrecs rars que ens agraden. fet a mida a barcelona."
+      },
+      "resumen": {
+        "es": "una web experimento con rana",
+        "en": "an experimental website with a frog",
+        "cat": "una web experiment amb granota"
+      },
+      "texto": {
+        "es": "el título de la web es un emoji de rana, y eso ya te dice el espíritu del proyecto. villagranota es un colectivo pequeño de gente que quiere un internet mejor — más raro, más hecho a mano, menos parecido a un centro comercial. es la clase de sitio que solo puede existir si alguien lo hace desde cero. los proyectos así son nuestro laboratorio: lo que aprendemos haciendo webs raras acaba mejorando las webs \"serias\".",
+        "en": "the website's title is a frog emoji, and that already tells you the spirit of the project. villagranota is a small collective of people who want a better internet — odder, more handmade, less like a shopping centre. it's the kind of place that can only exist if someone builds it from scratch. projects like this are our laboratory: what we learn making odd websites ends up improving the \"serious\" ones.",
+        "cat": "el títol de la web és un emoji de granota, i això ja et diu l'esperit del projecte. villagranota és un col·lectiu petit de gent que vol un internet millor — més rar, més fet a mà, menys semblant a un centre comercial. és la mena de lloc que només pot existir si algú el fa des de zero. els projectes així són el nostre laboratori: el que aprenem fent webs rares acaba millorant les webs \"sèries\"."
+      }
     }
   ]
 }

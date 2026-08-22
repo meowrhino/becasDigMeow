@@ -13,8 +13,11 @@
 > `proyectos-seo.json`, de donde la lee build-seo.js. esto queda como el porqué de
 > cada texto — de dónde salió la anécdota, qué keyword se eligió y contra qué.
 >
-> versiones en/cat: mejor después de validar las keywords con los datos de search
-> console. las keywords de abajo son hipótesis razonables, no datos.
+> **versiones en/cat: hechas (22 ago 2026)**, por decisión de manu de no esperar a
+> los datos de search console. las traducciones viven en `proyectos-seo.json`
+> junto al castellano; aquí abajo solo está la versión original en castellano,
+> que es donde se razonó cada texto. las keywords siguen siendo hipótesis, no
+> datos: cuando search console hable, se afinan las tres versiones.
 
 ---
 
@@ -288,4 +291,7 @@
 5. decidimos slugs (`/proyectos/rikamichie` o similar) y monto las páginas
    pre-renderizadas con el mismo sistema que la home (build-seo.js), con sus
    metadatos, JSON-LD y entrada en el sitemap.
-6. en/cat después de ver qué keywords traen gente en search console.
+6. ~~en/cat~~ — hecho (22 ago 2026): las 63 páginas (3 idiomas × 20 proyectos +
+   3 índices) con hreflang entre ellas. rutas traducidas: /proyectos,
+   /en/projects, /ca/projectes; el slug no se traduce.
+7. afinar keywords con los datos de search console cuando los haya.

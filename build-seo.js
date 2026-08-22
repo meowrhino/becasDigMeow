@@ -43,9 +43,12 @@ const SITE = "https://meowrhino.studio";
  * pública (Cloudflare sirve en.html en /en).
  */
 const IDIOMAS = [
-  { code: "es",  htmlLang: "es", ogLocale: "es_ES", file: "index.html", path: "/" },
-  { code: "en",  htmlLang: "en", ogLocale: "en_GB", file: "en.html",    path: "/en" },
-  { code: "cat", htmlLang: "ca", ogLocale: "ca_ES", file: "ca.html",    path: "/ca" },
+  { code: "es",  htmlLang: "es", ogLocale: "es_ES", file: "index.html", path: "/",
+    proyBase: "/proyectos",     proyDir: "proyectos",     proyFile: "proyectos.html" },
+  { code: "en",  htmlLang: "en", ogLocale: "en_GB", file: "en.html",    path: "/en",
+    proyBase: "/en/projects",   proyDir: "en/projects",   proyFile: "en/projects.html" },
+  { code: "cat", htmlLang: "ca", ogLocale: "ca_ES", file: "ca.html",    path: "/ca",
+    proyBase: "/ca/projectes",  proyDir: "ca/projectes",  proyFile: "ca/projectes.html" },
 ];
 
 /** El idioma por defecto: la raíz y el x-default de los hreflang. */
@@ -167,13 +170,16 @@ function paginaHome(plantilla, data, idioma) {
 // mayor parte del contenido indexable del sitio: la home compite por "diseño web
 // barcelona", que está saturada, y estas por búsquedas que sí podemos ganar.
 //
-// Van en /proyectos/ y no en la raíz porque son 21 archivos y ensuciarían el
-// árbol. A cambio, sus rutas a assets tienen que ser absolutas (ver la nota en
-// js/proyecto-template.js).
+// Van en un directorio y no en la raíz porque son 21 archivos por idioma y
+// ensuciarían el árbol. A cambio, sus rutas a assets tienen que ser absolutas
+// (ver la nota en js/proyecto-template.js).
 //
-// Solo en castellano de momento: traducir 20 páginas antes de saber cuáles
-// traen gente es trabajo a ciegas. Cuando Search Console diga cuáles funcionan,
-// se traducen esas y se les añaden hreflang.
+// Las tres variantes por idioma, con el segmento de ruta traducido:
+//   /proyectos/<slug>  ·  /en/projects/<slug>  ·  /ca/projectes/<slug>
+// El slug NO se traduce: sale del nombre del proyecto, que es un nombre propio.
+// Los índices salen de un archivo suelto (proyectos.html, en/projects.html…) y
+// no de un index.html dentro del directorio, porque Cloudflare trata el índice
+// de un directorio como /proyectos/ y redirige /proyectos ahí con un 307.
 
 /** Une cada proyecto de data.json con su copia en proyectos-seo.json. */
 function fichasDeProyecto(data, seoDoc) {
@@ -192,25 +198,36 @@ function fichasDeProyecto(data, seoDoc) {
   });
 }
 
+/**
+ * hreflang de una página de proyecto: enlaza sus tres variantes de idioma.
+ * `sufijo` es "" para el índice y "/<slug>" para una página concreta.
+ */
+function hreflangProyectoHTML(sufijo) {
+  const alternas = IDIOMAS.map(i =>
+    `  <link rel="alternate" hreflang="${i.htmlLang}" href="${SITE}${i.proyBase}${sufijo}">`
+  ).join("\n");
+  return `${alternas}\n  <link rel="alternate" hreflang="x-default" href="${SITE}${POR_DEFECTO.proyBase}${sufijo}">`;
+}
+
 /** Datos estructurados de una página de proyecto. */
-function jsonLdProyecto(proyecto, seo) {
+function jsonLdProyecto(proyecto, seo, idioma) {
   const enlaces = enlacesDe(proyecto);
   const schema = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
     name: proyecto.nombre,
-    headline: seo.title,
-    description: seo.description,
-    url: `${SITE}/proyectos/${seo.slug}`,
+    headline: pick(seo.title, idioma.code),
+    description: pick(seo.description, idioma.code),
+    url: `${SITE}${idioma.proyBase}/${seo.slug}`,
     image: `${SITE}/${proyecto.imagen}`,
-    inLanguage: "es",
+    inLanguage: idioma.htmlLang,
     creator: {
       "@type": "ProfessionalService",
       name: "meowrhino studio",
       url: SITE,
       areaServed: { "@type": "City", name: "Barcelona" },
     },
-    isPartOf: { "@type": "CollectionPage", url: `${SITE}/proyectos` },
+    isPartOf: { "@type": "CollectionPage", url: `${SITE}${idioma.proyBase}` },
   };
   // `about` solo si el proyecto tiene web pública: es la obra de la que habla
   // la página, y sin URL no hay entidad que señalar.
@@ -237,9 +254,9 @@ function scriptLdHTML(schema) {
  * scroll lineal, igual que /easy, así que heredan tipografía, ritmo vertical y
  * botones sin duplicar reglas. Lo propio vive en la sección 18 de style.css.
  */
-function paginaProyectoHTML({ title, description, url, imagen, jsonLd, cuerpo }) {
+function paginaProyectoHTML({ title, description, url, imagen, jsonLd, cuerpo, idioma, hreflang }) {
   return `<!DOCTYPE html>
-<html lang="es" class="easy">
+<html lang="${idioma.htmlLang}" class="easy">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -247,6 +264,7 @@ function paginaProyectoHTML({ title, description, url, imagen, jsonLd, cuerpo })
   <meta name="description" content="${esc(description)}">
   <title>${esc(title)}</title>
   <link rel="canonical" href="${url}">
+${hreflang}
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
   <meta property="og:type" content="article">
@@ -254,7 +272,7 @@ function paginaProyectoHTML({ title, description, url, imagen, jsonLd, cuerpo })
   <meta property="og:title" content="${esc(title)}">
   <meta property="og:description" content="${esc(description)}">
   <meta property="og:url" content="${url}">
-  <meta property="og:locale" content="es_ES">
+  <meta property="og:locale" content="${idioma.ogLocale}">
   <meta property="og:image" content="${imagen}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${esc(title)}">
@@ -284,27 +302,31 @@ ${cuerpo}
 `;
 }
 
-/** Página de un proyecto. */
-function paginaProyecto({ proyecto, seo }) {
+/** Página de un proyecto, en un idioma. */
+function paginaProyecto({ proyecto, seo }, idioma) {
+  const rutas = { indice: idioma.proyBase, home: idioma.path };
   return paginaProyectoHTML({
-    title: seo.title,
-    description: seo.description,
-    url: `${SITE}/proyectos/${seo.slug}`,
+    idioma,
+    title: pick(seo.title, idioma.code),
+    description: pick(seo.description, idioma.code),
+    url: `${SITE}${idioma.proyBase}/${seo.slug}`,
     imagen: `${SITE}/${proyecto.imagen}`,
-    jsonLd: jsonLdProyecto(proyecto, seo),
-    cuerpo: renderProyectoHTML(proyecto, seo),
+    hreflang: hreflangProyectoHTML(`/${seo.slug}`),
+    jsonLd: jsonLdProyecto(proyecto, seo, idioma),
+    cuerpo: renderProyectoHTML(proyecto, seo, idioma.code, rutas),
   });
 }
 
-/** Índice de /proyectos: la puerta de entrada a las 20 páginas. */
-function paginaIndice(fichas) {
+/** Índice de proyectos de un idioma: la puerta de entrada a las 20 páginas. */
+function paginaIndice(fichas, idioma) {
+  const t = INDICE[idioma.code] || INDICE.es;
   const schema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "proyectos — meowrhino studio",
-    description: INDICE_DESC,
-    url: `${SITE}/proyectos`,
-    inLanguage: "es",
+    name: t.schemaName,
+    description: t.description,
+    url: `${SITE}${idioma.proyBase}`,
+    inLanguage: idioma.htmlLang,
     isPartOf: { "@type": "WebSite", name: "meowrhino studio", url: SITE },
     mainEntity: {
       "@type": "ItemList",
@@ -313,24 +335,44 @@ function paginaIndice(fichas) {
         "@type": "ListItem",
         position: i + 1,
         name: proyecto.nombre,
-        url: `${SITE}/proyectos/${seo.slug}`,
+        url: `${SITE}${idioma.proyBase}/${seo.slug}`,
       })),
     },
   };
 
   return paginaProyectoHTML({
-    title: "proyectos — 20 webs a medida hechas en barcelona · meowrhino studio",
-    description: INDICE_DESC,
-    url: `${SITE}/proyectos`,
+    idioma,
+    title: t.title,
+    description: t.description,
+    url: `${SITE}${idioma.proyBase}`,
     imagen: `${SITE}/favicon/og-image.png`,
+    hreflang: hreflangProyectoHTML(""),
     jsonLd: scriptLdHTML(schema),
-    cuerpo: renderIndiceHTML(fichas),
+    cuerpo: renderIndiceHTML(fichas, idioma.code, { base: idioma.proyBase, home: idioma.path }),
   });
 }
 
-const INDICE_DESC =
-  "20 webs diseñadas a medida en Barcelona para artistas, fotógrafos, músicos y " +
-  "pequeños negocios. Cada proyecto cuenta cómo se hizo y por qué acabó siendo así.";
+/** Metadatos del índice, por idioma. */
+const INDICE = {
+  es: {
+    schemaName: "proyectos — meowrhino studio",
+    title: "proyectos — 20 webs a medida hechas en barcelona · meowrhino studio",
+    description: "20 webs diseñadas a medida en Barcelona para artistas, fotógrafos, " +
+      "músicos y pequeños negocios. Cada proyecto cuenta cómo se hizo y por qué acabó siendo así.",
+  },
+  en: {
+    schemaName: "projects — meowrhino studio",
+    title: "projects — 20 custom websites made in barcelona · meowrhino studio",
+    description: "20 websites custom-built in Barcelona for artists, photographers, " +
+      "musicians and small businesses. Each project tells how it was made and why it ended up like this.",
+  },
+  cat: {
+    schemaName: "projectes — meowrhino studio",
+    title: "projectes — 20 webs a mida fetes a barcelona · meowrhino studio",
+    description: "20 webs dissenyades a mida a Barcelona per a artistes, fotògrafs, " +
+      "músics i petits negocis. Cada projecte explica com es va fer i per què va acabar sent així.",
+  },
+};
 
 /**
  * Los `lastmod` del sitemap anterior, indexados por URL.
@@ -364,6 +406,13 @@ function sitemapXML(fichas = [], cambiadas = new Set()) {
   const fechaDe = (loc, archivo) =>
     cambiadas.has(archivo) ? hoy : (previos.get(loc) ?? hoy);
 
+  /** Alternativas hreflang de una página de proyecto, para el sitemap. */
+  const alternasProy = (sufijo) =>
+    IDIOMAS.map(i =>
+      `    <xhtml:link rel="alternate" hreflang="${i.htmlLang}" href="${SITE}${i.proyBase}${sufijo}"/>`
+    ).join("\n") +
+    `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${POR_DEFECTO.proyBase}${sufijo}"/>`;
+
   // Cada variante declara sus alternativas también aquí: es la forma que
   // recomienda Google para que no dependa solo de las etiquetas del HTML.
   const alternas = IDIOMAS.map(i =>
@@ -392,18 +441,20 @@ ${homes}
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  <url>
-    <loc>${SITE}/proyectos</loc>
-    <lastmod>${fechaDe(`${SITE}/proyectos`, "proyectos.html")}</lastmod>
+${IDIOMAS.map(i => `  <url>
+    <loc>${SITE}${i.proyBase}</loc>
+${alternasProy("")}
+    <lastmod>${fechaDe(`${SITE}${i.proyBase}`, i.proyFile)}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-${fichas.map(({ seo }) => `  <url>
-    <loc>${SITE}/proyectos/${seo.slug}</loc>
-    <lastmod>${fechaDe(`${SITE}/proyectos/${seo.slug}`, `proyectos/${seo.slug}.html`)}</lastmod>
+  </url>`).join("\n")}
+${fichas.flatMap(({ seo }) => IDIOMAS.map(i => `  <url>
+    <loc>${SITE}${i.proyBase}/${seo.slug}</loc>
+${alternasProy(`/${seo.slug}`)}
+    <lastmod>${fechaDe(`${SITE}${i.proyBase}/${seo.slug}`, `${i.proyDir}/${seo.slug}.html`)}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
-  </url>`).join("\n")}
+  </url>`)).join("\n")}
 </urlset>
 `;
 }
@@ -453,21 +504,24 @@ function main() {
     const easy = readFileSync(join(ROOT, "easy.html"), "utf8");
     generar("easy.html", reemplazarBloque(easy, "easy", renderBodyHTML(data, "es")));
 
-    // El índice va en la RAÍZ (proyectos.html), no en proyectos/index.html:
-    // Cloudflare trata el índice de un directorio como /proyectos/ y redirige
-    // /proyectos ahí con un 307. Así el índice se sirve en /proyectos sin salto,
-    // igual que /archive sale de archive.html, y el canonical no apunta a una
-    // URL que redirige. Los archivos de dentro siguen en proyectos/<slug>.html.
-    mkdirSync(join(ROOT, "proyectos"), { recursive: true });
-    generar("proyectos.html", paginaIndice(fichas));
-    for (const ficha of fichas) {
-      generar(`proyectos/${ficha.seo.slug}.html`, paginaProyecto(ficha));
+    // Cada idioma tiene su índice suelto (proyectos.html, en/projects.html…) y
+    // su directorio de fichas. El índice NO va como index.html dentro del
+    // directorio: Cloudflare lo trataría como /proyectos/ y redirigiría
+    // /proyectos ahí con un 307, dejando el canonical apuntando a una URL que
+    // redirige. Así se sirve en /proyectos sin salto, igual que /archive.
+    for (const idioma of IDIOMAS) {
+      mkdirSync(join(ROOT, idioma.proyDir), { recursive: true });
+      generar(idioma.proyFile, paginaIndice(fichas, idioma));
+      for (const ficha of fichas) {
+        generar(`${idioma.proyDir}/${ficha.seo.slug}.html`, paginaProyecto(ficha, idioma));
+      }
     }
 
     // El sitemap va el último: necesita saber qué se ha reescrito antes.
     escribirSiCambia("sitemap.xml", sitemapXML(fichas, cambiadas));
 
-    console.log(`\n${IDIOMAS.length} idiomas · ${fichas.length} proyectos.`);
+    console.log(`\n${IDIOMAS.length} idiomas · ${fichas.length} proyectos ` +
+      `· ${IDIOMAS.length * (fichas.length + 1)} páginas de proyecto.`);
   } catch (err) {
     console.error(`✗ ${err.message}`);
     process.exit(1);

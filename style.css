@@ -612,10 +612,8 @@ a.nav-label:visited {
    El valor está calibrado al idioma más ancho (es: "válido hasta finales de agosto"). */
 .welcome-cupon-face {
   box-sizing: border-box;
-  /* Reducido de 23rem: comparte celda con .welcome-card y a tamaño completo la
-     tapaba entera cada vez que se cruzaban. */
-  width: 19rem;
-  padding: 1.1rem 2.2rem;
+  width: 23rem;
+  padding: 1.3rem 2.8rem;
   background: var(--bg);
   border: 1px solid var(--text);
   outline: 1px solid var(--text);
@@ -666,7 +664,7 @@ a.nav-label:visited {
 }
 
 .welcome-cupon-precio {
-  font-size: 2.1rem;
+  font-size: 2.6rem;
   font-weight: 600;
   letter-spacing: 0.02em;
   line-height: 1;
@@ -2005,7 +2003,7 @@ html.js #seo-prerender {
   top: 0;
   left: 0;
   z-index: var(--z-card);
-  width: clamp(11rem, 21dvw, 17rem);
+  width: clamp(13rem, 26dvw, 21rem);
   display: flex;
   flex-direction: column;
   background: var(--bg);
@@ -2057,7 +2055,7 @@ html.js #seo-prerender {
 /* En móvil la celda es estrecha y la tarjeta competiría con el titular y el
    cupón, que es lo que vende. Se queda pequeña y sin el pie de texto. */
 @media (max-width: 768px) {
-  .welcome-card { width: clamp(7.5rem, 38dvw, 10.5rem); }
+  .welcome-card { width: clamp(8.5rem, 44dvw, 12rem); }
   .welcome-card-pie { padding: 0.4em 0.5em 0.45em; }
   .welcome-card-cta { display: none; }
 }

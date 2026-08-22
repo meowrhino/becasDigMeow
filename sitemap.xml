@@ -42,126 +42,630 @@
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos/rikamichie</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/rikamichie"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/rikamichie"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/rikamichie"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/rikamichie"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects/rikamichie</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/rikamichie"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/rikamichie"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/rikamichie"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/rikamichie"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes/rikamichie</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/rikamichie"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/rikamichie"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/rikamichie"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/rikamichie"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos/andrea-carilla</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/andrea-carilla"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/andrea-carilla"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/andrea-carilla"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/andrea-carilla"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects/andrea-carilla</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/andrea-carilla"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/andrea-carilla"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/andrea-carilla"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/andrea-carilla"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes/andrea-carilla</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/andrea-carilla"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/andrea-carilla"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/andrea-carilla"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/andrea-carilla"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos/diego-san-marcos</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/diego-san-marcos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/diego-san-marcos"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/diego-san-marcos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/diego-san-marcos"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects/diego-san-marcos</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/diego-san-marcos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/diego-san-marcos"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/diego-san-marcos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/diego-san-marcos"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes/diego-san-marcos</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/diego-san-marcos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/diego-san-marcos"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/diego-san-marcos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/diego-san-marcos"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos/mike-bros</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/mike-bros"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/mike-bros"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/mike-bros"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/mike-bros"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects/mike-bros</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/mike-bros"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/mike-bros"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/mike-bros"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/mike-bros"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes/mike-bros</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/mike-bros"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/mike-bros"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/mike-bros"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/mike-bros"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos/miranda</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/miranda"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/miranda"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/miranda"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/miranda"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects/miranda</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/miranda"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/miranda"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/miranda"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/miranda"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes/miranda</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/miranda"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/miranda"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/miranda"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/miranda"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos/noan-cittadino</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/noan-cittadino"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/noan-cittadino"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/noan-cittadino"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/noan-cittadino"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects/noan-cittadino</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/noan-cittadino"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/noan-cittadino"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/noan-cittadino"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/noan-cittadino"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes/noan-cittadino</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/noan-cittadino"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/noan-cittadino"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/noan-cittadino"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/noan-cittadino"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos/930blurberrie</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/930blurberrie"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/930blurberrie"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/930blurberrie"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/930blurberrie"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects/930blurberrie</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/930blurberrie"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/930blurberrie"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/930blurberrie"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/930blurberrie"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes/930blurberrie</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/930blurberrie"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/930blurberrie"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/930blurberrie"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/930blurberrie"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos/barbara-wong</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/barbara-wong"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/barbara-wong"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/barbara-wong"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/barbara-wong"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects/barbara-wong</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/barbara-wong"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/barbara-wong"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/barbara-wong"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/barbara-wong"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes/barbara-wong</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/barbara-wong"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/barbara-wong"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/barbara-wong"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/barbara-wong"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos/mokakopa-twins</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/mokakopa-twins"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/mokakopa-twins"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/mokakopa-twins"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/mokakopa-twins"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects/mokakopa-twins</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/mokakopa-twins"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/mokakopa-twins"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/mokakopa-twins"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/mokakopa-twins"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes/mokakopa-twins</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/mokakopa-twins"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/mokakopa-twins"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/mokakopa-twins"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/mokakopa-twins"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos/vicios-torpes</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/vicios-torpes"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/vicios-torpes"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/vicios-torpes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/vicios-torpes"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects/vicios-torpes</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/vicios-torpes"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/vicios-torpes"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/vicios-torpes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/vicios-torpes"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes/vicios-torpes</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/vicios-torpes"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/vicios-torpes"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/vicios-torpes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/vicios-torpes"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos/valentin</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/valentin"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/valentin"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/valentin"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/valentin"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects/valentin</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/valentin"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/valentin"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/valentin"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/valentin"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes/valentin</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/valentin"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/valentin"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/valentin"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/valentin"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos/conor</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/conor"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/conor"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/conor"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/conor"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects/conor</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/conor"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/conor"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/conor"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/conor"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes/conor</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/conor"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/conor"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/conor"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/conor"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos/maxito</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/maxito"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/maxito"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/maxito"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/maxito"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects/maxito</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/maxito"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/maxito"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/maxito"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/maxito"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes/maxito</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/maxito"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/maxito"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/maxito"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/maxito"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos/jaume-clotet</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/jaume-clotet"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/jaume-clotet"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/jaume-clotet"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/jaume-clotet"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects/jaume-clotet</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/jaume-clotet"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/jaume-clotet"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/jaume-clotet"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/jaume-clotet"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes/jaume-clotet</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/jaume-clotet"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/jaume-clotet"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/jaume-clotet"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/jaume-clotet"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos/berta-esteve</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/berta-esteve"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/berta-esteve"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/berta-esteve"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/berta-esteve"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects/berta-esteve</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/berta-esteve"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/berta-esteve"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/berta-esteve"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/berta-esteve"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes/berta-esteve</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/berta-esteve"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/berta-esteve"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/berta-esteve"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/berta-esteve"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos/estructuras3000</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/estructuras3000"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/estructuras3000"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/estructuras3000"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/estructuras3000"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects/estructuras3000</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/estructuras3000"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/estructuras3000"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/estructuras3000"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/estructuras3000"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes/estructuras3000</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/estructuras3000"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/estructuras3000"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/estructuras3000"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/estructuras3000"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos/paula-barjau</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/paula-barjau"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/paula-barjau"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/paula-barjau"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/paula-barjau"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects/paula-barjau</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/paula-barjau"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/paula-barjau"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/paula-barjau"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/paula-barjau"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes/paula-barjau</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/paula-barjau"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/paula-barjau"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/paula-barjau"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/paula-barjau"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos/el-mundo-de-las-jordis</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/el-mundo-de-las-jordis"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/el-mundo-de-las-jordis"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/el-mundo-de-las-jordis"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/el-mundo-de-las-jordis"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects/el-mundo-de-las-jordis</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/el-mundo-de-las-jordis"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/el-mundo-de-las-jordis"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/el-mundo-de-las-jordis"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/el-mundo-de-las-jordis"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes/el-mundo-de-las-jordis</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/el-mundo-de-las-jordis"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/el-mundo-de-las-jordis"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/el-mundo-de-las-jordis"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/el-mundo-de-las-jordis"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos/christine</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/christine"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/christine"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/christine"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/christine"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects/christine</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/christine"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/christine"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/christine"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/christine"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes/christine</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/christine"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/christine"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/christine"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/christine"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/proyectos/villagranota</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/villagranota"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/villagranota"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/villagranota"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/villagranota"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/projects/villagranota</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/villagranota"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/villagranota"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/villagranota"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/villagranota"/>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes/villagranota</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos/villagranota"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects/villagranota"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes/villagranota"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos/villagranota"/>
     <lastmod>2026-08-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
