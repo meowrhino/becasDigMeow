@@ -1945,11 +1945,23 @@ html.js #seo-prerender {
   display: block;
 }
 
-/* --- Pie de navegación --- */
-/* El espacio ya separa; la línea divisoria sobraba. */
-.proy-pie {
+/* --- Llamada final: el motivo por el que estas páginas existen --- */
+/* Va justo después de la galería, antes del pie: estaba detrás de los enlaces
+   de navegación, o sea que el lector se encontraba la puerta de salida antes
+   que la oferta. Sin caja: se sostiene con el centrado y el botón. */
+.proy-cta {
   margin-top: clamp(2.5rem, 6dvh, 4rem);
-  padding-top: 1.4rem;
+  padding: 1.8rem;
+  text-align: center;
+}
+.proy-cta p { font-size: 0.95rem; color: var(--text-content); margin-bottom: 1.1rem; }
+
+/* --- Pie de navegación --- */
+/* Ahora cierra la página de verdad, así que la fila izquierda/derecha se lee
+   como el pie de toda la vida. Sin `padding-top`: era el hueco de la línea
+   divisoria, que ya no está. */
+.proy-pie {
+  margin-top: clamp(2rem, 5dvh, 3rem);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -1958,15 +1970,6 @@ html.js #seo-prerender {
 }
 .proy-pie a { color: var(--text-secondary); }
 .proy-pie a:hover { color: var(--text); }
-
-/* --- Llamada final: el motivo por el que estas páginas existen --- */
-/* También sin caja: el bloque se sostiene con el centrado y el botón. */
-.proy-cta {
-  margin-top: clamp(2.5rem, 6dvh, 3.5rem);
-  padding: 1.8rem;
-  text-align: center;
-}
-.proy-cta p { font-size: 0.95rem; color: var(--text-content); margin-bottom: 1.1rem; }
 
 /* --- Índice: rejilla de tarjetas --- */
 .proy-grid {

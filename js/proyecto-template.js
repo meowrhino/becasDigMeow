@@ -125,14 +125,14 @@ export function renderProyectoHTML(proyecto, seo, lang = "es", rutas = {}, medir
       <p class="proy-texto">${esc(pickLang(seo.texto, lang))}</p>${visitar}
       <div class="proy-galeria">${galeria}
       </div>
-      <nav class="proy-pie" aria-label="${esc(t.navegar)}">
-        <a href="${esc(rutas.indice || "/proyectos")}">${esc(t.todos)}</a>
-        <a href="${esc(rutas.home || "/")}">meowrhino studio</a>
-      </nav>
       <aside class="proy-cta">
         <p>${esc(t.ctaTexto)}</p>
         <a class="easy-btn" href="mailto:hola@meowrhino.studio?subject=${encodeURIComponent(t.asunto)}">${esc(t.ctaBoton)}</a>
       </aside>
+      <nav class="proy-pie" aria-label="${esc(t.navegar)}">
+        <a href="${esc(rutas.indice || "/proyectos")}">${esc(t.todos)}</a>
+        <a href="${esc(rutas.home || "/")}">meowrhino studio</a>
+      </nav>
     </article>`;
 }
 
