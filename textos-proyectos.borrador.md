@@ -1,0 +1,226 @@
+# borradores: textos de los 20 proyectos
+
+> **qué es esto**: un borrador por proyecto para las futuras páginas de detalle
+> (`/proyectos/<slug>`), cada una atacando una long-tail distinta. escritos en la voz
+> de la web (minúsculas, cercano, nada corporativo), a partir de lo que dice la web
+> de cada cliente. **lo que falta de ti**: en cada uno hay un hueco `[detalle: …]`
+> para una anécdota real del proyecto — un reto técnico, una decisión de diseño,
+> algo que solo sabes tú. eso es lo que hará que no suenen a plantilla.
+>
+> versiones en/cat: mejor después de validar las keywords con los datos de search
+> console (~1 semana). las keywords de abajo son hipótesis razonables, no datos.
+
+---
+
+## rikamichie — rikamichie.com
+- **keyword**: web para músicos barcelona
+- **title**: una web para una trobadora moderna — rikamichie.com · meowrhino studio
+- **meta**: la web de erika michi, música y directora criada a las faldas de montjuic. diseñada a medida en barcelona, sin plantillas y sin cuotas mensuales.
+- **borrador**:
+  erika michi es trobadora moderna: música, directora y masajista criada a las faldas
+  de montjuic. su web tenía que sonar como ella — no como una plantilla de artista más.
+  la hicimos desde cero, pensando cada sección con ella: su música, sus proyectos y su
+  manera de contar las cosas caben en una sola web que puede actualizar ella misma,
+  sin pagar suscripciones ni depender de nadie. [detalle: …]
+
+## andrea carilla — andreacarilla.work
+- **keyword**: web portfolio para creativas (⚠️ su web no dice a qué se dedica — dímelo tú y afino)
+- **title**: el portfolio de andrea carilla — andreacarilla.work · meowrhino studio
+- **meta**: una web portfolio hecha a medida en barcelona: única por dentro y por fuera, y que la propia andrea mantiene sin cuotas mensuales.
+- **borrador**:
+  [detalle: a qué se dedica andrea y qué necesitaba la web] queríamos que el portfolio
+  fuera suyo de verdad: desde la estructura hasta el último detalle visual. como todas
+  nuestras webs, está hecha desde cero, sin frameworks ni constructores, y andrea
+  aprendió a actualizarla ella misma en la última reunión del proyecto.
+
+## diego san marcos — diegosanmarcos.com
+- **keyword**: web para músicos y técnicos de sonido
+- **title**: una web para música y audio inmersivo — diegosanmarcos.com · meowrhino studio
+- **meta**: el portfolio de diego san marcos: música, mezcla y audio inmersivo. una web a medida con reproductor persistente, hecha en barcelona sin plantillas.
+- **borrador**:
+  diego hace música, mezcla y audio inmersivo, y su web necesitaba algo que casi ninguna
+  plantilla resuelve bien: que el sonido no se corte al navegar. montamos un reproductor
+  persistente que sigue sonando mientras te mueves entre proyectos, y una home de
+  cuadrados que invita a explorar. [detalle: …]
+
+## mike bros — mikebros.com
+- **keyword**: web para coleccionistas / archivos personales
+- **title**: una web para una colección de cds — mikebros.com · meowrhino studio
+- **meta**: mikesx cd collection: un archivo personal convertido en web navegable. diseño a medida en barcelona, sin base de datos de pago ni cuotas.
+- **borrador**:
+  la colección de cds de mike merecía algo mejor que una hoja de cálculo. su web
+  convierte el archivo en un espacio navegable, donde cada disco tiene su sitio.
+  es el tipo de encargo que nos gusta: una idea muy personal que no encaja en ningún
+  constructor de webs, hecha a medida y fácil de ampliar cada vez que crece la
+  colección. [detalle: …]
+
+## miranda — mirandaperezhita.com
+- **keyword**: web para diseñadoras gráficas barcelona
+- **title**: una web para diseño editorial — mirandaperezhita.com · meowrhino studio
+- **meta**: el portfolio de miranda pérez-hita, diseñadora gráfica en barcelona: editorial, fanzines y proyectos culturales. web a medida, sin plantillas.
+- **borrador**:
+  miranda es diseñadora gráfica: editorial, publicaciones, fanzines y proyectos
+  culturales. cuando la clienta también diseña, la vara está alta — la web tenía que
+  estar a la altura de su criterio y a la vez ser suya, no nuestra. trabajamos la
+  retícula y el ritmo de las imágenes con el mismo cuidado que ella pone en sus
+  publicaciones. [detalle: …]
+
+## noan cittadino — noancittadino.com
+- **keyword**: web para compositores y sound designers
+- **title**: una web para game audio — noancittadino.com · meowrhino studio
+- **meta**: la web de noan cittadino, compositor y sound designer de videojuegos (fmod, wwise). portfolio a medida hecho en barcelona, sin cuotas mensuales.
+- **borrador**:
+  noan compone música y diseña sonido para videojuegos: sistemas de música dinámica,
+  fmod, wwise. su portfolio tenía que hablar dos idiomas a la vez — el de los estudios
+  de videojuegos que buscan un perfil técnico y el de quien solo quiere escuchar su
+  trabajo. [detalle: …]
+
+## 930blurberrie — 930blurberrie.com
+- **keyword**: web para ilustradoras
+- **title**: una web para ilustración y animación — 930blurberrie.com · meowrhino studio
+- **meta**: blurberrie, el universo de irene búrdalo: ilustración y animación en una web a medida que explora lo humano. hecha en barcelona, sin plantillas.
+- **borrador**:
+  irene explora lo humano a través de la ilustración y la animación, y firma como
+  blurberrie. su web es más universo que portfolio: un sitio donde el dibujo manda
+  y la interfaz acompaña sin hacer ruido. las plantillas de portfolio aplastan
+  trabajos así; por eso la hicimos desde cero. [detalle: …]
+
+## barbara wong — barbarawong.info
+- **keyword**: web para artistas visuales
+- **title**: una web para cine analógico y performance — barbarawong.info · meowrhino studio
+- **meta**: la web de bárbara s. barroso: cine analógico, vídeo-instalación, performance y escritura ecofeminista. obra, noticias y diario en una web a medida.
+- **borrador**:
+  bárbara trabaja con cine analógico, vídeo-instalación, performance y escritura desde
+  una perspectiva ecofeminista. su web reúne obra, noticias y un diario — tres ritmos
+  de publicación distintos en una sola casa. la montamos para que ella la alimente sin
+  tocar código: edita unos archivos de texto y la web se reorganiza sola. [detalle: …]
+
+## mokakopa twins — analopezserrano.com + mokakopa.com
+- **keyword**: webs para pintoras / artistas plásticas
+- **title**: dos webs gemelas para dos pintoras — analopezserrano.com y mokakopa.com · meowrhino studio
+- **meta**: dos artistas, dos webs hermanas: ana lópez (grabado, óleo, acuarela) y monica kopatschek (pintura figurativa). diseñadas a la vez, a medida, en barcelona.
+- **borrador**:
+  un encargo doble: ana lópez investiga la imagen desde el grabado al aguafuerte, el
+  óleo y la acuarela; monica kopatschek pinta figuración donde se cruzan poder,
+  intimidad y ficción. hicimos dos webs gemelas — misma estructura, personalidad
+  distinta — para que cada obra respire sola sin perder el aire de familia.
+  [detalle: …]
+
+## vicios torpes — viciostorpes.com
+- **keyword**: web para tatuadores barcelona
+- **title**: una web para un estudio de tatuaje — viciostorpes.com · meowrhino studio
+- **meta**: vicios torpes: flashbook, tatuajes y contacto de marc en una web a medida. diseño web para tatuadores en barcelona, sin plantillas ni cuotas.
+- **borrador**:
+  marc necesitaba tres cosas: enseñar su flashbook, enseñar tatuajes curados y que le
+  puedas escribir sin fricción. su web hace exactamente eso, con una estética que es
+  suya y no la de una plantilla de estudio de tatuaje. cuando dibuja flash nuevo, lo
+  sube él mismo. [detalle: …]
+
+## valentin — valentinbarrio.com
+- **keyword**: web para fotógrafos barcelona
+- **title**: una web para fotografía de directo y editorial — valentinbarrio.com · meowrhino studio
+- **meta**: el portfolio de valentin barrio, fotógrafo en barcelona: directos, editoriales de moda y retrato. una web a medida donde la imagen manda.
+- **borrador**:
+  valentin fotografía la energía cruda de los directos, editoriales de moda y retratos
+  íntimos. en una web de fotógrafo todo compite contra la imagen, así que quitamos
+  todo lo demás: la interfaz aparece cuando la necesitas y desaparece cuando no.
+  él gestiona sus proyectos editando un archivo de datos, sin tocar el código.
+  [detalle: …]
+
+## conor — conorashlee.com
+- **keyword**: web para artistas (⚠️ dime a qué se dedica conor y afino keyword y texto)
+- **title**: la web de conor ashlee-purle — conorashlee.com · meowrhino studio
+- **meta**: "you can hug them, heavens know they need it". la web de conor ashlee-purle, hecha a medida en barcelona.
+- **borrador**:
+  [detalle: a qué se dedica conor y qué pedía el proyecto] su web abre con una frase
+  que ya dice mucho: "you can hug them, heavens know they need it". ese tono — raro,
+  tierno, personal — es imposible de meter en una plantilla, y es exactamente el tipo
+  de web que nos gusta hacer desde cero.
+
+## maxito — maxazemar.com
+- **keyword**: web para artistas de performance
+- **title**: una web entre el arte y la vida — maxazemar.com · meowrhino studio
+- **meta**: el portfolio de max azemar: proyectos de arte, investigación y prácticas performativas. una web a medida hecha en barcelona.
+- **borrador**:
+  max se mueve entre el arte y la vida: proyectos, investigación y prácticas
+  performativas que no siempre caben en el formato "obra + título + año". su web
+  está pensada para ese desborde — documenta procesos, no solo resultados.
+  [detalle: …]
+
+## jaume clotet — jaumeclotet.com
+- **keyword**: web para artistas multidisciplinares
+- **title**: una web-mundo para jaume clotet — jaumeclotet.com · meowrhino studio
+- **meta**: alusinasons, cantautot, new ywork, difàcil… el universo de jaume clotet en una web a medida hecha en barcelona, sin plantillas.
+- **borrador**:
+  jaume tiene proyectos con nombres como alusinasons, cantautot o vampirtistes — un
+  universo propio que pedía una web-mundo, no un portfolio de casillas. cada proyecto
+  tiene su espacio y su navegación, y el conjunto se recorre más como se explora un
+  disco que como se lee un cv. [detalle: …]
+
+## berta esteve — bertaesteve.cat
+- **keyword**: web para comisarias e investigadoras de arte
+- **title**: una web para curaduría, expos y jajas — bertaesteve.cat · meowrhino studio
+- **meta**: berta esteve: curadora, investigadora i artista. expos, jajas & internet en una web .cat feta a mida a barcelona.
+- **borrador**:
+  berta es curadora, investigadora y artista, y su bio dice "expos, jajas & internet"
+  — con ese briefing, una web seria de cv quedaba descartada. hicimos una web que se
+  toma en serio su trabajo sin tomarse en serio a sí misma, en catalán y con dominio
+  .cat. [detalle: …]
+
+## estructuras3000 — estructuras3000.com
+- **keyword**: web para asociaciones y colectivos
+- **title**: una web para colectivizar materiales — estructuras3000.com · meowrhino studio
+- **meta**: estructuras 3000, associació sense ànim de lucre. una web a medida para un proyecto colectivo, sin cuotas mensuales que pesen en la caja común.
+- **borrador**:
+  estructuras 3000 es una asociación sin ánimo de lucro para la colectivización de
+  materiales. para un proyecto así, que la web no tenga cuotas mensuales no es un
+  eslogan: es presupuesto que se queda en el colectivo. la montamos a medida y les
+  enseñamos a mantenerla, para que no dependa de nadie de fuera. [detalle: …]
+
+## paula barjau — paulabarjau.studio
+- **keyword**: web para maquilladoras y estilistas barcelona
+- **title**: una web para maquillaje y hairstyling — paulabarjau.studio · meowrhino studio
+- **meta**: el portfolio de paula barjau, maquilladora y hairstylist en barcelona: moda, retrato y audiovisual. web a medida donde su trabajo brilla.
+- **borrador**:
+  paula maquilla y peina para moda, retrato y audiovisual en barcelona. su material
+  vive en las caras y el pelo de otros, así que la web tenía que ser puro escaparate:
+  imagen grande, navegación mínima y su contacto siempre a mano para las producciones
+  que van con prisa. [detalle: …]
+
+## el mundo de las jordis — elmundodelasjordis.com
+- **keyword**: webs de proyectos personales / comunidades (⚠️ cuéntame qué es y afino)
+- **title**: el mundo de las jordis — una web-mundo · meowrhino studio
+- **meta**: el mundo de las jordis: [qué es, en una frase]. una web a medida hecha en barcelona para un proyecto que no cabía en ninguna plantilla.
+- **borrador**:
+  [detalle: qué es el mundo de las jordis y de qué va el proyecto] técnicamente,
+  el motor de la web viene de twoitter, un experimento nuestro anterior — nos gusta
+  que las piezas de un proyecto encuentren segunda vida en otro.
+
+## christine — meowrhino.github.io/christine
+- **keyword**: web para artistas (⚠️ dime a qué se dedica christine; ¿tendrá dominio propio?)
+- **title**: la web de christine janjira meyer · meowrhino studio
+- **meta**: la web de christine janjira meyer, hecha a medida en barcelona. [pendiente de afinar cuando me cuentes el proyecto]
+- **borrador**:
+  [detalle: a qué se dedica christine y qué necesitaba] — nota: la web aún vive en
+  github.io sin dominio propio; si le ponéis dominio, mejor enlazar ahí desde el
+  portfolio.
+
+## villagranota — meowrhino.github.io/villagranota
+- **keyword**: webs experimentales / proyectos raros
+- **title**: villagranota 🐸 — una web experimento · meowrhino studio
+- **meta**: villagranota: un experimento web con rana. de los encargos raros que nos gustan. hecho a medida en barcelona.
+- **borrador**:
+  el título de la web es un emoji de rana, y eso ya te dice el espíritu del proyecto.
+  [detalle: qué es villagranota] los proyectos así son nuestro laboratorio: lo que
+  aprendemos haciendo webs raras acaba mejorando las webs "serias".
+
+---
+
+## siguientes pasos (cuando los textos estén validados)
+1. tú rellenas los `[detalle: …]` y corriges lo que no sea verdad — mejor 2 líneas
+   reales tuyas que 10 mías inventadas.
+2. resolvemos los 4 marcados con ⚠️ (andrea, conor, jordis, christine).
+3. decidimos slugs (`/proyectos/rikamichie` o similar) y monto las páginas
+   pre-renderizadas con el mismo sistema que la home (build-seo.js), con sus
+   metadatos, JSON-LD y entrada en el sitemap.
+4. en/cat después de ver qué keywords traen gente en search console.
