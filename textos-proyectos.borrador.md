@@ -21,7 +21,9 @@
   de montjuic. su web tenía que sonar como ella — no como una plantilla de artista más.
   la hicimos desde cero, pensando cada sección con ella: su música, sus proyectos y su
   manera de contar las cosas caben en una sola web que puede actualizar ella misma,
-  sin pagar suscripciones ni depender de nadie. [detalle: …]
+  sin pagar suscripciones ni depender de nadie. la navegación va en cruz: cada
+  faceta suya en una dirección, y erika en el centro. porque era la única forma de
+  que ninguna de sus facetas quedara por debajo de otra.
 
 ## andrea carilla — andreacarilla.work
 - **keyword**: web portfolio para creativas (⚠️ su web no dice a qué se dedica — dímelo tú y afino)
@@ -80,7 +82,9 @@
   noan compone música y diseña sonido para videojuegos: sistemas de música dinámica,
   fmod, wwise. su portfolio tenía que hablar dos idiomas a la vez — el de los estudios
   de videojuegos que buscan un perfil técnico y el de quien solo quiere escuchar su
-  trabajo. [detalle: …]
+  trabajo. lo resolvimos por lo sencillo y lo tierno: un pequeño escritorio donde
+  cada cosa que tocas suena, con soniditos hechos por el propio noan. el portfolio
+  de un sound designer que suena, en vez de contarte que suena.
 
 ## 930blurberrie — 930blurberrie.com
 - **keyword**: web para ilustradoras
@@ -101,7 +105,9 @@
   bárbara trabaja con cine analógico, vídeo-instalación, performance y escritura desde
   una perspectiva ecofeminista. su web reúne obra, noticias y un diario — tres ritmos
   de publicación distintos en una sola casa. la montamos para que ella la alimente sin
-  tocar código: edita unos archivos de texto y la web se reorganiza sola. [detalle: …]
+  tocar código: edita unos archivos de texto y la web se reorganiza sola. son muchos
+  años de trabajo, y con ese volumen la tentación es apretarlo todo. hicimos lo
+  contrario: una web muy clean, con aire, para que cada pieza se vea sola.
 
 ## mokakopa twins — analopezserrano.com + mokakopa.com
 - **keyword**: webs para pintoras / artistas plásticas
@@ -111,8 +117,9 @@
   un encargo doble: ana lópez investiga la imagen desde el grabado al aguafuerte, el
   óleo y la acuarela; monica kopatschek pinta figuración donde se cruzan poder,
   intimidad y ficción. hicimos dos webs gemelas — misma estructura, personalidad
-  distinta — para que cada obra respire sola sin perder el aire de familia.
-  [detalle: …]
+  distinta — para que cada obra respire sola sin perder el aire de familia. son dos
+  webs espejo: se miran la una a la otra. lo bonito de un encargo así es que la
+  decisión de diseño la tomas dos veces, y las dos tienen que ser la correcta.
 
 ## vicios torpes — viciostorpes.com
 - **keyword**: web para tatuadores barcelona
@@ -141,10 +148,11 @@
 - **title**: la web de conor ashlee-purle — conorashlee.com · meowrhino studio
 - **meta**: "you can hug them, heavens know they need it". la web de conor ashlee-purle, hecha a medida en barcelona.
 - **borrador**:
-  [detalle: a qué se dedica conor y qué pedía el proyecto] su web abre con una frase
-  que ya dice mucho: "you can hug them, heavens know they need it". ese tono — raro,
-  tierno, personal — es imposible de meter en una plantilla, y es exactamente el tipo
-  de web que nos gusta hacer desde cero.
+  [detalle: ⚠️ FALTA — a qué se dedica conor] su web abre con una frase que ya dice
+  mucho: "you can hug them, heavens know they need it". ese tono — raro, tierno,
+  personal — es imposible de meter en una plantilla. fue la primera web que hicimos
+  íntegramente en inglés, y salió un rinconcito escrito a mano: pequeño, cuidado, sin
+  una sola pieza prefabricada.
 
 ## maxito — maxazemar.com
 - **keyword**: web para artistas de performance
@@ -153,8 +161,10 @@
 - **borrador**:
   max se mueve entre el arte y la vida: proyectos, investigación y prácticas
   performativas que no siempre caben en el formato "obra + título + año". su web
-  está pensada para ese desborde — documenta procesos, no solo resultados.
-  [detalle: …]
+  está pensada para ese desborde — documenta procesos, no solo resultados. la
+  montamos como si fuera un ppt, diapositiva a diapositiva, y la llenamos de easter
+  eggs. la primera vez la lees en cinco minutos; la segunda encuentras cosas que no
+  estaban.
 
 ## jaume clotet — jaumeclotet.com
 - **keyword**: web para artistas multidisciplinares
@@ -216,9 +226,12 @@
 - **title**: la web de christine janjira meyer · meowrhino studio
 - **meta**: la web de christine janjira meyer, hecha a medida en barcelona. [pendiente de afinar cuando me cuentes el proyecto]
 - **borrador**:
-  [detalle: a qué se dedica christine y qué necesitaba] — nota: la web aún vive en
-  github.io sin dominio propio; si le ponéis dominio, mejor enlazar ahí desde el
-  portfolio.
+  [detalle: ⚠️ FALTA — a qué se dedica christine] el corazón de su web es una brújula:
+  una brújula hecha a medida, para navegar y para pasárselo bien. no es un menú
+  disfrazado de brújula — es el mecanismo con el que te mueves por todo el sitio, y
+  no existe en ninguna otra web porque se construyó para esta.
+  — nota: la web aún vive en github.io sin dominio propio; si le ponéis dominio,
+  mejor enlazar ahí desde el portfolio.
 
 ## villagranota — meowrhino.github.io/villagranota
 - **keyword**: webs experimentales / proyectos raros
@@ -226,8 +239,11 @@
 - **meta**: villagranota: un experimento web con rana. de los encargos raros que nos gustan. hecho a medida en barcelona.
 - **borrador**:
   el título de la web es un emoji de rana, y eso ya te dice el espíritu del proyecto.
-  [detalle: qué es villagranota] los proyectos así son nuestro laboratorio: lo que
-  aprendemos haciendo webs raras acaba mejorando las webs "serias".
+  villagranota es un colectivo pequeño de gente que quiere un internet mejor — más
+  raro, más hecho a mano, menos parecido a un centro comercial. es la clase de sitio
+  que solo puede existir si alguien lo hace desde cero. los proyectos así son nuestro
+  laboratorio: lo que aprendemos haciendo webs raras acaba mejorando las webs
+  "serias".
 
 ---
 
