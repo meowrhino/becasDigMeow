@@ -28,10 +28,13 @@
 - **title**: el portfolio de andrea carilla — andreacarilla.work · meowrhino studio
 - **meta**: una web portfolio hecha a medida en barcelona: única por dentro y por fuera, y que la propia andrea mantiene sin cuotas mensuales.
 - **borrador**:
-  [detalle: a qué se dedica andrea y qué necesitaba la web] queríamos que el portfolio
-  fuera suyo de verdad: desde la estructura hasta el último detalle visual. como todas
-  nuestras webs, está hecha desde cero, sin frameworks ni constructores, y andrea
-  aprendió a actualizarla ella misma en la última reunión del proyecto.
+  [detalle: ⚠️ FALTA — a qué se dedica andrea. es el único dato que sigue bloqueando
+  este texto] la de andrea fue la primera: la primera web que salió de meowrhino
+  studio. gracias andrea, t'estimo. queríamos que el portfolio fuera suyo de verdad,
+  desde la estructura hasta el último detalle visual — hecho desde cero, sin
+  frameworks ni constructores, y andrea aprendió a actualizarlo ella misma en la
+  última reunión del proyecto. y pronto será también la primera tienda online del
+  estudio.
 
 ## diego san marcos — diegosanmarcos.com
 - **keyword**: web para músicos y técnicos de sonido
@@ -40,8 +43,10 @@
 - **borrador**:
   diego hace música, mezcla y audio inmersivo, y su web necesitaba algo que casi ninguna
   plantilla resuelve bien: que el sonido no se corte al navegar. montamos un reproductor
-  persistente que sigue sonando mientras te mueves entre proyectos, y una home de
-  cuadrados que invita a explorar. [detalle: …]
+  persistente que sigue sonando mientras te mueves entre proyectos — y que además
+  genera visuales en directo con lo que está sonando. todo dentro de una interfaz
+  con rollito de windows antiguo, ventanas y cuadrados incluidos, que era justo el
+  tono que diego buscaba.
 
 ## mike bros — mikebros.com
 - **keyword**: web para coleccionistas / archivos personales
@@ -52,7 +57,8 @@
   convierte el archivo en un espacio navegable, donde cada disco tiene su sitio.
   es el tipo de encargo que nos gusta: una idea muy personal que no encaja en ningún
   constructor de webs, hecha a medida y fácil de ampliar cada vez que crece la
-  colección. [detalle: …]
+  colección. por dentro es una disquetera infinita: por mucho scroll que hagas, los
+  discos no se acaban nunca.
 
 ## miranda — mirandaperezhita.com
 - **keyword**: web para diseñadoras gráficas barcelona
@@ -63,7 +69,8 @@
   culturales. cuando la clienta también diseña, la vara está alta — la web tenía que
   estar a la altura de su criterio y a la vez ser suya, no nuestra. trabajamos la
   retícula y el ritmo de las imágenes con el mismo cuidado que ella pone en sus
-  publicaciones. [detalle: …]
+  publicaciones. la mejor devolución nos la dio ella: dice que la web parece hecha
+  de papel. viniendo de alguien que trabaja el papel de verdad, no hay mejor piropo.
 
 ## noan cittadino — noancittadino.com
 - **keyword**: web para compositores y sound designers
@@ -83,7 +90,8 @@
   irene explora lo humano a través de la ilustración y la animación, y firma como
   blurberrie. su web es más universo que portfolio: un sitio donde el dibujo manda
   y la interfaz acompaña sin hacer ruido. las plantillas de portfolio aplastan
-  trabajos así; por eso la hicimos desde cero. [detalle: …]
+  trabajos así; por eso la hicimos desde cero. y escondido dentro hay un minijuego,
+  otra de esas cosas que ningún constructor de webs te va a dar.
 
 ## barbara wong — barbarawong.info
 - **keyword**: web para artistas visuales
@@ -113,8 +121,9 @@
 - **borrador**:
   marc necesitaba tres cosas: enseñar su flashbook, enseñar tatuajes curados y que le
   puedas escribir sin fricción. su web hace exactamente eso, con una estética que es
-  suya y no la de una plantilla de estudio de tatuaje. cuando dibuja flash nuevo, lo
-  sube él mismo. [detalle: …]
+  suya y no la de una plantilla de estudio de tatuaje. las imágenes se despliegan en
+  páginas enormes, para que el flash se vea al tamaño que merece, y para la cita hay
+  un formulario directo. cuando dibuja flash nuevo, lo sube él mismo.
 
 ## valentin — valentinbarrio.com
 - **keyword**: web para fotógrafos barcelona
@@ -155,7 +164,10 @@
   jaume tiene proyectos con nombres como alusinasons, cantautot o vampirtistes — un
   universo propio que pedía una web-mundo, no un portfolio de casillas. cada proyecto
   tiene su espacio y su navegación, y el conjunto se recorre más como se explora un
-  disco que como se lee un cv. [detalle: …]
+  disco que como se lee un cv. jaume eligió seis proyectos, ni uno más, y la web está
+  montada para que se recorran los seis: cuando los has visto todos, aparece un
+  fantasma. no lo anuncia nada — o la recorres entera o no te enteras de que está
+  ahí. eso no sale de ningún constructor de webs; sale de una conversación con jaume.
 
 ## berta esteve — bertaesteve.cat
 - **keyword**: web para comisarias e investigadoras de arte
@@ -165,7 +177,9 @@
   berta es curadora, investigadora y artista, y su bio dice "expos, jajas & internet"
   — con ese briefing, una web seria de cv quedaba descartada. hicimos una web que se
   toma en serio su trabajo sin tomarse en serio a sí misma, en catalán y con dominio
-  .cat. [detalle: …]
+  .cat. por dentro es la más compleja que hemos montado: berta produce muchísimo, y
+  todo tenía que caber sin que la navegación se rompiera ni aquello pareciera un
+  archivo muerto.
 
 ## estructuras3000 — estructuras3000.com
 - **keyword**: web para asociaciones y colectivos
@@ -175,7 +189,8 @@
   estructuras 3000 es una asociación sin ánimo de lucro para la colectivización de
   materiales. para un proyecto así, que la web no tenga cuotas mensuales no es un
   eslogan: es presupuesto que se queda en el colectivo. la montamos a medida y les
-  enseñamos a mantenerla, para que no dependa de nadie de fuera. [detalle: …]
+  enseñamos a mantenerla, para que no dependa de nadie de fuera. y es un encargo de
+  casa: formo parte del colectivo, así que esta web salió desde dentro.
 
 ## paula barjau — paulabarjau.studio
 - **keyword**: web para maquilladoras y estilistas barcelona
