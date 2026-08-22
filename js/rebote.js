@@ -24,9 +24,10 @@
  * @param {number}  [opciones.rotInicial=3]   dispersión de la rotación de salida
  * @param {() => boolean} [opciones.pausar]   si devuelve true, el frame no avanza
  * @param {() => void}    [opciones.alChocar] se llama en cada rebote
- * @param {(b: {w:number,h:number}) => {x:number,y:number}} [opciones.inicio]
- *        de dónde sale. Por defecto, un punto al azar. La card de proyecto lo
- *        usa para no nacer encima del cupón, que comparte celda con ella.
+ * @param {(b: {minX:number,minY:number,maxX:number,maxY:number}) => {x:number,y:number}} [opciones.inicio]
+ *        de dónde sale, en coordenadas de `translate`. Por defecto, un punto al
+ *        azar dentro de los límites. La card de proyecto lo usa para no nacer
+ *        encima del cupón, que comparte celda con ella.
  * @returns {{ detener: () => void }} para poder pararlo (tests, cleanup)
  */
 export function iniciarRebote(celda, elemento, opciones = {}) {
@@ -53,10 +54,37 @@ export function iniciarRebote(celda, elemento, opciones = {}) {
   let detenido = false;
   let colocado = false;
 
-  const bounds = () => ({
-    w: celda.clientWidth - elemento.offsetWidth,
-    h: celda.clientHeight - elemento.offsetHeight,
-  });
+  /** El ángulo máximo, en radianes: de ahí sale el margen de los límites. */
+  const RAD = limiteRot * Math.PI / 180;
+
+  /**
+   * Los límites del movimiento, en las mismas coordenadas que el `translate`.
+   *
+   * El elemento se pinta ROTADO, así que su caja real es más grande que
+   * offsetWidth/Height: un rectángulo w×h girado θ ocupa
+   *   W' = w·cos θ + h·sin θ        H' = w·sin θ + h·cos θ
+   * y, como gira sobre su centro, sobresale (W'−w)/2 por cada lado. Midiendo
+   * sin rotar, el elemento llegaba al borde de la celda con la caja pequeña y
+   * las esquinas se salían: `.celda` es overflow:hidden, así que se recortaban
+   * (en la card del welcome eran hasta 48px comidos por el borde inferior).
+   *
+   * El margen se calcula con el ángulo MÁXIMO, no con el actual: así es
+   * constante y los rebotes siguen siendo estables, que era justo el motivo por
+   * el que originalmente se medía sin rotar. Recalcularlo con la rotación viva
+   * movería el punto de rebote en cada choque.
+   */
+  const bounds = () => {
+    const w = elemento.offsetWidth;
+    const h = elemento.offsetHeight;
+    const margenX = (w * Math.cos(RAD) + h * Math.sin(RAD) - w) / 2;
+    const margenY = (w * Math.sin(RAD) + h * Math.cos(RAD) - h) / 2;
+    return {
+      minX: margenX,
+      minY: margenY,
+      maxX: celda.clientWidth - w - margenX,
+      maxY: celda.clientHeight - h - margenY,
+    };
+  };
 
   // Cada choque suma un golpe de rotación de golpe (sin easing): 8..22º.
   // El ángulo queda acotado a ±limiteRot: si un lado se pasa, el golpe va hacia
@@ -87,12 +115,15 @@ export function iniciarRebote(celda, elemento, opciones = {}) {
    */
   const colocarInicial = () => {
     const b = bounds();
-    if (b.w <= 0 || b.h <= 0) return false;
+    if (b.maxX <= b.minX || b.maxY <= b.minY) return false;
     const p = inicio
       ? inicio(b)
-      : { x: Math.random() * b.w, y: Math.random() * b.h };
-    x = Math.min(Math.max(0, p.x), b.w);
-    y = Math.min(Math.max(0, p.y), b.h);
+      : {
+          x: b.minX + Math.random() * (b.maxX - b.minX),
+          y: b.minY + Math.random() * (b.maxY - b.minY),
+        };
+    x = Math.min(Math.max(b.minX, p.x), b.maxX);
+    y = Math.min(Math.max(b.minY, p.y), b.maxY);
     render();
     return true;
   };
@@ -110,10 +141,10 @@ export function iniciarRebote(celda, elemento, opciones = {}) {
       y += vy * velocidad * dt;
 
       let boto = false;
-      if (x <= 0)        { x = 0;   vx = -vx; boto = true; }
-      else if (x >= b.w) { x = b.w; vx = -vx; boto = true; }
-      if (y <= 0)        { y = 0;   vy = -vy; boto = true; }
-      else if (y >= b.h) { y = b.h; vy = -vy; boto = true; }
+      if (x <= b.minX)      { x = b.minX; vx = -vx; boto = true; }
+      else if (x >= b.maxX) { x = b.maxX; vx = -vx; boto = true; }
+      if (y <= b.minY)      { y = b.minY; vy = -vy; boto = true; }
+      else if (y >= b.maxY) { y = b.maxY; vy = -vy; boto = true; }
       if (boto) { golpearRotacion(); alChocar(); }
 
       render();
@@ -127,8 +158,8 @@ export function iniciarRebote(celda, elemento, opciones = {}) {
 
   window.addEventListener("resize", () => {
     const b = bounds();
-    x = Math.min(Math.max(0, x), b.w);
-    y = Math.min(Math.max(0, y), b.h);
+    x = Math.min(Math.max(b.minX, x), b.maxX);
+    y = Math.min(Math.max(b.minY, y), b.maxY);
   });
 
   if (typeof IntersectionObserver !== "undefined") {

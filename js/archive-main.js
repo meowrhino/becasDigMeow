@@ -22,7 +22,7 @@ import {
   setPosicion,
 } from "./navigation.js";
 import { crearThemeToggle } from "./theme.js";
-import { renderSeccion } from "./archive-pages.js";
+import { renderSeccion, SECCIONES } from "./archive-pages.js";
 import { fetchJson } from "./utils.js";
 import { setupKeyboardNav, setupResizeDebounce } from "./shell.js";
 
@@ -41,12 +41,8 @@ async function cargarDatosArchive() {
 // Renderizado
 // ============================================
 
-// Categorías que se renderizan como secciones shooter
-const SECCIONES = [
-  "tools", "misc", "sidequests", "meowrhino",
-  "games", "experiments", "social", "unfinished",
-  "texts", "WIP", "hidden",
-];
+// Las categorías que se renderizan como secciones shooter viven en
+// archive-pages.js: las comparte con el pre-render de build-seo.js.
 
 async function renderizarContenido() {
   const data = await cargarDatosArchive();
@@ -100,6 +96,12 @@ setupResizeDebounce({
 // ============================================
 // Inicialización
 // ============================================
+
+// El HTML llega con el archivo pre-renderizado dentro de #content (SEO, ver
+// build-seo.js). El CSS ya lo oculta desde el primer pintado, pero lo sacamos
+// del DOM antes de montar el grid: crearCeldas() hace appendChild sobre
+// #content y si no, el bloque se quedaría ahí debajo para siempre.
+document.getElementById("seo-prerender")?.remove();
 
 configurarNavegacion({
   grid: [

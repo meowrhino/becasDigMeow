@@ -4,8 +4,26 @@
 //
 // renderSeccion() genérico para todas las categorías
 // con estilo "shooter" (items aparecen y crecen).
+//
+// Las funciones que arman HTML son puras (no tocan el DOM) para poder
+// compartirlas con build-seo.js, que pre-renderiza el archivo entero dentro de
+// archive.html. Igual que easy-template.js hace con la home: así el texto que
+// ve Google es el mismo que pinta el navegador, sin una segunda copia que se
+// desincronice.
 
 import { escapeHTML } from "./utils.js";
+
+/**
+ * Las categorías del archive y el orden en el que se recorren.
+ *
+ * Vive aquí y no en archive-main.js porque la usan los dos: el navegador para
+ * pintar cada celda y el build para pre-renderizarlas todas seguidas.
+ */
+export const SECCIONES = [
+  "tools", "misc", "sidequests", "meowrhino",
+  "games", "experiments", "social", "unfinished",
+  "texts", "WIP", "hidden",
+];
 
 // --- Sección genérica (shooter) ---
 
@@ -25,6 +43,17 @@ function renderItem(item, index) {
   `;
 }
 
+/** El HTML interior de una sección, sin tocar el DOM. */
+export function seccionHTML(items) {
+  return `
+    <div class="archive-section">
+      <div class="archive-section-items">
+        ${items.map((item, i) => renderItem(item, i)).join("")}
+      </div>
+    </div>
+  `;
+}
+
 /**
  * Renderiza una sección genérica con estilo shooter.
  * @param {string} key — nombre de la categoría
@@ -35,13 +64,41 @@ export function renderSeccion(key, items) {
   const el = document.querySelector(`.celda.archive-${cssKey}`);
   if (!el || !items?.length) return;
 
-  const itemsHtml = items.map((item, i) => renderItem(item, i)).join("");
+  el.innerHTML = seccionHTML(items);
+}
 
-  el.innerHTML = `
-    <div class="archive-section">
-      <div class="archive-section-items">
-        ${itemsHtml}
-      </div>
-    </div>
-  `;
+/**
+ * Cuerpo pre-renderizado del archive (lo que va dentro de #seo-prerender).
+ *
+ * El archive se monta entero por JS sobre un <main> vacío, así que hasta ahora
+ * un rastreador sin JS veía una página en blanco — y eso que /archive sí está
+ * en el sitemap. Esto pone las once categorías y sus ~220 enlaces en el primer
+ * byte, con un <h2> por categoría para que se entienda de qué va cada bloque.
+ *
+ * Lleva su propio <h1>: el resto del sitio lo pinta el grid, pero aquí el grid
+ * no existe todavía cuando el bot lee la página.
+ */
+export function renderArchivePrerenderHTML(data) {
+  const secciones = SECCIONES
+    .filter(key => data[key]?.length)
+    .map(key => `
+      <section class="archive-prerender-seccion">
+        <h2>${escapeHTML(key)}</h2>
+        ${seccionHTML(data[key])}
+      </section>`)
+    .join("");
+
+  return `
+    <h1>${escapeHTML(data.welcome?.titulo || "meowrhino archive")}</h1>
+    <p>archivo personal de proyectos, experimentos y curiosidades.</p>
+    ${secciones}
+    <nav class="prerender-nota" aria-label="Esta página usa JavaScript para su navegación interactiva. También puedes ver:">
+      <p>Esta página usa JavaScript para su navegación interactiva. También puedes ver:</p>
+      <ul>
+        <li><a href="/">meowrhino studio</a></li>
+        <li><a href="/proyectos">las páginas de cada proyecto</a></li>
+      </ul>
+      <p>o escríbeme a
+        <a href="mailto:hola@meowrhino.studio">hola@meowrhino.studio</a>.</p>
+    </nav>`;
 }

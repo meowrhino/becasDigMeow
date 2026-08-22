@@ -161,7 +161,7 @@ export function renderWelcome(data) {
   // que se navega con los enlaces de los bordes.
   el.innerHTML = `
     <div class="welcome-content">
-      <h1 class="welcome-title"><a href="easy.html" class="welcome-title-link" aria-label="${escapeHTML(w.titulo)} — versión en una página">${escapeHTML(w.titulo)}</a></h1>
+      <h1 class="welcome-title"><a href="/easy" class="welcome-title-link" aria-label="${escapeHTML(w.titulo)} — versión en una página">${escapeHTML(w.titulo)}</a></h1>
       <p class="welcome-tagline">${escapeHTML(pick(w.tagline, currentLang))}</p>
       <button type="button" class="welcome-hint">
         <span class="welcome-hint-txt">${escapeHTML(pick(w.hint, currentLang))}</span>

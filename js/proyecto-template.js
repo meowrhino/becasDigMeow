@@ -92,14 +92,22 @@ export function dominioDe(url) {
  * nombre del proyecto porque es lo que la gente busca; la keyword va en el
  * <title> y en el primer párrafo, no forzada en el titular.
  */
-export function renderProyectoHTML(proyecto, seo, lang = "es", rutas = {}) {
+export function renderProyectoHTML(proyecto, seo, lang = "es", rutas = {}, medirImagen = null) {
   const t = UI[lang] || UI.es;
   const imagenes = imagenesDe(proyecto);
   const enlaces = enlacesDe(proyecto);
 
-  const galeria = imagenes.map((src, i) => `
-        <img class="proy-img" src="/${esc(src)}" alt="${esc(altDe(proyecto, i, t))}"
-             loading="${i === 0 ? "eager" : "lazy"}" decoding="async">`).join("");
+  // width/height reales para que el navegador reserve el hueco antes de
+  // descargar la captura y el texto no pegue el salto. Quien llama decide de
+  // dónde salen (build-seo.js las lee del .webp); sin `medirImagen` la <img>
+  // sale como antes, sin atributos, y esta función sigue siendo pura.
+  const galeria = imagenes.map((src, i) => {
+    const m = medirImagen?.(src);
+    const tamano = m ? ` width="${m.ancho}" height="${m.alto}"` : "";
+    return `
+        <img class="proy-img" src="/${esc(src)}" alt="${esc(altDe(proyecto, i, t))}"${tamano}
+             loading="${i === 0 ? "eager" : "lazy"}" decoding="async">`;
+  }).join("");
 
   const visitar = enlaces.length
     ? `

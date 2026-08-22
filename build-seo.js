@@ -1,6 +1,6 @@
 // ============================================
 // BUILD SEO — genera las variantes por idioma de la home, el pre-render de
-// /easy, las páginas de proyecto y el sitemap.
+// /easy y de /archive, las páginas de proyecto y el sitemap.
 // ============================================
 //
 // Por qué el pre-render: las páginas llegan con su contenedor vacío y el
@@ -30,10 +30,12 @@ import {
 import {
   enlacesDe, renderIndiceHTML, renderProyectoHTML,
 } from "./js/proyecto-template.js";
+import { renderArchivePrerenderHTML } from "./js/archive-pages.js";
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const DATA_PATH = join(ROOT, "data.json");
 const SEO_PATH = join(ROOT, "proyectos-seo.json");
+const ARCHIVE_PATH = join(ROOT, "archive-data.json");
 const SITE = "https://meowrhino.studio";
 
 /**
@@ -188,6 +190,65 @@ function paginaHome(plantilla, data, idioma) {
 // no de un index.html dentro del directorio, porque Cloudflare trata el índice
 // de un directorio como /proyectos/ y redirige /proyectos ahí con un 307.
 
+// --- Medidas de las capturas ---
+//
+// Las <img> de la galería salían sin width/height y sin aspect-ratio en el CSS,
+// así que el navegador no podía reservarles sitio: cada captura empujaba el
+// texto hacia abajo al cargar. Eso es CLS, y Google lo mide. La rejilla del
+// índice no lo sufría porque su CSS sí fija `aspect-ratio: 3/2`; aquí no vale
+// un ratio fijo porque las capturas van de 4:3 a 3:2 según la pantalla en la
+// que se hicieran.
+//
+// Se leen del propio archivo en tiempo de build: es la única fuente que no
+// puede desincronizarse de la imagen que se sirve.
+
+/**
+ * Ancho y alto de un .webp leyendo su cabecera, sin dependencias.
+ *
+ * Un webp es un contenedor RIFF cuyo primer chunk dice de qué variante se
+ * trata, y cada una guarda las medidas en un sitio distinto:
+ *   VP8  (con pérdida)  → tras el start code 0x9d 0x01 0x2a, dos uint16 de los
+ *                         que solo valen los 14 bits bajos (los 2 altos son la
+ *                         escala, que aquí no se usa).
+ *   VP8L (sin pérdida)  → un uint32 empaquetado: 14 bits de ancho-1 y 14 de alto-1.
+ *   VP8X (extendido)    → ancho-1 y alto-1 como enteros de 24 bits.
+ */
+function medidasWebp(buf) {
+  if (buf.toString("ascii", 0, 4) !== "RIFF" || buf.toString("ascii", 8, 12) !== "WEBP") return null;
+
+  switch (buf.toString("ascii", 12, 16)) {
+    case "VP8 ":
+      if (buf[23] !== 0x9d || buf[24] !== 0x01 || buf[25] !== 0x2a) return null;
+      return { ancho: buf.readUInt16LE(26) & 0x3fff, alto: buf.readUInt16LE(28) & 0x3fff };
+    case "VP8L": {
+      if (buf[20] !== 0x2f) return null;
+      const bits = buf.readUInt32LE(21);
+      return { ancho: (bits & 0x3fff) + 1, alto: ((bits >> 14) & 0x3fff) + 1 };
+    }
+    case "VP8X":
+      return { ancho: buf.readUIntLE(24, 3) + 1, alto: buf.readUIntLE(27, 3) + 1 };
+    default:
+      return null;
+  }
+}
+
+/**
+ * Medidas de una imagen del sitio, cacheadas por ruta relativa.
+ *
+ * Devuelve null si el archivo no existe o no se puede leer la cabecera: en ese
+ * caso la plantilla no escribe los atributos y todo sigue como antes. Una
+ * captura sin medidas no debe tumbar el build entero.
+ */
+const cacheMedidas = new Map();
+function medidasDe(rutaRelativa) {
+  if (cacheMedidas.has(rutaRelativa)) return cacheMedidas.get(rutaRelativa);
+  let medidas = null;
+  try { medidas = medidasWebp(readFileSync(join(ROOT, rutaRelativa))); } catch { /* sin medidas */ }
+  if (!medidas) console.warn(`· sin medidas para ${rutaRelativa}: la <img> irá sin width/height.`);
+  cacheMedidas.set(rutaRelativa, medidas);
+  return medidas;
+}
+
 /** Une cada proyecto de data.json con su copia en proyectos-seo.json. */
 function fichasDeProyecto(data, seoDoc) {
   const proyectos = data.portfolio?.proyectos ?? [];
@@ -320,7 +381,7 @@ function paginaProyecto({ proyecto, seo }, idioma) {
     imagen: `${SITE}/${proyecto.imagen}`,
     hreflang: hreflangProyectoHTML(`/${seo.slug}`),
     jsonLd: jsonLdProyecto(proyecto, seo, idioma),
-    cuerpo: renderProyectoHTML(proyecto, seo, idioma.code, rutas),
+    cuerpo: renderProyectoHTML(proyecto, seo, idioma.code, rutas, medidasDe),
   });
 }
 
@@ -510,6 +571,14 @@ function main() {
 
     const easy = readFileSync(join(ROOT, "easy.html"), "utf8");
     generar("easy.html", reemplazarBloque(easy, "easy", renderBodyHTML(data, "es")));
+
+    // /archive está en el sitemap pero se montaba entero por JS sobre un <main>
+    // vacío: un rastreador sin JS veía la página en blanco. Era la única página
+    // indexable sin pre-render.
+    const archiveData = JSON.parse(readFileSync(ARCHIVE_PATH, "utf8"));
+    const archive = readFileSync(join(ROOT, "archive.html"), "utf8");
+    generar("archive.html",
+      reemplazarBloque(archive, "archive", renderArchivePrerenderHTML(archiveData)));
 
     // Cada idioma tiene su índice suelto (proyectos.html, en/projects.html…) y
     // su directorio de fichas. El índice NO va como index.html dentro del

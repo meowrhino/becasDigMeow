@@ -36,18 +36,834 @@
       var t = localStorage.getItem("meowrhino-theme");
       if (!t) t = (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) ? "light" : "dark";
       if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+      // Marca que hay JS ANTES de que el body se parsee, para que el CSS oculte
+      // el bloque pre-renderizado (#seo-prerender) desde el primer pintado.
+      // Sin JS la clase no se pone y el bloque queda como versión navegable.
+      document.documentElement.classList.add("js");
     })();
   </script>
 </head>
 <body>
-  <main id="content" role="main"></main>
-  <noscript>
-    <div style="max-width:38rem;margin:12vh auto;padding:0 1.5rem;text-align:center;line-height:1.6;">
-      <h1>meowrhino archive</h1>
-      <p>archivo personal de proyectos, experimentos y curiosidades.</p>
-      <p>Escríbeme a <a href="mailto:hola@meowrhino.studio">hola@meowrhino.studio</a></p>
+  <main id="content" role="main">
+    <!-- Contenido pre-renderizado por build-seo.js: las mismas categorías y
+         enlaces que pinta el grid, disponibles en el primer byte. Oculto por
+         CSS en cuanto hay JS y eliminado del DOM por archive-main.js; sin JS se
+         queda como versión estática navegable (sustituye al viejo <noscript>,
+         que solo enseñaba un email). NO editar a mano: se regenera desde
+         archive-data.json en cada build. -->
+    <div id="seo-prerender">
+      <!-- BUILD:archive:start -->
+
+    <h1>meowrhino archive</h1>
+    <p>archivo personal de proyectos, experimentos y curiosidades.</p>
+    
+      <section class="archive-prerender-seccion">
+        <h2>tools</h2>
+        
+    <div class="archive-section">
+      <div class="archive-section-items">
+        
+    <div class="archive-item" style="--i: 0">
+      <a href="https://meowrhino.github.io/moixi/" target="_blank" rel="noopener" class="archive-item-name">moixi</a>
+      
     </div>
-  </noscript>
+  
+    <div class="archive-item" style="--i: 1">
+      <a href="https://meowrhino.github.io/retals/" target="_blank" rel="noopener" class="archive-item-name">retals</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 2">
+      <a href="https://meowrhino.github.io/trackr/" target="_blank" rel="noopener" class="archive-item-name">trackr</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 3">
+      <a href="https://meowrhino.github.io/imgToWeb/" target="_blank" rel="noopener" class="archive-item-name">webP converter</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 4">
+      <a href="https://meowrhino.github.io/imgTo1600x900/" target="_blank" rel="noopener" class="archive-item-name">imgTo1600x900</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 5">
+      <a href="https://meowrhino.github.io/videoToWeb/" target="_blank" rel="noopener" class="archive-item-name">webM converter</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 6">
+      <a href="https://meowrhino.github.io/calculadoraInversa/" target="_blank" rel="noopener" class="archive-item-name">calculadora Impuestos</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 7">
+      <a href="https://meowrhino.github.io/generadorFacturas/" target="_blank" rel="noopener" class="archive-item-name">facture generator</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 8">
+      <a href="https://meowrhino.github.io/colorFun/" target="_blank" rel="noopener" class="archive-item-name">colorFun</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 9">
+      <a href="https://meowrhino.github.io/encuestaClientes/" target="_blank" rel="noopener" class="archive-item-name">encuesta satisfacción</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 10">
+      <a href="https://meowrhino.github.io/imgToNavicon/" target="_blank" rel="noopener" class="archive-item-name">navicon converter</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 11">
+      <a href="https://meowrhino.github.io/tarifasCalculadora/" target="_blank" rel="noopener" class="archive-item-name">meowrhino tarifas</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 12">
+      <a href="https://meowrhino.github.io/fcyp/" target="_blank" rel="noopener" class="archive-item-name">copiar y pegar sin formato</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 13">
+      <a href="https://meowrhino.github.io/igChecker/" target="_blank" rel="noopener" class="archive-item-name">IG follower checker</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 14">
+      <a href="https://meowrhino.github.io/instagramNameGenerator/" target="_blank" rel="noopener" class="archive-item-name">IG @ generator</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 15">
+      <a href="https://meowrhino.github.io/etymodict/" target="_blank" rel="noopener" class="archive-item-name">etymodict</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 16">
+      <a href="https://meowrhino.github.io/writingapp/" target="_blank" rel="noopener" class="archive-item-name">write</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 17">
+      <a href="https://meowrhino.github.io/guiaSetupGithubPages/" target="_blank" rel="noopener" class="archive-item-name">guia setup github pages</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 18">
+      <a href="https://meowrhino.github.io/faqAutonomos/" target="_blank" rel="noopener" class="archive-item-name">faqAutonomos</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 19">
+      <a href="https://meowrhino.github.io/VNGenerator/" target="_blank" rel="noopener" class="archive-item-name">VNGenerator</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 20">
+      <a href="https://meowrhino.github.io/ajutscat/" target="_blank" rel="noopener" class="archive-item-name">ajutsCat</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 21">
+      <a href="https://meowrhino.github.io/chords/" target="_blank" rel="noopener" class="archive-item-name">chords</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 22">
+      <a href="https://meowrhino.github.io/poporingGenerator/" target="_blank" rel="noopener" class="archive-item-name">poporingGenerator</a>
+      
+    </div>
+  
+      </div>
+    </div>
+  
+      </section>
+      <section class="archive-prerender-seccion">
+        <h2>misc</h2>
+        
+    <div class="archive-section">
+      <div class="archive-section-items">
+        
+    <div class="archive-item" style="--i: 0">
+      <a href="https://www.youtube.com/watch?v=S9Nv0K8pjLo" target="_blank" rel="noopener" class="archive-item-name">AI (art direction)</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 1">
+      <a href="https://meowrhino.gitlab.io/bichi/" target="_blank" rel="noopener" class="archive-item-name">bichi</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 2">
+      <a href="https://meowrhino.neocities.org/projects/cv01/cv_0.png" target="_blank" rel="noopener" class="archive-item-name">CV01</a>
+      <span class="archive-item-links"><a href="https://meowrhino.neocities.org/projects/cv01/cv_0.png" target="_blank" rel="noopener" class="archive-item-link">01</a> <a href="https://meowrhino.neocities.org/projects/cv01/cv_1.png" target="_blank" rel="noopener" class="archive-item-link">02</a> <a href="https://meowrhino.neocities.org/projects/cv01/cv_2.png" target="_blank" rel="noopener" class="archive-item-link">03</a> <a href="https://mega.nz/#F!dlQWlIJK!f65Tz161WhWqD1TsYVSXTA" target="_blank" rel="noopener" class="archive-item-link">download (mac)</a> <a href="https://youtu.be/F_NGUAMIREI" target="_blank" rel="noopener" class="archive-item-link">gameplay</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 3">
+      <a href="https://mega.nz/#!BswTyShJ!3_w2PiNZnDeKSV2Lpe7MLNbrISanoJcDz9hsUccwof4" target="_blank" rel="noopener" class="archive-item-name">cubito</a>
+      <span class="archive-item-links"><a href="https://mega.nz/#!BswTyShJ!3_w2PiNZnDeKSV2Lpe7MLNbrISanoJcDz9hsUccwof4" target="_blank" rel="noopener" class="archive-item-link">video</a> <a href="https://mega.nz/#!84g3zYDY!_D2w_dw216gmrz1KQUhw3EobnasxlCbQ3EmcPEP5Yto" target="_blank" rel="noopener" class="archive-item-link">joan</a> <a href="https://meowrhino.neocities.org/projects/cubito/IMG_9318.png" target="_blank" rel="noopener" class="archive-item-link">3</a> <a href="https://meowrhino.neocities.org/projects/cubito/Sin%20t%C3%ADtulo-12.pdf" target="_blank" rel="noopener" class="archive-item-link">portfolio</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 4">
+      <a href="https://meowrhino.neocities.org/projects/cubito/IMG_9318.png" target="_blank" rel="noopener" class="archive-item-name">limon</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 5">
+      <a href="https://meowrhino.neocities.org/projects/entierro/velatori_2.png" target="_blank" rel="noopener" class="archive-item-name">entierro</a>
+      <span class="archive-item-links"><a href="https://meowrhino.neocities.org/projects/entierro/velatori_2.png" target="_blank" rel="noopener" class="archive-item-link">1</a> <a href="https://meowrhino.neocities.org/projects/entierro/enterrament_1.png" target="_blank" rel="noopener" class="archive-item-link">2</a> <a href="https://meowrhino.neocities.org/projects/entierro/enterrament_2.png" target="_blank" rel="noopener" class="archive-item-link">3</a> <a href="https://meowrhino.neocities.org/projects/entierro/enterrat_1.png" target="_blank" rel="noopener" class="archive-item-link">4</a> <a href="https://meowrhino.neocities.org/projects/entierro/enterrat_2.png" target="_blank" rel="noopener" class="archive-item-link">5</a> <a href="https://meowrhino.neocities.org/projects/entierro/Sin%20t%C3%ADtulo-13.pdf" target="_blank" rel="noopener" class="archive-item-link">portfolio</a> <a href="https://mega.nz/#!s1YBhCzZ!bCFO8BC2voApKtSAZzMtOhltAi_w0YyEIhZd2agfqys" target="_blank" rel="noopener" class="archive-item-link">bonus</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 6">
+      <a href="https://meowrhino.neocities.org/projects/casco/DSC_0059%20copia2.png" target="_blank" rel="noopener" class="archive-item-name">casco</a>
+      <span class="archive-item-links"><a href="https://meowrhino.neocities.org/projects/casco/DSC_0059%20copia2.png" target="_blank" rel="noopener" class="archive-item-link">0</a> <a href="https://meowrhino.neocities.org/projects/casco/DSC_0072%20copia.jpg" target="_blank" rel="noopener" class="archive-item-link">eura</a> <a href="https://meowrhino.neocities.org/projects/casco/DSC_0512.jpeg" target="_blank" rel="noopener" class="archive-item-link">casco</a> <a href="https://meowrhino.neocities.org/projects/casco/Casco.pdf" target="_blank" rel="noopener" class="archive-item-link">dossier</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 7">
+      <a href="https://mega.nz/fm/Q4gBXJYa" target="_blank" rel="noopener" class="archive-item-name">jungle</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 8">
+      <a href="https://meowrhino.neocities.org/projects/joyicidios/Joyicidios_Manuel_Latour1.pdf" target="_blank" rel="noopener" class="archive-item-name">joyicidios</a>
+      <span class="archive-item-links"><a href="https://meowrhino.neocities.org/projects/joyicidios/Joyicidios_Manuel_Latour1.pdf" target="_blank" rel="noopener" class="archive-item-link">object</a> <a href="https://meowrhino.neocities.org/projects/joyicidios/Joyicidios_Manuel_Latour2.pdf" target="_blank" rel="noopener" class="archive-item-link">human</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 9">
+      <a href="https://www.figma.com/proto/yQE0i2BeTxN55QMbRtfIMA/verdi-manue-latour?page-id=109%3A10&amp;type=design&amp;node-id=109-11&amp;viewport=102%2C367%2C0.25&amp;t=CFAM2Go2Sb6FfnpI-1&amp;scaling=scale-down&amp;starting-point-node-id=109%3A11&amp;show-proto-sidebar=1&amp;mode=design" target="_blank" rel="noopener" class="archive-item-name">verdi</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 10">
+      <a href="https://meowrhino.neocities.org/projects/ASAV/1.png" target="_blank" rel="noopener" class="archive-item-name">ASAV</a>
+      <span class="archive-item-links"><a href="https://meowrhino.neocities.org/projects/ASAV/1.png" target="_blank" rel="noopener" class="archive-item-link">1</a> <a href="https://meowrhino.neocities.org/projects/ASAV/2.png" target="_blank" rel="noopener" class="archive-item-link">2</a> <a href="https://meowrhino.neocities.org/projects/ASAV/3.png" target="_blank" rel="noopener" class="archive-item-link">3</a> <a href="https://meowrhino.neocities.org/projects/ASAV/4.png" target="_blank" rel="noopener" class="archive-item-link">4</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 11">
+      <a href="https://meowrhino.neocities.org/projects/yamigotchi/LATOUR_MANUEL_MEMORIAFINAL.pdf" target="_blank" rel="noopener" class="archive-item-name">yamigotchi</a>
+      <span class="archive-item-links"><a href="https://meowrhino.neocities.org/projects/yamigotchi/LATOUR_MANUEL_MEMORIAFINAL.pdf" target="_blank" rel="noopener" class="archive-item-link">portfolio</a> <a href="https://mega.nz/#!lo5ShIoY!VtHiCccCkk5vApziwP1H3Y2ebebEkZcRJZQumQaq3Q0" target="_blank" rel="noopener" class="archive-item-link">shop</a> <a href="https://latourtilla.hotglue.me/?blanki_cody" target="_blank" rel="noopener" class="archive-item-link">code</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 12">
+      <a href="https://meowrhino.neocities.org/projects/palomas/0.png" target="_blank" rel="noopener" class="archive-item-name">palomas</a>
+      <span class="archive-item-links"><a href="https://meowrhino.neocities.org/projects/palomas/0.png" target="_blank" rel="noopener" class="archive-item-link">0</a> <a href="https://meowrhino.neocities.org/projects/palomas/1.png" target="_blank" rel="noopener" class="archive-item-link">1</a> <a href="https://meowrhino.neocities.org/projects/palomas/2.png" target="_blank" rel="noopener" class="archive-item-link">2</a> <a href="https://meowrhino.neocities.org/projects/palomas/3.png" target="_blank" rel="noopener" class="archive-item-link">3</a> <a href="https://meowrhino.neocities.org/projects/palomas/4.png" target="_blank" rel="noopener" class="archive-item-link">4</a> <a href="https://meowrhino.neocities.org/projects/palomas/5.png" target="_blank" rel="noopener" class="archive-item-link">5</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 13">
+      <a href="https://meowrhino.neocities.org/img/paradians/paradians_01.png" target="_blank" rel="noopener" class="archive-item-name">paradians</a>
+      <span class="archive-item-links"><a href="https://meowrhino.neocities.org/img/paradians/paradians_01.png" target="_blank" rel="noopener" class="archive-item-link">0</a> <a href="https://meowrhino.neocities.org/img/paradians/paradians_02.png" target="_blank" rel="noopener" class="archive-item-link">1</a> <a href="https://meowrhino.neocities.org/img/paradians/paradians_03.png" target="_blank" rel="noopener" class="archive-item-link">2</a> <a href="https://meowrhino.neocities.org/img/paradians/paradians_04.png" target="_blank" rel="noopener" class="archive-item-link">3</a> <a href="https://meowrhino.neocities.org/img/paradians/paradians_05.png" target="_blank" rel="noopener" class="archive-item-link">4</a> <a href="https://meowrhino.neocities.org/img/paradians/paradians_06.png" target="_blank" rel="noopener" class="archive-item-link">5</a> <a href="https://meowrhino.neocities.org/img/paradians/paradians_07.png" target="_blank" rel="noopener" class="archive-item-link">6</a> <a href="https://meowrhino.neocities.org/img/paradians/paradians_08.png" target="_blank" rel="noopener" class="archive-item-link">7</a> <a href="https://meowrhino.neocities.org/img/paradians/paradians_09.png" target="_blank" rel="noopener" class="archive-item-link">8</a> <a href="https://meowrhino.neocities.org/img/paradians/paradians_10.png" target="_blank" rel="noopener" class="archive-item-link">9</a> <a href="https://meowrhino.neocities.org/img/paradians/parade_all.png" target="_blank" rel="noopener" class="archive-item-link">dance</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 14">
+      <a href="https://meowrhino.neocities.org/projects/insta/_.png" target="_blank" rel="noopener" class="archive-item-name">img</a>
+      <span class="archive-item-links"><a href="https://meowrhino.neocities.org/projects/insta/_.png" target="_blank" rel="noopener" class="archive-item-link">_</a> <a href="https://meowrhino.neocities.org/projects/insta/why.png" target="_blank" rel="noopener" class="archive-item-link">why</a> <a href="https://meowrhino.neocities.org/projects/insta/barquito.png" target="_blank" rel="noopener" class="archive-item-link">boat</a> <a href="https://mega.nz/file/R9wjlDaJ#n-8pm9jIMkgBDtg8HTmzHCcWTubNJYuR4-vjLT88aD0" target="_blank" rel="noopener" class="archive-item-link">luna</a> <a href="https://meowrhino.neocities.org/projects/insta/o.png" target="_blank" rel="noopener" class="archive-item-link">o</a> <a href="https://mega.nz/file/lxQFzZLA#mppVtvYamSo7fndY0VYNUBkx2_VNWi7dsHZYDU1ZzDI" target="_blank" rel="noopener" class="archive-item-link">boog</a> <a href="https://meowrhino.neocities.org/projects/insta/kiwi2.jpg" target="_blank" rel="noopener" class="archive-item-link">kiwi</a> <a href="https://meowrhino.neocities.org/projects/insta/b5_2.png" target="_blank" rel="noopener" class="archive-item-link">b5</a> <a href="https://mega.nz/file/QxI2lbQA#A0DfMmgQjMQvLpuhWPJvGa0GssNyjvMqFMB0rSGUQb0" target="_blank" rel="noopener" class="archive-item-link">tiburón</a> <a href="https://meowrhino.neocities.org/img/glub.png" target="_blank" rel="noopener" class="archive-item-link">glub</a> <a href="https://meowrhino.neocities.org/projects/insta/4444.png" target="_blank" rel="noopener" class="archive-item-link">4444</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 15">
+      <a href="https://meowrhino.github.io/odin-recipes/" target="_blank" rel="noopener" class="archive-item-name">odin-recipes</a>
+      
+    </div>
+  
+      </div>
+    </div>
+  
+      </section>
+      <section class="archive-prerender-seccion">
+        <h2>sidequests</h2>
+        
+    <div class="archive-section">
+      <div class="archive-section-items">
+        
+    <div class="archive-item" style="--i: 0">
+      <a href="https://meowrhino.github.io/diegosanmarcos/" target="_blank" rel="noopener" class="archive-item-name">diegosanmarcos</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 1">
+      <a href="https://meowrhino.github.io/maxito/" target="_blank" rel="noopener" class="archive-item-name">maxito</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 2">
+      <a href="https://meowrhino.github.io/rikamichie/" target="_blank" rel="noopener" class="archive-item-name">rikamichie</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/rikamichie/" target="_blank" rel="noopener" class="archive-item-link">repo</a> <a href="https://rikamichie.com" target="_blank" rel="noopener" class="archive-item-link">web</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 3">
+      <a href="https://meowrhino.github.io/valentin3/" target="_blank" rel="noopener" class="archive-item-name">valentin</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/valentin3/" target="_blank" rel="noopener" class="archive-item-link">repo3</a> <a href="https://meowrhino.github.io/valentin2/" target="_blank" rel="noopener" class="archive-item-link">repo2</a> <a href="https://meowrhino.github.io/valentin/" target="_blank" rel="noopener" class="archive-item-link">repo1</a> <a href="https://valentinbarrio.com" target="_blank" rel="noopener" class="archive-item-link">web</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 4">
+      <a href="https://meowrhino.github.io/polroig4/" target="_blank" rel="noopener" class="archive-item-name">polroig</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/polroig4/" target="_blank" rel="noopener" class="archive-item-link">web</a> <a href="https://meowrhino.github.io/polroig3/" target="_blank" rel="noopener" class="archive-item-link">repo3</a> <a href="https://meowrhino.github.io/polroig2/" target="_blank" rel="noopener" class="archive-item-link">repo2</a> <a href="https://meowrhino.github.io/polroig/" target="_blank" rel="noopener" class="archive-item-link">repo</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 5">
+      <a href="https://meowrhino.github.io/mikesx/" target="_blank" rel="noopener" class="archive-item-name">mikesx cd&#39;s</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/mikesx/" target="_blank" rel="noopener" class="archive-item-link">repo</a> <a href="https://mikebros.com" target="_blank" rel="noopener" class="archive-item-link">web</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 6">
+      <a href="https://meowrhino.github.io/jaumeclotet/" target="_blank" rel="noopener" class="archive-item-name">jaume clotet</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/jaumeclotet/" target="_blank" rel="noopener" class="archive-item-link">repo</a> <a href="https://jaumeclotet.com" target="_blank" rel="noopener" class="archive-item-link">web</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 7">
+      <a href="https://meowrhino.github.io/conor/" target="_blank" rel="noopener" class="archive-item-name">conor</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 8">
+      <a href="https://meowrhino.github.io/paulabarjau/" target="_blank" rel="noopener" class="archive-item-name">paula barjau</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 9">
+      <a href="https://meowrhino.github.io/mirandaperezhita/" target="_blank" rel="noopener" class="archive-item-name">miranda</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/mirandaperezhita/" target="_blank" rel="noopener" class="archive-item-link">repo</a> <a href="https://mirandaperezhita.com" target="_blank" rel="noopener" class="archive-item-link">web</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 10">
+      <a href="https://meowrhino.github.io/andreacarilla/" target="_blank" rel="noopener" class="archive-item-name">andrea carilla</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/andreacarilla/" target="_blank" rel="noopener" class="archive-item-link">repo</a> <a href="https://andreacarilla.work" target="_blank" rel="noopener" class="archive-item-link">web</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 11">
+      <a href="https://meowrhino.github.io/mokakopa/" target="_blank" rel="noopener" class="archive-item-name">mokakopa</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/mokakopa/" target="_blank" rel="noopener" class="archive-item-link">repo</a> <a href="https://mokakopa.com" target="_blank" rel="noopener" class="archive-item-link">web</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 12">
+      <a href="https://meowrhino.github.io/twinMokakopa/" target="_blank" rel="noopener" class="archive-item-name">ana lópez serrano</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/twinMokakopa/" target="_blank" rel="noopener" class="archive-item-link">repo</a> <a href="https://analopezserrano.com" target="_blank" rel="noopener" class="archive-item-link">web</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 13">
+      <a href="https://meowrhino.github.io/e300/" target="_blank" rel="noopener" class="archive-item-name">e3000</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/e300/" target="_blank" rel="noopener" class="archive-item-link">repo</a> <a href="https://estructuras3000.com" target="_blank" rel="noopener" class="archive-item-link">web</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 14">
+      <a href="https://meowrhino.github.io/jordis/" target="_blank" rel="noopener" class="archive-item-name">elmundodelasjordis</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/jordis/" target="_blank" rel="noopener" class="archive-item-link">repo</a> <a href="https://elmundodelasjordis.com" target="_blank" rel="noopener" class="archive-item-link">web</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 15">
+      <a href="https://meowrhino.github.io/snerta/" target="_blank" rel="noopener" class="archive-item-name">berta esteve</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/snerta/" target="_blank" rel="noopener" class="archive-item-link">repo</a> <a href="https://bertaesteve.cat" target="_blank" rel="noopener" class="archive-item-link">web</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 16">
+      <a href="https://meowrhino.github.io/anakatana/" target="_blank" rel="noopener" class="archive-item-name">hifas studio</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 17">
+      <a href="https://meowrhino.github.io/villagranota/" target="_blank" rel="noopener" class="archive-item-name">villa granota</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 18">
+      <a href="https://meowrhino.github.io/noan/" target="_blank" rel="noopener" class="archive-item-name">noan cittadino</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/noan/" target="_blank" rel="noopener" class="archive-item-link">repo</a> <a href="https://noancittadino.com" target="_blank" rel="noopener" class="archive-item-link">web</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 19">
+      <a href="https://meowrhino.github.io/blurberri/" target="_blank" rel="noopener" class="archive-item-name">930blurberrie</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/blurberri/" target="_blank" rel="noopener" class="archive-item-link">repo</a> <a href="https://930blurberrie.com" target="_blank" rel="noopener" class="archive-item-link">web</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 20">
+      <a href="https://meowrhino.github.io/diarioBarbara/" target="_blank" rel="noopener" class="archive-item-name">diarioBarbara</a>
+      
+    </div>
+  
+      </div>
+    </div>
+  
+      </section>
+      <section class="archive-prerender-seccion">
+        <h2>meowrhino</h2>
+        
+    <div class="archive-section">
+      <div class="archive-section-items">
+        
+    <div class="archive-item" style="--i: 0">
+      <a href="https://meowrhino.github.io/profilePics/" target="_blank" rel="noopener" class="archive-item-name">profilePics</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 1">
+      <a href="https://arxiu.meowrhino.studio" target="_blank" rel="noopener" class="archive-item-name">arxiu</a>
+      <span class="archive-item-links"><a href="https://arxiu.meowrhino.studio" target="_blank" rel="noopener" class="archive-item-link">web</a> <a href="https://meowrhino.github.io/arxiu/" target="_blank" rel="noopener" class="archive-item-link">gh</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 2">
+      <a href="https://meowrhino.github.io/clouds/" target="_blank" rel="noopener" class="archive-item-name">meowrhino clouds</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/clouds/" target="_blank" rel="noopener" class="archive-item-link">v1</a> <a href="https://meowrhino.github.io/cloudsv0/" target="_blank" rel="noopener" class="archive-item-link">v0</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 3">
+      <a href="https://meowrhino.neocities.org/" target="_blank" rel="noopener" class="archive-item-name">meowrhino archive</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 4">
+      <a href="https://meowrhino.github.io/arwuchivo/" target="_blank" rel="noopener" class="archive-item-name">archivo kung fú</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 5">
+      <a href="https://meowrhino.github.io/cielo/" target="_blank" rel="noopener" class="archive-item-name">cielo en barcelona</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 6">
+      <a href="https://meowrhino.github.io/becasDigMeow_v1/" target="_blank" rel="noopener" class="archive-item-name">becas digMeow</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/becasDigMeow_v1/" target="_blank" rel="noopener" class="archive-item-link">v1</a> <a href="https://meowrhino.github.io/becasDigMeow_v0/" target="_blank" rel="noopener" class="archive-item-link">v0</a></span>
+    </div>
+  
+      </div>
+    </div>
+  
+      </section>
+      <section class="archive-prerender-seccion">
+        <h2>games</h2>
+        
+    <div class="archive-section">
+      <div class="archive-section-items">
+        
+    <div class="archive-item" style="--i: 0">
+      <a href="https://meowrhino.neocities.org/barcelona.html" target="_blank" rel="noopener" class="archive-item-name">barcelona per eixample</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 1">
+      <a href="https://meowrhino.neocities.org/lafesta_old.html" target="_blank" rel="noopener" class="archive-item-name">festa</a>
+      <span class="archive-item-links"><a href="https://meowrhino.neocities.org/lafesta_old.html" target="_blank" rel="noopener" class="archive-item-link">link</a> <a href="https://meowrhino.neocities.org/lafesta.html" target="_blank" rel="noopener" class="archive-item-link">extended</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 2">
+      <a href="https://meowrhino.github.io/gameOfLife/" target="_blank" rel="noopener" class="archive-item-name">joc de la vida</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 3">
+      <a href="https://meowrhino.github.io/etchASketch/" target="_blank" rel="noopener" class="archive-item-name">minesweeper v0</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 4">
+      <a href="https://meowrhino.github.io/minesweeperV2/" target="_blank" rel="noopener" class="archive-item-name">minesweeperV2</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 5">
+      <a href="https://meowrhino.github.io/rockPaperScissors/" target="_blank" rel="noopener" class="archive-item-name">rockPaperScissors</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 6">
+      <a href="https://meowrhino.github.io/5cards/" target="_blank" rel="noopener" class="archive-item-name">5cards</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 7">
+      <a href="https://meowrhino.github.io/cards1/" target="_blank" rel="noopener" class="archive-item-name">cards1</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 8">
+      <a href="https://meowrhino.github.io/letterSoup/" target="_blank" rel="noopener" class="archive-item-name">letterSoup</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 9">
+      <a href="https://meowrhino.github.io/horseLife/" target="_blank" rel="noopener" class="archive-item-name">horseLife</a>
+      
+    </div>
+  
+      </div>
+    </div>
+  
+      </section>
+      <section class="archive-prerender-seccion">
+        <h2>experiments</h2>
+        
+    <div class="archive-section">
+      <div class="archive-section-items">
+        
+    <div class="archive-item" style="--i: 0">
+      <a href="https://meowrhino.github.io/diego3/" target="_blank" rel="noopener" class="archive-item-name">diego3</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 1">
+      <a href="https://meowrhino.github.io/randomStars/" target="_blank" rel="noopener" class="archive-item-name">stars generator</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 2">
+      <a href="https://meowrhino.github.io/buddhabrot/" target="_blank" rel="noopener" class="archive-item-name">buddhabrot generator</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 3">
+      <a href="https://meowrhino.github.io/8guamusic1" target="_blank" rel="noopener" class="archive-item-name">iching</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/8guamusic1" target="_blank" rel="noopener" class="archive-item-link">music</a> <a href="https://meowrhino.github.io/8guafuture1/" target="_blank" rel="noopener" class="archive-item-link">future</a> <a href="https://meowrhino.github.io/trigrama/" target="_blank" rel="noopener" class="archive-item-link">trigrama</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 4">
+      <a href="https://meowrhino.github.io/ichingPic/" target="_blank" rel="noopener" class="archive-item-name">ichingPic</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 5">
+      <a href="https://meowrhino.github.io/wholeSignHouseChart/" target="_blank" rel="noopener" class="archive-item-name">zodiac chart</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 6">
+      <a href="https://meowrhino.github.io/htmlDay2025/" target="_blank" rel="noopener" class="archive-item-name">html day 2025</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 7">
+      <a href="https://meowrhino.gitlab.io/mediocre-learner/" target="_blank" rel="noopener" class="archive-item-name">mediocre learner</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 8">
+      <a href="https://meowrhino.github.io/atalanta/" target="_blank" rel="noopener" class="archive-item-name">atalanta library</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 9">
+      <a href="https://meowrhino.github.io/apoloASCII/" target="_blank" rel="noopener" class="archive-item-name">apoloASCII</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 10">
+      <a href="https://meowrhino.github.io/neolib10/" target="_blank" rel="noopener" class="archive-item-name">neolib10</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 11">
+      <a href="https://meowrhino.github.io/solar5/" target="_blank" rel="noopener" class="archive-item-name">solar5</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 12">
+      <a href="https://meowrhino.github.io/a/" target="_blank" rel="noopener" class="archive-item-name">a</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 13">
+      <a href="https://matchacafe.manus.space" target="_blank" rel="noopener" class="archive-item-name">fake matcha cafe</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 14">
+      <a href="https://meowrhino.github.io/ryf/" target="_blank" rel="noopener" class="archive-item-name">ryf</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 15">
+      <a href="https://meowrhino.github.io/investigaciones_001/" target="_blank" rel="noopener" class="archive-item-name">investigaciones</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/investigaciones_001/" target="_blank" rel="noopener" class="archive-item-link">001</a> <a href="https://meowrhino.github.io/investigaciones_002/" target="_blank" rel="noopener" class="archive-item-link">002</a> <a href="https://meowrhino.github.io/investigaciones_003/" target="_blank" rel="noopener" class="archive-item-link">003</a> <a href="https://meowrhino.github.io/investigaciones_004/" target="_blank" rel="noopener" class="archive-item-link">004</a></span>
+    </div>
+  
+      </div>
+    </div>
+  
+      </section>
+      <section class="archive-prerender-seccion">
+        <h2>social</h2>
+        
+    <div class="archive-section">
+      <div class="archive-section-items">
+        
+    <div class="archive-item" style="--i: 0">
+      <a href="https://meowrhino.github.io/miaumiau/" target="_blank" rel="noopener" class="archive-item-name">miaumiau</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 1">
+      <a href="https://piulerv2.manuellatourf.workers.dev/" target="_blank" rel="noopener" class="archive-item-name">piupiu</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 2">
+      <a href="https://piuler.onrender.com/" target="_blank" rel="noopener" class="archive-item-name">piuler</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 3">
+      <a href="https://meowrhino.github.io/gridChat/" target="_blank" rel="noopener" class="archive-item-name">gridChat</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 4">
+      <a href="https://meowrhino.github.io/messagePark/" target="_blank" rel="noopener" class="archive-item-name">messagePark</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 5">
+      <a href="https://meowrhino.github.io/projectChat/" target="_blank" rel="noopener" class="archive-item-name">projectChat</a>
+      
+    </div>
+  
+      </div>
+    </div>
+  
+      </section>
+      <section class="archive-prerender-seccion">
+        <h2>unfinished</h2>
+        
+    <div class="archive-section">
+      <div class="archive-section-items">
+        
+    <div class="archive-item" style="--i: 0">
+      <a href="https://meowrhino.github.io/rikamichiev0/" target="_blank" rel="noopener" class="archive-item-name">rikamichieCard</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 1">
+      <a href="https://meowrhino.github.io/zumino/" target="_blank" rel="noopener" class="archive-item-name">zumiño.ppt</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 2">
+      <a href="https://meowrhino.github.io/plantitas/" target="_blank" rel="noopener" class="archive-item-name">plantitas</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/plantitas/" target="_blank" rel="noopener" class="archive-item-link">test</a> <a href="https://meowrhino.github.io/latrini/" target="_blank" rel="noopener" class="archive-item-link">prototype</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 3">
+      <a href="https://meowrhino.github.io/safeAmorx/" target="_blank" rel="noopener" class="archive-item-name">safeamorx</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/safeAmorx/" target="_blank" rel="noopener" class="archive-item-link">WIP</a> <a href="https://meowrhino.github.io/safeAmorxV2/" target="_blank" rel="noopener" class="archive-item-link">v2</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 4">
+      <a href="https://meowrhino.github.io/tarifas_DEPRECATED/" target="_blank" rel="noopener" class="archive-item-name">first tarifas (deprecated)</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 5">
+      <a href="https://meowrhino.github.io/linktree/" target="_blank" rel="noopener" class="archive-item-name">linktree</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 6">
+      <a href="https://meowrhino.github.io/tinnitusRelief/" target="_blank" rel="noopener" class="archive-item-name">tinnitusRelief</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 7">
+      <a href="https://meowrhino.github.io/discriminationtest/" target="_blank" rel="noopener" class="archive-item-name">discriminationTEST</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 8">
+      <a href="https://meowrhino.github.io/ableme/admin.html" target="_blank" rel="noopener" class="archive-item-name">ableme</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 9">
+      <a href="https://meowrhino.github.io/TEM/" target="_blank" rel="noopener" class="archive-item-name">ethereal TEM</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 10">
+      <a href="https://meowrhino.github.io/oca/" target="_blank" rel="noopener" class="archive-item-name">oca</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 11">
+      <a href="https://meowrhino.github.io/jordiyordiyordyiordi/" target="_blank" rel="noopener" class="archive-item-name">las xordxs</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 12">
+      <a href="https://meowrhino.github.io/directorio/" target="_blank" rel="noopener" class="archive-item-name">directorioLD</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 13">
+      <a href="https://meowrhino.github.io/tarifas2026_DEPRECATED/" target="_blank" rel="noopener" class="archive-item-name">tarifas2026 (deprecated)</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 14">
+      <a href="https://meowrhino.github.io/videoToLilVideo_DEPRECATED/" target="_blank" rel="noopener" class="archive-item-name">videoToLilVideo (deprecated)</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 15">
+      <a href="https://meowrhino.github.io/trackerTest/" target="_blank" rel="noopener" class="archive-item-name">trackerTest</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 16">
+      <a href="https://meowrhino.github.io/quests/" target="_blank" rel="noopener" class="archive-item-name">quests</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 17">
+      <a href="https://meowrhino.github.io/registro/" target="_blank" rel="noopener" class="archive-item-name">registro</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 18">
+      <a href="https://meowrhino.github.io/MTC/" target="_blank" rel="noopener" class="archive-item-name">MTC</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 19">
+      <a href="https://meowrhino.github.io/receptesdelapats/" target="_blank" rel="noopener" class="archive-item-name">receptesdelapats</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 20">
+      <a href="https://meowrhino.github.io/txttohtml/" target="_blank" rel="noopener" class="archive-item-name">txttohtml</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 21">
+      <a href="https://meowrhino.github.io/taxrhino/" target="_blank" rel="noopener" class="archive-item-name">taxrhino</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 22">
+      <a href="https://meowrhino.github.io/grid-web-generator/" target="_blank" rel="noopener" class="archive-item-name">grid-web-generator</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 23">
+      <a href="https://meowrhino.github.io/paintOnline/" target="_blank" rel="noopener" class="archive-item-name">paintOnline</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 24">
+      <a href="https://meowrhino.github.io/pdfs/" target="_blank" rel="noopener" class="archive-item-name">pdfs</a>
+      
+    </div>
+  
+      </div>
+    </div>
+  
+      </section>
+      <section class="archive-prerender-seccion">
+        <h2>texts</h2>
+        
+    <div class="archive-section">
+      <div class="archive-section-items">
+        
+    <div class="archive-item" style="--i: 0">
+      <a href="https://meowrhino.github.io/notas5/" target="_blank" rel="noopener" class="archive-item-name">notas</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/notas5/" target="_blank" rel="noopener" class="archive-item-link">notas5</a> <a href="https://meowrhino.github.io/notas4/" target="_blank" rel="noopener" class="archive-item-link">notas4</a> <a href="https://meowrhino.github.io/notas3/" target="_blank" rel="noopener" class="archive-item-link">notas3</a> <a href="https://meowrhino.github.io/notas2/" target="_blank" rel="noopener" class="archive-item-link">notas2</a> <a href="https://meowrhino.github.io/notas/" target="_blank" rel="noopener" class="archive-item-link">notas</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 1">
+      <a href="https://meowrhino.cargo.site/tfg" target="_blank" rel="noopener" class="archive-item-name">TFG</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 2">
+      <a href="https://meowrhino.github.io/hopeko2/" target="_blank" rel="noopener" class="archive-item-name">hopeko</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/hopeko2/" target="_blank" rel="noopener" class="archive-item-link">hopeko2</a> <a href="https://meowrhino.github.io/hopeko/" target="_blank" rel="noopener" class="archive-item-link">hopeko</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 3">
+      <a href="https://www.indiexpo.net/es/games/la-torra-manel" target="_blank" rel="noopener" class="archive-item-name">la torra manel</a>
+      <span class="archive-item-links"><a href="https://www.indiexpo.net/es/games/la-torra-manel" target="_blank" rel="noopener" class="archive-item-link">I</a> <a href="https://www.indiexpo.net/es/games/la-2a-torre-manel" target="_blank" rel="noopener" class="archive-item-link">II</a> <a href="https://www.indiexpo.net/es/games/la-3era-torra-manel-2" target="_blank" rel="noopener" class="archive-item-link">III</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 4">
+      <a href="https://mega.nz/file/JwZk3IIB#_vWw1ZMt0IV4vBIcd989K7yB7eJTfJriNk5PCnykViQ" target="_blank" rel="noopener" class="archive-item-name">login essay</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 5">
+      <a href="https://meowrhino.github.io/somnis/" target="_blank" rel="noopener" class="archive-item-name">somnis</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 6">
+      <a href="https://meowrhino.github.io/historias/" target="_blank" rel="noopener" class="archive-item-name">historias</a>
+      
+    </div>
+  
+      </div>
+    </div>
+  
+      </section>
+      <section class="archive-prerender-seccion">
+        <h2>WIP</h2>
+        
+    <div class="archive-section">
+      <div class="archive-section-items">
+        
+    <div class="archive-item" style="--i: 0">
+      <a href="https://meowrhino.github.io/barbaraWong/" target="_blank" rel="noopener" class="archive-item-name">barbara wong</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 1">
+      <a href="https://meowrhino.github.io/viciostorpes/" target="_blank" rel="noopener" class="archive-item-name">viciostorpes</a>
+      <span class="archive-item-links"><a href="https://meowrhino.github.io/viciostorpes/" target="_blank" rel="noopener" class="archive-item-link">WIP</a> <a href="https://meowrhino.github.io/viciostorpesV2/" target="_blank" rel="noopener" class="archive-item-link">v2</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 2">
+      <a href="https://meowrhino.github.io/ladiega/" target="_blank" rel="noopener" class="archive-item-name">ladiega</a>
+      
+    </div>
+  
+    <div class="archive-item" style="--i: 3">
+      <a href="https://meowrhino.github.io/christine/" target="_blank" rel="noopener" class="archive-item-name">christine</a>
+      
+    </div>
+  
+      </div>
+    </div>
+  
+      </section>
+      <section class="archive-prerender-seccion">
+        <h2>hidden</h2>
+        
+    <div class="archive-section">
+      <div class="archive-section-items">
+        
+    <div class="archive-item" style="--i: 0">
+      <a href="https://aheartthatrescueshearts.blogspot.com/" target="_blank" rel="noopener" class="archive-item-name">blogs adolescentes</a>
+      <span class="archive-item-links"><a href="https://aheartthatrescueshearts.blogspot.com/" target="_blank" rel="noopener" class="archive-item-link">1</a> <a href="https://freefromninepointeight.blogspot.com/" target="_blank" rel="noopener" class="archive-item-link">2</a></span>
+    </div>
+  
+    <div class="archive-item" style="--i: 1">
+      <a href="https://lethe0.tumblr.com/" target="_blank" rel="noopener" class="archive-item-name">mi primera web</a>
+      
+    </div>
+  
+      </div>
+    </div>
+  
+      </section>
+    <nav class="prerender-nota" aria-label="Esta página usa JavaScript para su navegación interactiva. También puedes ver:">
+      <p>Esta página usa JavaScript para su navegación interactiva. También puedes ver:</p>
+      <ul>
+        <li><a href="/">meowrhino studio</a></li>
+        <li><a href="/proyectos">las páginas de cada proyecto</a></li>
+      </ul>
+      <p>o escríbeme a
+        <a href="mailto:hola@meowrhino.studio">hola@meowrhino.studio</a>.</p>
+    </nav>
+  <!-- BUILD:archive:end -->
+    </div>
+  </main>
   <script type="module" src="js/archive-main.js"></script>
 </body>
 </html>

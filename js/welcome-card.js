@@ -10,7 +10,7 @@
 // y, de paso, da enlaces internos a las 20 páginas de proyecto, que es lo que
 // necesitan para posicionar.
 //
-// Dos decisiones que no son obvias:
+// Tres decisiones que no son obvias:
 //
 //  - El proyecto cambia por TIEMPO (cada CADENCIA ms), no solo al rebotar. Si
 //    dependiera del choque, en una pantalla ancha la tarjeta tardaría muchos
@@ -22,11 +22,17 @@
 //    rebote.js) pero SÍ sigue rotando de proyecto: quien pide menos movimiento
 //    quiere que no se muevan las cosas por la pantalla, no quedarse sin ver el
 //    portfolio. El cambio en ese caso es un corte seco, sin fundido.
+//
+//  - NO lleva `aria-live`. Lo llevaba, y con un cambio cada 4,5 s convertía a
+//    la tarjeta en un altavoz que interrumpía al lector de pantalla para
+//    siempre. Es un escaparate decorativo, no un aviso de estado: quien navegue
+//    con lector la encuentra como un enlace más cuando le toque.
 
 import { currentLang, attachLangListeners } from "./data.js";
 import { esMovil } from "./pages.js";
 import { slugify } from "./proyecto-template.js";
 import { iniciarRebote } from "./rebote.js";
+import { rutaProyectos } from "./rutas.js";
 import { escapeHTML } from "./utils.js";
 
 /** Cada cuánto cambia de proyecto. */
@@ -38,6 +44,13 @@ const ETIQUETA = {
   es:  "ver el proyecto",
   en:  "see the project",
   cat: "veure el projecte",
+};
+
+/** Alt de la captura, por idioma. */
+const ALT = {
+  es:  (n) => `${n} — web diseñada por meowrhino studio`,
+  en:  (n) => `${n} — website designed by meowrhino studio`,
+  cat: (n) => `${n} — web dissenyada per meowrhino studio`,
 };
 
 /**
@@ -55,7 +68,7 @@ export function renderWelcomeCard(celda, proyectos) {
   if (!orden.length) return;
 
   celda.insertAdjacentHTML("beforeend", `
-    <a class="welcome-card" id="welcomeCard" href="#" aria-live="polite">
+    <a class="welcome-card" id="welcomeCard" href="#">
       <img class="welcome-card-img" alt="" decoding="async">
       <span class="welcome-card-pie">
         <span class="welcome-card-nombre"></span>
@@ -74,12 +87,13 @@ export function renderWelcomeCard(celda, proyectos) {
 
   const pintar = () => {
     const p = orden[i];
-    const slug = slugify(p.nombre);
 
     imgEl.src = p.imagen;
-    imgEl.alt = `${p.nombre} — web diseñada por meowrhino studio`;
     nombreEl.textContent = p.nombre;
-    cardEl.href = `/proyectos/${slug}`;
+    // El destino y los textos dependen del idioma: en /en y /ca la card
+    // enlazaba a la página castellana, que es mandar al visitante inglés a la
+    // versión que no es teniendo la suya.
+    aplicarLang(currentLang);
     ultimoCambio = performance.now();
 
     // La siguiente se precarga fuera del DOM: cuando toque, ya está en caché y
@@ -97,8 +111,15 @@ export function renderWelcomeCard(celda, proyectos) {
     setTimeout(() => { pintar(); cardEl.classList.remove("cambiando"); }, 180);
   };
 
-  const aplicarLang = (lang) => { ctaEl.textContent = ETIQUETA[lang] || ETIQUETA.es; };
-  aplicarLang(currentLang);
+  // Repinta todo lo que depende del idioma sobre el proyecto que se ve AHORA:
+  // el destino, el pie y el alt. Lo llaman `pintar` (al cambiar de proyecto) y
+  // el listener de idioma (al cambiar de idioma sin cambiar de proyecto).
+  function aplicarLang(lang) {
+    const p = orden[i];
+    ctaEl.textContent = ETIQUETA[lang] || ETIQUETA.es;
+    imgEl.alt = (ALT[lang] || ALT.es)(p.nombre);
+    cardEl.href = `${rutaProyectos(lang)}/${slugify(p.nombre)}`;
+  }
   attachLangListeners(celda, aplicarLang);
 
   pintar();
@@ -130,7 +151,10 @@ export function renderWelcomeCard(celda, proyectos) {
  * por debajo (--z-card < --z-cupon) y la oferta nunca queda tapada.
  */
 function esquinaLejosDelCupon(celda, b) {
-  const esquinas = [{ x: 0, y: 0 }, { x: b.w, y: 0 }, { x: 0, y: b.h }, { x: b.w, y: b.h }];
+  const esquinas = [
+    { x: b.minX, y: b.minY }, { x: b.maxX, y: b.minY },
+    { x: b.minX, y: b.maxY }, { x: b.maxX, y: b.maxY },
+  ];
   const cupon = celda.querySelector("#welcomeCupon");
   if (!cupon) return esquinas[Math.floor(Math.random() * esquinas.length)];
 

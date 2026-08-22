@@ -9,6 +9,8 @@
 // Así el texto que ve Google es EXACTAMENTE el que ve el visitante, sin copias
 // que se desincronicen. Fuente única de contenido: data.json.
 
+import { rutaProyectos } from "./rutas.js";
+
 /** Escoge la variante de idioma de un objeto {es,en,cat}, con fallback a es. */
 export const pickLang = (obj, lang) => obj?.[lang] ?? obj?.es ?? "";
 
@@ -132,9 +134,12 @@ export function contactoHTML(data, lang) {
 
 export function footerHTML() {
   // Solo el wordmark, centrado. Enlaza al grid (única puerta de vuelta).
+  // Va a "/" y no a "index.html" porque Cloudflare responde 307 al segundo:
+  // enlazar a la forma que redirige gasta un salto en cada visita y en cada
+  // rastreo. Misma razón en la nota del pre-render, más abajo.
   return `
     <footer class="easy-footer">
-      <a href="index.html">meowrhino.studio</a>
+      <a href="/">meowrhino.studio</a>
     </footer>`;
 }
 
@@ -179,10 +184,14 @@ export function renderHomePrerenderHTML(data, lang) {
  * El índice de proyectos va en absoluto (y no "proyectos/index.html") porque es
  * la URL canónica que declaran esas páginas; enlazar a otra forma repartiría
  * señales. Y cada idioma enlaza al SUYO: mandar /en a /proyectos sería enviar al
- * visitante inglés a la versión castellana teniendo la suya.
+ * visitante inglés a la versión castellana teniendo la suya. La tabla de rutas
+ * vive en rutas.js para que el grid y la card del welcome usen la misma.
+ *
+ * /easy y /archive van sin extensión por lo mismo: Cloudflare responde 307 a
+ * easy.html y archive.html, y estos tres son los únicos enlaces a esas páginas
+ * que existen en el HTML crudo. No merece la pena que el rastreador gaste un
+ * salto para llegar a ellas.
  */
-const RUTA_PROYECTOS = { es: "/proyectos", en: "/en/projects", cat: "/ca/projectes" };
-
 function notaPrerenderHTML(data, lang) {
   const t = data.prerender || {};
   const email = data.contacto?.email || "";
@@ -192,9 +201,9 @@ function notaPrerenderHTML(data, lang) {
     <nav class="prerender-nota" aria-label="${esc(pickLang(t.aviso, lang))}">
       <p>${esc(pickLang(t.aviso, lang))}</p>
       <ul>
-        ${li("easy.html", pickLang(t.enlaceEasy, lang))}
-        ${li(RUTA_PROYECTOS[lang] || RUTA_PROYECTOS.es, pickLang(t.enlaceProyectos, lang))}
-        ${li("archive.html", pickLang(t.enlaceArchivo, lang))}
+        ${li("/easy", pickLang(t.enlaceEasy, lang))}
+        ${li(rutaProyectos(lang), pickLang(t.enlaceProyectos, lang))}
+        ${li("/archive", pickLang(t.enlaceArchivo, lang))}
       </ul>
       <p>${esc(pickLang(t.escribeme, lang))}
         <a href="mailto:${esc(email)}">${esc(email)}</a>.</p>

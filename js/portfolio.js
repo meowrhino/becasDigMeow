@@ -4,16 +4,13 @@
 
 import { currentLang, obtenerDatos, onLangChange } from "./data.js";
 import { slugify } from "./proyecto-template.js";
+import { rutaProyectos } from "./rutas.js";
 import { setupScrollGradients } from "./scroll-gradients.js";
 
 /** Texto del enlace al caso de estudio, por idioma. */
 const CASO = { es: "ver el caso →", en: "see the case →", cat: "veure el cas →" };
 
-/** Base de la ruta de proyectos en cada idioma (la misma que genera build-seo). */
-const RUTA_PROYECTOS = { es: "/proyectos", en: "/en/projects", cat: "/ca/projectes" };
-
 const pick = (obj, lang) => obj?.[lang] ?? obj?.es ?? "";
-const rutaProyectos = (lang) => RUTA_PROYECTOS[lang] || RUTA_PROYECTOS.es;
 
 // --- Estado centralizado de cycling de imágenes ---
 
@@ -202,7 +199,7 @@ export function renderPortfolio(data) {
 
   // Nav-label "archive" en la parte inferior
   const archiveLabel = document.createElement("a");
-  archiveLabel.href = "archive.html";
+  archiveLabel.href = "/archive";   // "archive.html" responde 307 en Cloudflare
   archiveLabel.classList.add("nav-label", "bottom");
   archiveLabel.dataset.permanent = "true";
   archiveLabel.textContent = "archive";
