@@ -1901,3 +1901,90 @@ html.js #seo-prerender {
 .prerender-nota li {
   margin-bottom: 0.3rem;
 }
+
+/* ============================================
+   18. PÁGINAS DE PROYECTO (/proyectos/<slug>)
+   Generadas por build-seo.js. Reutilizan el chasis del modo fácil
+   (html.easy + body.easy-mode): mismo scroll lineal, misma tipografía,
+   mismos botones. Aquí solo vive lo que no existía todavía.
+   ============================================ */
+
+.proy, .proy-indice {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: clamp(3rem, 8dvh, 5.5rem) clamp(1.5rem, 5dvw, 3rem) clamp(3rem, 8dvh, 5rem);
+}
+/* El índice respira más: es una rejilla, no una columna de texto. */
+.proy-indice { max-width: 64rem; }
+
+.proy-title {
+  font-size: clamp(1.8rem, 5dvw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 1.6rem;
+}
+.proy-texto {
+  font-size: 1.02rem;
+  line-height: 1.75;
+  color: var(--text-content);
+  max-width: 36rem;
+}
+
+.proy-visitar { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.7rem; }
+
+/* --- Galería: una imagen por fila, a lo ancho de la columna --- */
+.proy-galeria { margin-top: clamp(2.5rem, 6dvh, 4rem); display: flex; flex-direction: column; gap: 1.2rem; }
+.proy-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+
+/* --- Pie de navegación --- */
+.proy-pie {
+  margin-top: clamp(2.5rem, 6dvh, 4rem);
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.85rem;
+}
+.proy-pie a { color: var(--text-secondary); }
+.proy-pie a:hover { color: var(--text); }
+
+/* --- Llamada final: el motivo por el que estas páginas existen --- */
+.proy-cta {
+  margin-top: clamp(2.5rem, 6dvh, 3.5rem);
+  padding: 1.8rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  text-align: center;
+}
+.proy-cta p { font-size: 0.95rem; color: var(--text-content); margin-bottom: 1.1rem; }
+
+/* --- Índice: rejilla de tarjetas --- */
+.proy-grid {
+  list-style: none;
+  margin-top: clamp(2.5rem, 6dvh, 3.5rem);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 1.6rem 1.3rem;
+}
+.proy-card a { display: flex; flex-direction: column; gap: 0.5rem; }
+.proy-card img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  transition: border-color var(--transition-fast);
+}
+.proy-card a:hover img { border-color: var(--border-hover); }
+.proy-card-nombre { font-size: 0.95rem; color: var(--text); }
+.proy-card-kw { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }

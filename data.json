@@ -24,6 +24,11 @@
       "en": "the single-page version",
       "cat": "la versió en una sola pàgina"
     },
+    "enlaceProyectos": {
+      "es": "las páginas de cada proyecto",
+      "en": "the page for each project",
+      "cat": "les pàgines de cada projecte"
+    },
     "enlaceArchivo": {
       "es": "el archivo de proyectos y experimentos",
       "en": "the archive of projects and experiments",

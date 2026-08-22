@@ -10,7 +10,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en"/>
     <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/"/>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -20,7 +20,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en"/>
     <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/"/>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -30,14 +30,140 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en"/>
     <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/"/>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/archive</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos/rikamichie</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos/andrea-carilla</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos/diego-san-marcos</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos/mike-bros</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos/miranda</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos/noan-cittadino</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos/930blurberrie</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos/barbara-wong</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos/mokakopa-twins</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos/vicios-torpes</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos/valentin</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos/conor</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos/maxito</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos/jaume-clotet</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos/berta-esteve</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos/estructuras3000</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos/paula-barjau</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos/el-mundo-de-las-jordis</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos/christine</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos/villagranota</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

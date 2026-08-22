@@ -172,9 +172,12 @@ export function renderHomePrerenderHTML(data, lang) {
  * Nota al pie del bloque pre-renderizado: qué es esta versión y a dónde ir.
  *
  * Va aquí y no fija en index.html por dos motivos: se traduce con el resto (si
- * no, /en y /ca la servirían en castellano), y es el único enlace a /archive que
- * existe en el HTML crudo — sin él la página quedaba huérfana, alcanzable solo
- * por el sitemap y por los enlaces que pinta el JS.
+ * no, /en y /ca la servirían en castellano), y es el único enlace a /archive y
+ * a /proyectos que existe en el HTML crudo — sin él esas páginas quedaban
+ * huérfanas, alcanzables solo por el sitemap y por los enlaces que pinta el JS.
+ *
+ * /proyectos va en absoluto (y no "proyectos/index.html") porque es la URL
+ * canónica que declaran esas páginas; enlazar a otra forma repartiría señales.
  */
 function notaPrerenderHTML(data, lang) {
   const t = data.prerender || {};
@@ -186,6 +189,7 @@ function notaPrerenderHTML(data, lang) {
       <p>${esc(pickLang(t.aviso, lang))}</p>
       <ul>
         ${li("easy.html", pickLang(t.enlaceEasy, lang))}
+        ${li("/proyectos", pickLang(t.enlaceProyectos, lang))}
         ${li("archive.html", pickLang(t.enlaceArchivo, lang))}
       </ul>
       <p>${esc(pickLang(t.escribeme, lang))}

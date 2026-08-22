@@ -1,6 +1,6 @@
 // ============================================
 // BUILD SEO — genera las variantes por idioma de la home, el pre-render de
-// /easy y el sitemap.
+// /easy, las páginas de proyecto y el sitemap.
 // ============================================
 //
 // Por qué el pre-render: las páginas llegan con su contenedor vacío y el
@@ -21,15 +21,19 @@
 // Se ejecuta solo antes de cada commit que toque data.json (hook de pre-commit),
 // así el HTML estático nunca se desincroniza de data.json.
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import {
   esc, renderBodyHTML, renderHomePrerenderHTML,
 } from "./js/easy-template.js";
+import {
+  enlacesDe, renderIndiceHTML, renderProyectoHTML,
+} from "./js/proyecto-template.js";
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const DATA_PATH = join(ROOT, "data.json");
+const SEO_PATH = join(ROOT, "proyectos-seo.json");
 const SITE = "https://meowrhino.studio";
 
 /**
@@ -154,8 +158,182 @@ function paginaHome(plantilla, data, idioma) {
   return html;
 }
 
+// ============================================
+// PÁGINAS DE PROYECTO (/proyectos/<slug>)
+// ============================================
+//
+// Una página por proyecto, cada una atacando una long-tail distinta ("web para
+// tatuadores barcelona", "web para diseñadores de portadas de disco"…). Son la
+// mayor parte del contenido indexable del sitio: la home compite por "diseño web
+// barcelona", que está saturada, y estas por búsquedas que sí podemos ganar.
+//
+// Van en /proyectos/ y no en la raíz porque son 21 archivos y ensuciarían el
+// árbol. A cambio, sus rutas a assets tienen que ser absolutas (ver la nota en
+// js/proyecto-template.js).
+//
+// Solo en castellano de momento: traducir 20 páginas antes de saber cuáles
+// traen gente es trabajo a ciegas. Cuando Search Console diga cuáles funcionan,
+// se traducen esas y se les añaden hreflang.
+
+/** Une cada proyecto de data.json con su copia en proyectos-seo.json. */
+function fichasDeProyecto(data, seoDoc) {
+  const proyectos = data.portfolio?.proyectos ?? [];
+  const porNombre = new Map(proyectos.map(p => [p.nombre, p]));
+
+  return seoDoc.proyectos.map(seo => {
+    const proyecto = porNombre.get(seo.nombre);
+    if (!proyecto) {
+      throw new Error(
+        `proyectos-seo.json habla de "${seo.nombre}", que no existe en ` +
+        `data.json. Los nombres tienen que coincidir exactamente.`
+      );
+    }
+    return { proyecto, seo };
+  });
+}
+
+/** Datos estructurados de una página de proyecto. */
+function jsonLdProyecto(proyecto, seo) {
+  const enlaces = enlacesDe(proyecto);
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: proyecto.nombre,
+    headline: seo.title,
+    description: seo.description,
+    url: `${SITE}/proyectos/${seo.slug}`,
+    image: `${SITE}/${proyecto.imagen}`,
+    inLanguage: "es",
+    creator: {
+      "@type": "ProfessionalService",
+      name: "meowrhino studio",
+      url: SITE,
+      areaServed: { "@type": "City", name: "Barcelona" },
+    },
+    isPartOf: { "@type": "CollectionPage", url: `${SITE}/proyectos` },
+  };
+  // `about` solo si el proyecto tiene web pública: es la obra de la que habla
+  // la página, y sin URL no hay entidad que señalar.
+  if (enlaces.length) {
+    schema.about = enlaces.map(e => ({
+      "@type": "WebSite", name: e.nombre, url: e.url,
+    }));
+  }
+  return scriptLdHTML(schema);
+}
+
+/** Serializa un schema a <script type="application/ld+json">, ya escapado. */
+function scriptLdHTML(schema) {
+  const json = JSON.stringify(schema, null, 2)
+    .replace(/</g, "\\u003c")
+    .split("\n").map(l => `  ${l}`).join("\n");
+  return `  <script type="application/ld+json">\n${json}\n  </script>`;
+}
+
+/**
+ * Esqueleto común de las páginas de /proyectos.
+ *
+ * Reutiliza el CSS del modo fácil (html.easy + body.easy-mode): son páginas de
+ * scroll lineal, igual que /easy, así que heredan tipografía, ritmo vertical y
+ * botones sin duplicar reglas. Lo propio vive en la sección 18 de style.css.
+ */
+function paginaProyectoHTML({ title, description, url, imagen, jsonLd, cuerpo }) {
+  return `<!DOCTYPE html>
+<html lang="es" class="easy">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Generado por build-seo.js a partir de proyectos-seo.json. No editar a mano. -->
+  <meta name="description" content="${esc(description)}">
+  <title>${esc(title)}</title>
+  <link rel="canonical" href="${url}">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="meowrhino studio">
+  <meta property="og:title" content="${esc(title)}">
+  <meta property="og:description" content="${esc(description)}">
+  <meta property="og:url" content="${url}">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:image" content="${imagen}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${esc(title)}">
+  <meta name="twitter:description" content="${esc(description)}">
+  <meta name="twitter:image" content="${imagen}">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="icon" href="/favicon/favicon.ico">
+  <link rel="preload" href="/fonts/inknut-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+${jsonLd}
+  <script>
+    (function() {
+      var t = localStorage.getItem("meowrhino-theme");
+      if (!t && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";
+      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+    })();
+  </script>
+</head>
+<body class="easy-mode">
+  <main id="easy" role="main">
+${cuerpo}
+  </main>
+</body>
+</html>
+`;
+}
+
+/** Página de un proyecto. */
+function paginaProyecto({ proyecto, seo }) {
+  return paginaProyectoHTML({
+    title: seo.title,
+    description: seo.description,
+    url: `${SITE}/proyectos/${seo.slug}`,
+    imagen: `${SITE}/${proyecto.imagen}`,
+    jsonLd: jsonLdProyecto(proyecto, seo),
+    cuerpo: renderProyectoHTML(proyecto, seo),
+  });
+}
+
+/** Índice de /proyectos: la puerta de entrada a las 20 páginas. */
+function paginaIndice(fichas) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "proyectos — meowrhino studio",
+    description: INDICE_DESC,
+    url: `${SITE}/proyectos`,
+    inLanguage: "es",
+    isPartOf: { "@type": "WebSite", name: "meowrhino studio", url: SITE },
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: fichas.length,
+      itemListElement: fichas.map(({ proyecto, seo }, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: proyecto.nombre,
+        url: `${SITE}/proyectos/${seo.slug}`,
+      })),
+    },
+  };
+
+  return paginaProyectoHTML({
+    title: "proyectos — 20 webs a medida hechas en barcelona · meowrhino studio",
+    description: INDICE_DESC,
+    url: `${SITE}/proyectos`,
+    imagen: `${SITE}/favicon/og-image.png`,
+    jsonLd: scriptLdHTML(schema),
+    cuerpo: renderIndiceHTML(fichas),
+  });
+}
+
+const INDICE_DESC =
+  "20 webs diseñadas a medida en Barcelona para artistas, fotógrafos, músicos y " +
+  "pequeños negocios. Cada proyecto cuenta cómo se hizo y por qué acabó siendo así.";
+
 /** Sitemap con las tres variantes de la home más el archivo. */
-function sitemapXML() {
+function sitemapXML(fichas = []) {
   const hoy = new Date().toISOString().slice(0, 10);
 
   // Cada variante declara sus alternativas también aquí: es la forma que
@@ -186,6 +364,18 @@ ${homes}
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
+  <url>
+    <loc>${SITE}/proyectos</loc>
+    <lastmod>${hoy}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+${fichas.map(({ seo }) => `  <url>
+    <loc>${SITE}/proyectos/${seo.slug}</loc>
+    <lastmod>${hoy}</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>`).join("\n")}
 </urlset>
 `;
 }
@@ -206,12 +396,17 @@ function escribirSiCambia(nombre, contenido) {
 
 function main() {
   const data = JSON.parse(readFileSync(DATA_PATH, "utf8"));
+  const seoDoc = JSON.parse(readFileSync(SEO_PATH, "utf8"));
 
   // La plantilla se lee UNA vez, antes de escribir nada: index.html es a la vez
   // plantilla y salida, y si se releyera por idioma arrastraría lo ya escrito.
   const plantillaHome = readFileSync(join(ROOT, "index.html"), "utf8");
 
   try {
+    // Se resuelve ANTES de escribir nada: si un nombre no casa entre los dos
+    // JSON, mejor fallar con el árbol intacto que a medio generar.
+    const fichas = fichasDeProyecto(data, seoDoc);
+
     for (const idioma of IDIOMAS) {
       escribirSiCambia(idioma.file, paginaHome(plantillaHome, data, idioma));
     }
@@ -219,14 +414,19 @@ function main() {
     const easy = readFileSync(join(ROOT, "easy.html"), "utf8");
     escribirSiCambia("easy.html", reemplazarBloque(easy, "easy", renderBodyHTML(data, "es")));
 
-    escribirSiCambia("sitemap.xml", sitemapXML());
+    mkdirSync(join(ROOT, "proyectos"), { recursive: true });
+    escribirSiCambia("proyectos/index.html", paginaIndice(fichas));
+    for (const ficha of fichas) {
+      escribirSiCambia(`proyectos/${ficha.seo.slug}.html`, paginaProyecto(ficha));
+    }
+
+    escribirSiCambia("sitemap.xml", sitemapXML(fichas));
+
+    console.log(`\n${IDIOMAS.length} idiomas · ${fichas.length} proyectos.`);
   } catch (err) {
     console.error(`✗ ${err.message}`);
     process.exit(1);
   }
-
-  const proyectos = data.portfolio?.proyectos?.length ?? 0;
-  console.log(`\n${IDIOMAS.length} idiomas · ${proyectos} proyectos.`);
 }
 
 main();
