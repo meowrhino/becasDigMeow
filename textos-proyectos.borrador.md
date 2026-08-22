@@ -26,13 +26,14 @@
   que ninguna de sus facetas quedara por debajo de otra.
 
 ## andrea carilla — andreacarilla.work
-- **keyword**: web portfolio para creativas (⚠️ su web no dice a qué se dedica — dímelo tú y afino)
-- **title**: el portfolio de andrea carilla — andreacarilla.work · meowrhino studio
-- **meta**: una web portfolio hecha a medida en barcelona: única por dentro y por fuera, y que la propia andrea mantiene sin cuotas mensuales.
+- **keyword**: web para fotógrafas de moda y editorial barcelona
+- **title**: una web para fotografía de moda y editorial — andreacarilla.work · meowrhino studio
+- **meta**: el portfolio de andrea carilla, fotógrafa: editorial, moda, look book y producto. la primera web de meowrhino studio, hecha a medida en barcelona.
 - **borrador**:
-  [detalle: ⚠️ FALTA — a qué se dedica andrea. es el único dato que sigue bloqueando
-  este texto] la de andrea fue la primera: la primera web que salió de meowrhino
-  studio. gracias andrea, t'estimo. queríamos que el portfolio fuera suyo de verdad,
+  andrea carilla es fotógrafa y se mueve entre registros muy distintos: editorial,
+  fashion story, look book, producto, imagen de artista. [detalle: elige ángulo — ver
+  opciones propuestas] la de andrea fue la primera: la primera web que salió de
+  meowrhino studio. gracias andrea, t'estimo. queríamos que el portfolio fuera suyo de verdad,
   desde la estructura hasta el último detalle visual — hecho desde cero, sin
   frameworks ni constructores, y andrea aprendió a actualizarlo ella misma en la
   última reunión del proyecto. y pronto será también la primera tienda online del
@@ -144,15 +145,17 @@
   [detalle: …]
 
 ## conor — conorashlee.com
-- **keyword**: web para artistas (⚠️ dime a qué se dedica conor y afino keyword y texto)
-- **title**: la web de conor ashlee-purle — conorashlee.com · meowrhino studio
-- **meta**: "you can hug them, heavens know they need it". la web de conor ashlee-purle, hecha a medida en barcelona.
+- **keyword**: web para fotógrafos con archivo privado (zona protegida por contraseña)
+- **title**: una web de fotografía con archivo privado — conorashlee.com · meowrhino studio
+- **meta**: la web de conor ashlee-purle, fotógrafo: obra, encargos y un archivo familiar protegido por contraseña. hecha a medida en barcelona, en inglés.
 - **borrador**:
-  [detalle: ⚠️ FALTA — a qué se dedica conor] su web abre con una frase que ya dice
+  conor ashlee-purle es fotógrafo. su web abre con una frase que ya dice
   mucho: "you can hug them, heavens know they need it". ese tono — raro, tierno,
   personal — es imposible de meter en una plantilla. fue la primera web que hicimos
   íntegramente en inglés, y salió un rinconcito escrito a mano: pequeño, cuidado, sin
-  una sola pieza prefabricada.
+  una sola pieza prefabricada — hasta los botones son dibujos suyos, no tipografía.
+  y tiene algo que casi ningún portfolio resuelve: un archivo familiar detrás de
+  contraseña, para las fotos que quiere guardar sin publicar.
 
 ## maxito — maxazemar.com
 - **keyword**: web para artistas de performance
@@ -222,11 +225,11 @@
   que las piezas de un proyecto encuentren segunda vida en otro.
 
 ## christine — meowrhino.github.io/christine
-- **keyword**: web para artistas (⚠️ dime a qué se dedica christine; ¿tendrá dominio propio?)
-- **title**: la web de christine janjira meyer · meowrhino studio
-- **meta**: la web de christine janjira meyer, hecha a medida en barcelona. [pendiente de afinar cuando me cuentes el proyecto]
+- **keyword**: web portfolio para diseñadores gráficos (⚠️ ojo: miranda ya ataca «web para diseñadoras gráficas barcelona» — hay que separarlas)
+- **title**: un portfolio que se navega con una brújula — christine janjira meyer · meowrhino studio
+- **meta**: la web de christine janjira meyer, diseñadora gráfica: un portfolio que se navega con una brújula hecha a medida. diseño web sin plantillas, desde barcelona.
 - **borrador**:
-  [detalle: ⚠️ FALTA — a qué se dedica christine] el corazón de su web es una brújula:
+  christine janjira meyer es diseñadora gráfica. el corazón de su web es una brújula:
   una brújula hecha a medida, para navegar y para pasárselo bien. no es un menú
   disfrazado de brújula — es el mecanismo con el que te mueves por todo el sitio, y
   no existe en ninguna otra web porque se construyó para esta.
