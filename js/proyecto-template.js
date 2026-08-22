@@ -86,7 +86,7 @@ export function renderProyectoHTML(proyecto, seo) {
 
   return `
     <article class="proy">
-      <p class="easy-eyebrow">proyecto · ${esc(seo.keyword)}</p>
+      <p class="easy-eyebrow">proyecto · ${esc(seo.resumen || seo.keyword)}</p>
       <h1 class="proy-title">${esc(proyecto.nombre)}</h1>
       <p class="proy-texto">${esc(seo.texto)}</p>${visitar}
       <div class="proy-galeria">${galeria}
@@ -109,14 +109,22 @@ function altDe(proyecto, i) {
     : `${proyecto.nombre} — detalle ${i + 1} de la web`;
 }
 
-/** Índice de /proyectos: la rejilla con los 20, cada uno a su página. */
+/**
+ * Índice de /proyectos: la rejilla con los 20, cada uno a su página.
+ *
+ * Bajo el nombre va `resumen`, no `keyword`: la keyword está escrita en plural
+ * y en genérico («web para músicos barcelona») porque su sitio es el <title> y
+ * la etiqueta <meta>, donde compite en una búsqueda. En una rejilla de veinte
+ * suena a catálogo repetido; el resumen habla de ESE proyecto en concreto
+ * («un portfolio que es una disquetera»).
+ */
 export function renderIndiceHTML(fichas) {
   const items = fichas.map(({ proyecto, seo }) => `
         <li class="proy-card">
           <a href="/proyectos/${esc(seo.slug)}">
             <img src="/${esc(proyecto.imagen)}" alt="" loading="lazy" decoding="async">
             <span class="proy-card-nombre">${esc(proyecto.nombre)}</span>
-            <span class="proy-card-kw">${esc(seo.keyword)}</span>
+            <span class="proy-card-kw">${esc(seo.resumen || seo.keyword)}</span>
           </a>
         </li>`).join("");
 

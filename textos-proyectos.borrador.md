@@ -243,13 +243,11 @@
   el motor de la web viene de twoitter, un experimento nuestro anterior — nos gusta
   que las piezas de un proyecto encuentren segunda vida en otro.
 
-  > **decidido (22 ago 2026)**: la página se publica con enlace. manu cree que a las
-  > jordis les parecerá estupendo que se vea. queda anotado que es su criterio, no una
-  > confirmación de ellas: los posts llevan ubicaciones reales y contenido personal, y
-  > enlazar desde meowrhino.studio hará que su web empiece a salir en google por sí
-  > sola. si alguna vez cambian de idea, se quita el enlace de aquí y se le pone un
-  > `noindex` a elmundodelasjordis.com (hoy no tiene ninguno: su robots.txt es el texto
-  > por defecto de cloudflare, sin reglas).
+  > **confirmado (22 ago 2026)**: las jordis están de acuerdo con que su web se
+  > indexe. la página se publica con enlace y tema cerrado. si algún día cambian de
+  > idea, se quita el enlace de aquí y se le pone un `noindex` a
+  > elmundodelasjordis.com (hoy no tiene ninguno: su robots.txt es el texto por
+  > defecto de cloudflare, sin reglas).
 
 ## christine — meowrhino.github.io/christine
 - **keyword**: web portfolio para diseñadores gráficos (⚠️ ojo: miranda ya ataca «web para diseñadoras gráficas barcelona» — hay que separarlas)
