@@ -332,9 +332,37 @@ const INDICE_DESC =
   "20 webs diseñadas a medida en Barcelona para artistas, fotógrafos, músicos y " +
   "pequeños negocios. Cada proyecto cuenta cómo se hizo y por qué acabó siendo así.";
 
-/** Sitemap con las tres variantes de la home más el archivo. */
-function sitemapXML(fichas = []) {
+/**
+ * Los `lastmod` del sitemap anterior, indexados por URL.
+ *
+ * Se releen para poder CONSERVARLOS: `lastmod` significa "cuándo cambió esta
+ * página", no "cuándo se ejecutó el build". Sellarlo con la fecha de hoy en cada
+ * ejecución ensuciaba git con 25 líneas que no querían decir nada, y además le
+ * mentía a Google — que usa la fecha para decidir qué merece la pena reindexar.
+ */
+function lastmodsPrevios() {
+  let xml = "";
+  try { xml = readFileSync(join(ROOT, "sitemap.xml"), "utf8"); } catch { return new Map(); }
+
+  const previos = new Map();
+  const bloque = /<loc>([^<]+)<\/loc>[\s\S]*?<lastmod>([^<]+)<\/lastmod>/g;
+  for (const [, loc, lastmod] of xml.matchAll(bloque)) previos.set(loc, lastmod);
+  return previos;
+}
+
+/**
+ * Sitemap con las tres variantes de la home, el archivo y las de proyecto.
+ *
+ * `cambiadas` son las rutas que este build ha reescrito de verdad; solo esas
+ * estrenan fecha. Las demás heredan la que ya tenían.
+ */
+function sitemapXML(fichas = [], cambiadas = new Set()) {
   const hoy = new Date().toISOString().slice(0, 10);
+  const previos = lastmodsPrevios();
+
+  // Una URL sin fecha previa es nueva: hoy es su fecha real de publicación.
+  const fechaDe = (loc, archivo) =>
+    cambiadas.has(archivo) ? hoy : (previos.get(loc) ?? hoy);
 
   // Cada variante declara sus alternativas también aquí: es la forma que
   // recomienda Google para que no dependa solo de las etiquetas del HTML.
@@ -346,7 +374,7 @@ function sitemapXML(fichas = []) {
   const homes = IDIOMAS.map(i => `  <url>
     <loc>${urlDe(i)}</loc>
 ${alternas}
-    <lastmod>${hoy}</lastmod>
+    <lastmod>${fechaDe(urlDe(i), i.file)}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>`).join("\n");
@@ -360,19 +388,19 @@ ${alternas}
 ${homes}
   <url>
     <loc>${SITE}/archive</loc>
-    <lastmod>${hoy}</lastmod>
+    <lastmod>${fechaDe(`${SITE}/archive`, "archive.html")}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>${SITE}/proyectos</loc>
-    <lastmod>${hoy}</lastmod>
+    <lastmod>${fechaDe(`${SITE}/proyectos`, "proyectos/index.html")}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 ${fichas.map(({ seo }) => `  <url>
     <loc>${SITE}/proyectos/${seo.slug}</loc>
-    <lastmod>${hoy}</lastmod>
+    <lastmod>${fechaDe(`${SITE}/proyectos/${seo.slug}`, `proyectos/${seo.slug}.html`)}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>`).join("\n")}
@@ -380,7 +408,11 @@ ${fichas.map(({ seo }) => `  <url>
 `;
 }
 
-/** Escribe solo si cambió, para que el build sea idempotente y no ensucie git. */
+/**
+ * Escribe solo si cambió, para que el build sea idempotente y no ensucie git.
+ * Devuelve si ha escrito: el sitemap lo usa para saber a qué URLs les toca
+ * `lastmod` nuevo y a cuáles hay que conservarles el que ya tenían.
+ */
 function escribirSiCambia(nombre, contenido) {
   const path = join(ROOT, nombre);
   let actual = null;
@@ -388,10 +420,11 @@ function escribirSiCambia(nombre, contenido) {
 
   if (actual === contenido) {
     console.log(`· ${nombre} ya estaba al día.`);
-    return;
+    return false;
   }
   writeFileSync(path, contenido);
   console.log(`✓ ${nombre} ${actual === null ? "creado" : "actualizado"}.`);
+  return true;
 }
 
 function main() {
@@ -407,20 +440,27 @@ function main() {
     // JSON, mejor fallar con el árbol intacto que a medio generar.
     const fichas = fichasDeProyecto(data, seoDoc);
 
+    // Qué páginas ha reescrito este build: de ahí salen los `lastmod` nuevos.
+    const cambiadas = new Set();
+    const generar = (nombre, contenido) => {
+      if (escribirSiCambia(nombre, contenido)) cambiadas.add(nombre);
+    };
+
     for (const idioma of IDIOMAS) {
-      escribirSiCambia(idioma.file, paginaHome(plantillaHome, data, idioma));
+      generar(idioma.file, paginaHome(plantillaHome, data, idioma));
     }
 
     const easy = readFileSync(join(ROOT, "easy.html"), "utf8");
-    escribirSiCambia("easy.html", reemplazarBloque(easy, "easy", renderBodyHTML(data, "es")));
+    generar("easy.html", reemplazarBloque(easy, "easy", renderBodyHTML(data, "es")));
 
     mkdirSync(join(ROOT, "proyectos"), { recursive: true });
-    escribirSiCambia("proyectos/index.html", paginaIndice(fichas));
+    generar("proyectos/index.html", paginaIndice(fichas));
     for (const ficha of fichas) {
-      escribirSiCambia(`proyectos/${ficha.seo.slug}.html`, paginaProyecto(ficha));
+      generar(`proyectos/${ficha.seo.slug}.html`, paginaProyecto(ficha));
     }
 
-    escribirSiCambia("sitemap.xml", sitemapXML(fichas));
+    // El sitemap va el último: necesita saber qué se ha reescrito antes.
+    escribirSiCambia("sitemap.xml", sitemapXML(fichas, cambiadas));
 
     console.log(`\n${IDIOMAS.length} idiomas · ${fichas.length} proyectos.`);
   } catch (err) {
