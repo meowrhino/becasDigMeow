@@ -10,7 +10,9 @@
 > versiones en/cat: mejor después de validar las keywords con los datos de search
 > console (~1 semana). las keywords de abajo son hipótesis razonables, no datos.
 >
-> **pendiente de decisión**: el mundo de las jordis (ver aviso en su ficha).
+> **validado por manu (22 ago 2026)**: los 20 textos, más las correcciones de mike
+> (los cds son cómo enseña su trabajo, no una colección suya) y paula (maquilladora y
+> estilista). el mundo de las jordis se publica con enlace (ver nota en su ficha).
 
 ---
 
@@ -239,10 +241,13 @@
   el motor de la web viene de twoitter, un experimento nuestro anterior — nos gusta
   que las piezas de un proyecto encuentren segunda vida en otro.
 
-  > ⚠️ **decisión pendiente antes de publicar esta página**: los posts son íntimos y
-  > llevan ubicaciones reales. publicar una página de proyecto que enlace ahí le manda
-  > desconocidos a un sitio que no parece hecho para eso. opciones: pedir permiso a las
-  > jordis, contar el proyecto sin enlazar, o dejarla fuera de las páginas SEO.
+  > **decidido (22 ago 2026)**: la página se publica con enlace. manu cree que a las
+  > jordis les parecerá estupendo que se vea. queda anotado que es su criterio, no una
+  > confirmación de ellas: los posts llevan ubicaciones reales y contenido personal, y
+  > enlazar desde meowrhino.studio hará que su web empiece a salir en google por sí
+  > sola. si alguna vez cambian de idea, se quita el enlace de aquí y se le pone un
+  > `noindex` a elmundodelasjordis.com (hoy no tiene ninguno: su robots.txt es el texto
+  > por defecto de cloudflare, sin reglas).
 
 ## christine — meowrhino.github.io/christine
 - **keyword**: web portfolio para diseñadores gráficos (⚠️ ojo: miranda ya ataca «web para diseñadoras gráficas barcelona» — hay que separarlas)
@@ -270,13 +275,17 @@
 
 ---
 
-## siguientes pasos (cuando los textos estén validados)
+## siguientes pasos
 1. ~~rellenar los `[detalle: …]`~~ — hecho (22 ago 2026): los 20 proyectos tienen su
-   anécdota real. queda tu repaso de veracidad antes de publicar.
-2. decidir qué hacemos con el mundo de las jordis (permiso / sin enlace / fuera).
-3. separar las keywords de los tres fotógrafos (andrea, valentin, conor) y las dos
-   de diseño gráfico (miranda, christine) para que no compitan entre ellas.
-4. decidimos slugs (`/proyectos/rikamichie` o similar) y monto las páginas
+   anécdota real, contada por manu.
+2. ~~repaso de veracidad~~ — hecho (22 ago 2026): validado por manu, con las
+   correcciones de mike y paula ya aplicadas.
+3. ~~decidir qué hacemos con el mundo de las jordis~~ — hecho (22 ago 2026): se
+   publica con enlace.
+4. separar la keyword de christine de la de miranda (las dos son diseño gráfico y
+   hoy se pisan). propuesta: miranda se queda «diseñadoras gráficas barcelona» y
+   christine tira por la brújula / portfolio interactivo, que es lo suyo distintivo.
+5. decidimos slugs (`/proyectos/rikamichie` o similar) y monto las páginas
    pre-renderizadas con el mismo sistema que la home (build-seo.js), con sus
    metadatos, JSON-LD y entrada en el sitemap.
-5. en/cat después de ver qué keywords traen gente en search console.
+6. en/cat después de ver qué keywords traen gente en search console.
