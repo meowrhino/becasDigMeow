@@ -238,10 +238,6 @@
     },
     "varios": [
       {
-        "nombre": "analopez",
-        "url": "https://ml2.meowrhino.studio/"
-      },
-      {
         "nombre": "bici",
         "url": "https://bici.meowrhino.studio/"
       },
@@ -264,10 +260,6 @@
       {
         "nombre": "messenger",
         "url": "https://messenger.meowrhino.studio/"
-      },
-      {
-        "nombre": "mokakopa",
-        "url": "https://ml3.meowrhino.studio/"
       },
       {
         "nombre": "networking",
