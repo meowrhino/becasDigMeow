@@ -3,16 +3,18 @@
 > **qué es esto**: un borrador por proyecto para las futuras páginas de detalle
 > (`/proyectos/<slug>`), cada una atacando una long-tail distinta. escritos en la voz
 > de la web (minúsculas, cercano, nada corporativo), a partir de lo que dice la web
-> de cada cliente. **estado (22 ago 2026)**: los 20 llevan ya su anécdota real
-> —contada por manu y redactada aquí—, que es lo que hace que no suenen a plantilla.
-> falta tu repaso: corrige lo que no sea verdad antes de que esto se publique.
+> de cada cliente. **estado (22 ago 2026)**: cerrado y publicado. los 20 llevan su
+> anécdota real —contada por manu y redactada aquí—, que es lo que hace que no suenen
+> a plantilla, y manu ha validado los textos con las correcciones de mike (los cds son
+> cómo enseña su trabajo, no una colección suya) y paula (maquilladora y estilista).
+> el mundo de las jordis se publica con enlace (ver nota en su ficha).
+>
+> **este archivo ya no es la fuente de verdad**: la copia que se publica vive en
+> `proyectos-seo.json`, de donde la lee build-seo.js. esto queda como el porqué de
+> cada texto — de dónde salió la anécdota, qué keyword se eligió y contra qué.
 >
 > versiones en/cat: mejor después de validar las keywords con los datos de search
-> console (~1 semana). las keywords de abajo son hipótesis razonables, no datos.
->
-> **validado por manu (22 ago 2026)**: los 20 textos, más las correcciones de mike
-> (los cds son cómo enseña su trabajo, no una colección suya) y paula (maquilladora y
-> estilista). el mundo de las jordis se publica con enlace (ver nota en su ficha).
+> console. las keywords de abajo son hipótesis razonables, no datos.
 
 ---
 
@@ -282,9 +284,9 @@
    correcciones de mike y paula ya aplicadas.
 3. ~~decidir qué hacemos con el mundo de las jordis~~ — hecho (22 ago 2026): se
    publica con enlace.
-4. separar la keyword de christine de la de miranda (las dos son diseño gráfico y
-   hoy se pisan). propuesta: miranda se queda «diseñadoras gráficas barcelona» y
-   christine tira por la brújula / portfolio interactivo, que es lo suyo distintivo.
+4. ~~separar la keyword de christine de la de miranda~~ — hecho (22 ago 2026):
+   miranda se queda «web para diseñadoras gráficas barcelona» y christine pasa a
+   «portfolio web interactivo para diseñadores», que es lo suyo distintivo.
 5. decidimos slugs (`/proyectos/rikamichie` o similar) y monto las páginas
    pre-renderizadas con el mismo sistema que la home (build-seo.js), con sus
    metadatos, JSON-LD y entrada en el sitemap.
