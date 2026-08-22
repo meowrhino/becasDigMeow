@@ -394,7 +394,7 @@ ${homes}
   </url>
   <url>
     <loc>${SITE}/proyectos</loc>
-    <lastmod>${fechaDe(`${SITE}/proyectos`, "proyectos/index.html")}</lastmod>
+    <lastmod>${fechaDe(`${SITE}/proyectos`, "proyectos.html")}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -453,8 +453,13 @@ function main() {
     const easy = readFileSync(join(ROOT, "easy.html"), "utf8");
     generar("easy.html", reemplazarBloque(easy, "easy", renderBodyHTML(data, "es")));
 
+    // El índice va en la RAÍZ (proyectos.html), no en proyectos/index.html:
+    // Cloudflare trata el índice de un directorio como /proyectos/ y redirige
+    // /proyectos ahí con un 307. Así el índice se sirve en /proyectos sin salto,
+    // igual que /archive sale de archive.html, y el canonical no apunta a una
+    // URL que redirige. Los archivos de dentro siguen en proyectos/<slug>.html.
     mkdirSync(join(ROOT, "proyectos"), { recursive: true });
-    generar("proyectos/index.html", paginaIndice(fichas));
+    generar("proyectos.html", paginaIndice(fichas));
     for (const ficha of fichas) {
       generar(`proyectos/${ficha.seo.slug}.html`, paginaProyecto(ficha));
     }
