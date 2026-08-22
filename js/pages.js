@@ -74,14 +74,15 @@ export function renderTools(data) {
   const herramientas  = data.links.herramientas || [];
   const tools         = data.links.tools || [];
   const wip           = data.links.wip || [];
+  const varios        = data.links.varios || [];
   const formateadores = data.welcome?.formateadores || [];
   const websTerminadas = (data.portfolio?.proyectos || []).map(p =>
     p.urls ? { urls: p.urls } : { nombre: p.nombre, url: p.url }
   );
 
   // "tools" y "WIP" son términos ya usados igual en los tres idiomas (como el
-  // resto de nombres de celda); "formateadores" y "webs terminadas" sí varían
-  // y viven en data.json (links.labels) con el patrón {es,en,cat} habitual.
+  // resto de nombres de celda); "formateadores", "webs terminadas" y "varios"
+  // sí varían y viven en data.json (links.labels) con el patrón {es,en,cat}.
   const labels = data.links.labels || {};
 
   const linksHTML = herramientas.map(crearLinkHTML).join("");
@@ -90,6 +91,7 @@ export function renderTools(data) {
     crearDropdownHTML("WIP", wip, "dd_wip"),
     crearDropdownHTML(pick(labels.formateadores, currentLang), formateadores, "dd_formateadores"),
     crearDropdownHTML(pick(labels.webs, currentLang), websTerminadas, "dd_webs"),
+    crearDropdownHTML(pick(labels.varios, currentLang), varios, "dd_varios"),
   ].join("");
 
   el.innerHTML = `
@@ -130,15 +132,17 @@ export function renderTools(data) {
     });
   }
 
-  // Re-traduce los labels de "formateadores" y "webs terminadas" al cambiar
+  // Re-traduce los labels que varían por idioma al cambiar de
   // idioma. La celda tools no tiene botones .lang-btn propios (el cambio de
   // idioma se dispara desde otra celda), así que usamos el callback global
   // onLangChange (mismo mecanismo que theme.js para su aria-label).
   const formateadoresLabelEl = el.querySelector('[data-target="dd_formateadores"] .tools-dropdown-label');
   const websLabelEl = el.querySelector('[data-target="dd_webs"] .tools-dropdown-label');
+  const variosLabelEl = el.querySelector('[data-target="dd_varios"] .tools-dropdown-label');
   onLangChange((lang) => {
     if (formateadoresLabelEl) formateadoresLabelEl.textContent = pick(labels.formateadores, lang);
     if (websLabelEl) websLabelEl.textContent = pick(labels.webs, lang);
+    if (variosLabelEl) variosLabelEl.textContent = pick(labels.varios, lang);
   });
 }
 

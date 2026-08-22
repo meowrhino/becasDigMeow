@@ -229,8 +229,67 @@
         "es": "webs terminadas",
         "en": "finished websites",
         "cat": "webs acabades"
+      },
+      "varios": {
+        "es": "varios",
+        "en": "misc",
+        "cat": "diversos"
       }
-    }
+    },
+    "varios": [
+      {
+        "nombre": "analopez",
+        "url": "https://ml2.meowrhino.studio/"
+      },
+      {
+        "nombre": "bici",
+        "url": "https://bici.meowrhino.studio/"
+      },
+      {
+        "nombre": "foro",
+        "url": "https://foro.meowrhino.studio/"
+      },
+      {
+        "nombre": "geomag",
+        "url": "https://geomag.meowrhino.studio/"
+      },
+      {
+        "nombre": "lemuria",
+        "url": "https://lemuria.meowrhino.studio/"
+      },
+      {
+        "nombre": "meowboard",
+        "url": "https://meowboard.meowrhino.studio/"
+      },
+      {
+        "nombre": "messenger",
+        "url": "https://messenger.meowrhino.studio/"
+      },
+      {
+        "nombre": "mokakopa",
+        "url": "https://ml3.meowrhino.studio/"
+      },
+      {
+        "nombre": "networking",
+        "url": "https://networking.meowrhino.studio/"
+      },
+      {
+        "nombre": "petra",
+        "url": "https://petra.meowrhino.studio/"
+      },
+      {
+        "nombre": "pspsps",
+        "url": "https://pspsps.meowrhino.studio/"
+      },
+      {
+        "nombre": "rumrum",
+        "url": "https://rumrum.meowrhino.studio/"
+      },
+      {
+        "nombre": "toctoc",
+        "url": "https://toctoc.meowrhino.studio/"
+      }
+    ]
   },
   "statement": {
     "es": {
