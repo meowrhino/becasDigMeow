@@ -104,6 +104,9 @@ function jsonLdHTML(data, idioma) {
     description: pick(data.meta?.description, idioma.code),
     url: urlDe(idioma),
     email: "hola@meowrhino.studio",
+    // El mismo número que publica la ficha de Google Business Profile: si no
+    // coinciden, Google los trata como dos negocios distintos.
+    telephone: "+34644471997",
     image: `${SITE}/favicon/android-chrome-512x512.png`,
     areaServed: { "@type": "City", name: "Barcelona" },
     address: {
