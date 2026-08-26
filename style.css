@@ -1610,7 +1610,11 @@ html.easy, html.easy body {
 .easy-hero-primera { font-size: 0.75rem; color: var(--text-muted); }
 
 /* --- Secciones genéricas (ritmo vertical consistente) --- */
-.easy-section { padding: clamp(3.5rem, 9dvh, 6rem) clamp(1.5rem, 5dvw, 4rem); max-width: 64rem; margin: 0 auto; }
+/* El aire entre secciones se mide en dvh, así que en pantallas altas cada
+   sección se llevaba media pantalla en padding — y donde dos se tocan, se
+   sumaban los dos. Recortado: sigue habiendo aire, pero deja de haber vacíos
+   de 400px entre bloques. */
+.easy-section { padding: clamp(2.75rem, 6dvh, 4.5rem) clamp(1.5rem, 5dvw, 4rem); max-width: 64rem; margin: 0 auto; }
 .easy-h { font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.8rem; font-weight: 400; }
 
 /* --- Portfolio (visor con fundido: imágenes apiladas que cambian por opacidad) --- */
@@ -1689,7 +1693,9 @@ html.easy, html.easy body {
 }
 
 /* Stepper de progreso al scrollear: nº y conectores se encienden acumulativamente. */
-.easy-steps.is-scrolly .easy-step { opacity: 0.35; transition: opacity 0.45s ease; }
+/* Mismo motivo que el statement: los pasos apagados eran ilegibles y aquí lo
+   que se apaga son las condiciones del presupuesto, que conviene poder leer. */
+.easy-steps.is-scrolly .easy-step { opacity: 0.6; transition: opacity 0.45s ease; }
 .easy-steps.is-scrolly .easy-step.is-on { opacity: 1; }
 .easy-step-num { transition: background 0.45s ease, color 0.45s ease, border-color 0.45s ease; }
 .easy-steps.is-scrolly .easy-step.is-on .easy-step-num {
@@ -1698,19 +1704,24 @@ html.easy, html.easy body {
 .easy-steps.is-scrolly .easy-step.link-on::before { background: var(--text); }
 
 /* --- Statement (manifiesto centrado; resalta la línea del centro al scrollear) --- */
-.easy-statement { text-align: center; padding-top: clamp(5rem, 17dvh, 10rem); padding-bottom: clamp(5rem, 17dvh, 10rem); }
+.easy-statement { text-align: center; padding-top: clamp(4rem, 10dvh, 6.5rem); padding-bottom: clamp(4rem, 10dvh, 6.5rem); }
 .easy-statement-line {
   font-size: clamp(1.3rem, 3.3dvw, 2rem); line-height: 1.5; letter-spacing: -0.01em;
   color: var(--text); margin: 0 auto 1.7rem; max-width: 40rem;
   transition: opacity 0.45s ease;
 }
 .easy-statement-line:last-child { margin-bottom: 0; }
-/* Karaoke: con JS, las líneas se atenúan y solo brilla la del centro */
-.easy-statement.is-scrolly .easy-statement-line { opacity: 0.28; }
+/* Karaoke: con JS, las líneas se atenúan y solo brilla la del centro.
+   0.55 y no 0.28: esta es la página que existe para leerse del tirón, y a 0.28
+   casi todo el texto quedaba semiborrado en cualquier momento. Se nota que algo
+   iba mal en que con `prefers-reduced-motion` el efecto se desactiva entero —
+   o sea que la versión accesible se leía mejor que la normal. La línea activa
+   sigue destacando; el resto ya se puede leer. */
+.easy-statement.is-scrolly .easy-statement-line { opacity: 0.55; }
 .easy-statement.is-scrolly .easy-statement-line.is-active { opacity: 1; }
 
 /* --- Contacto (más pequeño, con aire) --- */
-.easy-contacto { text-align: center; padding-top: clamp(5.5rem, 18dvh, 11rem); padding-bottom: clamp(5.5rem, 18dvh, 11rem); }
+.easy-contacto { text-align: center; padding-top: clamp(4.5rem, 11dvh, 7rem); padding-bottom: clamp(4.5rem, 11dvh, 7rem); }
 .easy-contacto .easy-h { margin-bottom: 3rem; }
 .easy-email { font-size: clamp(1.6rem, 5dvw, 2.7rem); letter-spacing: -0.02em; color: var(--text); }
 .easy-email:hover { text-decoration: underline; text-underline-offset: 0.12em; }

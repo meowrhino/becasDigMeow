@@ -18,6 +18,33 @@ export const esc = (s) => String(s ?? "")
   .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
   .replace(/"/g, "&quot;");
 
+/**
+ * Textos de interfaz por idioma: los encabezados de sección y las etiquetas del
+ * visor de portfolio.
+ *
+ * Estaban escritos a pelo en castellano, y como estas plantillas las comparten
+ * /easy Y el pre-renderizado de la home, `en.html` y `ca.html` servían
+ * «metodología», «contacto» y «visitar ↗» en castellano — que es justo el texto
+ * que lee Google de la home inglesa y la catalana.
+ *
+ * `portfolio` y `statement` se quedan igual en los tres a propósito: son los
+ * mismos términos que usan los nombres de celda del grid.
+ */
+export const UI = {
+  es:  { portfolio: "portfolio", statement: "statement", metodologia: "metodología",
+         contacto: "contacto", visitar: "visitar ↗",
+         anterior: "proyecto anterior", siguiente: "proyecto siguiente", proyectos: "proyectos" },
+  en:  { portfolio: "portfolio", statement: "statement", metodologia: "methodology",
+         contacto: "contact", visitar: "visit ↗",
+         anterior: "previous project", siguiente: "next project", proyectos: "projects" },
+  cat: { portfolio: "portfolio", statement: "statement", metodologia: "metodologia",
+         contacto: "contacte", visitar: "visitar ↗",
+         anterior: "projecte anterior", siguiente: "projecte següent", proyectos: "projectes" },
+};
+
+/** Los textos de interfaz del idioma pedido, con fallback a castellano. */
+export const ui = (lang) => UI[lang] || UI.es;
+
 // Titular de venta por idioma (el wordmark ya vive en el header).
 export const HERO = {
   es:  { eyebrow: "estudio de diseño web · barcelona", titular: "diseño web en barcelona: tu web en un mes, sin cuotas." },
@@ -54,7 +81,8 @@ export function heroHTML(data, lang) {
 // initPortfolio en easy-main.js). Cada proyecto con url es un enlace; sin url, un
 // div neutro. El alt describe el proyecto para SEO/accesibilidad: usa el campo
 // `alt` de data.json si existe; si no, genera uno con el nombre + estudio + ciudad.
-export function portfolioHTML(data) {
+export function portfolioHTML(data, lang) {
+  const t = ui(lang);
   const proyectos = data.portfolio?.proyectos || [];
   const altFor = (p) => p.alt || `${p.nombre} — web diseñada por meowrhino studio, Barcelona`;
   const slides = proyectos.map(p => {
@@ -71,16 +99,16 @@ export function portfolioHTML(data) {
     </button>`).join("");
   return `
     <section class="easy-section easy-portfolio" id="portfolio">
-      <h2 class="easy-h">portfolio</h2>
+      <h2 class="easy-h">${esc(t.portfolio)}</h2>
       <div class="easy-pf">
         <div class="easy-pf-viewer">
-          <button class="easy-pf-nav easy-pf-prev" type="button" aria-label="proyecto anterior">‹</button>
-          <div class="easy-pf-stage" tabindex="0" role="group" aria-label="proyectos">${slides}</div>
-          <button class="easy-pf-nav easy-pf-next" type="button" aria-label="proyecto siguiente">›</button>
+          <button class="easy-pf-nav easy-pf-prev" type="button" aria-label="${esc(t.anterior)}">‹</button>
+          <div class="easy-pf-stage" tabindex="0" role="group" aria-label="${esc(t.proyectos)}">${slides}</div>
+          <button class="easy-pf-nav easy-pf-next" type="button" aria-label="${esc(t.siguiente)}">›</button>
         </div>
         <p class="easy-pf-caption">
           <span class="easy-pf-name"></span>
-          <a class="easy-pf-visitar" target="_blank" rel="noopener" hidden>visitar ↗</a>
+          <a class="easy-pf-visitar" target="_blank" rel="noopener" hidden>${esc(t.visitar)}</a>
         </p>
         <div class="easy-pf-thumbs">${thumbs}</div>
       </div>
@@ -96,7 +124,7 @@ export function metodologiaHTML(data, lang) {
     </li>`).join("");
   return `
     <section class="easy-section" id="metodologia">
-      <h2 class="easy-h">metodología</h2>
+      <h2 class="easy-h">${esc(ui(lang).metodologia)}</h2>
       <ol class="easy-steps">${pasos}</ol>
     </section>`;
 }
@@ -106,7 +134,7 @@ export function statementHTML(data, lang) {
   const ls = lineas.map(l => `<p class="easy-statement-line">${esc(l)}</p>`).join("");
   return `
     <section class="easy-section easy-statement" id="statement">
-      <h2 class="easy-h">statement</h2>
+      <h2 class="easy-h">${esc(ui(lang).statement)}</h2>
       ${ls}
     </section>`;
 }
@@ -120,7 +148,7 @@ export function contactoHTML(data, lang) {
   const cta = (data.welcome.cupon[lang] || data.welcome.cupon.es || {}).cta || "escríbeme";
   return `
     <section class="easy-section easy-contacto" id="contacto">
-      <h2 class="easy-h">contacto</h2>
+      <h2 class="easy-h">${esc(ui(lang).contacto)}</h2>
       <a class="easy-email" href="${mailto}">${esc(co.email)}</a>
       <div class="easy-contacto-cta">
         <a class="easy-btn" href="${mailto}">${esc(cta)}</a>
@@ -146,7 +174,7 @@ export function footerHTML() {
 // Cuerpo completo del modo fácil, en el mismo orden que pinta el navegador.
 export function renderBodyHTML(data, lang) {
   return heroHTML(data, lang) +
-    portfolioHTML(data) +
+    portfolioHTML(data, lang) +
     statementHTML(data, lang) +
     metodologiaHTML(data, lang) +
     contactoHTML(data, lang) +
@@ -166,7 +194,7 @@ export function renderBodyHTML(data, lang) {
  */
 export function renderHomePrerenderHTML(data, lang) {
   return heroHTML(data, lang) +
-    portfolioHTML(data) +
+    portfolioHTML(data, lang) +
     statementHTML(data, lang) +
     metodologiaHTML(data, lang) +
     contactoHTML(data, lang) +
