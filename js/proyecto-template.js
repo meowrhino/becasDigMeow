@@ -15,6 +15,9 @@
 // /img/…). Con rutas relativas el navegador las buscaría en /proyectos/.
 
 import { esc, pickLang } from "./easy-template.js";
+// `slugify` se mudó a rutas.js (lo necesita también easy-template.js, y tenerlo
+// aquí montaba un import circular). Se re-exporta para no romper a quien lo pida.
+export { slugify } from "./rutas.js";
 
 /**
  * Textos de interfaz de estas páginas, por idioma. Van aquí y no en data.json
@@ -40,18 +43,6 @@ export const UI = {
          intro: (n) => `${n} webs fetes a mida, des de zero i sense plantilles, per a artistes, fotògrafs, músics i petits negocis. cadascuna explica com es va fer i per què va acabar sent així.`,
          navegar: "seguir navegant" },
 };
-
-/**
- * Convierte el `nombre` de data.json en slug de URL.
- * Parte el camelCase antes de bajar a minúsculas (mokakopaTwins →
- * mokakopa-twins) y quita los acentos, que en una URL sobran.
- */
-export const slugify = (s) => String(s ?? "")
-  .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
-  .toLowerCase()
-  .normalize("NFD").replace(/[̀-ͯ]/g, "")
-  .replace(/[^a-z0-9]+/g, "-")
-  .replace(/^-+|-+$/g, "");
 
 /** Carpeta de imágenes del proyecto, deducida de `imagen` en data.json. */
 const carpetaDe = (proyecto) => proyecto.imagen?.replace(/\/[^/]+$/, "") ?? "";

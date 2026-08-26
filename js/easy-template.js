@@ -9,7 +9,7 @@
 // Así el texto que ve Google es EXACTAMENTE el que ve el visitante, sin copias
 // que se desincronicen. Fuente única de contenido: data.json.
 
-import { rutaProyectos } from "./rutas.js";
+import { rutaProyectos, slugify } from "./rutas.js";
 
 /** Escoge la variante de idioma de un objeto {es,en,cat}, con fallback a es. */
 export const pickLang = (obj, lang) => obj?.[lang] ?? obj?.es ?? "";
@@ -32,14 +32,11 @@ export const esc = (s) => String(s ?? "")
  */
 export const UI = {
   es:  { portfolio: "portfolio", statement: "statement", metodologia: "metodología",
-         contacto: "contacto", visitar: "visitar ↗",
-         anterior: "proyecto anterior", siguiente: "proyecto siguiente", proyectos: "proyectos" },
+         contacto: "contacto", caso: "ver el caso →" },
   en:  { portfolio: "portfolio", statement: "statement", metodologia: "methodology",
-         contacto: "contact", visitar: "visit ↗",
-         anterior: "previous project", siguiente: "next project", proyectos: "projects" },
+         contacto: "contact", caso: "see the case →" },
   cat: { portfolio: "portfolio", statement: "statement", metodologia: "metodologia",
-         contacto: "contacte", visitar: "visitar ↗",
-         anterior: "projecte anterior", siguiente: "projecte següent", proyectos: "projectes" },
+         contacto: "contacte", caso: "veure el cas →" },
 };
 
 /** Los textos de interfaz del idioma pedido, con fallback a castellano. */
@@ -76,41 +73,64 @@ export function heroHTML(data, lang) {
     </section>`;
 }
 
-// Portfolio: visor grande (imágenes apiladas que se funden por opacidad) + rejilla
-// de miniaturas para elegir. El nombre y "visitar" se actualizan al cambiar (ver
-// initPortfolio en easy-main.js). Cada proyecto con url es un enlace; sin url, un
-// div neutro. El alt describe el proyecto para SEO/accesibilidad: usa el campo
-// `alt` de data.json si existe; si no, genera uno con el nombre + estudio + ciudad.
+/**
+ * Portfolio: la MISMA rejilla que la celda portfolio de la home.
+ *
+ * Antes era un visor grande con veinte miniaturas de 60px debajo. Dos motivos
+ * para cambiarlo: a ese tamaño, veinte capturas de web son veinte rectángulos
+ * grises que no se distinguen entre sí; y era un patrón que no existía en
+ * ninguna otra pantalla del sitio, así que /easy se leía como una web aparte.
+ *
+ * Reutiliza las clases .portfolio-grid/.pgrid-* de la home, no unas propias:
+ * el objetivo era que encajara con el resto, y compartir las reglas es la única
+ * forma de que siga encajando cuando se toquen. Cero CSS nuevo.
+ *
+ * Lo único que no se copia es el crossfade entre las imágenes de cada proyecto,
+ * que en la home lo mueve JS: aquí se sirve la captura principal y ya. /easy es
+ * la versión que se lee del tirón, no la que se mira.
+ *
+ * Cada ficha lleva los dos destinos de la home: la captura y la url van a la
+ * web del cliente, y «ver el caso» a /proyectos/<slug> en el idioma de la
+ * página. El alt sale del campo `alt` de data.json si existe.
+ */
 export function portfolioHTML(data, lang) {
   const t = ui(lang);
   const proyectos = data.portfolio?.proyectos || [];
   const altFor = (p) => p.alt || `${p.nombre} — web diseñada por meowrhino studio, Barcelona`;
-  const slides = proyectos.map(p => {
-    const href = p.url || p.urls?.[0]?.url || "";
-    const open = href
-      ? `<a class="easy-pf-slide" href="${esc(href)}" target="_blank" rel="noopener" data-name="${esc(p.nombre)}">`
-      : `<div class="easy-pf-slide" data-name="${esc(p.nombre)}">`;
-    const close = href ? "</a>" : "</div>";
-    return `${open}<img src="${esc(p.imagen)}" alt="${esc(altFor(p))}" loading="lazy" decoding="async">${close}`;
+  const limpia = (u) => String(u ?? "").replace(/^https?:\/\//, "").replace(/\/$/, "");
+
+  const fichas = proyectos.map(p => {
+    const urls = Array.isArray(p.urls) && p.urls.length
+      ? p.urls
+      : (p.url ? [{ url: p.url, nombre: p.urlLabel }] : []);
+
+    // Con dos urls la captura no puede ser un enlace (¿a cuál de las dos?), así
+    // que es un div y los enlaces quedan solo debajo. Mismo criterio que la home.
+    const thumb = urls.length === 1
+      ? `<a class="pgrid-thumb" href="${esc(urls[0].url)}" target="_blank" rel="noopener">`
+      : `<div class="pgrid-thumb">`;
+    const cierra = urls.length === 1 ? "</a>" : "</div>";
+
+    const enlaces = urls.map(u =>
+      `<a class="pgrid-url" href="${esc(u.url)}" target="_blank" rel="noopener">${esc(u.nombre || limpia(u.url))}</a>`
+    ).join("");
+
+    return `
+        <div class="pgrid-item">
+          ${thumb}<img class="pgrid-img pgrid-img-a" src="${esc(p.imagen)}"
+                 alt="${esc(altFor(p))}" width="800" height="600"
+                 loading="lazy" decoding="async">${cierra}
+          <div class="pgrid-meta">
+            ${enlaces}
+            <a class="pgrid-caso" href="${esc(rutaProyectos(lang))}/${esc(slugify(p.nombre))}">${esc(t.caso)}</a>
+          </div>
+        </div>`;
   }).join("");
-  const thumbs = proyectos.map((p, i) => `
-    <button class="easy-pf-thumb" type="button" data-i="${i}" aria-label="${esc(p.nombre)}">
-      <img src="${esc(p.imagen)}" alt="" loading="lazy" decoding="async">
-    </button>`).join("");
+
   return `
     <section class="easy-section easy-portfolio" id="portfolio">
       <h2 class="easy-h">${esc(t.portfolio)}</h2>
-      <div class="easy-pf">
-        <div class="easy-pf-viewer">
-          <button class="easy-pf-nav easy-pf-prev" type="button" aria-label="${esc(t.anterior)}">‹</button>
-          <div class="easy-pf-stage" tabindex="0" role="group" aria-label="${esc(t.proyectos)}">${slides}</div>
-          <button class="easy-pf-nav easy-pf-next" type="button" aria-label="${esc(t.siguiente)}">›</button>
-        </div>
-        <p class="easy-pf-caption">
-          <span class="easy-pf-name"></span>
-          <a class="easy-pf-visitar" target="_blank" rel="noopener" hidden>${esc(t.visitar)}</a>
-        </p>
-        <div class="easy-pf-thumbs">${thumbs}</div>
+      <div class="portfolio-grid">${fichas}
       </div>
     </section>`;
 }

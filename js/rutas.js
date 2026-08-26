@@ -20,3 +20,22 @@ export const RUTA_PROYECTOS = {
 
 /** Base de la ruta de proyectos en un idioma, con fallback a castellano. */
 export const rutaProyectos = (lang) => RUTA_PROYECTOS[lang] || RUTA_PROYECTOS.es;
+
+/**
+ * Convierte el `nombre` de data.json en slug de URL.
+ * Parte el camelCase antes de bajar a minúsculas (mokakopaTwins →
+ * mokakopa-twins) y quita los acentos, que en una URL sobran.
+ *
+ * Vive aquí y no en proyecto-template.js porque también lo necesita
+ * easy-template.js, y ese ya es de quien proyecto-template importa: tenerlo
+ * allí montaba un import circular. Es código de URLs, su sitio es este.
+ *
+ * El resultado tiene que coincidir con el `slug` de proyectos-seo.json, que es
+ * la URL canónica; si algún día dejan de cuadrar, estos enlaces darían 404.
+ */
+export const slugify = (s) => String(s ?? "")
+  .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
+  .toLowerCase()
+  .normalize("NFD").replace(/[̀-ͯ]/g, "")
+  .replace(/[^a-z0-9]+/g, "-")
+  .replace(/^-+|-+$/g, "");

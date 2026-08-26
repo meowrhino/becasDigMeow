@@ -19,75 +19,34 @@ import { renderBodyHTML } from "./easy-template.js";
 
 const root = document.getElementById("easy");
 
-// Estos inits crean timers/observers globales y se rehacen en cada render por
-// idioma; guardamos una función de limpieza para pararlos antes de re-crearlos
-// (si no, el setInterval del autoplay seguiría vivo y se acumularían listeners).
-let pfCleanup = null;
+// Estos inits crean observers globales y se rehacen en cada render por idioma;
+// guardamos una función de limpieza para pararlos antes de re-crearlos (si no,
+// se acumularían listeners). El portfolio ya no necesita una: desde que es la
+// rejilla de la home, sus listeners son `{ once: true }` sobre elementos que el
+// propio render sustituye.
 let stmtCleanup = null;
 let mtdCleanup = null;
 
 // --- Inits interactivos (progressive enhancement sobre el cuerpo ya pintado) ---
 
-// Portfolio en modo VISOR con fundido: una imagen grande que cambia por crossfade
-// (opacidad), nunca por scroll → sin saltos, sin clones, sin scroll-snap. El índice
-// es circular ((i+n)%n), y al ser un fundido pasar de la última a la primera es
-// perfectamente continuo. Miniaturas/flechas/teclado eligen; autoplay suave opcional
-// con pausa en hover, foco y pestaña oculta. Se re-llama en cada render (idioma):
-// pfCleanup para el autoplay y el listener global del render anterior.
+// Portfolio: la misma rejilla que la home, ya pintada por easy-template.js. Lo
+// único que necesita del navegador es apagar el skeleton de cada captura cuando
+// su imagen termina de cargar — el shimmer de `.pgrid-thumb::before` solo se
+// funde con la clase `.loaded`, y sin JS se quedaría encima de la imagen para
+// siempre. En error también se quita: mejor un hueco que un shimmer eterno.
+//
+// Aquí estaba el visor grande con miniaturas: 55 líneas de carrusel (autoplay,
+// flechas, teclado, pausa en hover/foco/pestaña oculta) para un patrón que no
+// existía en ninguna otra pantalla del sitio.
 function initPortfolio() {
-  if (pfCleanup) { pfCleanup(); pfCleanup = null; }
-  const pf = root.querySelector(".easy-pf");
-  if (!pf) return;
-  const stage = pf.querySelector(".easy-pf-stage");
-  const slides = [...pf.querySelectorAll(".easy-pf-slide")];
-  const thumbs = [...pf.querySelectorAll(".easy-pf-thumb")];
-  const nameEl = pf.querySelector(".easy-pf-name");
-  const visitarEl = pf.querySelector(".easy-pf-visitar");
-  const n = slides.length;
-  if (!n) return;
-
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let current = -1;
-  let autoTimer;
-
-  const show = (i) => {
-    i = (i + n) % n;                 // índice circular: tras la última, la primera
-    if (i === current) return;
-    current = i;
-    slides.forEach((s, j) => s.classList.toggle("is-active", j === i));
-    thumbs.forEach((t, j) => t.classList.toggle("is-active", j === i));
-    const s = slides[i];
-    nameEl.textContent = s.dataset.name || "";
-    const url = s.getAttribute("href");
-    if (url) { visitarEl.hidden = false; visitarEl.href = url; }
-    else { visitarEl.hidden = true; }
-  };
-
-  const startAuto = () => { if (!reduce && !autoTimer) autoTimer = setInterval(() => show(current + 1), 4500); };
-  const stopAuto = () => { clearInterval(autoTimer); autoTimer = null; };
-  const kick = () => { stopAuto(); startAuto(); };   // reinicia el contador tras interactuar
-  const onVis = () => { if (document.hidden) stopAuto(); else startAuto(); };
-
-  thumbs.forEach((t, i) => t.addEventListener("click", () => { show(i); kick(); }));
-  pf.querySelector(".easy-pf-prev").addEventListener("click", () => { show(current - 1); kick(); });
-  pf.querySelector(".easy-pf-next").addEventListener("click", () => { show(current + 1); kick(); });
-  stage.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowRight") { e.preventDefault(); show(current + 1); kick(); }
-    else if (e.key === "ArrowLeft") { e.preventDefault(); show(current - 1); kick(); }
+  root.querySelectorAll(".pgrid-thumb").forEach(thumb => {
+    const img = thumb.querySelector("img");
+    if (!img) return;
+    if (img.complete) { thumb.classList.add("loaded"); return; }   // ya estaba en caché
+    const listo = () => thumb.classList.add("loaded");
+    img.addEventListener("load", listo, { once: true });
+    img.addEventListener("error", listo, { once: true });
   });
-  pf.addEventListener("mouseenter", stopAuto);
-  pf.addEventListener("mouseleave", startAuto);
-  pf.addEventListener("focusin", stopAuto);
-  pf.addEventListener("focusout", startAuto);
-  document.addEventListener("visibilitychange", onVis);
-
-  pfCleanup = () => {
-    stopAuto();
-    document.removeEventListener("visibilitychange", onVis);
-  };
-
-  show(0);
-  startAuto();
 }
 
 // Statement "karaoke": resalta la línea que cruza el centro de la pantalla.
