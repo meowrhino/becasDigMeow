@@ -36,6 +36,15 @@
 //    No basta con arrancarlas separadas y que avancen a la par — los rebotes
 //    hacen avanzar a cada una por su cuenta y el desfase se pierde solo.
 //
+//  - Los cambios están DESINCRONIZADOS y se mantienen así. No basta con arrancar
+//    los temporizadores desfasados: cada rebote adelanta el cambio de una sola
+//    tarjeta, así que dos que empiezan separadas acaban coincidiendo solas. Por
+//    eso el reloj no es un `setInterval` fijo sino un `setTimeout` que se
+//    reprograma en CADA cambio (venga del tiempo o de un choque), y además hay
+//    una separación mínima compartida: si la otra tarjeta acaba de cambiar, esta
+//    espera. Cambiar las dos a la vez se lee como un corte de página entera en
+//    vez de como dos objetos con vida propia.
+//
 //  - Cada una sale de la esquina más lejana a TODO lo que ya rebota (el cupón y
 //    las tarjetas anteriores), no solo del cupón. Y van a velocidades distintas
 //    a propósito: a la misma velocidad viajarían en paralelo y se leerían como
@@ -52,6 +61,11 @@ import { escapeHTML } from "./utils.js";
 const CADENCIA = 4500;
 /** Tiempo mínimo que un proyecto permanece antes de que un rebote lo cambie. */
 const DWELL_MIN = 1800;
+/**
+ * Separación mínima entre el cambio de una tarjeta y el de cualquier otra. Si
+ * al tocarle el turno la vecina acaba de cambiar, espera lo que falte.
+ */
+const SEPARACION = 1500;
 
 const ETIQUETA = {
   es:  "ver el proyecto",
@@ -97,6 +111,10 @@ export function renderWelcomeCard(celda, proyectos) {
   // Los índices que hay ahora mismo a la vista, compartidos por las tarjetas.
   const enPantalla = new Set();
 
+  // Cuándo cambió por última vez CUALQUIERA de las tarjetas. Es lo que les
+  // permite cederse el turno en vez de cambiar a la vez.
+  const turno = { ultimo: -Infinity };
+
   // Con menos proyectos que tarjetas no hay forma de no repetir; en ese caso
   // sale una sola y ya.
   const cuantas = Math.min(TARJETAS.length, orden.length);
@@ -104,12 +122,17 @@ export function renderWelcomeCard(celda, proyectos) {
   TARJETAS.slice(0, cuantas).forEach((config, k) => {
     // Repartidas por el barajado, no pegadas: si arrancan en 0 y 1 las dos
     // primeras capturas son vecinas del mismo barajado y parecen relacionadas.
-    crearTarjeta(celda, orden, enPantalla, config, Math.floor(k * orden.length / cuantas));
+    // Y el primer cambio de cada una va desfasado un trozo de CADENCIA, para
+    // que el reparto de turnos empiece ya separado y no tenga que corregirse.
+    crearTarjeta(celda, orden, enPantalla, turno, config, {
+      indice:  Math.floor(k * orden.length / cuantas),
+      desfase: Math.round(CADENCIA * (k + 1) / cuantas),
+    });
   });
 }
 
 /** Una tarjeta: la pinta, la traduce, la hace rotar de proyecto y rebotar. */
-function crearTarjeta(celda, orden, enPantalla, config, inicial) {
+function crearTarjeta(celda, orden, enPantalla, turno, config, arranque) {
   celda.insertAdjacentHTML("beforeend", `
     <a class="welcome-card" href="#">
       <img class="welcome-card-img" alt="" decoding="async">
@@ -125,8 +148,9 @@ function crearTarjeta(celda, orden, enPantalla, config, inicial) {
   const nombreEl = cardEl.querySelector(".welcome-card-nombre");
   const ctaEl    = cardEl.querySelector(".welcome-card-cta");
 
-  let i = inicial;
+  let i = arranque.indice;
   let ultimoCambio = 0;
+  let reloj = null;
   enPantalla.add(i);
 
   const pintar = () => {
@@ -151,11 +175,38 @@ function crearTarjeta(celda, orden, enPantalla, config, inicial) {
     enPantalla.delete(i);
     i = proximoIndice(i, orden.length, enPantalla);
     enPantalla.add(i);
+    turno.ultimo = performance.now();
+    programar();
     // El fundido lo hace el CSS al quitar la clase; con movimiento reducido la
     // transición está anulada y el cambio es directo.
     cardEl.classList.add("cambiando");
     setTimeout(() => { pintar(); cardEl.classList.remove("cambiando"); }, 180);
   };
+
+  /** Deja el próximo cambio a `ms` de ahora, pisando el que hubiera pendiente. */
+  function programar(ms = CADENCIA) {
+    clearTimeout(reloj);
+    reloj = setTimeout(tocaCambiar, ms);
+  }
+
+  /**
+   * Le toca cambiar. Tres motivos para no hacerlo todavía, y en los tres se
+   * reprograma en vez de saltarse el turno:
+   *
+   *  - La celda no está activa: fuera de la welcome la tarjeta no se ve y
+   *    cambiarla es trabajo (y descargas) para nadie.
+   *  - El puntero está encima: quien está leyendo el nombre para hacer clic no
+   *    quiere que la tarjeta se le convierta en otra.
+   *  - La vecina acaba de cambiar: espera lo que falte de SEPARACION.
+   */
+  function tocaCambiar() {
+    if (!celda.classList.contains("activa") || cardEl.matches(":hover")) return programar();
+
+    const desdeElOtro = performance.now() - turno.ultimo;
+    if (desdeElOtro < SEPARACION) return programar(SEPARACION - desdeElOtro);
+
+    avanzar();
+  }
 
   // Repinta todo lo que depende del idioma sobre el proyecto que se ve AHORA:
   // el destino, el pie y el alt. Lo llaman `pintar` (al cambiar de proyecto) y
@@ -169,19 +220,16 @@ function crearTarjeta(celda, orden, enPantalla, config, inicial) {
   attachLangListeners(celda, aplicarLang);
 
   pintar();
-
-  // El temporizador solo corre con la celda activa: fuera de la welcome, la
-  // tarjeta no se ve y cambiarla sería trabajo (y descargas) para nadie.
-  setInterval(() => {
-    if (celda.classList.contains("activa") && !cardEl.matches(":hover")) avanzar();
-  }, CADENCIA);
+  programar(arranque.desfase);
 
   iniciarRebote(celda, cardEl, {
     velocidad: esMovil ? config.velocidadMovil : config.velocidad,
     limiteRot: config.limiteRot,
     inicio: (b) => esquinaMasLibre(celda, b, cardEl),
+    // El choque no llama a `avanzar` directo: pasa por el mismo turno que el
+    // reloj, así un rebote tampoco puede caer encima del cambio de la vecina.
     alChocar: () => {
-      if (performance.now() - ultimoCambio > DWELL_MIN) avanzar();
+      if (performance.now() - ultimoCambio > DWELL_MIN) tocaCambiar();
     },
   });
 }
