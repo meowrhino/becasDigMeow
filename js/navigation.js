@@ -120,6 +120,64 @@ export function crearCeldas() {
   }
 }
 
+/**
+ * El rectángulo que de verdad tiene celdas dentro del GRID.
+ *
+ * El lienzo pasa a ser un terreno de 5×5 para que la celda `plano` pueda
+ * recolocar las secciones donde quiera, pero un minimapa de 25 casillas casi
+ * todas vacías ocuparía el doble en la esquina y no diría nada. Los dos
+ * minimapas dibujan solo este marco, así que se encogen y se estiran solos
+ * según dónde hayas puesto las cosas.
+ */
+export function marcoOcupado() {
+  const ys = [], xs = [];
+  for (let y = 0; y < GRID.length; y++) {
+    for (let x = 0; x < (GRID[y]?.length || 0); x++) {
+      if (GRID[y][x] === 1) { ys.push(y); xs.push(x); }
+    }
+  }
+  if (!ys.length) return { y0: 0, y1: GRID.length - 1, x0: 0, x1: (GRID[0]?.length || 1) - 1 };
+  return { y0: Math.min(...ys), y1: Math.max(...ys), x0: Math.min(...xs), x1: Math.max(...xs) };
+}
+
+/**
+ * Cambia el reparto de celdas sin recrear ni repintar su contenido.
+ *
+ * Se puede porque `pos_Y_X` no coloca nada: todas las celdas están apiladas en
+ * el mismo hueco con `position:absolute` y solo se ve la que lleva `.activa`
+ * (ver la sección 2 de style.css). La clase es un selector, no una posición. Así
+ * que mudar una sección es re-etiquetar su div y redibujar los dos minimapas —
+ * el portfolio no reinicia sus ciclos de imagen ni el welcome sus tarjetas,
+ * que es lo que costaría destruir y volver a montar el lienzo.
+ *
+ * La celda ACTIVA se sigue por su nombre, no por su casilla: si mueves la que
+ * estás mirando, te quedas en ella y no te teletransporta a lo que haya caído
+ * en sus coordenadas viejas.
+ */
+export function reconfigurarGrid({ grid, nombres }) {
+  const nombreActivo = getNombrePagina();
+  GRID = grid;
+  NOMBRES_CELDAS = nombres;
+
+  for (const [clave, nombre] of Object.entries(NOMBRES_CELDAS)) {
+    const celda = document.querySelector(`.celda[data-nombre="${nombre}"]`);
+    if (!celda) continue;
+    const [y, x] = clave.split("_");
+    celda.classList.remove(`pos_${celda.dataset.y}_${celda.dataset.x}`);
+    celda.classList.add(`pos_${y}_${x}`);
+    celda.dataset.y = y;
+    celda.dataset.x = x;
+  }
+
+  if (!(nombreActivo && irACeldaLlamada(nombreActivo))) {
+    const { y0, x0 } = marcoOcupado();
+    setPosicion(y0, x0);
+  }
+
+  rehacerMinimapas();
+  actualizarVista({ historial: false });
+}
+
 // --- Zone Label ---
 
 let zoneLabelEl = null;
@@ -158,6 +216,27 @@ export function actualizarTamanoMinimapInline() {
   });
 }
 
+/** Rellena el minimapa de la esquina con el marco que hoy tiene celdas. */
+function pintarMinimapInline() {
+  if (!minimapInlineEl) return;
+  const { y0, y1, x0, x1 } = marcoOcupado();
+  minimapInlineEl.innerHTML = "";
+  minimapInlineEl.style.gridTemplateColumns = `repeat(${x1 - x0 + 1}, 1fr)`;
+  minimapInlineEl.style.gridTemplateRows    = `repeat(${y1 - y0 + 1}, 1fr)`;
+
+  for (let y = y0; y <= y1; y++) {
+    for (let x = x0; x <= x1; x++) {
+      const cell = document.createElement("div");
+      cell.classList.add("minimap-inline-cell");
+      cell.dataset.y = y;
+      cell.dataset.x = x;
+      if (GRID[y]?.[x] !== 1) cell.classList.add("invisible");
+      minimapInlineEl.appendChild(cell);
+    }
+  }
+  actualizarTamanoMinimapInline();
+}
+
 export function crearHeader() {
   const headerEl = document.createElement("div");
   headerEl.classList.add("header-topright");
@@ -167,21 +246,7 @@ export function crearHeader() {
   minimapInlineEl.setAttribute("role", "button");
   minimapInlineEl.setAttribute("tabindex", "0");
   minimapInlineEl.setAttribute("aria-label", "Abrir mapa de navegación");
-  minimapInlineEl.style.gridTemplateColumns = `repeat(${GRID[0].length}, 1fr)`;
-  minimapInlineEl.style.gridTemplateRows    = `repeat(${GRID.length}, 1fr)`;
-
-  for (let y = 0; y < GRID.length; y++) {
-    for (let x = 0; x < GRID[y].length; x++) {
-      const cell = document.createElement("div");
-      cell.classList.add("minimap-inline-cell");
-      cell.dataset.y = y;
-      cell.dataset.x = x;
-      if (GRID[y][x] === 0) cell.classList.add("invisible");
-      minimapInlineEl.appendChild(cell);
-    }
-  }
-
-  actualizarTamanoMinimapInline();
+  pintarMinimapInline();
   minimapInlineEl.addEventListener("click", () => abrirMinimapExpandido());
   minimapInlineEl.addEventListener("keydown", (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -217,23 +282,22 @@ export function actualizarTamanoMinimapExpandido() {
   });
 }
 
-export function crearOverlay() {
-  overlayEl = document.createElement("div");
-  overlayEl.classList.add("minimap-overlay");
+/** Rellena el minimapa grande con el marco que hoy tiene celdas. */
+function pintarMinimapExpandido() {
+  if (!minimapExpandedEl) return;
+  const { y0, y1, x0, x1 } = marcoOcupado();
+  minimapExpandedEl.innerHTML = "";
+  minimapExpandedEl.style.gridTemplateColumns = `repeat(${x1 - x0 + 1}, 1fr)`;
+  minimapExpandedEl.style.gridTemplateRows    = `repeat(${y1 - y0 + 1}, 1fr)`;
 
-  minimapExpandedEl = document.createElement("div");
-  minimapExpandedEl.classList.add("minimap-expanded");
-  minimapExpandedEl.style.gridTemplateColumns = `repeat(${GRID[0].length}, 1fr)`;
-  minimapExpandedEl.style.gridTemplateRows    = `repeat(${GRID.length}, 1fr)`;
-
-  for (let y = 0; y < GRID.length; y++) {
-    for (let x = 0; x < GRID[y].length; x++) {
+  for (let y = y0; y <= y1; y++) {
+    for (let x = x0; x <= x1; x++) {
       const cell = document.createElement("button");
       cell.classList.add("minimap-expanded-cell");
       cell.dataset.y = y;
       cell.dataset.x = x;
 
-      if (GRID[y][x] === 0) {
+      if (GRID[y]?.[x] !== 1) {
         cell.classList.add("invisible");
       } else {
         const nombreCelda = NOMBRES_CELDAS[`${y}_${x}`] || "";
@@ -253,8 +317,22 @@ export function crearOverlay() {
       minimapExpandedEl.appendChild(cell);
     }
   }
-
   actualizarTamanoMinimapExpandido();
+}
+
+/** Vuelve a dibujar los dos minimapas tras recolocar las secciones. */
+function rehacerMinimapas() {
+  pintarMinimapInline();
+  pintarMinimapExpandido();
+}
+
+export function crearOverlay() {
+  overlayEl = document.createElement("div");
+  overlayEl.classList.add("minimap-overlay");
+
+  minimapExpandedEl = document.createElement("div");
+  minimapExpandedEl.classList.add("minimap-expanded");
+  pintarMinimapExpandido();
   overlayEl.appendChild(minimapExpandedEl);
   overlayEl.addEventListener("click", e => {
     if (e.target === overlayEl) cerrarMinimapExpandido();

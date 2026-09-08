@@ -1200,6 +1200,107 @@ a.nav-label:visited {
 .theme-toggle::before    { width: 44px; }
 
 /* ============================================
+   12b. PAGE: PLANO
+   El mapa del sitio, y lo puedes recolocar. Las casillas son las mismas piezas
+   que el minimapa expandido —mismo gris, misma proporción de pantalla— porque
+   es el mismo objeto: el mapa de dónde estás, aquí en grande y editable.
+   ============================================ */
+
+.celda.plano {
+  flex-direction: column;
+}
+
+.plano-terreno {
+  display: grid;
+  gap: 10px;
+  user-select: none;
+  /* El terreno es 5×5 fijo. Las casillas vacías existen (mantienen la rejilla
+     cuadrada) pero en reposo son aire: con sus bordes puestos, veinte huecos se
+     leían como una hoja de cálculo y tapaban las secciones, que es lo único
+     que hay que mirar. Solo se dibujan mientras tienes una cogida. */
+}
+
+.plano-terreno > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: clamp(0.5rem, 1dvw, 0.85rem);
+  text-transform: lowercase;
+  text-align: center;
+  line-height: 1.15;
+  padding: 0.2em;
+  /* En vertical la casilla hereda la proporción del móvil: alta y estrecha. Y
+     «metodología» es una palabra sin espacios, que no parte sola y se salía por
+     los dos lados. `anywhere` la deja caer en dos líneas. */
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  background: none;
+  border: 1px dashed transparent;
+  box-sizing: border-box;
+  transition: background var(--transition-fast), transform var(--transition-fast),
+              opacity var(--transition-fast), border-color var(--transition-fast);
+}
+
+/* Una sección del sitio. Los selectores van con `.plano-terreno >` delante
+   porque la regla base de arriba es `.plano-terreno > button`, que gana en
+   especificidad a una clase suelta y les borraba el fondo. */
+.plano-terreno > .plano-seccion {
+  background: var(--minimap-expanded-bg);
+  color: var(--minimap-expanded-text);
+  cursor: pointer;
+}
+.plano-terreno > .plano-seccion:hover { background: var(--minimap-expanded-hover); transform: scale(1.05); }
+
+/* La que has cogido: se queda esperando a que le digas dónde va. */
+.plano-terreno > .plano-seccion.cogida { background: var(--minimap-active); transform: scale(1.05); }
+
+/* Mientras hay una cogida, las demás se apagan salvo al pasar por encima:
+   tocarlas las intercambia, y eso tiene que leerse distinto de un hueco. */
+.plano-terreno.eligiendo .plano-seccion:not(.cogida) { opacity: 0.45; }
+.plano-terreno.eligiendo .plano-seccion:not(.cogida):hover { opacity: 1; }
+
+/* Un hueco donde puede ir. Valen todos: ver la nota larga en js/plano.js. */
+.plano-terreno > .plano-libre { cursor: pointer; border-color: var(--border); }
+.plano-terreno > .plano-libre:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-hover);
+  transform: scale(1.05);
+}
+
+/* …pero si la sección va a quedarse sin ninguna vecina, el borde lo dice. No
+   se prohíbe: al minimapa se llega igual. Lo único que pierde es llegar
+   deslizando, y eso es una consecuencia que enseñar, no un error que evitar. */
+.plano-terreno > .plano-libre.suelta { border-style: dotted; opacity: 0.5; }
+.plano-terreno > .plano-libre.suelta:hover { opacity: 1; }
+
+/* Casilla vacía en reposo: ocupa sitio en la rejilla y no se ve ni se pulsa. */
+.plano-terreno > .plano-vacio { cursor: default; pointer-events: none; }
+
+/* Volver al orden original. Solo aparece si has movido algo: sin nada que
+   deshacer es un botón que solo puede confundir. */
+.plano-reset {
+  position: absolute;
+  bottom: var(--edge-pad-y);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  line-height: 1;
+  background: none;
+  border: none;
+  padding: 0.4rem 0.6rem;
+  color: var(--btn-subtle);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-med), color var(--transition-fast);
+  z-index: var(--z-nav);
+}
+.plano-reset.visible { opacity: 1; pointer-events: auto; }
+.plano-reset:hover { color: var(--btn-subtle-strong-hover); }
+
+/* ============================================
    13. PAGE: PORTFOLIO
    Grid de proyectos (cuadrícula estática ordenada).
    El antiguo modo "nubes flotantes" (WAAPI + deriva

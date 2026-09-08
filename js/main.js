@@ -30,6 +30,7 @@ import {
   renderCondiciones,
   renderAbout,
 } from "./pages.js";
+import { renderPlano, leerPlano, aGrid } from "./plano.js";
 import { renderPortfolio } from "./portfolio.js";
 import { rutaCelda, celdaDeRuta } from "./rutas.js";
 import { crearThemeToggle } from "./theme.js";
@@ -60,6 +61,7 @@ async function renderizarContenido() {
   renderMetodologia(data);
   renderCondiciones(data);
   renderPortfolio(data);
+  renderPlano(data);
   renderAbout(data);
 }
 
@@ -104,20 +106,17 @@ document.getElementById("seo-prerender")?.remove();
 // sin lo único que convence, que son las imágenes. El índice no se ha perdido —
 // vive en `/proyectos` como página lineal, que es donde le sirve a un buscador—
 // pero ya no ocupa una casilla del mapa.
+//
+// La rejilla ya no se escribe aquí: sale del reparto que tenga guardado este
+// navegador (js/plano.js), que de fábrica es el de siempre —links arriba, la
+// fila central, portfolio abajo— colocado en un terreno de 5×5 y con `plano` a
+// la derecha del portfolio. Quien no haya tocado nada ve exactamente lo mismo
+// que antes: los minimapas dibujan solo el rectángulo ocupado, no las 25
+// casillas del terreno.
+const reparto = leerPlano();
+
 configurarNavegacion({
-  grid: [
-    [0, 1, 0, 0], // fila 0: _, links, _, _
-    [1, 1, 1, 1], // fila 1: about, welcome, metodología, condiciones
-    [0, 1, 0, 0], // fila 2: _, portfolio, _, _
-  ],
-  nombres: {
-    "0_1": "links",
-    "1_0": "about",
-    "1_1": "welcome",
-    "1_2": "metodología",
-    "1_3": "condiciones",
-    "2_1": "portfolio",
-  },
+  ...aGrid(reparto),
   clasesCss: {
     "links": "tools",
     "about": "about",
@@ -125,6 +124,7 @@ configurarNavegacion({
     "welcome": "welcome",
     "condiciones": "footer",
     "portfolio": "portfolio",
+    "plano": "plano",
   },
   redirects: {
     "links": ["tools"],
@@ -135,7 +135,13 @@ configurarNavegacion({
     "condiciones": ["footer"],
     "welcome": ["statement"],
   },
-  posInicial: { y: 1, x: 1 },
+  // La portada, esté donde esté: con el reparto de fábrica es 2_2, pero si
+  // alguien la ha mudado, entrar sigue siendo entrar por la portada.
+  posInicial: (() => {
+    const [y, x] = (Object.entries(reparto).find(([, n]) => n === "welcome")?.[0] ?? "2_2")
+      .split("_").map(Number);
+    return { y, x };
+  })(),
   rutas: {
     de: (nombre) => rutaCelda(nombre, currentLang),
     celdaDe: (pathname) => celdaDeRuta(pathname)?.nombre ?? null,

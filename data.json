@@ -107,6 +107,16 @@
       "es": "contacto",
       "en": "contact",
       "cat": "contacte"
+    },
+    "plano": {
+      "es": "plano",
+      "en": "plan",
+      "cat": "plànol"
+    },
+    "condiciones": {
+      "es": "condiciones",
+      "en": "terms",
+      "cat": "condicions"
     }
   },
   "welcome": {
