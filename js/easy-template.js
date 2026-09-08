@@ -66,6 +66,7 @@ export function heroHTML(data, lang) {
         ${t.caduca ? `<p class="easy-ticket-caduca">${esc(t.caduca)}</p>` : ""}
       </div>
       ${t.incluye ? `<p class="easy-hero-incluye">${esc(t.incluye)}</p>` : ""}
+      ${t.condiciones ? `<p class="easy-hero-condiciones">${esc(t.condiciones)}</p>` : ""}
       <div class="easy-hero-cta">
         <a class="easy-btn" href="${mailto}">${esc(t.cta || "escríbeme")}</a>
         ${t.primera ? `<span class="easy-hero-primera">${esc(t.primera)}</span>` : ""}

@@ -80,7 +80,7 @@ export function renderTools(data) {
     p.urls ? { urls: p.urls } : { nombre: p.nombre, url: p.url }
   );
 
-  // "tools" y "WIP" son términos ya usados igual en los tres idiomas (como el
+  // "tools" y "wip" son términos ya usados igual en los tres idiomas (como el
   // resto de nombres de celda); "formateadores", "webs terminadas" y "varios"
   // sí varían y viven en data.json (links.labels) con el patrón {es,en,cat}.
   const labels = data.links.labels || {};
@@ -88,7 +88,7 @@ export function renderTools(data) {
   const linksHTML = herramientas.map(crearLinkHTML).join("");
   const dropdownsHTML = [
     crearDropdownHTML("tools", tools, "dd_tools"),
-    crearDropdownHTML("WIP", wip, "dd_wip"),
+    crearDropdownHTML("wip", wip, "dd_wip"),
     crearDropdownHTML(pick(labels.formateadores, currentLang), formateadores, "dd_formateadores"),
     crearDropdownHTML(pick(labels.webs, currentLang), websTerminadas, "dd_webs"),
     crearDropdownHTML(pick(labels.varios, currentLang), varios, "dd_varios"),
@@ -165,20 +165,31 @@ export function renderWelcome(data) {
   // interfaz en vez de enseñar trabajo, llamaba «botones» a unas etiquetas de
   // texto giradas, y era un <button> que nadie sabía que lo era. En su lugar,
   // más portfolio moviéndose: renderWelcomeCard pinta varias tarjetas.
+  // La letra pequeña del precio va aquí, en .welcome-content, y no colgada del
+  // cupón: el cupón rebota por la celda, así que nada puede ir "debajo" de él.
+  // Y va SIEMPRE visible, no en el dorso que se descubre al girarlo: enseñar
+  // un precio con un gesto es divertido, esconder detrás del mismo gesto lo
+  // que cuesta dinero parece una encerrona aunque no lo sea. Vendemos
+  // honestidad; la condición se lee sin tener que descubrir nada.
+  const condiciones = w.cupon?.[currentLang]?.condiciones || w.cupon?.es?.condiciones || "";
+
   el.innerHTML = `
     <div class="welcome-content">
       <h1 class="welcome-title">${escapeHTML(w.titulo)}</h1>
       <p class="welcome-tagline">${escapeHTML(pick(w.tagline, currentLang))}</p>
+      <p class="welcome-condiciones">${escapeHTML(condiciones)}</p>
     </div>
     ${buildLangButtons()}
   `;
 
   const taglineEl = el.querySelector(".welcome-tagline");
+  const condicionesEl = el.querySelector(".welcome-condiciones");
 
   // i18n en sitio: reusa el mecanismo de attachLangListeners (mismo patrón
   // que el cupón, que registra el suyo aparte sobre la misma celda).
   attachLangListeners(el, (lang) => {
     if (taglineEl) taglineEl.textContent = pick(w.tagline, lang);
+    if (condicionesEl) condicionesEl.textContent = w.cupon?.[lang]?.condiciones || "";
   });
 
   renderWelcomeCupon(el, w.cupon);

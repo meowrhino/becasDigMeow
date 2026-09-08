@@ -73,9 +73,10 @@
         "_iva": "(iva no incluido)",
         "caduca": "",
         "subject": "quiero una web!",
-        "incluye": "diseño a medida. sin servidores, sin suscripciones, sin tasas mensuales. te enseñamos a mantenerla tú mismo.",
+        "incluye": "diseño a medida. sin servidores, sin suscripciones, sin tasas mensuales. te enseñamos a mantenerla por tu cuenta.",
         "primera": "primera reunión gratis",
-        "cta": "escríbeme"
+        "cta": "escríbeme",
+        "condiciones": "3 rondas de revisión · el mes empieza en la primera reunión · después de la entrega, 60 €/h"
       },
       "en": {
         "hazte": "your website in a month for",
@@ -84,16 +85,18 @@
         "subject": "I want a website!",
         "incluye": "custom design. no servers, no subscriptions, no monthly fees. we teach you to maintain it yourself.",
         "primera": "first meeting free",
-        "cta": "let's talk"
+        "cta": "let's talk",
+        "condiciones": "3 rounds of revisions · the month starts at the first meeting · after delivery, €60/h"
       },
       "cat": {
         "hazte": "la teva web en un mes per",
         "_iva": "(iva no inclòs)",
         "caduca": "",
         "subject": "vull una web!",
-        "incluye": "disseny a mida. sense servidors, sense subscripcions, sense quotes mensuals. t'ensenyem a mantenir-la tu mateix.",
+        "incluye": "disseny a mida. sense servidors, sense subscripcions, sense quotes mensuals. t'ensenyem a mantenir-la pel teu compte.",
         "primera": "primera reunió gratis",
-        "cta": "escriu-me"
+        "cta": "escriu-me",
+        "condiciones": "3 rondes de revisió · el mes comença a la primera reunió · després del lliurament, 60 €/h"
       }
     },
     "formateadores": [
@@ -172,10 +175,6 @@
         "url": "https://meowrhino.github.io/fcyp/"
       },
       {
-        "nombre": "guia setup cloudflare pages",
-        "url": "https://meowrhino.github.io/guiaSetupCloudflarePages/"
-      },
-      {
         "nombre": "animeTest",
         "url": "https://meowrhino.github.io/animeTest/"
       },
@@ -200,10 +199,6 @@
       {
         "nombre": "VNGenerator",
         "url": "https://meowrhino.github.io/VNGenerator/"
-      },
-      {
-        "nombre": "miaumiau",
-        "url": "https://miaumiauonline.com"
       },
       {
         "nombre": "ajutsCat",
@@ -275,13 +270,17 @@
       {
         "nombre": "toctoc",
         "url": "https://toctoc.meowrhino.studio/"
+      },
+      {
+        "nombre": "guia setup cloudflare pages",
+        "url": "https://meowrhino.github.io/guiaSetupCloudflarePages/"
       }
     ]
   },
   "statement": {
     "es": {
       "lineas": [
-        "somos un estudio de diseño web en Barcelona",
+        "somos un estudio de diseño web en barcelona",
         "hacemos webs para un internet más común, cercano y vivo",
         "webs desde cero, contigo: únicas por dentro y por fuera",
         "te enseñamos a mantenerla y personalizarla a tu gusto",
@@ -290,7 +289,7 @@
     },
     "en": {
       "lineas": [
-        "we are a web design studio in Barcelona",
+        "we are a web design studio in barcelona",
         "we make websites for a more communal, close and living internet",
         "websites from scratch, with you: unique inside and out",
         "we teach you to maintain and customize it your way",
@@ -299,7 +298,7 @@
     },
     "cat": {
       "lineas": [
-        "som un estudi de disseny web a Barcelona",
+        "som un estudi de disseny web a barcelona",
         "fem webs per a un internet més comú, proper i viu",
         "webs des de zero, amb tu: úniques per dins i per fora",
         "t'ensenyem a mantenir-la i personalitzar-la al teu gust",
@@ -644,7 +643,7 @@
       {
         "nombre": "el mundo de las jordis",
         "imagen": "img/elmundodelasjordis/1.webp",
-        "imagenesSecundarias": 1,
+        "imagenesSecundarias": 2,
         "url": "https://elmundodelasjordis.com"
       },
       {

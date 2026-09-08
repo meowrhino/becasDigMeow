@@ -30,6 +30,7 @@ import {
 import {
   enlacesDe, renderIndiceHTML, renderProyectoHTML,
 } from "./js/proyecto-template.js";
+import { slugify } from "./js/rutas.js";
 import { renderArchivePrerenderHTML } from "./js/archive-pages.js";
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
@@ -37,6 +38,50 @@ const DATA_PATH = join(ROOT, "data.json");
 const SEO_PATH = join(ROOT, "proyectos-seo.json");
 const ARCHIVE_PATH = join(ROOT, "archive-data.json");
 const SITE = "https://meowrhino.studio";
+
+// ============================================
+// MODULEPRELOAD
+// ============================================
+//
+// js/ son módulos ES sueltos y el navegador los descubre leyendo los `import`
+// de cada uno. Desde main.js el grafo tiene SEIS niveles de profundidad
+// (main → pages → welcome-card → rebote…), así que sin ayuda el navegador hace
+// seis viajes en serie antes de tener el último módulo: no puede ni pedir
+// rebote.js hasta que ha descargado y parseado welcome-card.js.
+//
+// Un `<link rel="modulepreload">` por módulo le da la lista entera de golpe y
+// los pide todos en paralelo: la cascada de seis niveles pasa a uno. No es un
+// bundler — no hay dependencias nuevas, js/ se queda tal cual y sigue siendo
+// legible — y la lista la calcula el build, así que no puede quedarse vieja
+// cuando alguien añada un import.
+
+/** Cierre transitivo de imports de un módulo de js/, en orden de descubrimiento. */
+function grafoDeModulos(entrada) {
+  const vistos = new Set();
+  const orden = [];
+  const cola = [entrada];
+  while (cola.length) {
+    const actual = cola.shift();
+    if (vistos.has(actual)) continue;
+    vistos.add(actual);
+    orden.push(actual);
+    let src;
+    try {
+      src = readFileSync(join(ROOT, "js", actual), "utf8");
+    } catch {
+      throw new Error(`modulepreload: js/${actual} no existe (lo importa otro módulo).`);
+    }
+    for (const m of src.matchAll(/from\s+"\.\/([\w.-]+\.js)"/g)) cola.push(m[1]);
+  }
+  return orden;
+}
+
+/** Los <link rel="modulepreload"> de un punto de entrada, ya indentados. */
+function modulepreloadHTML(entrada) {
+  return grafoDeModulos(entrada)
+    .map(m => `  <link rel="modulepreload" href="/js/${m}">`)
+    .join("\n");
+}
 
 /**
  * Idiomas de la home. `code` es la clave dentro de data.json; `htmlLang` el
@@ -163,6 +208,7 @@ function headHTML(data, idioma) {
 /** Genera el HTML completo de una variante de la home a partir de la plantilla. */
 function paginaHome(plantilla, data, idioma) {
   let html = reemplazarBloque(plantilla, "head", headHTML(data, idioma));
+  html = reemplazarBloque(html, "preload", modulepreloadHTML("main.js"));
   html = reemplazarBloque(html, "home", renderHomePrerenderHTML(data, idioma.code));
   // El <html lang> tiene que coincidir con el contenido pre-renderizado: es la
   // señal que lee data.js al arrancar para saber en qué idioma pintarse.
@@ -260,6 +306,21 @@ function fichasDeProyecto(data, seoDoc) {
       throw new Error(
         `proyectos-seo.json habla de "${seo.nombre}", que no existe en ` +
         `data.json. Los nombres tienen que coincidir exactamente.`
+      );
+    }
+    // El slug se calcula DOS veces: aquí sale de proyectos-seo.json (es el
+    // nombre del archivo que se escribe y la URL canónica) y en el navegador
+    // sale de slugify(nombre) — la card del welcome y la rejilla del portfolio
+    // enlazan con eso, no con este JSON. Mientras coincidan no pasa nada; el
+    // día que dejen de coincidir, esos enlaces darían 404 sin que se entere
+    // nadie. Que reviente el build es mucho más barato que descubrirlo en
+    // producción.
+    const calculado = slugify(seo.nombre);
+    if (calculado !== seo.slug) {
+      throw new Error(
+        `El slug de "${seo.nombre}" no cuadra: proyectos-seo.json dice ` +
+        `"${seo.slug}" y slugify() calcula "${calculado}". Los enlaces del ` +
+        `welcome y del portfolio usan slugify(), así que apuntarían a un 404.`
       );
     }
     return { proyecto, seo };
@@ -371,8 +432,28 @@ ${cuerpo}
 }
 
 /** Página de un proyecto, en un idioma. */
-function paginaProyecto({ proyecto, seo }, idioma) {
-  const rutas = { indice: idioma.proyBase, home: idioma.path };
+function paginaProyecto({ proyecto, seo }, idioma, vecinos = {}) {
+  const rutas = {
+    indice: idioma.proyBase,
+    home: idioma.path,
+    // El selector de idioma de ESTA ficha: las mismas tres URLs que ya declara
+    // el hreflang, pero clicables. La etiqueta es el código corto porque es lo
+    // que usa la home ("es en cat") y así las dos pantallas se leen igual.
+    idiomas: IDIOMAS.map(i => ({
+      etiqueta: i.code,
+      htmlLang: i.htmlLang,
+      href: `${i.proyBase}/${seo.slug}`,
+      activo: i.code === idioma.code,
+    })),
+    anterior: vecinos.anterior && {
+      nombre: vecinos.anterior.proyecto.nombre,
+      href: `${idioma.proyBase}/${vecinos.anterior.seo.slug}`,
+    },
+    siguiente: vecinos.siguiente && {
+      nombre: vecinos.siguiente.proyecto.nombre,
+      href: `${idioma.proyBase}/${vecinos.siguiente.seo.slug}`,
+    },
+  };
   return paginaProyectoHTML({
     idioma,
     title: pick(seo.title, idioma.code),
@@ -578,15 +659,18 @@ function main() {
     }
 
     const easy = readFileSync(join(ROOT, "easy.html"), "utf8");
-    generar("easy.html", reemplazarBloque(easy, "easy", renderBodyHTML(data, "es")));
+    generar("easy.html", reemplazarBloque(
+      reemplazarBloque(easy, "preload", modulepreloadHTML("easy-main.js")),
+      "easy", renderBodyHTML(data, "es")));
 
     // /archive está en el sitemap pero se montaba entero por JS sobre un <main>
     // vacío: un rastreador sin JS veía la página en blanco. Era la única página
     // indexable sin pre-render.
     const archiveData = JSON.parse(readFileSync(ARCHIVE_PATH, "utf8"));
     const archive = readFileSync(join(ROOT, "archive.html"), "utf8");
-    generar("archive.html",
-      reemplazarBloque(archive, "archive", renderArchivePrerenderHTML(archiveData)));
+    generar("archive.html", reemplazarBloque(
+      reemplazarBloque(archive, "preload", modulepreloadHTML("archive-main.js")),
+      "archive", renderArchivePrerenderHTML(archiveData)));
 
     // Cada idioma tiene su índice suelto (proyectos.html, en/projects.html…) y
     // su directorio de fichas. El índice NO va como index.html dentro del
@@ -596,9 +680,18 @@ function main() {
     for (const idioma of IDIOMAS) {
       mkdirSync(join(ROOT, idioma.proyDir), { recursive: true });
       generar(idioma.proyFile, paginaIndice(fichas, idioma));
-      for (const ficha of fichas) {
-        generar(`${idioma.proyDir}/${ficha.seo.slug}.html`, paginaProyecto(ficha, idioma));
-      }
+      // Los vecinos salen del orden de proyectos-seo.json, que es el mismo que
+      // el de la rejilla. La lista es circular a propósito: desde el último,
+      // "siguiente" vuelve al primero. Un cul-de-sac al final de una lista de
+      // 21 es peor que dar la vuelta.
+      fichas.forEach((ficha, i) => {
+        const vecinos = {
+          anterior: fichas[(i - 1 + fichas.length) % fichas.length],
+          siguiente: fichas[(i + 1) % fichas.length],
+        };
+        generar(`${idioma.proyDir}/${ficha.seo.slug}.html`,
+          paginaProyecto(ficha, idioma, vecinos));
+      });
     }
 
     // El sitemap va el último: necesita saber qué se ha reescrito antes.

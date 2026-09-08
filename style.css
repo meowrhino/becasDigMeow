@@ -1199,7 +1199,12 @@ a.nav-label:visited {
   display: block;
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  /* El ratio de las capturas, no un 4/3 de catálogo: las 21 carpetas de img/
+     miden 1600x1049. Con 4/3 (1.333) todas salían con franja arriba y abajo
+     por el object-fit: contain de .pgrid-img. Si algún día entra una captura
+     con otra proporción, el contain la encaja igual: esto solo decide cuánto
+     hueco reserva la rejilla. */
+  aspect-ratio: 1600 / 1049;
   overflow: hidden;
 }
 
@@ -2023,3 +2028,155 @@ html.js #seo-prerender {
 }
 .pgrid-item:hover .pgrid-caso { color: var(--text-secondary); }
 .pgrid-caso:hover { color: var(--text); text-decoration: underline; text-underline-offset: 0.16em; }
+
+/* ============================================
+   FICHA DE PROYECTO — el marco de celda
+   ============================================
+
+   Las fichas (/proyectos/<slug>) eran una columna de texto centrada con dos
+   capturas debajo: correcta y de nadie. Como son las páginas a las que llega
+   la gente desde Google, tenían además tres agujeros — ni selector de idioma,
+   ni cambio de tema, ni forma de ir a otro proyecto sin volver al índice.
+
+   La respuesta no es añadir una barra de navegación, que sería la solución de
+   cualquier web: es que la ficha se lea como UNA CELDA DEL LIENZO que has
+   abierto. Por eso reutiliza el vocabulario visual de la home — la palabra
+   gigante desvaída del fondo (.zone-label-bg), las etiquetas giradas de las
+   celdas vecinas (.nav-label.left/.right) y los códigos de idioma sueltos
+   (.lang-btn) — en vez de inventarse un lenguaje nuevo.
+
+   Todo esto es CSS y HTML estático: las fichas siguen sin cargar un solo
+   módulo de js/. */
+
+/* La palabra "proyecto" en grande y desvaída, como la de cada celda. */
+.proy-borde-etiqueta {
+  position: fixed;
+  bottom: 4dvh;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-serif);
+  font-size: clamp(4rem, 14dvw, 12rem);
+  color: var(--zone-label);
+  text-transform: lowercase;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: var(--z-base);
+}
+
+/* Códigos de idioma arriba a la derecha, con el mismo peso que en la home. */
+.proy-lang-switch {
+  position: fixed;
+  top: 3dvh;
+  right: 3dvw;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  z-index: var(--z-nav);
+}
+
+.proy-lang,
+.proy-lang-actual {
+  font-size: 0.8rem;
+  padding: 0.2rem 0.3rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.proy-lang,
+.proy-lang:visited { color: var(--btn-subtle); }
+.proy-lang:hover   { color: var(--btn-subtle-hover); }
+.proy-lang-actual  { font-weight: 600; color: var(--text); }
+
+/* Los vecinos, girados en los bordes: el mismo gesto que las celdas de al lado
+   en el lienzo. La lista es circular, así que siempre hay los dos. */
+.proy-vecino {
+  position: fixed;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-serif);
+  font-size: clamp(0.7rem, 1dvw, 1rem);
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  color: var(--text-secondary);
+  transition: color 0.3s ease, transform 0.3s ease;
+  z-index: var(--z-nav);
+  max-width: 40dvh;
+}
+
+.proy-vecino:visited { color: var(--text-secondary); }
+.proy-vecino:hover   { color: var(--text); }
+
+.proy-vecino-nombre {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.proy-vecino-prev {
+  left: 3dvw;
+  writing-mode: vertical-rl;
+  transform: translateY(-50%) rotate(180deg);
+}
+.proy-vecino-next {
+  right: 3dvw;
+  writing-mode: vertical-rl;
+  transform: translateY(-50%);
+}
+
+.proy-vecino-prev:hover { transform: translateY(-50%) rotate(180deg) translateY(0.3rem); }
+.proy-vecino-next:hover { transform: translateY(-50%) translateY(0.3rem); }
+
+/* En pantallas estrechas no hay márgenes laterales que gastar: los vecinos
+   bajan al pie, en horizontal, junto a "todos los proyectos". La palabra
+   gigante del fondo desaparece — a este ancho tapa el texto en vez de
+   ambientarlo. */
+@media (max-width: 860px) {
+  .proy-borde-etiqueta { display: none; }
+
+  .proy-vecino {
+    position: static;
+    writing-mode: horizontal-tb;
+    transform: none;
+    max-width: 45%;
+  }
+  .proy-vecino-prev:hover,
+  .proy-vecino-next:hover { transform: none; }
+
+  .proy { display: flex; flex-direction: column; }
+  .proy-pie { order: 97; }
+  /* Uno pegado a cada lado, para que se lean como los dos extremos de la
+     lista y no como dos enlaces sueltos apilados. */
+  .proy-vecino-prev { order: 98; align-self: flex-start; }
+  .proy-vecino-next { order: 99; align-self: flex-end; flex-direction: row-reverse; }
+
+  .proy-lang-switch { position: static; justify-content: flex-end; margin-bottom: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proy-vecino { transition: color 0.3s ease; }
+  .proy-vecino-prev:hover { transform: translateY(-50%) rotate(180deg); }
+  .proy-vecino-next:hover { transform: translateY(-50%); }
+}
+
+/* La letra pequeña del cupón: fuera de la tarjeta y siempre a la vista.
+   Ver la nota en js/welcome-cupon.js — es una decisión de marca, no de
+   maquetación: las condiciones que cuestan dinero no se esconden detrás de
+   un gesto que hay que descubrir. */
+.welcome-condiciones,
+.easy-hero-condiciones {
+  margin-top: 0.9rem;
+  max-width: 30rem;
+  font-size: clamp(0.62rem, 0.85dvw, 0.72rem);
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  color: var(--text-secondary);
+  text-align: center;
+  text-wrap: balance;
+}
+
+.welcome-condiciones { margin-inline: auto; }

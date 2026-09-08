@@ -28,18 +28,21 @@ export const UI = {
          indiceTitulo: "proyectos", indiceEyebrow: "estudio de diseño web · barcelona",
          ctaTexto: "¿quieres una web así? la primera reunión es gratis.", ctaBoton: "escríbeme",
          asunto: "quiero una web!", detalle: "detalle", disenada: "web diseñada por meowrhino studio, Barcelona",
+         anterior: "anterior", siguiente: "siguiente", idiomas: "idioma",
          intro: (n) => `${n} webs hechas a medida, desde cero y sin plantillas, para artistas, fotógrafos, músicos y pequeños negocios. cada una cuenta cómo se hizo y por qué acabó siendo así.`,
          navegar: "seguir navegando" },
   en:  { eyebrow: "project", visitar: "visit", todos: "← all projects",
          indiceTitulo: "projects", indiceEyebrow: "web design studio · barcelona",
          ctaTexto: "want a website like this? the first meeting is free.", ctaBoton: "write to me",
          asunto: "i want a website!", detalle: "detail", disenada: "website designed by meowrhino studio, Barcelona",
+         anterior: "previous", siguiente: "next", idiomas: "language",
          intro: (n) => `${n} websites built from scratch, custom-made and without templates, for artists, photographers, musicians and small businesses. each one tells how it was made and why it ended up like this.`,
          navegar: "keep browsing" },
   cat: { eyebrow: "projecte", visitar: "visitar", todos: "← tots els projectes",
          indiceTitulo: "projectes", indiceEyebrow: "estudi de disseny web · barcelona",
          ctaTexto: "vols una web així? la primera reunió és gratis.", ctaBoton: "escriu-me",
          asunto: "vull una web!", detalle: "detall", disenada: "web dissenyada per meowrhino studio, Barcelona",
+         anterior: "anterior", siguiente: "següent", idiomas: "idioma",
          intro: (n) => `${n} webs fetes a mida, des de zero i sense plantilles, per a artistes, fotògrafs, músics i petits negocis. cadascuna explica com es va fer i per què va acabar sent així.`,
          navegar: "seguir navegant" },
 };
@@ -109,8 +112,39 @@ export function renderProyectoHTML(proyecto, seo, lang = "es", rutas = {}, medir
       </p>`
     : "";
 
+  // Las tres variantes de idioma de ESTA ficha. Existían ya como <link
+  // hreflang> para los buscadores, pero una persona que caía aquí desde Google
+  // en el idioma equivocado no tenía forma de cambiarlo: la ficha solo llevaba
+  // cuatro enlaces y ninguno era el selector.
+  const idiomas = (rutas.idiomas || []).map(i =>
+    i.activo
+      ? `<span class="proy-lang-actual" aria-current="true">${esc(i.etiqueta)}</span>`
+      : `<a class="proy-lang" href="${esc(i.href)}" hreflang="${esc(i.htmlLang)}">${esc(i.etiqueta)}</a>`
+  ).join("");
+
+  const cabecera = idiomas
+    ? `
+      <div class="proy-lang-switch" role="group" aria-label="${esc(t.idiomas)}">${idiomas}</div>`
+    : "";
+
+  // Anterior y siguiente van en los BORDES, girados, como las etiquetas de las
+  // celdas vecinas del lienzo de la home: la ficha se lee como una celda que
+  // has abierto, no como una página suelta. En móvil el CSS los baja al pie,
+  // donde sí hay sitio.
+  const vecino = (v, clase, flecha) => v
+    ? `
+      <a class="proy-vecino ${clase}" href="${esc(v.href)}" rel="${clase === "proy-vecino-prev" ? "prev" : "next"}">
+        <span class="proy-vecino-flecha">${flecha}</span>
+        <span class="proy-vecino-nombre">${esc(v.nombre)}</span>
+      </a>`
+    : "";
+
+  const vecinos = vecino(rutas.anterior, "proy-vecino-prev", "←") +
+    vecino(rutas.siguiente, "proy-vecino-next", "→");
+
   return `
-    <article class="proy">
+    <article class="proy">${cabecera}
+      <span class="proy-borde-etiqueta" aria-hidden="true">${esc(t.eyebrow)}</span>${vecinos}
       <p class="easy-eyebrow">${esc(t.eyebrow)} · ${esc(pickLang(seo.resumen, lang))}</p>
       <h1 class="proy-title">${esc(proyecto.nombre)}</h1>
       <p class="proy-texto">${esc(pickLang(seo.texto, lang))}</p>${visitar}
