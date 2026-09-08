@@ -594,7 +594,7 @@ function paginaIndice(fichas, idioma) {
       base: idioma.proyBase,
       home: idioma.path,
       rejilla: `${idioma.path}#portfolio`,
-    }),
+    }, medidasDe),
   });
 }
 

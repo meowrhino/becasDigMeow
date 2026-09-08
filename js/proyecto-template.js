@@ -174,17 +174,25 @@ function altDe(proyecto, i, t) {
  * suena a catálogo repetido; el resumen habla de ESE proyecto en concreto
  * («un portfolio que es una disquetera»).
  */
-export function renderIndiceHTML(fichas, lang = "es", rutas = {}) {
+export function renderIndiceHTML(fichas, lang = "es", rutas = {}, medirImagen = null) {
   const t = UI[lang] || UI.es;
   const base = rutas.base || "/proyectos";
-  const items = fichas.map(({ proyecto, seo }) => `
+  const items = fichas.map(({ proyecto, seo }) => {
+    // Las 21 capturas van `lazy` y sin medidas no reservaban sitio: al entrar,
+    // la página saltaba entera cada vez que llegaba una. Las fichas ya medían
+    // sus imágenes (medidasDe, en build-seo.js); el índice no, y era justo la
+    // página donde más se notaba porque hay veintiuna a la vez.
+    const m = medirImagen?.(proyecto.imagen);
+    const tamano = m ? ` width="${m.ancho}" height="${m.alto}"` : "";
+    return `
         <li class="proy-card">
           <a href="${esc(base)}/${esc(seo.slug)}">
-            <img src="/${esc(proyecto.imagen)}" alt="" loading="lazy" decoding="async">
+            <img src="/${esc(proyecto.imagen)}" alt=""${tamano} loading="lazy" decoding="async">
             <span class="proy-card-nombre">${esc(proyecto.nombre)}</span>
             <span class="proy-card-kw">${esc(pickLang(seo.resumen, lang))}</span>
           </a>
-        </li>`).join("");
+        </li>`;
+  }).join("");
 
   return `
     <section class="proy-indice">

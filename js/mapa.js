@@ -1,5 +1,5 @@
 // ============================================
-// PLANO — el mapa del lienzo, y lo puedes recolocar
+// MAPA — el mapa del lienzo, y lo puedes recolocar
 // ============================================
 //
 // La celda a la derecha del portfolio. Enseña las secciones del sitio como
@@ -49,13 +49,13 @@ const LADO = 5;
 export const ORIGEN = Object.freeze({
   "1_2": "links",
   "2_1": "about", "2_2": "welcome", "2_3": "metodología", "2_4": "condiciones",
-  "3_2": "portfolio", "3_3": "plano",
+  "3_2": "portfolio", "3_3": "mapa",
 });
 
-const GUARDADO = "meowrhino-plano";
+const GUARDADO = "meowrhino-mapa";
 
 /** El reparto guardado en este navegador, o el de fábrica. */
-export function leerPlano() {
+export function leerMapa() {
   try {
     const v = localStorage.getItem(GUARDADO);
     if (!v) return { ...ORIGEN };
@@ -69,7 +69,7 @@ export function leerPlano() {
   } catch { return { ...ORIGEN }; }
 }
 
-function guardarPlano(mapa) {
+function guardarMapa(mapa) {
   try {
     if (esDeFabrica(mapa)) localStorage.removeItem(GUARDADO);
     else localStorage.setItem(GUARDADO, JSON.stringify(mapa));
@@ -103,23 +103,23 @@ function quedaSuelta(mapa, origen, destino) {
   return ![[-1, 0], [1, 0], [0, -1], [0, 1]].some(([dy, dx]) => tras[`${y + dy}_${x + dx}`]);
 }
 
-export function renderPlano(data) {
-  const el = document.querySelector(".celda.plano");
+export function renderMapa(data) {
+  const el = document.querySelector(".celda.mapa");
   if (!el) return;
 
   const zone = data?.zoneLabels || {};
   const etiqueta = (nombre, lang) => zone[nombre]?.[lang] ?? zone[nombre]?.es ?? nombre;
 
-  let mapa = leerPlano();
+  let mapa = leerMapa();
   let cogida = null;
 
   el.innerHTML = `
-    <div class="plano-terreno" role="group" aria-label="mapa del sitio"></div>
-    <button class="plano-reset" type="button" aria-label="volver al orden original">↺</button>
+    <div class="mapa-terreno" role="group" aria-label="mapa del sitio"></div>
+    <button class="mapa-reset" type="button" aria-label="volver al orden original">↺</button>
     ${buildLangButtons()}
   `;
-  const terreno = el.querySelector(".plano-terreno");
-  const reset   = el.querySelector(".plano-reset");
+  const terreno = el.querySelector(".mapa-terreno");
+  const reset   = el.querySelector(".mapa-reset");
 
   // La casilla lleva la proporción de la pantalla, igual que los minimapas: el
   // mapa se parece a lo que estás mirando. Cabe a lo ancho y a lo alto, y de
@@ -147,12 +147,12 @@ export function renderPlano(data) {
         casilla.type = "button";
         casilla.dataset.k = k;
         if (mapa[k]) {
-          casilla.className = "plano-seccion" + (k === cogida ? " cogida" : "");
+          casilla.className = "mapa-seccion" + (k === cogida ? " cogida" : "");
           casilla.textContent = etiqueta(mapa[k], lang);
         } else if (cogida) {
-          casilla.className = "plano-libre" + (quedaSuelta(mapa, cogida, k) ? " suelta" : "");
+          casilla.className = "mapa-libre" + (quedaSuelta(mapa, cogida, k) ? " suelta" : "");
         } else {
-          casilla.className = "plano-vacio";
+          casilla.className = "mapa-vacio";
           casilla.tabIndex = -1;
           casilla.setAttribute("aria-hidden", "true");
         }
@@ -163,7 +163,7 @@ export function renderPlano(data) {
   }
 
   function aplicar() {
-    guardarPlano(mapa);
+    guardarMapa(mapa);
     reconfigurarGrid(aGrid(mapa));
     pintar();
   }

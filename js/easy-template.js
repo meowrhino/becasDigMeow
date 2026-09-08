@@ -242,6 +242,52 @@ export function linksHTML(data, lang) {
 }
 
 /**
+ * Mapa: el índice de las secciones del sitio, con sus enlaces.
+ *
+ * En el navegador esta celda es una rejilla de casillas que puedes recolocar
+ * (js/mapa.js), pero recolocar es JavaScript y arrastrar casillas no se le
+ * cuenta a nadie sin él. Aquí abajo se convierte en lo que de verdad es por
+ * debajo: la lista de las secciones y a dónde va cada una. Un rastreador ve el
+ * índice del sitio entero y quien navega sin JS tiene por fin una página que
+ * los enlaza todos.
+ *
+ * El orden es el de RUTA_CELDAS, no el que tenga guardado nadie: lo que se
+ * recoloca vive en el navegador de cada visitante y esto es HTML para todos.
+ */
+export function mapaHTML(data, lang) {
+  const t = ui(lang);
+  const zone = data.zoneLabels || {};
+  const nombre = (celda) => pickLang(zone[celda], lang) || celda;
+  const m = MAPA[lang] || MAPA.es;
+
+  const secciones = ["welcome", "about", "metodología", "condiciones", "links"]
+    .map(celda => {
+      const ruta = rutaCelda(celda, lang);
+      return ruta ? `<li><a href="${esc(ruta)}">${esc(nombre(celda))}</a></li>` : "";
+    }).join("");
+
+  return `
+    <section class="easy-section easy-mapa" id="mapa">
+      <p class="easy-eyebrow">${esc(m.eyebrow)}</p>
+      <h1 class="easy-h">${esc(nombre("mapa"))}</h1>
+      <p>${esc(m.texto)}</p>
+      <ul class="easy-links-lista">${secciones}
+        <li><a href="${esc(rutaProyectos(lang))}">${esc(t.portfolio)}</a></li>
+      </ul>
+    </section>`;
+}
+
+/** Los textos propios de la celda mapa, por idioma. */
+const MAPA = {
+  es:  { eyebrow: "estudio de diseño web · barcelona",
+         texto: "las secciones de esta web. en el navegador puedes moverlas de sitio y se quedan así para ti: una web es un espacio propio, no un molde prestado." },
+  en:  { eyebrow: "web design studio · barcelona",
+         texto: "the sections of this website. in the browser you can move them around and they stay that way for you: a website is a place of your own, not a borrowed template." },
+  cat: { eyebrow: "estudi de disseny web · barcelona",
+         texto: "les seccions d'aquesta web. al navegador les pots moure de lloc i es queden així per a tu: una web és un espai propi, no un motlle prestat." },
+};
+
+/**
  * El cuerpo pre-renderizado de UNA celda.
  *
  * Es el cambio de fondo de todo esto: hasta ahora la raíz servía el texto de
@@ -271,9 +317,14 @@ export function renderCeldaPrerenderHTML(data, lang, celda, enlaces = []) {
     condiciones: () => condicionesHTML(data, lang),
     links: () => linksHTML(data, lang),
     portfolio: () => portfolioHTML(data, lang),
+    mapa: () => mapaHTML(data, lang),
   }[celda];
 
-  return (cuerpo ? cuerpo() : "") + notaCeldaHTML(enlaces, lang);
+  // La celda `mapa` YA es la lista de secciones con sus enlaces: añadirle el
+  // pie de navegación sería imprimir dos veces los mismos seis enlaces, uno
+  // debajo del otro.
+  const nota = celda === "mapa" ? "" : notaCeldaHTML(enlaces, lang);
+  return (cuerpo ? cuerpo() : "") + nota;
 }
 
 /**

@@ -30,7 +30,7 @@ import {
   renderCondiciones,
   renderAbout,
 } from "./pages.js";
-import { renderPlano, leerPlano, aGrid } from "./plano.js";
+import { renderMapa, leerMapa, aGrid } from "./mapa.js";
 import { renderPortfolio } from "./portfolio.js";
 import { rutaCelda, celdaDeRuta } from "./rutas.js";
 import { crearThemeToggle } from "./theme.js";
@@ -61,7 +61,7 @@ async function renderizarContenido() {
   renderMetodologia(data);
   renderCondiciones(data);
   renderPortfolio(data);
-  renderPlano(data);
+  renderMapa(data);
   renderAbout(data);
 }
 
@@ -108,12 +108,12 @@ document.getElementById("seo-prerender")?.remove();
 // pero ya no ocupa una casilla del mapa.
 //
 // La rejilla ya no se escribe aquí: sale del reparto que tenga guardado este
-// navegador (js/plano.js), que de fábrica es el de siempre —links arriba, la
-// fila central, portfolio abajo— colocado en un terreno de 5×5 y con `plano` a
+// navegador (js/mapa.js), que de fábrica es el de siempre —links arriba, la
+// fila central, portfolio abajo— colocado en un terreno de 5×5 y con `mapa` a
 // la derecha del portfolio. Quien no haya tocado nada ve exactamente lo mismo
 // que antes: los minimapas dibujan solo el rectángulo ocupado, no las 25
 // casillas del terreno.
-const reparto = leerPlano();
+const reparto = leerMapa();
 
 configurarNavegacion({
   ...aGrid(reparto),
@@ -124,7 +124,7 @@ configurarNavegacion({
     "welcome": "welcome",
     "condiciones": "footer",
     "portfolio": "portfolio",
-    "plano": "plano",
+    "mapa": "mapa",
   },
   redirects: {
     "links": ["tools"],
@@ -134,6 +134,10 @@ configurarNavegacion({
     "about": ["contacto"],
     "condiciones": ["footer"],
     "welcome": ["statement"],
+    // `#plano` fue el nombre de la celda mapa durante un commit. No lo enlaza
+    // nada de fuera, pero el alias cuesta una línea y evita que un enlace que
+    // alguien copiara ese día caiga en la portada sin explicación.
+    "mapa": ["plano"],
   },
   // La portada, esté donde esté: con el reparto de fábrica es 2_2, pero si
   // alguien la ha mudado, entrar sigue siendo entrar por la portada.

@@ -67,6 +67,12 @@ export const slugify = (s) => String(s ?? "")
 // sigue vivo en `/proyectos` como página lineal suelta —con sus fichas, sus
 // resúmenes y su hreflang— porque ahí sí sirve: es lo que rastrea un buscador.
 // Lo que se fue del mapa es la celda, no la página.
+//
+// `mapa` ocupa ahora esa casilla, a la derecha del portfolio: el plano del
+// sitio, que además puedes recolocar. Sí tiene ruta, aunque lo que se guarda
+// (dónde has puesto cada sección) viva solo en tu navegador: la página existe
+// igual para quien llega de fuera, y sin JS se lee como lo que es, el índice
+// de las secciones con sus enlaces.
 
 /**
  * Celda → ruta, por idioma. La clave es el identificador interno de la celda
@@ -82,6 +88,7 @@ export const RUTA_CELDAS = {
     "metodología": "/metodologia",
     condiciones: "/condiciones",
     links: "/links",
+    mapa: "/mapa",
   },
   en: {
     welcome: "/en",
@@ -89,6 +96,7 @@ export const RUTA_CELDAS = {
     "metodología": "/en/methodology",
     condiciones: "/en/terms",
     links: "/en/links",
+    mapa: "/en/map",
   },
   cat: {
     welcome: "/ca",
@@ -96,6 +104,7 @@ export const RUTA_CELDAS = {
     "metodología": "/ca/metodologia",
     condiciones: "/ca/condicions",
     links: "/ca/links",
+    mapa: "/ca/mapa",
   },
 };
 

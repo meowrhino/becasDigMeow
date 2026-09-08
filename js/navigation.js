@@ -123,7 +123,7 @@ export function crearCeldas() {
 /**
  * El rectángulo que de verdad tiene celdas dentro del GRID.
  *
- * El lienzo pasa a ser un terreno de 5×5 para que la celda `plano` pueda
+ * El lienzo pasa a ser un terreno de 5×5 para que la celda `mapa` pueda
  * recolocar las secciones donde quiera, pero un minimapa de 25 casillas casi
  * todas vacías ocuparía el doble en la esquina y no diría nada. Los dos
  * minimapas dibujan solo este marco, así que se encogen y se estiran solos

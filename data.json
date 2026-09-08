@@ -61,6 +61,18 @@
         "en": "the tools we make and publish openly: compress images and video in the browser, generate invoices without signing up, work out freelance rates, plus the experiments along the way.",
         "cat": "les eines que fem i publiquem obertes: comprimir imatges i vídeo al navegador, generar factures sense registre, calcular preus d'autònom·a, i els experiments que van sortint."
       }
+    },
+    "mapa": {
+      "title": {
+        "es": "mapa — coloca las secciones de esta web donde quieras · meowrhino studio",
+        "en": "map — put the sections of this website wherever you want · meowrhino studio",
+        "cat": "mapa — col·loca les seccions d'aquesta web on vulguis · meowrhino studio"
+      },
+      "description": {
+        "es": "el mapa de meowrhino studio, y lo puedes recolocar: mueve las secciones donde te apetezca y se quedan así en tu navegador. una web es un espacio propio, no un molde prestado.",
+        "en": "the map of meowrhino studio, and you can rearrange it: move the sections wherever you like and they stay that way in your browser. a website is a place of your own, not a borrowed template.",
+        "cat": "el mapa de meowrhino studio, i el pots recol·locar: mou les seccions on vulguis i es queden així al teu navegador. una web és un espai propi, no un motlle prestat."
+      }
     }
   },
   "prerender": {
@@ -108,15 +120,15 @@
       "en": "contact",
       "cat": "contacte"
     },
-    "plano": {
-      "es": "plano",
-      "en": "plan",
-      "cat": "plànol"
-    },
     "condiciones": {
       "es": "condiciones",
       "en": "terms",
       "cat": "condicions"
+    },
+    "mapa": {
+      "es": "mapa",
+      "en": "map",
+      "cat": "mapa"
     }
   },
   "welcome": {
