@@ -254,7 +254,18 @@ export function linksHTML(data, lang) {
  */
 export function renderCeldaPrerenderHTML(data, lang, celda, enlaces = []) {
   const cuerpo = {
-    welcome: () => heroHTML(data, lang),
+    // La portada lleva el hero Y la rejilla del portfolio. No es decoración:
+    // en el HTML crudo de "/" no había NI UN enlace a las 21 fichas. Existían,
+    // pero los pintaba JavaScript dentro de la celda portfolio, así que solo
+    // los veía quien renderiza (Google sí; Bing a ratos, los rastreadores de IA
+    // y los de redes sociales, no) y encima dentro de un contenedor con
+    // `visibility:hidden`, que se pondera menos. Con esto, las 21 fichas del
+    // idioma que toque están en el primer byte de la portada.
+    //
+    // No pesa: `html.js #seo-prerender` es `display:none`, así que el navegador
+    // nunca descarga estas 21 imágenes. Sin JS sí se cargan, y ahí es justo lo
+    // que quieres — es la única versión navegable de la home.
+    welcome: () => heroHTML(data, lang) + portfolioHTML(data, lang),
     about: () => aboutHTML(data, lang),
     "metodología": () => metodologiaHTML(data, lang),
     condiciones: () => condicionesHTML(data, lang),
