@@ -69,7 +69,6 @@ export function heroHTML(data, lang) {
       ${t.condiciones ? `<p class="easy-hero-condiciones">${esc(t.condiciones)}</p>` : ""}
       <div class="easy-hero-cta">
         <a class="easy-btn" href="${mailto}">${esc(t.cta || "escríbeme")}</a>
-        ${t.primera ? `<span class="easy-hero-primera">${esc(t.primera)}</span>` : ""}
       </div>
     </section>`;
 }

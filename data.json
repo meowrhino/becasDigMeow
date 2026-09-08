@@ -74,9 +74,9 @@
         "caduca": "",
         "subject": "quiero una web!",
         "incluye": "diseño a medida. sin servidores, sin suscripciones, sin tasas mensuales. te enseñamos a mantenerla por tu cuenta.",
-        "primera": "primera reunión gratis",
         "cta": "escríbeme",
-        "condiciones": "3 rondas de revisión · el mes empieza en la primera reunión · después de la entrega, 60 €/h"
+        "condiciones": "3 rondas de revisión · el mes empieza en la primera reunión · después de la entrega, 60 €/h",
+        "_primera": "primera reunión gratis"
       },
       "en": {
         "hazte": "your website in a month for",
@@ -84,9 +84,9 @@
         "caduca": "",
         "subject": "I want a website!",
         "incluye": "custom design. no servers, no subscriptions, no monthly fees. we teach you to maintain it yourself.",
-        "primera": "first meeting free",
         "cta": "let's talk",
-        "condiciones": "3 rounds of revisions · the month starts at the first meeting · after delivery, €60/h"
+        "condiciones": "3 rounds of revisions · the month starts at the first meeting · after delivery, €60/h",
+        "_primera": "first meeting free"
       },
       "cat": {
         "hazte": "la teva web en un mes per",
@@ -94,9 +94,9 @@
         "caduca": "",
         "subject": "vull una web!",
         "incluye": "disseny a mida. sense servidors, sense subscripcions, sense quotes mensuals. t'ensenyem a mantenir-la pel teu compte.",
-        "primera": "primera reunió gratis",
         "cta": "escriu-me",
-        "condiciones": "3 rondes de revisió · el mes comença a la primera reunió · després del lliurament, 60 €/h"
+        "condiciones": "3 rondes de revisió · el mes comença a la primera reunió · després del lliurament, 60 €/h",
+        "_primera": "primera reunió gratis"
       }
     },
     "formateadores": [

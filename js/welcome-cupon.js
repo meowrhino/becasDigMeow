@@ -41,7 +41,6 @@ export function renderWelcomeCupon(celda, cuponData) {
           <span class="welcome-cupon-precio">${escapeHTML(cuponData.precio)}</span>
           <span class="welcome-cupon-iva"></span>
           <span class="welcome-cupon-caduca"></span>
-          <span class="welcome-cupon-primera"></span>
         </div>
         <div class="welcome-cupon-face welcome-cupon-back">
           <p class="welcome-cupon-incluye"></p>
@@ -57,11 +56,10 @@ export function renderWelcomeCupon(celda, cuponData) {
   const ivaEl     = wrapperEl.querySelector(".welcome-cupon-iva");
   const caducaEl  = wrapperEl.querySelector(".welcome-cupon-caduca");
   const incluyeEl = wrapperEl.querySelector(".welcome-cupon-incluye");
-  const primeraEl = wrapperEl.querySelector(".welcome-cupon-primera");
-  // Las dos caras se reparten el trabajo: delante la oferta (precio y que la
-  // primera reunión no cuesta), detrás el detalle (qué incluye y las
-  // condiciones que cuestan dinero). Quien gira el cupón ya está preguntando
-  // el precio: ahí la letra pequeña informa en vez de espantar.
+  // Las dos caras se reparten el trabajo: delante el precio, detrás el detalle
+  // (qué incluye y las condiciones que cuestan dinero). Quien gira el cupón ya
+  // está preguntando el precio: ahí la letra pequeña informa en vez de
+  // espantar.
   const condicionesEl = wrapperEl.querySelector(".welcome-cupon-condiciones");
   const ctaEl     = wrapperEl.querySelector(".welcome-cupon-cta");
   const email = cuponData.email || "hola@meowrhino.studio";
@@ -73,7 +71,6 @@ export function renderWelcomeCupon(celda, cuponData) {
     ivaEl.textContent     = t.iva     || "";
     ivaEl.style.display   = t.iva ? "" : "none";   // aparcado en data.json (_iva)
     caducaEl.textContent  = t.caduca  || "";
-    primeraEl.textContent = t.primera || "";
     ctaEl.textContent     = t.cta     || "";
     incluyeEl.textContent = t.incluye || "";
     condicionesEl.textContent = t.condiciones || "";

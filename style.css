@@ -677,8 +677,7 @@ a.nav-label:visited {
 
 .welcome-cupon-wrapper:hover .welcome-cupon-hazte,
 .welcome-cupon-wrapper:hover .welcome-cupon-iva,
-.welcome-cupon-wrapper:hover .welcome-cupon-caduca,
-.welcome-cupon-wrapper:hover .welcome-cupon-primera {
+.welcome-cupon-wrapper:hover .welcome-cupon-caduca {
   color: var(--bg);
   opacity: 0.85;
 }
@@ -692,12 +691,6 @@ a.nav-label:visited {
   letter-spacing: 0.02em;
   line-height: 1.5;
   white-space: normal;
-}
-
-.welcome-cupon-primera {
-  font-size: 0.72rem;
-  letter-spacing: 0.02em;
-  color: var(--text-muted);
 }
 
 /* La letra pequeña, en el dorso y bajo lo que incluye: más chica que el
@@ -764,10 +757,6 @@ a.nav-label:visited {
   .welcome-cupon-incluye {
     font-size: 0.58rem;
     line-height: 1.45;
-  }
-  .welcome-cupon-primera {
-    font-size: 0.58rem;
-    letter-spacing: 0.02em;
   }
   .welcome-cupon-condiciones {
     font-size: 0.52rem;
@@ -1614,7 +1603,6 @@ html.easy, html.easy body {
   min-height: 44px;
 }
 .easy-btn:hover { opacity: 0.85; }
-.easy-hero-primera { font-size: 0.75rem; color: var(--text-muted); }
 
 /* --- Secciones genéricas (ritmo vertical consistente) --- */
 /* El aire entre secciones se mide en dvh, así que en pantallas altas cada
