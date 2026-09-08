@@ -436,7 +436,12 @@ function paginaProyecto({ proyecto, seo }, idioma, vecinos = {}) {
   const rutas = {
     indice: idioma.proyBase,
     home: idioma.path,
-    slug: seo.slug,
+    // La celda del lienzo por la que se entra al portfolio. Hasta ahora el
+    // recorrido no cerraba: de la celda portfolio se iba a una ficha, de la
+    // ficha al índice, y del índice solo se podía volver a "/" — que deja el
+    // lienzo en welcome, no donde estabas. El hash lo resuelve leerHash() en
+    // navigation.js, que coloca el lienzo en esa celda al cargar.
+    rejilla: `${idioma.path}#portfolio`,
     // El selector de idioma de ESTA ficha: las mismas tres URLs que ya declara
     // el hreflang, pero clicables. La etiqueta es el código corto porque es lo
     // que usa la home ("es en cat") y así las dos pantallas se leen igual.
@@ -499,7 +504,8 @@ function paginaIndice(fichas, idioma) {
     imagen: `${SITE}/favicon/og-image.png`,
     hreflang: hreflangProyectoHTML(""),
     jsonLd: scriptLdHTML(schema),
-    cuerpo: renderIndiceHTML(fichas, idioma.code, { base: idioma.proyBase, home: idioma.path }),
+    cuerpo: renderIndiceHTML(fichas, idioma.code,
+      { base: idioma.proyBase, home: idioma.path, rejilla: `${idioma.path}#portfolio` }),
   });
 }
 

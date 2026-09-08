@@ -683,7 +683,7 @@ a.nav-label:visited {
   opacity: 0.85;
 }
 
-/* Dorso — párrafo con lo que incluye + primera reunión + CTA.
+/* Dorso — párrafo con lo que incluye + la letra pequeña + CTA.
    `white-space: normal` sobrescribe el `nowrap` heredado de .welcome-cupon-face
    para que el párrafo pueda partir en varias líneas. */
 .welcome-cupon-incluye {
@@ -697,6 +697,17 @@ a.nav-label:visited {
 .welcome-cupon-primera {
   font-size: 0.72rem;
   letter-spacing: 0.02em;
+  color: var(--text-muted);
+}
+
+/* La letra pequeña, en el dorso y bajo lo que incluye: más chica que el
+   párrafo de arriba porque es el detalle, no el argumento. */
+.welcome-cupon-condiciones {
+  margin: 0;
+  font-size: 0.62rem;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  white-space: normal;
   color: var(--text-muted);
 }
 
@@ -757,6 +768,10 @@ a.nav-label:visited {
   .welcome-cupon-primera {
     font-size: 0.58rem;
     letter-spacing: 0.02em;
+  }
+  .welcome-cupon-condiciones {
+    font-size: 0.52rem;
+    line-height: 1.4;
   }
   .welcome-cupon-cta {
     font-size: 0.64rem;
@@ -2050,7 +2065,32 @@ html.js #seo-prerender {
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
-  z-index: var(--z-base);
+  /* Es fondo: tiene que quedar DETRÁS del contenido. Con --z-base (vale 1) se
+     pintaba encima del texto y de las capturas, porque .proy es estático y no
+     crea contexto de apilamiento. Y con z-index:-1 desaparecía del todo, que
+     tampoco vale: html lleva su propio background, así que lo negativo cae por
+     detrás de ese fondo opaco. La forma que aguanta las dos cosas es dejar la
+     palabra en el nivel de base y subir el contenido por encima (la regla de
+     .proy > * , justo debajo). */
+  z-index: 0;
+}
+
+/* Sube el contenido de la ficha por encima de la palabra del fondo. Se listan
+   los bloques uno a uno en vez de usar `.proy > *`: el selector de idioma y
+   los vecinos también son hijos de .proy y son `position: fixed`, así que un
+   `position: relative` genérico los arrancaba de los bordes de la ventana y
+   los amontonaba arriba a la izquierda. Y no se pone sobre .proy porque
+   entonces .proy crearía contexto propio y esos `fixed` dejarían de medirse
+   contra la ventana. */
+.proy > .easy-eyebrow,
+.proy > .proy-title,
+.proy > .proy-texto,
+.proy > .proy-visitar,
+.proy > .proy-galeria,
+.proy > .proy-cta,
+.proy > .proy-pie {
+  position: relative;
+  z-index: 1;
 }
 
 /* Códigos de idioma arriba a la derecha, con el mismo peso que en la home. */
@@ -2154,7 +2194,6 @@ html.js #seo-prerender {
    Ver la nota en js/welcome-cupon.js — es una decisión de marca, no de
    maquetación: las condiciones que cuestan dinero no se esconden detrás de
    un gesto que hay que descubrir. */
-.welcome-condiciones,
 .easy-hero-condiciones {
   margin-top: 0.9rem;
   max-width: 30rem;
@@ -2166,33 +2205,27 @@ html.js #seo-prerender {
   text-wrap: balance;
 }
 
-.welcome-condiciones { margin-inline: auto; }
 
 /* ============================================
-   TRANSICIÓN ENTRE LA REJILLA Y LA FICHA
+   TRANSICIÓN AL ABRIR UN PROYECTO
    ============================================
 
-   Al tocar una captura del portfolio, el navegador anima esa miniatura hasta
-   la posición que ocupa la imagen grande en /proyectos/<slug>, en vez de
-   cortar a negro y volver a pintar. Es el gesto de "abrir la celda", que es
-   justo lo que la ficha dice que es.
+   Un fundido suave entre la rejilla y la ficha, en vez del corte a blanco.
 
-   Cómo funciona: las dos páginas declaran `@view-transition` y el mismo
-   elemento lleva en las dos el mismo `view-transition-name`
-   (proy-<slug>, en línea, porque hay uno por proyecto). El navegador empareja
-   los dos y hace el resto.
+   Aquí hubo un intento de transición de elemento compartido: la miniatura
+   viajaba hasta la posición de la imagen grande de la ficha. Sobre el papel
+   era el gesto de "abrir la celda"; en pantalla no funcionaba. En la ficha la
+   imagen va después del titular y de un párrafo de cien palabras, así que la
+   captura no está donde estaba sino mucho más abajo, y lo que se veía era la
+   miniatura descolgándose hacia el pie mientras el texto aparecía por detrás.
+   Un movimiento largo que no explicaba nada. El fundido sí: dice "esto es otra
+   página" sin fingir una continuidad espacial que no existe.
 
    Cero JavaScript y cero dependencias. Donde no está implementado —Firefox, de
-   momento— no pasa absolutamente nada: la navegación es la de siempre. Por eso
-   se puede poner sin condicionales ni detección.
-
-   El `view-transition-name` tiene que ser un custom-ident, y un custom-ident no
-   puede empezar por dígito: de ahí el prefijo `proy-`, que hay slugs como
-   "930blurberrie". */
+   momento— no pasa nada y la navegación es la de siempre. */
 @view-transition { navigation: auto; }
 
-/* Un pelín más lenta que el defecto: a este tamaño de captura, 250ms se lee
-   como un parpadeo y no como un movimiento. */
+/* Un pelín más lento que el defecto: 250ms se lee como un parpadeo. */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: 0.35s;

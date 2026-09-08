@@ -104,12 +104,11 @@ export function portfolioHTML(data, lang) {
     // nota larga en js/portfolio.js. Como ya no depende de la url, el caso de
     // las dos urls (mokakopaTwins) deja de ser especial y la captura es un
     // enlace normal como las demás.
-    const slug = slugify(p.nombre);
-    const href = `${rutaProyectos(lang)}/${slug}`;
+    const href = `${rutaProyectos(lang)}/${slugify(p.nombre)}`;
 
     return `
         <div class="pgrid-item">
-          <a class="pgrid-thumb" href="${esc(href)}" style="view-transition-name: proy-${esc(slug)}"><img class="pgrid-img pgrid-img-a" src="${esc(p.imagen)}"
+          <a class="pgrid-thumb" href="${esc(href)}"><img class="pgrid-img pgrid-img-a" src="${esc(p.imagen)}"
                  alt="${esc(altFor(p))}" width="1600" height="1049"
                  loading="lazy" decoding="async"></a>
           <div class="pgrid-meta">

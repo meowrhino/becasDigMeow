@@ -232,18 +232,12 @@ function renderGridProyectos(proyectos) {
     // del welcome hacen por fin lo mismo: un solo destino, el mismo.
     // Como ya no depende de la url, el caso de las dos urls (mokakopaTwins)
     // deja de ser especial: la captura enlaza igual que las demás.
-    const slug = slugify(proyecto.nombre);
-    const href = `${rutaProyectos(currentLang)}/${slug}`;
+    const href = `${rutaProyectos(currentLang)}/${slugify(proyecto.nombre)}`;
 
     const thumb = document.createElement("a");
     thumb.classList.add("pgrid-thumb");
     thumb.href = href;
     thumb.setAttribute("aria-label", `${proyecto.nombre} — ${pick(CASO, currentLang)}`);
-    // Nombre de transición: al navegar a la ficha, el navegador anima esta
-    // captura hasta la posición que ocupa allí la imagen grande. Ver la nota
-    // de @view-transition en style.css. El prefijo no es decorativo: un
-    // custom-ident no puede empezar por dígito y hay slugs como "930blurberrie".
-    thumb.style.viewTransitionName = `proy-${slug}`;
 
     const imgA = document.createElement("img");
     imgA.classList.add("pgrid-img", "pgrid-img-a");

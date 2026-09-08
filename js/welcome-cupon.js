@@ -41,10 +41,11 @@ export function renderWelcomeCupon(celda, cuponData) {
           <span class="welcome-cupon-precio">${escapeHTML(cuponData.precio)}</span>
           <span class="welcome-cupon-iva"></span>
           <span class="welcome-cupon-caduca"></span>
+          <span class="welcome-cupon-primera"></span>
         </div>
         <div class="welcome-cupon-face welcome-cupon-back">
           <p class="welcome-cupon-incluye"></p>
-          <span class="welcome-cupon-primera"></span>
+          <p class="welcome-cupon-condiciones"></p>
           <a class="welcome-cupon-cta" href="#" rel="noopener"></a>
         </div>
       </div>
@@ -57,6 +58,11 @@ export function renderWelcomeCupon(celda, cuponData) {
   const caducaEl  = wrapperEl.querySelector(".welcome-cupon-caduca");
   const incluyeEl = wrapperEl.querySelector(".welcome-cupon-incluye");
   const primeraEl = wrapperEl.querySelector(".welcome-cupon-primera");
+  // Las dos caras se reparten el trabajo: delante la oferta (precio y que la
+  // primera reunión no cuesta), detrás el detalle (qué incluye y las
+  // condiciones que cuestan dinero). Quien gira el cupón ya está preguntando
+  // el precio: ahí la letra pequeña informa en vez de espantar.
+  const condicionesEl = wrapperEl.querySelector(".welcome-cupon-condiciones");
   const ctaEl     = wrapperEl.querySelector(".welcome-cupon-cta");
   const email = cuponData.email || "hola@meowrhino.studio";
 
@@ -70,6 +76,8 @@ export function renderWelcomeCupon(celda, cuponData) {
     primeraEl.textContent = t.primera || "";
     ctaEl.textContent     = t.cta     || "";
     incluyeEl.textContent = t.incluye || "";
+    condicionesEl.textContent = t.condiciones || "";
+    condicionesEl.style.display = t.condiciones ? "" : "none";
     ctaEl.href = `mailto:${email}?subject=${encodeURIComponent(t.subject || "")}`;
   };
   applyLang(currentLang);

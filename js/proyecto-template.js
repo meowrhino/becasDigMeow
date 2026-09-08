@@ -29,6 +29,7 @@ export const UI = {
          ctaTexto: "¿quieres una web así? la primera reunión es gratis.", ctaBoton: "escríbeme",
          asunto: "quiero una web!", detalle: "detalle", disenada: "web diseñada por meowrhino studio, Barcelona",
          anterior: "anterior", siguiente: "siguiente", idiomas: "idioma",
+         volverRejilla: "← volver al portfolio",
          intro: (n) => `${n} webs hechas a medida, desde cero y sin plantillas, para artistas, fotógrafos, músicos y pequeños negocios. cada una cuenta cómo se hizo y por qué acabó siendo así.`,
          navegar: "seguir navegando" },
   en:  { eyebrow: "project", visitar: "visit", todos: "← all projects",
@@ -36,6 +37,7 @@ export const UI = {
          ctaTexto: "want a website like this? the first meeting is free.", ctaBoton: "write to me",
          asunto: "i want a website!", detalle: "detail", disenada: "website designed by meowrhino studio, Barcelona",
          anterior: "previous", siguiente: "next", idiomas: "language",
+         volverRejilla: "← back to the portfolio",
          intro: (n) => `${n} websites built from scratch, custom-made and without templates, for artists, photographers, musicians and small businesses. each one tells how it was made and why it ended up like this.`,
          navegar: "keep browsing" },
   cat: { eyebrow: "projecte", visitar: "visitar", todos: "← tots els projectes",
@@ -43,6 +45,7 @@ export const UI = {
          ctaTexto: "vols una web així? la primera reunió és gratis.", ctaBoton: "escriu-me",
          asunto: "vull una web!", detalle: "detall", disenada: "web dissenyada per meowrhino studio, Barcelona",
          anterior: "anterior", siguiente: "següent", idiomas: "idioma",
+         volverRejilla: "← tornar al portfolio",
          intro: (n) => `${n} webs fetes a mida, des de zero i sense plantilles, per a artistes, fotògrafs, músics i petits negocis. cadascuna explica com es va fer i per què va acabar sent així.`,
          navegar: "seguir navegant" },
 };
@@ -95,18 +98,11 @@ export function renderProyectoHTML(proyecto, seo, lang = "es", rutas = {}, medir
   // descargar la captura y el texto no pegue el salto. Quien llama decide de
   // dónde salen (build-seo.js las lee del .webp); sin `medirImagen` la <img>
   // sale como antes, sin atributos, y esta función sigue siendo pura.
-  // La primera captura lleva el mismo `view-transition-name` que su miniatura
-  // en la rejilla, así que al venir de allí el navegador la anima de un sitio
-  // a otro en vez de cortar. Solo la primera: un nombre de transición tiene que
-  // ser único en la página. Ver la nota de @view-transition en style.css.
   const galeria = imagenes.map((src, i) => {
     const m = medirImagen?.(src);
     const tamano = m ? ` width="${m.ancho}" height="${m.alto}"` : "";
-    const vt = i === 0 && rutas.slug
-      ? ` style="view-transition-name: proy-${esc(rutas.slug)}"`
-      : "";
     return `
-        <img class="proy-img" src="/${esc(src)}" alt="${esc(altDe(proyecto, i, t))}"${tamano}${vt}
+        <img class="proy-img" src="/${esc(src)}" alt="${esc(altDe(proyecto, i, t))}"${tamano}
              loading="${i === 0 ? "eager" : "lazy"}" decoding="async">`;
   }).join("");
 
@@ -204,6 +200,7 @@ export function renderIndiceHTML(fichas, lang = "es", rutas = {}) {
       <ul class="proy-grid">${items}
       </ul>
       <nav class="proy-pie" aria-label="${esc(t.navegar)}">
+        <a href="${esc(rutas.rejilla || "/#portfolio")}">${esc(t.volverRejilla)}</a>
         <a href="${esc(rutas.home || "/")}">meowrhino studio</a>
       </nav>
     </section>`;

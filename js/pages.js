@@ -165,31 +165,26 @@ export function renderWelcome(data) {
   // interfaz en vez de enseñar trabajo, llamaba «botones» a unas etiquetas de
   // texto giradas, y era un <button> que nadie sabía que lo era. En su lugar,
   // más portfolio moviéndose: renderWelcomeCard pinta varias tarjetas.
-  // La letra pequeña del precio va aquí, en .welcome-content, y no colgada del
-  // cupón: el cupón rebota por la celda, así que nada puede ir "debajo" de él.
-  // Y va SIEMPRE visible, no en el dorso que se descubre al girarlo: enseñar
-  // un precio con un gesto es divertido, esconder detrás del mismo gesto lo
-  // que cuesta dinero parece una encerrona aunque no lo sea. Vendemos
-  // honestidad; la condición se lee sin tener que descubrir nada.
-  const condiciones = w.cupon?.[currentLang]?.condiciones || w.cupon?.es?.condiciones || "";
-
+  // El centro de la celda es lo primero que ve alguien que acaba de entrar:
+  // el nombre del estudio y qué somos. Nada más. La letra pequeña del precio
+  // estuvo aquí un rato y era demasiado concreta demasiado pronto — condiciones
+  // de contrato a alguien que todavía no sabe si le interesamos. Se mudó al
+  // dorso del cupón, junto a lo que incluye, que es donde alguien ya está
+  // preguntando el precio.
   el.innerHTML = `
     <div class="welcome-content">
       <h1 class="welcome-title">${escapeHTML(w.titulo)}</h1>
       <p class="welcome-tagline">${escapeHTML(pick(w.tagline, currentLang))}</p>
-      <p class="welcome-condiciones">${escapeHTML(condiciones)}</p>
     </div>
     ${buildLangButtons()}
   `;
 
   const taglineEl = el.querySelector(".welcome-tagline");
-  const condicionesEl = el.querySelector(".welcome-condiciones");
 
   // i18n en sitio: reusa el mecanismo de attachLangListeners (mismo patrón
   // que el cupón, que registra el suyo aparte sobre la misma celda).
   attachLangListeners(el, (lang) => {
     if (taglineEl) taglineEl.textContent = pick(w.tagline, lang);
-    if (condicionesEl) condicionesEl.textContent = w.cupon?.[lang]?.condiciones || "";
   });
 
   renderWelcomeCupon(el, w.cupon);
