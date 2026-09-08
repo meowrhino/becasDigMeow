@@ -1233,19 +1233,6 @@ a.nav-label:visited {
   text-align: center;
 }
 
-.pgrid-url {
-  font-size: clamp(0.7rem, 0.9dvw, 0.8rem);
-  font-weight: 400;
-  color: var(--text-secondary);
-  letter-spacing: 0.02em;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.pgrid-item:hover .pgrid-url,
-.pgrid-url:hover {
-  color: var(--text);
-}
 
 @media (max-width: 768px) {
   .celda.portfolio .nav-label {
@@ -2180,3 +2167,48 @@ html.js #seo-prerender {
 }
 
 .welcome-condiciones { margin-inline: auto; }
+
+/* ============================================
+   TRANSICIÓN ENTRE LA REJILLA Y LA FICHA
+   ============================================
+
+   Al tocar una captura del portfolio, el navegador anima esa miniatura hasta
+   la posición que ocupa la imagen grande en /proyectos/<slug>, en vez de
+   cortar a negro y volver a pintar. Es el gesto de "abrir la celda", que es
+   justo lo que la ficha dice que es.
+
+   Cómo funciona: las dos páginas declaran `@view-transition` y el mismo
+   elemento lleva en las dos el mismo `view-transition-name`
+   (proy-<slug>, en línea, porque hay uno por proyecto). El navegador empareja
+   los dos y hace el resto.
+
+   Cero JavaScript y cero dependencias. Donde no está implementado —Firefox, de
+   momento— no pasa absolutamente nada: la navegación es la de siempre. Por eso
+   se puede poner sin condicionales ni detección.
+
+   El `view-transition-name` tiene que ser un custom-ident, y un custom-ident no
+   puede empezar por dígito: de ahí el prefijo `proy-`, que hay slugs como
+   "930blurberrie". */
+@view-transition { navigation: auto; }
+
+/* Un pelín más lenta que el defecto: a este tamaño de captura, 250ms se lee
+   como un parpadeo y no como un movimiento. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.35s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+}
+
+/* El nombre del proyecto bajo la captura. Ocupa el sitio que tenía la url del
+   cliente, que se mudó a la ficha. */
+.pgrid-nombre {
+  font-size: clamp(0.78rem, 1dvw, 0.9rem);
+  color: var(--text);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+.pgrid-nombre:visited { color: var(--text); }
+.pgrid-nombre:hover   { opacity: 0.6; }

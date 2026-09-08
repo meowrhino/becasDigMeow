@@ -436,6 +436,7 @@ function paginaProyecto({ proyecto, seo }, idioma, vecinos = {}) {
   const rutas = {
     indice: idioma.proyBase,
     home: idioma.path,
+    slug: seo.slug,
     // El selector de idioma de ESTA ficha: las mismas tres URLs que ya declara
     // el hreflang, pero clicables. La etiqueta es el código corto porque es lo
     // que usa la home ("es en cat") y así las dos pantallas se leen igual.

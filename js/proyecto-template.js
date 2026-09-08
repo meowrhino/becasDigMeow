@@ -95,11 +95,18 @@ export function renderProyectoHTML(proyecto, seo, lang = "es", rutas = {}, medir
   // descargar la captura y el texto no pegue el salto. Quien llama decide de
   // dónde salen (build-seo.js las lee del .webp); sin `medirImagen` la <img>
   // sale como antes, sin atributos, y esta función sigue siendo pura.
+  // La primera captura lleva el mismo `view-transition-name` que su miniatura
+  // en la rejilla, así que al venir de allí el navegador la anima de un sitio
+  // a otro en vez de cortar. Solo la primera: un nombre de transición tiene que
+  // ser único en la página. Ver la nota de @view-transition en style.css.
   const galeria = imagenes.map((src, i) => {
     const m = medirImagen?.(src);
     const tamano = m ? ` width="${m.ancho}" height="${m.alto}"` : "";
+    const vt = i === 0 && rutas.slug
+      ? ` style="view-transition-name: proy-${esc(rutas.slug)}"`
+      : "";
     return `
-        <img class="proy-img" src="/${esc(src)}" alt="${esc(altDe(proyecto, i, t))}"${tamano}
+        <img class="proy-img" src="/${esc(src)}" alt="${esc(altDe(proyecto, i, t))}"${tamano}${vt}
              loading="${i === 0 ? "eager" : "lazy"}" decoding="async">`;
   }).join("");
 

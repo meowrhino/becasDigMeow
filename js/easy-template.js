@@ -98,32 +98,23 @@ export function portfolioHTML(data, lang) {
   const t = ui(lang);
   const proyectos = data.portfolio?.proyectos || [];
   const altFor = (p) => p.alt || `${p.nombre} — web diseñada por meowrhino studio, Barcelona`;
-  const limpia = (u) => String(u ?? "").replace(/^https?:\/\//, "").replace(/\/$/, "");
 
   const fichas = proyectos.map(p => {
-    const urls = Array.isArray(p.urls) && p.urls.length
-      ? p.urls
-      : (p.url ? [{ url: p.url, nombre: p.urlLabel }] : []);
-
-    // Con dos urls la captura no puede ser un enlace (¿a cuál de las dos?), así
-    // que es un div y los enlaces quedan solo debajo. Mismo criterio que la home.
-    const thumb = urls.length === 1
-      ? `<a class="pgrid-thumb" href="${esc(urls[0].url)}" target="_blank" rel="noopener">`
-      : `<div class="pgrid-thumb">`;
-    const cierra = urls.length === 1 ? "</a>" : "</div>";
-
-    const enlaces = urls.map(u =>
-      `<a class="pgrid-url" href="${esc(u.url)}" target="_blank" rel="noopener">${esc(u.nombre || limpia(u.url))}</a>`
-    ).join("");
+    // La captura va a la ficha del proyecto, no a la web del cliente: ver la
+    // nota larga en js/portfolio.js. Como ya no depende de la url, el caso de
+    // las dos urls (mokakopaTwins) deja de ser especial y la captura es un
+    // enlace normal como las demás.
+    const slug = slugify(p.nombre);
+    const href = `${rutaProyectos(lang)}/${slug}`;
 
     return `
         <div class="pgrid-item">
-          ${thumb}<img class="pgrid-img pgrid-img-a" src="${esc(p.imagen)}"
-                 alt="${esc(altFor(p))}" width="800" height="600"
-                 loading="lazy" decoding="async">${cierra}
+          <a class="pgrid-thumb" href="${esc(href)}" style="view-transition-name: proy-${esc(slug)}"><img class="pgrid-img pgrid-img-a" src="${esc(p.imagen)}"
+                 alt="${esc(altFor(p))}" width="1600" height="1049"
+                 loading="lazy" decoding="async"></a>
           <div class="pgrid-meta">
-            ${enlaces}
-            <a class="pgrid-caso" href="${esc(rutaProyectos(lang))}/${esc(slugify(p.nombre))}">${esc(t.caso)}</a>
+            <a class="pgrid-nombre" href="${esc(href)}">${esc(p.nombre)}</a>
+            <a class="pgrid-caso" href="${esc(href)}">${esc(t.caso)}</a>
           </div>
         </div>`;
   }).join("");

@@ -137,10 +137,6 @@ function suscribirCiclo(projectIndex, listener) {
 
 // --- Utilidades ---
 
-function limpiarUrl(u) {
-  return (u || "").replace(/^https?:\/\//, "").replace(/\/$/, "");
-}
-
 /**
  * Devuelve el listado de imágenes de un proyecto.
  * Estructura esperada: img/<slug>/1.webp, img/<slug>/2.webp, ...
@@ -219,7 +215,6 @@ function renderGridProyectos(proyectos) {
   proyectos.forEach((proyecto, idx) => {
     const imagenes = obtenerImagenesProyecto(proyecto).filter(Boolean);
     const tieneCiclo = imagenes.length > 1;
-    const tieneDualUrls = Array.isArray(proyecto.urls) && proyecto.urls.length > 0;
 
     // El item es SIEMPRE un div y la imagen va dentro de su propio <a>. Antes el
     // item entero era el enlace, pero desde que la ficha lleva también un enlace
@@ -228,13 +223,27 @@ function renderGridProyectos(proyectos) {
     const item = document.createElement("div");
     item.classList.add("pgrid-item");
 
-    const thumb = document.createElement(tieneDualUrls ? "div" : "a");
+    // La captura va SIEMPRE a la ficha del proyecto, nunca a la web del cliente.
+    // Antes iba fuera, y era el objetivo de clic más grande de la rejilla: quien
+    // tocaba una captura perdía la pestaña y se iba justo antes de leer lo único
+    // que le convence de contratarnos, que está en la ficha y no en la web del
+    // cliente. La salida externa no desaparece: vive en la ficha, en un botón
+    // más grande que el textito que había aquí. Y de paso la rejilla y la card
+    // del welcome hacen por fin lo mismo: un solo destino, el mismo.
+    // Como ya no depende de la url, el caso de las dos urls (mokakopaTwins)
+    // deja de ser especial: la captura enlaza igual que las demás.
+    const slug = slugify(proyecto.nombre);
+    const href = `${rutaProyectos(currentLang)}/${slug}`;
+
+    const thumb = document.createElement("a");
     thumb.classList.add("pgrid-thumb");
-    if (!tieneDualUrls) {
-      thumb.href = proyecto.url;
-      thumb.target = "_blank";
-      thumb.rel = "noopener";
-    }
+    thumb.href = href;
+    thumb.setAttribute("aria-label", `${proyecto.nombre} — ${pick(CASO, currentLang)}`);
+    // Nombre de transición: al navegar a la ficha, el navegador anima esta
+    // captura hasta la posición que ocupa allí la imagen grande. Ver la nota
+    // de @view-transition en style.css. El prefijo no es decorativo: un
+    // custom-ident no puede empezar por dígito y hay slugs como "930blurberrie".
+    thumb.style.viewTransitionName = `proy-${slug}`;
 
     const imgA = document.createElement("img");
     imgA.classList.add("pgrid-img", "pgrid-img-a");
@@ -275,34 +284,22 @@ function renderGridProyectos(proyectos) {
 
     item.appendChild(thumb);
 
+    // Debajo, el nombre del proyecto y "ver el caso". La url del cliente ya no
+    // está aquí: en una tarjeta de 200px había dos destinos distintos y en
+    // móvil eso es una trampa para el dedo. El dominio se lee en la ficha.
     const meta = document.createElement("div");
     meta.classList.add("pgrid-meta");
-    if (tieneDualUrls) {
-      proyecto.urls.forEach(u => {
-        const link = document.createElement("a");
-        link.classList.add("pgrid-url");
-        link.href = u.url;
-        link.target = "_blank";
-        link.rel = "noopener";
-        link.textContent = limpiarUrl(u.url);
-        meta.appendChild(link);
-      });
-    } else {
-      const url = document.createElement("a");
-      url.classList.add("pgrid-url");
-      url.href = proyecto.url;
-      url.target = "_blank";
-      url.rel = "noopener";
-      url.textContent = proyecto.urlLabel || limpiarUrl(proyecto.url);
-      meta.appendChild(url);
-    }
 
-    // Enlace al caso de estudio. Es la única vía desde el grid hacia
-    // /proyectos/<slug>, y de paso le da a esas páginas los enlaces internos que
-    // necesitan para posicionar. El texto se retraduce al cambiar de idioma.
+    const nombre = document.createElement("a");
+    nombre.classList.add("pgrid-nombre");
+    nombre.href = href;
+    nombre.textContent = proyecto.nombre;
+    meta.appendChild(nombre);
+
+    // El texto se retraduce al cambiar de idioma.
     const caso = document.createElement("a");
     caso.classList.add("pgrid-caso");
-    caso.href = `${rutaProyectos(currentLang)}/${slugify(proyecto.nombre)}`;
+    caso.href = href;
     caso.textContent = pick(CASO, currentLang);
     meta.appendChild(caso);
 
