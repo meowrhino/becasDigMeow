@@ -24,7 +24,8 @@ estudio de diseño web en Barcelona. hacemos webs a medida, desde cero y sin
 plantillas, para artistas, fotógrafos, músicos y pequeños negocios: cada web es
 única por dentro y por fuera.
 
-tu web está lista en un mes desde la primera reunión (que es gratuita). sin
+tu web está lista en un mes desde que nos mandas tu material (y la primera
+reunión es gratuita). sin
 servidores de pago, sin suscripciones y sin cuotas mensuales: la web es tuya,
 con su código abierto, y te enseñamos a mantenerla y actualizarla tú mismo. y
 si prefieres no tocarla, la mantenemos nosotros.

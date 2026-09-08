@@ -89,9 +89,7 @@ la web la diseñamos juntos: formas parte del proceso creativo. igual hasta nos
 
 **el mes.** un mes de principio a fin. empieza cuando me mandas el material
 —textos, imágenes y tu identidad visual si la tienes—, no cuando nos
-conocemos. sin material no hay proyecto: no trabajo con placeholders. desde ahí
-tengo dos semanas para devolverte el proceso. `[← confírmame qué es exactamente
-esta devolución y lo escribo bien]`
+conocemos. sin material no hay proyecto: no trabajo con placeholders.
 
 **las tres entregas.** el diseño, la programación cuando ya empieza a tener
 forma, y la programación final. cada una lleva su ronda de revisiones: tres en
@@ -127,6 +125,5 @@ trabajo, una vez. 850 € + iva, y el código es tuyo.
 
 ## Pendiente de ti
 
-1. Qué es exactamente la "devolución del proceso" de las dos semanas.
-2. La foto.
-3. Si el precio va con número (mi recomendación) o sin él.
+1. La foto: manu manda tres, la del polo granate es la que recomiendo.
+2. El precio: decidido, se lee del cupón (`welcome.cupon.precio`), sin repetirlo.
