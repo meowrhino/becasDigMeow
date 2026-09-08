@@ -4,8 +4,7 @@
 //
 // Funciones puras que devuelven strings de HTML a partir de data.json. Al no
 // tocar el DOM ni depender del navegador, se comparten entre:
-//   - easy-main.js (navegador: pinta el cuerpo y le engancha los inits vivos)
-//   - build-seo.js (Node: pre-renderiza el contenido en easy.html y en la home)
+//   - build-seo.js (Node: pre-renderiza el contenido de cada celda en su HTML)
 // Así el texto que ve Google es EXACTAMENTE el que ve el visitante, sin copias
 // que se desincronicen. Fuente única de contenido: data.json.
 
@@ -23,7 +22,7 @@ export const esc = (s) => String(s ?? "")
  * visor de portfolio.
  *
  * Estaban escritos a pelo en castellano, y como estas plantillas las comparten
- * /easy Y el pre-renderizado de la home, `en.html` y `ca.html` servían
+ * El pre-renderizado de cada celda servía
  * «metodología», «contacto» y «visitar ↗» en castellano — que es justo el texto
  * que lee Google de la home inglesa y la catalana.
  *
@@ -82,14 +81,14 @@ export function heroHTML(data, lang) {
  * Antes era un visor grande con veinte miniaturas de 60px debajo. Dos motivos
  * para cambiarlo: a ese tamaño, veinte capturas de web son veinte rectángulos
  * grises que no se distinguen entre sí; y era un patrón que no existía en
- * ninguna otra pantalla del sitio, así que /easy se leía como una web aparte.
+ * ninguna otra pantalla del sitio.
  *
  * Reutiliza las clases .portfolio-grid/.pgrid-* de la home, no unas propias:
  * el objetivo era que encajara con el resto, y compartir las reglas es la única
  * forma de que siga encajando cuando se toquen. Cero CSS nuevo.
  *
  * Lo único que no se copia es el crossfade entre las imágenes de cada proyecto,
- * que en la home lo mueve JS: aquí se sirve la captura principal y ya. /easy es
+ * que en la home lo mueve JS: aquí se sirve la captura principal y ya. Es
  * la versión que se lee del tirón, no la que se mira.
  *
  * Cada ficha lleva los dos destinos de la home: la captura y la url van a la
@@ -142,36 +141,7 @@ export function metodologiaHTML(data, lang) {
     </section>`;
 }
 
-export function statementHTML(data, lang) {
-  const lineas = (data.statement?.[lang] || data.statement?.es || {}).lineas || [];
-  const ls = lineas.map(l => `<p class="easy-statement-line">${esc(l)}</p>`).join("");
-  return `
-    <section class="easy-section easy-statement" id="statement">
-      <h2 class="easy-h">${esc(ui(lang).statement)}</h2>
-      ${ls}
-    </section>`;
-}
 
-export function contactoHTML(data, lang) {
-  const co = data.contacto || {};
-  const asunto = encodeURIComponent(co.asunto?.[lang] || co.asunto?.es || "");
-  const mailto = `mailto:${co.email}?subject=${asunto}`;
-  const ig = co.instagram;
-  const cv = co.cv?.[lang] || co.cv?.es;
-  const cta = (data.welcome.cupon[lang] || data.welcome.cupon.es || {}).cta || "escríbeme";
-  return `
-    <section class="easy-section easy-contacto" id="contacto">
-      <h2 class="easy-h">${esc(ui(lang).contacto)}</h2>
-      <a class="easy-email" href="${mailto}">${esc(co.email)}</a>
-      <div class="easy-contacto-cta">
-        <a class="easy-btn" href="${mailto}">${esc(cta)}</a>
-      </div>
-      <div class="easy-contacto-links">
-        ${ig ? `<a href="${esc(ig.url)}" target="_blank" rel="noopener">${esc(ig.usuario)}</a>` : ""}
-        ${cv ? `<a href="${esc(cv)}" target="_blank" rel="noopener">cv</a>` : ""}
-      </div>
-    </section>`;
-}
 
 /**
  * El about, pre-renderizado.
@@ -194,15 +164,13 @@ export function aboutHTML(data, lang) {
         ${(sec.parrafos || []).map(t => `<p>${esc(t.replace("{precio}", precio))}</p>`).join("")}
       </div>`).join("");
 
-  const foto = a.foto
-    ? `<img class="easy-about-foto" src="/${esc(a.foto)}" alt="${esc(pickLang(a.fotoAlt, lang))}"
-             width="1200" height="960" loading="lazy" decoding="async">`
-    : "";
+  const lineas = (data.statement?.[lang] || data.statement?.es || {}).lineas || [];
+  const statement = lineas.map(l => `<p class="easy-statement-line">${esc(l)}</p>`).join("");
 
   return `
     <section class="easy-section easy-about" id="about">
       <h1 class="easy-about-pregunta">${esc(d.pregunta || "")}</h1>
-      ${foto}${secciones}
+      ${statement}${secciones}
       <p class="easy-about-contacto">
         <a href="mailto:${esc(co.email)}?subject=${asunto}">${esc(co.email)}</a>
         ${co.instagram ? `<a href="${esc(co.instagram.url)}" target="_blank" rel="noopener">${esc(co.instagram.usuario)}</a>` : ""}
@@ -289,7 +257,7 @@ export function linksHTML(data, lang) {
  */
 export function renderCeldaPrerenderHTML(data, lang, celda, enlaces = []) {
   const cuerpo = {
-    welcome: () => heroHTML(data, lang) + statementHTML(data, lang),
+    welcome: () => heroHTML(data, lang),
     about: () => aboutHTML(data, lang),
     "metodología": () => metodologiaHTML(data, lang),
     condiciones: () => condicionesHTML(data, lang),
@@ -316,28 +284,6 @@ function notaCeldaHTML(enlaces, lang) {
     </nav>`;
 }
 
-export function footerHTML(lang = "es") {
-  // Mismo pie que /proyectos, las fichas y /archive: las cinco páginas
-  // lineales terminan igual. Enlaza a la celda del lienzo por la que se llega
-  // al portfolio y al wordmark.
-  // Va a "/" y no a "index.html" porque Cloudflare responde 307 al segundo:
-  // enlazar a la forma que redirige gasta un salto en cada visita y en cada
-  // rastreo. Misma razón en la nota del pre-render, más abajo.
-  return `
-    <nav class="proy-pie easy-footer" aria-label="seguir navegando">
-      <a href="/#portfolio">${esc(ui(lang).volverRejilla)}</a>
-      <a href="/">meowrhino studio</a>
-    </nav>`;
-}
 
-// Cuerpo completo del modo fácil, en el mismo orden que pinta el navegador.
-export function renderBodyHTML(data, lang) {
-  return heroHTML(data, lang) +
-    portfolioHTML(data, lang) +
-    statementHTML(data, lang) +
-    metodologiaHTML(data, lang) +
-    contactoHTML(data, lang) +
-    footerHTML(lang);
-}
 
 

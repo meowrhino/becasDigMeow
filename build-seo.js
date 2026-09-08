@@ -25,7 +25,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import {
-  esc, renderBodyHTML, renderCeldaPrerenderHTML,
+  esc, renderCeldaPrerenderHTML,
 } from "./js/easy-template.js";
 import {
   enlacesDe, renderIndiceHTML, renderProyectoHTML,
@@ -259,11 +259,18 @@ function headCeldaHTML(data, idioma, celda, url) {
 }
 
 /** El HTML de una página de celda, a partir de la plantilla de la home. */
-function paginaCelda(plantilla, data, idioma, { celda, url }) {
+function paginaCelda(plantilla, data, idioma, { celda, url }, fichas = []) {
   const enlaces = enlacesEntreCeldas(data, idioma, celda);
+  // El índice de proyectos necesita `proyectos-seo.json` (los resúmenes de cada
+  // ficha), que no llega hasta aquí desde las plantillas del lienzo: se compone
+  // con la función que ya lo hacía cuando /proyectos era una página lineal.
+  const cuerpo = celda === "proyectos"
+    ? renderIndiceHTML(fichas, idioma.code, { base: idioma.proyBase, home: idioma.path,
+        rejilla: `${idioma.path}#portfolio` })
+    : renderCeldaPrerenderHTML(data, idioma.code, celda, enlaces);
   let html = reemplazarBloque(plantilla, "head", headCeldaHTML(data, idioma, celda, url));
   html = reemplazarBloque(html, "preload", modulepreloadHTML("main.js"));
-  html = reemplazarBloque(html, "home", renderCeldaPrerenderHTML(data, idioma.code, celda, enlaces));
+  html = reemplazarBloque(html, "home", cuerpo);
   html = html.replace(/<html lang="[^"]*"/, `<html lang="${idioma.htmlLang}"`);
   return html;
 }
@@ -525,42 +532,6 @@ function paginaProyecto({ proyecto, seo }, idioma, vecinos = {}) {
   });
 }
 
-/** Índice de proyectos de un idioma: la puerta de entrada a sus fichas. */
-function paginaIndice(fichas, idioma) {
-  const copia = INDICE(fichas.length);
-  const t = copia[idioma.code] || copia.es;
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: t.schemaName,
-    description: t.description,
-    url: `${SITE}${idioma.proyBase}`,
-    inLanguage: idioma.htmlLang,
-    isPartOf: { "@type": "WebSite", name: "meowrhino studio", url: SITE },
-    mainEntity: {
-      "@type": "ItemList",
-      numberOfItems: fichas.length,
-      itemListElement: fichas.map(({ proyecto, seo }, i) => ({
-        "@type": "ListItem",
-        position: i + 1,
-        name: proyecto.nombre,
-        url: `${SITE}${idioma.proyBase}/${seo.slug}`,
-      })),
-    },
-  };
-
-  return paginaProyectoHTML({
-    idioma,
-    title: t.title,
-    description: t.description,
-    url: `${SITE}${idioma.proyBase}`,
-    imagen: `${SITE}/favicon/og-image.png`,
-    hreflang: hreflangProyectoHTML(""),
-    jsonLd: scriptLdHTML(schema),
-    cuerpo: renderIndiceHTML(fichas, idioma.code,
-      { base: idioma.proyBase, home: idioma.path, rejilla: `${idioma.path}#portfolio` }),
-  });
-}
 
 /**
  * Metadatos del índice, por idioma.
@@ -658,8 +629,8 @@ ${alternasCelda(celda)}
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <!-- Generado por build-seo.js. No editar a mano. -->
-<!-- Solo URLs canónicas: /easy sirve el mismo contenido que la raíz y su
-     canonical apunta ahí, así que listarlo mandaría señales cruzadas. -->
+<!-- Solo URLs canónicas. /easy ya no existe: servía una copia del sitio
+     entero y ahora responde 301 a /metodologia (ver _redirects). -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${homes}
@@ -732,14 +703,10 @@ function main() {
       for (const pagina of celdasDe(idioma)) {
         const dir = dirname(join(ROOT, pagina.archivo));
         mkdirSync(dir, { recursive: true });
-        generar(pagina.archivo, paginaCelda(plantillaHome, data, idioma, pagina));
+        generar(pagina.archivo, paginaCelda(plantillaHome, data, idioma, pagina, fichas));
       }
     }
 
-    const easy = readFileSync(join(ROOT, "easy.html"), "utf8");
-    generar("easy.html", reemplazarBloque(
-      reemplazarBloque(easy, "preload", modulepreloadHTML("easy-main.js")),
-      "easy", renderBodyHTML(data, "es")));
 
     // /archive está en el sitemap pero se montaba entero por JS sobre un <main>
     // vacío: un rastreador sin JS veía la página en blanco. Era la única página
@@ -757,7 +724,6 @@ function main() {
     // redirige. Así se sirve en /proyectos sin salto, igual que /archive.
     for (const idioma of IDIOMAS) {
       mkdirSync(join(ROOT, idioma.proyDir), { recursive: true });
-      generar(idioma.proyFile, paginaIndice(fichas, idioma));
       // Los vecinos salen del orden de proyectos-seo.json, que es el mismo que
       // el de la rejilla. La lista es circular a propósito: desde el último,
       // "siguiente" vuelve al primero. Un cul-de-sac al final de una lista de

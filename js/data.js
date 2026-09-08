@@ -35,7 +35,7 @@ function detectarIdiomaNavegador() {
 /**
  * Idioma que impone la URL, o null si la página no es una variante por idioma.
  *
- * Solo la home lo es (/, /en, /ca). En /easy y /archive devuelve null y manda
+ * Lo son todas las celdas del lienzo. En /archive devuelve null y manda
  * la preferencia guardada, como siempre.
  *
  * Cuando aplica, manda sobre localStorage y sobre el navegador a propósito: si

@@ -1,0 +1,6 @@
+# /easy servía una copia entera del sitio con canonical a "/": nunca podía
+# posicionar y duplicaba el texto de todas las celdas. Su contenido es ahora
+# /metodologia (el método) y /about (el porqué). 301 para que lo poco que
+# hubiera indexado se traspase en vez de perderse.
+/easy /metodologia 301
+/easy.html /metodologia 301

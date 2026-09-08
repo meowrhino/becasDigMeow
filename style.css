@@ -995,15 +995,46 @@ a.nav-label:visited {
   margin-bottom: 2.2rem;
 }
 
-/* Redonda y pequeña: es una foto de perfil, no un retrato de portada. El
-   ancho fijo evita que empuje el texto mientras carga. */
-.about-foto {
-  width: clamp(7rem, 12dvw, 10rem);
-  height: clamp(7rem, 12dvw, 10rem);
-  object-fit: cover;
-  border-radius: 50%;
-  display: block;
-  margin: 0 auto 2.4rem;
+/* Las cinco frases que abren la página. Un punto por encima del cuerpo, para
+   que se lean de un tirón antes de que empiecen los apartados. */
+.about-statement {
+  font-size: clamp(0.9rem, 1.3dvw, 1.1rem);
+  line-height: 1.6;
+  margin-bottom: 3rem;
+}
+.about-statement p { margin: 0 0 0.5em; }
+.about-statement p:last-child { margin-bottom: 0; }
+
+/* --- La celda proyectos: el índice en lista --- */
+/* Al lado del portfolio, contando lo mismo sin imágenes: 21 nombres que se
+   recorren de un vistazo. Numerada porque el orden es el mismo que el de la
+   rejilla y el de las flechas «anterior/siguiente» de cada ficha. */
+.celda.proyectos { flex-direction: column; }
+
+.proyectos-content {
+  width: 70dvw;
+  max-width: 34rem;
+  max-height: 78dvh;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.proyectos-content::-webkit-scrollbar { display: none; }
+
+.proyectos-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 2;
+  column-gap: 2.5rem;
+  font-size: clamp(0.85rem, 1.2dvw, 1.05rem);
+  line-height: 2;
+}
+.proyectos-lista a { color: var(--text-content); }
+.proyectos-lista a:hover { color: var(--text); }
+
+@media (max-width: 768px) {
+  .proyectos-content { width: 86dvw; }
+  .proyectos-lista { columns: 1; }
 }
 
 .about-seccion { margin-bottom: 2.4rem; }
@@ -1040,17 +1071,6 @@ a.nav-label:visited {
   gap: 0.6rem;
 }
 
-/* Las cinco frases del statement, ahora bajo el tagline de la portada. Un
-   escalón por debajo del tagline para que el orden de lectura no cambie:
-   nombre, qué somos, y luego el detalle. */
-.welcome-statement {
-  margin-top: 1.4rem;
-  font-size: clamp(0.7rem, 1dvw, 0.85rem);
-  line-height: 1.65;
-  color: var(--text-secondary);
-  max-width: 30rem;
-}
-.welcome-statement p { margin: 0; }
 
 /* ============================================
    12. PAGE: FOOTER

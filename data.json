@@ -61,6 +61,18 @@
         "en": "the tools we make and publish openly: compress images and video in the browser, generate invoices without signing up, work out freelance rates, plus the experiments along the way.",
         "cat": "les eines que fem i publiquem obertes: comprimir imatges i vídeo al navegador, generar factures sense registre, calcular preus d'autònom·a, i els experiments que van sortint."
       }
+    },
+    "proyectos": {
+      "title": {
+        "es": "proyectos — 21 webs a medida hechas en barcelona · meowrhino studio",
+        "en": "projects — 21 custom websites made in barcelona · meowrhino studio",
+        "cat": "projectes — 21 webs a mida fetes a barcelona · meowrhino studio"
+      },
+      "description": {
+        "es": "21 webs diseñadas a medida en Barcelona para artistas, fotógrafos, músicos y pequeños negocios. Cada proyecto cuenta cómo se hizo y por qué acabó siendo así.",
+        "en": "21 websites custom-built in Barcelona for artists, photographers, musicians and small businesses. Each project tells how it was made and why it ended up like this.",
+        "cat": "21 webs dissenyades a mida a Barcelona per a artistes, fotògrafs, músics i petits negocis. Cada projecte explica com es va fer i per què va acabar sent així."
+      }
     }
   },
   "prerender": {
@@ -399,12 +411,6 @@
     }
   },
   "about": {
-    "foto": "img/manu/manu.webp",
-    "fotoAlt": {
-      "es": "manu latour, diseñador web en barcelona",
-      "en": "manu latour, web designer in barcelona",
-      "cat": "manu latour, dissenyador web a barcelona"
-    },
     "es": {
       "pregunta": "¿te ayudo a hacer tu rinconcito en internet?",
       "secciones": [
@@ -426,10 +432,11 @@
           ]
         },
         {
-          "titulo": "sin publicidad, sin formato",
+          "titulo": "internet propio",
           "parrafos": [
-            "tú decides dónde va cada cosa, cómo se distribuye, de qué maneras se ordenan los elementos, qué subes y qué no subes.",
-            "nadie modera: no hay política de contenido de nadie más, es tu casa. y no hay formato: si tu portfolio tiene sentido siendo una disquetera, es una disquetera."
+            "una red social es un espacio que alguien ha construido para ti. una web es un espacio que construyes tú.",
+            "tú decides dónde va cada cosa, cómo se distribuye, de qué maneras se ordenan los elementos, qué subes y qué no subes. no tienes que adaptarte al formato de ninguna plataforma: si tu portfolio tiene sentido siendo una disquetera, es una disquetera.",
+            "internet es demasiado grande para que todos tengamos la misma página."
           ]
         },
         {
@@ -443,7 +450,7 @@
         {
           "titulo": "el precio",
           "parrafos": [
-            "¿cuánto pagas por tu web? el negocio de casi todo el mundo no es hacerte una web, es cobrarte todos los meses por una que no puedes tocar y que no es tuya. aquí pagas por mi trabajo una vez: {precio} + iva, y el código es tuyo."
+            "webs desde {precio} + iva: diseño, programación y acompañamiento, hecha desde cero para ti. lo pagas una vez, no cada mes, y el código es tuyo."
           ]
         }
       ]
@@ -469,10 +476,11 @@
           ]
         },
         {
-          "titulo": "no ads, no format",
+          "titulo": "an internet of your own",
           "parrafos": [
-            "you decide where everything goes, how it is laid out, what ways the elements can be arranged, what you upload and what you don't.",
-            "nobody moderates: there is no one else's content policy, it's your house. and there is no format: if your portfolio makes sense as a floppy drive, it is a floppy drive."
+            "a social network is a space someone else built for you. a website is a space you build yourself.",
+            "you decide where everything goes, how it is laid out, what ways the elements can be arranged, what you upload and what you don't. you don't have to fit any platform's format: if your portfolio makes sense as a floppy drive, it is a floppy drive.",
+            "the internet is far too big for all of us to have the same page."
           ]
         },
         {
@@ -486,7 +494,7 @@
         {
           "titulo": "the price",
           "parrafos": [
-            "how much do you pay for your website? almost everyone's business isn't making you a website, it's charging you every month for one you can't touch and don't own. here you pay for my work once: {precio} + vat, and the code is yours."
+            "websites from {precio} + vat: design, development and support, built from scratch for you. you pay once, not every month, and the code is yours."
           ]
         }
       ]
@@ -512,10 +520,11 @@
           ]
         },
         {
-          "titulo": "sense publicitat, sense format",
+          "titulo": "internet propi",
           "parrafos": [
-            "tu decideixes on va cada cosa, com es distribueix, de quines maneres s'ordenen els elements, què puges i què no puges.",
-            "ningú modera: no hi ha política de contingut de ningú més, és casa teva. i no hi ha format: si el teu portfolio té sentit sent una disquetera, és una disquetera."
+            "una xarxa social és un espai que algú ha construït per a tu. una web és un espai que construeixes tu.",
+            "tu decideixes on va cada cosa, com es distribueix, de quines maneres s'ordenen els elements, què puges i què no puges. no t'has d'adaptar al format de cap plataforma: si el teu portfolio té sentit sent una disquetera, és una disquetera.",
+            "internet és massa gran perquè tots tinguem la mateixa pàgina."
           ]
         },
         {
@@ -529,7 +538,7 @@
         {
           "titulo": "el preu",
           "parrafos": [
-            "quant pagues per la teva web? el negoci de gairebé tothom no és fer-te una web, és cobrar-te cada mes per una que no pots tocar i que no és teva. aquí pagues per la meva feina un cop: {precio} + iva, i el codi és teu."
+            "webs des de {precio} + iva: disseny, programació i acompanyament, feta des de zero per a tu. ho pagues un cop, no cada mes, i el codi és teu."
           ]
         }
       ]

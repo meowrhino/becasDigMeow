@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generado por build-seo.js. No editar a mano. -->
-<!-- Solo URLs canónicas: /easy sirve el mismo contenido que la raíz y su
-     canonical apunta ahí, así que listarlo mandaría señales cruzadas. -->
+<!-- Solo URLs canónicas. /easy ya no existe: servía una copia del sitio
+     entero y ahora responde 301 a /metodologia (ver _redirects). -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
@@ -50,6 +50,16 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/links"/>
     <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/links"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/links"/>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/proyectos</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos"/>
     <lastmod>2026-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -105,6 +115,16 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://meowrhino.studio/en/projects</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos"/>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://meowrhino.studio/ca</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en"/>
@@ -150,6 +170,16 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/links"/>
     <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/links"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/links"/>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/projectes</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/proyectos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/projects"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/projectes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/proyectos"/>
     <lastmod>2026-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

@@ -57,10 +57,9 @@ export const slugify = (s) => String(s ?? "")
 // El archive NO entra en esta tabla: es otro documento con su propio lienzo de
 // once celdas, y sigue navegando por hash exactamente como antes.
 //
-// `portfolio` tampoco, todavía: su URL natural es /proyectos, que hoy sirve el
-// índice lineal de las 21 fichas. Son la misma cosa contada dos veces y hay que
-// fundirlas, pero eso toca las 66 fichas y merece su propio paso; hasta
-// entonces esa celda sigue con hash y /proyectos sigue siendo lo que era.
+// `portfolio` tampoco: es la celda de las capturas en movimiento, y su índice
+// —la lista de las 21 con su enlace— es la celda de al lado, `proyectos`, que
+// sí tiene ruta. Son dos vistas de lo mismo y por eso solo una es una URL.
 
 /**
  * Celda → ruta, por idioma. La clave es el identificador interno de la celda
@@ -76,6 +75,7 @@ export const RUTA_CELDAS = {
     "metodología": "/metodologia",
     condiciones: "/condiciones",
     links: "/links",
+    proyectos: "/proyectos",
   },
   en: {
     welcome: "/en",
@@ -83,6 +83,7 @@ export const RUTA_CELDAS = {
     "metodología": "/en/methodology",
     condiciones: "/en/terms",
     links: "/en/links",
+    proyectos: "/en/projects",
   },
   cat: {
     welcome: "/ca",
@@ -90,6 +91,7 @@ export const RUTA_CELDAS = {
     "metodología": "/ca/metodologia",
     condiciones: "/ca/condicions",
     links: "/ca/links",
+    proyectos: "/ca/projectes",
   },
 };
 

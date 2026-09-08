@@ -11,6 +11,7 @@ import { setupScrollGradients } from "./scroll-gradients.js";
 import { renderWelcomeCard } from "./welcome-card.js";
 import { renderWelcomeCupon } from "./welcome-cupon.js";
 import { repaintWithFade, escapeHTML } from "./utils.js";
+import { rutaProyectos, slugify } from "./rutas.js";
 
 /** true si el viewport es táctil / móvil (mismo criterio que portfolio usa para hover/pointer). */
 export const esMovil = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
@@ -168,9 +169,9 @@ export function renderWelcome(data) {
   // lang-btn por encima (z-index mayor); `renderWelcomeCupon` engancha sus
   // listeners al recorrer los .lang-btn dentro de la celda.
   //
-  // El título ya no enlaza a /easy: un wordmark significa «inicio» o no
-  // significa nada, y usarlo de puerta a otra maquetación del mismo sitio era
-  // una trampa — nadie pulsa el nombre de un estudio esperando eso. Y debajo
+  // El título no enlaza a ninguna parte: un wordmark significa «inicio» o no
+  // significa nada, y usarlo de puerta a otra pantalla del mismo sitio era una
+  // trampa — nadie pulsa el nombre de un estudio esperando eso. Y debajo
   // había un hint («navega con los botones de los lados») que explicaba la
   // interfaz en vez de enseñar trabajo, llamaba «botones» a unas etiquetas de
   // texto giradas, y era un <button> que nadie sabía que lo era. En su lugar,
@@ -181,31 +182,20 @@ export function renderWelcome(data) {
   // de contrato a alguien que todavía no sabe si le interesamos. Se mudó al
   // dorso del cupón, junto a lo que incluye, que es donde alguien ya está
   // preguntando el precio.
-  // Las cinco frases del statement viven aquí desde que dejó de ser celda: son
-  // el claim del estudio, y el claim va en la portada. Como pantalla aparte
-  // eran un cartel — cinco líneas no sostienen una página, y el porqué largo
-  // ya lo cuenta el about.
-  const lineasStatement = (lang) =>
-    (data.statement?.[lang]?.lineas || [])
-      .map(l => `<p>${escapeHTML(l)}</p>`).join("");
-
   el.innerHTML = `
     <div class="welcome-content">
       <h1 class="welcome-title">${escapeHTML(w.titulo)}</h1>
       <p class="welcome-tagline">${escapeHTML(pick(w.tagline, currentLang))}</p>
-      <div class="welcome-statement">${lineasStatement(currentLang)}</div>
     </div>
     ${buildLangButtons()}
   `;
 
   const taglineEl = el.querySelector(".welcome-tagline");
-  const statementEl = el.querySelector(".welcome-statement");
 
   // i18n en sitio: reusa el mecanismo de attachLangListeners (mismo patrón
   // que el cupón, que registra el suyo aparte sobre la misma celda).
   attachLangListeners(el, (lang) => {
     if (taglineEl) taglineEl.textContent = pick(w.tagline, lang);
-    if (statementEl) statementEl.innerHTML = lineasStatement(lang);
   });
 
   renderWelcomeCupon(el, w.cupon);
@@ -243,18 +233,6 @@ export function renderMetodologia(data) {
     );
   });
 
-  // Nav-label a /easy, colgando de esta celda porque /easy es donde el método
-  // se lee entero y del tirón. Mismo patrón exacto que el "archive" de la celda
-  // portfolio: un nav-label más del lienzo, con data-permanent para que no lo
-  // barra el repintado de vecinas. No va en el minimapa a propósito — el
-  // minimapa es el mapa de las siete celdas y prometer deslizamiento para
-  // luego cambiar de página rompe lo único que ese componente promete.
-  const easyLabel = document.createElement("a");
-  easyLabel.href = "/easy";   // "easy.html" responde 307 en Cloudflare
-  easyLabel.classList.add("nav-label", "bottom");
-  easyLabel.dataset.permanent = "true";
-  easyLabel.textContent = "easy";
-  el.appendChild(easyLabel);
 }
 
 // --- Footer ---
@@ -434,6 +412,52 @@ export function renderCondiciones(data) {
  * la única fuente. En la copia va como `{precio}` y se sustituye aquí, para
  * que subirlo siga siendo cambiar un número en un sitio.
  */
+/**
+ * La celda `proyectos`: el índice de las 21 fichas, en lista.
+ *
+ * Al lado del portfolio y contando lo mismo de otra manera: el portfolio son
+ * las capturas moviéndose y esta es la lista, que se lee de un vistazo y se
+ * puede recorrer con el teclado. Hasta ahora ese índice era una página lineal
+ * suelta (/proyectos) a la que no se llegaba desde el lienzo.
+ */
+export function renderProyectos(data) {
+  const el = document.querySelector(".celda.proyectos");
+  const proyectos = data?.portfolio?.proyectos || [];
+  if (!el || !proyectos.length) return;
+
+  const buildContent = (lang) => `
+    <ol class="proyectos-lista">
+      ${proyectos.map(p => `
+        <li><a href="${escapeHTML(rutaProyectos(lang))}/${escapeHTML(slugify(p.nombre))}">${escapeHTML(p.nombre)}</a></li>`).join("")}
+    </ol>`;
+
+  el.innerHTML = `
+    <div class="proyectos-content">${buildContent(currentLang)}</div>
+    ${buildLangButtons()}
+  `;
+
+  const content = el.querySelector(".proyectos-content");
+  const applyScale = setupZoom(el, content);
+
+  attachLangListeners(el, (lang) => {
+    repaintWithFade(el, content,
+      () => { content.innerHTML = buildContent(lang); },
+      applyScale
+    );
+  });
+}
+
+/**
+ * La celda `about`: quién es manu, por qué hace esto y cómo trabaja.
+ *
+ * Era la celda `contacto`, que tenía cuatro datos —email, instagram y el cv— y
+ * como página propia no se sostenía. El contacto sigue aquí, al final, que es
+ * donde se busca cuando ya has leído a quién estás escribiendo.
+ *
+ * El precio no se escribe en el texto: se lee del cupón de la portada, que es
+ * la única fuente. En la copia va como `{precio}` y se sustituye aquí, para
+ * que subirlo siga siendo cambiar un número en un sitio.
+ */
 export function renderAbout(data) {
   const el = document.querySelector(".celda.about");
   if (!el || !data?.about) return;
@@ -458,16 +482,15 @@ export function renderAbout(data) {
         ${sec.parrafos.map(t => `<p>${escapeHTML(t.replace("{precio}", precio))}</p>`).join("")}
       </section>`).join("");
 
-    const foto = data.about.foto
-      ? `<img class="about-foto" src="/${escapeHTML(data.about.foto)}"
-             alt="${escapeHTML(pick(data.about.fotoAlt, lang))}"
-             width="1200" height="960" loading="lazy" decoding="async">`
-      : "";
+    // Las cinco frases del statement abren la página: dicen qué es el estudio
+    // en una respiración, y todo lo que viene detrás las desarrolla. Estuvieron
+    // un rato en la portada y ahí sobraban — la portada es el nombre y ya.
+    const statement = (data.statement?.[lang] || data.statement?.es || {}).lineas || [];
 
     const cvHref = pick(cv, lang);
     return `
       <p class="about-pregunta">${escapeHTML(d.pregunta)}</p>
-      ${foto}
+      <div class="about-statement">${statement.map(l => `<p>${escapeHTML(l)}</p>`).join("")}</div>
       ${secciones}
       <div class="about-contacto">
         <a class="contacto-email" href="${escapeHTML(buildMailto(lang))}">${escapeHTML(email)}</a>
