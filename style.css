@@ -2176,7 +2176,7 @@ html.js #seo-prerender {
   /* Uno pegado a cada lado, para que se lean como los dos extremos de la
      lista y no como dos enlaces sueltos apilados. */
   .proy-vecino-prev { order: 98; align-self: flex-start; }
-  .proy-vecino-next { order: 99; align-self: flex-end; flex-direction: row-reverse; }
+  .proy-vecino-next { order: 99; align-self: flex-end; }
 
   .proy-lang-switch { position: static; justify-content: flex-end; margin-bottom: 1rem; }
 }

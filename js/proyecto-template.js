@@ -134,16 +134,15 @@ export function renderProyectoHTML(proyecto, seo, lang = "es", rutas = {}, medir
   // celdas vecinas del lienzo de la home: la ficha se lee como una celda que
   // has abierto, no como una página suelta. En móvil el CSS los baja al pie,
   // donde sí hay sitio.
-  const vecino = (v, clase, flecha) => v
+  const vecino = (v, clase) => v
     ? `
       <a class="proy-vecino ${clase}" href="${esc(v.href)}" rel="${clase === "proy-vecino-prev" ? "prev" : "next"}">
-        <span class="proy-vecino-flecha">${flecha}</span>
         <span class="proy-vecino-nombre">${esc(v.nombre)}</span>
       </a>`
     : "";
 
-  const vecinos = vecino(rutas.anterior, "proy-vecino-prev", "←") +
-    vecino(rutas.siguiente, "proy-vecino-next", "→");
+  const vecinos = vecino(rutas.anterior, "proy-vecino-prev") +
+    vecino(rutas.siguiente, "proy-vecino-next");
 
   return `
     <article class="proy">${cabecera}
