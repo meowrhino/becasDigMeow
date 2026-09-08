@@ -3,3 +3,6 @@
 .vscode/
 .wrangler/
 node_modules/
+
+# Borradores sueltos de manu, que no son del sitio
+NO_*.html
