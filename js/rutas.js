@@ -57,9 +57,16 @@ export const slugify = (s) => String(s ?? "")
 // El archive NO entra en esta tabla: es otro documento con su propio lienzo de
 // once celdas, y sigue navegando por hash exactamente como antes.
 //
-// `portfolio` tampoco: es la celda de las capturas en movimiento, y su índice
-// —la lista de las 21 con su enlace— es la celda de al lado, `proyectos`, que
-// sí tiene ruta. Son dos vistas de lo mismo y por eso solo una es una URL.
+// `portfolio` tampoco: es la celda de las capturas en movimiento y no tiene URL
+// propia; se entra por `/#portfolio`, que leerHash() resuelve al cargar.
+//
+// `proyectos` ESTUVO aquí y ya no está. Fue celda del lienzo durante un día: la
+// lista de las 21 al lado de la rejilla. Contaba lo mismo que el portfolio pero
+// sin las capturas, y en un sitio donde el trabajo es lo visual, una columna de
+// nombres al lado de las imágenes solo podía ser la versión pobre. El índice
+// sigue vivo en `/proyectos` como página lineal suelta —con sus fichas, sus
+// resúmenes y su hreflang— porque ahí sí sirve: es lo que rastrea un buscador.
+// Lo que se fue del mapa es la celda, no la página.
 
 /**
  * Celda → ruta, por idioma. La clave es el identificador interno de la celda
@@ -75,7 +82,6 @@ export const RUTA_CELDAS = {
     "metodología": "/metodologia",
     condiciones: "/condiciones",
     links: "/links",
-    proyectos: "/proyectos",
   },
   en: {
     welcome: "/en",
@@ -83,7 +89,6 @@ export const RUTA_CELDAS = {
     "metodología": "/en/methodology",
     condiciones: "/en/terms",
     links: "/en/links",
-    proyectos: "/en/projects",
   },
   cat: {
     welcome: "/ca",
@@ -91,7 +96,6 @@ export const RUTA_CELDAS = {
     "metodología": "/ca/metodologia",
     condiciones: "/ca/condicions",
     links: "/ca/links",
-    proyectos: "/ca/projectes",
   },
 };
 

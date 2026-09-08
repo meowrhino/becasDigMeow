@@ -226,9 +226,11 @@ function enlacesEntreCeldas(data, idioma, celdaActual) {
     .filter(([c]) => c !== celdaActual)
     .map(([c, ruta]) => ({ href: ruta, texto: nombreVisible(c) }));
 
-  // El portfolio todavía no es una celda con ruta, pero es la página con más
-  // contenido del sitio: no puede quedarse fuera del camino.
-  otras.push({ href: idioma.proyBase, texto: pick(data.zoneLabels?.portfolio, idioma.code) || "portfolio" });
+  // El índice de proyectos ya no es una celda, así que no sale de la tabla de
+  // arriba: se añade a mano. Es la página con más contenido del sitio y la que
+  // enlaza las 21 fichas — dejarla fuera de este pie la convertiría en huérfana,
+  // que es la forma más rápida de que un buscador deje de visitarla.
+  otras.push({ href: idioma.proyBase, texto: pick(data.zoneLabels?.proyectos, idioma.code) || "proyectos" });
   return otras;
 }
 
@@ -259,15 +261,9 @@ function headCeldaHTML(data, idioma, celda, url) {
 }
 
 /** El HTML de una página de celda, a partir de la plantilla de la home. */
-function paginaCelda(plantilla, data, idioma, { celda, url }, fichas = []) {
+function paginaCelda(plantilla, data, idioma, { celda, url }) {
   const enlaces = enlacesEntreCeldas(data, idioma, celda);
-  // El índice de proyectos necesita `proyectos-seo.json` (los resúmenes de cada
-  // ficha), que no llega hasta aquí desde las plantillas del lienzo: se compone
-  // con la función que ya lo hacía cuando /proyectos era una página lineal.
-  const cuerpo = celda === "proyectos"
-    ? renderIndiceHTML(fichas, idioma.code, { base: idioma.proyBase, home: idioma.path,
-        rejilla: `${idioma.path}#portfolio` })
-    : renderCeldaPrerenderHTML(data, idioma.code, celda, enlaces);
+  const cuerpo = renderCeldaPrerenderHTML(data, idioma.code, celda, enlaces);
   let html = reemplazarBloque(plantilla, "head", headCeldaHTML(data, idioma, celda, url));
   html = reemplazarBloque(html, "preload", modulepreloadHTML("main.js"));
   html = reemplazarBloque(html, "home", cuerpo);
@@ -443,7 +439,8 @@ function scriptLdHTML(schema) {
  * scroll lineal, igual que /easy, así que heredan tipografía, ritmo vertical y
  * botones sin duplicar reglas. Lo propio vive en la sección 18 de style.css.
  */
-function paginaProyectoHTML({ title, description, url, imagen, jsonLd, cuerpo, idioma, hreflang }) {
+function paginaProyectoHTML({ title, description, url, imagen, jsonLd, cuerpo, idioma, hreflang,
+                             ogType = "article" }) {
   return `<!DOCTYPE html>
 <html lang="${idioma.htmlLang}" class="easy">
 <head>
@@ -456,7 +453,7 @@ function paginaProyectoHTML({ title, description, url, imagen, jsonLd, cuerpo, i
 ${hreflang}
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
-  <meta property="og:type" content="article">
+  <meta property="og:type" content="${ogType}">
   <meta property="og:site_name" content="meowrhino studio">
   <meta property="og:title" content="${esc(title)}">
   <meta property="og:description" content="${esc(description)}">
@@ -494,13 +491,13 @@ ${cuerpo}
 /** Página de un proyecto, en un idioma. */
 function paginaProyecto({ proyecto, seo }, idioma, vecinos = {}) {
   const rutas = {
-    indice: idioma.proyBase,
+    // La vuelta de una ficha es la REJILLA del portfolio, no el índice suelto.
+    // Estas páginas son puro visual —seis capturas a pantalla completa— y salir
+    // de ellas a una lista de nombres era caer en seco: pierdes de golpe lo
+    // único por lo que alguien mira un portfolio. `/#portfolio` lo resuelve
+    // leerHash() en navigation.js, que coloca el lienzo en esa celda al cargar.
+    indice: `${idioma.path}#portfolio`,
     home: idioma.path,
-    // La celda del lienzo por la que se entra al portfolio. Hasta ahora el
-    // recorrido no cerraba: de la celda portfolio se iba a una ficha, de la
-    // ficha al índice, y del índice solo se podía volver a "/" — que deja el
-    // lienzo en welcome, no donde estabas. El hash lo resuelve leerHash() en
-    // navigation.js, que coloca el lienzo en esa celda al cargar.
     rejilla: `${idioma.path}#portfolio`,
     // El selector de idioma de ESTA ficha: las mismas tres URLs que ya declara
     // el hreflang, pero clicables. La etiqueta es el código corto porque es lo
@@ -561,6 +558,45 @@ const INDICE = (n) => ({
       "músics i petits negocis. Cada projecte explica com es va fer i per què va acabar sent així.",
   },
 });
+
+/**
+ * El índice suelto de proyectos (/proyectos, /en/projects, /ca/projectes).
+ *
+ * Es una página lineal, no una celda del lienzo: se sirve con el mismo esqueleto
+ * que las 63 fichas y NO carga la aplicación del lienzo. Fue celda durante un
+ * día y volvió aquí — la lista de nombres al lado de la rejilla de capturas era
+ * la versión pobre de lo mismo (ver la nota en js/rutas.js).
+ *
+ * Que siga existiendo no es nostalgia: es la única página que enlaza las 21
+ * fichas de un idioma en un solo documento, y por eso está en el sitemap y en el
+ * pie de todas las celdas. Lo que se fue del mapa es la celda, no la página.
+ */
+function paginaIndice(fichas, idioma) {
+  const meta = INDICE(fichas.length)[idioma.code] || INDICE(fichas.length).es;
+  const url = `${SITE}${idioma.proyBase}`;
+  return paginaProyectoHTML({
+    idioma,
+    ogType: "website",
+    title: meta.title,
+    description: meta.description,
+    url,
+    imagen: `${SITE}/favicon/og-image.png`,
+    hreflang: hreflangProyectoHTML(""),
+    jsonLd: scriptLdHTML({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: meta.schemaName,
+      description: meta.description,
+      url,
+      inLanguage: idioma.htmlLang,
+    }),
+    cuerpo: renderIndiceHTML(fichas, idioma.code, {
+      base: idioma.proyBase,
+      home: idioma.path,
+      rejilla: `${idioma.path}#portfolio`,
+    }),
+  });
+}
 
 /**
  * Los `lastmod` del sitemap anterior, indexados por URL.
@@ -703,7 +739,7 @@ function main() {
       for (const pagina of celdasDe(idioma)) {
         const dir = dirname(join(ROOT, pagina.archivo));
         mkdirSync(dir, { recursive: true });
-        generar(pagina.archivo, paginaCelda(plantillaHome, data, idioma, pagina, fichas));
+        generar(pagina.archivo, paginaCelda(plantillaHome, data, idioma, pagina));
       }
     }
 
@@ -724,6 +760,7 @@ function main() {
     // redirige. Así se sirve en /proyectos sin salto, igual que /archive.
     for (const idioma of IDIOMAS) {
       mkdirSync(join(ROOT, idioma.proyDir), { recursive: true });
+      generar(idioma.proyFile, paginaIndice(fichas, idioma));
       // Los vecinos salen del orden de proyectos-seo.json, que es el mismo que
       // el de la rejilla. La lista es circular a propósito: desde el último,
       // "siguiente" vuelve al primero. Un cul-de-sac al final de una lista de

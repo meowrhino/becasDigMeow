@@ -29,7 +29,6 @@ import {
   renderMetodologia,
   renderCondiciones,
   renderAbout,
-  renderProyectos,
 } from "./pages.js";
 import { renderPortfolio } from "./portfolio.js";
 import { rutaCelda, celdaDeRuta } from "./rutas.js";
@@ -61,7 +60,6 @@ async function renderizarContenido() {
   renderMetodologia(data);
   renderCondiciones(data);
   renderPortfolio(data);
-  renderProyectos(data);
   renderAbout(data);
 }
 
@@ -100,14 +98,17 @@ document.getElementById("seo-prerender")?.remove();
 //     una página, pero quién eres y por qué haces esto sí, y el email sigue ahí.
 //   · `footer` pasa a llamarse `condiciones`, que es lo que de verdad contiene.
 //     Conserva la clase css `footer` para no reescribir su hoja de estilos.
-//   · `proyectos` es nueva, a la derecha del portfolio: el índice de las 21
-//     fichas, que hasta ahora era una página lineal suelta que no se alcanzaba
-//     desde el lienzo. El portfolio son las capturas; esto es la lista.
+//
+// `proyectos` llegó a estar aquí, a la derecha del portfolio, y duró un día: era
+// la lista de las 21 al lado de la rejilla de capturas, o sea lo mismo contado
+// sin lo único que convence, que son las imágenes. El índice no se ha perdido —
+// vive en `/proyectos` como página lineal, que es donde le sirve a un buscador—
+// pero ya no ocupa una casilla del mapa.
 configurarNavegacion({
   grid: [
     [0, 1, 0, 0], // fila 0: _, links, _, _
     [1, 1, 1, 1], // fila 1: about, welcome, metodología, condiciones
-    [0, 1, 1, 0], // fila 2: _, portfolio, proyectos, _
+    [0, 1, 0, 0], // fila 2: _, portfolio, _, _
   ],
   nombres: {
     "0_1": "links",
@@ -116,7 +117,6 @@ configurarNavegacion({
     "1_2": "metodología",
     "1_3": "condiciones",
     "2_1": "portfolio",
-    "2_2": "proyectos",
   },
   clasesCss: {
     "links": "tools",
@@ -125,7 +125,6 @@ configurarNavegacion({
     "welcome": "welcome",
     "condiciones": "footer",
     "portfolio": "portfolio",
-    "proyectos": "proyectos",
   },
   redirects: {
     "links": ["tools"],

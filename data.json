@@ -61,18 +61,6 @@
         "en": "the tools we make and publish openly: compress images and video in the browser, generate invoices without signing up, work out freelance rates, plus the experiments along the way.",
         "cat": "les eines que fem i publiquem obertes: comprimir imatges i vídeo al navegador, generar factures sense registre, calcular preus d'autònom·a, i els experiments que van sortint."
       }
-    },
-    "proyectos": {
-      "title": {
-        "es": "proyectos — 21 webs a medida hechas en barcelona · meowrhino studio",
-        "en": "projects — 21 custom websites made in barcelona · meowrhino studio",
-        "cat": "projectes — 21 webs a mida fetes a barcelona · meowrhino studio"
-      },
-      "description": {
-        "es": "21 webs diseñadas a medida en Barcelona para artistas, fotógrafos, músicos y pequeños negocios. Cada proyecto cuenta cómo se hizo y por qué acabó siendo así.",
-        "en": "21 websites custom-built in Barcelona for artists, photographers, musicians and small businesses. Each project tells how it was made and why it ended up like this.",
-        "cat": "21 webs dissenyades a mida a Barcelona per a artistes, fotògrafs, músics i petits negocis. Cada projecte explica com es va fer i per què va acabar sent així."
-      }
     }
   },
   "prerender": {

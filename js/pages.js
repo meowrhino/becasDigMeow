@@ -420,45 +420,6 @@ export function renderCondiciones(data) {
  * que subirlo siga siendo cambiar un número en un sitio.
  */
 /**
- * La celda `proyectos`: el índice de las 21 fichas, en lista.
- *
- * Al lado del portfolio y contando lo mismo de otra manera: el portfolio son
- * las capturas moviéndose y esta es la lista, que se lee de un vistazo y se
- * puede recorrer con el teclado. Hasta ahora ese índice era una página lineal
- * suelta (/proyectos) a la que no se llegaba desde el lienzo.
- */
-export function renderProyectos(data) {
-  const el = document.querySelector(".celda.proyectos");
-  const proyectos = data?.portfolio?.proyectos || [];
-  if (!el || !proyectos.length) return;
-
-  const buildContent = (lang) => `
-    <ol class="proyectos-lista">
-      ${proyectos.map(p => `
-        <li><a href="${escapeHTML(rutaProyectos(lang))}/${escapeHTML(slugify(p.nombre))}">${escapeHTML(p.nombre)}</a></li>`).join("")}
-    </ol>`;
-
-  el.innerHTML = `
-    <div class="scroll-wrapper proyectos-scroll-wrapper">
-      <div class="scroll-content proyectos-content">${buildContent(currentLang)}</div>
-    </div>
-    ${buildLangButtons()}
-  `;
-
-  const wrapper = el.querySelector(".proyectos-scroll-wrapper");
-  const content = el.querySelector(".proyectos-content");
-  const checkScroll = setupScrollGradients(wrapper, content);
-  const applyScale = setupZoom(el, content, checkScroll);
-
-  attachLangListeners(el, (lang) => {
-    repaintWithFade(el, content,
-      () => { content.innerHTML = buildContent(lang); },
-      () => { applyScale(); requestAnimationFrame(checkScroll); }
-    );
-  });
-}
-
-/**
  * La celda `about`: quién es manu, por qué hace esto y cómo trabaja.
  *
  * Era la celda `contacto`, que tenía cuatro datos —email, instagram y el cv— y

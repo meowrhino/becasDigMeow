@@ -24,24 +24,21 @@ export { slugify } from "./rutas.js";
  * porque solo los usan estas plantillas; data.json es el contenido del sitio.
  */
 export const UI = {
-  es:  { eyebrow: "proyecto", visitar: "visitar", todos: "← todos los proyectos",
-         indiceTitulo: "proyectos", indiceEyebrow: "estudio de diseño web · barcelona",
+  es:  { eyebrow: "proyecto", visitar: "visitar", indiceTitulo: "proyectos", indiceEyebrow: "estudio de diseño web · barcelona",
          ctaBoton: "¿quieres una web así?",
          asunto: "quiero una web!", detalle: "detalle", disenada: "web diseñada por meowrhino studio, Barcelona",
          anterior: "anterior", siguiente: "siguiente", idiomas: "idioma",
          volverRejilla: "← volver al portfolio",
          intro: (n) => `${n} webs hechas a medida, desde cero y sin plantillas, para artistas, fotógrafos, músicos y pequeños negocios. cada una cuenta cómo se hizo y por qué acabó siendo así.`,
          navegar: "seguir navegando" },
-  en:  { eyebrow: "project", visitar: "visit", todos: "← all projects",
-         indiceTitulo: "projects", indiceEyebrow: "web design studio · barcelona",
+  en:  { eyebrow: "project", visitar: "visit", indiceTitulo: "projects", indiceEyebrow: "web design studio · barcelona",
          ctaBoton: "want a website like this?",
          asunto: "i want a website!", detalle: "detail", disenada: "website designed by meowrhino studio, Barcelona",
          anterior: "previous", siguiente: "next", idiomas: "language",
          volverRejilla: "← back to the portfolio",
          intro: (n) => `${n} websites built from scratch, custom-made and without templates, for artists, photographers, musicians and small businesses. each one tells how it was made and why it ended up like this.`,
          navegar: "keep browsing" },
-  cat: { eyebrow: "projecte", visitar: "visitar", todos: "← tots els projectes",
-         indiceTitulo: "projectes", indiceEyebrow: "estudi de disseny web · barcelona",
+  cat: { eyebrow: "projecte", visitar: "visitar", indiceTitulo: "projectes", indiceEyebrow: "estudi de disseny web · barcelona",
          ctaBoton: "vols una web així?",
          asunto: "vull una web!", detalle: "detall", disenada: "web dissenyada per meowrhino studio, Barcelona",
          anterior: "anterior", siguiente: "següent", idiomas: "idioma",
@@ -155,7 +152,7 @@ export function renderProyectoHTML(proyecto, seo, lang = "es", rutas = {}, medir
       <div class="proy-galeria">${galeria}
       </div>${acciones}
       <nav class="proy-pie" aria-label="${esc(t.navegar)}">
-        <a href="${esc(rutas.indice || "/proyectos")}">${esc(t.todos)}</a>
+        <a href="${esc(rutas.indice || "/#portfolio")}">${esc(t.volverRejilla)}</a>
         <a href="${esc(rutas.home || "/")}">meowrhino studio</a>
       </nav>
     </article>`;
