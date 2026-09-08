@@ -385,9 +385,10 @@ function paginaProyecto({ proyecto, seo }, idioma) {
   });
 }
 
-/** Índice de proyectos de un idioma: la puerta de entrada a las 20 páginas. */
+/** Índice de proyectos de un idioma: la puerta de entrada a sus fichas. */
 function paginaIndice(fichas, idioma) {
-  const t = INDICE[idioma.code] || INDICE.es;
+  const copia = INDICE(fichas.length);
+  const t = copia[idioma.code] || copia.es;
   const schema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -420,27 +421,34 @@ function paginaIndice(fichas, idioma) {
   });
 }
 
-/** Metadatos del índice, por idioma. */
-const INDICE = {
+/**
+ * Metadatos del índice, por idioma.
+ *
+ * El número de proyectos NO se escribe a mano: se recibe como argumento y sale
+ * de `fichas.length`. Estaba repetido en seis cadenas ("20 webs…") y cada vez
+ * que entraba un proyecto nuevo había que acordarse de tocarlas todas — al
+ * añadir la 21 se quedaron diciendo 20 en los tres idiomas.
+ */
+const INDICE = (n) => ({
   es: {
     schemaName: "proyectos — meowrhino studio",
-    title: "proyectos — 20 webs a medida hechas en barcelona · meowrhino studio",
-    description: "20 webs diseñadas a medida en Barcelona para artistas, fotógrafos, " +
+    title: `proyectos — ${n} webs a medida hechas en barcelona · meowrhino studio`,
+    description: `${n} webs diseñadas a medida en Barcelona para artistas, fotógrafos, ` +
       "músicos y pequeños negocios. Cada proyecto cuenta cómo se hizo y por qué acabó siendo así.",
   },
   en: {
     schemaName: "projects — meowrhino studio",
-    title: "projects — 20 custom websites made in barcelona · meowrhino studio",
-    description: "20 websites custom-built in Barcelona for artists, photographers, " +
+    title: `projects — ${n} custom websites made in barcelona · meowrhino studio`,
+    description: `${n} websites custom-built in Barcelona for artists, photographers, ` +
       "musicians and small businesses. Each project tells how it was made and why it ended up like this.",
   },
   cat: {
     schemaName: "projectes — meowrhino studio",
-    title: "projectes — 20 webs a mida fetes a barcelona · meowrhino studio",
-    description: "20 webs dissenyades a mida a Barcelona per a artistes, fotògrafs, " +
+    title: `projectes — ${n} webs a mida fetes a barcelona · meowrhino studio`,
+    description: `${n} webs dissenyades a mida a Barcelona per a artistes, fotògrafs, ` +
       "músics i petits negocis. Cada projecte explica com es va fer i per què va acabar sent així.",
   },
-};
+});
 
 /**
  * Los `lastmod` del sitemap anterior, indexados por URL.

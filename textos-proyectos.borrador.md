@@ -1,4 +1,4 @@
-# borradores: textos de los 20 proyectos
+# borradores: textos de los 21 proyectos
 
 > **qué es esto**: un borrador por proyecto para las futuras páginas de detalle
 > (`/proyectos/<slug>`), cada una atacando una long-tail distinta. escritos en la voz
@@ -8,6 +8,9 @@
 > a plantilla, y manu ha validado los textos con las correcciones de mike (los cds son
 > cómo enseña su trabajo, no una colección suya) y paula (maquilladora y estilista).
 > el mundo de las jordis se publica con enlace (ver nota en su ficha).
+>
+> **actualización (8 sep 2026)**: entra `la diega` en el 6º puesto y noan pasa
+> detrás de berta esteve. son 21 proyectos.
 >
 > **este archivo ya no es la fuente de verdad**: la copia que se publica vive en
 > `proyectos-seo.json`, de donde la lee build-seo.js. esto queda como el porqué de
@@ -87,17 +90,23 @@
   publicaciones. la mejor devolución nos la dio ella: dice que la web parece hecha
   de papel. viniendo de alguien que trabaja el papel de verdad, no hay mejor piropo.
 
-## noan cittadino — noancittadino.com
-- **keyword**: web para compositores y sound designers
-- **title**: una web para game audio — noancittadino.com · meowrhino studio
-- **meta**: la web de noan cittadino, compositor y sound designer de videojuegos (fmod, wwise). portfolio a medida hecho en barcelona, sin cuotas mensuales.
+## la diega — ladiega.com
+- **keyword**: web para diseñadores de sonido y música publicitaria
+- **title**: un portfolio de sonido que suena — ladiega.com · meowrhino studio
+- **meta**: la web de la diega: composición, diseño sonoro y sfx para nike, loewe, samantha hudson o la ost de menudas piezas. hecha a medida en barcelona, sin cuotas mensuales.
+- **por qué esta keyword**: hay tres proyectos de sonido en el portfolio y las long-tail no se pueden pisar. diego san marcos se queda «músicos y técnicos de sonido», noan «compositores y sound designers» (game audio), y la diega coge el lado de marca y publicidad, que es donde está su trabajo.
+- **anécdota**: el sinte. dentro del about, detrás de una ficha de personaje con stats, hay un sintetizador de verdad — potes de onda y filtro, presets, efectos, teclado de una octava tocable con `A S D F G H J K` y un osciloscopio que se arrastra como un theremin. nos llevó más tiempo que la web entera.
+- **género**: la diega usa todos los pronombres. el texto está escrito esquivando la concordancia a propósito, en los tres idiomas. si se toca, mantenerlo así.
 - **borrador**:
-  noan compone música y diseña sonido para videojuegos: sistemas de música dinámica,
-  fmod, wwise. su portfolio tenía que hablar dos idiomas a la vez — el de los estudios
-  de videojuegos que buscan un perfil técnico y el de quien solo quiere escuchar su
-  trabajo. lo resolvimos por lo sencillo y lo tierno: un pequeño escritorio donde
-  cada cosa que tocas suena, con soniditos hechos por el propio noan. el portfolio
-  de un sound designer que suena, en vez de contarte que suena.
+  la diega compone música y diseña sonido para marcas y audiovisual: la ost de menudas
+  piezas, samantha hudson, amor butano, anuncios de nike, loewe o massimo dutti. el
+  problema de un portfolio de sonido es que casi siempre es mudo — una rejilla de
+  miniaturas que hay que ir abriendo. aquí lo primero que hace la web es preguntar si
+  quieres escuchar, y a partir del sí ya no para: los trabajos van a pantalla completa,
+  uno detrás de otro, con la estética de un menú de videojuego japonés. y en el about,
+  detrás de una ficha de personaje, hay un sintetizador de verdad — se toca con el
+  teclado del ordenador y suena por encima del vídeo. nos llevó más tiempo que la web
+  entera. esperamos que le guste.
 
 ## 930blurberrie — 930blurberrie.com
 - **keyword**: web para ilustradoras
@@ -207,6 +216,19 @@
   .cat. por dentro es la más compleja que hemos montado: berta produce muchísimo, y
   todo tenía que caber sin que la navegación se rompiera ni aquello pareciera un
   archivo muerto.
+
+## noan cittadino — noancittadino.com
+- **keyword**: web para compositores y sound designers
+- **title**: una web para game audio — noan cittadino · meowrhino studio
+- **meta**: la web de noan cittadino, compositor y sound designer de videojuegos (fmod, wwise). portfolio a medida hecho en barcelona, sin cuotas mensuales.
+- **nota (8 sep 2026)**: el dominio noancittadino.com sigue registrado pero apunta a Wix; la ficha enlaza a meowrhino.github.io/noan mientras tanto. el diagnóstico completo está en NOAN_DOMINIO.md del repo meowrhino/noan.
+- **borrador**:
+  noan compone música y diseña sonido para videojuegos: sistemas de música dinámica,
+  fmod, wwise. su portfolio tenía que hablar dos idiomas a la vez — el de los estudios
+  de videojuegos que buscan un perfil técnico y el de quien solo quiere escuchar su
+  trabajo. lo resolvimos por lo sencillo y lo tierno: un pequeño escritorio donde
+  cada cosa que tocas suena, con soniditos hechos por el propio noan. el portfolio
+  de un sound designer que suena, en vez de contarte que suena.
 
 ## estructuras3000 — estructuras3000.com
 - **keyword**: web para asociaciones y colectivos

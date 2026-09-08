@@ -554,10 +554,10 @@
         "url": "https://mirandaperezhita.com"
       },
       {
-        "nombre": "noan cittadino",
-        "imagen": "img/noan/1.webp",
+        "nombre": "la diega",
+        "imagen": "img/ladiega/1.webp",
         "imagenesSecundarias": 2,
-        "url": "https://noancittadino.com"
+        "url": "https://ladiega.com"
       },
       {
         "nombre": "930blurberrie",
@@ -607,20 +607,27 @@
       {
         "nombre": "maxito",
         "imagen": "img/maxito/1.webp",
-        "imagenesSecundarias": 0,
+        "imagenesSecundarias": 2,
         "url": "https://maxazemar.com"
       },
       {
         "nombre": "jaume clotet",
         "imagen": "img/jaumeclotet/1.webp",
-        "imagenesSecundarias": 1,
+        "imagenesSecundarias": 2,
         "url": "https://jaumeclotet.com"
       },
       {
         "nombre": "berta esteve",
         "imagen": "img/bertaesteve/1.webp",
-        "imagenesSecundarias": 1,
+        "imagenesSecundarias": 2,
         "url": "https://bertaesteve.cat"
+      },
+      {
+        "nombre": "noan cittadino",
+        "imagen": "img/noan/1.webp",
+        "imagenesSecundarias": 2,
+        "url": "https://meowrhino.github.io/noan/",
+        "urlLabel": "noan cittadino"
       },
       {
         "nombre": "estructuras3000",

@@ -147,32 +147,32 @@
       }
     },
     {
-      "nombre": "noan cittadino",
-      "slug": "noan-cittadino",
+      "nombre": "la diega",
+      "slug": "la-diega",
       "keyword": {
-        "es": "web para compositores y sound designers",
-        "en": "website for composers and sound designers",
-        "cat": "web per a compositors i dissenyadors de so"
+        "es": "web para diseñadores de sonido y música publicitaria",
+        "en": "website for sound designers and advertising composers",
+        "cat": "web per a dissenyadors de so i música publicitària"
       },
       "title": {
-        "es": "una web para game audio — noancittadino.com · meowrhino studio",
-        "en": "a website for game audio — noancittadino.com · meowrhino studio",
-        "cat": "una web per a game audio — noancittadino.com · meowrhino studio"
+        "es": "un portfolio de sonido que suena — ladiega.com · meowrhino studio",
+        "en": "a sound portfolio that actually sounds — ladiega.com · meowrhino studio",
+        "cat": "un portfolio de so que sona — ladiega.com · meowrhino studio"
       },
       "description": {
-        "es": "la web de noan cittadino, compositor y sound designer de videojuegos (fmod, wwise). portfolio a medida hecho en barcelona, sin cuotas mensuales.",
-        "en": "noan cittadino's website, composer and sound designer for video games (fmod, wwise). custom portfolio made in barcelona, no monthly fees.",
-        "cat": "la web del noan cittadino, compositor i dissenyador de so de videojocs (fmod, wwise). portfolio a mida fet a barcelona, sense quotes mensuals."
+        "es": "la web de la diega: composición, diseño sonoro y sfx para nike, loewe, samantha hudson o la ost de menudas piezas. hecha a medida en barcelona, sin cuotas mensuales.",
+        "en": "la diega's website: composition, sound design and sfx for nike, loewe, samantha hudson and the menudas piezas ost. custom-built in barcelona, no monthly fees.",
+        "cat": "la web de la diega: composició, disseny sonor i sfx per a nike, loewe, samantha hudson o l'ost de menudas piezas. feta a mida a barcelona, sense quotes mensuals."
       },
       "resumen": {
-        "es": "una web para game audio",
-        "en": "a website for game audio",
-        "cat": "una web per a game audio"
+        "es": "un portfolio de sonido que suena",
+        "en": "a sound portfolio that actually sounds",
+        "cat": "un portfolio de so que sona"
       },
       "texto": {
-        "es": "noan compone música y diseña sonido para videojuegos: sistemas de música dinámica, fmod, wwise. su portfolio tenía que hablar dos idiomas a la vez — el de los estudios de videojuegos que buscan un perfil técnico y el de quien solo quiere escuchar su trabajo. lo resolvimos por lo sencillo y lo tierno: un pequeño escritorio donde cada cosa que tocas suena, con soniditos hechos por el propio noan. el portfolio de un sound designer que suena, en vez de contarte que suena.",
-        "en": "noan composes music and designs sound for video games: dynamic music systems, fmod, wwise. his portfolio had to speak two languages at once — that of game studios looking for a technical profile, and that of anyone who just wants to hear his work. we solved it through the simple and the tender: a small desktop where everything you touch makes a sound, with little sounds made by noan himself. the portfolio of a sound designer that sounds, instead of telling you that it sounds.",
-        "cat": "el noan compon música i dissenya so per a videojocs: sistemes de música dinàmica, fmod, wwise. el seu portfolio havia de parlar dos idiomes alhora — el dels estudis de videojocs que busquen un perfil tècnic i el de qui només vol escoltar la seva feina. ho vam resoldre per la banda senzilla i tendra: un escriptori petit on cada cosa que toques sona, amb sonets fets pel mateix noan. el portfolio d'un sound designer que sona, en comptes d'explicar-te que sona."
+        "es": "la diega compone música y diseña sonido para marcas y audiovisual: la ost de menudas piezas, samantha hudson, amor butano, anuncios de nike, loewe o massimo dutti. el problema de un portfolio de sonido es que casi siempre es mudo — una rejilla de miniaturas que hay que ir abriendo. aquí lo primero que hace la web es preguntar si quieres escuchar, y a partir del sí ya no para: los trabajos van a pantalla completa, uno detrás de otro, con la estética de un menú de videojuego japonés. y en el about, detrás de una ficha de personaje, hay un sintetizador de verdad — se toca con el teclado del ordenador y suena por encima del vídeo. nos llevó más tiempo que la web entera. esperamos que le guste.",
+        "en": "la diega composes music and designs sound for brands and film: the menudas piezas ost, samantha hudson, amor butano, ads for nike, loewe or massimo dutti. the trouble with a sound portfolio is that it's almost always mute — a grid of thumbnails you have to open one by one. here the first thing the site does is ask whether you want to listen, and after the yes it never stops: the work plays full screen, one piece after another, with the look of a japanese video game menu. and inside the about, behind a character sheet, there's a real synthesiser — played with the computer keyboard, sounding over the video. it took us longer than the whole website. we hope la diega likes it.",
+        "cat": "la diega compon música i dissenya so per a marques i audiovisual: l'ost de menudas piezas, samantha hudson, amor butano, anuncis de nike, loewe o massimo dutti. el problema d'un portfolio de so és que gairebé sempre és mut — una graella de miniatures que has d'anar obrint. aquí el primer que fa la web és preguntar si vols escoltar, i a partir del sí ja no para: els treballs van a pantalla completa, un darrere l'altre, amb l'estètica d'un menú de videojoc japonès. i a l'about, darrere d'una fitxa de personatge, hi ha un sintetitzador de veritat — es toca amb el teclat de l'ordinador i sona per damunt del vídeo. ens va portar més temps que tota la web. esperem que li agradi."
       }
     },
     {
@@ -434,6 +434,35 @@
         "es": "berta es curadora, investigadora y artista, y su bio dice \"expos, jajas & internet\" — con ese briefing, una web seria de cv quedaba descartada. hicimos una web que se toma en serio su trabajo sin tomarse en serio a sí misma, en catalán y con dominio .cat. por dentro es la más compleja que hemos montado: berta produce muchísimo, y todo tenía que caber sin que la navegación se rompiera ni aquello pareciera un archivo muerto.",
         "en": "berta is a curator, researcher and artist, and her bio says \"expos, jajas & internet\" — with that brief, a serious cv website was off the table. we made a website that takes her work seriously without taking itself seriously, in catalan and on a .cat domain. underneath it's the most complex thing we've built: berta produces an enormous amount, and all of it had to fit without the navigation breaking or the whole thing looking like a dead archive.",
         "cat": "la berta és curadora, investigadora i artista, i la seva bio diu \"expos, jajas & internet\" — amb aquest briefing, una web seriosa de cv quedava descartada. vam fer una web que es pren seriosament la seva feina sense prendre's seriosament a ella mateixa, en català i amb domini .cat. per dins és la més complexa que hem muntat: la berta produeix moltíssim, i tot havia de cabre-hi sense que la navegació es trenqués ni allò semblés un arxiu mort."
+      }
+    },
+    {
+      "nombre": "noan cittadino",
+      "slug": "noan-cittadino",
+      "keyword": {
+        "es": "web para compositores y sound designers",
+        "en": "website for composers and sound designers",
+        "cat": "web per a compositors i dissenyadors de so"
+      },
+      "title": {
+        "es": "una web para game audio — noan cittadino · meowrhino studio",
+        "en": "a website for game audio — noan cittadino · meowrhino studio",
+        "cat": "una web per a game audio — noan cittadino · meowrhino studio"
+      },
+      "description": {
+        "es": "la web de noan cittadino, compositor y sound designer de videojuegos (fmod, wwise). portfolio a medida hecho en barcelona, sin cuotas mensuales.",
+        "en": "noan cittadino's website, composer and sound designer for video games (fmod, wwise). custom portfolio made in barcelona, no monthly fees.",
+        "cat": "la web del noan cittadino, compositor i dissenyador de so de videojocs (fmod, wwise). portfolio a mida fet a barcelona, sense quotes mensuals."
+      },
+      "resumen": {
+        "es": "una web para game audio",
+        "en": "a website for game audio",
+        "cat": "una web per a game audio"
+      },
+      "texto": {
+        "es": "noan compone música y diseña sonido para videojuegos: sistemas de música dinámica, fmod, wwise. su portfolio tenía que hablar dos idiomas a la vez — el de los estudios de videojuegos que buscan un perfil técnico y el de quien solo quiere escuchar su trabajo. lo resolvimos por lo sencillo y lo tierno: un pequeño escritorio donde cada cosa que tocas suena, con soniditos hechos por el propio noan. el portfolio de un sound designer que suena, en vez de contarte que suena.",
+        "en": "noan composes music and designs sound for video games: dynamic music systems, fmod, wwise. his portfolio had to speak two languages at once — that of game studios looking for a technical profile, and that of anyone who just wants to hear his work. we solved it through the simple and the tender: a small desktop where everything you touch makes a sound, with little sounds made by noan himself. the portfolio of a sound designer that sounds, instead of telling you that it sounds.",
+        "cat": "el noan compon música i dissenya so per a videojocs: sistemes de música dinàmica, fmod, wwise. el seu portfolio havia de parlar dos idiomes alhora — el dels estudis de videojocs que busquen un perfil tècnic i el de qui només vol escoltar la seva feina. ho vam resoldre per la banda senzilla i tendra: un escriptori petit on cada cosa que toques sona, amb sonets fets pel mateix noan. el portfolio d'un sound designer que sona, en comptes d'explicar-te que sona."
       }
     },
     {

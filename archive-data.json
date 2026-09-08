@@ -364,7 +364,7 @@
     { "nombre": "berta esteve", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/snerta/" }, { "label": "web", "url": "https://bertaesteve.cat" }] },
     { "nombre": "hifas studio", "url": "https://meowrhino.github.io/anakatana/" },
     { "nombre": "villa granota", "url": "https://meowrhino.github.io/villagranota/" },
-    { "nombre": "noan cittadino", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/noan/" }, { "label": "web", "url": "https://noancittadino.com" }] },
+    { "nombre": "noan cittadino", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/noan/" }] },
     { "nombre": "930blurberrie", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/blurberri/" }, { "label": "web", "url": "https://930blurberrie.com" }] },
     { "nombre": "diarioBarbara", "url": "https://meowrhino.github.io/diarioBarbara/" }
   ],
