@@ -32,17 +32,20 @@ export const esc = (s) => String(s ?? "")
  */
 export const UI = {
   es:  { portfolio: "portfolio", statement: "statement", metodologia: "metodología",
-         contacto: "contacto", caso: "ver el caso →" },
+         contacto: "contacto", caso: "ver el caso →",
+         volverRejilla: "← volver al portfolio" },
   en:  { portfolio: "portfolio", statement: "statement", metodologia: "methodology",
-         contacto: "contact", caso: "see the case →" },
+         contacto: "contact", caso: "see the case →",
+         volverRejilla: "← back to the portfolio" },
   cat: { portfolio: "portfolio", statement: "statement", metodologia: "metodologia",
-         contacto: "contacte", caso: "veure el cas →" },
+         contacto: "contacte", caso: "veure el cas →",
+         volverRejilla: "← tornar al portfolio" },
 };
 
 /** Los textos de interfaz del idioma pedido, con fallback a castellano. */
 export const ui = (lang) => UI[lang] || UI.es;
 
-// Titular de venta por idioma (el wordmark ya vive en el header).
+// Titular de venta por idioma (el wordmark vive en el pie).
 export const HERO = {
   es:  { eyebrow: "estudio de diseño web · barcelona", titular: "diseño web en barcelona: tu web en un mes, sin cuotas." },
   en:  { eyebrow: "web design studio · barcelona",     titular: "web design in barcelona: your website in a month, no monthly fees." },
@@ -170,15 +173,18 @@ export function contactoHTML(data, lang) {
     </section>`;
 }
 
-export function footerHTML() {
-  // Solo el wordmark, centrado. Enlaza al grid (única puerta de vuelta).
+export function footerHTML(lang = "es") {
+  // Mismo pie que /proyectos, las fichas y /archive: las cinco páginas
+  // lineales terminan igual. Enlaza a la celda del lienzo por la que se llega
+  // al portfolio y al wordmark.
   // Va a "/" y no a "index.html" porque Cloudflare responde 307 al segundo:
   // enlazar a la forma que redirige gasta un salto en cada visita y en cada
   // rastreo. Misma razón en la nota del pre-render, más abajo.
   return `
-    <footer class="easy-footer">
-      <a href="/">meowrhino.studio</a>
-    </footer>`;
+    <nav class="proy-pie easy-footer" aria-label="seguir navegando">
+      <a href="/#portfolio">${esc(ui(lang).volverRejilla)}</a>
+      <a href="/">meowrhino studio</a>
+    </nav>`;
 }
 
 // Cuerpo completo del modo fácil, en el mismo orden que pinta el navegador.
@@ -188,7 +194,7 @@ export function renderBodyHTML(data, lang) {
     statementHTML(data, lang) +
     metodologiaHTML(data, lang) +
     contactoHTML(data, lang) +
-    footerHTML();
+    footerHTML(lang);
 }
 
 /**

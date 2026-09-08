@@ -111,13 +111,16 @@ function construirHeader(data) {
   // montar la versión viva para no duplicar contenido.
   root.innerHTML = "";
 
-  const header = document.createElement("header");
-  header.className = "easy-header";
-  header.innerHTML = `
-    <div class="easy-header-id">
-      <a class="easy-logo" href="#top">meowrhino studio</a>
-      ${buildLangButtons()}
-    </div>`;
+  // Sin barra de cabecera. Era el único elemento de este tipo en todo el sitio:
+  // /proyectos, las 63 fichas y /archive no la tienen, así que /easy se leía
+  // como una web aparte. Los controles quedan sueltos arriba a la derecha, en
+  // el mismo sitio y con el mismo peso que el selector de idioma de las fichas
+  // (.proy-lang-switch), y el wordmark baja al pie, que es donde ya está en
+  // todas las demás. El ancla #top del wordmark tampoco hacía falta: la página
+  // se lee del tirón y el pie es el final del recorrido, no un atajo.
+  const header = document.createElement("div");
+  header.className = "easy-controles";
+  header.innerHTML = buildLangButtons();
   root.appendChild(header);
 
   // Toggle de tema a la derecha del bloque logo + idiomas.

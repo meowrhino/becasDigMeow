@@ -1544,30 +1544,27 @@ html.easy, html.easy body {
 
 #easy { display: block; }
 
-.easy-section, .easy-hero, .easy-footer { scroll-margin-top: 56px; }
+.easy-section, .easy-hero, .easy-footer { scroll-margin-top: 3rem; }
 
-/* --- Header (compacto: wordmark + idiomas en una fila a la izquierda) --- */
-.easy-header {
-  position: sticky;
-  top: 0;
-  z-index: var(--z-header);
+/* --- Controles de /easy (idiomas + tema, sueltos arriba a la derecha) ---
+   Antes había una barra de cabecera pegajosa con wordmark, idiomas y tema.
+   Era el único elemento así del sitio —ni /proyectos, ni las 63 fichas, ni
+   /archive la tienen—, y bastaba para que /easy se leyera como otra web.
+   Ahora los controles van sueltos en la esquina, en la misma posición y con
+   el mismo peso que .proy-lang-switch en las fichas, y el wordmark baja al
+   pie con el resto. */
+.easy-controles {
+  position: fixed;
+  top: 3dvh;
+  right: 3dvw;
+  z-index: var(--z-nav);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.55rem clamp(1rem, 4dvw, 2.5rem);
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
+  gap: 0.5rem;
 }
-/* Fila izquierda: wordmark con los idiomas al lado */
-.easy-header-id { display: flex; flex-direction: row; align-items: baseline; gap: 0.9rem; }
-.easy-logo { font-size: 1.02rem; letter-spacing: -0.02em; color: var(--text); }
-/* Reubicar controles reutilizados (vienen posicionados absolutos para el grid).
-   El toggle usa relative (no static) para seguir siendo el contexto de sus
-   iconos SVG absolutos; inset:auto anula el bottom:10dvh del overlay. */
-.easy-header .lang-group { position: static; inset: auto; gap: 0.35rem; }
-.easy-header .lang-btn { font-size: 0.72rem; }
-.easy-header .theme-toggle { position: relative; inset: auto; flex: none; width: 26px; height: 26px; }
+.easy-controles .lang-group { position: static; inset: auto; gap: 0.35rem; }
+.easy-controles .lang-btn { font-size: 0.8rem; padding: 0.2rem 0.3rem; }
+.easy-controles .theme-toggle { position: relative; inset: auto; flex: none; width: 26px; height: 26px; }
 
 /* --- Hero --- */
 .easy-hero {

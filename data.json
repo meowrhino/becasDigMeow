@@ -119,36 +119,32 @@
     ]
   },
   "links": {
+    "labels": {
+      "formateadores": {
+        "es": "formateadores",
+        "en": "formatters",
+        "cat": "formatadors"
+      },
+      "webs": {
+        "es": "webs terminadas",
+        "en": "finished websites",
+        "cat": "webs acabades"
+      },
+      "varios": {
+        "es": "varios",
+        "en": "misc",
+        "cat": "diversos"
+      },
+      "experimentos": {
+        "es": "experimentos",
+        "en": "experiments",
+        "cat": "experiments"
+      }
+    },
     "herramientas": [
       {
         "nombre": "trackr",
         "url": "https://trackr.meowrhino.studio/"
-      },
-      {
-        "nombre": "piuler",
-        "url": "https://piuler.meowrhino.studio/"
-      },
-      {
-        "nombre": "arxiu",
-        "url": "https://arxiu.meowrhino.studio"
-      },
-      {
-        "nombre": "twoitter",
-        "url": "https://twoitter.meowrhino.studio/"
-      },
-      {
-        "nombre": "profilePics",
-        "url": "https://profile.meowrhino.studio/"
-      },
-      {
-        "nombre": "chords",
-        "url": "https://chords.meowrhino.studio/"
-      }
-    ],
-    "tools": [
-      {
-        "nombre": "colorfun",
-        "url": "https://meowrhino.github.io/colorFun/"
       },
       {
         "nombre": "calculadora impuestos",
@@ -173,6 +169,32 @@
       {
         "nombre": "limpiatexto",
         "url": "https://meowrhino.github.io/fcyp/"
+      }
+    ],
+    "experimentos": [
+      {
+        "nombre": "piuler",
+        "url": "https://piuler.meowrhino.studio/"
+      },
+      {
+        "nombre": "twoitter",
+        "url": "https://twoitter.meowrhino.studio/"
+      },
+      {
+        "nombre": "profilePics",
+        "url": "https://profile.meowrhino.studio/"
+      },
+      {
+        "nombre": "chords",
+        "url": "https://chords.meowrhino.studio/"
+      },
+      {
+        "nombre": "colorfun",
+        "url": "https://meowrhino.github.io/colorFun/"
+      },
+      {
+        "nombre": "poporingGenerator",
+        "url": "https://meowrhino.github.io/poporingGenerator/"
       },
       {
         "nombre": "animeTest",
@@ -185,13 +207,17 @@
       {
         "nombre": "carta astral (i-ching)",
         "url": "https://meowrhino.github.io/hexagramaNacimiento/"
-      }
-    ],
-    "wip": [
+      },
       {
         "nombre": "moixi",
         "url": "https://meowrhino.github.io/moixi/"
       },
+      {
+        "nombre": "arxiu",
+        "url": "https://arxiu.meowrhino.studio"
+      }
+    ],
+    "wip": [
       {
         "nombre": "retals",
         "url": "https://meowrhino.github.io/retals/"
@@ -203,29 +229,8 @@
       {
         "nombre": "ajutsCat",
         "url": "https://meowrhino.github.io/ajutscat/"
-      },
-      {
-        "nombre": "poporingGenerator",
-        "url": "https://meowrhino.github.io/poporingGenerator/"
       }
     ],
-    "labels": {
-      "formateadores": {
-        "es": "formateadores",
-        "en": "formatters",
-        "cat": "formatadors"
-      },
-      "webs": {
-        "es": "webs terminadas",
-        "en": "finished websites",
-        "cat": "webs acabades"
-      },
-      "varios": {
-        "es": "varios",
-        "en": "misc",
-        "cat": "diversos"
-      }
-    },
     "varios": [
       {
         "nombre": "bici",
@@ -309,32 +314,32 @@
   "metodologia": {
     "es": {
       "lineas": [
-        "empezamos con una primera reunión gratuita. trae 3–5 referentes de cosas que te gusten o no te gusten: pueden ser webs, otras interfaces o incluso bocetos. revisamos juntos el material y hablamos de estructura, estética y presupuesto. antes de despedirnos dejamos agendada la segunda reunión y una lista de lo que necesitamos de ti: textos, imágenes y tu identidad visual.",
-        "tu web está lista en un mes, que empieza a contar desde la primera reunión. la segunda reunión está incluida si la hacemos en las dos semanas siguientes y con tu material enviado. si pasan más de dos semanas sin contenido, el proyecto entra en pausa y reactivarlo tiene una tarifa del 10% del coste acordado.",
-        "a partir de ahí elaboramos una propuesta de diseño. te damos tiempo para pensarlo con calma. cuando estés conforme y se haga el primer pago (50%), empezamos a programar.",
-        "a lo largo del proyecto tienes hasta 3 rondas de revisiones. cada ronda puede incluir varios ajustes. el diseño también se adapta cuando pasa del boceto a una web funcional que se vea bien en distintos dispositivos. solemos tardar 1–2 semanas en diseño y 1–2 semanas en programación: con el material a tiempo, un mes de principio a fin.",
-        "con el código aprobado y el segundo pago (50%), nos vemos en una última reunión para preparar tu dispositivo: aprenderás a actualizar la web tú mismo. si lo necesitas, también configuramos tu dominio (recomendamos cloudflare).",
-        "tras la entrega tienes 2 semanas para reportar errores o usar las rondas de revisión que te queden. pasado ese periodo, los cambios se facturan a 60€/hora."
+        "empezamos con una reunión gratis. trae 3–5 referentes de cosas que te gusten o que no: webs, otras interfaces, bocetos en una servilleta. los miramos juntos y hablamos de estructura, estética y dinero. antes de irnos dejamos fecha para la segunda y una lista de lo que necesitamos de ti: textos, imágenes y tu identidad visual si la tienes.",
+        "tu web está lista en un mes, contando desde esa primera reunión. la segunda la hacemos dentro de las dos semanas siguientes, con tu material ya enviado. si pasan más de dos semanas y no hay material, paramos — te hemos reservado un mes de agenda y no lo podemos tener en el aire. retomarlo cuesta un 10%, que es lo que cuesta volver a hacerte hueco. no es una multa: es que ese mes que te guardábamos ya se lo dimos a otra persona.",
+        "con el material encima de la mesa te hacemos una propuesta de diseño. tómate el tiempo que necesites en decidirte: preferimos que lo pienses ahora y no a mitad de la programación. cuando estés conforme y llegue el primer pago (la mitad), empezamos a escribir código.",
+        "tienes 3 rondas de revisión, y cada ronda puede llevar varios ajustes dentro. el diseño se mueve otra vez cuando pasa de boceto a web de verdad y hay que hacerla funcionar en un móvil: eso no cuenta como ronda, es parte del trabajo. solemos tardar 1–2 semanas en diseño y otras 1–2 en programación. con el material a tiempo, un mes de punta a punta.",
+        "con el código aprobado y la otra mitad pagada nos vemos una última vez, delante de tu ordenador. sales de esa reunión sabiendo actualizar tu web sin nosotros: ese es el objetivo, no un extra. si hace falta te configuramos el dominio (te recomendamos cloudflare) y queda a tu nombre, no al nuestro.",
+        "después de la entrega tienes dos semanas para decirnos qué falla o gastar las rondas que te queden. a partir de ahí, los cambios van a 60 €/hora. lo decimos claro porque la alternativa es la de siempre: una cuota mensual que pagas todos los meses para nada. aquí solo pagas cuando de verdad quieres cambiar algo — y si aprendiste a tocarlo tú, no pagas."
       ]
     },
     "en": {
       "lineas": [
-        "we start with a free first meeting. bring 3–5 references of things you like or don't like: they can be websites, other interfaces, or even sketches. we go through the material together and talk about structure, aesthetics, and budget. before we say goodbye, we schedule the second meeting and a list of what we need from you: texts, images and your visual identity.",
-        "your website is ready in a month, counting from the first meeting. the second meeting is included as long as we hold it within the next two weeks and you've sent your material. if more than two weeks pass without content, the project is paused and restarting it carries a fee of 10% of the agreed price.",
-        "from there, we put together a design proposal. we give you time to think it over. once you're happy with it and the first payment is made (50%), we start coding.",
-        "throughout the project you have up to 3 rounds of revisions. each round can include several adjustments. the design also adapts as it goes from mockup to a working website that looks good on different devices. we usually take 1–2 weeks for design and 1–2 weeks for development: with your material on time, a month from start to finish.",
-        "once the code is approved and the second payment is made (50%), we meet one last time to set up your device: you'll learn to update the website yourself. if you need it, we also configure your domain (we recommend cloudflare).",
-        "after delivery you have 2 weeks to report bugs or use any remaining revision rounds. after that period, changes are billed at 60€/hour."
+        "we start with a free meeting. bring 3–5 references of things you like or don't: websites, other interfaces, sketches on a napkin. we go through them together and talk about structure, look and money. before we leave we set a date for the second one and a list of what we need from you: texts, images and your visual identity if you have one.",
+        "your website is ready in a month, counting from that first meeting. we hold the second one within the following two weeks, with your material already sent. if more than two weeks go by and there is no material, we stop — we have set aside a month of our calendar and we cannot keep it hanging. picking it up again costs 10%, which is what it costs to make room for you again. it is not a fine: the month we were keeping for you already went to someone else.",
+        "with the material on the table we put together a design proposal. take as long as you need to decide: better you think it over now than halfway through the coding. once you are happy and the first payment lands (half), we start writing code.",
+        "you get 3 rounds of revisions, and each round can hold several changes. the design also moves again when it goes from sketch to a real website that has to work on a phone: that does not count as a round, it is part of the job. design usually takes 1–2 weeks and coding another 1–2. with the material on time, a month end to end.",
+        "with the code approved and the other half paid, we meet one last time, in front of your computer. you leave that meeting knowing how to update your website without us: that is the point, not an extra. if you need it we set up your domain (we recommend cloudflare) and it stays in your name, not ours.",
+        "after delivery you have two weeks to tell us what is broken or to spend the rounds you have left. from there, changes are €60/hour. we say it plainly because the alternative is the usual one: a monthly fee you pay every month for nothing. here you only pay when you actually want to change something — and if you learned to do it yourself, you do not pay."
       ]
     },
     "cat": {
       "lineas": [
-        "comencem amb una primera reunió gratuïta. porta 3–5 referents de coses que t'agradin o no t'agradin: poden ser webs, altres interfícies o fins i tot esbossos. revisem junts el material i parlem d'estructura, estètica i pressupost. abans d'acomiadar-nos deixem agendada la segona reunió i una llista del que necessitem de tu: textos, imatges i la teva identitat visual.",
-        "la teva web està llesta en un mes, que comença a comptar des de la primera reunió. la segona reunió està inclosa si la fem dins de les dues setmanes següents i amb el teu material enviat. si passen més de dues setmanes sense contingut, el projecte queda en pausa i reactivar-lo té una tarifa del 10% del cost acordat.",
-        "a partir d'aquí elaborem una proposta de disseny. et donem temps per pensar-ho amb calma. quan estiguis conforme i es faci el primer pagament (50%), comencem a programar.",
-        "al llarg del projecte tens fins a 3 rondes de revisions. cada ronda pot incloure diversos ajustos. el disseny també s'adapta quan passa de l'esbós a una web funcional que es vegi bé en diferents dispositius. solem trigar 1–2 setmanes en disseny i 1–2 setmanes en programació: amb el material a temps, un mes de principi a fi.",
-        "amb el codi aprovat i el segon pagament (50%), ens veiem en una última reunió per preparar el teu dispositiu: aprendràs a actualitzar la web tu mateix. si ho necessites, també configurem el teu domini (recomanem cloudflare).",
-        "després del lliurament tens 2 setmanes per reportar errors o fer servir les rondes de revisió que et quedin. passat aquest període, els canvis es facturen a 60€/hora."
+        "comencem amb una reunió gratis. porta 3–5 referents de coses que t'agradin o que no: webs, altres interfícies, esbossos en un tovalló. els mirem junts i parlem d'estructura, estètica i diners. abans de marxar deixem data per a la segona i una llista del que necessitem de tu: textos, imatges i la teva identitat visual si en tens.",
+        "la teva web està llesta en un mes, comptant des d'aquella primera reunió. la segona la fem dins de les dues setmanes següents, amb el teu material ja enviat. si passen més de dues setmanes i no hi ha material, parem — t'hem reservat un mes d'agenda i no el podem tenir a l'aire. reprendre-ho costa un 10%, que és el que costa tornar a fer-te lloc. no és una multa: és que aquell mes que et guardàvem ja l'hem donat a una altra persona.",
+        "amb el material sobre la taula et fem una proposta de disseny. pren-te el temps que necessitis per decidir: preferim que t'ho pensis ara i no a mitja programació. quan hi estiguis conforme i arribi el primer pagament (la meitat), comencem a escriure codi.",
+        "tens 3 rondes de revisió, i cada ronda pot portar diversos ajustos a dins. el disseny es torna a moure quan passa d'esbós a web de debò i s'ha de fer funcionar en un mòbil: això no compta com a ronda, és part de la feina. solem trigar 1–2 setmanes en disseny i unes altres 1–2 en programació. amb el material a temps, un mes de punta a punta.",
+        "amb el codi aprovat i l'altra meitat pagada ens veiem un últim cop, davant del teu ordinador. surts d'aquella reunió sabent actualitzar la teva web sense nosaltres: aquest és l'objectiu, no un extra. si cal et configurem el domini (et recomanem cloudflare) i et queda al teu nom, no al nostre.",
+        "després del lliurament tens dues setmanes per dir-nos què falla o gastar les rondes que et quedin. a partir d'aquí, els canvis van a 60 €/hora. ho diem clar perquè l'alternativa és la de sempre: una quota mensual que pagues cada mes per res. aquí només pagues quan de debò vols canviar alguna cosa — i si has après a tocar-ho tu, no pagues."
       ]
     }
   },

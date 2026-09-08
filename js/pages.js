@@ -72,7 +72,7 @@ export function renderTools(data) {
   if (!el || !data?.links) return;
 
   const herramientas  = data.links.herramientas || [];
-  const tools         = data.links.tools || [];
+  const experimentos  = data.links.experimentos || [];
   const wip           = data.links.wip || [];
   const varios        = data.links.varios || [];
   const formateadores = data.welcome?.formateadores || [];
@@ -80,14 +80,22 @@ export function renderTools(data) {
     p.urls ? { urls: p.urls } : { nombre: p.nombre, url: p.url }
   );
 
-  // "tools" y "wip" son términos ya usados igual en los tres idiomas (como el
-  // resto de nombres de celda); "formateadores", "webs terminadas" y "varios"
-  // sí varían y viven en data.json (links.labels) con el patrón {es,en,cat}.
+  // "wip" es un término ya usado igual en los tres idiomas (como el resto de
+  // nombres de celda); "experimentos", "formateadores", "webs terminadas" y
+  // "varios" sí varían y viven en data.json (links.labels) con {es,en,cat}.
+  //
+  // El corte de los grupos es por PARA QUÉ SIRVE cada cosa, no por qué es.
+  // Antes había un grupo "herramientas" y otro "tools" —la misma palabra en
+  // dos idiomas— y los dos llevaban utilidades de verdad, así que el
+  // generador de facturas y la calculadora de impuestos, que son argumento de
+  // venta puro, estaban escondidos en un desplegable debajo de un generador
+  // de poporings. Ahora las que le sirven a alguien hoy van sueltas y
+  // siempre visibles, y lo demás va plegado.
   const labels = data.links.labels || {};
 
   const linksHTML = herramientas.map(crearLinkHTML).join("");
   const dropdownsHTML = [
-    crearDropdownHTML("tools", tools, "dd_tools"),
+    crearDropdownHTML(pick(labels.experimentos, currentLang), experimentos, "dd_experimentos"),
     crearDropdownHTML("wip", wip, "dd_wip"),
     crearDropdownHTML(pick(labels.formateadores, currentLang), formateadores, "dd_formateadores"),
     crearDropdownHTML(pick(labels.webs, currentLang), websTerminadas, "dd_webs"),
@@ -136,10 +144,12 @@ export function renderTools(data) {
   // idioma. La celda tools no tiene botones .lang-btn propios (el cambio de
   // idioma se dispara desde otra celda), así que usamos el callback global
   // onLangChange (mismo mecanismo que theme.js para su aria-label).
+  const experimentosLabelEl = el.querySelector('[data-target="dd_experimentos"] .tools-dropdown-label');
   const formateadoresLabelEl = el.querySelector('[data-target="dd_formateadores"] .tools-dropdown-label');
   const websLabelEl = el.querySelector('[data-target="dd_webs"] .tools-dropdown-label');
   const variosLabelEl = el.querySelector('[data-target="dd_varios"] .tools-dropdown-label');
   onLangChange((lang) => {
+    if (experimentosLabelEl) experimentosLabelEl.textContent = pick(labels.experimentos, lang);
     if (formateadoresLabelEl) formateadoresLabelEl.textContent = pick(labels.formateadores, lang);
     if (websLabelEl) websLabelEl.textContent = pick(labels.webs, lang);
     if (variosLabelEl) variosLabelEl.textContent = pick(labels.varios, lang);
@@ -249,6 +259,19 @@ export function renderMetodologia(data) {
       () => { applyScale(); requestAnimationFrame(checkScroll); }
     );
   });
+
+  // Nav-label a /easy, colgando de esta celda porque /easy es donde el método
+  // se lee entero y del tirón. Mismo patrón exacto que el "archive" de la celda
+  // portfolio: un nav-label más del lienzo, con data-permanent para que no lo
+  // barra el repintado de vecinas. No va en el minimapa a propósito — el
+  // minimapa es el mapa de las siete celdas y prometer deslizamiento para
+  // luego cambiar de página rompe lo único que ese componente promete.
+  const easyLabel = document.createElement("a");
+  easyLabel.href = "/easy";   // "easy.html" responde 307 en Cloudflare
+  easyLabel.classList.add("nav-label", "bottom");
+  easyLabel.dataset.permanent = "true";
+  easyLabel.textContent = "easy";
+  el.appendChild(easyLabel);
 }
 
 // --- Footer ---
