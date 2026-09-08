@@ -22,7 +22,7 @@ import { escapeHTML } from "./utils.js";
 export const SECCIONES = [
   "tools", "misc", "sidequests", "meowrhino",
   "games", "experiments", "social", "unfinished",
-  "texts", "WIP", "hidden", "facts",
+  "texts", "WIP", "hidden",
 ];
 
 // --- Sección genérica (shooter) ---
@@ -88,7 +88,7 @@ export function renderArchivePrerenderHTML(data) {
     .filter(key => data[key]?.length)
     .map(key => `
       <section class="archive-prerender-seccion">
-        <h2>${escapeHTML(key.toLowerCase())}</h2>
+        <h2>${escapeHTML(key)}</h2>
         ${seccionHTML(data[key])}
       </section>`)
     .join("");
