@@ -1674,17 +1674,29 @@ html.easy, html.easy body {
 .easy-contacto-links a:hover { color: var(--text); }
 
 /* --- Footer (solo el wordmark, centrado) --- */
-.easy-footer {
-  display: flex; justify-content: center;
+/* El pie de /easy hereda de .proy-pie, que reparte sus enlaces con
+   `space-between`. En las fichas eso funciona porque el pie vive dentro de una
+   columna de 46rem; aquí colgaba del cuerpo entero y los dos enlaces se iban a
+   los bordes de la pantalla. Se le da el ancho de .easy-section para que sea
+   la misma caja que el resto de la página, y los enlaces se agrupan en el
+   centro en vez de repartirse: /easy se lee del tirón y su pie es el final del
+   recorrido, no una barra de navegación con extremos.
+
+   El selector lleva las dos clases (.proy-pie.easy-footer) y no una sola por
+   un tema de cascada: .proy-pie está declarado MÁS ABAJO en este archivo y con
+   la misma especificidad, así que su `justify-content: space-between` ganaba a
+   cualquier regla que pusiéramos aquí arriba con un solo nombre de clase. */
+.proy-pie.easy-footer {
+  max-width: 64rem;
+  margin: 0 auto;
   padding: 2.6rem clamp(1.5rem, 5dvw, 4rem);
-  font-size: 0.95rem; color: var(--text-muted);
+  justify-content: center;
+  gap: 2.2rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
 }
 .easy-footer a { color: inherit; letter-spacing: -0.01em; }
 .easy-footer a:hover { color: var(--text); }
-
-@media (max-width: 600px) {
-  .easy-logo { font-size: 0.95rem; }
-}
 
 /* ============================================
    PORTFOLIO — Skeleton + blur-up (preloader)
