@@ -1054,6 +1054,16 @@ a.nav-label:visited {
 }
 .about-seccion p:last-child { margin-bottom: 0; }
 
+/* Las tres entregas. Numeradas en el propio texto ("01 —"), así que la lista
+   va sin marcador: poner dos números seguidos sería contarlo dos veces. */
+.about-lista {
+  list-style: none;
+  margin: 0 0 1.2em;
+  padding: 0;
+  color: var(--text-content);
+}
+.about-lista li { margin-bottom: 0.25em; }
+
 /* En móvil, 70dvw son 260px: demasiado estrecho para cinco apartados de texto
    seguidos. El about es la celda más larga del lienzo y se lee de arriba abajo,
    así que se le da casi todo el ancho. */

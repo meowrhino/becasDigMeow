@@ -476,10 +476,17 @@ export function renderAbout(data) {
     const d = data.about[lang] || data.about.es;
     if (!d) return "";
 
+    // Un párrafo que en data.json sea un array se pinta como lista: lo pide el
+    // texto una sola vez (las tres entregas de "cómo trabajo") y no compensa
+    // inventarse un campo aparte que habría que mantener en tres idiomas.
+    const parrafo = (t) => Array.isArray(t)
+      ? `<ol class="about-lista">${t.map(i => `<li>${escapeHTML(i)}</li>`).join("")}</ol>`
+      : `<p>${escapeHTML(t.replace("{precio}", precio))}</p>`;
+
     const secciones = d.secciones.map(sec => `
       <section class="about-seccion">
         <h2 class="about-h">${escapeHTML(sec.titulo)}</h2>
-        ${sec.parrafos.map(t => `<p>${escapeHTML(t.replace("{precio}", precio))}</p>`).join("")}
+        ${sec.parrafos.map(parrafo).join("")}
       </section>`).join("");
 
     // Las cinco frases del statement abren la página: dicen qué es el estudio
@@ -496,7 +503,7 @@ export function renderAbout(data) {
         <a class="contacto-email" href="${escapeHTML(buildMailto(lang))}">${escapeHTML(email)}</a>
         <div class="contacto-row">
           <a class="contacto-instagram" href="${escapeHTML(instagram.url)}"${esMovil ? "" : ' target="_blank"'} rel="noopener">${escapeHTML(instagram.usuario)}</a>
-          ${cvHref ? `<a class="contacto-cv" href="/${escapeHTML(cvHref)}" target="_blank" rel="noopener">CV</a>` : ""}
+          ${cvHref ? `<a class="contacto-cv" href="/${escapeHTML(cvHref)}" target="_blank" rel="noopener">cv</a>` : ""}
         </div>
       </div>`;
   };

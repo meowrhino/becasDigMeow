@@ -352,29 +352,29 @@
   "statement": {
     "es": {
       "lineas": [
-        "somos un estudio de diseño web en barcelona",
-        "hacemos webs para un internet más común, cercano y vivo",
-        "webs desde cero, contigo: únicas por dentro y por fuera",
-        "te enseñamos a mantenerla y personalizarla a tu gusto",
-        "y si no quieres, la mantenemos nosotros"
+        "somos un estudio de diseño web en barcelona.",
+        "hacemos webs para un internet más común, cercano y vivo.",
+        "webs desde cero, contigo: únicas por dentro y por fuera.",
+        "te enseñamos a mantenerlas y personalizarlas a tu gusto.",
+        "y si no quieres hacerlo tú, las mantenemos nosotros."
       ]
     },
     "en": {
       "lineas": [
-        "we are a web design studio in barcelona",
-        "we make websites for a more communal, close and living internet",
-        "websites from scratch, with you: unique inside and out",
-        "we teach you to maintain and customize it your way",
-        "and if you'd rather not, we'll maintain it for you"
+        "we are a web design studio in barcelona.",
+        "we make websites for a more communal, close and living internet.",
+        "websites from scratch, with you: unique inside and out.",
+        "we teach you to maintain and customise them your way.",
+        "and if you'd rather not do it yourself, we maintain them for you."
       ]
     },
     "cat": {
       "lineas": [
-        "som un estudi de disseny web a barcelona",
-        "fem webs per a un internet més comú, proper i viu",
-        "webs des de zero, amb tu: úniques per dins i per fora",
-        "t'ensenyem a mantenir-la i personalitzar-la al teu gust",
-        "i si no vols, te la mantenim nosaltres"
+        "som un estudi de disseny web a barcelona.",
+        "fem webs per a un internet més comú, proper i viu.",
+        "webs des de zero, amb tu: úniques per dins i per fora.",
+        "t'ensenyem a mantenir-les i personalitzar-les al teu gust.",
+        "i si no vols fer-ho tu, te les mantenim nosaltres."
       ]
     }
   },
@@ -418,39 +418,52 @@
           "titulo": "quién soy",
           "parrafos": [
             "un autónomo que hace webs a sus amigas.",
-            "soy manu latour, diseño y programo desde barcelona. vengo del arte y el diseño (escola massana) y desde 2020 hago webs a medida para artistas, fotógrafos, músicos, colectivos y gente que trabaja por su cuenta.",
-            "también hago herramientas libres para lo que me hace falta: comprimir imágenes sin subirlas a ningún servidor, generar facturas sin registro, calcular lo que de verdad cobras siendo autónom·a."
+            "soy manu latour, diseño y programo desde barcelona. vengo del arte y el diseño —estudié en escola massana— y desde 2020 hago webs a medida para artistas, fotógrafos, músicos, colectivos y gente que trabaja por su cuenta.",
+            "también hago pequeñas herramientas libres para lo que me hace falta: comprimir imágenes sin subirlas a ningún servidor, generar facturas sin registro, calcular lo que de verdad cobras siendo autónom·a."
           ]
         },
         {
           "titulo": "por qué",
           "parrafos": [
-            "es importante que nos empecemos a imaginar un futuro fuera de las redes sociales. hay mil motivos: la censura, la protesta contra los tecnócratas, poder desinstalarte instagram el día que estés abrumada por las noticias sin desaparecer del mapa, que el trabajo deje de ser una excusa para scrollear.",
-            "las redes se están convirtiendo en plataformas de contenido, y lo que se cae por el camino es lo social y lo divertido: publicas en el formato que te dan, para el algoritmo que toque, y lo que haces nunca acaba de ser del todo tuyo.",
-            "una web propia es el sitio donde decides qué se cuenta de ti. hay quien llama a esto jardines digitales: espacios que no se parecen a los sitios donde pasamos el día. creo que todavía estamos a tiempo de usar internet de otra manera.",
-            "y es tuya de verdad: el día que te pelees con el servidor, con el proveedor o conmigo, coges tus archivos y te vas. no hay nada que rescatar, porque nunca dejó de ser tuyo."
+            "internet puede ser otra cosa.",
+            "es importante que nos empecemos a imaginar un futuro fuera de las redes sociales. poder desinstalar instagram cuando estés harta de las noticias sin desaparecer del mapa. que tu trabajo no sea una excusa para seguir haciendo scroll. tener un sitio donde las cosas puedan funcionar de otra manera.",
+            "las redes se están convirtiendo cada vez más en plataformas de contenido. publicas en el formato que te dan, para el algoritmo que toque, y lo que haces nunca acaba de ser del todo tuyo.",
+            "una web propia es distinta.",
+            "es un espacio donde decides qué se cuenta de ti, cómo se cuenta y cómo se ve. hay quien llama a esto jardines digitales: pequeños espacios que no tienen por qué parecerse a los sitios donde pasamos el día.",
+            "creo que todavía estamos a tiempo de usar internet de otra manera.",
+            "y además, es tuyo. el día que te pelees con el servidor, con el proveedor o conmigo, coges tus archivos y te vas. no hay nada que rescatar, porque nunca dejó de ser tuyo."
           ]
         },
         {
           "titulo": "internet propio",
           "parrafos": [
             "una red social es un espacio que alguien ha construido para ti. una web es un espacio que construyes tú.",
-            "tú decides dónde va cada cosa, cómo se distribuye, de qué maneras se ordenan los elementos, qué subes y qué no subes. no tienes que adaptarte al formato de ninguna plataforma: si tu portfolio tiene sentido siendo una disquetera, es una disquetera.",
+            "tú decides dónde va cada cosa, cómo se distribuyen los elementos, qué subes y qué no subes. no tienes que adaptarte al formato de ninguna plataforma.",
+            "si tu portfolio tiene sentido siendo una disquetera, es una disquetera.",
             "internet es demasiado grande para que todos tengamos la misma página."
           ]
         },
         {
           "titulo": "cómo trabajo",
           "parrafos": [
-            "mi objetivo principal es entender tu trabajo, tu proyecto o tu negocio e intentar traducirlo a una página web. la web la diseñamos juntos: formas parte del proceso creativo. igual hasta nos «peleamos» por los detalles pequeños :P",
-            "un mes de principio a fin, que empieza cuando me mandas el material. tres entregas —el diseño, la programación cuando ya tiene forma, y la programación final— y una ronda de revisión por entrega.",
-            "y sales entendiendo qué es lo que tienes: ¿quieres actualizarla tú? puedes. ¿quieres que lo haga yo? también puedes. pero sales sabiendo hacerlo."
+            "mi objetivo es entender tu trabajo, tu proyecto o tu negocio e intentar traducirlo a una página web.",
+            "la web la diseñamos juntos. formas parte del proceso creativo y vamos tomando las decisiones contigo. igual hasta nos «peleamos» por los detalles pequeños :P",
+            "un proyecto dura aproximadamente un mes de principio a fin y empieza cuando me mandas el material. trabajamos en tres entregas:",
+            [
+              "01 — diseño",
+              "02 — programación, cuando empieza a coger forma",
+              "03 — programación final"
+            ],
+            "hay una ronda de revisión después de cada entrega.",
+            "y una cosa importante: sales entendiendo qué es lo que tienes. ¿quieres actualizarla tú? puedes. ¿quieres que lo haga yo? también puedes. pero no dependes de mí para entender tu propia web."
           ]
         },
         {
           "titulo": "el precio",
           "parrafos": [
-            "webs desde {precio} + iva: diseño, programación y acompañamiento, hecha desde cero para ti. lo pagas una vez, no cada mes, y el código es tuyo."
+            "webs desde {precio} + iva.",
+            "diseño, programación y acompañamiento. hechas desde cero para ti.",
+            "lo pagas una vez, no cada mes. y el código es tuyo."
           ]
         }
       ]
@@ -462,39 +475,52 @@
           "titulo": "who i am",
           "parrafos": [
             "a freelancer who makes websites for his friends.",
-            "i'm manu latour, i design and code from barcelona. i come from art and design (escola massana) and since 2020 i've been making custom websites for artists, photographers, musicians, collectives and people working for themselves.",
-            "i also make free tools for whatever i need: compressing images without uploading them to any server, generating invoices without signing up, working out what you actually earn as a freelancer."
+            "i'm manu latour, i design and code from barcelona. i come from art and design —i studied at escola massana— and since 2020 i've made custom websites for artists, photographers, musicians, collectives and people working for themselves.",
+            "i also make small free tools for whatever i need: compressing images without uploading them to any server, generating invoices without signing up, working out what you actually earn as a freelancer."
           ]
         },
         {
           "titulo": "why",
           "parrafos": [
-            "it matters that we start imagining a future outside social media. there are a thousand reasons: censorship, protest against technocrats, being able to delete instagram the day the news overwhelms you without disappearing off the map, work no longer being an excuse to scroll.",
-            "social media is turning into content platforms, and what falls away is the social and the fun: you publish in the format you're given, for whichever algorithm is in charge, and what you make never quite ends up being yours.",
-            "a website of your own is the place where you decide what gets told about you. some people call these digital gardens: spaces that look nothing like the places where we spend the day. i think we're still in time to use the internet differently.",
-            "and it is really yours: the day you fall out with the server, with the provider or with me, you take your files and go. there is nothing to rescue, because it never stopped being yours."
+            "the internet can be something else.",
+            "it matters that we start imagining a future outside social media. being able to delete instagram when you've had enough of the news, without disappearing off the map. your work not being an excuse to keep scrolling. having a place where things can work differently.",
+            "social media is turning more and more into content platforms. you publish in the format you're given, for whichever algorithm is in charge, and what you make never quite ends up being yours.",
+            "a website of your own is a different thing.",
+            "it's a space where you decide what gets told about you, how it's told and how it looks. some people call these digital gardens: small spaces that don't have to look like the places where we spend the day.",
+            "i think we're still in time to use the internet differently.",
+            "and besides, it's yours. the day you fall out with the server, with the provider or with me, you take your files and go. there is nothing to rescue, because it never stopped being yours."
           ]
         },
         {
           "titulo": "an internet of your own",
           "parrafos": [
             "a social network is a space someone else built for you. a website is a space you build yourself.",
-            "you decide where everything goes, how it is laid out, what ways the elements can be arranged, what you upload and what you don't. you don't have to fit any platform's format: if your portfolio makes sense as a floppy drive, it is a floppy drive.",
+            "you decide where everything goes, how the elements are laid out, what you upload and what you don't. you don't have to fit any platform's format.",
+            "if your portfolio makes sense as a floppy drive, it is a floppy drive.",
             "the internet is far too big for all of us to have the same page."
           ]
         },
         {
           "titulo": "how i work",
           "parrafos": [
-            "my main goal is to understand your work, your project or your business and try to translate it into a website. we design it together: you are part of the creative process. we might even \"argue\" over the small details :P",
-            "one month end to end, starting when you send me your material. three deliveries —the design, the code once it takes shape, and the final code— and one round of revisions per delivery.",
-            "and you leave understanding what you have: want to update it yourself? you can. want me to do it? you can too. but you leave knowing how."
+            "my aim is to understand your work, your project or your business and try to translate it into a website.",
+            "we design the website together. you're part of the creative process and we make the decisions with you. we might even «argue» over the small details :P",
+            "a project takes roughly a month end to end and starts when you send me your material. we work in three deliveries:",
+            [
+              "01 — design",
+              "02 — development, once it starts taking shape",
+              "03 — final development"
+            ],
+            "there is one round of revisions after each delivery.",
+            "and something important: you leave understanding what you have. want to update it yourself? you can. want me to do it? you can too. but you don't depend on me to understand your own website."
           ]
         },
         {
           "titulo": "the price",
           "parrafos": [
-            "websites from {precio} + vat: design, development and support, built from scratch for you. you pay once, not every month, and the code is yours."
+            "websites from {precio} + vat.",
+            "design, development and support. built from scratch for you.",
+            "you pay once, not every month. and the code is yours."
           ]
         }
       ]
@@ -506,39 +532,52 @@
           "titulo": "qui sóc",
           "parrafos": [
             "un autònom que fa webs a les seves amigues.",
-            "sóc en manu latour, dissenyo i programo des de barcelona. vinc de l'art i el disseny (escola massana) i des del 2020 faig webs a mida per a artistes, fotògrafs, músics, col·lectius i gent que treballa pel seu compte.",
-            "també faig eines lliures per al que em fa falta: comprimir imatges sense pujar-les a cap servidor, generar factures sense registre, calcular el que de debò cobres sent autònom·a."
+            "sóc en manu latour, dissenyo i programo des de barcelona. vinc de l'art i el disseny —vaig estudiar a l'escola massana— i des del 2020 faig webs a mida per a artistes, fotògrafs, músics, col·lectius i gent que treballa pel seu compte.",
+            "també faig petites eines lliures per al que em fa falta: comprimir imatges sense pujar-les a cap servidor, generar factures sense registre, calcular el que de debò cobres sent autònom·a."
           ]
         },
         {
           "titulo": "per què",
           "parrafos": [
-            "és important que comencem a imaginar un futur fora de les xarxes socials. hi ha mil motius: la censura, la protesta contra els tecnòcrates, poder desinstal·lar-te instagram el dia que estiguis aclaparada per les notícies sense desaparèixer del mapa, que la feina deixi de ser una excusa per scrollejar.",
-            "les xarxes s'estan convertint en plataformes de contingut, i el que es perd pel camí és el social i el divertit: publiques en el format que et donen, per a l'algoritme que toqui, i el que fas mai acaba de ser del tot teu.",
-            "una web pròpia és el lloc on decideixes què s'explica de tu. hi ha qui en diu jardins digitals: espais que no s'assemblen als llocs on passem el dia. crec que encara hi som a temps d'usar internet d'una altra manera.",
-            "i és teva de debò: el dia que et barallis amb el servidor, amb el proveïdor o amb mi, agafes els teus arxius i te'n vas. no hi ha res a rescatar, perquè mai va deixar de ser teu."
+            "internet pot ser una altra cosa.",
+            "és important que comencem a imaginar un futur fora de les xarxes socials. poder desinstal·lar instagram quan estiguis farta de les notícies sense desaparèixer del mapa. que la teva feina no sigui una excusa per seguir fent scroll. tenir un lloc on les coses puguin funcionar d'una altra manera.",
+            "les xarxes s'estan convertint cada cop més en plataformes de contingut. publiques en el format que et donen, per a l'algoritme que toqui, i el que fas mai acaba de ser del tot teu.",
+            "una web pròpia és diferent.",
+            "és un espai on decideixes què s'explica de tu, com s'explica i com es veu. hi ha qui en diu jardins digitals: petits espais que no s'han d'assemblar als llocs on passem el dia.",
+            "crec que encara hi som a temps d'usar internet d'una altra manera.",
+            "i a més, és teu. el dia que et barallis amb el servidor, amb el proveïdor o amb mi, agafes els teus arxius i te'n vas. no hi ha res a rescatar, perquè mai va deixar de ser teu."
           ]
         },
         {
           "titulo": "internet propi",
           "parrafos": [
             "una xarxa social és un espai que algú ha construït per a tu. una web és un espai que construeixes tu.",
-            "tu decideixes on va cada cosa, com es distribueix, de quines maneres s'ordenen els elements, què puges i què no puges. no t'has d'adaptar al format de cap plataforma: si el teu portfolio té sentit sent una disquetera, és una disquetera.",
+            "tu decideixes on va cada cosa, com es distribueixen els elements, què puges i què no puges. no t'has d'adaptar al format de cap plataforma.",
+            "si el teu portfolio té sentit sent una disquetera, és una disquetera.",
             "internet és massa gran perquè tots tinguem la mateixa pàgina."
           ]
         },
         {
           "titulo": "com treballo",
           "parrafos": [
-            "el meu objectiu principal és entendre la teva feina, el teu projecte o el teu negoci i intentar traduir-ho a una pàgina web. la web la dissenyem junts: formes part del procés creatiu. igual fins i tot ens «barallem» pels detalls petits :P",
-            "un mes de punta a punta, que comença quan m'envies el material. tres lliuraments —el disseny, la programació quan ja té forma, i la programació final— i una ronda de revisió per lliurament.",
-            "i en surts entenent què és el que tens: vols actualitzar-la tu? pots. vols que ho faci jo? també pots. però en surts sabent fer-ho."
+            "el meu objectiu és entendre la teva feina, el teu projecte o el teu negoci i intentar traduir-ho a una pàgina web.",
+            "la web la dissenyem junts. formes part del procés creatiu i anem prenent les decisions amb tu. igual fins i tot ens «barallem» pels detalls petits :P",
+            "un projecte dura aproximadament un mes de punta a punta i comença quan m'envies el material. treballem en tres lliuraments:",
+            [
+              "01 — disseny",
+              "02 — programació, quan comença a agafar forma",
+              "03 — programació final"
+            ],
+            "hi ha una ronda de revisió després de cada lliurament.",
+            "i una cosa important: en surts entenent què és el que tens. vols actualitzar-la tu? pots. vols que ho faci jo? també pots. però no depens de mi per entendre la teva pròpia web."
           ]
         },
         {
           "titulo": "el preu",
           "parrafos": [
-            "webs des de {precio} + iva: disseny, programació i acompanyament, feta des de zero per a tu. ho pagues un cop, no cada mes, i el codi és teu."
+            "webs des de {precio} + iva.",
+            "disseny, programació i acompanyament. fetes des de zero per a tu.",
+            "ho pagues un cop, no cada mes. i el codi és teu."
           ]
         }
       ]

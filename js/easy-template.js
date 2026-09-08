@@ -158,10 +158,15 @@ export function aboutHTML(data, lang) {
   const asunto = encodeURIComponent(co.asunto?.[lang] || co.asunto?.es || "");
   const cv = co.cv?.[lang] || co.cv?.es;
 
+  // Ver la nota en pages.js: un párrafo que sea un array es una lista.
+  const parrafo = (t) => Array.isArray(t)
+    ? `<ol class="easy-about-lista">${t.map(i => `<li>${esc(i)}</li>`).join("")}</ol>`
+    : `<p>${esc(t.replace("{precio}", precio))}</p>`;
+
   const secciones = (d.secciones || []).map(sec => `
       <div class="easy-about-bloque">
         <h2 class="easy-h">${esc(sec.titulo)}</h2>
-        ${(sec.parrafos || []).map(t => `<p>${esc(t.replace("{precio}", precio))}</p>`).join("")}
+        ${(sec.parrafos || []).map(parrafo).join("")}
       </div>`).join("");
 
   const lineas = (data.statement?.[lang] || data.statement?.es || {}).lineas || [];
