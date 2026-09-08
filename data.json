@@ -193,6 +193,11 @@
   },
   "links": {
     "labels": {
+      "herramientas": {
+        "es": "herramientas",
+        "en": "tools",
+        "cat": "eines"
+      },
       "formateadores": {
         "es": "formateadores",
         "en": "formatters",

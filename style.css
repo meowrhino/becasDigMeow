@@ -1180,13 +1180,15 @@ a.nav-label:visited {
    - lang-btn: fila horizontal con gap 0.3rem → se tesela el hueco sin solapar.
    - font-btn: la fila +/- va pegada (gap 0) → solo se amplía en vertical para
      no robar clicks al botón vecino.
-   - theme-toggle: aislado en el overlay → 44×44 completo. */
+   - theme-toggle: aislado en el overlay → 44×44 completo.
+   - mapa-reset: solo en su esquina, sin vecinos → 44×44 completo. */
 .lang-btn,
 .footer-font-btn {
   position: relative;
 }
 .lang-btn::before,
 .footer-font-btn::before,
+.mapa-reset::before,
 .theme-toggle::before {
   content: "";
   position: absolute;
@@ -1198,6 +1200,7 @@ a.nav-label:visited {
 .lang-btn::before    { width: calc(100% + 0.3rem); }
 .footer-font-btn::before { width: 100%; }
 .theme-toggle::before    { width: 44px; }
+.mapa-reset::before      { width: 44px; }
 
 /* ============================================
    12b. PAGE: MAPA
@@ -1277,20 +1280,29 @@ a.nav-label:visited {
 /* Casilla vacía en reposo: ocupa sitio en la rejilla y no se ve ni se pulsa. */
 .mapa-terreno > .mapa-vacio { cursor: default; pointer-events: none; }
 
-/* Volver al orden original. Solo aparece si has movido algo: sin nada que
-   deshacer es un botón que solo puede confundir. */
+/* Volver al orden original. Va en la esquina de abajo a la izquierda, en el
+   mismo sitio y del mismo tamaño que los botones +/- de metodología, about y
+   condiciones (.footer-bottom-bar / .footer-font-btn): es el control de esta
+   celda, y los controles de celda de este sitio viven todos ahí.
+
+   Solo aparece si has movido algo: sin nada que deshacer, un botón de deshacer
+   solo puede confundir. */
 .mapa-reset {
   position: absolute;
-  bottom: var(--edge-pad-y);
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: 3dvh;
+  left: 3dvw;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-serif);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   line-height: 1;
   background: none;
   border: none;
-  padding: 0.4rem 0.6rem;
-  color: var(--btn-subtle);
+  padding: 0;
+  color: var(--btn-subtle-strong);
   cursor: pointer;
   opacity: 0;
   pointer-events: none;
@@ -1299,6 +1311,7 @@ a.nav-label:visited {
 }
 .mapa-reset.visible { opacity: 1; pointer-events: auto; }
 .mapa-reset:hover { color: var(--btn-subtle-strong-hover); }
+
 
 /* ============================================
    13. PAGE: PORTFOLIO

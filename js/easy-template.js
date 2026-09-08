@@ -220,24 +220,56 @@ export function condicionesHTML(data, lang) {
  * Son enlaces salientes a otros dominios; el valor de esta página es la lista
  * en sí, así que va entera en el HTML crudo.
  */
+/**
+ * Links: los mismos seis grupos que pinta la celda, en el mismo orden.
+ *
+ * Iba por su cuenta y se había quedado atrás: listaba cuatro grupos con el
+ * reparto viejo, se dejaba fuera los formateadores y las 21 webs de clientes
+ * —o sea los enlaces salientes que más valen— y titulaba «herramientas» en
+ * inglés, porque ese grupo no tenía label y caía en su propia clave.
+ *
+ * En la celda, `herramientas` va suelto y sin encabezado, y el resto plegado en
+ * desplegables (renderTools, en js/pages.js). Aquí abajo no hay desplegables
+ * que abrir, así que todos son secciones con su título; el orden es el mismo.
+ * Un enlace con varias urls (`urls`) se imprime como varios: sin JS no hay
+ * botón doble que valga.
+ */
 export function linksHTML(data, lang) {
   const l = data.links || {};
-  const grupos = ["herramientas", "experimentos", "wip", "varios"]
-    .filter(k => Array.isArray(l[k]) && l[k].length)
-    .map(k => {
-      const titulo = pickLang(l.labels?.[k], lang) || k;
-      const items = l[k].map(i =>
-        `<li><a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.nombre)}</a></li>`
-      ).join("");
+  const etiqueta = (clave, porDefecto) => pickLang(l.labels?.[clave], lang) || porDefecto;
+
+  // Las webs terminadas salen del portfolio, no de `links`: son los mismos 21
+  // proyectos, aquí como enlace a la web del cliente y no a su ficha.
+  const websTerminadas = (data.portfolio?.proyectos || []).map(p =>
+    p.urls ? { urls: p.urls } : { nombre: p.nombre, url: p.url });
+
+  const grupos = [
+    { titulo: etiqueta("herramientas", "herramientas"), items: l.herramientas },
+    { titulo: etiqueta("experimentos", "experimentos"), items: l.experimentos },
+    // "wip" se usa igual en los tres idiomas, como el resto de nombres de celda.
+    { titulo: "wip", items: l.wip },
+    { titulo: etiqueta("formateadores", "formateadores"), items: data.welcome?.formateadores },
+    { titulo: etiqueta("webs", "webs"), items: websTerminadas },
+    { titulo: etiqueta("varios", "varios"), items: l.varios },
+  ];
+
+  const enlace = (i) => `<li><a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.nombre)}</a></li>`;
+
+  const html = grupos
+    .filter(g => Array.isArray(g.items) && g.items.length)
+    .map(g => {
+      const items = g.items.flatMap(i => (Array.isArray(i.urls) ? i.urls : [i]))
+        .filter(i => i?.url)
+        .map(enlace).join("");
       return `
       <div class="easy-links-grupo">
-        <h2 class="easy-h">${esc(titulo)}</h2>
+        <h2 class="easy-h">${esc(g.titulo)}</h2>
         <ul class="easy-links-lista">${items}</ul>
       </div>`;
     }).join("");
 
   return `
-    <section class="easy-section easy-links" id="links">${grupos}
+    <section class="easy-section easy-links" id="links">${html}
     </section>`;
 }
 
