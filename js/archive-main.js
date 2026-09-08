@@ -108,7 +108,7 @@ configurarNavegacion({
     [0, 0, 1, 0, 0], // fila 0: _, _, tools, _, _
     [0, 1, 1, 1, 0], // fila 1: _, misc, sidequests, experiments, _
     [1, 1, 1, 1, 1], // fila 2: texts, social, meowrhino, games, unfinished
-    [0, 1, 0, 1, 0], // fila 3: _, WIP, _, hidden, _
+    [0, 1, 1, 1, 0], // fila 3: _, WIP, facts, hidden, _
   ],
   nombres: {
     "0_2": "tools",
@@ -121,6 +121,7 @@ configurarNavegacion({
     "2_3": "games",
     "2_4": "unfinished",
     "3_1": "WIP",
+    "3_2": "facts",
     "3_3": "hidden",
   },
   clasesCss: {
@@ -134,6 +135,7 @@ configurarNavegacion({
     "games":       "archive-games",
     "unfinished":  "archive-unfinished",
     "WIP":         "archive-wip",
+    "facts":       "archive-facts",
     "hidden":      "archive-hidden",
   },
   posInicial: { y: 2, x: 2 },

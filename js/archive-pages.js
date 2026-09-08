@@ -22,22 +22,27 @@ import { escapeHTML } from "./utils.js";
 export const SECCIONES = [
   "tools", "misc", "sidequests", "meowrhino",
   "games", "experiments", "social", "unfinished",
-  "texts", "WIP", "hidden",
+  "texts", "WIP", "hidden", "facts",
 ];
 
 // --- Sección genérica (shooter) ---
 
 function renderItem(item, index) {
-  const url = item.url || (item.links?.[0]?.url) || "#";
-  const linksHtml = item.links
-    ? item.links.map(l =>
-        `<a href="${escapeHTML(l.url)}" target="_blank" rel="noopener" class="archive-item-link">${escapeHTML(l.label)}</a>`
-      ).join(" ")
-    : "";
+  // Un item con `links` y sin `url` enlazaba dos veces al mismo sitio: el
+  // nombre se llevaba links[0] y la lista lo repetía justo al lado. Ahora el
+  // nombre solo enlaza si tiene destino propio, y los links se pintan enteros;
+  // cuando no hay `url`, el nombre es el rótulo de su fila de enlaces.
+  const linksHtml = (item.links || []).map(l =>
+    `<a href="${escapeHTML(l.url)}" target="_blank" rel="noopener" class="archive-item-link">${escapeHTML(l.label)}</a>`
+  ).join(" ");
+
+  const nombre = item.url
+    ? `<a href="${escapeHTML(item.url)}" target="_blank" rel="noopener" class="archive-item-name">${escapeHTML(item.nombre)}</a>`
+    : `<span class="archive-item-name">${escapeHTML(item.nombre)}</span>`;
 
   return `
     <div class="archive-item" style="--i: ${index}">
-      <a href="${escapeHTML(url)}" target="_blank" rel="noopener" class="archive-item-name">${escapeHTML(item.nombre)}</a>
+      ${nombre}
       ${linksHtml ? `<span class="archive-item-links">${linksHtml}</span>` : ""}
     </div>
   `;
@@ -83,7 +88,7 @@ export function renderArchivePrerenderHTML(data) {
     .filter(key => data[key]?.length)
     .map(key => `
       <section class="archive-prerender-seccion">
-        <h2>${escapeHTML(key)}</h2>
+        <h2>${escapeHTML(key.toLowerCase())}</h2>
         ${seccionHTML(data[key])}
       </section>`)
     .join("");

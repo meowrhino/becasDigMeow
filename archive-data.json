@@ -1,7 +1,7 @@
 {
   "welcome": {
     "titulo": "meowrhino archive",
-    "studioUrl": "index.html"
+    "studioUrl": "/"
   },
   "tools": [
     { "nombre": "moixi", "url": "https://meowrhino.github.io/moixi/" },
@@ -369,24 +369,6 @@
     { "nombre": "diarioBarbara", "url": "https://meowrhino.github.io/diarioBarbara/" }
   ],
   "facts": [
-    "Al videojuego al que más he jugado es al Pokémon Zafiro (282 horas)",
-    "me gustan mucho los animes de chicas con superpoderes",
-    "mi libro favorito es el Circo de la Noche",
-    "mi novela visual favorita es Umineko no Naku Koro ni Chiru",
-    "mi primera canción de vocaloid fue ésta (youtube)",
-    "mi anime favorito es Mahou Shoujo Madoka Magica",
-    "mi estudio de animación favorito es Shaft",
-    "empecé filología clásica e inglesa en la UAB para luego cambiarme a arte y diseño en la Massana",
-    "durante 3 años hice cosplay: Makoto Tachibana, Garnet, Sanageyama y Oikawa",
-    "hago canto moderno desde hace 2 años y medio",
-    "llevo viendo anime desde hace como 10 años",
-    "mi plato favorito de comida es el puchero",
-    "tengo un lunar en el lagrimar izquierdo",
-    "mi fruto seco favorito es el anacardo",
-    "nací en el puerto de santa maría, cádiz",
-    "soy piscis ascendente leo luna escorpio",
-    "me he pasado las 100 mazmorras del Paper Mario",
-    "he entrado en Berghain",
-    "la historia del nombre 'meowrhino' viene de cuando un amigo comentó 'manumeorino' en instagram y evolucionó hasta perder el manu"
+    { "nombre": "fun facts (2020)", "url": "https://meowrhino.neocities.org/about_facts/facts" }
   ]
 }
