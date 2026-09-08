@@ -1600,6 +1600,14 @@ html.easy, html.easy body {
   min-height: 44px;
 }
 .easy-btn:hover { opacity: 0.85; }
+/* Variante en negativo: cuando hay dos botones en fila, el segundo no puede
+   pesar lo mismo que el primero o dejan de ser una acción y una alternativa.
+   Mismo tamaño y misma caja, solo cambia el relleno. */
+.easy-btn-secundario {
+  background: transparent; color: var(--text);
+  box-shadow: inset 0 0 0 1px var(--text);
+}
+.easy-btn-secundario:hover { background: var(--text); color: var(--bg); opacity: 1; }
 
 /* --- Secciones genéricas (ritmo vertical consistente) --- */
 /* El aire entre secciones se mide en dvh, así que en pantallas altas cada
@@ -1858,7 +1866,13 @@ html.js #seo-prerender {
   max-width: 36rem;
 }
 
-.proy-visitar { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.7rem; }
+/* --- Los dos botones, al salir de la galería --- */
+/* Visitar esa web o pedir la tuya: las dos únicas cosas que se pueden hacer
+   aquí, en la misma fila y al final, cuando ya has visto las capturas. */
+.proy-acciones {
+  margin-top: clamp(2.5rem, 6dvh, 4rem);
+  display: flex; flex-wrap: wrap; gap: 0.7rem;
+}
 
 /* --- Galería: una imagen por fila, a lo ancho de la columna --- */
 .proy-galeria { margin-top: clamp(2.5rem, 6dvh, 4rem); display: flex; flex-direction: column; gap: 1.2rem; }
@@ -1870,17 +1884,6 @@ html.js #seo-prerender {
   height: auto;
   display: block;
 }
-
-/* --- Llamada final: el motivo por el que estas páginas existen --- */
-/* Va justo después de la galería, antes del pie: estaba detrás de los enlaces
-   de navegación, o sea que el lector se encontraba la puerta de salida antes
-   que la oferta. Sin caja: se sostiene con el centrado y el botón. */
-.proy-cta {
-  margin-top: clamp(2.5rem, 6dvh, 4rem);
-  padding: 1.8rem;
-  text-align: center;
-}
-.proy-cta p { font-size: 0.95rem; color: var(--text-content); margin-bottom: 1.1rem; }
 
 /* --- Pie de navegación --- */
 /* Ahora cierra la página de verdad, así que la fila izquierda/derecha se lee
@@ -2082,9 +2085,8 @@ html.js #seo-prerender {
 .proy > .easy-eyebrow,
 .proy > .proy-title,
 .proy > .proy-texto,
-.proy > .proy-visitar,
 .proy > .proy-galeria,
-.proy > .proy-cta,
+.proy > .proy-acciones,
 .proy > .proy-pie {
   position: relative;
   z-index: 1;

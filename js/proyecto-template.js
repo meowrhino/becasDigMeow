@@ -26,7 +26,7 @@ export { slugify } from "./rutas.js";
 export const UI = {
   es:  { eyebrow: "proyecto", visitar: "visitar", todos: "← todos los proyectos",
          indiceTitulo: "proyectos", indiceEyebrow: "estudio de diseño web · barcelona",
-         ctaTexto: "¿quieres una web así? la primera reunión es gratis.", ctaBoton: "escríbeme",
+         ctaBoton: "¿quieres una web así?",
          asunto: "quiero una web!", detalle: "detalle", disenada: "web diseñada por meowrhino studio, Barcelona",
          anterior: "anterior", siguiente: "siguiente", idiomas: "idioma",
          volverRejilla: "← volver al portfolio",
@@ -34,7 +34,7 @@ export const UI = {
          navegar: "seguir navegando" },
   en:  { eyebrow: "project", visitar: "visit", todos: "← all projects",
          indiceTitulo: "projects", indiceEyebrow: "web design studio · barcelona",
-         ctaTexto: "want a website like this? the first meeting is free.", ctaBoton: "write to me",
+         ctaBoton: "want a website like this?",
          asunto: "i want a website!", detalle: "detail", disenada: "website designed by meowrhino studio, Barcelona",
          anterior: "previous", siguiente: "next", idiomas: "language",
          volverRejilla: "← back to the portfolio",
@@ -42,7 +42,7 @@ export const UI = {
          navegar: "keep browsing" },
   cat: { eyebrow: "projecte", visitar: "visitar", todos: "← tots els projectes",
          indiceTitulo: "projectes", indiceEyebrow: "estudi de disseny web · barcelona",
-         ctaTexto: "vols una web així? la primera reunió és gratis.", ctaBoton: "escriu-me",
+         ctaBoton: "vols una web així?",
          asunto: "vull una web!", detalle: "detall", disenada: "web dissenyada per meowrhino studio, Barcelona",
          anterior: "anterior", siguiente: "següent", idiomas: "idioma",
          volverRejilla: "← tornar al portfolio",
@@ -106,14 +106,16 @@ export function renderProyectoHTML(proyecto, seo, lang = "es", rutas = {}, medir
              loading="${i === 0 ? "eager" : "lazy"}" decoding="async">`;
   }).join("");
 
-  const visitar = enlaces.length
-    ? `
-      <p class="proy-visitar">
-        ${enlaces.map(e =>
-          `<a class="easy-btn" href="${esc(e.url)}" target="_blank" rel="noopener">${esc(t.visitar)} ${esc(e.nombre)} ↗</a>`
-        ).join("\n        ")}
-      </p>`
-    : "";
+  // Los dos botones van juntos y DESPUÉS de la galería: antes, «visitar» salía
+  // encima de las capturas (te echaba de la página antes de enseñártela) y la
+  // llamada a escribir quedaba en un cartel aparte al final. Puestos en fila al
+  // salir de las imágenes, se leen como lo que son: ver esa web, o pedir la tuya.
+  const acciones = `
+      <p class="proy-acciones">${enlaces.map(e => `
+        <a class="easy-btn" href="${esc(e.url)}" target="_blank" rel="noopener">${esc(t.visitar)} ${esc(e.nombre)} ↗</a>`
+        ).join("")}
+        <a class="easy-btn easy-btn-secundario" href="mailto:hola@meowrhino.studio?subject=${encodeURIComponent(t.asunto)}">${esc(t.ctaBoton)}</a>
+      </p>`;
 
   // Las tres variantes de idioma de ESTA ficha. Existían ya como <link
   // hreflang> para los buscadores, pero una persona que caía aquí desde Google
@@ -147,15 +149,11 @@ export function renderProyectoHTML(proyecto, seo, lang = "es", rutas = {}, medir
   return `
     <article class="proy">${cabecera}
       <span class="proy-borde-etiqueta" aria-hidden="true">${esc(t.eyebrow)}</span>${vecinos}
-      <p class="easy-eyebrow">${esc(t.eyebrow)} · ${esc(pickLang(seo.resumen, lang))}</p>
+      <p class="easy-eyebrow">${esc(pickLang(seo.resumen, lang))}</p>
       <h1 class="proy-title">${esc(proyecto.nombre)}</h1>
-      <p class="proy-texto">${esc(pickLang(seo.texto, lang))}</p>${visitar}
+      <p class="proy-texto">${esc(pickLang(seo.texto, lang))}</p>
       <div class="proy-galeria">${galeria}
-      </div>
-      <aside class="proy-cta">
-        <p>${esc(t.ctaTexto)}</p>
-        <a class="easy-btn" href="mailto:hola@meowrhino.studio?subject=${encodeURIComponent(t.asunto)}">${esc(t.ctaBoton)}</a>
-      </aside>
+      </div>${acciones}
       <nav class="proy-pie" aria-label="${esc(t.navegar)}">
         <a href="${esc(rutas.indice || "/proyectos")}">${esc(t.todos)}</a>
         <a href="${esc(rutas.home || "/")}">meowrhino studio</a>
