@@ -8,7 +8,7 @@
 // Así el texto que ve Google es EXACTAMENTE el que ve el visitante, sin copias
 // que se desincronicen. Fuente única de contenido: data.json.
 
-import { rutaProyectos, slugify } from "./rutas.js";
+import { rutaProyectos, rutaCelda, slugify } from "./rutas.js";
 
 /** Escoge la variante de idioma de un objeto {es,en,cat}, con fallback a es. */
 export const pickLang = (obj, lang) => obj?.[lang] ?? obj?.es ?? "";
@@ -128,16 +128,22 @@ export function portfolioHTML(data, lang) {
 }
 
 export function metodologiaHTML(data, lang) {
-  const lineas = (data.metodologia?.[lang] || data.metodologia?.es || {}).lineas || [];
+  const m = data.metodologia?.[lang] || data.metodologia?.es || {};
+  const lineas = m.lineas || [];
   const pasos = lineas.map((l, i) => `
     <li class="easy-step">
       <span class="easy-step-num">${String(i + 1).padStart(2, "0")}</span>
       <p class="easy-step-text">${esc(l)}</p>
     </li>`).join("");
+  const suelto = (ls, clase) => (ls || [])
+    .map(l => `<p class="${clase}">${esc(l)}</p>`).join("");
+
   return `
     <section class="easy-section" id="metodologia">
       <h2 class="easy-h">${esc(ui(lang).metodologia)}</h2>
+      ${suelto(m.intro, "easy-metodologia-intro")}
       <ol class="easy-steps">${pasos}</ol>
+      ${suelto(m.cierre, "easy-metodologia-cierre")}
     </section>`;
 }
 
@@ -163,10 +169,14 @@ export function aboutHTML(data, lang) {
     ? `<ol class="easy-about-lista">${t.map(i => `<li>${esc(i)}</li>`).join("")}</ol>`
     : `<p>${esc(t.replace("{precio}", precio))}</p>`;
 
+  const enlace = (e) => e
+    ? `<p class="easy-about-enlace"><a href="${esc(rutaCelda(e.celda, lang) || "/")}">${esc(e.texto)}</a></p>`
+    : "";
+
   const secciones = (d.secciones || []).map(sec => `
       <div class="easy-about-bloque">
         <h2 class="easy-h">${esc(sec.titulo)}</h2>
-        ${(sec.parrafos || []).map(parrafo).join("")}
+        ${(sec.parrafos || []).map(parrafo).join("")}${enlace(sec.enlace)}
       </div>`).join("");
 
   const lineas = (data.statement?.[lang] || data.statement?.es || {}).lineas || [];

@@ -963,6 +963,15 @@ a.nav-label:visited {
   color: var(--text-content);
 }
 
+/* Lo que abre y lo que cierra los pasos: no son pasos, así que se separan de
+   ellos con aire y con el color del texto principal, no el del cuerpo. */
+.metodologia-intro { color: var(--text); }
+.metodologia-intro:last-of-type { margin-bottom: 2.6em; }
+.metodologia-cierre {
+  margin-top: 2.6em;
+  color: var(--text);
+}
+
 /* ============================================
    11b. PAGE: ABOUT
    Quién es manu, por qué hace esto y cómo trabaja.
@@ -1063,6 +1072,15 @@ a.nav-label:visited {
   color: var(--text-content);
 }
 .about-lista li { margin-bottom: 0.25em; }
+
+/* El enlace con el que un apartado del about pasa el testigo a la página que
+   cuenta eso entero (hoy solo "cómo trabajamos" → metodología). */
+.about-enlace {
+  margin-top: 1.2em;
+  font-size: 0.9em;
+}
+.about-enlace a { color: var(--text-secondary); }
+.about-enlace a:hover { color: var(--text); }
 
 /* En móvil, 70dvw son 260px: demasiado estrecho para cinco apartados de texto
    seguidos. El about es la celda más larga del lienzo y se lee de arriba abajo,

@@ -11,7 +11,7 @@ import { setupScrollGradients } from "./scroll-gradients.js";
 import { renderWelcomeCard } from "./welcome-card.js";
 import { renderWelcomeCupon } from "./welcome-cupon.js";
 import { repaintWithFade, escapeHTML } from "./utils.js";
-import { rutaProyectos, slugify } from "./rutas.js";
+import { rutaProyectos, rutaCelda, slugify } from "./rutas.js";
 
 /** true si el viewport es táctil / móvil (mismo criterio que portfolio usa para hover/pointer). */
 export const esMovil = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
@@ -208,10 +208,16 @@ export function renderMetodologia(data) {
   const el = document.querySelector(".celda.metodologia");
   if (!el || !data?.metodologia) return;
 
+  // Intro y cierre enmarcan los pasos: el qué buscamos antes de empezar y el
+  // para qué al terminar. Se separan de `lineas` porque los pasos van
+  // numerados y esto no es un paso.
   const buildContent = (lang) => {
     const d = data.metodologia[lang];
     if (!d) return "";
-    return d.lineas.map(l => `<p>${escapeHTML(l)}</p>`).join("");
+    const p = (l) => `<p>${escapeHTML(l)}</p>`;
+    return (d.intro || []).map(l => `<p class="metodologia-intro">${escapeHTML(l)}</p>`).join("") +
+      d.lineas.map(p).join("") +
+      (d.cierre || []).map(l => `<p class="metodologia-cierre">${escapeHTML(l)}</p>`).join("");
   };
 
   el.innerHTML = `
@@ -483,10 +489,18 @@ export function renderAbout(data) {
       ? `<ol class="about-lista">${t.map(i => `<li>${escapeHTML(i)}</li>`).join("")}</ol>`
       : `<p>${escapeHTML(t.replace("{precio}", precio))}</p>`;
 
+    // Un apartado puede acabar en un enlace a otra celda: el about cuenta el
+    // proceso en dos líneas y el detalle vive en metodología, que es la página
+    // que va de eso. Contarlo entero en los dos sitios era el duplicado que
+    // acabamos de quitarnos de encima con /easy.
+    const enlace = (e) => e
+      ? `<p class="about-enlace"><a href="${escapeHTML(rutaCelda(e.celda, currentLang) || "/")}">${escapeHTML(e.texto)}</a></p>`
+      : "";
+
     const secciones = d.secciones.map(sec => `
       <section class="about-seccion">
         <h2 class="about-h">${escapeHTML(sec.titulo)}</h2>
-        ${sec.parrafos.map(parrafo).join("")}
+        ${sec.parrafos.map(parrafo).join("")}${enlace(sec.enlace)}
       </section>`).join("");
 
     // Las cinco frases del statement abren la página: dicen qué es el estudio
