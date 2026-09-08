@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+  <!-- Bloque que depende del idioma (título, description, canonical, og/twitter
+       y los hreflang). Lo genera build-seo.js para las tres variantes de la home:
+       index.html (es), en.html y ca.html. NO editar a mano: los textos salen de
+       data.json (meta.title / meta.description). -->
+  <!-- BUILD:head:start -->
+  <meta name="description" content="la letra pequeña del estudio: condiciones de contratación, política de privacidad y cookies, y la financiación pública de este proyecto.">
+  <title>condiciones, privacidad y financiación — meowrhino studio</title>
+  <link rel="canonical" href="https://meowrhino.studio/condiciones">
+  <link rel="alternate" hreflang="es" href="https://meowrhino.studio/condiciones">
+  <link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/terms">
+  <link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/condicions">
+  <link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/condiciones">
+  <meta property="og:title" content="condiciones, privacidad y financiación — meowrhino studio">
+  <meta property="og:description" content="la letra pequeña del estudio: condiciones de contratación, política de privacidad y cookies, y la financiación pública de este proyecto.">
+  <meta property="og:url" content="https://meowrhino.studio/condiciones">
+  <meta property="og:locale" content="es_ES">
+  <meta name="twitter:title" content="condiciones, privacidad y financiación — meowrhino studio">
+  <meta name="twitter:description" content="la letra pequeña del estudio: condiciones de contratación, política de privacidad y cookies, y la financiación pública de este proyecto.">
+  <!-- BUILD:head:end -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="meowrhino studio">
+  <meta property="og:image" content="https://meowrhino.studio/favicon/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="meowrhino studio — estudio de diseño web en Barcelona">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://meowrhino.studio/favicon/og-image.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="icon" href="/favicon/favicon.ico">
+  <link rel="preload" href="/fonts/inknut-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+  <script>
+    // Anti-flash: resuelve el tema antes del primer render.
+    // Prioridad: localStorage > prefers-color-scheme > light (default studio).
+    (function() {
+      var t = localStorage.getItem("meowrhino-theme");
+      if (!t && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";
+      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+      // Marca que hay JS ANTES de que el body se parsee, para que el CSS oculte
+      // el bloque pre-renderizado (#seo-prerender) desde el primer pintado: el
+      // visitante ve el grid, nunca un destello del contenido estático. Sin JS
+      // la clase no se pone y el bloque queda visible como fallback real.
+      document.documentElement.classList.add("js");
+    })();
+  </script>
+  <!-- BUILD:preload:start -->
+  <link rel="modulepreload" href="/js/main.js">
+  <link rel="modulepreload" href="/js/data.js">
+  <link rel="modulepreload" href="/js/navigation.js">
+  <link rel="modulepreload" href="/js/pages.js">
+  <link rel="modulepreload" href="/js/portfolio.js">
+  <link rel="modulepreload" href="/js/rutas.js">
+  <link rel="modulepreload" href="/js/theme.js">
+  <link rel="modulepreload" href="/js/shell.js">
+  <link rel="modulepreload" href="/js/utils.js">
+  <link rel="modulepreload" href="/js/zoom.js">
+  <link rel="modulepreload" href="/js/scroll-gradients.js">
+  <link rel="modulepreload" href="/js/welcome-card.js">
+  <link rel="modulepreload" href="/js/welcome-cupon.js">
+  <link rel="modulepreload" href="/js/proyecto-template.js">
+  <link rel="modulepreload" href="/js/rebote.js">
+  <link rel="modulepreload" href="/js/easy-template.js">
+  <!-- BUILD:preload:end -->
+</head>
+<body>
+  <a href="#content" class="skip-link">saltar al contenido</a>
+  <main id="content" role="main" tabindex="-1">
+    <!-- Contenido pre-renderizado por build-seo.js: el mismo texto que pintan
+         las celdas del grid, disponible en el primer byte para los buscadores.
+         Oculto por CSS en cuanto hay JS y eliminado del DOM por main.js; sin JS
+         se queda como versión estática navegable. NO editar a mano: se regenera
+         desde data.json en cada commit que la toque. -->
+    <div id="seo-prerender">
+      <!-- BUILD:home:start -->
+
+    <section class="easy-section easy-legal" id="condiciones">
+      <div class="easy-legal-bloque">
+        <h2 class="easy-h">condiciones</h2>
+        <p>diseñamos y desarrollamos páginas web a medida con tecnología jamstack. los datos de tu web los gestiona un archivo que aprendes a leer y modificar: puedes añadir, eliminar y cambiar textos, imágenes y archivos sin depender de nadie.</p><p>el código es tuyo. puedes usarlo, transformarlo, continuarlo o dárselo a quien quieras. meowrhino.studio conserva una copia de cada proyecto como registro de autoría y para garantizar que el código sea siempre libre y accesible.</p><p>no iniciamos un proyecto sin todo el material listo: textos, imágenes y contenido. también una identidad visual mínima (logo, paleta de color, tipografía). si no se dispone de ella, se puede presupuestar como parte del proyecto.</p><p>no trabajamos con placeholders. el mes de trabajo empieza el día que llega tu material.</p><p>cada proyecto incluye 3 entregas (diseño, programación intermedia y programación final) y una ronda de revisiones por entrega. cada ronda puede incluir varios cambios, pero una vez enviada, los siguientes cambios pertenecen a la siguiente ronda. lo aprobado en una entrega no se reabre en la siguiente. cualquier cambio derivado de trabajar con material incompleto cuenta como revisión. las rondas extra se presupuestan a 60€/hora.</p><p>pago en dos fases: 50% al cerrar diseño, 50% al finalizar programación.</p><p>la primera reunión es gratuita, y la segunda también si la hacemos dentro de las dos semanas siguientes y con tu material listo. pasado ese plazo sin contenido, el proyecto queda en pausa y reactivarlo conlleva una tarifa del 10% del presupuesto. a partir de la primera entrega se consume parte del presupuesto. puedes parar el proyecto en cualquier momento abonando la parte proporcional de lo trabajado; si se retoma más adelante, se abre un nuevo presupuesto.</p><p>nos reservamos la posibilidad de publicar el proyecto en nuestro portfolio y redes sociales. a la finalización de la web, planteamos la posibilidad de un post conjunto en instagram.</p><p>nuestro compromiso es diseñar una web que entiendas, que puedas mantener y que pueda crecer contigo.</p>
+        <p class="easy-legal-nota">aceptar el presupuesto significa aceptar estas condiciones.</p>
+      </div>
+      <div class="easy-legal-bloque">
+        <h2 class="easy-h">privacidad</h2>
+        <p><strong>responsable:</strong> manuel latour fernández, dni 45382378-c, c. peracamps 9, 08001 barcelona. contacto: <a href="mailto:hola@meowrhino.studio">hola@meowrhino.studio</a>.</p><p><strong>cookies:</strong> esta web pasa por <a href="https://www.cloudflare.com/web-analytics/" target="_blank" rel="noopener">cloudflare</a> como cdn. cookies estrictamente necesarias, todas de cloudflare, inc.: __cf_bm (bot management, 30 min), cf_clearance (bypass anti-bot, 30 min a 1 año), __cflb (load balancing, sesión). exentas de consentimiento bajo <a href="https://www.boe.es/buscar/act.php?id=BOE-A-2002-13758#a22" target="_blank" rel="noopener">lssi-ce art. 22.2</a>.</p><p><strong>analítica:</strong> cloudflare web analytics, sin cookies, sin fingerprinting, agregada y anonimizada. retención 6 meses. base legal: interés legítimo (<a href="https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32016R0679" target="_blank" rel="noopener">gdpr art. 6.1.f</a>).</p><p><strong>transferencias:</strong> cloudflare puede procesar datos en USA bajo el <a href="https://commission.europa.eu/document/fa09cbad-dd7d-4684-ae60-be03fcb0fddf_en" target="_blank" rel="noopener">eu-us data privacy framework</a> (2023).</p><p><strong>tus derechos:</strong> acceso, rectificación, supresión, oposición, portabilidad y limitación. escribe a <a href="mailto:hola@meowrhino.studio">hola@meowrhino.studio</a>.</p><p><strong>reclamación:</strong> si crees que no se respetan tus derechos, puedes presentar reclamación ante la <a href="https://www.aepd.es" target="_blank" rel="noopener">aepd</a>.</p><p><em>última actualización: mayo 2026.</em></p>
+        
+      </div>
+      <div class="easy-legal-bloque" id="financiacion">
+        <h2 class="easy-h">financiación</h2>
+        <p>esta web es posible gracias al apoyo de:</p>
+        <div class="easy-logos"><img class="easy-logo" src="/img/LOGOS/light/gene.webp" alt="Generalitat de Catalunya — Departament d'Empresa i Treball"
+              loading="lazy" decoding="async"><img class="easy-logo" src="/img/LOGOS/light/eu.webp" alt="Cofinanciado por la Unión Europea"
+              loading="lazy" decoding="async"><img class="easy-logo" src="/img/LOGOS/light/sepe.webp" alt="Ministerio de Trabajo y Economía Social, SEPE"
+              loading="lazy" decoding="async"><img class="easy-logo" src="/img/LOGOS/light/garantia.webp" alt="Sistema Nacional de Garantía Juvenil"
+              loading="lazy" decoding="async"></div>
+        <p class="easy-legal-frase">Aquesta actuació està impulsada i subvencionada pel Departament d'Empresa i Treball i cofinançada per la Unió Europea mitjançant el Fons Social Europeu Plus.</p>
+      </div>
+    </section>
+    <nav class="prerender-nota" aria-label="seguir navegando">
+      <ul><li><a href="/">bienvenida</a></li><li><a href="/about">about</a></li><li><a href="/metodologia">metodología</a></li><li><a href="/links">links</a></li><li><a href="/proyectos">portfolio</a></li></ul>
+    </nav>
+  <!-- BUILD:home:end -->
+    </div>
+  </main>
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+  <!-- Bloque que depende del idioma (título, description, canonical, og/twitter
+       y los hreflang). Lo genera build-seo.js para las tres variantes de la home:
+       index.html (es), en.html y ca.html. NO editar a mano: los textos salen de
+       data.json (meta.title / meta.description). -->
+  <!-- BUILD:head:start -->
+  <meta name="description" content="el procés sencer, sense lletra petita: reunió gratis, el mes comença amb el teu material, tres lliuraments amb una ronda de revisió cadascun, i en surts sabent mantenir la teva web.">
+  <title>com treballem: la teva web a mida en un mes — meowrhino studio</title>
+  <link rel="canonical" href="https://meowrhino.studio/ca/metodologia">
+  <link rel="alternate" hreflang="es" href="https://meowrhino.studio/metodologia">
+  <link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/methodology">
+  <link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/metodologia">
+  <link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/metodologia">
+  <meta property="og:title" content="com treballem: la teva web a mida en un mes — meowrhino studio">
+  <meta property="og:description" content="el procés sencer, sense lletra petita: reunió gratis, el mes comença amb el teu material, tres lliuraments amb una ronda de revisió cadascun, i en surts sabent mantenir la teva web.">
+  <meta property="og:url" content="https://meowrhino.studio/ca/metodologia">
+  <meta property="og:locale" content="ca_ES">
+  <meta name="twitter:title" content="com treballem: la teva web a mida en un mes — meowrhino studio">
+  <meta name="twitter:description" content="el procés sencer, sense lletra petita: reunió gratis, el mes comença amb el teu material, tres lliuraments amb una ronda de revisió cadascun, i en surts sabent mantenir la teva web.">
+  <!-- BUILD:head:end -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="meowrhino studio">
+  <meta property="og:image" content="https://meowrhino.studio/favicon/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="meowrhino studio — estudio de diseño web en Barcelona">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://meowrhino.studio/favicon/og-image.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="icon" href="/favicon/favicon.ico">
+  <link rel="preload" href="/fonts/inknut-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+  <script>
+    // Anti-flash: resuelve el tema antes del primer render.
+    // Prioridad: localStorage > prefers-color-scheme > light (default studio).
+    (function() {
+      var t = localStorage.getItem("meowrhino-theme");
+      if (!t && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";
+      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+      // Marca que hay JS ANTES de que el body se parsee, para que el CSS oculte
+      // el bloque pre-renderizado (#seo-prerender) desde el primer pintado: el
+      // visitante ve el grid, nunca un destello del contenido estático. Sin JS
+      // la clase no se pone y el bloque queda visible como fallback real.
+      document.documentElement.classList.add("js");
+    })();
+  </script>
+  <!-- BUILD:preload:start -->
+  <link rel="modulepreload" href="/js/main.js">
+  <link rel="modulepreload" href="/js/data.js">
+  <link rel="modulepreload" href="/js/navigation.js">
+  <link rel="modulepreload" href="/js/pages.js">
+  <link rel="modulepreload" href="/js/portfolio.js">
+  <link rel="modulepreload" href="/js/rutas.js">
+  <link rel="modulepreload" href="/js/theme.js">
+  <link rel="modulepreload" href="/js/shell.js">
+  <link rel="modulepreload" href="/js/utils.js">
+  <link rel="modulepreload" href="/js/zoom.js">
+  <link rel="modulepreload" href="/js/scroll-gradients.js">
+  <link rel="modulepreload" href="/js/welcome-card.js">
+  <link rel="modulepreload" href="/js/welcome-cupon.js">
+  <link rel="modulepreload" href="/js/proyecto-template.js">
+  <link rel="modulepreload" href="/js/rebote.js">
+  <link rel="modulepreload" href="/js/easy-template.js">
+  <!-- BUILD:preload:end -->
+</head>
+<body>
+  <a href="#content" class="skip-link">saltar al contenido</a>
+  <main id="content" role="main" tabindex="-1">
+    <!-- Contenido pre-renderizado por build-seo.js: el mismo texto que pintan
+         las celdas del grid, disponible en el primer byte para los buscadores.
+         Oculto por CSS en cuanto hay JS y eliminado del DOM por main.js; sin JS
+         se queda como versión estática navegable. NO editar a mano: se regenera
+         desde data.json en cada commit que la toque. -->
+    <div id="seo-prerender">
+      <!-- BUILD:home:start -->
+
+    <section class="easy-section" id="metodologia">
+      <h2 class="easy-h">metodologia</h2>
+      <ol class="easy-steps">
+    <li class="easy-step">
+      <span class="easy-step-num">01</span>
+      <p class="easy-step-text">comencem amb una reunió gratis. porta 3–5 referents de coses que t'agradin o que no: webs, altres interfícies, esbossos en un tovalló. els mirem junts i parlem d'estructura, estètica i diners. abans de marxar deixem data per a la segona i una llista del que necessitem de tu: textos, imatges i la teva identitat visual si en tens.</p>
+    </li>
+    <li class="easy-step">
+      <span class="easy-step-num">02</span>
+      <p class="easy-step-text">la teva web està llesta en un mes, comptant des que arriba el teu material — no des que ens coneixem. la segona reunió la fem dins de les dues setmanes següents a la primera, amb el teu material ja enviat. si passen més de dues setmanes i no hi ha material, parem — t'hem reservat un mes d'agenda i no el podem tenir a l'aire. reprendre-ho costa un 10%, que és el que costa tornar a fer-te lloc. no és una multa: és que aquell mes que et guardàvem ja l'hem donat a una altra persona.</p>
+    </li>
+    <li class="easy-step">
+      <span class="easy-step-num">03</span>
+      <p class="easy-step-text">amb el material sobre la taula et fem una proposta de disseny. pren-te el temps que necessitis per decidir: preferim que t'ho pensis ara i no a mitja programació. quan hi estiguis conforme i arribi el primer pagament (la meitat), comencem a escriure codi.</p>
+    </li>
+    <li class="easy-step">
+      <span class="easy-step-num">04</span>
+      <p class="easy-step-text">hi ha tres lliuraments —el disseny, la programació quan ja comença a agafar forma, i la programació final— i una ronda de revisió per lliurament. cada ronda pot portar diversos ajustos a dins. el que tanquem en un lliurament no el reobrim en el següent: no és rigidesa, reobrir decisions tancades és exactament el que converteix un mes en sis. el disseny sí que es torna a moure quan passa d'esbós a web de debò i s'ha de fer funcionar en un mòbil: això no compta com a ronda, és part de la feina. solem trigar 1–2 setmanes en disseny i unes altres 1–2 en programació. amb el material a temps, un mes de punta a punta.</p>
+    </li>
+    <li class="easy-step">
+      <span class="easy-step-num">05</span>
+      <p class="easy-step-text">amb el codi aprovat i l'altra meitat pagada ens veiem un últim cop, davant del teu ordinador. surts d'aquella reunió sabent actualitzar la teva web sense nosaltres: aquest és l'objectiu, no un extra. si cal et configurem el domini (et recomanem cloudflare) i et queda al teu nom, no al nostre.</p>
+    </li>
+    <li class="easy-step">
+      <span class="easy-step-num">06</span>
+      <p class="easy-step-text">després del lliurament tens dues setmanes per dir-nos què falla o gastar les rondes que et quedin. a partir d'aquí, els canvis van a 60 €/hora. ho diem clar perquè l'alternativa és la de sempre: una quota mensual que pagues cada mes per res. aquí només pagues quan de debò vols canviar alguna cosa — i si has après a tocar-ho tu, no pagues.</p>
+    </li></ol>
+    </section>
+    <nav class="prerender-nota" aria-label="seguir navegant">
+      <ul><li><a href="/ca">benvinguda</a></li><li><a href="/ca/about">about</a></li><li><a href="/ca/condicions">condiciones</a></li><li><a href="/ca/links">links</a></li><li><a href="/ca/projectes">portfolio</a></li></ul>
+    </nav>
+  <!-- BUILD:home:end -->
+    </div>
+  </main>
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

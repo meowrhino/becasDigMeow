@@ -11,7 +11,7 @@ import {
   crearZoneLabel,
   crearHeader,
   crearOverlay,
-  leerHash,
+  leerURL,
   actualizarVista,
   actualizarTamanoMinimapInline,
   actualizarTamanoMinimapExpandido,
@@ -26,12 +26,12 @@ import {
 import {
   renderTools,
   renderWelcome,
-  renderStatement,
   renderMetodologia,
-  renderFooter,
-  renderContacto,
+  renderCondiciones,
+  renderAbout,
 } from "./pages.js";
 import { renderPortfolio } from "./portfolio.js";
+import { rutaCelda, celdaDeRuta } from "./rutas.js";
 import { crearThemeToggle } from "./theme.js";
 import { setupKeyboardNav, setupResizeDebounce } from "./shell.js";
 
@@ -57,11 +57,10 @@ async function renderizarContenido() {
 
   renderTools(data);
   renderWelcome(data);
-  renderStatement(data);
   renderMetodologia(data);
-  renderFooter(data);
+  renderCondiciones(data);
   renderPortfolio(data);
-  renderContacto(data);
+  renderAbout(data);
 }
 
 // ============================================
@@ -87,34 +86,53 @@ setupResizeDebounce({
 // sobre #content, así que si no, el bloque quedaría ahí de por vida.
 document.getElementById("seo-prerender")?.remove();
 
+// La rejilla del lienzo. Cada celda es ahora una PÁGINA con su URL (ver
+// RUTA_CELDAS en rutas.js): el texto de cada una vive en un solo sitio y puede
+// competir por su búsqueda, en vez de amontonarse todo en la raíz.
+//
+// Cambios respecto a la rejilla anterior:
+//   · `statement` desaparece como celda — sus cinco frases son el claim del
+//     estudio y su sitio es la portada, no una pantalla aparte.
+//   · `contacto` se convierte en `about`: cuatro datos de contacto no sostienen
+//     una página, pero quién eres y por qué haces esto sí, y el email sigue ahí.
+//   · `footer` pasa a llamarse `condiciones`, que es lo que de verdad contiene.
+//     Conserva la clase css `footer` para no reescribir su hoja de estilos.
 configurarNavegacion({
   grid: [
     [0, 1, 0, 0], // fila 0: _, links, _, _
-    [1, 1, 1, 1], // fila 1: footer, welcome, metodología, statement
-    [0, 1, 1, 0], // fila 2: _, portfolio, contacto, _
+    [1, 1, 1, 1], // fila 1: about, welcome, metodología, condiciones
+    [0, 1, 0, 0], // fila 2: _, portfolio, _, _
   ],
   nombres: {
     "0_1": "links",
-    "1_0": "footer",
+    "1_0": "about",
     "1_1": "welcome",
     "1_2": "metodología",
-    "1_3": "statement",
+    "1_3": "condiciones",
     "2_1": "portfolio",
-    "2_2": "contacto",
   },
   clasesCss: {
     "links": "tools",
-    "footer": "footer",
+    "about": "about",
     "metodología": "metodologia",
     "welcome": "welcome",
-    "statement": "statement",
+    "condiciones": "footer",
     "portfolio": "portfolio",
-    "contacto": "contacto",
   },
   redirects: {
     "links": ["tools"],
+    // Los hash viejos siguen llevando a alguna parte: `#contacto` es ahora el
+    // about, y `#footer` y `#statement` no existen pero apuntan a lo más
+    // parecido. Hay 66 fichas de proyecto enlazando a `/#portfolio`.
+    "about": ["contacto"],
+    "condiciones": ["footer"],
+    "welcome": ["statement"],
   },
   posInicial: { y: 1, x: 1 },
+  rutas: {
+    de: (nombre) => rutaCelda(nombre, currentLang),
+    celdaDe: (pathname) => celdaDeRuta(pathname)?.nombre ?? null,
+  },
 });
 
 crearCeldas();
@@ -122,7 +140,7 @@ crearZoneLabel();
 crearHeader();
 crearOverlay();
 crearThemeToggle(getOverlayEl());
-leerHash();
+leerURL();
 renderizarContenido().then(() => {
   // Zone labels traducibles: los identificadores de celda (hash, clase css)
   // NO cambian; solo el texto visible. Los que faltan en `zoneLabels` (o los 3

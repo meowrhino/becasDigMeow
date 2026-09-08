@@ -32,14 +32,14 @@ export const esc = (s) => String(s ?? "")
  */
 export const UI = {
   es:  { portfolio: "portfolio", statement: "statement", metodologia: "metodología",
-         contacto: "contacto", caso: "ver el caso →",
+         contacto: "contacto", caso: "ver el caso →", navegar: "seguir navegando",
          volverRejilla: "← volver al portfolio" },
   en:  { portfolio: "portfolio", statement: "statement", metodologia: "methodology",
-         contacto: "contact", caso: "see the case →",
+         contacto: "contact", caso: "see the case →", navegar: "keep browsing",
          volverRejilla: "← back to the portfolio" },
   cat: { portfolio: "portfolio", statement: "statement", metodologia: "metodologia",
          contacto: "contacte", caso: "veure el cas →",
-         volverRejilla: "← tornar al portfolio" },
+         volverRejilla: "← tornar al portfolio", navegar: "seguir navegant" },
 };
 
 /** Los textos de interfaz del idioma pedido, con fallback a castellano. */
@@ -110,7 +110,7 @@ export function portfolioHTML(data, lang) {
 
     return `
         <div class="pgrid-item">
-          <a class="pgrid-thumb" href="${esc(href)}"><img class="pgrid-img pgrid-img-a" src="${esc(p.imagen)}"
+          <a class="pgrid-thumb" href="${esc(href)}"><img class="pgrid-img pgrid-img-a" src="/${esc(p.imagen)}"
                  alt="${esc(altFor(p))}" width="1600" height="1049"
                  loading="lazy" decoding="async"></a>
           <div class="pgrid-meta">
@@ -173,6 +173,149 @@ export function contactoHTML(data, lang) {
     </section>`;
 }
 
+/**
+ * El about, pre-renderizado.
+ *
+ * Es la única versión sin JS de la celda `about`, así que lleva el texto
+ * entero: la pregunta, la foto, los cinco apartados y el contacto. El precio
+ * se sustituye desde el cupón, que es donde vive el número.
+ */
+export function aboutHTML(data, lang) {
+  const a = data.about || {};
+  const d = a[lang] || a.es || {};
+  const precio = data.welcome?.cupon?.precio ?? "";
+  const co = data.contacto || {};
+  const asunto = encodeURIComponent(co.asunto?.[lang] || co.asunto?.es || "");
+  const cv = co.cv?.[lang] || co.cv?.es;
+
+  const secciones = (d.secciones || []).map(sec => `
+      <div class="easy-about-bloque">
+        <h2 class="easy-h">${esc(sec.titulo)}</h2>
+        ${(sec.parrafos || []).map(t => `<p>${esc(t.replace("{precio}", precio))}</p>`).join("")}
+      </div>`).join("");
+
+  const foto = a.foto
+    ? `<img class="easy-about-foto" src="/${esc(a.foto)}" alt="${esc(pickLang(a.fotoAlt, lang))}"
+             width="1200" height="960" loading="lazy" decoding="async">`
+    : "";
+
+  return `
+    <section class="easy-section easy-about" id="about">
+      <h1 class="easy-about-pregunta">${esc(d.pregunta || "")}</h1>
+      ${foto}${secciones}
+      <p class="easy-about-contacto">
+        <a href="mailto:${esc(co.email)}?subject=${asunto}">${esc(co.email)}</a>
+        ${co.instagram ? `<a href="${esc(co.instagram.url)}" target="_blank" rel="noopener">${esc(co.instagram.usuario)}</a>` : ""}
+        ${cv ? `<a href="/${esc(cv)}" target="_blank" rel="noopener">cv</a>` : ""}
+      </p>
+    </section>`;
+}
+
+/**
+ * Condiciones, privacidad y financiación: la letra pequeña del estudio.
+ *
+ * Los párrafos de privacidad traen etiquetas dentro (negritas y enlaces a la
+ * lssi y a cloudflare), así que van SIN escapar; son texto nuestro de
+ * data.json, no entrada de nadie. Los logos van con ruta absoluta porque esta
+ * misma función pinta /condiciones y /en/terms, que están a distinta
+ * profundidad.
+ */
+export function condicionesHTML(data, lang) {
+  const secciones = (data.footer?.[lang] || data.footer?.es || {}).secciones || [];
+
+  const bloques = secciones.map(sec => {
+    if (sec.tipo === "subvencion") {
+      const logos = (sec.logos || []).map(l =>
+        `<img class="easy-logo" src="/img/LOGOS/light/${esc(l.name)}.webp" alt="${esc(l.alt || "")}"
+              loading="lazy" decoding="async">`).join("");
+      return `
+      <div class="easy-legal-bloque" id="financiacion">
+        <h2 class="easy-h">${esc(sec.label)}</h2>
+        <p>${esc(sec.intro || "")}</p>
+        <div class="easy-logos">${logos}</div>
+        <p class="easy-legal-frase">${esc(sec.frase || "")}</p>
+      </div>`;
+    }
+    return `
+      <div class="easy-legal-bloque">
+        <h2 class="easy-h">${esc(sec.label)}</h2>
+        ${(sec.parrafos || []).map(t => `<p>${t}</p>`).join("")}
+        ${sec.nota ? `<p class="easy-legal-nota">${esc(sec.nota)}</p>` : ""}
+      </div>`;
+  }).join("");
+
+  return `
+    <section class="easy-section easy-legal" id="condiciones">${bloques}
+    </section>`;
+}
+
+/**
+ * La celda de links: las herramientas y los experimentos que hay publicados.
+ *
+ * Son enlaces salientes a otros dominios; el valor de esta página es la lista
+ * en sí, así que va entera en el HTML crudo.
+ */
+export function linksHTML(data, lang) {
+  const l = data.links || {};
+  const grupos = ["herramientas", "experimentos", "wip", "varios"]
+    .filter(k => Array.isArray(l[k]) && l[k].length)
+    .map(k => {
+      const titulo = pickLang(l.labels?.[k], lang) || k;
+      const items = l[k].map(i =>
+        `<li><a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.nombre)}</a></li>`
+      ).join("");
+      return `
+      <div class="easy-links-grupo">
+        <h2 class="easy-h">${esc(titulo)}</h2>
+        <ul class="easy-links-lista">${items}</ul>
+      </div>`;
+    }).join("");
+
+  return `
+    <section class="easy-section easy-links" id="links">${grupos}
+    </section>`;
+}
+
+/**
+ * El cuerpo pre-renderizado de UNA celda.
+ *
+ * Es el cambio de fondo de todo esto: hasta ahora la raíz servía el texto de
+ * todas las secciones y /easy servía una copia, así que ningún texto tenía una
+ * URL propia por la que competir. Ahora cada celda pre-renderiza LO SUYO y solo
+ * lo suyo; lo demás se alcanza por los enlaces del pie.
+ *
+ * La portada es la excepción y lleva dos cosas: el titular de venta y las cinco
+ * frases del statement, que dejaron de ser celda y son el claim del estudio.
+ */
+export function renderCeldaPrerenderHTML(data, lang, celda, enlaces = []) {
+  const cuerpo = {
+    welcome: () => heroHTML(data, lang) + statementHTML(data, lang),
+    about: () => aboutHTML(data, lang),
+    "metodología": () => metodologiaHTML(data, lang),
+    condiciones: () => condicionesHTML(data, lang),
+    links: () => linksHTML(data, lang),
+    portfolio: () => portfolioHTML(data, lang),
+  }[celda];
+
+  return (cuerpo ? cuerpo() : "") + notaCeldaHTML(enlaces, lang);
+}
+
+/**
+ * El pie del bloque pre-renderizado: las otras celdas, en enlaces de verdad.
+ *
+ * Sin esto, un rastreador que no ejecuta JS vería seis páginas sueltas sin
+ * ningún camino entre ellas — el lienzo las une, pero el lienzo es JavaScript.
+ */
+function notaCeldaHTML(enlaces, lang) {
+  if (!enlaces.length) return "";
+  const items = enlaces.map(e =>
+    `<li><a href="${esc(e.href)}">${esc(e.texto)}</a></li>`).join("");
+  return `
+    <nav class="prerender-nota" aria-label="${esc(ui(lang).navegar)}">
+      <ul>${items}</ul>
+    </nav>`;
+}
+
 export function footerHTML(lang = "es") {
   // Mismo pie que /proyectos, las fichas y /archive: las cinco páginas
   // lineales terminan igual. Enlaza a la celda del lienzo por la que se llega
@@ -197,59 +340,4 @@ export function renderBodyHTML(data, lang) {
     footerHTML(lang);
 }
 
-/**
- * Cuerpo pre-renderizado para la HOME (index.html).
- *
- * El grid de index.html se monta por JS, así que su HTML llegaba sin una sola
- * línea de texto: un rastreador que no ejecuta JS (o que aún no ha hecho la
- * segunda pasada de render) veía la página vacía. Esto pone el mismo contenido
- * que pintan las celdas ya en el primer byte.
- *
- * Es el cuerpo de /easy sin el footer: ahí el footer es un enlace de vuelta a
- * index.html, que desde la propia home sería un enlace a sí misma.
- */
-export function renderHomePrerenderHTML(data, lang) {
-  return heroHTML(data, lang) +
-    portfolioHTML(data, lang) +
-    statementHTML(data, lang) +
-    metodologiaHTML(data, lang) +
-    contactoHTML(data, lang) +
-    notaPrerenderHTML(data, lang);
-}
 
-/**
- * Nota al pie del bloque pre-renderizado: qué es esta versión y a dónde ir.
- *
- * Va aquí y no fija en index.html por dos motivos: se traduce con el resto (si
- * no, /en y /ca la servirían en castellano), y es el único enlace a /archive y
- * a /proyectos que existe en el HTML crudo — sin él esas páginas quedaban
- * huérfanas, alcanzables solo por el sitemap y por los enlaces que pinta el JS.
- *
- * El índice de proyectos va en absoluto (y no "proyectos/index.html") porque es
- * la URL canónica que declaran esas páginas; enlazar a otra forma repartiría
- * señales. Y cada idioma enlaza al SUYO: mandar /en a /proyectos sería enviar al
- * visitante inglés a la versión castellana teniendo la suya. La tabla de rutas
- * vive en rutas.js para que el grid y la card del welcome usen la misma.
- *
- * /easy y /archive van sin extensión por lo mismo: Cloudflare responde 307 a
- * easy.html y archive.html, y estos tres son los únicos enlaces a esas páginas
- * que existen en el HTML crudo. No merece la pena que el rastreador gaste un
- * salto para llegar a ellas.
- */
-function notaPrerenderHTML(data, lang) {
-  const t = data.prerender || {};
-  const email = data.contacto?.email || "";
-  const li = (href, texto) => `<li><a href="${esc(href)}">${esc(texto)}</a></li>`;
-
-  return `
-    <nav class="prerender-nota" aria-label="${esc(pickLang(t.aviso, lang))}">
-      <p>${esc(pickLang(t.aviso, lang))}</p>
-      <ul>
-        ${li("/easy", pickLang(t.enlaceEasy, lang))}
-        ${li(rutaProyectos(lang), pickLang(t.enlaceProyectos, lang))}
-        ${li("/archive", pickLang(t.enlaceArchivo, lang))}
-      </ul>
-      <p>${esc(pickLang(t.escribeme, lang))}
-        <a href="mailto:${esc(email)}">${esc(email)}</a>.</p>
-    </nav>`;
-}

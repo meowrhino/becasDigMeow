@@ -17,6 +17,14 @@ let REDIRECTS = {};
 let posY = 0;
 let posX = 0;
 let onVistaActualizadaCb = null;
+// Función celda→ruta, opcional. Cuando existe, el lienzo vive en el pathname y
+// cada celda es una URL de verdad; cuando no, se guarda en el hash como
+// siempre. El archive es el segundo caso: otro documento, su propio lienzo.
+let rutaDe = null;
+// Y la inversa: de un pathname a la celda que le toca. Va aparte porque la
+// ida depende del idioma activo y la vuelta no: /en/about es la celda `about`
+// vengas del idioma que vengas, y de hecho es la URL la que decide el idioma.
+let celdaDeRutaFn = null;
 
 // Traductor del TEXTO VISIBLE de las celdas (zone label, nav labels, minimapa).
 // Por defecto es la identidad: se muestra el propio identificador de la celda.
@@ -40,7 +48,7 @@ export function setTraductorNombres(fn) {
  * `redirects` mapea destino → [aliases]. Resuelve en cadena:
  * { macarrones: ["links"], links: ["tools"] } hace que #tools → #links → #macarrones.
  */
-export function configurarNavegacion({ grid, nombres, clasesCss, posInicial, onUpdate, redirects }) {
+export function configurarNavegacion({ grid, nombres, clasesCss, posInicial, onUpdate, redirects, rutas }) {
   GRID = grid;
   NOMBRES_CELDAS = nombres;
   CLASE_CSS = clasesCss || {};
@@ -48,7 +56,20 @@ export function configurarNavegacion({ grid, nombres, clasesCss, posInicial, onU
   posY = posInicial?.y ?? 0;
   posX = posInicial?.x ?? 0;
   onVistaActualizadaCb = onUpdate || null;
+  rutaDe = typeof rutas?.de === "function" ? rutas.de : null;
+  celdaDeRutaFn = typeof rutas?.celdaDe === "function" ? rutas.celdaDe : null;
+
+  // Volver atrás tiene que deshacer el último deslizamiento, no sacarte del
+  // sitio: con rutas, cada celda es una entrada de historial.
+  if (rutaDe && !popstateEnganchado) {
+    popstateEnganchado = true;
+    window.addEventListener("popstate", () => {
+      if (leerURL()) actualizarVista({ historial: false });
+    });
+  }
 }
+
+let popstateEnganchado = false;
 
 function resolverAlias(hash) {
   let actual = hash;
@@ -306,20 +327,16 @@ function crearNavLabels(celda) {
   });
 }
 
-// --- Hash ---
+// --- La URL ---
+//
+// Dos modos, según haya tabla de rutas o no:
+//   con rutas → la celda vive en el pathname y cada una es una URL indexable.
+//   sin rutas → la celda vive en el hash, como siempre (es el caso del archive).
 
-function actualizarHash() {
-  const nombre = getNombrePagina();
-  const nuevoHash = nombre ? `#${nombre}` : "#";
-  history.replaceState(null, "", nuevoHash || window.location.pathname);
-}
-
-export function leerHash() {
-  const hash = decodeURIComponent(window.location.hash.replace("#", "")).toLowerCase().trim();
-  if (!hash) return false;
-  const resolved = resolverAlias(hash);
-  for (const [key, nombre] of Object.entries(NOMBRES_CELDAS)) {
-    if (nombre === resolved) {
+/** Coloca el lienzo en la celda `nombre`. Devuelve si la encontró. */
+function irACeldaLlamada(nombre) {
+  for (const [key, n] of Object.entries(NOMBRES_CELDAS)) {
+    if (n === nombre) {
       const [y, x] = key.split("_").map(Number);
       setPosicion(y, x);
       return true;
@@ -328,9 +345,58 @@ export function leerHash() {
   return false;
 }
 
+/**
+ * Escribe la celda activa en la URL.
+ *
+ * Con rutas se hace pushState y no replaceState: deslizar de una celda a otra
+ * es cambiar de página, y el botón «atrás» tiene que deshacerlo. Solo se
+ * empuja si la ruta cambia de verdad, para que repintar (cambio de idioma,
+ * resize) no llene el historial de entradas iguales.
+ */
+function actualizarURL(historial = true) {
+  const nombre = getNombrePagina();
+
+  if (rutaDe) {
+    const ruta = nombre ? rutaDe(nombre) : null;
+    if (!ruta) return;
+    if (normalizar(window.location.pathname) === normalizar(ruta)) return;
+    if (historial) history.pushState(null, "", ruta);
+    else history.replaceState(null, "", ruta);
+    return;
+  }
+
+  const nuevoHash = nombre ? `#${nombre}` : "#";
+  history.replaceState(null, "", nuevoHash || window.location.pathname);
+}
+
+/** `metodologia.html`, `/metodologia/` y `/metodologia` son la misma ruta. */
+const normalizar = (ruta) =>
+  (String(ruta ?? "").replace(/\.html$/, "").replace(/\/+$/, "") || "/");
+
+/**
+ * Coloca el lienzo según la URL de entrada. Primero el pathname (si hay tabla
+ * de rutas) y después el hash, que sigue funcionando: las 66 fichas de proyecto
+ * enlazan a `/#portfolio` y los enlaces viejos de fuera no se pueden arreglar.
+ */
+export function leerURL() {
+  // El hash manda cuando lo hay: las 66 fichas enlazan a `/#portfolio`, y los
+  // hash viejos (`#contacto`, `#statement`) siguen llevando a donde fue a parar
+  // su contenido. Si mirásemos primero el pathname, `/#contacto` se quedaría en
+  // la portada porque "/" ya resuelve a una celda.
+  if (leerHash()) return true;
+  const nombre = celdaDeRutaFn?.(window.location.pathname);
+  return nombre ? irACeldaLlamada(nombre) : false;
+}
+
+export function leerHash() {
+  const hash = decodeURIComponent(window.location.hash.replace("#", "")).toLowerCase().trim();
+  if (!hash) return false;
+  return irACeldaLlamada(resolverAlias(hash));
+}
+
 // --- Actualizar vista ---
 
-export function actualizarVista() {
+export function actualizarVista({ historial = true } = {}) {
   document.querySelectorAll(".celda").forEach(c => c.classList.remove("activa"));
   const activa = document.querySelector(`.pos_${posY}_${posX}`);
   if (activa) {
@@ -340,7 +406,7 @@ export function actualizarVista() {
   actualizarHeader();
   actualizarZoneLabel();
   actualizarMinimapExpandido();
-  actualizarHash();
+  actualizarURL(historial);
   if (onVistaActualizadaCb) onVistaActualizadaCb();
 }
 

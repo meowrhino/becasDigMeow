@@ -3,6 +3,7 @@
 // ============================================
 
 import { fetchJson } from "./utils.js";
+import { celdaDeRuta } from "./rutas.js";
 
 // --- Idioma global ---
 
@@ -45,10 +46,12 @@ function detectarIdiomaNavegador() {
 function idiomaDeLaRuta() {
   // Cloudflare sirve en.html como /en, así que normalizamos ambas formas.
   const ruta = location.pathname.replace(/\.html$/, "").replace(/\/+$/, "") || "/";
-  if (ruta === "/" || ruta === "/index") return "es";
-  if (ruta === "/en") return "en";
-  if (ruta === "/ca") return "cat";
-  return null;
+  if (ruta === "/index") return "es";
+  // Todas las celdas del lienzo tienen ruta por idioma, no solo la portada:
+  // quien cae en /en/about desde una búsqueda en inglés tiene que ver inglés
+  // aunque su última visita fuera en otro idioma. La tabla es la de rutas.js,
+  // que es la misma que usa el enrutado, así que no puede desincronizarse.
+  return celdaDeRuta(ruta)?.lang ?? null;
 }
 
 // Prioridad: idioma que impone la URL > preferencia guardada > navegador.
@@ -153,7 +156,11 @@ export function attachLangListeners(container, onLangChange) {
  */
 export async function cargarDatos() {
   if (dataCache) return dataCache;
-  dataCache = await fetchJson("data.json");
+  // Absoluta, no "data.json": desde que cada celda es una página, la misma
+  // aplicación se sirve en /about y en /en/about, y una ruta relativa buscaría
+  // el JSON en /en/data.json. Misma razón en las rutas de imagen del portfolio
+  // y de los logos del pie.
+  dataCache = await fetchJson("/data.json");
   // En el arranque, sincronizarLangDocumento(currentLang) ya corrió antes de
   // este fetch (dataCache aún era null), así que la meta description quedó
   // sin actualizar: la sincronizamos ahora que ya hay datos.

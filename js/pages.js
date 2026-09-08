@@ -181,52 +181,35 @@ export function renderWelcome(data) {
   // de contrato a alguien que todavía no sabe si le interesamos. Se mudó al
   // dorso del cupón, junto a lo que incluye, que es donde alguien ya está
   // preguntando el precio.
+  // Las cinco frases del statement viven aquí desde que dejó de ser celda: son
+  // el claim del estudio, y el claim va en la portada. Como pantalla aparte
+  // eran un cartel — cinco líneas no sostienen una página, y el porqué largo
+  // ya lo cuenta el about.
+  const lineasStatement = (lang) =>
+    (data.statement?.[lang]?.lineas || [])
+      .map(l => `<p>${escapeHTML(l)}</p>`).join("");
+
   el.innerHTML = `
     <div class="welcome-content">
       <h1 class="welcome-title">${escapeHTML(w.titulo)}</h1>
       <p class="welcome-tagline">${escapeHTML(pick(w.tagline, currentLang))}</p>
+      <div class="welcome-statement">${lineasStatement(currentLang)}</div>
     </div>
     ${buildLangButtons()}
   `;
 
   const taglineEl = el.querySelector(".welcome-tagline");
+  const statementEl = el.querySelector(".welcome-statement");
 
   // i18n en sitio: reusa el mecanismo de attachLangListeners (mismo patrón
   // que el cupón, que registra el suyo aparte sobre la misma celda).
   attachLangListeners(el, (lang) => {
     if (taglineEl) taglineEl.textContent = pick(w.tagline, lang);
+    if (statementEl) statementEl.innerHTML = lineasStatement(lang);
   });
 
   renderWelcomeCupon(el, w.cupon);
   renderWelcomeCard(el, data.portfolio?.proyectos);
-}
-
-// --- Statement ---
-
-export function renderStatement(data) {
-  const el = document.querySelector(".celda.statement");
-  if (!el || !data?.statement) return;
-
-  const buildContent = (lang) => {
-    const d = data.statement[lang];
-    if (!d) return "";
-    return d.lineas.map(l => `<p>${escapeHTML(l)}</p>`).join("");
-  };
-
-  el.innerHTML = `
-    <div class="statement-content">${buildContent(currentLang)}</div>
-    ${buildLangButtons()}
-  `;
-
-  const content = el.querySelector(".statement-content");
-  const applyScale = setupZoom(el, content);
-
-  attachLangListeners(el, (lang) => {
-    repaintWithFade(el, content,
-      () => { content.innerHTML = buildContent(lang); },
-      applyScale
-    );
-  });
 }
 
 // --- Metodología ---
@@ -280,7 +263,15 @@ export function renderMetodologia(data) {
 // Cada sección define su propio rotateMs. Nav inferior con botones (activo en bold).
 // Hover sobre el contenido pausa la rotación; mouseleave la reanuda.
 
-export function renderFooter(data) {
+/**
+ * La celda de la letra pequeña: condiciones, privacidad y financiación.
+ *
+ * Se llamaba `footer` y ahora se llama `condiciones`, que es lo que contiene:
+ * un pie de página es lo que va al final de TODAS las páginas, y esto era una
+ * pantalla más del lienzo. Conserva la clase css `.celda.footer` para no mover
+ * su hoja de estilos, que es larga y no ha cambiado.
+ */
+export function renderCondiciones(data) {
   const el = document.querySelector(".celda.footer");
   if (!el || !data?.footer) return;
 
@@ -304,7 +295,7 @@ export function renderFooter(data) {
       const tone = document.documentElement.getAttribute("data-theme") === "dark" ? "BLANCO" : "NEGRO";
       const logos = (s.logos || []).length
         ? `<div class="footer-logos">${s.logos.map(l =>
-            `<img src="img/LOGOS/${tone}/${escapeHTML(l.name)}.webp" alt="${escapeHTML(l.alt || '')}" class="footer-logo" data-logo-name="${escapeHTML(l.name)}" ${logoAttrs}>`
+            `<img src="/img/LOGOS/${tone}/${escapeHTML(l.name)}.webp" alt="${escapeHTML(l.alt || '')}" class="footer-logo" data-logo-name="${escapeHTML(l.name)}" ${logoAttrs}>`
           ).join("")}</div>`
         : "";
       const frase = s.frase ? `<p class="footer-frase">${escapeHTML(s.frase)}</p>` : "";
@@ -432,47 +423,73 @@ export function renderFooter(data) {
 
 // --- Contacto ---
 
-export function renderContacto(data) {
-  const el = document.querySelector(".celda.contacto");
-  if (!el || !data?.contacto) return;
+/**
+ * La celda `about`: quién es manu, por qué hace esto y cómo trabaja.
+ *
+ * Era la celda `contacto`, que tenía cuatro datos —email, instagram y el cv— y
+ * como página propia no se sostenía. El contacto sigue aquí, al final, que es
+ * donde se busca cuando ya has leído a quién estás escribiendo.
+ *
+ * El precio no se escribe en el texto: se lee del cupón de la portada, que es
+ * la única fuente. En la copia va como `{precio}` y se sustituye aquí, para
+ * que subirlo siga siendo cambiar un número en un sitio.
+ */
+export function renderAbout(data) {
+  const el = document.querySelector(".celda.about");
+  if (!el || !data?.about) return;
 
-  const { email, instagram, asunto, cv } = data.contacto;
-
-  // asunto y cv pueden ser string (legacy) o objeto por idioma
-  const pickLang = (val, lang) => {
-    if (val == null) return "";
-    if (typeof val === "string") return val;
-    return val[lang] || val.es || "";
-  };
+  const { email, instagram, asunto, cv } = data.contacto || {};
+  const precio = data.welcome?.cupon?.precio ?? "";
 
   const buildMailto = (lang) => {
-    const subject = pickLang(asunto, lang);
+    const subject = pick(asunto, lang);
     const params = new URLSearchParams();
     if (subject) params.set("subject", subject);
     return `mailto:${email}${params.toString() ? `?${params.toString()}` : ""}`;
   };
 
-  const cvHrefInicial = pickLang(cv, currentLang);
-  const cvHtml = cvHrefInicial
-    ? `<a class="contacto-cv" href="${escapeHTML(cvHrefInicial)}" target="_blank" rel="noopener">CV</a>`
-    : "";
+  const buildContent = (lang) => {
+    const d = data.about[lang] || data.about.es;
+    if (!d) return "";
+
+    const secciones = d.secciones.map(sec => `
+      <section class="about-seccion">
+        <h2 class="about-h">${escapeHTML(sec.titulo)}</h2>
+        ${sec.parrafos.map(t => `<p>${escapeHTML(t.replace("{precio}", precio))}</p>`).join("")}
+      </section>`).join("");
+
+    const foto = data.about.foto
+      ? `<img class="about-foto" src="/${escapeHTML(data.about.foto)}"
+             alt="${escapeHTML(pick(data.about.fotoAlt, lang))}"
+             width="1200" height="960" loading="lazy" decoding="async">`
+      : "";
+
+    const cvHref = pick(cv, lang);
+    return `
+      <p class="about-pregunta">${escapeHTML(d.pregunta)}</p>
+      ${foto}
+      ${secciones}
+      <div class="about-contacto">
+        <a class="contacto-email" href="${escapeHTML(buildMailto(lang))}">${escapeHTML(email)}</a>
+        <div class="contacto-row">
+          <a class="contacto-instagram" href="${escapeHTML(instagram.url)}"${esMovil ? "" : ' target="_blank"'} rel="noopener">${escapeHTML(instagram.usuario)}</a>
+          ${cvHref ? `<a class="contacto-cv" href="/${escapeHTML(cvHref)}" target="_blank" rel="noopener">CV</a>` : ""}
+        </div>
+      </div>`;
+  };
 
   el.innerHTML = `
-    <div class="contacto-content">
-      <a class="contacto-email" href="${escapeHTML(buildMailto(currentLang))}">${escapeHTML(email)}</a>
-      <div class="contacto-row">
-        <a class="contacto-instagram" href="${escapeHTML(instagram.url)}"${esMovil ? "" : ' target="_blank"'} rel="noopener">${escapeHTML(instagram.usuario)}</a>
-        ${cvHtml}
-      </div>
-    </div>
+    <div class="about-content">${buildContent(currentLang)}</div>
     ${buildLangButtons()}
   `;
 
-  const emailEl = el.querySelector(".contacto-email");
-  const cvEl = el.querySelector(".contacto-cv");
+  const content = el.querySelector(".about-content");
+  const applyScale = setupZoom(el, content);
 
   attachLangListeners(el, (lang) => {
-    if (emailEl) emailEl.href = buildMailto(lang);
-    if (cvEl) cvEl.href = pickLang(cv, lang);
+    repaintWithFade(el, content,
+      () => { content.innerHTML = buildContent(lang); },
+      applyScale
+    );
   });
 }

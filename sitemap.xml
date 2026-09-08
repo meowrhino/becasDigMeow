@@ -15,6 +15,46 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://meowrhino.studio/about</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/about"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/about"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/about"/>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/metodologia</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/metodologia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/methodology"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/metodologia"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/metodologia"/>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/condiciones</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/condiciones"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/condicions"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/condiciones"/>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/links</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/links"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/links"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/links"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/links"/>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://meowrhino.studio/en</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en"/>
@@ -25,6 +65,46 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://meowrhino.studio/en/about</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/about"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/about"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/about"/>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/methodology</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/metodologia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/methodology"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/metodologia"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/metodologia"/>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/terms</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/condiciones"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/condicions"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/condiciones"/>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/links</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/links"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/links"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/links"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/links"/>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://meowrhino.studio/ca</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en"/>
@@ -33,6 +113,46 @@
     <lastmod>2026-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/about</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/about"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/about"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/about"/>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/metodologia</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/metodologia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/methodology"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/metodologia"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/metodologia"/>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/condicions</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/condiciones"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/condicions"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/condiciones"/>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/links</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/links"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/links"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/links"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/links"/>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/archive</loc>

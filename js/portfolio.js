@@ -250,7 +250,7 @@ function renderGridProyectos(proyectos) {
     // habilita su ciclo de crossfade. En error se quita igual el skeleton.
     imgA.addEventListener("load", () => { thumb.classList.add("loaded"); marcarCicloListo(idx); });
     imgA.addEventListener("error", () => { thumb.classList.add("loaded"); marcarCicloListo(idx); });
-    imgA.dataset.src = proyecto.imagen;  // src diferido: se asigna al activar el portfolio
+    imgA.dataset.src = `/${proyecto.imagen}`;  // src diferido: se asigna al activar el portfolio
     thumb.appendChild(imgA);
 
     if (tieneCiclo) {
@@ -266,10 +266,10 @@ function renderGridProyectos(proyectos) {
       let showingA = true;
       suscribirCiclo(idx, (newIndex, imgs) => {
         if (showingA) {
-          imgB.src = imgs[newIndex];
+          imgB.src = `/${imgs[newIndex]}`;
           thumb.classList.add("crossfade-flip");
         } else {
-          imgA.src = imgs[newIndex];
+          imgA.src = `/${imgs[newIndex]}`;
           thumb.classList.remove("crossfade-flip");
         }
         showingA = !showingA;

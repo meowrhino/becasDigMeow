@@ -25,12 +25,12 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import {
-  esc, renderBodyHTML, renderHomePrerenderHTML,
+  esc, renderBodyHTML, renderCeldaPrerenderHTML,
 } from "./js/easy-template.js";
 import {
   enlacesDe, renderIndiceHTML, renderProyectoHTML,
 } from "./js/proyecto-template.js";
-import { slugify } from "./js/rutas.js";
+import { slugify, RUTA_CELDAS } from "./js/rutas.js";
 import { renderArchivePrerenderHTML } from "./js/archive-pages.js";
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
@@ -123,18 +123,6 @@ function reemplazarBloque(html, marker, contenido) {
     html.slice(endIdx);
 }
 
-/**
- * Los <link rel="alternate" hreflang> que se repiten en las tres variantes.
- * Cada página debe listar TODAS las alternativas, incluida ella misma, o Google
- * ignora el grupo entero. x-default marca a dónde mandar a quien no encaje en
- * ninguno de los tres idiomas.
- */
-function hreflangHTML() {
-  const alternas = IDIOMAS.map(i =>
-    `  <link rel="alternate" hreflang="${i.htmlLang}" href="${urlDe(i)}">`
-  ).join("\n");
-  return `${alternas}\n  <link rel="alternate" hreflang="x-default" href="${urlDe(POR_DEFECTO)}">`;
-}
 
 /**
  * Datos estructurados del estudio, en el idioma de la página.
@@ -184,37 +172,102 @@ function jsonLdHTML(data, idioma) {
   return `  <script type="application/ld+json">\n${json}\n  </script>`;
 }
 
-/** Bloque <head> que depende del idioma. */
-function headHTML(data, idioma) {
-  const titulo = pick(data.meta?.title, idioma.code);
-  const desc = pick(data.meta?.description, idioma.code);
-  const url = urlDe(idioma);
+
+// ============================================
+// PÁGINAS DE CELDA (una URL por celda del lienzo)
+// ============================================
+//
+// El lienzo era una sola URL con la celda en el hash: para un buscador, UNA
+// página con el texto de todas las secciones dentro, y /easy sirviendo una
+// copia entera con canonical a la raíz. Ahora cada celda tiene su HTML, su
+// title, su description y su canonical, y el JS coloca el lienzo en la celda
+// que dice la URL (ver RUTA_CELDAS en js/rutas.js).
+//
+// Todas se generan de la MISMA plantilla que la home (index.html): son la misma
+// aplicación. Lo único que cambia es la cabecera y el bloque pre-renderizado.
+
+/** De una ruta al archivo que Cloudflare sirve en ella: /en/about → en/about.html */
+const archivoDeRuta = (ruta) => (ruta === "/" ? "index.html" : `${ruta.slice(1)}.html`);
+
+/** Las páginas de celda de un idioma, sacadas de la tabla de rutas. */
+function celdasDe(idioma) {
+  const tabla = RUTA_CELDAS[idioma.code] || {};
+  return Object.entries(tabla).map(([celda, ruta]) => ({
+    celda, ruta, archivo: archivoDeRuta(ruta), url: `${SITE}${ruta}`,
+  }));
+}
+
+/** Las alternativas de idioma de una celda, para el <link hreflang>. */
+function hreflangCeldaHTML(celda) {
+  const filas = IDIOMAS.map(i => {
+    const ruta = RUTA_CELDAS[i.code]?.[celda];
+    return ruta ? `  <link rel="alternate" hreflang="${i.htmlLang}" href="${SITE}${ruta}">` : null;
+  }).filter(Boolean);
+  const porDefecto = RUTA_CELDAS[POR_DEFECTO.code]?.[celda];
+  if (porDefecto) {
+    filas.push(`  <link rel="alternate" hreflang="x-default" href="${SITE}${porDefecto}">`);
+  }
+  return filas.join("\n");
+}
+
+/**
+ * Los enlaces a las demás celdas, para el pie del bloque pre-renderizado.
+ *
+ * Sin JavaScript, cada página de celda sería un callejón sin salida: el lienzo
+ * las une deslizando, pero deslizar es JavaScript. Estos enlaces son el camino
+ * que recorre un rastreador, y también la salida real de quien navega sin JS.
+ */
+function enlacesEntreCeldas(data, idioma, celdaActual) {
+  const tabla = RUTA_CELDAS[idioma.code] || {};
+  const zone = data.zoneLabels || {};
+  const nombreVisible = (c) => pick(zone[c], idioma.code) || c;
+
+  const otras = Object.entries(tabla)
+    .filter(([c]) => c !== celdaActual)
+    .map(([c, ruta]) => ({ href: ruta, texto: nombreVisible(c) }));
+
+  // El portfolio todavía no es una celda con ruta, pero es la página con más
+  // contenido del sitio: no puede quedarse fuera del camino.
+  otras.push({ href: idioma.proyBase, texto: pick(data.zoneLabels?.portfolio, idioma.code) || "portfolio" });
+  return otras;
+}
+
+/** Cabecera de una página de celda: su title, su description y su canonical. */
+function headCeldaHTML(data, idioma, celda, url) {
+  // La portada sigue usando `meta`, que es el title por el que compite el sitio
+  // entero; las demás celdas tienen el suyo en `seoCeldas`.
+  const fuente = celda === "welcome" ? data.meta : data.seoCeldas?.[celda];
+  const titulo = pick(fuente?.title, idioma.code);
+  const desc = pick(fuente?.description, idioma.code);
 
   return [
     `  <meta name="description" content="${esc(desc)}">`,
     `  <title>${esc(titulo)}</title>`,
     `  <link rel="canonical" href="${url}">`,
-    hreflangHTML(),
+    hreflangCeldaHTML(celda),
     `  <meta property="og:title" content="${esc(titulo)}">`,
     `  <meta property="og:description" content="${esc(desc)}">`,
     `  <meta property="og:url" content="${url}">`,
     `  <meta property="og:locale" content="${idioma.ogLocale}">`,
     `  <meta name="twitter:title" content="${esc(titulo)}">`,
     `  <meta name="twitter:description" content="${esc(desc)}">`,
-    jsonLdHTML(data, idioma),
-  ].join("\n");
+    // El JSON-LD del estudio solo tiene sentido una vez, en la portada de cada
+    // idioma: repetirlo en cinco URLs sería declarar cinco veces el mismo
+    // negocio.
+    celda === "welcome" ? jsonLdHTML(data, idioma) : "",
+  ].filter(Boolean).join("\n");
 }
 
-/** Genera el HTML completo de una variante de la home a partir de la plantilla. */
-function paginaHome(plantilla, data, idioma) {
-  let html = reemplazarBloque(plantilla, "head", headHTML(data, idioma));
+/** El HTML de una página de celda, a partir de la plantilla de la home. */
+function paginaCelda(plantilla, data, idioma, { celda, url }) {
+  const enlaces = enlacesEntreCeldas(data, idioma, celda);
+  let html = reemplazarBloque(plantilla, "head", headCeldaHTML(data, idioma, celda, url));
   html = reemplazarBloque(html, "preload", modulepreloadHTML("main.js"));
-  html = reemplazarBloque(html, "home", renderHomePrerenderHTML(data, idioma.code));
-  // El <html lang> tiene que coincidir con el contenido pre-renderizado: es la
-  // señal que lee data.js al arrancar para saber en qué idioma pintarse.
+  html = reemplazarBloque(html, "home", renderCeldaPrerenderHTML(data, idioma.code, celda, enlaces));
   html = html.replace(/<html lang="[^"]*"/, `<html lang="${idioma.htmlLang}"`);
   return html;
 }
+
 
 // ============================================
 // PÁGINAS DE PROYECTO (/proyectos/<slug>)
@@ -584,13 +637,24 @@ function sitemapXML(fichas = [], cambiadas = new Set()) {
   ).join("\n") +
     `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${urlDe(POR_DEFECTO)}"/>`;
 
-  const homes = IDIOMAS.map(i => `  <url>
-    <loc>${urlDe(i)}</loc>
-${alternas}
-    <lastmod>${fechaDe(urlDe(i), i.file)}</lastmod>
+  // Una entrada por celda y por idioma. La portada mantiene prioridad 1.0; las
+  // demás celdas son páginas de contenido, no la puerta del sitio.
+  const alternasCelda = (celda) =>
+    IDIOMAS.map(i => {
+      const r = RUTA_CELDAS[i.code]?.[celda];
+      return r ? `    <xhtml:link rel="alternate" hreflang="${i.htmlLang}" href="${SITE}${r}"/>` : null;
+    }).filter(Boolean).join("\n") +
+    (RUTA_CELDAS[POR_DEFECTO.code]?.[celda]
+      ? `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${RUTA_CELDAS[POR_DEFECTO.code][celda]}"/>`
+      : "");
+
+  const homes = IDIOMAS.flatMap(i => celdasDe(i).map(({ celda, url, archivo }) => `  <url>
+    <loc>${url}</loc>
+${alternasCelda(celda)}
+    <lastmod>${fechaDe(url, archivo)}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>`).join("\n");
+    <priority>${celda === "welcome" ? "1.0" : "0.8"}</priority>
+  </url>`)).join("\n");
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <!-- Generado por build-seo.js. No editar a mano. -->
@@ -661,8 +725,15 @@ function main() {
       if (escribirSiCambia(nombre, contenido)) cambiadas.add(nombre);
     };
 
+    // Una página por celda y por idioma. La portada (index.html, en.html,
+    // ca.html) es la celda `welcome` y sale de aquí como las demás: antes se
+    // generaba aparte y era la única del lienzo con URL.
     for (const idioma of IDIOMAS) {
-      generar(idioma.file, paginaHome(plantillaHome, data, idioma));
+      for (const pagina of celdasDe(idioma)) {
+        const dir = dirname(join(ROOT, pagina.archivo));
+        mkdirSync(dir, { recursive: true });
+        generar(pagina.archivo, paginaCelda(plantillaHome, data, idioma, pagina));
+      }
     }
 
     const easy = readFileSync(join(ROOT, "easy.html"), "utf8");

@@ -964,6 +964,95 @@ a.nav-label:visited {
 }
 
 /* ============================================
+   11b. PAGE: ABOUT
+   Quién es manu, por qué hace esto y cómo trabaja.
+   Es la celda más larga del lienzo: va con la misma caja de scroll que
+   metodología, con la foto y los apartados dentro.
+   ============================================ */
+
+.celda.about {
+  flex-direction: column;
+}
+
+.about-content {
+  width: 70dvw;
+  max-width: 640px;
+  max-height: 80dvh;
+  overflow-y: auto;
+  text-align: center;
+  line-height: 1.7;
+  font-size: clamp(0.82rem, 1.1dvw, 1.05rem);
+  padding: 4dvh 0;
+  scrollbar-width: none;
+}
+.about-content::-webkit-scrollbar { display: none; }
+
+/* La pregunta con la que empieza todo. Va sola y grande: es literalmente lo
+   primero que manu le dice a alguien que acaba de conocer. */
+.about-pregunta {
+  font-size: clamp(1.1rem, 2.2dvw, 1.6rem);
+  line-height: 1.35;
+  margin-bottom: 2.2rem;
+}
+
+/* Redonda y pequeña: es una foto de perfil, no un retrato de portada. El
+   ancho fijo evita que empuje el texto mientras carga. */
+.about-foto {
+  width: clamp(7rem, 12dvw, 10rem);
+  height: clamp(7rem, 12dvw, 10rem);
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto 2.4rem;
+}
+
+.about-seccion { margin-bottom: 2.4rem; }
+
+.about-h {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-bottom: 0.9rem;
+}
+
+.about-seccion p {
+  margin-bottom: 1.2em;
+  color: var(--text-content);
+}
+.about-seccion p:last-child { margin-bottom: 0; }
+
+/* En móvil, 70dvw son 260px: demasiado estrecho para cinco apartados de texto
+   seguidos. El about es la celda más larga del lienzo y se lee de arriba abajo,
+   así que se le da casi todo el ancho. */
+@media (max-width: 768px) {
+  .about-content { width: 86dvw; max-height: 78dvh; }
+}
+
+/* El contacto cierra la página: los mismos estilos que tenía la celda
+   contacto, que es de donde vienen estas tres cosas. */
+.about-contacto {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Las cinco frases del statement, ahora bajo el tagline de la portada. Un
+   escalón por debajo del tagline para que el orden de lectura no cambie:
+   nombre, qué somos, y luego el detalle. */
+.welcome-statement {
+  margin-top: 1.4rem;
+  font-size: clamp(0.7rem, 1dvw, 0.85rem);
+  line-height: 1.65;
+  color: var(--text-secondary);
+  max-width: 30rem;
+}
+.welcome-statement p { margin: 0; }
+
+/* ============================================
    12. PAGE: FOOTER
    Términos de pago y condiciones del estudio.
    ============================================ */

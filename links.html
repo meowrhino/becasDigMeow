@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+  <!-- Bloque que depende del idioma (título, description, canonical, og/twitter
+       y los hreflang). Lo genera build-seo.js para las tres variantes de la home:
+       index.html (es), en.html y ca.html. NO editar a mano: los textos salen de
+       data.json (meta.title / meta.description). -->
+  <!-- BUILD:head:start -->
+  <meta name="description" content="las herramientas que hacemos y publicamos abiertas: comprimir imágenes y vídeo en el navegador, generar facturas sin registro, calcular precios de autónom·a, y los experimentos que van saliendo.">
+  <title>herramientas y experimentos libres — meowrhino studio</title>
+  <link rel="canonical" href="https://meowrhino.studio/links">
+  <link rel="alternate" hreflang="es" href="https://meowrhino.studio/links">
+  <link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/links">
+  <link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/links">
+  <link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/links">
+  <meta property="og:title" content="herramientas y experimentos libres — meowrhino studio">
+  <meta property="og:description" content="las herramientas que hacemos y publicamos abiertas: comprimir imágenes y vídeo en el navegador, generar facturas sin registro, calcular precios de autónom·a, y los experimentos que van saliendo.">
+  <meta property="og:url" content="https://meowrhino.studio/links">
+  <meta property="og:locale" content="es_ES">
+  <meta name="twitter:title" content="herramientas y experimentos libres — meowrhino studio">
+  <meta name="twitter:description" content="las herramientas que hacemos y publicamos abiertas: comprimir imágenes y vídeo en el navegador, generar facturas sin registro, calcular precios de autónom·a, y los experimentos que van saliendo.">
+  <!-- BUILD:head:end -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="meowrhino studio">
+  <meta property="og:image" content="https://meowrhino.studio/favicon/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="meowrhino studio — estudio de diseño web en Barcelona">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://meowrhino.studio/favicon/og-image.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="icon" href="/favicon/favicon.ico">
+  <link rel="preload" href="/fonts/inknut-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+  <script>
+    // Anti-flash: resuelve el tema antes del primer render.
+    // Prioridad: localStorage > prefers-color-scheme > light (default studio).
+    (function() {
+      var t = localStorage.getItem("meowrhino-theme");
+      if (!t && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";
+      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+      // Marca que hay JS ANTES de que el body se parsee, para que el CSS oculte
+      // el bloque pre-renderizado (#seo-prerender) desde el primer pintado: el
+      // visitante ve el grid, nunca un destello del contenido estático. Sin JS
+      // la clase no se pone y el bloque queda visible como fallback real.
+      document.documentElement.classList.add("js");
+    })();
+  </script>
+  <!-- BUILD:preload:start -->
+  <link rel="modulepreload" href="/js/main.js">
+  <link rel="modulepreload" href="/js/data.js">
+  <link rel="modulepreload" href="/js/navigation.js">
+  <link rel="modulepreload" href="/js/pages.js">
+  <link rel="modulepreload" href="/js/portfolio.js">
+  <link rel="modulepreload" href="/js/rutas.js">
+  <link rel="modulepreload" href="/js/theme.js">
+  <link rel="modulepreload" href="/js/shell.js">
+  <link rel="modulepreload" href="/js/utils.js">
+  <link rel="modulepreload" href="/js/zoom.js">
+  <link rel="modulepreload" href="/js/scroll-gradients.js">
+  <link rel="modulepreload" href="/js/welcome-card.js">
+  <link rel="modulepreload" href="/js/welcome-cupon.js">
+  <link rel="modulepreload" href="/js/proyecto-template.js">
+  <link rel="modulepreload" href="/js/rebote.js">
+  <link rel="modulepreload" href="/js/easy-template.js">
+  <!-- BUILD:preload:end -->
+</head>
+<body>
+  <a href="#content" class="skip-link">saltar al contenido</a>
+  <main id="content" role="main" tabindex="-1">
+    <!-- Contenido pre-renderizado por build-seo.js: el mismo texto que pintan
+         las celdas del grid, disponible en el primer byte para los buscadores.
+         Oculto por CSS en cuanto hay JS y eliminado del DOM por main.js; sin JS
+         se queda como versión estática navegable. NO editar a mano: se regenera
+         desde data.json en cada commit que la toque. -->
+    <div id="seo-prerender">
+      <!-- BUILD:home:start -->
+
+    <section class="easy-section easy-links" id="links">
+      <div class="easy-links-grupo">
+        <h2 class="easy-h">herramientas</h2>
+        <ul class="easy-links-lista"><li><a href="https://trackr.meowrhino.studio/" target="_blank" rel="noopener">trackr</a></li><li><a href="https://meowrhino.github.io/calculadoraInversa/" target="_blank" rel="noopener">calculadora impuestos</a></li><li><a href="https://meowrhino.github.io/generadorFacturas/" target="_blank" rel="noopener">generador facturas</a></li><li><a href="https://meowrhino.github.io/imgToWeb/" target="_blank" rel="noopener">imgToWeb</a></li><li><a href="https://meowrhino.github.io/videoToWeb/" target="_blank" rel="noopener">videoToWeb</a></li><li><a href="https://meowrhino.github.io/contarTexto/" target="_blank" rel="noopener">contarTexto</a></li><li><a href="https://meowrhino.github.io/fcyp/" target="_blank" rel="noopener">limpiatexto</a></li><li><a href="https://meowrhino.github.io/guiaVSCode/" target="_blank" rel="noopener">guia vscode</a></li></ul>
+      </div>
+      <div class="easy-links-grupo">
+        <h2 class="easy-h">experimentos</h2>
+        <ul class="easy-links-lista"><li><a href="https://piuler.meowrhino.studio/" target="_blank" rel="noopener">piuler</a></li><li><a href="https://twoitter.meowrhino.studio/" target="_blank" rel="noopener">twoitter</a></li><li><a href="https://profile.meowrhino.studio/" target="_blank" rel="noopener">profilePics</a></li><li><a href="https://chords.meowrhino.studio/" target="_blank" rel="noopener">chords</a></li><li><a href="https://meowrhino.github.io/colorFun/" target="_blank" rel="noopener">colorfun</a></li><li><a href="https://meowrhino.github.io/poporingGenerator/" target="_blank" rel="noopener">poporingGenerator</a></li><li><a href="https://meowrhino.github.io/animeTest/" target="_blank" rel="noopener">animeTest</a></li><li><a href="https://meowrhino.github.io/wholeSignHouseChart/" target="_blank" rel="noopener">carta astral (zodiaco)</a></li><li><a href="https://meowrhino.github.io/hexagramaNacimiento/" target="_blank" rel="noopener">carta astral (i-ching)</a></li><li><a href="https://meowrhino.github.io/moixi/" target="_blank" rel="noopener">moixi</a></li><li><a href="https://arxiu.meowrhino.studio" target="_blank" rel="noopener">arxiu</a></li></ul>
+      </div>
+      <div class="easy-links-grupo">
+        <h2 class="easy-h">wip</h2>
+        <ul class="easy-links-lista"><li><a href="https://meowrhino.github.io/retals/" target="_blank" rel="noopener">retals</a></li><li><a href="https://meowrhino.github.io/VNGenerator/" target="_blank" rel="noopener">VNGenerator</a></li><li><a href="https://meowrhino.github.io/ajutscat/" target="_blank" rel="noopener">ajutsCat</a></li></ul>
+      </div>
+      <div class="easy-links-grupo">
+        <h2 class="easy-h">varios</h2>
+        <ul class="easy-links-lista"><li><a href="https://bici.meowrhino.studio/" target="_blank" rel="noopener">bici</a></li><li><a href="https://foro.meowrhino.studio/" target="_blank" rel="noopener">foro</a></li><li><a href="https://geomag.meowrhino.studio/" target="_blank" rel="noopener">geomag</a></li><li><a href="https://lemuria.meowrhino.studio/" target="_blank" rel="noopener">lemuria</a></li><li><a href="https://meowboard.meowrhino.studio/" target="_blank" rel="noopener">meowboard</a></li><li><a href="https://messenger.meowrhino.studio/" target="_blank" rel="noopener">messenger</a></li><li><a href="https://networking.meowrhino.studio/" target="_blank" rel="noopener">networking</a></li><li><a href="https://petra.meowrhino.studio/" target="_blank" rel="noopener">petra</a></li><li><a href="https://pspsps.meowrhino.studio/" target="_blank" rel="noopener">pspsps</a></li><li><a href="https://rumrum.meowrhino.studio/" target="_blank" rel="noopener">rumrum</a></li><li><a href="https://toctoc.meowrhino.studio/" target="_blank" rel="noopener">toctoc</a></li><li><a href="https://meowrhino.github.io/guiaSetupCloudflarePages/" target="_blank" rel="noopener">guia setup cloudflare pages</a></li></ul>
+      </div>
+    </section>
+    <nav class="prerender-nota" aria-label="seguir navegando">
+      <ul><li><a href="/">bienvenida</a></li><li><a href="/about">about</a></li><li><a href="/metodologia">metodología</a></li><li><a href="/condiciones">condiciones</a></li><li><a href="/proyectos">portfolio</a></li></ul>
+    </nav>
+  <!-- BUILD:home:end -->
+    </div>
+  </main>
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

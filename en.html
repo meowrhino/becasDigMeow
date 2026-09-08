@@ -69,12 +69,12 @@
   <meta property="og:image:alt" content="meowrhino studio — estudio de diseño web en Barcelona">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://meowrhino.studio/favicon/og-image.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-  <link rel="icon" href="favicon/favicon.ico">
-  <link rel="preload" href="fonts/inknut-400-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="icon" href="/favicon/favicon.ico">
+  <link rel="preload" href="/fonts/inknut-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
   <script>
     // Anti-flash: resuelve el tema antes del primer render.
     // Prioridad: localStorage > prefers-color-scheme > light (default studio).
@@ -95,6 +95,7 @@
   <link rel="modulepreload" href="/js/navigation.js">
   <link rel="modulepreload" href="/js/pages.js">
   <link rel="modulepreload" href="/js/portfolio.js">
+  <link rel="modulepreload" href="/js/rutas.js">
   <link rel="modulepreload" href="/js/theme.js">
   <link rel="modulepreload" href="/js/shell.js">
   <link rel="modulepreload" href="/js/utils.js">
@@ -103,7 +104,6 @@
   <link rel="modulepreload" href="/js/welcome-card.js">
   <link rel="modulepreload" href="/js/welcome-cupon.js">
   <link rel="modulepreload" href="/js/proyecto-template.js">
-  <link rel="modulepreload" href="/js/rutas.js">
   <link rel="modulepreload" href="/js/rebote.js">
   <link rel="modulepreload" href="/js/easy-template.js">
   <!-- BUILD:preload:end -->
@@ -134,256 +134,16 @@
         <a class="easy-btn" href="mailto:hola@meowrhino.studio?subject=I%20want%20a%20website!">let's talk</a>
       </div>
     </section>
-    <section class="easy-section easy-portfolio" id="portfolio">
-      <h2 class="easy-h">portfolio</h2>
-      <div class="portfolio-grid">
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/rikamichie"><img class="pgrid-img pgrid-img-a" src="img/rikamichie/1.webp"
-                 alt="rikamichie — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/rikamichie">rikamichie</a>
-            <a class="pgrid-caso" href="/en/projects/rikamichie">see the case →</a>
-          </div>
-        </div>
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/andrea-carilla"><img class="pgrid-img pgrid-img-a" src="img/andreacarilla/1.webp"
-                 alt="andrea carilla — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/andrea-carilla">andrea carilla</a>
-            <a class="pgrid-caso" href="/en/projects/andrea-carilla">see the case →</a>
-          </div>
-        </div>
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/diego-san-marcos"><img class="pgrid-img pgrid-img-a" src="img/diegosanmarcos/1.webp"
-                 alt="diego san marcos — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/diego-san-marcos">diego san marcos</a>
-            <a class="pgrid-caso" href="/en/projects/diego-san-marcos">see the case →</a>
-          </div>
-        </div>
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/mike-bros"><img class="pgrid-img pgrid-img-a" src="img/mikebros/1.webp"
-                 alt="mike bros — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/mike-bros">mike bros</a>
-            <a class="pgrid-caso" href="/en/projects/mike-bros">see the case →</a>
-          </div>
-        </div>
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/miranda"><img class="pgrid-img pgrid-img-a" src="img/miranda/1.webp"
-                 alt="miranda — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/miranda">miranda</a>
-            <a class="pgrid-caso" href="/en/projects/miranda">see the case →</a>
-          </div>
-        </div>
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/la-diega"><img class="pgrid-img pgrid-img-a" src="img/ladiega/1.webp"
-                 alt="la diega — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/la-diega">la diega</a>
-            <a class="pgrid-caso" href="/en/projects/la-diega">see the case →</a>
-          </div>
-        </div>
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/930blurberrie"><img class="pgrid-img pgrid-img-a" src="img/blurberrie/1.webp"
-                 alt="930blurberrie — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/930blurberrie">930blurberrie</a>
-            <a class="pgrid-caso" href="/en/projects/930blurberrie">see the case →</a>
-          </div>
-        </div>
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/barbara-wong"><img class="pgrid-img pgrid-img-a" src="img/barbarawong/1.webp"
-                 alt="barbara wong — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/barbara-wong">barbara wong</a>
-            <a class="pgrid-caso" href="/en/projects/barbara-wong">see the case →</a>
-          </div>
-        </div>
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/mokakopa-twins"><img class="pgrid-img pgrid-img-a" src="img/mokakopatwins/1.webp"
-                 alt="mokakopaTwins — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/mokakopa-twins">mokakopaTwins</a>
-            <a class="pgrid-caso" href="/en/projects/mokakopa-twins">see the case →</a>
-          </div>
-        </div>
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/vicios-torpes"><img class="pgrid-img pgrid-img-a" src="img/viciostorpes/1.webp"
-                 alt="vicios torpes — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/vicios-torpes">vicios torpes</a>
-            <a class="pgrid-caso" href="/en/projects/vicios-torpes">see the case →</a>
-          </div>
-        </div>
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/valentin"><img class="pgrid-img pgrid-img-a" src="img/valentin/1.webp"
-                 alt="valentin — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/valentin">valentin</a>
-            <a class="pgrid-caso" href="/en/projects/valentin">see the case →</a>
-          </div>
-        </div>
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/conor"><img class="pgrid-img pgrid-img-a" src="img/conor/1.webp"
-                 alt="conor — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/conor">conor</a>
-            <a class="pgrid-caso" href="/en/projects/conor">see the case →</a>
-          </div>
-        </div>
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/maxito"><img class="pgrid-img pgrid-img-a" src="img/maxito/1.webp"
-                 alt="maxito — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/maxito">maxito</a>
-            <a class="pgrid-caso" href="/en/projects/maxito">see the case →</a>
-          </div>
-        </div>
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/jaume-clotet"><img class="pgrid-img pgrid-img-a" src="img/jaumeclotet/1.webp"
-                 alt="jaume clotet — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/jaume-clotet">jaume clotet</a>
-            <a class="pgrid-caso" href="/en/projects/jaume-clotet">see the case →</a>
-          </div>
-        </div>
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/berta-esteve"><img class="pgrid-img pgrid-img-a" src="img/bertaesteve/1.webp"
-                 alt="berta esteve — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/berta-esteve">berta esteve</a>
-            <a class="pgrid-caso" href="/en/projects/berta-esteve">see the case →</a>
-          </div>
-        </div>
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/noan-cittadino"><img class="pgrid-img pgrid-img-a" src="img/noan/1.webp"
-                 alt="noan cittadino — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/noan-cittadino">noan cittadino</a>
-            <a class="pgrid-caso" href="/en/projects/noan-cittadino">see the case →</a>
-          </div>
-        </div>
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/estructuras3000"><img class="pgrid-img pgrid-img-a" src="img/estructuras3000/1.webp"
-                 alt="estructuras3000 — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/estructuras3000">estructuras3000</a>
-            <a class="pgrid-caso" href="/en/projects/estructuras3000">see the case →</a>
-          </div>
-        </div>
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/paula-barjau"><img class="pgrid-img pgrid-img-a" src="img/paulabarjau/1.webp"
-                 alt="paula barjau — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/paula-barjau">paula barjau</a>
-            <a class="pgrid-caso" href="/en/projects/paula-barjau">see the case →</a>
-          </div>
-        </div>
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/el-mundo-de-las-jordis"><img class="pgrid-img pgrid-img-a" src="img/elmundodelasjordis/1.webp"
-                 alt="el mundo de las jordis — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/el-mundo-de-las-jordis">el mundo de las jordis</a>
-            <a class="pgrid-caso" href="/en/projects/el-mundo-de-las-jordis">see the case →</a>
-          </div>
-        </div>
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/christine"><img class="pgrid-img pgrid-img-a" src="img/christine/1.webp"
-                 alt="christine — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/christine">christine</a>
-            <a class="pgrid-caso" href="/en/projects/christine">see the case →</a>
-          </div>
-        </div>
-        <div class="pgrid-item">
-          <a class="pgrid-thumb" href="/en/projects/villagranota"><img class="pgrid-img pgrid-img-a" src="img/villagranota/1.webp"
-                 alt="villagranota — web diseñada por meowrhino studio, Barcelona" width="1600" height="1049"
-                 loading="lazy" decoding="async"></a>
-          <div class="pgrid-meta">
-            <a class="pgrid-nombre" href="/en/projects/villagranota">villagranota</a>
-            <a class="pgrid-caso" href="/en/projects/villagranota">see the case →</a>
-          </div>
-        </div>
-      </div>
-    </section>
     <section class="easy-section easy-statement" id="statement">
       <h2 class="easy-h">statement</h2>
       <p class="easy-statement-line">we are a web design studio in barcelona</p><p class="easy-statement-line">we make websites for a more communal, close and living internet</p><p class="easy-statement-line">websites from scratch, with you: unique inside and out</p><p class="easy-statement-line">we teach you to maintain and customize it your way</p><p class="easy-statement-line">and if you'd rather not, we'll maintain it for you</p>
     </section>
-    <section class="easy-section" id="metodologia">
-      <h2 class="easy-h">methodology</h2>
-      <ol class="easy-steps">
-    <li class="easy-step">
-      <span class="easy-step-num">01</span>
-      <p class="easy-step-text">we start with a free meeting. bring 3–5 references of things you like or don't: websites, other interfaces, sketches on a napkin. we go through them together and talk about structure, look and money. before we leave we set a date for the second one and a list of what we need from you: texts, images and your visual identity if you have one.</p>
-    </li>
-    <li class="easy-step">
-      <span class="easy-step-num">02</span>
-      <p class="easy-step-text">your website is ready in a month, counting from the day your material lands — not from the day we meet. we hold the second meeting within the two weeks after the first, with your material already sent. if more than two weeks go by and there is no material, we stop — we have set aside a month of our calendar and we cannot keep it hanging. picking it up again costs 10%, which is what it costs to make room for you again. it is not a fine: the month we were keeping for you already went to someone else.</p>
-    </li>
-    <li class="easy-step">
-      <span class="easy-step-num">03</span>
-      <p class="easy-step-text">with the material on the table we put together a design proposal. take as long as you need to decide: better you think it over now than halfway through the coding. once you are happy and the first payment lands (half), we start writing code.</p>
-    </li>
-    <li class="easy-step">
-      <span class="easy-step-num">04</span>
-      <p class="easy-step-text">there are three deliveries —the design, the code once it starts to take shape, and the final code— and one round of revisions per delivery. each round can hold several changes. what we close at one delivery does not reopen at the next: it is not rigidity, reopening closed decisions is exactly what turns one month into six. the design does move again when it goes from sketch to a real website that has to work on a phone: that does not count as a round, it is part of the job. design usually takes 1–2 weeks and coding another 1–2. with the material on time, a month end to end.</p>
-    </li>
-    <li class="easy-step">
-      <span class="easy-step-num">05</span>
-      <p class="easy-step-text">with the code approved and the other half paid, we meet one last time, in front of your computer. you leave that meeting knowing how to update your website without us: that is the point, not an extra. if you need it we set up your domain (we recommend cloudflare) and it stays in your name, not ours.</p>
-    </li>
-    <li class="easy-step">
-      <span class="easy-step-num">06</span>
-      <p class="easy-step-text">after delivery you have two weeks to tell us what is broken or to spend the rounds you have left. from there, changes are €60/hour. we say it plainly because the alternative is the usual one: a monthly fee you pay every month for nothing. here you only pay when you actually want to change something — and if you learned to do it yourself, you do not pay.</p>
-    </li></ol>
-    </section>
-    <section class="easy-section easy-contacto" id="contacto">
-      <h2 class="easy-h">contact</h2>
-      <a class="easy-email" href="mailto:hola@meowrhino.studio?subject=I%20want%20a%20website!">hola@meowrhino.studio</a>
-      <div class="easy-contacto-cta">
-        <a class="easy-btn" href="mailto:hola@meowrhino.studio?subject=I%20want%20a%20website!">let's talk</a>
-      </div>
-      <div class="easy-contacto-links">
-        <a href="https://instagram.com/meowrhino" target="_blank" rel="noopener">@meowrhino</a>
-        <a href="cv_manu_en.pdf" target="_blank" rel="noopener">cv</a>
-      </div>
-    </section>
-    <nav class="prerender-nota" aria-label="This page uses JavaScript for its interactive navigation. You can also see:">
-      <p>This page uses JavaScript for its interactive navigation. You can also see:</p>
-      <ul>
-        <li><a href="/easy">the single-page version</a></li>
-        <li><a href="/en/projects">the page for each project</a></li>
-        <li><a href="/archive">the archive of projects and experiments</a></li>
-      </ul>
-      <p>or write to me at
-        <a href="mailto:hola@meowrhino.studio">hola@meowrhino.studio</a>.</p>
+    <nav class="prerender-nota" aria-label="keep browsing">
+      <ul><li><a href="/en/about">about</a></li><li><a href="/en/methodology">methodology</a></li><li><a href="/en/terms">condiciones</a></li><li><a href="/en/links">links</a></li><li><a href="/en/projects">portfolio</a></li></ul>
     </nav>
   <!-- BUILD:home:end -->
     </div>
   </main>
-  <script type="module" src="js/main.js"></script>
+  <script type="module" src="/js/main.js"></script>
 </body>
 </html>

@@ -33,7 +33,7 @@ import { setupKeyboardNav, setupResizeDebounce } from "./shell.js";
 let archiveData = null;
 
 async function cargarDatosArchive() {
-  archiveData = await fetchJson("archive-data.json");
+  archiveData = await fetchJson("/archive-data.json");
   return archiveData;
 }
 

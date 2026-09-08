@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+  <!-- Bloque que depende del idioma (título, description, canonical, og/twitter
+       y los hreflang). Lo genera build-seo.js para las tres variantes de la home:
+       index.html (es), en.html y ca.html. NO editar a mano: los textos salen de
+       data.json (meta.title / meta.description). -->
+  <!-- BUILD:head:start -->
+  <meta name="description" content="a freelancer who makes websites for his friends. who i am, why i make websites outside social media, and how i work: one month, three deliveries, and the code is yours.">
+  <title>who is behind this — manu latour, custom web design in barcelona</title>
+  <link rel="canonical" href="https://meowrhino.studio/en/about">
+  <link rel="alternate" hreflang="es" href="https://meowrhino.studio/about">
+  <link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/about">
+  <link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/about">
+  <link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/about">
+  <meta property="og:title" content="who is behind this — manu latour, custom web design in barcelona">
+  <meta property="og:description" content="a freelancer who makes websites for his friends. who i am, why i make websites outside social media, and how i work: one month, three deliveries, and the code is yours.">
+  <meta property="og:url" content="https://meowrhino.studio/en/about">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:title" content="who is behind this — manu latour, custom web design in barcelona">
+  <meta name="twitter:description" content="a freelancer who makes websites for his friends. who i am, why i make websites outside social media, and how i work: one month, three deliveries, and the code is yours.">
+  <!-- BUILD:head:end -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="meowrhino studio">
+  <meta property="og:image" content="https://meowrhino.studio/favicon/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="meowrhino studio — estudio de diseño web en Barcelona">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://meowrhino.studio/favicon/og-image.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="icon" href="/favicon/favicon.ico">
+  <link rel="preload" href="/fonts/inknut-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+  <script>
+    // Anti-flash: resuelve el tema antes del primer render.
+    // Prioridad: localStorage > prefers-color-scheme > light (default studio).
+    (function() {
+      var t = localStorage.getItem("meowrhino-theme");
+      if (!t && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";
+      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+      // Marca que hay JS ANTES de que el body se parsee, para que el CSS oculte
+      // el bloque pre-renderizado (#seo-prerender) desde el primer pintado: el
+      // visitante ve el grid, nunca un destello del contenido estático. Sin JS
+      // la clase no se pone y el bloque queda visible como fallback real.
+      document.documentElement.classList.add("js");
+    })();
+  </script>
+  <!-- BUILD:preload:start -->
+  <link rel="modulepreload" href="/js/main.js">
+  <link rel="modulepreload" href="/js/data.js">
+  <link rel="modulepreload" href="/js/navigation.js">
+  <link rel="modulepreload" href="/js/pages.js">
+  <link rel="modulepreload" href="/js/portfolio.js">
+  <link rel="modulepreload" href="/js/rutas.js">
+  <link rel="modulepreload" href="/js/theme.js">
+  <link rel="modulepreload" href="/js/shell.js">
+  <link rel="modulepreload" href="/js/utils.js">
+  <link rel="modulepreload" href="/js/zoom.js">
+  <link rel="modulepreload" href="/js/scroll-gradients.js">
+  <link rel="modulepreload" href="/js/welcome-card.js">
+  <link rel="modulepreload" href="/js/welcome-cupon.js">
+  <link rel="modulepreload" href="/js/proyecto-template.js">
+  <link rel="modulepreload" href="/js/rebote.js">
+  <link rel="modulepreload" href="/js/easy-template.js">
+  <!-- BUILD:preload:end -->
+</head>
+<body>
+  <a href="#content" class="skip-link">saltar al contenido</a>
+  <main id="content" role="main" tabindex="-1">
+    <!-- Contenido pre-renderizado por build-seo.js: el mismo texto que pintan
+         las celdas del grid, disponible en el primer byte para los buscadores.
+         Oculto por CSS en cuanto hay JS y eliminado del DOM por main.js; sin JS
+         se queda como versión estática navegable. NO editar a mano: se regenera
+         desde data.json en cada commit que la toque. -->
+    <div id="seo-prerender">
+      <!-- BUILD:home:start -->
+
+    <section class="easy-section easy-about" id="about">
+      <h1 class="easy-about-pregunta">shall i help you make your little corner of the internet?</h1>
+      <img class="easy-about-foto" src="/img/manu/manu.webp" alt="manu latour, web designer in barcelona"
+             width="1200" height="960" loading="lazy" decoding="async">
+      <div class="easy-about-bloque">
+        <h2 class="easy-h">who i am</h2>
+        <p>a freelancer who makes websites for his friends.</p><p>i'm manu latour, i design and code from barcelona. i come from art and design (escola massana) and since 2020 i've been making custom websites for artists, photographers, musicians, collectives and people working for themselves.</p><p>i also make free tools for whatever i need: compressing images without uploading them to any server, generating invoices without signing up, working out what you actually earn as a freelancer.</p>
+      </div>
+      <div class="easy-about-bloque">
+        <h2 class="easy-h">why</h2>
+        <p>it matters that we start imagining a future outside social media. there are a thousand reasons: censorship, protest against technocrats, being able to delete instagram the day the news overwhelms you without disappearing off the map, work no longer being an excuse to scroll.</p><p>social media is turning into content platforms, and what falls away is the social and the fun: you publish in the format you're given, for whichever algorithm is in charge, and what you make never quite ends up being yours.</p><p>a website of your own is the place where you decide what gets told about you. some people call these digital gardens: spaces that look nothing like the places where we spend the day. i think we're still in time to use the internet differently.</p><p>and it is really yours: the day you fall out with the server, with the provider or with me, you take your files and go. there is nothing to rescue, because it never stopped being yours.</p>
+      </div>
+      <div class="easy-about-bloque">
+        <h2 class="easy-h">no ads, no format</h2>
+        <p>you decide where everything goes, how it is laid out, what ways the elements can be arranged, what you upload and what you don't.</p><p>nobody moderates: there is no one else's content policy, it's your house. and there is no format: if your portfolio makes sense as a floppy drive, it is a floppy drive.</p>
+      </div>
+      <div class="easy-about-bloque">
+        <h2 class="easy-h">how i work</h2>
+        <p>my main goal is to understand your work, your project or your business and try to translate it into a website. we design it together: you are part of the creative process. we might even &quot;argue&quot; over the small details :P</p><p>one month end to end, starting when you send me your material. three deliveries —the design, the code once it takes shape, and the final code— and one round of revisions per delivery.</p><p>and you leave understanding what you have: want to update it yourself? you can. want me to do it? you can too. but you leave knowing how.</p>
+      </div>
+      <div class="easy-about-bloque">
+        <h2 class="easy-h">the price</h2>
+        <p>how much do you pay for your website? almost everyone's business isn't making you a website, it's charging you every month for one you can't touch and don't own. here you pay for my work once: 850 € + vat, and the code is yours.</p>
+      </div>
+      <p class="easy-about-contacto">
+        <a href="mailto:hola@meowrhino.studio?subject=I%20want%20a%20website!">hola@meowrhino.studio</a>
+        <a href="https://instagram.com/meowrhino" target="_blank" rel="noopener">@meowrhino</a>
+        <a href="/cv_manu_en.pdf" target="_blank" rel="noopener">cv</a>
+      </p>
+    </section>
+    <nav class="prerender-nota" aria-label="keep browsing">
+      <ul><li><a href="/en">welcome</a></li><li><a href="/en/methodology">methodology</a></li><li><a href="/en/terms">condiciones</a></li><li><a href="/en/links">links</a></li><li><a href="/en/projects">portfolio</a></li></ul>
+    </nav>
+  <!-- BUILD:home:end -->
+    </div>
+  </main>
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

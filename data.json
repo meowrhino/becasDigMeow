@@ -12,6 +12,57 @@
       "cat": "meowrhino studio — estudi de disseny web a Barcelona. Webs de codi obert, sense quotes de manteniment."
     }
   },
+  "seoCeldas": {
+    "_comment": "Title y description de cada celda del lienzo, que ahora es una URL propia. La portada usa `meta`, que ya existía. Sin esto, las cuatro páginas nuevas heredarían el title de la home y competirían entre ellas.",
+    "about": {
+      "title": {
+        "es": "quién está detrás — manu latour, diseño web a medida en barcelona",
+        "en": "who is behind this — manu latour, custom web design in barcelona",
+        "cat": "qui hi ha darrere — manu latour, disseny web a mida a barcelona"
+      },
+      "description": {
+        "es": "un autónomo que hace webs a sus amigas. quién soy, por qué hago webs fuera de las redes sociales y cómo trabajo: un mes, tres entregas y el código es tuyo.",
+        "en": "a freelancer who makes websites for his friends. who i am, why i make websites outside social media, and how i work: one month, three deliveries, and the code is yours.",
+        "cat": "un autònom que fa webs a les seves amigues. qui sóc, per què faig webs fora de les xarxes socials i com treballo: un mes, tres lliuraments i el codi és teu."
+      }
+    },
+    "metodología": {
+      "title": {
+        "es": "cómo trabajamos: tu web a medida en un mes — meowrhino studio",
+        "en": "how we work: your custom website in a month — meowrhino studio",
+        "cat": "com treballem: la teva web a mida en un mes — meowrhino studio"
+      },
+      "description": {
+        "es": "el proceso entero, sin letra pequeña: reunión gratis, el mes empieza con tu material, tres entregas con una ronda de revisión cada una, y sales sabiendo mantener tu web.",
+        "en": "the whole process, no small print: free first meeting, the month starts with your material, three deliveries with one round of revisions each, and you leave knowing how to maintain your website.",
+        "cat": "el procés sencer, sense lletra petita: reunió gratis, el mes comença amb el teu material, tres lliuraments amb una ronda de revisió cadascun, i en surts sabent mantenir la teva web."
+      }
+    },
+    "condiciones": {
+      "title": {
+        "es": "condiciones, privacidad y financiación — meowrhino studio",
+        "en": "terms, privacy and funding — meowrhino studio",
+        "cat": "condicions, privacitat i finançament — meowrhino studio"
+      },
+      "description": {
+        "es": "la letra pequeña del estudio: condiciones de contratación, política de privacidad y cookies, y la financiación pública de este proyecto.",
+        "en": "the studio's small print: terms of engagement, privacy and cookie policy, and the public funding behind this project.",
+        "cat": "la lletra petita de l'estudi: condicions de contractació, política de privacitat i galetes, i el finançament públic d'aquest projecte."
+      }
+    },
+    "links": {
+      "title": {
+        "es": "herramientas y experimentos libres — meowrhino studio",
+        "en": "free tools and experiments — meowrhino studio",
+        "cat": "eines i experiments lliures — meowrhino studio"
+      },
+      "description": {
+        "es": "las herramientas que hacemos y publicamos abiertas: comprimir imágenes y vídeo en el navegador, generar facturas sin registro, calcular precios de autónom·a, y los experimentos que van saliendo.",
+        "en": "the tools we make and publish openly: compress images and video in the browser, generate invoices without signing up, work out freelance rates, plus the experiments along the way.",
+        "cat": "les eines que fem i publiquem obertes: comprimir imatges i vídeo al navegador, generar factures sense registre, calcular preus d'autònom·a, i els experiments que van sortint."
+      }
+    }
+  },
   "prerender": {
     "_comment": "Nota al pie del bloque pre-renderizado de la home. Solo la ven los buscadores y quien navegue sin JS; con JS el bloque se oculta y se elimina. Los enlaces los compone easy-template.js (renderHomePrerenderHTML).",
     "aviso": {
@@ -344,6 +395,143 @@
         "hi ha tres lliuraments —el disseny, la programació quan ja comença a agafar forma, i la programació final— i una ronda de revisió per lliurament. cada ronda pot portar diversos ajustos a dins. el que tanquem en un lliurament no el reobrim en el següent: no és rigidesa, reobrir decisions tancades és exactament el que converteix un mes en sis. el disseny sí que es torna a moure quan passa d'esbós a web de debò i s'ha de fer funcionar en un mòbil: això no compta com a ronda, és part de la feina. solem trigar 1–2 setmanes en disseny i unes altres 1–2 en programació. amb el material a temps, un mes de punta a punta.",
         "amb el codi aprovat i l'altra meitat pagada ens veiem un últim cop, davant del teu ordinador. surts d'aquella reunió sabent actualitzar la teva web sense nosaltres: aquest és l'objectiu, no un extra. si cal et configurem el domini (et recomanem cloudflare) i et queda al teu nom, no al nostre.",
         "després del lliurament tens dues setmanes per dir-nos què falla o gastar les rondes que et quedin. a partir d'aquí, els canvis van a 60 €/hora. ho diem clar perquè l'alternativa és la de sempre: una quota mensual que pagues cada mes per res. aquí només pagues quan de debò vols canviar alguna cosa — i si has après a tocar-ho tu, no pagues."
+      ]
+    }
+  },
+  "about": {
+    "foto": "img/manu/manu.webp",
+    "fotoAlt": {
+      "es": "manu latour, diseñador web en barcelona",
+      "en": "manu latour, web designer in barcelona",
+      "cat": "manu latour, dissenyador web a barcelona"
+    },
+    "es": {
+      "pregunta": "¿te ayudo a hacer tu rinconcito en internet?",
+      "secciones": [
+        {
+          "titulo": "quién soy",
+          "parrafos": [
+            "un autónomo que hace webs a sus amigas.",
+            "soy manu latour, diseño y programo desde barcelona. vengo del arte y el diseño (escola massana) y desde 2020 hago webs a medida para artistas, fotógrafos, músicos, colectivos y gente que trabaja por su cuenta.",
+            "también hago herramientas libres para lo que me hace falta: comprimir imágenes sin subirlas a ningún servidor, generar facturas sin registro, calcular lo que de verdad cobras siendo autónom·a."
+          ]
+        },
+        {
+          "titulo": "por qué",
+          "parrafos": [
+            "es importante que nos empecemos a imaginar un futuro fuera de las redes sociales. hay mil motivos: la censura, la protesta contra los tecnócratas, poder desinstalarte instagram el día que estés abrumada por las noticias sin desaparecer del mapa, que el trabajo deje de ser una excusa para scrollear.",
+            "las redes se están convirtiendo en plataformas de contenido, y lo que se cae por el camino es lo social y lo divertido: publicas en el formato que te dan, para el algoritmo que toque, y lo que haces nunca acaba de ser del todo tuyo.",
+            "una web propia es el sitio donde decides qué se cuenta de ti. hay quien llama a esto jardines digitales: espacios que no se parecen a los sitios donde pasamos el día. creo que todavía estamos a tiempo de usar internet de otra manera.",
+            "y es tuya de verdad: el día que te pelees con el servidor, con el proveedor o conmigo, coges tus archivos y te vas. no hay nada que rescatar, porque nunca dejó de ser tuyo."
+          ]
+        },
+        {
+          "titulo": "sin publicidad, sin formato",
+          "parrafos": [
+            "tú decides dónde va cada cosa, cómo se distribuye, de qué maneras se ordenan los elementos, qué subes y qué no subes.",
+            "nadie modera: no hay política de contenido de nadie más, es tu casa. y no hay formato: si tu portfolio tiene sentido siendo una disquetera, es una disquetera."
+          ]
+        },
+        {
+          "titulo": "cómo trabajo",
+          "parrafos": [
+            "mi objetivo principal es entender tu trabajo, tu proyecto o tu negocio e intentar traducirlo a una página web. la web la diseñamos juntos: formas parte del proceso creativo. igual hasta nos «peleamos» por los detalles pequeños :P",
+            "un mes de principio a fin, que empieza cuando me mandas el material. tres entregas —el diseño, la programación cuando ya tiene forma, y la programación final— y una ronda de revisión por entrega.",
+            "y sales entendiendo qué es lo que tienes: ¿quieres actualizarla tú? puedes. ¿quieres que lo haga yo? también puedes. pero sales sabiendo hacerlo."
+          ]
+        },
+        {
+          "titulo": "el precio",
+          "parrafos": [
+            "¿cuánto pagas por tu web? el negocio de casi todo el mundo no es hacerte una web, es cobrarte todos los meses por una que no puedes tocar y que no es tuya. aquí pagas por mi trabajo una vez: {precio} + iva, y el código es tuyo."
+          ]
+        }
+      ]
+    },
+    "en": {
+      "pregunta": "shall i help you make your little corner of the internet?",
+      "secciones": [
+        {
+          "titulo": "who i am",
+          "parrafos": [
+            "a freelancer who makes websites for his friends.",
+            "i'm manu latour, i design and code from barcelona. i come from art and design (escola massana) and since 2020 i've been making custom websites for artists, photographers, musicians, collectives and people working for themselves.",
+            "i also make free tools for whatever i need: compressing images without uploading them to any server, generating invoices without signing up, working out what you actually earn as a freelancer."
+          ]
+        },
+        {
+          "titulo": "why",
+          "parrafos": [
+            "it matters that we start imagining a future outside social media. there are a thousand reasons: censorship, protest against technocrats, being able to delete instagram the day the news overwhelms you without disappearing off the map, work no longer being an excuse to scroll.",
+            "social media is turning into content platforms, and what falls away is the social and the fun: you publish in the format you're given, for whichever algorithm is in charge, and what you make never quite ends up being yours.",
+            "a website of your own is the place where you decide what gets told about you. some people call these digital gardens: spaces that look nothing like the places where we spend the day. i think we're still in time to use the internet differently.",
+            "and it is really yours: the day you fall out with the server, with the provider or with me, you take your files and go. there is nothing to rescue, because it never stopped being yours."
+          ]
+        },
+        {
+          "titulo": "no ads, no format",
+          "parrafos": [
+            "you decide where everything goes, how it is laid out, what ways the elements can be arranged, what you upload and what you don't.",
+            "nobody moderates: there is no one else's content policy, it's your house. and there is no format: if your portfolio makes sense as a floppy drive, it is a floppy drive."
+          ]
+        },
+        {
+          "titulo": "how i work",
+          "parrafos": [
+            "my main goal is to understand your work, your project or your business and try to translate it into a website. we design it together: you are part of the creative process. we might even \"argue\" over the small details :P",
+            "one month end to end, starting when you send me your material. three deliveries —the design, the code once it takes shape, and the final code— and one round of revisions per delivery.",
+            "and you leave understanding what you have: want to update it yourself? you can. want me to do it? you can too. but you leave knowing how."
+          ]
+        },
+        {
+          "titulo": "the price",
+          "parrafos": [
+            "how much do you pay for your website? almost everyone's business isn't making you a website, it's charging you every month for one you can't touch and don't own. here you pay for my work once: {precio} + vat, and the code is yours."
+          ]
+        }
+      ]
+    },
+    "cat": {
+      "pregunta": "t'ajudo a fer el teu raconet a internet?",
+      "secciones": [
+        {
+          "titulo": "qui sóc",
+          "parrafos": [
+            "un autònom que fa webs a les seves amigues.",
+            "sóc en manu latour, dissenyo i programo des de barcelona. vinc de l'art i el disseny (escola massana) i des del 2020 faig webs a mida per a artistes, fotògrafs, músics, col·lectius i gent que treballa pel seu compte.",
+            "també faig eines lliures per al que em fa falta: comprimir imatges sense pujar-les a cap servidor, generar factures sense registre, calcular el que de debò cobres sent autònom·a."
+          ]
+        },
+        {
+          "titulo": "per què",
+          "parrafos": [
+            "és important que comencem a imaginar un futur fora de les xarxes socials. hi ha mil motius: la censura, la protesta contra els tecnòcrates, poder desinstal·lar-te instagram el dia que estiguis aclaparada per les notícies sense desaparèixer del mapa, que la feina deixi de ser una excusa per scrollejar.",
+            "les xarxes s'estan convertint en plataformes de contingut, i el que es perd pel camí és el social i el divertit: publiques en el format que et donen, per a l'algoritme que toqui, i el que fas mai acaba de ser del tot teu.",
+            "una web pròpia és el lloc on decideixes què s'explica de tu. hi ha qui en diu jardins digitals: espais que no s'assemblen als llocs on passem el dia. crec que encara hi som a temps d'usar internet d'una altra manera.",
+            "i és teva de debò: el dia que et barallis amb el servidor, amb el proveïdor o amb mi, agafes els teus arxius i te'n vas. no hi ha res a rescatar, perquè mai va deixar de ser teu."
+          ]
+        },
+        {
+          "titulo": "sense publicitat, sense format",
+          "parrafos": [
+            "tu decideixes on va cada cosa, com es distribueix, de quines maneres s'ordenen els elements, què puges i què no puges.",
+            "ningú modera: no hi ha política de contingut de ningú més, és casa teva. i no hi ha format: si el teu portfolio té sentit sent una disquetera, és una disquetera."
+          ]
+        },
+        {
+          "titulo": "com treballo",
+          "parrafos": [
+            "el meu objectiu principal és entendre la teva feina, el teu projecte o el teu negoci i intentar traduir-ho a una pàgina web. la web la dissenyem junts: formes part del procés creatiu. igual fins i tot ens «barallem» pels detalls petits :P",
+            "un mes de punta a punta, que comença quan m'envies el material. tres lliuraments —el disseny, la programació quan ja té forma, i la programació final— i una ronda de revisió per lliurament.",
+            "i en surts entenent què és el que tens: vols actualitzar-la tu? pots. vols que ho faci jo? també pots. però en surts sabent fer-ho."
+          ]
+        },
+        {
+          "titulo": "el preu",
+          "parrafos": [
+            "quant pagues per la teva web? el negoci de gairebé tothom no és fer-te una web, és cobrar-te cada mes per una que no pots tocar i que no és teva. aquí pagues per la meva feina un cop: {precio} + iva, i el codi és teu."
+          ]
+        }
       ]
     }
   },

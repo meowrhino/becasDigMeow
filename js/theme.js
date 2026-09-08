@@ -48,7 +48,7 @@ function aplicarTema(tema) {
   }
   const tone = tema === "dark" ? "BLANCO" : "NEGRO";
   document.querySelectorAll(".footer-logo[data-logo-name]").forEach(img => {
-    img.src = `img/LOGOS/${tone}/${img.dataset.logoName}.webp`;
+    img.src = `/img/LOGOS/${tone}/${img.dataset.logoName}.webp`;
   });
   forzarRepaintCapasCompuestas();
 }

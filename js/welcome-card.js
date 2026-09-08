@@ -156,7 +156,7 @@ function crearTarjeta(celda, orden, enPantalla, turno, config, arranque) {
   const pintar = () => {
     const p = orden[i];
 
-    imgEl.src = p.imagen;
+    imgEl.src = `/${p.imagen}`;
     nombreEl.textContent = p.nombre;
     // El destino y los textos dependen del idioma: en /en y /ca la card
     // enlazaba a la página castellana, que es mandar al visitante inglés a la
@@ -168,7 +168,7 @@ function crearTarjeta(celda, orden, enPantalla, turno, config, arranque) {
     // el cambio no enseña un hueco. Solo una — precargar las 20 en la portada
     // sería tirar ancho de banda del visitante.
     const siguiente = orden[proximoIndice(i, orden.length, enPantalla)];
-    if (siguiente) new Image().src = siguiente.imagen;
+    if (siguiente) new Image().src = `/${siguiente.imagen}`;
   };
 
   const avanzar = () => {
