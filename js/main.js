@@ -93,8 +93,9 @@ document.getElementById("seo-prerender")?.remove();
 // competir por su búsqueda, en vez de amontonarse todo en la raíz.
 //
 // Cambios respecto a la rejilla anterior:
-//   · `statement` desaparece como celda — sus cinco frases son el claim del
-//     estudio y su sitio es la portada, no una pantalla aparte.
+//   · `statement` desaparece como celda: sus líneas son ahora la entrada del
+//     about, que es donde se explica qué es esto. Como pantalla aparte eran un
+//     cartel de cinco frases.
 //   · `contacto` se convierte en `about`: cuatro datos de contacto no sostienen
 //     una página, pero quién eres y por qué haces esto sí, y el email sigue ahí.
 //   · `footer` pasa a llamarse `condiciones`, que es lo que de verdad contiene.

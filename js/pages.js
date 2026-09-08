@@ -208,16 +208,17 @@ export function renderMetodologia(data) {
   const el = document.querySelector(".celda.metodologia");
   if (!el || !data?.metodologia) return;
 
-  // Intro y cierre enmarcan los pasos: el qué buscamos antes de empezar y el
-  // para qué al terminar. Se separan de `lineas` porque los pasos van
-  // numerados y esto no es un paso.
+  // Cada paso es un titular con lo que pasa y debajo el detalle. Antes era un
+  // párrafo por paso, y los seis se leían como un muro: lo importante de cada
+  // uno quedaba enterrado en mitad de la frase.
   const buildContent = (lang) => {
-    const d = data.metodologia[lang];
-    if (!d) return "";
-    const p = (l) => `<p>${escapeHTML(l)}</p>`;
-    return (d.intro || []).map(l => `<p class="metodologia-intro">${escapeHTML(l)}</p>`).join("") +
-      d.lineas.map(p).join("") +
-      (d.cierre || []).map(l => `<p class="metodologia-cierre">${escapeHTML(l)}</p>`).join("");
+    const pasos = (data.metodologia[lang] || data.metodologia.es)?.pasos || [];
+    return pasos.map((paso, i) => `
+      <div class="metodologia-paso">
+        <span class="metodologia-num">${String(i + 1).padStart(2, "0")}</span>
+        <p class="metodologia-titular">${escapeHTML(paso.titular)}</p>
+        ${(paso.parrafos || []).map(t => `<p>${escapeHTML(t)}</p>`).join("")}
+      </div>`).join("");
   };
 
   el.innerHTML = `
@@ -486,37 +487,13 @@ export function renderAbout(data) {
     const d = data.about[lang] || data.about.es;
     if (!d) return "";
 
-    // Un párrafo que en data.json sea un array se pinta como lista: lo pide el
-    // texto una sola vez (las tres entregas de "cómo trabajo") y no compensa
-    // inventarse un campo aparte que habría que mantener en tres idiomas.
-    const parrafo = (t) => Array.isArray(t)
-      ? `<ol class="about-lista">${t.map(i => `<li>${escapeHTML(i)}</li>`).join("")}</ol>`
-      : `<p>${escapeHTML(t.replace("{precio}", precio))}</p>`;
-
-    // Un apartado puede acabar en un enlace a otra celda: el about cuenta el
-    // proceso en dos líneas y el detalle vive en metodología, que es la página
-    // que va de eso. Contarlo entero en los dos sitios era el duplicado que
-    // acabamos de quitarnos de encima con /easy.
-    const enlace = (e) => e
-      ? `<p class="about-enlace"><a href="${escapeHTML(rutaCelda(e.celda, currentLang) || "/")}">${escapeHTML(e.texto)}</a></p>`
-      : "";
-
-    const secciones = d.secciones.map(sec => `
-      <section class="about-seccion">
-        <h2 class="about-h">${escapeHTML(sec.titulo)}</h2>
-        ${sec.parrafos.map(parrafo).join("")}${enlace(sec.enlace)}
-      </section>`).join("");
-
-    // Las cinco frases del statement abren la página: dicen qué es el estudio
-    // en una respiración, y todo lo que viene detrás las desarrolla. Estuvieron
-    // un rato en la portada y ahí sobraban — la portada es el nombre y ya.
-    const statement = (data.statement?.[lang] || data.statement?.es || {}).lineas || [];
-
     const cvHref = pick(cv, lang);
+    const p = (t) => `<p>${escapeHTML(t.replace("{precio}", precio))}</p>`;
+
     return `
-      <p class="about-pregunta">${escapeHTML(d.pregunta)}</p>
-      <div class="about-statement">${statement.map(l => `<p>${escapeHTML(l)}</p>`).join("")}</div>
-      ${secciones}
+      <h1 class="about-pregunta">${escapeHTML(d.pregunta)}</h1>
+      <div class="about-entrada">${(d.entrada || []).map(p).join("")}</div>
+      <div class="about-texto">${(d.parrafos || []).map(p).join("")}</div>
       <div class="about-contacto">
         <a class="contacto-email" href="${escapeHTML(buildMailto(lang))}">${escapeHTML(email)}</a>
         <div class="contacto-row">

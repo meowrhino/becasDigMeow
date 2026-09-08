@@ -26,17 +26,17 @@ export const esc = (s) => String(s ?? "")
  * «metodología», «contacto» y «visitar ↗» en castellano — que es justo el texto
  * que lee Google de la home inglesa y la catalana.
  *
- * `portfolio` y `statement` se quedan igual en los tres a propósito: son los
+ * `portfolio` se queda igual en los tres a propósito: es de los
  * mismos términos que usan los nombres de celda del grid.
  */
 export const UI = {
-  es:  { portfolio: "portfolio", statement: "statement", metodologia: "metodología",
+  es:  { portfolio: "portfolio", metodologia: "metodología",
          contacto: "contacto", caso: "ver el caso →", navegar: "seguir navegando",
          volverRejilla: "← volver al portfolio" },
-  en:  { portfolio: "portfolio", statement: "statement", metodologia: "methodology",
+  en:  { portfolio: "portfolio", metodologia: "methodology",
          contacto: "contact", caso: "see the case →", navegar: "keep browsing",
          volverRejilla: "← back to the portfolio" },
-  cat: { portfolio: "portfolio", statement: "statement", metodologia: "metodologia",
+  cat: { portfolio: "portfolio", metodologia: "metodologia",
          contacto: "contacte", caso: "veure el cas →",
          volverRejilla: "← tornar al portfolio", navegar: "seguir navegant" },
 };
@@ -128,22 +128,20 @@ export function portfolioHTML(data, lang) {
 }
 
 export function metodologiaHTML(data, lang) {
-  const m = data.metodologia?.[lang] || data.metodologia?.es || {};
-  const lineas = m.lineas || [];
-  const pasos = lineas.map((l, i) => `
+  const pasos = (data.metodologia?.[lang] || data.metodologia?.es || {}).pasos || [];
+  const items = pasos.map((paso, i) => `
     <li class="easy-step">
       <span class="easy-step-num">${String(i + 1).padStart(2, "0")}</span>
-      <p class="easy-step-text">${esc(l)}</p>
+      <div class="easy-step-text">
+        <p class="easy-step-titular">${esc(paso.titular)}</p>
+        ${(paso.parrafos || []).map(t => `<p>${esc(t)}</p>`).join("")}
+      </div>
     </li>`).join("");
-  const suelto = (ls, clase) => (ls || [])
-    .map(l => `<p class="${clase}">${esc(l)}</p>`).join("");
 
   return `
     <section class="easy-section" id="metodologia">
       <h2 class="easy-h">${esc(ui(lang).metodologia)}</h2>
-      ${suelto(m.intro, "easy-metodologia-intro")}
-      <ol class="easy-steps">${pasos}</ol>
-      ${suelto(m.cierre, "easy-metodologia-cierre")}
+      <ol class="easy-steps">${items}</ol>
     </section>`;
 }
 
@@ -163,29 +161,13 @@ export function aboutHTML(data, lang) {
   const co = data.contacto || {};
   const asunto = encodeURIComponent(co.asunto?.[lang] || co.asunto?.es || "");
   const cv = co.cv?.[lang] || co.cv?.es;
-
-  // Ver la nota en pages.js: un párrafo que sea un array es una lista.
-  const parrafo = (t) => Array.isArray(t)
-    ? `<ol class="easy-about-lista">${t.map(i => `<li>${esc(i)}</li>`).join("")}</ol>`
-    : `<p>${esc(t.replace("{precio}", precio))}</p>`;
-
-  const enlace = (e) => e
-    ? `<p class="easy-about-enlace"><a href="${esc(rutaCelda(e.celda, lang) || "/")}">${esc(e.texto)}</a></p>`
-    : "";
-
-  const secciones = (d.secciones || []).map(sec => `
-      <div class="easy-about-bloque">
-        <h2 class="easy-h">${esc(sec.titulo)}</h2>
-        ${(sec.parrafos || []).map(parrafo).join("")}${enlace(sec.enlace)}
-      </div>`).join("");
-
-  const lineas = (data.statement?.[lang] || data.statement?.es || {}).lineas || [];
-  const statement = lineas.map(l => `<p class="easy-statement-line">${esc(l)}</p>`).join("");
+  const p = (t) => `<p>${esc(t.replace("{precio}", precio))}</p>`;
 
   return `
     <section class="easy-section easy-about" id="about">
       <h1 class="easy-about-pregunta">${esc(d.pregunta || "")}</h1>
-      ${statement}${secciones}
+      <div class="easy-about-entrada">${(d.entrada || []).map(p).join("")}</div>
+      ${(d.parrafos || []).map(p).join("")}
       <p class="easy-about-contacto">
         <a href="mailto:${esc(co.email)}?subject=${asunto}">${esc(co.email)}</a>
         ${co.instagram ? `<a href="${esc(co.instagram.url)}" target="_blank" rel="noopener">${esc(co.instagram.usuario)}</a>` : ""}
@@ -268,7 +250,7 @@ export function linksHTML(data, lang) {
  * lo suyo; lo demás se alcanza por los enlaces del pie.
  *
  * La portada es la excepción y lleva dos cosas: el titular de venta y las cinco
- * frases del statement, que dejaron de ser celda y son el claim del estudio.
+ * líneas de entrada del about, que dejaron de ser una celda aparte.
  */
 export function renderCeldaPrerenderHTML(data, lang, celda, enlaces = []) {
   const cuerpo = {

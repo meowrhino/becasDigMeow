@@ -963,13 +963,23 @@ a.nav-label:visited {
   color: var(--text-content);
 }
 
-/* Lo que abre y lo que cierra los pasos: no son pasos, así que se separan de
-   ellos con aire y con el color del texto principal, no el del cuerpo. */
-.metodologia-intro { color: var(--text); }
-.metodologia-intro:last-of-type { margin-bottom: 2.6em; }
-.metodologia-cierre {
-  margin-top: 2.6em;
+/* Cada paso: su número pequeño arriba, el titular con lo que pasa, y debajo
+   el detalle en el color del cuerpo. Antes eran seis párrafos seguidos y se
+   leían como un muro. */
+.metodologia-paso { margin-bottom: 3rem; }
+.metodologia-paso:last-child { margin-bottom: 0; }
+
+.metodologia-num {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  margin-bottom: 0.7rem;
+}
+
+.metodologia-titular {
   color: var(--text);
+  margin-bottom: 1em;
 }
 
 /* ============================================
@@ -1005,88 +1015,29 @@ a.nav-label:visited {
 .about-pregunta {
   font-size: clamp(1.1rem, 2.2dvw, 1.6rem);
   line-height: 1.35;
-  margin-bottom: 2.2rem;
+  margin-bottom: 2.4rem;
+  font-weight: 400;
 }
 
-/* Las cinco frases que abren la página. Un punto por encima del cuerpo, para
-   que se lean de un tirón antes de que empiecen los apartados. */
-.about-statement {
+/* Las cuatro líneas de entrada: qué es el estudio, de un tirón. Un punto por
+   encima del cuerpo para que se lean antes que el resto. */
+.about-entrada {
   font-size: clamp(0.9rem, 1.3dvw, 1.1rem);
   line-height: 1.6;
   margin-bottom: 3rem;
 }
-.about-statement p { margin: 0 0 0.5em; }
-.about-statement p:last-child { margin-bottom: 0; }
+.about-entrada p { margin: 0 0 0.6em; }
+.about-entrada p:last-child { margin-bottom: 0; }
 
-/* --- La celda proyectos: el índice en lista --- */
-/* Al lado del portfolio, contando lo mismo sin imágenes: 21 nombres que se
-   recorren de un vistazo. Numerada porque el orden es el mismo que el de la
-   rejilla y el de las flechas «anterior/siguiente» de cada ficha. */
-.celda.proyectos { flex-direction: column; }
-
-.proyectos-scroll-wrapper {
-  width: 70dvw;
-  max-width: 720px;
-  height: 80dvh;
-}
-
-.proyectos-content {
-  padding-top: 20dvh;
-  padding-bottom: 20dvh;
-}
-
-.proyectos-lista {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  columns: 2;
-  column-gap: 2.5rem;
-  font-size: clamp(0.85rem, 1.2dvw, 1.05rem);
-  line-height: 2;
-}
-.proyectos-lista a { color: var(--text-content); }
-.proyectos-lista a:hover { color: var(--text); }
-
-@media (max-width: 768px) {
-  .proyectos-scroll-wrapper { width: 86dvw; }
-  .proyectos-lista { columns: 1; }
-}
-
-.about-seccion { margin-bottom: 2.4rem; }
-
-.about-h {
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  font-weight: 400;
-  margin-bottom: 0.9rem;
-}
-
-.about-seccion p {
-  margin-bottom: 1.2em;
+.about-texto p {
+  margin-bottom: 1.4em;
   color: var(--text-content);
 }
-.about-seccion p:last-child { margin-bottom: 0; }
+.about-texto p:last-child { margin-bottom: 0; }
 
-/* Las tres entregas. Numeradas en el propio texto ("01 —"), así que la lista
-   va sin marcador: poner dos números seguidos sería contarlo dos veces. */
-.about-lista {
-  list-style: none;
-  margin: 0 0 1.2em;
-  padding: 0;
-  color: var(--text-content);
-}
-.about-lista li { margin-bottom: 0.25em; }
 
-/* El enlace con el que un apartado del about pasa el testigo a la página que
-   cuenta eso entero (hoy solo "cómo trabajamos" → metodología). */
-.about-enlace {
-  margin-top: 1.2em;
-  font-size: 0.9em;
-}
-.about-enlace a { color: var(--text-secondary); }
-.about-enlace a:hover { color: var(--text); }
+
+
 
 /* En móvil, 70dvw son 260px: demasiado estrecho para cinco apartados de texto
    seguidos. El about es la celda más larga del lienzo y se lee de arriba abajo,
