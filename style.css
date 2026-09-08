@@ -983,18 +983,22 @@ a.nav-label:visited {
   flex-direction: column;
 }
 
-.about-content {
+/* La misma caja que metodología y condiciones: 70dvw, 80dvh de alto y 20dvh
+   de aire arriba y abajo dentro del scroll. Tenía una suya, más estrecha y con
+   otro margen superior, y la ficha se leía como si fuera de otro sitio. */
+.about-scroll-wrapper {
   width: 70dvw;
-  max-width: 640px;
-  max-height: 80dvh;
-  overflow-y: auto;
+  max-width: 720px;
+  height: 80dvh;
+}
+
+.about-content {
   text-align: center;
   line-height: 1.7;
   font-size: clamp(0.82rem, 1.1dvw, 1.05rem);
-  padding: 4dvh 0;
-  scrollbar-width: none;
+  padding-top: 20dvh;
+  padding-bottom: 20dvh;
 }
-.about-content::-webkit-scrollbar { display: none; }
 
 /* La pregunta con la que empieza todo. Va sola y grande: es literalmente lo
    primero que manu le dice a alguien que acaba de conocer. */
@@ -1020,14 +1024,16 @@ a.nav-label:visited {
    rejilla y el de las flechas «anterior/siguiente» de cada ficha. */
 .celda.proyectos { flex-direction: column; }
 
-.proyectos-content {
+.proyectos-scroll-wrapper {
   width: 70dvw;
-  max-width: 34rem;
-  max-height: 78dvh;
-  overflow-y: auto;
-  scrollbar-width: none;
+  max-width: 720px;
+  height: 80dvh;
 }
-.proyectos-content::-webkit-scrollbar { display: none; }
+
+.proyectos-content {
+  padding-top: 20dvh;
+  padding-bottom: 20dvh;
+}
 
 .proyectos-lista {
   list-style: none;
@@ -1042,7 +1048,7 @@ a.nav-label:visited {
 .proyectos-lista a:hover { color: var(--text); }
 
 @media (max-width: 768px) {
-  .proyectos-content { width: 86dvw; }
+  .proyectos-scroll-wrapper { width: 86dvw; }
   .proyectos-lista { columns: 1; }
 }
 
@@ -1086,7 +1092,7 @@ a.nav-label:visited {
    seguidos. El about es la celda más larga del lienzo y se lee de arriba abajo,
    así que se le da casi todo el ancho. */
 @media (max-width: 768px) {
-  .about-content { width: 86dvw; max-height: 78dvh; }
+  .about-scroll-wrapper { width: 86dvw; }
 }
 
 /* El contacto cierra la página: los mismos estilos que tenía la celda

@@ -438,17 +438,21 @@ export function renderProyectos(data) {
     </ol>`;
 
   el.innerHTML = `
-    <div class="proyectos-content">${buildContent(currentLang)}</div>
+    <div class="scroll-wrapper proyectos-scroll-wrapper">
+      <div class="scroll-content proyectos-content">${buildContent(currentLang)}</div>
+    </div>
     ${buildLangButtons()}
   `;
 
+  const wrapper = el.querySelector(".proyectos-scroll-wrapper");
   const content = el.querySelector(".proyectos-content");
-  const applyScale = setupZoom(el, content);
+  const checkScroll = setupScrollGradients(wrapper, content);
+  const applyScale = setupZoom(el, content, checkScroll);
 
   attachLangListeners(el, (lang) => {
     repaintWithFade(el, content,
       () => { content.innerHTML = buildContent(lang); },
-      applyScale
+      () => { applyScale(); requestAnimationFrame(checkScroll); }
     );
   });
 }
@@ -523,17 +527,21 @@ export function renderAbout(data) {
   };
 
   el.innerHTML = `
-    <div class="about-content">${buildContent(currentLang)}</div>
+    <div class="scroll-wrapper about-scroll-wrapper">
+      <div class="scroll-content about-content">${buildContent(currentLang)}</div>
+    </div>
     ${buildLangButtons()}
   `;
 
+  const wrapper = el.querySelector(".about-scroll-wrapper");
   const content = el.querySelector(".about-content");
-  const applyScale = setupZoom(el, content);
+  const checkScroll = setupScrollGradients(wrapper, content);
+  const applyScale = setupZoom(el, content, checkScroll);
 
   attachLangListeners(el, (lang) => {
     repaintWithFade(el, content,
       () => { content.innerHTML = buildContent(lang); },
-      applyScale
+      () => { applyScale(); requestAnimationFrame(checkScroll); }
     );
   });
 }
