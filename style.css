@@ -1076,6 +1076,18 @@ a.nav-label:visited {
   margin: 0 0 1.4rem;
 }
 
+/* La foto de quién está detrás. La caja del about es estrecha (720px como
+   mucho) y la foto es apaisada, así que ocupa el ancho entero de la columna:
+   recortarla a un retrato cuadrado quitaría justo lo que la hace decir algo,
+   que es la mesa alrededor. */
+.about-foto {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 1.6rem;
+  border-radius: 2px;
+}
+
 /* El cierre: la invitación a escribir, el precio en una línea y el enlace a
    metodología. El precio ya no es un bloque de venta —está en el cupón de la
    portada y en condiciones—, aquí es solo el dato que falta antes de irse. */
@@ -1926,6 +1938,7 @@ html.easy, html.easy body {
 .easy-importante { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); max-width: 46rem; }
 .easy-importante .easy-h3 { margin-top: 0; }
 .easy-about-cierre { margin-top: 2.6rem; }
+.easy-about-foto { display: block; width: 100%; max-width: 46rem; height: auto; margin: 1.6rem 0; border-radius: 2px; }
 
 /* --- Statement (manifiesto centrado; resalta la línea del centro al scrollear) --- */
 .easy-statement { text-align: center; padding-top: clamp(4rem, 10dvh, 6.5rem); padding-bottom: clamp(4rem, 10dvh, 6.5rem); }

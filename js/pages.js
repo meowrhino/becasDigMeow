@@ -464,6 +464,11 @@ export function renderAbout(data) {
     const cvHref = pick(cv, lang);
     const p = (t) => `<p>${escapeHTML(t.replace("{precio}", precio))}</p>`;
 
+    // La foto va SIN `loading="lazy"`: las celdas del lienzo viven todas apiladas
+    // en el mismo hueco y el navegador nunca las da por visibles, así que una
+    // imagen diferida se queda sin cargar aunque la tengas delante. En el
+    // pre-render (easy-template.js), que es un documento normal, sí es lazy.
+    //
     // El about pasó de ser un chorro de párrafos a tener apartados con titular:
     // quién está detrás, internet puede ser otra cosa, tu web es tuya. El
     // manifiesto y la persona dejaron de estar mezclados en el mismo bloque.
@@ -471,6 +476,8 @@ export function renderAbout(data) {
       <section class="about-seccion">
         <h2 class="about-seccion-titular">${escapeHTML(sec.titular)}</h2>
         ${(sec.parrafos || []).map(p).join("")}
+        ${sec.imagen ? `<img class="about-foto" src="${escapeHTML(sec.imagen.src)}"
+             alt="${escapeHTML(sec.imagen.alt || "")}" decoding="async">` : ""}
       </section>`).join("");
 
     const c = d.cierre;

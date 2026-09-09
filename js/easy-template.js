@@ -178,7 +178,8 @@ export function aboutHTML(data, lang) {
       <div class="easy-about-entrada">${(d.entrada || []).map(p).join("")}</div>
       ${(d.secciones || []).map(sec => `
       <h2 class="easy-h3">${esc(sec.titular)}</h2>
-      ${(sec.parrafos || []).map(p).join("")}`).join("")}
+      ${(sec.parrafos || []).map(p).join("")}
+      ${sec.imagen ? `<img class="easy-about-foto" src="${esc(sec.imagen.src)}" alt="${esc(sec.imagen.alt || "")}" loading="lazy" decoding="async">` : ""}`).join("")}
       ${d.cierre ? `
       <div class="easy-about-cierre">
         ${(d.cierre.parrafos || []).map(p).join("")}
