@@ -222,3 +222,29 @@ Pero sí es la única marca de lenguaje inclusivo de todo el sitio. Quitarla del
 about y dejarla en links sería lo peor de las dos opciones. O se quedan las
 tres, o se van las tres. Yo las dejaría: quitarlas es una decisión más ruidosa
 que mantenerlas.
+
+---
+
+# 6. Correcciones finales (ya publicadas)
+
+Sobre la v3, en la ronda del 9 sep:
+
+**metodología**
+- 01: fuera "en una servilleta", más ejemplos → "webs, carteles, videojuegos,
+  interfaces que hayas visto por ahí". Y fuera "antes de irnos".
+- 04: "aquí el diseño cambia un poco" → "el diseño evolucionará al adaptarlo a
+  móvil y a otras resoluciones posibles".
+- 05: "si hace falta configuramos el dominio" → "configuramos el dominio: lo
+  mejor es que esperes a comprarlo con nosotros".
+- El pago pasa de **50/50** a **40/30/30**, en tres líneas separadas en vez de
+  una con puntos medios: 40% al empezar (reserva el mes de agenda), 30% al
+  aprobar el diseño, 30% al terminar la programación.
+
+**condiciones**
+- Mismo 40/30/30, en los tres idiomas.
+- Se añade la garantía de dos semanas, que se prometía en metodología y no
+  estaba por escrito en la letra pequeña.
+
+`3 entregas · 1 ronda de revisión por entrega` mantiene su punto medio: es la
+fórmula que se repite igual en tres páginas, y partirla la volvería a
+desalinear.

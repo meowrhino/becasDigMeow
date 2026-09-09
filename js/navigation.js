@@ -123,12 +123,20 @@ export function crearCeldas() {
 /**
  * El rectángulo que de verdad tiene celdas dentro del GRID.
  *
- * El lienzo pasa a ser un terreno de 5×5 para que la celda `mapa` pueda
- * recolocar las secciones donde quiera, pero un minimapa de 25 casillas casi
- * todas vacías ocuparía el doble en la esquina y no diría nada. Los dos
- * minimapas dibujan solo este marco, así que se encogen y se estiran solos
- * según dónde hayas puesto las cosas.
+ * Lo usa el aterrizaje cuando la celda activa desaparece de la vista: hay que
+ * caer en una esquina que exista. Los minimapas ya NO se recortan a este marco
+ * —dibujan el terreno entero, ver `pintarMinimapInline`—, así que este cálculo
+ * ha dejado de ser lo que define su tamaño.
  */
+/**
+ * El terreno completo: el mismo 5×5 que se ve y se toca en la celda `mapa`.
+ * Es lo que dibujan los dos minimapas, para que una sección esté en el mismo
+ * sitio en el juego y en la navegación.
+ */
+function terreno() {
+  return { y0: 0, y1: GRID.length - 1, x0: 0, x1: (GRID[0]?.length || 1) - 1 };
+}
+
 export function marcoOcupado() {
   const ys = [], xs = [];
   for (let y = 0; y < GRID.length; y++) {
@@ -216,10 +224,19 @@ export function actualizarTamanoMinimapInline() {
   });
 }
 
-/** Rellena el minimapa de la esquina con el marco que hoy tiene celdas. */
+/**
+ * Rellena el minimapa de la esquina con el terreno ENTERO.
+ *
+ * Antes se recortaba al rectángulo ocupado, para no dibujar una rejilla de 25
+ * casillas casi todas vacías. Pero entonces la celda `mapa` y el minimapa
+ * contaban cosas distintas: colocabas una sección en una esquina del 5×5 y el
+ * minimapa la enseñaba pegada al centro, porque había recortado el vacío. Si
+ * el mapa es un sitio donde se juega a mover las cosas, lo que se mueve tiene
+ * que quedarse donde lo pusiste. El vacío también es información.
+ */
 function pintarMinimapInline() {
   if (!minimapInlineEl) return;
-  const { y0, y1, x0, x1 } = marcoOcupado();
+  const { y0, y1, x0, x1 } = terreno();
   minimapInlineEl.innerHTML = "";
   minimapInlineEl.style.gridTemplateColumns = `repeat(${x1 - x0 + 1}, 1fr)`;
   minimapInlineEl.style.gridTemplateRows    = `repeat(${y1 - y0 + 1}, 1fr)`;
@@ -285,7 +302,7 @@ export function actualizarTamanoMinimapExpandido() {
 /** Rellena el minimapa grande con el marco que hoy tiene celdas. */
 function pintarMinimapExpandido() {
   if (!minimapExpandedEl) return;
-  const { y0, y1, x0, x1 } = marcoOcupado();
+  const { y0, y1, x0, x1 } = terreno();
   minimapExpandedEl.innerHTML = "";
   minimapExpandedEl.style.gridTemplateColumns = `repeat(${x1 - x0 + 1}, 1fr)`;
   minimapExpandedEl.style.gridTemplateRows    = `repeat(${y1 - y0 + 1}, 1fr)`;
