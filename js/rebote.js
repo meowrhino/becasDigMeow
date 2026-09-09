@@ -156,11 +156,40 @@ export function iniciarRebote(celda, elemento, opciones = {}) {
   elemento.addEventListener("mouseenter", () => { hoverPausa = true; });
   elemento.addEventListener("mouseleave", () => { hoverPausa = false; });
 
-  window.addEventListener("resize", () => {
+  /**
+   * Devuelve el elemento a los límites de ahora, y lo repinta.
+   *
+   * El repintado no es opcional: sin él la corrección solo se ve en el
+   * siguiente frame del tick, y el tick no siempre llega —con
+   * `prefers-reduced-motion` el bloque que mueve y recorta no se ejecuta nunca,
+   * así que el elemento se quedaba visualmente fuera para siempre aunque sus
+   * coordenadas ya estuvieran bien.
+   */
+  const ajustar = () => {
+    if (!colocado) return;
     const b = bounds();
     x = Math.min(Math.max(b.minX, x), b.maxX);
     y = Math.min(Math.max(b.minY, y), b.maxY);
-  });
+    render();
+  };
+
+  window.addEventListener("resize", ajustar);
+
+  // El elemento puede CRECER después de haberse colocado. La card del welcome
+  // mide 23px de alto mientras su captura descarga (el <img> no reserva sitio:
+  // no lleva width/height ni aspect-ratio, y su proporción real no se sabe
+  // hasta que llega) y 152 cuando la imagen aparece. Si se colocó pegada al
+  // borde de abajo —que es lo normal: sale de la esquina más lejana al cupón—
+  // los 129px que crece se salen de la celda.
+  //
+  // El tick ya recorta la posición cada frame, pero solo dentro del `if` que
+  // exige movimiento: con `prefers-reduced-motion` no se ejecuta nunca y la
+  // tarjeta se queda medio fuera para siempre. Y no basta con esperar a la
+  // primera imagen: la card cambia de proyecto cada 4,5s y cada `src` nuevo la
+  // vuelve a colapsar a 23px mientras descarga.
+  if (typeof ResizeObserver !== "undefined") {
+    new ResizeObserver(ajustar).observe(elemento);
+  }
 
   if (typeof IntersectionObserver !== "undefined") {
     const obs = new IntersectionObserver(([entry]) => {
