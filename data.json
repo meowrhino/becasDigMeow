@@ -565,7 +565,11 @@
             "detrás de meowrhino estoy yo: manu latour. estudié en la massana y en la uab, y desde 2020 diseño y programo webs a medida desde barcelona.",
             "trabajo contigo durante todo el proceso: la estructura la pensamos juntos, la interfaz la diseño y el código lo escribo yo. no hay plantillas — tu proyecto no tiene que caber dentro de una web que ya existe.",
             "también hago herramientas libres para lo que me hace falta: comprimir imágenes sin subirlas a ningún servidor, generar facturas sin registro, calcular lo que de verdad cobras trabajando por tu cuenta."
-          ]
+          ],
+          "imagen": {
+            "src": "/img/manu/manu.webp",
+            "alt": "manu latour en la mesa donde trabaja, en casa."
+          }
         },
         {
           "titular": "internet puede ser otra cosa",
@@ -573,6 +577,7 @@
             "nos gusta internet cuando todavía parece un lugar donde pueden pasar cosas.",
             "cada vez pasamos más tiempo en plataformas que deciden cómo publicas, qué puedes enseñar y a quién le llega.",
             "una web propia funciona de otra manera: decides qué cuentas, cómo lo cuentas y cómo se ve. no tienes que adaptarte al formato de nadie ni diseñar tu trabajo pensando en un algoritmo.",
+            "una web no solo cuenta lo que haces: también lo cuenta cómo lo enseña. un buscaminas dice algo de ti. un índice que cambia de orden cada vez que entras dice algo de ti. una página que solo aparece si sabes dónde buscar dice algo de ti.",
             "tu web puede ser sencilla, extraña, experimental, pequeña o completamente absurda. si tu portfolio tiene sentido siendo una disquetera, hacemos una disquetera.",
             "internet es demasiado grande para que todos tengamos la misma página."
           ]
@@ -580,7 +585,8 @@
         {
           "titular": "tu web es tuya",
           "parrafos": [
-            "cuando terminamos te llevas el código y los archivos.",
+            "hay quien llama a esto jardines digitales: webs que se cultivan. crecen despacio, cambian de forma, tienen cosas a medio hacer y cosas que llevan años ahí. no se publican y ya está: se riegan.",
+            "por eso cuando terminamos te llevas el código y los archivos.",
             "te enseñamos a mantenerla y a cambiarla por tu cuenta. si prefieres que lo hagamos nosotros, seguimos aquí.",
             "no queremos que dependas de nosotros para entender lo que tienes.",
             "el día que te pelees con el servidor, con el proveedor o con nosotros, coges tus archivos y te los llevas. no hay nada que rescatar, porque nunca dejó de ser tuyo."
@@ -610,7 +616,11 @@
             "behind meowrhino it's me: manu latour. i studied at la massana and the uab, and since 2020 i have been designing and coding custom websites from barcelona.",
             "i work with you through the whole process: we think out the structure together, i design the interface and i write the code. there are no templates — your project doesn't have to fit inside a website that already exists.",
             "i also make free tools for whatever i happen to need: compressing images without uploading them to any server, generating invoices without signing up, working out what you really earn as a freelancer."
-          ]
+          ],
+          "imagen": {
+            "src": "/img/manu/manu.webp",
+            "alt": "manu latour at the desk where they work, at home."
+          }
         },
         {
           "titular": "the internet can be something else",
@@ -618,6 +628,7 @@
             "we like the internet when it still looks like a place where things can happen.",
             "we spend more and more time on platforms that decide how you publish, what you are allowed to show and who gets to see it.",
             "a website of your own works differently: you decide what you tell, how you tell it and how it looks. you don't have to fit anyone's format or design your work for an algorithm.",
+            "a website doesn't only say what you do: how it shows it says something too. a game of minesweeper says something about you. an index that reorders itself every time you come in says something about you. a page that only appears if you know where to look says something about you.",
             "your website can be simple, strange, experimental, tiny or completely absurd. if your portfolio makes sense as a floppy drive, we make a floppy drive.",
             "the internet is far too big for all of us to have the same page."
           ]
@@ -625,7 +636,8 @@
         {
           "titular": "your website is yours",
           "parrafos": [
-            "when we are done you take the code and the files with you.",
+            "some people call these digital gardens: websites that are cultivated. they grow slowly, they change shape, they have things half done and things that have been sitting there for years. they don't get published and that's that: they get watered.",
+            "that is why, when we are done, you take the code and the files with you.",
             "we teach you to maintain it and change it on your own. if you would rather we did it, we are still here.",
             "we don't want you to depend on us to understand what you have.",
             "the day you fall out with the server, with the provider or with us, you pick up your files and take them with you. there is nothing to rescue, because it never stopped being yours."
@@ -655,7 +667,11 @@
             "darrere de meowrhino hi ha jo: en manu latour. vaig estudiar a la massana i a la uab, i des del 2020 dissenyo i programo webs a mida des de barcelona.",
             "treballo amb tu durant tot el procés: l'estructura la pensem junts, la interfície la dissenyo i el codi l'escric jo. no hi ha plantilles — el teu projecte no ha de cabre dins d'una web que ja existeix.",
             "també faig eines lliures per al que em fa falta: comprimir imatges sense pujar-les a cap servidor, generar factures sense registre, calcular el que de veritat cobres treballant pel teu compte."
-          ]
+          ],
+          "imagen": {
+            "src": "/img/manu/manu.webp",
+            "alt": "manu latour a la taula on treballa, a casa."
+          }
         },
         {
           "titular": "internet pot ser una altra cosa",
@@ -663,6 +679,7 @@
             "ens agrada internet quan encara sembla un lloc on poden passar coses.",
             "cada cop passem més temps en plataformes que decideixen com publiques, què pots ensenyar i a qui li arriba.",
             "una web pròpia funciona d'una altra manera: decideixes què expliques, com ho expliques i com es veu. no t'has d'adaptar al format de ningú ni dissenyar la teva feina pensant en un algoritme.",
+            "una web no només explica el que fas: també ho explica com ho ensenya. un buscamines diu alguna cosa de tu. un índex que canvia d'ordre cada cop que hi entres diu alguna cosa de tu. una pàgina que només apareix si saps on buscar diu alguna cosa de tu.",
             "la teva web pot ser senzilla, estranya, experimental, petita o completament absurda. si el teu portfolio té sentit sent una disquetera, fem una disquetera.",
             "internet és massa gran perquè tots tinguem la mateixa pàgina."
           ]
@@ -670,7 +687,8 @@
         {
           "titular": "la teva web és teva",
           "parrafos": [
-            "quan acabem t'endús el codi i els arxius.",
+            "hi ha qui en diu jardins digitals: webs que es cultiven. creixen a poc a poc, canvien de forma, tenen coses a mig fer i coses que fa anys que hi són. no es publiquen i ja està: es reguen.",
+            "per això quan acabem t'endús el codi i els arxius.",
             "t'ensenyem a mantenir-la i a canviar-la pel teu compte. si prefereixes que ho fem nosaltres, seguim aquí.",
             "no volem que depenguis de nosaltres per entendre el que tens.",
             "el dia que et barallis amb el servidor, amb el proveïdor o amb nosaltres, agafes els teus arxius i te'ls endús. no hi ha res a rescatar, perquè mai va deixar de ser teu."
