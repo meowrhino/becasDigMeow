@@ -2177,6 +2177,12 @@ html.js #seo-prerender {
 .proy-pie a { color: var(--text-secondary); }
 .proy-pie a:hover { color: var(--text); }
 
+/* El pie del ÍNDICE necesita más aire que el de la ficha: encima tiene una
+   rejilla de 21 capturas, no un párrafo. Con el margen de la ficha se pegaba
+   a la última fila de tarjetas y "volver al portfolio" parecía el pie de la
+   tarjeta de al lado en vez del pie de la página. */
+.proy-indice > .proy-pie { margin-top: clamp(4rem, 10dvh, 6.5rem); }
+
 /* --- Índice: rejilla de tarjetas --- */
 .proy-grid {
   list-style: none;
@@ -2466,12 +2472,18 @@ html.js #seo-prerender {
   .proy { display: grid; grid-template-columns: 1fr 1fr; }
   .proy > * { grid-column: 1 / -1; }
 
+  /* El orden del cierre: primero los vecinos (seguir mirando proyectos),
+     luego los dos botones (visitar esta web o pedir la tuya) y al final el
+     pie (salir de aquí). De lo cercano a lo lejano. */
   .proy-vecino { margin-top: clamp(2rem, 5dvh, 3rem); }
-  .proy-vecino-prev { grid-column: 1; order: 97; justify-self: start; }
-  .proy-vecino-next { grid-column: 2; order: 97; justify-self: end; }
+  .proy-vecino-prev { grid-column: 1; order: 96; justify-self: start; }
+  .proy-vecino-next { grid-column: 2; order: 96; justify-self: end; }
   /* Mismo `order` en los dos y adyacentes en el HTML: la rejilla los coloca
-     en la misma fila, en columna 1 y 2. El pie viene después. */
-  .proy-pie { order: 98; margin-top: 0.9rem; }
+     en la misma fila, en columna 1 y 2. */
+  .proy > .proy-acciones { order: 97; }
+  /* Solo el pie DE LA FICHA: en /proyectos el pie va detrás de la rejilla de
+     21 capturas y necesita mucho más aire (ver .proy-indice > .proy-pie). */
+  .proy > .proy-pie { order: 98; margin-top: clamp(1.5rem, 4dvh, 2.5rem); }
 
   /* Las flechas que en ancho daba la rotación: sin ellas, en horizontal, son
      dos nombres sueltos y no se ve cuál es el anterior y cuál el siguiente. */
