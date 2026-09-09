@@ -28,6 +28,7 @@
 // leer, y darle URL solo serviría para generar un html vacío en tres idiomas.
 
 import { currentLang, buildLangButtons, attachLangListeners } from "./data.js";
+import { bordeCelda } from "./navigation.js";
 
 /**
  * Las densidades del minesweeper de toda la vida, que es lo que de verdad
@@ -319,14 +320,13 @@ class Tablero {
 //
 // Los controles viven en los BORDES, como los de cualquier otra celda:
 //
-//   arriba   → la navegación a `mapa` (nav-label normal, lo pone navigation.js)
-//   abajo    → los tres niveles, igual que `archive` en el portfolio
-//   izquierda → las minas que quedan
-//   derecha   → el tiempo
+//   arriba → la navegación a `mapa`, y debajo las minas y el tiempo
+//   abajo  → los tres niveles, igual que `archive` en el portfolio
 //
-// Los tres son `.nav-label[data-permanent]`, que es el mecanismo que ya existía
-// para que una celda se quede un borde: crearNavLabels() no pone navegación en
-// un lado que ya está ocupado. Ver la nota sobre los choques en navigation.js.
+// Se cuelgan de `bordeCelda(el, lado)`: el borde es un sitio compartido, la
+// navegación se queda pegada al canto y lo de la celda se aparta hacia dentro.
+// Con el reparto de fábrica el de arriba ya viene compartido —`mapa` está
+// justo encima—, así que el caso raro es el caso normal y se ve siempre.
 //
 // No hay menú de inicio: al entrar ya hay una partida fácil empezada. Un menú
 // era una pantalla intermedia para elegir algo que se puede cambiar en
@@ -362,20 +362,24 @@ export function renderBuscaminas() {
         <button type="button" class="bm-otra"></button>
       </div>
     </div>
+    ${buildLangButtons()}
+  `;
 
-    <span class="nav-label left bm-dato" data-permanent="true">
-      <i class="bm-dato-label"></i> <b class="bm-minas">0</b>
-    </span>
-    <span class="nav-label right bm-dato" data-permanent="true">
-      <i class="bm-dato-label"></i> <b class="bm-tiempo">0</b>
-    </span>
-    <div class="nav-label bottom bm-niveles" data-permanent="true">
+  // Los controles, a sus bordes. No llevan `data-permanent` porque no son
+  // `.nav-label`: crearNavLabels() solo barre etiquetas de navegación, y esto
+  // no lo es aunque se le parezca.
+  bordeCelda(el, "top").insertAdjacentHTML("beforeend", `
+    <div class="bm-marcador">
+      <span class="bm-dato"><i class="bm-dato-label"></i> <b class="bm-minas">0</b></span>
+      <span class="bm-dato"><i class="bm-dato-label"></i> <b class="bm-tiempo">0</b></span>
+    </div>`);
+
+  bordeCelda(el, "bottom").insertAdjacentHTML("beforeend", `
+    <div class="bm-niveles">
       <button type="button" class="bm-nivel" data-nivel="easy"></button>
       <button type="button" class="bm-nivel" data-nivel="medium"></button>
       <button type="button" class="bm-nivel" data-nivel="hard"></button>
-    </div>
-    ${buildLangButtons()}
-  `;
+    </div>`);
 
   const $ = (sel) => el.querySelector(sel);
   const tableroEl = $(".bm-tablero");
@@ -399,16 +403,21 @@ export function renderBuscaminas() {
   // con el dedo. Si aun así no cabe, el tablero se desplaza (overflow auto en
   // `.bm-tablero`), que es peor que verlo entero pero mucho mejor que verlo y
   // no poder jugar.
-  /** El rectángulo de píxeles que le queda al tablero dentro de la celda. */
+  /**
+   * El rectángulo de píxeles que le queda al tablero dentro de la celda.
+   *
+   * Los bordes de arriba y de abajo se MIDEN, no se estiman: desde que son
+   * elementos de verdad (`.nav-slot`), da igual si llevan una fila o dos, si el
+   * idioma alarga el texto o si el móvil encoge la fuente. Antes esto era un
+   * 26 multiplicado por las filas que pareciera haber.
+   */
   function hueco() {
     const cs = getComputedStyle(el);
     const padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
     const padY = parseFloat(cs.paddingTop)  + parseFloat(cs.paddingBottom);
     const alto = el.clientHeight || window.innerHeight;
-    // Si un borde lleva dos filas —el control de la celda y la navegación
-    // apartada hacia dentro— ocupa el doble. Ver crearNavLabels en navigation.js.
-    const filas = el.querySelector(".nav-label.desplazada.top, .nav-label.desplazada.bottom") ? 2 : 1;
-    const bordes = 2 * (alto * 0.03 + 26 * filas);
+    const mide = (sel) => el.querySelector(`:scope > ${sel}`)?.offsetHeight ?? 0;
+    const bordes = mide(".nav-slot.top") + mide(".nav-slot.bottom") + 2 * alto * 0.03 + 16;
     const pie = tactil() ? 44 : 30;                 // abrir/marcar, o la línea de ayuda
     return {
       ancho: (el.clientWidth || window.innerWidth) - padX - 8,

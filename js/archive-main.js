@@ -20,6 +20,7 @@ import {
   getGrid,
   getPosicion,
   setPosicion,
+  bordeCelda,
 } from "./navigation.js";
 import { crearThemeToggle } from "./theme.js";
 import { renderSeccion, SECCIONES } from "./archive-pages.js";
@@ -68,7 +69,7 @@ async function renderizarContenido() {
   if (meowEl) {
     const studioLabel = document.createElement("a");
     studioLabel.href = data.welcome.studioUrl;
-    studioLabel.classList.add("nav-label", "bottom");
+    studioLabel.classList.add("nav-label");
     studioLabel.dataset.permanent = "true";
     studioLabel.textContent = "studio";
     // El estudio se siente claro por defecto: fija el tema destino en vez de
@@ -76,7 +77,7 @@ async function renderizarContenido() {
     studioLabel.addEventListener("click", () => {
       localStorage.setItem("meowrhino-theme", "light");
     });
-    meowEl.appendChild(studioLabel);
+    bordeCelda(meowEl, "bottom").appendChild(studioLabel);
   }
 }
 

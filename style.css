@@ -416,12 +416,63 @@ p, h1, h2, h3 {
    Posiciones: top, bottom, left, right.
    ============================================ */
 
-.nav-label {
+/* Un borde de la celda. El slot dice DÓNDE (qué lado, a qué distancia); lo que
+   va dentro dice QUÉ es. Antes lo hacía todo `.nav-label`, que mezclaba la
+   cosmética, la posición y el ser-un-botón, y por eso los controles de celda
+   —los niveles del buscaminas— tenían que disfrazarse de etiqueta de navegación
+   para heredar el sitio.
+
+   Un slot puede llevar dos cosas: la navegación al vecino y un control de la
+   propia celda. Cuando pasa, manda la navegación: se queda pegada al borde y el
+   control se aparta hacia dentro. La navegación es lo único que está en el
+   mismo sitio en las ocho celdas, y eso no se toca. */
+.nav-slot {
   position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 0.9em;
+  z-index: var(--z-nav);
+}
+
+/* En los cuatro lados, el primer hijo (la navegación, que se antepone en
+   crearNavLabels) queda en el borde EXTERIOR y el resto hacia dentro. De ahí
+   los `-reverse` de abajo y de la derecha. */
+.nav-slot.top {
+  top: 3dvh;
+  left: 50%;
+  transform: translateX(-50%);
+  flex-direction: column;
+}
+
+.nav-slot.bottom {
+  bottom: 3dvh;
+  left: 50%;
+  transform: translateX(-50%);
+  flex-direction: column-reverse;
+}
+
+.nav-slot.left {
+  left: 3dvw;
+  top: 50%;
+  transform: translateY(-50%);
+  flex-direction: row;
+}
+
+.nav-slot.right {
+  right: 3dvw;
+  top: 50%;
+  transform: translateY(-50%);
+  flex-direction: row-reverse;
+}
+
+/* Cómo se ve una etiqueta de borde. Solo cosmética: dónde va lo dice el slot.
+   La usan la navegación entre celdas y cualquier control que quiera parecerse
+   a ella (`archive` en el portfolio, `studio` en el archive, minas y tiempo en
+   el buscaminas). */
+.nav-label {
   font-size: clamp(0.7rem, 1dvw, 1rem);
   color: var(--text-secondary);
   cursor: pointer;
-  z-index: var(--z-nav);
   transition: color 0.3s ease;
   font-family: var(--font-serif);
   letter-spacing: 0.05em;
@@ -442,44 +493,14 @@ a.nav-label:visited {
   color: var(--text-secondary);
 }
 
-.nav-label.left {
-  left: 3dvw;
-  top: 50%;
-  writing-mode: vertical-rl;
-  transform: translateY(-50%) rotate(180deg);
-}
-
-.nav-label.right {
-  right: 3dvw;
-  top: 50%;
-  writing-mode: vertical-rl;
-  transform: translateY(-50%);
-}
-
-.nav-label.top {
-  top: 3dvh;
-  left: 50%;
-  transform: translateX(-50%) rotate(180deg);
-}
-
-.nav-label.bottom {
-  bottom: 3dvh;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* Un borde ocupado por un control de la celda (los niveles del buscaminas,
-   `archive` en el portfolio) no se queda sin navegación: la etiqueta del vecino
-   se aparta hacia dentro y comparten el lado en dos alturas. Ver la nota de
-   crearNavLabels() en js/navigation.js.
-
-   El desplazamiento va en `em`, o sea relativo al tamaño de la propia etiqueta:
-   así el hueco entre las dos filas se mantiene igual en móvil, donde la fuente
-   encoge. */
-.nav-label.top.desplazada    { top:    calc(3dvh + 1.8em); }
-.nav-label.bottom.desplazada { bottom: calc(3dvh + 1.8em); }
-.nav-label.left.desplazada   { left:   calc(3dvw + 1.8em); }
-.nav-label.right.desplazada  { right:  calc(3dvw + 1.8em); }
+/* Los lados leen en vertical y los bordes de arriba y de la izquierda van del
+   revés: es la vuelta que da el lienzo, y se aplica a la etiqueta, no al slot.
+   Un control que solo informa —minas, tiempo— no tiene por qué ir cabeza abajo
+   aunque comparta borde con una etiqueta que sí. */
+.nav-slot.left  > .nav-label,
+.nav-slot.right > .nav-label { writing-mode: vertical-rl; }
+.nav-slot.left  > .nav-label,
+.nav-slot.top   > .nav-label { transform: rotate(180deg); }
 
 @media (max-width: 768px) {
   .nav-label {
@@ -1450,15 +1471,34 @@ a.nav-label:visited {
    cartel de final se quedaría puesto encima del tablero. */
 .celda.buscaminas [hidden] { display: none; }
 
-/* --- minas y tiempo, en los laterales --- */
+/* --- los controles de los bordes --- */
 
-/* Son nav-label en todo menos en que no llevan a ningún sitio. */
-.bm-dato { cursor: default; }
+/* Se ven como una etiqueta de borde sin serlo: no navegan a ningún sitio, así
+   que no llevan la clase `.nav-label` ni heredan de ella. La posición se la da
+   el `.nav-slot` que los contiene (ver js/navigation.js), no estas reglas. */
+.bm-dato,
+.bm-nivel {
+  font-family: var(--font-serif);
+  font-size: clamp(0.7rem, 1dvw, 1rem);
+  letter-spacing: 0.05em;
+  line-height: normal;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .bm-dato,
+  .bm-nivel { font-size: clamp(0.6rem, 2.5dvw, 0.8rem); }
+}
+
+/* minas y tiempo, juntos bajo la navegación del borde de arriba. */
+.bm-marcador {
+  display: flex;
+  gap: 1.4em;
+}
 .bm-dato i { font-style: normal; }
 .bm-dato b { color: var(--text); font-weight: 400; }
 
-/* --- los niveles, en el borde de abajo --- */
-
+/* Los tres niveles, en el borde de abajo. */
 .bm-niveles {
   display: flex;
   gap: 0.9em;
@@ -1466,11 +1506,7 @@ a.nav-label:visited {
 }
 
 .bm-nivel {
-  font-family: inherit;
-  font-size: inherit;
-  letter-spacing: inherit;
   text-transform: lowercase;
-  color: var(--text-secondary);
   background: none;
   border: none;
   padding: 0;
@@ -1751,7 +1787,7 @@ a.nav-label:visited {
 
 
 @media (max-width: 768px) {
-  .celda.portfolio .nav-label {
+  .celda.portfolio .nav-slot {
     z-index: var(--z-overlay-img);
   }
   .portfolio-scroll-wrapper {
@@ -2021,7 +2057,9 @@ a.nav-label:visited {
     align-items: center;
     gap: var(--tab-gap);
     max-width: 92dvw;
-    /* alinea el centro óptico del tab medio con el de un .nav-label.bottom.
+    /* alinea el centro óptico del tab medio con el de una .nav-label dentro de
+       un .nav-slot.bottom (el slot lleva el bottom:3dvh; la etiqueta acaba en
+       el mismo sitio que cuando se posicionaba ella sola).
        .nav-label usa line-height:normal (Inknut Antiqua ≈ 2.5×), el tab usa 1.4.
        Offset base (border inferior tab medio en 3dvh) = tab_h + gap = 1.7·fs.
        Compensamos la diferencia de line-boxes: (2.5 − 1.4)/2 = 0.55·fs.

@@ -400,43 +400,56 @@ function getVecinos() {
 }
 
 /**
+ * El slot de un borde de la celda, creándolo si aún no existe.
+ *
+ * Un borde es un sitio, no una cosa: puede llevar la navegación al vecino, un
+ * control de la propia celda, o las dos. Antes lo era `.nav-label`, que hacía
+ * de estilo, de posición y de botón a la vez, y obligaba a los controles a
+ * disfrazarse de etiqueta de navegación para poder colocarse.
+ *
+ * Lo usan las celdas que se quedan un borde (portfolio, archive, buscaminas)
+ * para colgar ahí lo suyo antes de que exista ninguna navegación.
+ *
+ * @param {HTMLElement} celda
+ * @param {"top"|"bottom"|"left"|"right"} pos
+ */
+export function bordeCelda(celda, pos) {
+  let slot = celda.querySelector(`:scope > .nav-slot.${pos}`);
+  if (!slot) {
+    slot = document.createElement("div");
+    slot.className = `nav-slot ${pos}`;
+    celda.appendChild(slot);
+  }
+  return slot;
+}
+
+/**
  * Los cuatro bordes de la celda activa: a dónde se va desde aquí.
  *
- * Un borde puede estar ya ocupado por un control de la propia celda —los
- * niveles del buscaminas, `archive` en el portfolio, `studio` en el archive—,
- * que se marcan con `data-permanent` y sobreviven a los repintados.
+ * Si el borde ya lo ocupaba un control de la celda —los niveles del
+ * buscaminas, `archive` en el portfolio, `studio` en el archive—, los dos
+ * comparten el lado: la navegación se antepone y se queda pegada al borde, y
+ * el control se aparta hacia dentro.
  *
- * Cuando eso pasa, la navegación NO desaparece: se aparta hacia dentro con la
- * clase `desplazada` y las dos cosas comparten el lado en dos alturas. Antes se
- * omitía, y el resultado era que si movías una sección al lado del buscaminas
- * en el mapa, desde el buscaminas no había forma visible de llegar a ella: con
- * teclado y con el minimapa sí, pero en un móvil no hay flechas y solo quedaba
- * el minimapa. Un vecino que existe tiene que verse.
- *
- * Las dos alturas además dicen cosas distintas, y está bien que se lean
- * distinto: el borde exterior es lo que HACES aquí, el interior es a dónde
- * PUEDES IR.
+ * Manda la navegación y no al revés a propósito. Es lo único que está en el
+ * mismo sitio en las ocho celdas: si se moviera según lo que cada celda tenga
+ * puesto, dejaría de poder confiarse. Antes esto ni se compartía —el control
+ * ganaba y la navegación no se dibujaba—, y mover una sección al lado del
+ * buscaminas la dejaba sin forma visible de llegar: con teclado y minimapa sí,
+ * pero en un móvil no hay flechas.
  */
 function crearNavLabels(celda) {
   celda.querySelectorAll(".nav-label:not([data-permanent])").forEach(l => l.remove());
 
-  const vecinos = getVecinos();
-  // Posiciones ya ocupadas por controles de la celda
-  const permanentes = new Set(
-    Array.from(celda.querySelectorAll(".nav-label[data-permanent]"))
-      .flatMap(l => ["top","bottom","left","right"].filter(d => l.classList.contains(d)))
-  );
-
-  Object.entries(vecinos).forEach(([pos, info]) => {
+  Object.entries(getVecinos()).forEach(([pos, info]) => {
     const label = document.createElement("button");
-    label.classList.add("nav-label", pos);
-    if (permanentes.has(pos)) label.classList.add("desplazada");
+    label.classList.add("nav-label");
     label.textContent = traducirNombre(info.nombre);
     label.addEventListener("click", () => {
       setPosicion(info.y, info.x);
       actualizarVista();
     });
-    celda.appendChild(label);
+    bordeCelda(celda, pos).prepend(label);
   });
 }
 

@@ -6,6 +6,7 @@ import { currentLang, obtenerDatos, onLangChange } from "./data.js";
 import { slugify } from "./proyecto-template.js";
 import { rutaProyectos } from "./rutas.js";
 import { setupScrollGradients } from "./scroll-gradients.js";
+import { bordeCelda } from "./navigation.js";
 
 /** Texto del enlace al caso de estudio, por idioma. */
 const CASO = { es: "ver el caso →", en: "see the case →", cat: "veure el cas →" };
@@ -193,10 +194,14 @@ export function renderPortfolio(data) {
   const content = el.querySelector(".portfolio-scroll-content");
   setupScrollGradients(wrapper, content);
 
-  // Nav-label "archive" en la parte inferior
+  // "archive" en el borde de abajo. Es de esta celda, no navegación del lienzo:
+  // `data-permanent` es lo que le dice a crearNavLabels() que no lo barra al
+  // repintar. Si algún día pones una sección debajo del portfolio, la
+  // navegación a ella se antepone en el mismo borde y esto se aparta hacia
+  // dentro (ver bordeCelda en js/navigation.js).
   const archiveLabel = document.createElement("a");
   archiveLabel.href = "/archive";   // "archive.html" responde 307 en Cloudflare
-  archiveLabel.classList.add("nav-label", "bottom");
+  archiveLabel.classList.add("nav-label");
   archiveLabel.dataset.permanent = "true";
   archiveLabel.textContent = "archive";
   // El archivo se siente oscuro por defecto: fija el tema destino en vez de
@@ -204,7 +209,7 @@ export function renderPortfolio(data) {
   archiveLabel.addEventListener("click", () => {
     localStorage.setItem("meowrhino-theme", "dark");
   });
-  el.appendChild(archiveLabel);
+  bordeCelda(el, "bottom").appendChild(archiveLabel);
 }
 
 function renderGridProyectos(proyectos) {
