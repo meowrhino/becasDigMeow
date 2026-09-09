@@ -982,6 +982,32 @@ a.nav-label:visited {
   margin-bottom: 1em;
 }
 
+/* Plazos, dinero y qué pasa si algo se para. Separado de los pasos por una
+   línea: los seis pasos cuentan cómo va a ser trabajar juntos, y esto de aquí
+   son los datos con los que se decide. Cada frase va suelta para poder
+   escanearlas; el número primero y la explicación después. */
+.metodologia-importante {
+  margin-top: 4rem;
+  padding-top: 2.4rem;
+  border-top: 1px solid var(--border);
+}
+
+.metodologia-importante-titular {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin: 0 0 1.8rem;
+}
+
+.metodologia-enlace {
+  display: inline-block;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
 /* ============================================
    11b. PAGE: ABOUT
    Quién es manu, por qué hace esto y cómo trabaja.
@@ -1034,6 +1060,34 @@ a.nav-label:visited {
   color: var(--text-content);
 }
 .about-texto p:last-child { margin-bottom: 0; }
+
+/* Los apartados: quién está detrás, internet puede ser otra cosa, tu web es
+   tuya. El titular va en el tono de los rótulos del sitio (pequeño, espaciado,
+   apagado) para que ordene sin competir con la pregunta de arriba. */
+.about-seccion { margin-top: 3rem; }
+.about-seccion:first-child { margin-top: 2.4rem; }
+
+.about-seccion-titular {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin: 0 0 1.4rem;
+}
+
+/* El cierre: la invitación a escribir, el precio en una línea y el enlace a
+   metodología. El precio ya no es un bloque de venta —está en el cupón de la
+   portada y en condiciones—, aquí es solo el dato que falta antes de irse. */
+.about-cierre { margin-top: 3rem; }
+.about-precio { color: var(--text); }
+.about-enlace {
+  display: inline-block;
+  margin-top: 0.4rem;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
 
 
 
@@ -1862,6 +1916,17 @@ html.easy, html.easy body {
 }
 .easy-steps.is-scrolly .easy-step.link-on::before { background: var(--text); }
 
+/* Titular de apartado dentro de una sección: los del about y el bloque de
+   condiciones de metodología. Mismo tono que .easy-h, un punto menos de peso
+   porque cuelga de una sección que ya tiene rótulo. */
+.easy-h3 {
+  font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text-muted); font-weight: 400; margin: 2.6rem 0 1.2rem;
+}
+.easy-importante { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); max-width: 46rem; }
+.easy-importante .easy-h3 { margin-top: 0; }
+.easy-about-cierre { margin-top: 2.6rem; }
+
 /* --- Statement (manifiesto centrado; resalta la línea del centro al scrollear) --- */
 .easy-statement { text-align: center; padding-top: clamp(4rem, 10dvh, 6.5rem); padding-bottom: clamp(4rem, 10dvh, 6.5rem); }
 .easy-statement-line {
@@ -2392,12 +2457,26 @@ html.js #seo-prerender {
   .proy-vecino-prev:hover,
   .proy-vecino-next:hover { transform: none; }
 
-  .proy { display: flex; flex-direction: column; }
-  .proy-pie { order: 97; }
-  /* Uno pegado a cada lado, para que se lean como los dos extremos de la
-     lista y no como dos enlaces sueltos apilados. */
-  .proy-vecino-prev { order: 98; align-self: flex-start; }
-  .proy-vecino-next { order: 99; align-self: flex-end; }
+  /* Los dos vecinos COMPARTEN FILA, uno a cada lado, y el pie va debajo:
+     dos filas de dos, no cuatro enlaces escalonados. Con flex cada uno se
+     llevaba su propia línea (align-self no junta hermanos), así que a este
+     ancho .proy es una rejilla de dos columnas: todo ocupa el ancho entero
+     salvo el par de vecinos, que se reparte una columna cada uno. Así el par
+     conserva el "izquierda y derecha" que en ancho le daba el giro. */
+  .proy { display: grid; grid-template-columns: 1fr 1fr; }
+  .proy > * { grid-column: 1 / -1; }
+
+  .proy-vecino { margin-top: clamp(2rem, 5dvh, 3rem); }
+  .proy-vecino-prev { grid-column: 1; order: 97; justify-self: start; }
+  .proy-vecino-next { grid-column: 2; order: 97; justify-self: end; }
+  /* Mismo `order` en los dos y adyacentes en el HTML: la rejilla los coloca
+     en la misma fila, en columna 1 y 2. El pie viene después. */
+  .proy-pie { order: 98; margin-top: 0.9rem; }
+
+  /* Las flechas que en ancho daba la rotación: sin ellas, en horizontal, son
+     dos nombres sueltos y no se ve cuál es el anterior y cuál el siguiente. */
+  .proy-vecino-prev::before { content: "\2190"; }
+  .proy-vecino-next::after  { content: "\2192"; }
 
   .proy-lang-switch { position: static; justify-content: flex-end; margin-bottom: 1rem; }
 }
