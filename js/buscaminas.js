@@ -11,14 +11,16 @@
 // bandera → interrogante → nada) viene de github.com/meowrhino/minesweeperV2 y
 // está portada casi tal cual. Lo que cambia es todo lo de fuera:
 //
-//  - No hay pantalla de logo ni marca: esto ya está DENTRO del sitio.
+//  - No hay pantalla de logo, ni marca, ni menú de inicio: esto ya está DENTRO
+//    del sitio, y al entrar ya hay una partida fácil empezada.
 //  - No hay puntos. En la versión suelta el marcador daba una razón para
 //    volver; dentro de una celda solo era un número más peleando por el poco
 //    sitio que hay. Queda el tiempo, que es lo que de verdad se compara, y el
 //    mejor de cada nivel guardado en este navegador (igual que el mapa guarda
 //    dónde has puesto cada sección).
 //  - El tablero se mide contra la celda, no contra la ventana: aquí dentro hay
-//    padding de 10dvh/10dvw y un marcador arriba que también ocupan.
+//    padding de 10dvh/10dvw y dos bordes ocupados que también cuentan.
+//  - Los controles van en los bordes de la celda, como en el resto del lienzo.
 //  - Los textos van por idioma, como el resto del lienzo.
 //
 // La celda NO tiene ruta propia, igual que `portfolio`: se entra por el lienzo
@@ -41,34 +43,28 @@ const NIVELES = {
  */
 const T = {
   es: {
-    intro: "un buscaminas.",
     ayuda: "clic para abrir · clic derecho para marcar",
-    ayudaTactil: "toca para abrir · cambia a marcar abajo",
     niveles: { easy: "fácil", medium: "medio", hard: "difícil" },
     minas: "minas", tiempo: "tiempo", mejor: "mejor",
     revelar: "abrir", marcar: "marcar",
     gano: "despejado", perdio: "boom",
-    otra: "otra vez", volver: "cambiar de nivel",
+    otra: "otra vez",
   },
   en: {
-    intro: "a minesweeper.",
     ayuda: "click to open · right click to flag",
-    ayudaTactil: "tap to open · switch to flag below",
     niveles: { easy: "easy", medium: "medium", hard: "hard" },
     minas: "mines", tiempo: "time", mejor: "best",
     revelar: "open", marcar: "flag",
     gano: "cleared", perdio: "boom",
-    otra: "again", volver: "change level",
+    otra: "again",
   },
   cat: {
-    intro: "un buscamines.",
     ayuda: "clic per obrir · clic dret per marcar",
-    ayudaTactil: "toca per obrir · canvia a marcar a sota",
     niveles: { easy: "fàcil", medium: "mitjà", hard: "difícil" },
     minas: "mines", tiempo: "temps", mejor: "millor",
     revelar: "obrir", marcar: "marcar",
     gano: "netejat", perdio: "boom",
-    otra: "un altre cop", volver: "canviar de nivell",
+    otra: "un altre cop",
   },
 };
 
@@ -292,14 +288,29 @@ class Tablero {
 // ============================================
 // La celda
 // ============================================
+//
+// Los controles viven en los BORDES, como los de cualquier otra celda:
+//
+//   arriba   → la navegación a `mapa` (nav-label normal, lo pone navigation.js)
+//   abajo    → los tres niveles, igual que `archive` en el portfolio
+//   izquierda → las minas que quedan
+//   derecha   → el tiempo
+//
+// Los tres son `.nav-label[data-permanent]`, que es el mecanismo que ya existía
+// para que una celda se quede un borde: crearNavLabels() no pone navegación en
+// un lado que ya está ocupado. Ver la nota sobre los choques en navigation.js.
+//
+// No hay menú de inicio: al entrar ya hay una partida fácil empezada. Un menú
+// era una pantalla intermedia para elegir algo que se puede cambiar en
+// cualquier momento desde el borde de abajo.
 
 export function renderBuscaminas() {
   const el = document.querySelector(".celda.buscaminas");
   if (!el) return;
 
   let lang = currentLang;
-  let estado = "menu";      // 'menu' | 'jugando' | 'fin'
-  let nivel = null;
+  let estado = "jugando";   // 'jugando' | 'fin'
+  let nivel = "easy";
   let tablero = null;
   let segundos = 0;
   let reloj = null;
@@ -308,47 +319,41 @@ export function renderBuscaminas() {
   let record = false;
 
   el.innerHTML = `
-    <div class="bm-pantalla">
-      <div class="bm-marcador" hidden>
-        <span class="bm-dato"><i class="bm-dato-label"></i> <b class="bm-minas">0</b></span>
-        <span class="bm-dato"><i class="bm-dato-label"></i> <b class="bm-tiempo">0</b></span>
-        <span class="bm-dato bm-dato-mejor" hidden><i class="bm-dato-label"></i> <b class="bm-mejor">–</b></span>
-      </div>
-
-      <div class="bm-menu">
-        <p class="bm-intro"></p>
-        <div class="bm-niveles">
-          <button type="button" class="bm-nivel" data-nivel="easy"></button>
-          <button type="button" class="bm-nivel" data-nivel="medium"></button>
-          <button type="button" class="bm-nivel" data-nivel="hard"></button>
-        </div>
+    <div class="bm-juego">
+      <div class="bm-tablero" role="grid"></div>
+      <div class="bm-pie">
         <p class="bm-ayuda"></p>
-      </div>
-
-      <div class="bm-juego" hidden>
-        <div class="bm-tablero" role="grid"></div>
         <div class="bm-modos">
           <button type="button" class="bm-modo activo" data-modo="abrir"></button>
           <button type="button" class="bm-modo" data-modo="marcar"></button>
         </div>
-        <div class="bm-fin" hidden>
-          <p class="bm-fin-titulo"></p>
-          <p class="bm-fin-tiempo"></p>
-          <button type="button" class="bm-otra"></button>
-        </div>
+      </div>
+      <div class="bm-fin" hidden>
+        <p class="bm-fin-titulo"></p>
+        <p class="bm-fin-tiempo"></p>
+        <button type="button" class="bm-otra"></button>
       </div>
     </div>
-    <button class="bm-volver" type="button" hidden>↺</button>
+
+    <span class="nav-label left bm-dato" data-permanent="true">
+      <i class="bm-dato-label"></i> <b class="bm-minas">0</b>
+    </span>
+    <span class="nav-label right bm-dato" data-permanent="true">
+      <i class="bm-dato-label"></i> <b class="bm-tiempo">0</b>
+    </span>
+    <div class="nav-label bottom bm-niveles" data-permanent="true">
+      <button type="button" class="bm-nivel" data-nivel="easy"></button>
+      <button type="button" class="bm-nivel" data-nivel="medium"></button>
+      <button type="button" class="bm-nivel" data-nivel="hard"></button>
+    </div>
     ${buildLangButtons()}
   `;
 
   const $ = (sel) => el.querySelector(sel);
-  const marcador = $(".bm-marcador");
-  const menu     = $(".bm-menu");
-  const juego    = $(".bm-juego");
   const tableroEl = $(".bm-tablero");
-  const finEl    = $(".bm-fin");
-  const volverEl = $(".bm-volver");
+  const finEl     = $(".bm-fin");
+
+  const tactil = () => window.matchMedia("(hover: none)").matches;
 
   // --- medidas ---
   //
@@ -357,8 +362,10 @@ export function renderBuscaminas() {
   // restarlo: sin eso la partida difícil en un móvil creía tener 375px cuando
   // tenía 300 y se salía por la derecha.
   //
-  // También se reserva lo que ocupan el marcador, los huecos entre bloques y,
-  // sólo en táctil, los botones de abrir/marcar.
+  // A lo alto hay que dejar libres los dos bordes ocupados —la navegación
+  // arriba y los niveles abajo, los dos a 3dvh— y el pie de debajo del tablero.
+  // Los huecos de 1px entre casillas también ocupan: sin descontarlos el nivel
+  // medio se pasaba de largo por los 15 que tiene.
   //
   // El mínimo de 13px es deliberado: por debajo la casilla no se puede tocar
   // con el dedo. Si aun así no cabe, el tablero se desplaza (overflow auto en
@@ -369,11 +376,11 @@ export function renderBuscaminas() {
     const cs = getComputedStyle(el);
     const padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
     const padY = parseFloat(cs.paddingTop)  + parseFloat(cs.paddingBottom);
-    const alrededor = tactil() ? 92 : 60;   // marcador + huecos (+ modos)
-    // Los huecos de 1px entre casillas (gap en `.bm-tablero`) también ocupan:
-    // sin descontarlos el nivel medio se pasaba de largo por los 15 que tiene.
-    const anchoUtil = (el.clientWidth  || window.innerWidth)  - padX - 8 - (w - 1);
-    const altoUtil  = (el.clientHeight || window.innerHeight) - padY - alrededor - (h - 1);
+    const alto = el.clientHeight || window.innerHeight;
+    const bordes = 2 * (alto * 0.03 + 26);          // los nav-label de arriba y abajo
+    const pie = tactil() ? 44 : 30;                 // abrir/marcar, o la línea de ayuda
+    const anchoUtil = (el.clientWidth || window.innerWidth) - padX - 8 - (w - 1);
+    const altoUtil  = alto - padY - bordes - pie - (h - 1);
     return Math.max(13, Math.min(34, Math.floor(Math.min(anchoUtil / w, altoUtil / h))));
   }
 
@@ -381,8 +388,6 @@ export function renderBuscaminas() {
 
   function textos() {
     const s = t(lang);
-    $(".bm-intro").textContent = s.intro;
-    $(".bm-ayuda").textContent = tactil() ? s.ayudaTactil : s.ayuda;
     el.querySelectorAll(".bm-nivel").forEach(b => {
       b.textContent = s.niveles[b.dataset.nivel];
     });
@@ -392,14 +397,10 @@ export function renderBuscaminas() {
     const labels = el.querySelectorAll(".bm-dato-label");
     labels[0].textContent = s.minas;
     labels[1].textContent = s.tiempo;
-    labels[2].textContent = s.mejor;
+    $(".bm-ayuda").textContent = s.ayuda;
     $(".bm-otra").textContent = s.otra;
-    volverEl.setAttribute("aria-label", s.volver);
-    volverEl.title = s.volver;
     if (estado === "fin") pintarFin();
   }
-
-  const tactil = () => window.matchMedia("(hover: none)").matches;
 
   // --- marcador ---
 
@@ -407,33 +408,26 @@ export function renderBuscaminas() {
     if (!tablero) return;
     $(".bm-minas").textContent = tablero.minas - tablero.banderas;
     $(".bm-tiempo").textContent = segundos;
-    const mejor = leerMejores()[nivel];
-    const datoMejor = $(".bm-dato-mejor");
-    datoMejor.hidden = mejor == null;
-    if (mejor != null) $(".bm-mejor").textContent = `${mejor}s`;
   }
 
   function pintarFin() {
     const s = t(lang);
     $(".bm-fin-titulo").textContent = gano ? s.gano : s.perdio;
+    const mejor = leerMejores()[nivel];
     $(".bm-fin-tiempo").textContent = gano
-      ? `${s.tiempo} ${segundos}s${record ? " · " + s.mejor : ""}`
+      ? `${segundos}s${record ? " · " + s.mejor : (mejor != null ? ` · ${s.mejor} ${mejor}s` : "")}`
       : "";
   }
 
-  // --- partidas ---
-
-  function irAlMenu() {
-    pararReloj();
-    estado = "menu";
-    nivel = null;
-    tablero = null;
-    menu.hidden = false;
-    juego.hidden = true;
-    finEl.hidden = true;
-    marcador.hidden = true;
-    volverEl.hidden = true;
+  function sincronizarNiveles() {
+    el.querySelectorAll(".bm-nivel").forEach(b => {
+      const suyo = b.dataset.nivel === nivel;
+      b.classList.toggle("activo", suyo);
+      b.setAttribute("aria-pressed", suyo ? "true" : "false");
+    });
   }
+
+  // --- partidas ---
 
   function empezar(n) {
     nivel = n;
@@ -444,21 +438,19 @@ export function renderBuscaminas() {
     record = false;
     modo = "abrir";
     sincronizarModos();
+    sincronizarNiveles();
 
-    menu.hidden = true;
-    juego.hidden = false;
     finEl.hidden = true;
-    marcador.hidden = false;
-    volverEl.hidden = false;
-    el.querySelector(".bm-modos").hidden = !tactil();
+    $(".bm-modos").hidden = !tactil();
+    $(".bm-ayuda").hidden = tactil();
 
     tablero.pintarEn(tableroEl, ladoCasilla());
     pintarMarcador();
-    arrancarReloj();
+    pararReloj();   // el reloj arranca en el primer clic, no al repartir
   }
 
   function arrancarReloj() {
-    pararReloj();
+    if (reloj) return;
     reloj = setInterval(() => {
       segundos++;
       $(".bm-tiempo").textContent = segundos;
@@ -481,7 +473,7 @@ export function renderBuscaminas() {
     // tiempo a mirar dónde estaban las minas, y al ganar a ver el tablero
     // limpio. El cartel tapa las dos cosas.
     setTimeout(() => {
-      if (estado !== "fin") return;   // se ha vuelto al menú mientras tanto
+      if (estado !== "fin") return;   // ha empezado otra partida mientras tanto
       pintarFin();
       finEl.hidden = false;
     }, haGanado ? 500 : 1200);
@@ -499,7 +491,6 @@ export function renderBuscaminas() {
     b.addEventListener("click", () => empezar(b.dataset.nivel));
   });
 
-  volverEl.addEventListener("click", irAlMenu);
   $(".bm-otra").addEventListener("click", () => empezar(nivel));
 
   el.querySelectorAll(".bm-modo").forEach(b => {
@@ -511,6 +502,7 @@ export function renderBuscaminas() {
     if (!c || estado !== "jugando") return;
     const x = +c.dataset.x, y = +c.dataset.y;
     if (tactil() && modo === "marcar") { tablero.marcar(x, y); pintarMarcador(); return; }
+    arrancarReloj();
     const r = tablero.abrir(x, y);
     if (r === "mina") acabar(false);
     else if (r === "gana") acabar(true);
@@ -541,7 +533,8 @@ export function renderBuscaminas() {
         c.style.height = `${lado}px`;
         c.style.fontSize = `${Math.max(8, lado * 0.62)}px`;
       });
-      el.querySelector(".bm-modos").hidden = !tactil();
+      $(".bm-modos").hidden = !tactil();
+      $(".bm-ayuda").hidden = tactil();
       textos();
     }, 150);
   });
@@ -552,5 +545,5 @@ export function renderBuscaminas() {
   attachLangListeners(el, (l) => { lang = l; textos(); });
 
   textos();
-  irAlMenu();
+  empezar("easy");
 }

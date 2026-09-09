@@ -1415,6 +1415,11 @@ a.nav-label:visited {
    La casilla de debajo del mapa. Ver js/buscaminas.js
    para por qué existe y de dónde sale la lógica.
 
+   Los controles van en los bordes, con la pinta de
+   los nav-label: los niveles abajo (como `archive`
+   en el portfolio) y minas/tiempo a los lados. Lo
+   que hay dentro de la celda es solo el tablero.
+
    Es el único sitio del estudio con color: los
    números del buscaminas son los del buscaminas
    desde 1990 y cambiarlos por grises no lo haría
@@ -1426,78 +1431,45 @@ a.nav-label:visited {
   flex-direction: column;
 }
 
-/* Los bloques de esta celda se turnan (menú, partida, cartel de final) y se
-   esconden con la propiedad `hidden`. Casi todos son `display: flex`, que gana
-   a la regla de agente de usuario de `[hidden]`: sin esto el menú seguía
-   ocupando su sitio y dejaba el tablero en una franja de una fila. */
+/* Los bloques de esta celda se turnan (partida, cartel de final, botones de
+   modo) y se esconden con la propiedad `hidden`. Casi todos son `display:
+   flex`, que gana a la regla de agente de usuario de `[hidden]`: sin esto el
+   cartel de final se quedaría puesto encima del tablero. */
 .celda.buscaminas [hidden] { display: none; }
 
-.bm-pantalla {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.1rem;
-  max-width: 100%;
-  max-height: 100%;
-}
+/* --- minas y tiempo, en los laterales --- */
 
-/* --- el menú de niveles --- */
+/* Son nav-label en todo menos en que no llevan a ningún sitio. */
+.bm-dato { cursor: default; }
+.bm-dato i { font-style: normal; }
+.bm-dato b { color: var(--text); font-weight: 400; }
 
-.bm-menu {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.1rem;
-  text-align: center;
-}
-
-.bm-intro {
-  font-family: var(--font-serif);
-  font-size: clamp(1rem, 3dvw, 1.6rem);
-  margin: 0;
-}
+/* --- los niveles, en el borde de abajo --- */
 
 .bm-niveles {
   display: flex;
-  gap: 0.6rem;
-  flex-wrap: wrap;
-  justify-content: center;
+  gap: 0.9em;
+  align-items: baseline;
 }
 
-/* Los tres niveles se leen como las secciones del mapa: mismo gris, misma
-   serif, mismo crecer al pasar por encima. Son la misma clase de cosa —una
-   casilla que eliges— y el sitio solo tiene un gesto para eso. */
 .bm-nivel {
-  font-family: var(--font-serif);
-  font-size: clamp(0.75rem, 1.6dvw, 1rem);
+  font-family: inherit;
+  font-size: inherit;
+  letter-spacing: inherit;
   text-transform: lowercase;
-  padding: 0.55em 1.2em;
+  color: var(--text-secondary);
+  background: none;
   border: none;
-  background: var(--minimap-expanded-bg);
-  color: var(--minimap-expanded-text);
+  padding: 0;
   cursor: pointer;
-  transition: background var(--transition-fast), transform var(--transition-fast);
+  transition: color var(--transition-med);
 }
-.bm-nivel:hover { background: var(--minimap-expanded-hover); transform: scale(1.05); }
+.bm-nivel:hover { color: var(--text); }
 
-.bm-ayuda {
-  margin: 0;
-  font-size: clamp(0.65rem, 1.4dvw, 0.8rem);
-  color: var(--text-secondary);
-}
-
-/* --- el marcador --- */
-
-.bm-marcador {
-  display: flex;
-  gap: 1.4rem;
-  font-size: clamp(0.65rem, 1.4dvw, 0.8rem);
-  color: var(--text-secondary);
-}
-
-.bm-dato i { font-style: normal; }
-.bm-dato b { color: var(--text); font-weight: 400; }
+/* El nivel que se está jugando. No es un botón "pulsado" sino dónde estás:
+   se marca como la sección activa del minimapa, con el color del texto normal
+   contra el gris de las otras dos. */
+.bm-nivel.activo { color: var(--text); }
 
 /* --- el tablero --- */
 
@@ -1505,7 +1477,7 @@ a.nav-label:visited {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.7rem;
   position: relative;
   max-width: 100%;
   min-height: 0;
@@ -1561,7 +1533,20 @@ a.nav-label:visited {
 .bm-casilla[data-n="7"] { color: var(--bm-7); }
 .bm-casilla[data-n="8"] { color: var(--bm-8); }
 
-/* --- abrir / marcar, sólo en táctil --- */
+/* --- el pie del tablero: la ayuda, o abrir/marcar en táctil --- */
+
+.bm-pie {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.6em;
+}
+
+.bm-ayuda {
+  margin: 0;
+  font-size: clamp(0.65rem, 1.4dvw, 0.8rem);
+  color: var(--text-secondary);
+}
 
 .bm-modos { display: flex; gap: 0.5rem; }
 
@@ -1617,30 +1602,6 @@ a.nav-label:visited {
   transition: background var(--transition-fast), transform var(--transition-fast);
 }
 .bm-otra:hover { background: var(--minimap-expanded-hover); transform: scale(1.05); }
-
-/* Volver al menú de niveles. Mismo sitio y mismo tamaño que el ↺ del mapa y
-   que los +/- de metodología: los controles de celda viven todos ahí. */
-.bm-volver {
-  position: absolute;
-  bottom: 3dvh;
-  left: 3dvw;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-serif);
-  font-size: 1.2rem;
-  line-height: 1;
-  background: none;
-  border: none;
-  padding: 0;
-  color: var(--btn-subtle-strong);
-  cursor: pointer;
-  transition: color var(--transition-fast);
-  z-index: var(--z-nav);
-}
-.bm-volver:hover { color: var(--btn-subtle-strong-hover); }
 
 
 /* ============================================
