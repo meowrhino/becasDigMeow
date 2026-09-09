@@ -57,9 +57,9 @@
         "cat": "eines i experiments lliures — meowrhino studio"
       },
       "description": {
-        "es": "las herramientas que hacemos y publicamos abiertas: comprimir imágenes y vídeo en el navegador, generar facturas sin registro, calcular precios de autónom·a, y los experimentos que van saliendo.",
+        "es": "las herramientas que hacemos y publicamos abiertas: comprimir imágenes y vídeo en el navegador, generar facturas sin registro, calcular precios cuando trabajas por tu cuenta, y los experimentos que van saliendo.",
         "en": "the tools we make and publish openly: compress images and video in the browser, generate invoices without signing up, work out freelance rates, plus the experiments along the way.",
-        "cat": "les eines que fem i publiquem obertes: comprimir imatges i vídeo al navegador, generar factures sense registre, calcular preus d'autònom·a, i els experiments que van sortint."
+        "cat": "les eines que fem i publiquem obertes: comprimir imatges i vídeo al navegador, generar factures sense registre, calcular preus quan treballes pel teu compte, i els experiments que van sortint."
       }
     },
     "mapa": {
@@ -417,9 +417,8 @@
         "parrafos": [
           "el proyecto dura aproximadamente un mes desde que recibimos todo el material necesario. no trabajamos con placeholders.",
           "3 entregas · 1 ronda de revisión por entrega. cada ronda admite varios cambios; una vez enviada, lo que venga después pasa a la siguiente.",
-          "40% al empezar el proyecto: es lo que reserva tu mes de agenda.",
-          "30% al aprobar el diseño.",
-          "30% al terminar la programación.",
+          "50% al confirmar el proyecto · 50% antes de la entrega final.",
+          "el primer pago reserva el proyecto y nos permite empezar a trabajar. el segundo se hace cuando la web está terminada y antes de ponerla en producción.",
           "2 semanas de garantía después de la entrega. durante ese tiempo puedes avisarnos de cualquier cosa que falle.",
           "después, 60 €/hora para cambios. y si aprendiste a tocarlo tú, no pagas.",
           "si el proyecto queda parado más de dos semanas por falta de material, se reactiva con un 10%. te habíamos reservado un mes de agenda y tenemos que volver a hacerte hueco."
@@ -479,9 +478,8 @@
         "parrafos": [
           "the project takes roughly a month from the day we receive all the material we need. we don't work with placeholders.",
           "3 deliveries · 1 round of revisions per delivery. each round can hold several changes; once it is sent, whatever comes next goes to the following one.",
-          "40% when the project starts: that is what reserves your month in the calendar.",
-          "30% when the design is signed off.",
-          "30% when the code is finished.",
+          "50% when the project is confirmed · 50% before the final delivery.",
+          "the first payment reserves the project and lets us start working. the second one happens once the website is finished and before it goes live.",
           "2 weeks of warranty after delivery. during that time you can tell us about anything that breaks.",
           "after that, 60 €/hour for changes. and if you learned to do it yourself, you don't pay.",
           "if the project sits still for more than two weeks for lack of material, it restarts with a 10%. we had set aside a month of our calendar and we have to make room for you again."
@@ -541,9 +539,8 @@
         "parrafos": [
           "el projecte dura aproximadament un mes des que rebem tot el material necessari. no treballem amb placeholders.",
           "3 lliuraments · 1 ronda de revisió per lliurament. cada ronda admet diversos canvis; un cop enviada, el que vingui després passa a la següent.",
-          "40% en començar el projecte: és el que reserva el teu mes d'agenda.",
-          "30% en aprovar el disseny.",
-          "30% en acabar la programació.",
+          "50% en confirmar el projecte · 50% abans del lliurament final.",
+          "el primer pagament reserva el projecte i ens permet començar a treballar. el segon es fa quan la web està acabada i abans de posar-la en producció.",
           "2 setmanes de garantia després del lliurament. durant aquest temps pots avisar-nos de qualsevol cosa que falli.",
           "després, 60 €/hora per canvis. i si vas aprendre a tocar-ho tu, no pagues.",
           "si el projecte queda parat més de dues setmanes per falta de material, es reactiva amb un 10%. t'havíem reservat un mes d'agenda i hem de tornar a fer-te lloc."
@@ -554,7 +551,7 @@
   },
   "about": {
     "es": {
-      "pregunta": "¿te ayudo a hacer tu rinconcito en internet?",
+      "pregunta": "¿te hago una web?",
       "entrada": [
         "somos un estudio pequeño de diseño y desarrollo web en barcelona.",
         "hacemos webs para un internet más común, cercano y vivo.",
@@ -567,7 +564,7 @@
           "parrafos": [
             "detrás de meowrhino estoy yo: manu latour. estudié en la massana y en la uab, y desde 2020 diseño y programo webs a medida desde barcelona.",
             "trabajo contigo durante todo el proceso: la estructura la pensamos juntos, la interfaz la diseño y el código lo escribo yo. no hay plantillas — tu proyecto no tiene que caber dentro de una web que ya existe.",
-            "también hago herramientas libres para lo que me hace falta: comprimir imágenes sin subirlas a ningún servidor, generar facturas sin registro, calcular lo que de verdad cobras siendo autónom·a."
+            "también hago herramientas libres para lo que me hace falta: comprimir imágenes sin subirlas a ningún servidor, generar facturas sin registro, calcular lo que de verdad cobras trabajando por tu cuenta."
           ]
         },
         {
@@ -599,7 +596,7 @@
       }
     },
     "en": {
-      "pregunta": "shall i help you make your little corner of the internet?",
+      "pregunta": "shall i make you a website?",
       "entrada": [
         "we are a small web design and development studio in barcelona.",
         "we make websites for a more communal, close and living internet.",
@@ -644,7 +641,7 @@
       }
     },
     "cat": {
-      "pregunta": "t'ajudo a fer el teu raconet a internet?",
+      "pregunta": "et faig una web?",
       "entrada": [
         "som un estudi petit de disseny i desenvolupament web a barcelona.",
         "fem webs per a un internet més comú, proper i viu.",
@@ -657,7 +654,7 @@
           "parrafos": [
             "darrere de meowrhino hi ha jo: en manu latour. vaig estudiar a la massana i a la uab, i des del 2020 dissenyo i programo webs a mida des de barcelona.",
             "treballo amb tu durant tot el procés: l'estructura la pensem junts, la interfície la dissenyo i el codi l'escric jo. no hi ha plantilles — el teu projecte no ha de cabre dins d'una web que ja existeix.",
-            "també faig eines lliures per al que em fa falta: comprimir imatges sense pujar-les a cap servidor, generar factures sense registre, calcular el que de veritat cobres sent autònom·a."
+            "també faig eines lliures per al que em fa falta: comprimir imatges sense pujar-les a cap servidor, generar factures sense registre, calcular el que de veritat cobres treballant pel teu compte."
           ]
         },
         {
@@ -702,7 +699,9 @@
             "no iniciamos un proyecto sin todo el material listo: textos, imágenes y contenido. también una identidad visual mínima (logo, paleta de color, tipografía). si no se dispone de ella, se puede presupuestar como parte del proyecto.",
             "no trabajamos con placeholders. el mes de trabajo empieza el día que llega tu material.",
             "cada proyecto incluye 3 entregas · 1 ronda de revisión por entrega (diseño, programación intermedia y programación final). cada ronda puede incluir varios cambios, pero una vez enviada, los siguientes cambios pertenecen a la siguiente ronda. lo aprobado en una entrega no se reabre en la siguiente. cualquier cambio derivado de trabajar con material incompleto cuenta como revisión. las rondas extra se presupuestan a 60€/hora.",
-            "pago en tres fases: 40% al empezar el proyecto —es lo que reserva el mes de agenda—, 30% al aprobar el diseño y 30% al finalizar la programación.",
+            "pago en dos fases: 50% al confirmar el proyecto —reserva el mes de agenda y permite empezar a trabajar— y 50% antes de la entrega final, con la web ya terminada y antes de ponerla en producción.",
+            "el dominio lo compras tú y queda registrado a tu nombre, no al nuestro. te ayudamos a elegirlo y a configurarlo —recomendamos cloudflare—, pero la titularidad y la renovación anual son tuyas. si el dominio caduca, la web deja de verse; los archivos siguen siendo tuyos y se pueden volver a publicar cuando quieras.",
+            "la web se sirve como archivos estáticos, sin servidor propio ni base de datos, así que el alojamiento no tiene coste mensual. el dominio es el único gasto recurrente del proyecto.",
             "después de la entrega tienes dos semanas para avisarnos de cualquier cosa que falle. pasado ese plazo, los cambios se presupuestan a 60€/hora.",
             "la primera reunión es gratuita, y la segunda también si la hacemos dentro de las dos semanas siguientes y con tu material listo. pasado ese plazo sin contenido, el proyecto queda en pausa y reactivarlo conlleva una tarifa del 10% del presupuesto. a partir de la primera entrega se consume parte del presupuesto. puedes parar el proyecto en cualquier momento abonando la parte proporcional de lo trabajado; si se retoma más adelante, se abre un nuevo presupuesto.",
             "nos reservamos la posibilidad de publicar el proyecto en nuestro portfolio y redes sociales. a la finalización de la web, planteamos la posibilidad de un post conjunto en instagram.",
@@ -763,7 +762,9 @@
             "we do not start a project without all the material ready: texts, images and content. also a minimal visual identity (logo, colour palette, typography). if you don't have one, it can be quoted as part of the project.",
             "we don't work with placeholders. the working month starts the day your material lands.",
             "each project includes 3 deliveries · 1 round of revisions per delivery (design, mid-stage development and final development). each round may include several changes, but once submitted, subsequent changes belong to the next round. what is approved at one delivery is not reopened at the next. any change resulting from working with incomplete material counts as a revision. extra rounds are billed at 60€/hour.",
-            "payment in three phases: 40% when the project starts —that is what reserves the month in the calendar—, 30% upon design sign-off and 30% upon completing development.",
+            "payment in two phases: 50% when the project is confirmed —it reserves the month in the calendar and lets the work start— and 50% before the final delivery, with the website already finished and before it goes live.",
+            "you buy the domain and it is registered in your name, not ours. we help you choose it and set it up —we recommend cloudflare—, but ownership and the yearly renewal are yours. if the domain expires, the website stops being visible; the files are still yours and can be published again whenever you want.",
+            "the website is served as static files, with no server of our own and no database, so hosting has no monthly cost. the domain is the project's only recurring expense.",
             "after delivery you have two weeks to tell us about anything that breaks. after that, changes are quoted at 60€/hour.",
             "the first meeting is free, and so is the second as long as we hold it within the next two weeks and your material is ready. after that period without content, the project is paused and restarting it carries a fee of 10% of the budget. from the first delivery onwards, part of the budget is used. you can stop the project at any time by paying the proportional share of the work done; if resumed later, a new quote is provided.",
             "we reserve the option to publish the project in our portfolio and social media. upon completion of the website, we'll suggest a joint instagram post.",
@@ -824,7 +825,9 @@
             "no iniciem un projecte sense tot el material llest: textos, imatges i contingut. també una identitat visual mínima (logo, paleta de color, tipografia). si no es disposa d'ella, es pot pressupostar com a part del projecte.",
             "no treballem amb placeholders. el mes de feina comença el dia que arriba el teu material.",
             "cada projecte inclou 3 lliuraments · 1 ronda de revisió per lliurament (disseny, programació intermèdia i programació final). cada ronda pot incloure diversos canvis, però un cop enviada, els canvis següents pertanyen a la ronda següent. el que s'aprova en un lliurament no es reobre en el següent. qualsevol canvi derivat de treballar amb material incomplet compta com a revisió. les rondes extra es pressuposten a 60€/hora.",
-            "pagament en tres fases: 40% en començar el projecte —és el que reserva el mes d'agenda—, 30% en aprovar el disseny i 30% en finalitzar la programació.",
+            "pagament en dues fases: 50% en confirmar el projecte —reserva el mes d'agenda i permet començar a treballar— i 50% abans del lliurament final, amb la web ja acabada i abans de posar-la en producció.",
+            "el domini el compres tu i queda registrat al teu nom, no al nostre. t'ajudem a triar-lo i a configurar-lo —recomanem cloudflare—, però la titularitat i la renovació anual són teves. si el domini caduca, la web deixa de veure's; els arxius segueixen sent teus i es poden tornar a publicar quan vulguis.",
+            "la web se serveix com a arxius estàtics, sense servidor propi ni base de dades, així que l'allotjament no té cost mensual. el domini és l'única despesa recurrent del projecte.",
             "després del lliurament tens dues setmanes per avisar-nos de qualsevol cosa que falli. passat aquest termini, els canvis es pressuposten a 60€/hora.",
             "la primera reunió és gratuïta, i la segona també si la fem dins de les dues setmanes següents i amb el teu material llest. passat aquest termini sense contingut, el projecte queda en pausa i reactivar-lo comporta una tarifa del 10% del pressupost. a partir del primer lliurament es consumeix part del pressupost. pots aturar el projecte en qualsevol moment abonant la part proporcional del treball fet; si es reprèn més endavant, s'obre un nou pressupost.",
             "ens reservem la possibilitat de publicar el projecte al nostre portfolio i xarxes socials. en finalitzar la web, plantegem la possibilitat d'un post conjunt a instagram.",

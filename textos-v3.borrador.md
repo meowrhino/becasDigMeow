@@ -248,3 +248,26 @@ Sobre la v3, en la ronda del 9 sep:
 `3 entregas · 1 ronda de revisión por entrega` mantiene su punto medio: es la
 fórmula que se repite igual en tres páginas, y partirla la volvería a
 desalinear.
+
+---
+
+# 7. Segunda ronda de correcciones (publicada)
+
+- **La pregunta de apertura** pasa a ser el eslogan que ya se dice en todas
+  partes: **"¿te hago una web?"** (`shall i make you a website?`,
+  `et faig una web?`). Fuera "rinconcito".
+- **Fuera el punto medio de `autónom·a`**, reformulado con el vocabulario que
+  ya está en la entrada del about: "calcular lo que de verdad cobras
+  **trabajando por tu cuenta**". Igual en la descripción de /links (es y cat).
+  El inglés ya decía "as a freelancer" y no se toca.
+- **Vuelve el 50/50**, con los dos momentos dichos por su nombre:
+  "50% al confirmar el proyecto · 50% antes de la entrega final", y debajo qué
+  es cada pago. Mismo texto en condiciones, en los tres idiomas.
+- **El dominio y el alojamiento entran en condiciones**: quién lo compra, a
+  nombre de quién queda, quién lo renueva, qué pasa si caduca y por qué no hay
+  coste mensual de alojamiento.
+
+## Sigue abierto
+
+- **La foto de "quién está detrás".** No hay ninguna en el sitio y el hueco
+  sigue ahí.
