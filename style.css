@@ -2123,6 +2123,13 @@ html.js #seo-prerender {
    son mínimas — y al no haber fondo, ni se ven. */
 .proy-card img {
   width: 100%;
+  /* `height: auto` es obligatorio aquí: cada <img> lleva sus atributos
+     width/height reales (1600x1049, 1392x912…) para que el navegador reserve
+     el hueco y no haya salto de layout. Ese `height` es una pista de
+     presentación que gana a `aspect-ratio`, así que sin esta línea la caja
+     mide el alto original de la captura —1049px por tarjeta— y la rejilla se
+     descuadra. Igual que .proy-img en la ficha. */
+  height: auto;
   aspect-ratio: 3 / 2;
   object-fit: contain;
   display: block;
