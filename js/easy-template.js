@@ -18,6 +18,22 @@ export const esc = (s) => String(s ?? "")
   .replace(/"/g, "&quot;");
 
 /**
+ * Como `esc`, pero deja pasar enlaces escritos en markdown: `[texto](url)`.
+ *
+ * Los textos de data.json son texto plano a propósito —así nadie mete etiquetas
+ * sin querer—, pero algún párrafo necesita citar su fuente. En vez de abrir el
+ * HTML entero, se escapa todo primero y sólo después se reconstruyen los
+ * enlaces, así que lo que no sea esta sintaxis exacta sigue saliendo literal.
+ * Sólo se aceptan http(s) y rutas internas: un `javascript:` se queda en texto.
+ */
+export const escConEnlaces = (s) => esc(s).replace(
+  /\[([^\]]+)\]\((https?:\/\/[^\s)]+|\/[^\s)]*)\)/g,
+  (_, texto, url) => url.startsWith("/")
+    ? `<a href="${url}">${texto}</a>`
+    : `<a href="${url}" target="_blank" rel="noopener">${texto}</a>`
+);
+
+/**
  * Textos de interfaz por idioma: los encabezados de sección y las etiquetas del
  * visor de portfolio.
  *
@@ -170,7 +186,7 @@ export function aboutHTML(data, lang) {
   const co = data.contacto || {};
   const asunto = encodeURIComponent(co.asunto?.[lang] || co.asunto?.es || "");
   const cv = co.cv?.[lang] || co.cv?.es;
-  const p = (t) => `<p>${esc(t.replace("{precio}", precio))}</p>`;
+  const p = (t) => `<p>${escConEnlaces(t.replace("{precio}", precio))}</p>`;
 
   return `
     <section class="easy-section easy-about" id="about">
