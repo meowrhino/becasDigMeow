@@ -2080,6 +2080,10 @@ html.js #seo-prerender {
 .proy-acciones {
   margin-top: clamp(2.5rem, 6dvh, 4rem);
   display: flex; flex-wrap: wrap; gap: 0.7rem;
+  /* Centrados, no alineados a la izquierda con el texto: son el final de la
+     ficha, no otro párrafo. Pegados al margen izquierdo se leían como una
+     continuación de la columna de texto y el segundo botón quedaba colgando. */
+  justify-content: center;
 }
 
 /* --- Galería: una imagen por fila, a lo ancho de la columna --- */
