@@ -138,10 +138,19 @@ export function metodologiaHTML(data, lang) {
       </div>
     </li>`).join("");
 
+  const imp = (data.metodologia?.[lang] || data.metodologia?.es || {}).importante;
+  const importante = imp ? `
+      <div class="easy-importante">
+        <h3 class="easy-h3">${esc(imp.titular)}</h3>
+        ${(imp.parrafos || []).map(t => `<p>${esc(t)}</p>`).join("")}
+        ${imp.enlace ? `<p><a href="${esc(rutaCelda("condiciones", lang))}">${esc(imp.enlace)}</a></p>` : ""}
+      </div>` : "";
+
   return `
     <section class="easy-section" id="metodologia">
       <h2 class="easy-h">${esc(ui(lang).metodologia)}</h2>
       <ol class="easy-steps">${items}</ol>
+      ${importante}
     </section>`;
 }
 
@@ -151,8 +160,8 @@ export function metodologiaHTML(data, lang) {
  * El about, pre-renderizado.
  *
  * Es la única versión sin JS de la celda `about`, así que lleva el texto
- * entero: la pregunta, la foto, los cinco apartados y el contacto. El precio
- * se sustituye desde el cupón, que es donde vive el número.
+ * entero: la pregunta, la entrada, los apartados, el cierre y el contacto. El
+ * precio se sustituye desde el cupón, que es donde vive el número.
  */
 export function aboutHTML(data, lang) {
   const a = data.about || {};
@@ -167,7 +176,15 @@ export function aboutHTML(data, lang) {
     <section class="easy-section easy-about" id="about">
       <h1 class="easy-about-pregunta">${esc(d.pregunta || "")}</h1>
       <div class="easy-about-entrada">${(d.entrada || []).map(p).join("")}</div>
-      ${(d.parrafos || []).map(p).join("")}
+      ${(d.secciones || []).map(sec => `
+      <h2 class="easy-h3">${esc(sec.titular)}</h2>
+      ${(sec.parrafos || []).map(p).join("")}`).join("")}
+      ${d.cierre ? `
+      <div class="easy-about-cierre">
+        ${(d.cierre.parrafos || []).map(p).join("")}
+        <p>${esc((d.cierre.precio || "").replace("{precio}", precio))}
+        · <a href="${esc(rutaCelda("metodología", lang))}">${esc(d.cierre.enlace || "")}</a></p>
+      </div>` : ""}
       <p class="easy-about-contacto">
         <a href="mailto:${esc(co.email)}?subject=${asunto}">${esc(co.email)}</a>
         ${co.instagram ? `<a href="${esc(co.instagram.url)}" target="_blank" rel="noopener">${esc(co.instagram.usuario)}</a>` : ""}

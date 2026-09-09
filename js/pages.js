@@ -213,12 +213,25 @@ export function renderMetodologia(data) {
   // uno quedaba enterrado en mitad de la frase.
   const buildContent = (lang) => {
     const pasos = (data.metodologia[lang] || data.metodologia.es)?.pasos || [];
-    return pasos.map((paso, i) => `
+    const lista = pasos.map((paso, i) => `
       <div class="metodologia-paso">
         <span class="metodologia-num">${String(i + 1).padStart(2, "0")}</span>
         <p class="metodologia-titular">${escapeHTML(paso.titular)}</p>
         ${(paso.parrafos || []).map(t => `<p>${escapeHTML(t)}</p>`).join("")}
       </div>`).join("");
+
+    // Los plazos, el dinero y lo que pasa si algo se para. Iba repartido entre
+    // los pasos y convertía el segundo en una advertencia; aquí abajo es lo que
+    // es: la información que necesitas para decidir, junta y sin tono de aviso.
+    const imp = (data.metodologia[lang] || data.metodologia.es)?.importante;
+    const importante = imp ? `
+      <div class="metodologia-importante">
+        <h2 class="metodologia-importante-titular">${escapeHTML(imp.titular)}</h2>
+        ${(imp.parrafos || []).map(t => `<p>${escapeHTML(t)}</p>`).join("")}
+        ${imp.enlace ? `<a class="metodologia-enlace" href="${escapeHTML(rutaCelda("condiciones", lang))}">${escapeHTML(imp.enlace)}</a>` : ""}
+      </div>` : "";
+
+    return lista + importante;
   };
 
   el.innerHTML = `
@@ -451,10 +464,27 @@ export function renderAbout(data) {
     const cvHref = pick(cv, lang);
     const p = (t) => `<p>${escapeHTML(t.replace("{precio}", precio))}</p>`;
 
+    // El about pasó de ser un chorro de párrafos a tener apartados con titular:
+    // quién está detrás, internet puede ser otra cosa, tu web es tuya. El
+    // manifiesto y la persona dejaron de estar mezclados en el mismo bloque.
+    const secciones = (d.secciones || []).map(sec => `
+      <section class="about-seccion">
+        <h2 class="about-seccion-titular">${escapeHTML(sec.titular)}</h2>
+        ${(sec.parrafos || []).map(p).join("")}
+      </section>`).join("");
+
+    const c = d.cierre;
+    const cierre = c ? `
+      <div class="about-cierre">
+        ${(c.parrafos || []).map(p).join("")}
+        <p class="about-precio">${escapeHTML((c.precio || "").replace("{precio}", precio))}</p>
+        <a class="about-enlace" href="${escapeHTML(rutaCelda("metodología", lang))}">${escapeHTML(c.enlace || "")}</a>
+      </div>` : "";
+
     return `
       <h1 class="about-pregunta">${escapeHTML(d.pregunta)}</h1>
       <div class="about-entrada">${(d.entrada || []).map(p).join("")}</div>
-      <div class="about-texto">${(d.parrafos || []).map(p).join("")}</div>
+      <div class="about-texto">${secciones}${cierre}</div>
       <div class="about-contacto">
         <a class="contacto-email" href="${escapeHTML(buildMailto(lang))}">${escapeHTML(email)}</a>
         <div class="contacto-row">
