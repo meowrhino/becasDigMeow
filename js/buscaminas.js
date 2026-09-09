@@ -29,12 +29,40 @@
 
 import { currentLang, buildLangButtons, attachLangListeners } from "./data.js";
 
-/** Ancho, alto y minas de cada nivel. Los tres del minesweeper de siempre. */
+/**
+ * Las densidades del minesweeper de toda la vida, que es lo que de verdad
+ * define la dificultad: 12,5% en principiante, 15,6% en intermedio y 20,6% en
+ * experto. El tamaño del tablero es solo cuánto rato dura la partida.
+ *
+ * Los dos primeros niveles llevan su tablero escrito porque es el clásico y no
+ * hay nada que decidir. El difícil NO: el experto original es 30×16, apaisado,
+ * y aquí la celda es alta y estrecha en un móvil. En vez de encoger el 30×16
+ * hasta que no se pueda tocar, se mide el hueco, se saca el tablero más grande
+ * que cabe con casillas cómodas y se calculan las minas para clavar la misma
+ * densidad. Así la partida es igual de difícil en un móvil que en un portátil,
+ * que es lo que la densidad significa.
+ *
+ * `minasPara` está suelta a propósito: el día que haya un nivel a medida, esto
+ * ya es la fórmula.
+ */
+const DENSIDADES = { principiante: 0.125, intermedio: 0.156, experto: 0.206 };
+
+/** Las minas que le tocan a un tablero de w×h para una densidad dada. */
+export const minasPara = (w, h, densidad) =>
+  Math.max(1, Math.min(w * h - 1, Math.round(w * h * densidad)));
+
 const NIVELES = {
-  easy:   { w: 8,  h: 8,  minas: 10 },
-  medium: { w: 16, h: 16, minas: 40 },
-  hard:   { w: 20, h: 20, minas: 100 },
+  easy:   { w: 8,  h: 8,  minas: 8 },    // 12,5%, el principiante clásico
+  medium: { w: 16, h: 16, minas: 40 },   // 15,6%, el intermedio clásico tal cual
+  hard:   { densidad: DENSIDADES.experto },
 };
+
+/** Casilla cómoda de tocar. Es el objetivo del tablero que se calcula, no un
+ *  mínimo: si no cabe, ladoCasilla() lo aprieta luego hasta donde haga falta. */
+const LADO_COMODO = 24;
+
+/** Límites del tablero calculado: ni un pañuelo ni una hoja de cálculo. */
+const LADOS = { min: 10, max: 30 };
 
 /**
  * Los textos, por idioma. Van aquí y no en data.json a propósito: data.json es
@@ -371,21 +399,44 @@ export function renderBuscaminas() {
   // con el dedo. Si aun así no cabe, el tablero se desplaza (overflow auto en
   // `.bm-tablero`), que es peor que verlo entero pero mucho mejor que verlo y
   // no poder jugar.
-  function ladoCasilla() {
-    const { w, h } = NIVELES[nivel];
+  /** El rectángulo de píxeles que le queda al tablero dentro de la celda. */
+  function hueco() {
     const cs = getComputedStyle(el);
     const padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
     const padY = parseFloat(cs.paddingTop)  + parseFloat(cs.paddingBottom);
     const alto = el.clientHeight || window.innerHeight;
-    // Si has puesto una sección encima o debajo en el mapa, ese borde lleva dos
-    // filas: el control de la celda fuera y la navegación apartada hacia dentro
-    // (ver crearNavLabels en js/navigation.js).
+    // Si un borde lleva dos filas —el control de la celda y la navegación
+    // apartada hacia dentro— ocupa el doble. Ver crearNavLabels en navigation.js.
     const filas = el.querySelector(".nav-label.desplazada.top, .nav-label.desplazada.bottom") ? 2 : 1;
     const bordes = 2 * (alto * 0.03 + 26 * filas);
     const pie = tactil() ? 44 : 30;                 // abrir/marcar, o la línea de ayuda
-    const anchoUtil = (el.clientWidth || window.innerWidth) - padX - 8 - (w - 1);
-    const altoUtil  = alto - padY - bordes - pie - (h - 1);
-    return Math.max(13, Math.min(34, Math.floor(Math.min(anchoUtil / w, altoUtil / h))));
+    return {
+      ancho: (el.clientWidth || window.innerWidth) - padX - 8,
+      alto:  alto - padY - bordes - pie,
+    };
+  }
+
+  /**
+   * El tablero de un nivel. Los fijos se devuelven tal cual; el que va por
+   * densidad se calcula contra el hueco de AHORA.
+   *
+   * Se recalcula solo al empezar partida, no al girar el móvil: cambiar el
+   * tablero a mitad de partida es perderla.
+   */
+  function tableroDe(n) {
+    const def = NIVELES[n];
+    if (!def.densidad) return def;
+    const { ancho, alto } = hueco();
+    const paso = LADO_COMODO + 1;   // la casilla más el hueco de 1px
+    const cabe = (px) => Math.max(LADOS.min, Math.min(LADOS.max, Math.floor((px + 1) / paso)));
+    const w = cabe(ancho), h = cabe(alto);
+    return { w, h, minas: minasPara(w, h, def.densidad) };
+  }
+
+  function ladoCasilla(w, h) {
+    const { ancho, alto } = hueco();
+    return Math.max(13, Math.min(34,
+      Math.floor(Math.min((ancho - (w - 1)) / w, (alto - (h - 1)) / h))));
   }
 
   // --- textos ---
@@ -435,7 +486,7 @@ export function renderBuscaminas() {
 
   function empezar(n) {
     nivel = n;
-    tablero = new Tablero(NIVELES[n]);
+    tablero = new Tablero(tableroDe(n));
     estado = "jugando";
     segundos = 0;
     gano = false;
@@ -448,7 +499,7 @@ export function renderBuscaminas() {
     $(".bm-modos").hidden = !tactil();
     $(".bm-ayuda").hidden = tactil();
 
-    tablero.pintarEn(tableroEl, ladoCasilla());
+    tablero.pintarEn(tableroEl, ladoCasilla(tablero.w, tablero.h));
     pintarMarcador();
     pararReloj();   // el reloj arranca en el primer clic, no al repartir
   }
@@ -526,7 +577,7 @@ export function renderBuscaminas() {
   // elementos y su estado siguen donde estaban.
   function reajustar() {
     if (!tablero) return;
-    const lado = ladoCasilla();
+    const lado = ladoCasilla(tablero.w, tablero.h);
     tableroEl.style.gridTemplateColumns = `repeat(${tablero.w}, ${lado}px)`;
     tableroEl.style.gridTemplateRows    = `repeat(${tablero.h}, ${lado}px)`;
     tableroEl.querySelectorAll(".bm-casilla").forEach(c => {
