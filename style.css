@@ -468,6 +468,19 @@ a.nav-label:visited {
   transform: translateX(-50%);
 }
 
+/* Un borde ocupado por un control de la celda (los niveles del buscaminas,
+   `archive` en el portfolio) no se queda sin navegación: la etiqueta del vecino
+   se aparta hacia dentro y comparten el lado en dos alturas. Ver la nota de
+   crearNavLabels() en js/navigation.js.
+
+   El desplazamiento va en `em`, o sea relativo al tamaño de la propia etiqueta:
+   así el hueco entre las dos filas se mantiene igual en móvil, donde la fuente
+   encoge. */
+.nav-label.top.desplazada    { top:    calc(3dvh + 1.8em); }
+.nav-label.bottom.desplazada { bottom: calc(3dvh + 1.8em); }
+.nav-label.left.desplazada   { left:   calc(3dvw + 1.8em); }
+.nav-label.right.desplazada  { right:  calc(3dvw + 1.8em); }
+
 @media (max-width: 768px) {
   .nav-label {
     font-size: clamp(0.6rem, 2.5dvw, 0.8rem);

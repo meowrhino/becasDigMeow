@@ -377,7 +377,11 @@ export function renderBuscaminas() {
     const padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
     const padY = parseFloat(cs.paddingTop)  + parseFloat(cs.paddingBottom);
     const alto = el.clientHeight || window.innerHeight;
-    const bordes = 2 * (alto * 0.03 + 26);          // los nav-label de arriba y abajo
+    // Si has puesto una sección encima o debajo en el mapa, ese borde lleva dos
+    // filas: el control de la celda fuera y la navegación apartada hacia dentro
+    // (ver crearNavLabels en js/navigation.js).
+    const filas = el.querySelector(".nav-label.desplazada.top, .nav-label.desplazada.bottom") ? 2 : 1;
+    const bordes = 2 * (alto * 0.03 + 26 * filas);
     const pie = tactil() ? 44 : 30;                 // abrir/marcar, o la línea de ayuda
     const anchoUtil = (el.clientWidth || window.innerWidth) - padX - 8 - (w - 1);
     const altoUtil  = alto - padY - bordes - pie - (h - 1);
@@ -518,26 +522,38 @@ export function renderBuscaminas() {
   });
 
   // Un tablero a medio jugar no se puede repintar desde cero sin perder la
-  // partida, así que al cambiar de tamaño solo se reajusta el lado de las
-  // casillas: los elementos y su estado siguen donde estaban.
+  // partida, así que aquí solo se reajusta el lado de las casillas: los
+  // elementos y su estado siguen donde estaban.
+  function reajustar() {
+    if (!tablero) return;
+    const lado = ladoCasilla();
+    tableroEl.style.gridTemplateColumns = `repeat(${tablero.w}, ${lado}px)`;
+    tableroEl.style.gridTemplateRows    = `repeat(${tablero.h}, ${lado}px)`;
+    tableroEl.querySelectorAll(".bm-casilla").forEach(c => {
+      c.style.width = `${lado}px`;
+      c.style.height = `${lado}px`;
+      c.style.fontSize = `${Math.max(8, lado * 0.62)}px`;
+    });
+    $(".bm-modos").hidden = !tactil();
+    $(".bm-ayuda").hidden = tactil();
+    textos();
+  }
+
   let ajuste;
-  window.addEventListener("resize", () => {
+  const reajustarPronto = () => {
     clearTimeout(ajuste);
-    ajuste = setTimeout(() => {
-      if (!tablero) return;
-      const lado = ladoCasilla();
-      tableroEl.style.gridTemplateColumns = `repeat(${tablero.w}, ${lado}px)`;
-      tableroEl.style.gridTemplateRows    = `repeat(${tablero.h}, ${lado}px)`;
-      tableroEl.querySelectorAll(".bm-casilla").forEach(c => {
-        c.style.width = `${lado}px`;
-        c.style.height = `${lado}px`;
-        c.style.fontSize = `${Math.max(8, lado * 0.62)}px`;
-      });
-      $(".bm-modos").hidden = !tactil();
-      $(".bm-ayuda").hidden = tactil();
-      textos();
-    }, 150);
-  });
+    ajuste = setTimeout(reajustar, 120);
+  };
+
+  window.addEventListener("resize", reajustarPronto);
+
+  // Los nav-label los pone navigation.js DESPUÉS de este render, y cambian
+  // cuando recolocas las secciones en el mapa: si el borde de arriba o el de
+  // abajo pasa a tener dos filas, al tablero le sobra alto del que creía tener.
+  // Observar la celda es la forma de enterarse sin que navigation.js tenga que
+  // saber que el buscaminas existe. Solo mira los hijos directos, y reajustar()
+  // no toca ninguno, así que no se muerde la cola.
+  new MutationObserver(reajustarPronto).observe(el, { childList: true });
 
   // Basta con registrarlo una vez: data.js dispara TODOS los callbacks al
   // cambiar de idioma, se haya pulsado el botón de la celda que se haya

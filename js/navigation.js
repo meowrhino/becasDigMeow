@@ -399,20 +399,38 @@ function getVecinos() {
   return vecinos;
 }
 
+/**
+ * Los cuatro bordes de la celda activa: a dónde se va desde aquí.
+ *
+ * Un borde puede estar ya ocupado por un control de la propia celda —los
+ * niveles del buscaminas, `archive` en el portfolio, `studio` en el archive—,
+ * que se marcan con `data-permanent` y sobreviven a los repintados.
+ *
+ * Cuando eso pasa, la navegación NO desaparece: se aparta hacia dentro con la
+ * clase `desplazada` y las dos cosas comparten el lado en dos alturas. Antes se
+ * omitía, y el resultado era que si movías una sección al lado del buscaminas
+ * en el mapa, desde el buscaminas no había forma visible de llegar a ella: con
+ * teclado y con el minimapa sí, pero en un móvil no hay flechas y solo quedaba
+ * el minimapa. Un vecino que existe tiene que verse.
+ *
+ * Las dos alturas además dicen cosas distintas, y está bien que se lean
+ * distinto: el borde exterior es lo que HACES aquí, el interior es a dónde
+ * PUEDES IR.
+ */
 function crearNavLabels(celda) {
   celda.querySelectorAll(".nav-label:not([data-permanent])").forEach(l => l.remove());
 
   const vecinos = getVecinos();
-  // Posiciones ya ocupadas por labels permanentes
+  // Posiciones ya ocupadas por controles de la celda
   const permanentes = new Set(
     Array.from(celda.querySelectorAll(".nav-label[data-permanent]"))
       .flatMap(l => ["top","bottom","left","right"].filter(d => l.classList.contains(d)))
   );
 
   Object.entries(vecinos).forEach(([pos, info]) => {
-    if (permanentes.has(pos)) return;
     const label = document.createElement("button");
     label.classList.add("nav-label", pos);
+    if (permanentes.has(pos)) label.classList.add("desplazada");
     label.textContent = traducirNombre(info.nombre);
     label.addEventListener("click", () => {
       setPosicion(info.y, info.x);
