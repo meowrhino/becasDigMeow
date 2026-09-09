@@ -129,6 +129,11 @@
       "es": "mapa",
       "en": "map",
       "cat": "mapa"
+    },
+    "buscaminas": {
+      "es": "buscaminas",
+      "en": "minesweeper",
+      "cat": "buscamines"
     }
   },
   "welcome": {

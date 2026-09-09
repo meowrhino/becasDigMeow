@@ -42,7 +42,9 @@ const LADO = 5;
  * El reparto de fábrica, centrado en el terreno.
  *
  * `welcome` cae en 2_2, que es el centro exacto del 5×5: la portada en medio,
- * como en el lienzo de siempre. Las cuatro columnas de la fila central no
+ * como en el lienzo de siempre. `buscaminas` cuelga de `mapa`, en la fila de
+ * abajo: es la única celda que no explica nada del estudio, y llegar a ella es
+ * salirse por debajo de lo que sí lo explica. Las cuatro columnas de la fila central no
  * pueden centrarse en cinco sin partir una casilla, así que la fila queda
  * pegada a la derecha y la columna libre es la 0.
  */
@@ -50,6 +52,7 @@ export const ORIGEN = Object.freeze({
   "1_2": "links",
   "2_1": "about", "2_2": "welcome", "2_3": "metodología", "2_4": "condiciones",
   "3_2": "portfolio", "3_3": "mapa",
+  "4_3": "buscaminas",
 });
 
 const GUARDADO = "meowrhino-mapa";

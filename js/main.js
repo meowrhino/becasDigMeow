@@ -32,6 +32,7 @@ import {
 } from "./pages.js";
 import { renderMapa, leerMapa, aGrid } from "./mapa.js";
 import { renderPortfolio } from "./portfolio.js";
+import { renderBuscaminas } from "./buscaminas.js";
 import { rutaCelda, celdaDeRuta } from "./rutas.js";
 import { crearThemeToggle } from "./theme.js";
 import { setupKeyboardNav, setupResizeDebounce } from "./shell.js";
@@ -63,6 +64,7 @@ async function renderizarContenido() {
   renderPortfolio(data);
   renderMapa(data);
   renderAbout(data);
+  renderBuscaminas();
 }
 
 // ============================================
@@ -125,6 +127,7 @@ configurarNavegacion({
     "condiciones": "footer",
     "portfolio": "portfolio",
     "mapa": "mapa",
+    "buscaminas": "buscaminas",
   },
   redirects: {
     "links": ["tools"],

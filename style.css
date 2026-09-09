@@ -69,6 +69,22 @@
   --minimap-expanded-text: #ffffff;
   --overlay-bg: rgba(255, 255, 255, 0.97);
 
+  /* Buscaminas: los números del juego de siempre, bajados de saturación para
+     que convivan con el gris del estudio. Es el único color de todo el sitio,
+     y está donde tiene sentido: contar minas por color es la mecánica. */
+  --bm-1: #1c48d8;
+  --bm-2: #1d7a34;
+  --bm-3: #c62828;
+  --bm-4: #2b2f7a;
+  --bm-5: #8a2a24;
+  --bm-6: #12716e;
+  --bm-7: #1a1a1a;
+  --bm-8: #6e6e6e;
+  --bm-mina: #b3261e;
+  --bm-marca: #a01a12;
+  --bm-acierto: #1d7a34;
+  --bm-fallo: #b3261e;
+
   /* Buttons (subtle) */
   --btn-subtle: rgba(0, 0, 0, 0.3);
   --btn-subtle-hover: rgba(0, 0, 0, 0.6);
@@ -139,6 +155,21 @@
   --minimap-expanded-hover: #999999;
   --minimap-expanded-text: #121212;
   --overlay-bg: rgba(18, 18, 18, 0.97);
+
+  /* Buscaminas: los mismos números, subidos de luz para que se lean sobre el
+     gris oscuro de la casilla abierta. */
+  --bm-1: #6f9bff;
+  --bm-2: #5fc177;
+  --bm-3: #ff6f6b;
+  --bm-4: #9aa4ff;
+  --bm-5: #e08b84;
+  --bm-6: #4fd2ce;
+  --bm-7: #e0e0e0;
+  --bm-8: #9a9a9a;
+  --bm-mina: #d1534c;
+  --bm-marca: #ff8a80;
+  --bm-acierto: #3f9d59;
+  --bm-fallo: #d1534c;
 
   /* Buttons (subtle) */
   --btn-subtle: rgba(255, 255, 255, 0.3);
@@ -1377,6 +1408,239 @@ a.nav-label:visited {
 }
 .mapa-reset.visible { opacity: 1; pointer-events: auto; }
 .mapa-reset:hover { color: var(--btn-subtle-strong-hover); }
+
+
+/* ============================================
+   12b. PAGE: BUSCAMINAS
+   La casilla de debajo del mapa. Ver js/buscaminas.js
+   para por qué existe y de dónde sale la lógica.
+
+   Es el único sitio del estudio con color: los
+   números del buscaminas son los del buscaminas
+   desde 1990 y cambiarlos por grises no lo haría
+   más nuestro, lo haría menos legible. El resto de
+   la celda va con las variables de siempre.
+   ============================================ */
+
+.celda.buscaminas {
+  flex-direction: column;
+}
+
+/* Los bloques de esta celda se turnan (menú, partida, cartel de final) y se
+   esconden con la propiedad `hidden`. Casi todos son `display: flex`, que gana
+   a la regla de agente de usuario de `[hidden]`: sin esto el menú seguía
+   ocupando su sitio y dejaba el tablero en una franja de una fila. */
+.celda.buscaminas [hidden] { display: none; }
+
+.bm-pantalla {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* --- el menú de niveles --- */
+
+.bm-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  text-align: center;
+}
+
+.bm-intro {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 3dvw, 1.6rem);
+  margin: 0;
+}
+
+.bm-niveles {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Los tres niveles se leen como las secciones del mapa: mismo gris, misma
+   serif, mismo crecer al pasar por encima. Son la misma clase de cosa —una
+   casilla que eliges— y el sitio solo tiene un gesto para eso. */
+.bm-nivel {
+  font-family: var(--font-serif);
+  font-size: clamp(0.75rem, 1.6dvw, 1rem);
+  text-transform: lowercase;
+  padding: 0.55em 1.2em;
+  border: none;
+  background: var(--minimap-expanded-bg);
+  color: var(--minimap-expanded-text);
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+.bm-nivel:hover { background: var(--minimap-expanded-hover); transform: scale(1.05); }
+
+.bm-ayuda {
+  margin: 0;
+  font-size: clamp(0.65rem, 1.4dvw, 0.8rem);
+  color: var(--text-secondary);
+}
+
+/* --- el marcador --- */
+
+.bm-marcador {
+  display: flex;
+  gap: 1.4rem;
+  font-size: clamp(0.65rem, 1.4dvw, 0.8rem);
+  color: var(--text-secondary);
+}
+
+.bm-dato i { font-style: normal; }
+.bm-dato b { color: var(--text); font-weight: 400; }
+
+/* --- el tablero --- */
+
+.bm-juego {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  position: relative;
+  max-width: 100%;
+  min-height: 0;
+}
+
+.bm-tablero {
+  display: grid;
+  gap: 1px;
+  user-select: none;
+  /* Con el mínimo de 13px por casilla, la partida difícil no siempre cabe en
+     un móvil. Antes de encoger las casillas hasta que no se puedan tocar,
+     mejor que el tablero se desplace. */
+  max-width: 100%;
+  overflow: auto;
+}
+
+.bm-casilla {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  font-family: var(--font-serif);
+  line-height: 1;
+  background: var(--minimap-expanded-bg);
+  color: var(--minimap-expanded-text);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.bm-casilla:hover:not(.abierta) { background: var(--minimap-expanded-hover); }
+
+.bm-casilla.abierta {
+  background: var(--bg-hover);
+  color: var(--text-content);
+  cursor: default;
+}
+
+.bm-casilla.mina { background: var(--bm-mina); color: #ffffff; }
+
+.bm-casilla.bandera,
+.bm-casilla.duda { color: var(--bm-marca); }
+
+/* Al acabar la partida, cada marca dice si estaba bien puesta. */
+.bm-casilla.acierto { background: var(--bm-acierto); color: #ffffff; }
+.bm-casilla.fallo   { background: var(--bm-fallo);   color: #ffffff; text-decoration: line-through; }
+
+.bm-casilla[data-n="1"] { color: var(--bm-1); }
+.bm-casilla[data-n="2"] { color: var(--bm-2); }
+.bm-casilla[data-n="3"] { color: var(--bm-3); }
+.bm-casilla[data-n="4"] { color: var(--bm-4); }
+.bm-casilla[data-n="5"] { color: var(--bm-5); }
+.bm-casilla[data-n="6"] { color: var(--bm-6); }
+.bm-casilla[data-n="7"] { color: var(--bm-7); }
+.bm-casilla[data-n="8"] { color: var(--bm-8); }
+
+/* --- abrir / marcar, sólo en táctil --- */
+
+.bm-modos { display: flex; gap: 0.5rem; }
+
+.bm-modo {
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
+  text-transform: lowercase;
+  padding: 0.4em 1em;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+.bm-modo.activo { border-color: var(--border-hover); color: var(--text); }
+
+/* --- el final de la partida --- */
+
+.bm-fin {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  text-align: center;
+  background: var(--overlay-bg);
+}
+
+.bm-fin-titulo {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 4dvw, 2rem);
+  text-transform: lowercase;
+}
+
+.bm-fin-tiempo {
+  margin: 0;
+  font-size: clamp(0.65rem, 1.4dvw, 0.8rem);
+  color: var(--text-secondary);
+}
+
+.bm-otra {
+  font-family: var(--font-serif);
+  font-size: clamp(0.75rem, 1.6dvw, 1rem);
+  text-transform: lowercase;
+  padding: 0.55em 1.2em;
+  border: none;
+  background: var(--minimap-expanded-bg);
+  color: var(--minimap-expanded-text);
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+.bm-otra:hover { background: var(--minimap-expanded-hover); transform: scale(1.05); }
+
+/* Volver al menú de niveles. Mismo sitio y mismo tamaño que el ↺ del mapa y
+   que los +/- de metodología: los controles de celda viven todos ahí. */
+.bm-volver {
+  position: absolute;
+  bottom: 3dvh;
+  left: 3dvw;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  line-height: 1;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--btn-subtle-strong);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+  z-index: var(--z-nav);
+}
+.bm-volver:hover { color: var(--btn-subtle-strong-hover); }
 
 
 /* ============================================
