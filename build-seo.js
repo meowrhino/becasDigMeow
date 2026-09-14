@@ -623,7 +623,11 @@ function lastmodsPrevios() {
  * estrenan fecha. Las demás heredan la que ya tenían.
  */
 function sitemapXML(fichas = [], cambiadas = new Set()) {
-  const hoy = new Date().toISOString().slice(0, 10);
+  // Fecha LOCAL, no UTC: `toISOString()` convierte a UTC, así que un build
+  // lanzado de madrugada en Barcelona (00:30 CEST = 22:30 UTC del día
+  // anterior) sellaba el sitemap con la fecha de ayer. "sv" formatea como
+  // YYYY-MM-DD, que es justo lo que pide <lastmod>.
+  const hoy = new Date().toLocaleDateString("sv");
   const previos = lastmodsPrevios();
 
   // Una URL sin fecha previa es nueva: hoy es su fecha real de publicación.
