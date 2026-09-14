@@ -1127,6 +1127,32 @@ a.nav-label:visited {
 /* El cierre: la invitación a escribir, el precio en una línea y el enlace a
    metodología. El precio ya no es un bloque de venta —está en el cupón de la
    portada y en condiciones—, aquí es solo el dato que falta antes de irse. */
+/* Los enlaces DENTRO del texto: el sitio entero tiene `a { color: inherit;
+   text-decoration: none }`, así que un enlace en medio de un párrafo era texto
+   normal y nadie lo encontraba. Subrayado fino para que se distinga siempre.
+   El `.about-enlace` del cierre ya trae el suyo, más separado. */
+.about-content p a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+/* Y un parpadeo corto al entrar: tres destellos y se queda quieto.
+   Cuelga de `.activa` a propósito. Las celdas viven todas apiladas y ocultas
+   en el mismo hueco, así que una animación que arranque al cargar la página se
+   habría gastado entera antes de que llegues al about; colgada de la clase que
+   enciende la celda, empieza cuando la miras. El retraso deja pasar los 0.6s
+   del fundido de `.celda.activa`.
+   `prefers-reduced-motion` la apaga desde el reset (sección 0). */
+.celda.about.activa .about-content p a {
+  animation: about-link-parpadeo 0.42s steps(1, end) 0.7s 3;
+}
+
+@keyframes about-link-parpadeo {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.15; }
+}
+
 .about-cierre { margin-top: 3rem; }
 .about-precio { color: var(--text); }
 .about-enlace {
@@ -2263,6 +2289,12 @@ html.js #seo-prerender {
 #seo-prerender img {
   max-width: 100%;
   height: auto;
+}
+
+/* Sin JS no hay hover ni colores de celda: los enlaces se distinguen por el
+   subrayado o no se distinguen. */
+#seo-prerender a {
+  text-decoration: underline;
 }
 
 .prerender-nota {

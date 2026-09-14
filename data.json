@@ -743,7 +743,7 @@
     "es": {
       "secciones": [
         {
-          "label": "condiciones",
+          "label": "trabajo",
           "rotateMs": 20000,
           "tipo": "texto",
           "parrafos": [
@@ -806,7 +806,7 @@
     "en": {
       "secciones": [
         {
-          "label": "terms",
+          "label": "work",
           "rotateMs": 20000,
           "tipo": "texto",
           "parrafos": [
@@ -869,7 +869,7 @@
     "cat": {
       "secciones": [
         {
-          "label": "condicions",
+          "label": "treball",
           "rotateMs": 20000,
           "tipo": "texto",
           "parrafos": [
