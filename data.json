@@ -254,7 +254,12 @@
       },
       {
         "nombre": "colorFun",
-        "url": "https://meowrhino.github.io/colorFun/"
+        "url": "https://meowrhino.github.io/colorFun/",
+        "desc": {
+          "es": "explorador de colores posibles",
+          "en": "an explorer of possible colours",
+          "cat": "explorador de colors possibles"
+        }
       },
       {
         "nombre": "guia vscode",
