@@ -93,6 +93,40 @@ const ALT_SUFIJO = {
 export const altProyecto = (p, lang) =>
   p?.alt || `${p?.nombre ?? ""} — ${ALT_SUFIJO[lang] || ALT_SUFIJO.es}`;
 
+/**
+ * Titular de las celdas que tienen página propia pero no traían ninguno.
+ *
+ * Vive aquí y no en data.json por lo mismo que HERO: es el <h1> que lee un
+ * buscador, no contenido que el cliente vaya a tocar. /links, /condiciones y
+ * /metodologia salían sin titular ninguno, y el de /mapa era la etiqueta de la
+ * celda —«mapa»— que no dice qué puedes hacer ahí.
+ */
+const TITULARES = {
+  "metodología": {
+    es:  "cómo trabajamos en meowrhino studio",
+    en:  "how we work at meowrhino studio",
+    cat: "com treballem a meowrhino studio",
+  },
+  links: {
+    es:  "herramientas para todo el mundo",
+    en:  "tools for everyone",
+    cat: "eines per a tothom",
+  },
+  condiciones: {
+    es:  "la letra pequeña",
+    en:  "the small print",
+    cat: "la lletra petita",
+  },
+  mapa: {
+    es:  "customiza el mapa",
+    en:  "customise the map",
+    cat: "personalitza el mapa",
+  },
+};
+
+export const titularCelda = (celda, lang) =>
+  TITULARES[celda]?.[lang] ?? TITULARES[celda]?.es ?? "";
+
 export function heroHTML(data, lang) {
   const c = data.welcome.cupon;
   const t = c[lang] || c.es || {};
@@ -190,7 +224,7 @@ export function metodologiaHTML(data, lang) {
 
   return `
     <section class="easy-section" id="metodologia">
-      <h2 class="easy-h">${esc(ui(lang).metodologia)}</h2>
+      <h1 class="easy-h">${esc(titularCelda("metodología", lang))}</h1>
       <ol class="easy-steps">${items}</ol>
       ${importante}
     </section>`;
@@ -270,7 +304,8 @@ export function condicionesHTML(data, lang) {
   }).join("");
 
   return `
-    <section class="easy-section easy-legal" id="condiciones">${bloques}
+    <section class="easy-section easy-legal" id="condiciones">
+      <h1 class="easy-h">${esc(titularCelda("condiciones", lang))}</h1>${bloques}
     </section>`;
 }
 
@@ -333,7 +368,8 @@ export function linksHTML(data, lang) {
     }).join("");
 
   return `
-    <section class="easy-section easy-links" id="links">${html}
+    <section class="easy-section easy-links" id="links">
+      <h1 class="easy-h">${esc(titularCelda("links", lang))}</h1>${html}
     </section>`;
 }
 
@@ -365,7 +401,7 @@ export function mapaHTML(data, lang) {
   return `
     <section class="easy-section easy-mapa" id="mapa">
       <p class="easy-eyebrow">${esc(m.eyebrow)}</p>
-      <h1 class="easy-h">${esc(nombre("mapa"))}</h1>
+      <h1 class="easy-h">${esc(titularCelda("mapa", lang))}</h1>
       <p>${esc(m.texto)}</p>
       <ul class="easy-links-lista">${secciones}
         <li><a href="${esc(rutaProyectos(lang))}">${esc(t.portfolio)}</a></li>
