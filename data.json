@@ -593,6 +593,15 @@
           ]
         },
         {
+          "titular": "cómo trabajamos",
+          "parrafos": [
+            "la primera reunión es gratis y no compromete a nada: miramos juntos qué haces, qué necesitas y 3–5 referentes de cosas que te gusten o que no.",
+            "con tu material delante pensamos la estructura, la diseñamos y la programamos. tarda aproximadamente un mes desde el día que llega todo.",
+            "y te la entregamos delante de tu ordenador: sales de esa reunión sabiendo actualizarla sin nosotras.",
+            "el proceso entero, paso a paso, está en [metodología](/metodologia)."
+          ]
+        },
+        {
           "titular": "tu web es tuya",
           "parrafos": [
             "tú tienes tu repositorio en github y tu dominio en cloudflare. en tus textos, en tus imágenes y en tus proyectos no habrá anuncios ni plantillas que te fuercen a hacer nada.",
@@ -624,17 +633,10 @@
           "parrafos": [
             "hay quien llama a esto [jardines digitales](https://www.cccb.org/es/w/articulos/jardines-digitales-el-fin-del-scroll-infinito): espacios pequeños de internet que se cultivan en lugar de publicarse y abandonarse.",
             "crecen despacio. cambian de forma. tienen cosas a medio hacer y cosas que llevan años ahí.",
-            "no necesitan competir por nuestra atención.",
-            "simplemente están.",
-            "nos gusta pensar que tu web puede ser una de esas cosas.",
-            "un pequeño lugar que existe porque tú has decidido que exista."
+            "no necesitan competir por nuestra atención. simplemente están. nos gusta pensar que tu web puede ser una de esas cosas. un pequeño lugar que existe porque tú has decidido que exista."
           ]
         }
-      ],
-      "cierre": {
-        "parrafos": [],
-        "enlace": "ver cómo trabajamos →"
-      }
+      ]
     },
     "en": {
       "pregunta": "shall i make you a website?",
@@ -651,6 +653,15 @@
             "the internet is also all those [small pages](https://oneterabyteofkilobyteage.tumblr.com/) that someone made because they wanted to tell, teach or share something. but more and more, like so many things, it is becoming the property of a few.",
             "and it is worth having a place of your own, one that looks the way you want and that somebody actually made.",
             "we make every website from scratch so that you decide what you want to tell and how you want to tell it. we come up with the concept, think out the structure, design the interface and write the code."
+          ]
+        },
+        {
+          "titular": "how we work",
+          "parrafos": [
+            "the first meeting is free and commits you to nothing: we look together at what you do, what you need and 3–5 references of things you like or don't.",
+            "with your material in front of us we think out the structure, design it and code it. it takes about a month from the day everything arrives.",
+            "and we hand it over in front of your computer: you leave that meeting knowing how to update it without us.",
+            "the whole process, step by step, is in [methodology](/en/methodology)."
           ]
         },
         {
@@ -685,17 +696,10 @@
           "parrafos": [
             "some people call this [digital gardens](https://www.cccb.org/en/w/articles/digitals-gardens-an-end-to-the-infinite-scroll): small spaces of the internet that are cultivated instead of published and abandoned.",
             "they grow slowly. they change shape. they have half-finished things and things that have been there for years.",
-            "they don't need to compete for our attention.",
-            "they are simply there.",
-            "we like to think your website can be one of those.",
-            "a small place that exists because you decided it should exist."
+            "they don't need to compete for our attention. they are simply there. we like to think your website can be one of those. a small place that exists because you decided it should exist."
           ]
         }
-      ],
-      "cierre": {
-        "parrafos": [],
-        "enlace": "see how we work →"
-      }
+      ]
     },
     "cat": {
       "pregunta": "et faig una web?",
@@ -712,6 +716,15 @@
             "internet també són totes aquelles [pàgines petites](https://oneterabyteofkilobyteage.tumblr.com/) que algú va fer perquè volia explicar, ensenyar o compartir alguna cosa. però cada cop més, com tantes coses, està començant a ser propietat d'uns quants.",
             "i val la pena que tinguis un lloc propi, que sigui com tu vulguis i que l'hagi fet algú.",
             "fem cada web des de zero perquè decideixis què vols explicar i com ho vols explicar. creem el concepte, pensem l'estructura, dissenyem la interfície i escrivim el codi."
+          ]
+        },
+        {
+          "titular": "com treballem",
+          "parrafos": [
+            "la primera reunió és gratis i no compromet a res: mirem junts què fas, què necessites i 3–5 referents de coses que t'agradin o que no.",
+            "amb el teu material al davant pensem l'estructura, la dissenyem i la programem. triga aproximadament un mes des del dia que arriba tot.",
+            "i te l'entreguem davant del teu ordinador: surts d'aquella reunió sabent actualitzar-la sense nosaltres.",
+            "el procés sencer, pas a pas, és a [metodologia](/ca/metodologia)."
           ]
         },
         {
@@ -746,17 +759,10 @@
           "parrafos": [
             "hi ha qui en diu [jardins digitals](https://www.cccb.org/ca/w/articles/jardins-digitals-la-fi-de-l-scroll-infinit): espais petits d'internet que es cultiven en lloc de publicar-se i abandonar-se.",
             "creixen a poc a poc. canvien de forma. tenen coses a mig fer i coses que fa anys que hi són.",
-            "no necessiten competir per la nostra atenció.",
-            "simplement hi són.",
-            "ens agrada pensar que la teva web pot ser una d'aquestes coses.",
-            "un petit lloc que existeix perquè tu has decidit que existeixi."
+            "no necessiten competir per la nostra atenció. simplement hi són. ens agrada pensar que la teva web pot ser una d'aquestes coses. un petit lloc que existeix perquè tu has decidit que existeixi."
           ]
         }
-      ],
-      "cierre": {
-        "parrafos": [],
-        "enlace": "mira com treballem →"
-      }
+      ]
     }
   },
   "footer": {

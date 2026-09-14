@@ -1175,14 +1175,10 @@ a.nav-label:visited {
   border-radius: 2px;
 }
 
-/* El cierre: la invitación a escribir, el precio en una línea y el enlace a
-   metodología. El precio ya no es un bloque de venta —está en el cupón de la
-   portada y en condiciones—, aquí es solo el dato que falta antes de irse. */
 /* Los enlaces DENTRO del texto: el sitio entero tiene `a { color: inherit;
    text-decoration: none }`, así que un enlace en medio de un párrafo es texto
    normal. No lleva subrayado a propósito; lo único que lo delata es que
    respira muy despacio, y al pasar por encima respira un poco más hondo.
-   El `.about-enlace` del cierre sí trae subrayado, y es otra cosa.
 
    Cuelga de `.activa` a propósito: las celdas viven todas apiladas y ocultas
    en el mismo hueco, así que sin esa condición el latido correría también en
@@ -1205,15 +1201,9 @@ a.nav-label:visited {
   50%      { opacity: var(--about-link-valle); }
 }
 
-.about-cierre { margin-top: 3rem; }
-.about-precio { color: var(--text); }
-.about-enlace {
-  display: inline-block;
-  margin-top: 0.4rem;
-  color: var(--text);
-  text-decoration: underline;
-  text-underline-offset: 0.18em;
-}
+/* Ya no hay bloque de cierre: el precio vive en el cupón de la portada y
+   «cómo trabajamos» pasó a ser un apartado más, con su enlace a metodología
+   dentro del texto. El about acaba en jardines digitales y de ahí al contacto. */
 
 
 
@@ -2224,7 +2214,6 @@ html.easy, html.easy body {
 }
 .easy-importante { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); max-width: 46rem; }
 .easy-importante .easy-h3 { margin-top: 0; }
-.easy-about-cierre { margin-top: 2.6rem; }
 .easy-about-foto { display: block; width: 100%; max-width: 46rem; height: auto; margin: 1.6rem 0; border-radius: 2px; }
 
 /* ============================================

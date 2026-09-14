@@ -200,12 +200,6 @@ export function aboutHTML(data, lang) {
       <h2 class="easy-h3">${esc(sec.titular)}</h2>
       ${(sec.parrafos || []).map(p).join("")}
       ${sec.imagen ? `<img class="easy-about-foto" src="${esc(sec.imagen.src)}" alt="${esc(sec.imagen.alt || "")}" loading="lazy" decoding="async">` : ""}`).join("")}
-      ${d.cierre ? `
-      <div class="easy-about-cierre">
-        ${(d.cierre.parrafos || []).map(p).join("")}
-        <p>${d.cierre.precio ? `${esc(d.cierre.precio.replace("{precio}", precio))}
-        · ` : ""}<a href="${esc(rutaCelda("metodología", lang))}">${esc(d.cierre.enlace || "")}</a></p>
-      </div>` : ""}
       <p class="easy-about-contacto">
         <a href="mailto:${esc(co.email)}?subject=${asunto}">${esc(co.email)}</a>
         ${co.instagram ? `<a href="${esc(co.instagram.url)}" target="_blank" rel="noopener">${esc(co.instagram.usuario)}</a>` : ""}

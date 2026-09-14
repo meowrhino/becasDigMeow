@@ -499,18 +499,13 @@ export function renderAbout(data) {
              alt="${escapeHTML(sec.imagen.alt || "")}" decoding="async">` : ""}
       </section>`).join("");
 
-    const c = d.cierre;
-    const cierre = c ? `
-      <div class="about-cierre">
-        ${(c.parrafos || []).map(p).join("")}
-        ${c.precio ? `<p class="about-precio">${escapeHTML(c.precio.replace("{precio}", precio))}</p>` : ""}
-        <a class="about-enlace" href="${escapeHTML(rutaCelda("metodología", lang))}">${escapeHTML(c.enlace || "")}</a>
-      </div>` : "";
-
+    // Ya no hay bloque de cierre. «cómo trabajamos» es un apartado más y lleva
+    // su enlace a metodología dentro del texto; el precio vive en el cupón de
+    // la portada. El about acaba en jardines digitales y de ahí al contacto.
     return `
       <h1 class="about-pregunta">${escapeHTML(d.pregunta)}</h1>
       <div class="about-entrada">${(d.entrada || []).map(p).join("")}</div>
-      <div class="about-texto">${secciones}${cierre}</div>
+      <div class="about-texto">${secciones}</div>
       <div class="about-contacto">
         <a class="contacto-email" href="${escapeHTML(buildMailto(lang))}">${escapeHTML(email)}</a>
         <div class="contacto-row">
