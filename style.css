@@ -113,6 +113,7 @@
   --z-cell: 2;          /* celda */
   --z-card: 4;          /* card de proyecto flotante (welcome), debajo del cupón */
   --z-cupon: 5;         /* cupón flotante (welcome) */
+  --z-tooltip: 6;       /* globo de resumen (links), sobre los enlaces de al lado */
   --z-nav: 10;          /* nav-labels, lang/font/theme buttons, section-nav */
   --z-overlay-img: 30;  /* overlay sobre imagen (portfolio grid) */
   --z-header: 100;      /* header fijo (minimapa inline) */
@@ -862,6 +863,56 @@ a.nav-label:visited {
 
 .tool-link:active {
   transform: translateY(0);
+}
+
+/* --- El globo con el resumen de una herramienta --- */
+/* Solo lo llevan las herramientas sueltas, las cinco de arriba: las de los
+   desplegables salen plegadas y el globo taparía la lista. Vive DENTRO del
+   `<a>`, así que el hover es el del propio enlace y no hace falta JS.
+
+   Va por debajo del botón y no por encima: debajo de las cinco sueltas siempre
+   hay más lista, así que el globo cae sobre contenido que ya existe y no le
+   añade scroll al contenedor. */
+.tool-link {
+  position: relative;
+}
+
+.tool-link-desc {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-tooltip);
+  width: max-content;
+  max-width: min(30rem, 60dvw);
+  padding: 0.5rem 0.75rem;
+  background: var(--bg);
+  border: 1px solid var(--border-hover);
+  border-radius: 4px;
+  box-shadow: 0 4px 10px var(--shadow-md);
+  font-family: var(--font-serif);
+  font-size: clamp(0.65rem, 0.85dvw, 0.8rem);
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  color: var(--text-content);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.18s ease, visibility 0s linear 0.18s;
+}
+
+.tool-link:hover .tool-link-desc,
+.tool-link:focus-visible .tool-link-desc {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.18s ease, visibility 0s linear 0s;
+}
+
+/* Sin ratón no hay hover que enseñe el globo: se queda fuera del todo en vez
+   de aparecer al tocar y comerse el tap que iba al enlace. */
+@media (hover: none) {
+  .tool-link-desc { display: none; }
 }
 
 /* --- Botón doble (2 links en una línea) --- */
@@ -2296,6 +2347,12 @@ html.js #seo-prerender {
    subrayado o no se distinguen. */
 #seo-prerender a {
   text-decoration: underline;
+}
+
+/* El resumen de cada herramienta en la versión sin JS: el mismo texto que en
+   la celda sale en un globo, aquí detrás del nombre y siempre visible. */
+.easy-links-desc {
+  color: var(--text-secondary);
 }
 
 .prerender-nota {

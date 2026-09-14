@@ -227,35 +227,43 @@
     "herramientas": [
       {
         "nombre": "trackr",
-        "url": "https://trackr.meowrhino.studio/"
-      },
-      {
-        "nombre": "calculadora impuestos",
-        "url": "https://meowrhino.github.io/calculadoraInversa/"
-      },
-      {
-        "nombre": "generador facturas",
-        "url": "https://meowrhino.github.io/generadorFacturas/"
+        "url": "https://trackr.meowrhino.studio/",
+        "desc": {
+          "es": "herramienta gratuita para trackear tu trabajo como autónomo: registra horas, genera facturas y *trackea* tus dineros",
+          "en": "a free tool to track your freelance work: it logs hours, generates invoices and *tracks* your money",
+          "cat": "eina gratuïta per trackejar la teva feina com a autònom: registra hores, genera factures i *trackeja* els teus diners"
+        }
       },
       {
         "nombre": "imgToWeb",
-        "url": "https://meowrhino.github.io/imgToWeb/"
+        "url": "https://meowrhino.github.io/imgToWeb/",
+        "desc": {
+          "es": "conversor a webp para que tus imágenes pesen poquísimo",
+          "en": "a webp converter so your images weigh next to nothing",
+          "cat": "conversor a webp perquè les teves imatges pesin poquíssim"
+        }
       },
       {
         "nombre": "videoToWeb",
-        "url": "https://meowrhino.github.io/videoToWeb/"
+        "url": "https://meowrhino.github.io/videoToWeb/",
+        "desc": {
+          "es": "conversor a webm para que tus vídeos pesen poquísimo",
+          "en": "a webm converter so your videos weigh next to nothing",
+          "cat": "conversor a webm perquè els teus vídeos pesin poquíssim"
+        }
       },
       {
-        "nombre": "contarTexto",
-        "url": "https://meowrhino.github.io/contarTexto/"
-      },
-      {
-        "nombre": "limpiatexto",
-        "url": "https://meowrhino.github.io/fcyp/"
+        "nombre": "colorFun",
+        "url": "https://meowrhino.github.io/colorFun/"
       },
       {
         "nombre": "guia vscode",
-        "url": "https://meowrhino.github.io/guiaVSCode/"
+        "url": "https://meowrhino.github.io/guiaVSCode/",
+        "desc": {
+          "es": "guía de uso del visual studio code",
+          "en": "a guide to using visual studio code",
+          "cat": "guia d'ús del visual studio code"
+        }
       }
     ],
     "experimentos": [
@@ -274,10 +282,6 @@
       {
         "nombre": "chords",
         "url": "https://chords.meowrhino.studio/"
-      },
-      {
-        "nombre": "colorfun",
-        "url": "https://meowrhino.github.io/colorFun/"
       },
       {
         "nombre": "poporingGenerator",
@@ -319,6 +323,22 @@
       }
     ],
     "varios": [
+      {
+        "nombre": "calculadora impuestos",
+        "url": "https://meowrhino.github.io/calculadoraInversa/"
+      },
+      {
+        "nombre": "generador facturas",
+        "url": "https://meowrhino.github.io/generadorFacturas/"
+      },
+      {
+        "nombre": "contarTexto",
+        "url": "https://meowrhino.github.io/contarTexto/"
+      },
+      {
+        "nombre": "limpiatexto",
+        "url": "https://meowrhino.github.io/fcyp/"
+      },
       {
         "nombre": "bici",
         "url": "https://bici.meowrhino.studio/"
@@ -587,12 +607,12 @@
         {
           "titular": "quién está detrás",
           "parrafos": [
-            "detrás de meowrhino estoy yo: manu latour.",
+            "detrás de meowrhino estoy yo: [manu latour](https://www.linkedin.com/in/meowrhino/).",
             "estudié en la massana y en la uab, y desde 2020 diseño y programo webs a medida desde barcelona.",
             "internet lleva mucho tiempo conmigo y me ha hecho mucha compañía: pienso mi trabajo como hacer de internet un lugar un poquito mejor con cada proyecto que construimos.",
             "me interesa entender qué haces, qué necesitas y qué puede funcionar mejor para ti.",
             "quiero que cuando terminemos tengas una web de la que presumas, que sirva para construir el relato que necesites: fotógrafa profesional, empresa multinacional, microcelebridad de internet.",
-            "y te doy las herramientas que necesites para mantenerla: [imgToWeb](https://meowrhino.github.io/imgToWeb/) para comprimir imágenes, [colorFun](https://meowrhino.github.io/colorFun/) para elegir colores."
+            "y te doy [las herramientas](/links) que necesites para mantenerla: [imgToWeb](https://meowrhino.github.io/imgToWeb/) para comprimir imágenes, [colorFun](https://meowrhino.github.io/colorFun/) para elegir colores…"
           ],
           "imagen": {
             "src": "/img/manu/manu.webp",
@@ -648,12 +668,12 @@
         {
           "titular": "who's behind this",
           "parrafos": [
-            "behind meowrhino it's me: manu latour.",
+            "behind meowrhino it's me: [manu latour](https://www.linkedin.com/in/meowrhino/).",
             "i studied at la massana and the uab, and since 2020 i have been designing and coding custom websites from barcelona.",
             "the internet has been with me for a long time and it has kept me good company: i think of my work as making the internet a slightly better place with every project we build.",
             "i want to understand what you do, what you need and what can work best for you.",
             "i want you to end up with a website you show off, one that builds whatever story you need: professional photographer, multinational company, internet microcelebrity.",
-            "and i give you the tools you need to look after it: [imgToWeb](https://meowrhino.github.io/imgToWeb/) to compress images, [colorFun](https://meowrhino.github.io/colorFun/) to pick colours."
+            "and i give you [the tools](/en/links) you need to look after it: [imgToWeb](https://meowrhino.github.io/imgToWeb/) to compress images, [colorFun](https://meowrhino.github.io/colorFun/) to pick colours…"
           ],
           "imagen": {
             "src": "/img/manu/manu.webp",
@@ -709,12 +729,12 @@
         {
           "titular": "qui hi ha al darrere",
           "parrafos": [
-            "darrere de meowrhino hi ha jo: en manu latour.",
+            "darrere de meowrhino hi ha jo: [en manu latour](https://www.linkedin.com/in/meowrhino/).",
             "vaig estudiar a la massana i a la uab, i des del 2020 dissenyo i programo webs a mida des de barcelona.",
             "internet fa molt temps que m'acompanya i m'ha fet molta companyia: penso la meva feina com fer d'internet un lloc una miqueta millor amb cada projecte que construïm.",
             "m'interessa entendre què fas, què necessites i què pot funcionar millor per a tu.",
             "vull que quan acabem tinguis una web de la qual presumeixis, que serveixi per construir el relat que necessitis: fotògrafa professional, empresa multinacional, microcelebritat d'internet.",
-            "i et dono les eines que necessitis per mantenir-la: [imgToWeb](https://meowrhino.github.io/imgToWeb/) per comprimir imatges, [colorFun](https://meowrhino.github.io/colorFun/) per triar colors."
+            "i et dono [les eines](/ca/links) que necessitis per mantenir-la: [imgToWeb](https://meowrhino.github.io/imgToWeb/) per comprimir imatges, [colorFun](https://meowrhino.github.io/colorFun/) per triar colors…"
           ],
           "imagen": {
             "src": "/img/manu/manu.webp",

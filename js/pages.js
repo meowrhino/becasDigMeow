@@ -22,12 +22,22 @@ const pick = (obj, lang) => (obj?.[lang] ?? obj?.es ?? "");
 
 /**
  * Genera el HTML de un enlace tipo tarjeta.
- * @param {{ nombre: string, url: string }} item
+ *
+ * Si el item trae `desc`, se le cuelga dentro un globo con el resumen de para
+ * qué sirve, que sale al pasar por encima. Solo lo llevan las herramientas
+ * sueltas: dentro de un desplegable el globo taparía la lista entera. Va
+ * DENTRO del `<a>` para que el hover sea el del propio enlace, sin JS.
+ *
+ * @param {{ nombre: string, url: string, desc?: Object }} item
+ * @param {number} [idx] posición en su lista, para re-traducir el globo
  * @returns {string}
  */
-function crearLinkHTML(item) {
+function crearLinkHTML(item, idx) {
   const target = esMovil ? "" : ' target="_blank"';
-  return `<a class="tool-link" href="${escapeHTML(item.url)}"${target} rel="noopener">${escapeHTML(item.nombre)}</a>`;
+  const desc = item.desc
+    ? `<span class="tool-link-desc" data-desc="${idx}">${escConEnlaces(pick(item.desc, currentLang))}</span>`
+    : "";
+  return `<a class="tool-link" href="${escapeHTML(item.url)}"${target} rel="noopener">${escapeHTML(item.nombre)}${desc}</a>`;
 }
 
 /**
@@ -95,7 +105,7 @@ export function renderTools(data) {
   // siempre visibles, y lo demás va plegado.
   const labels = data.links.labels || {};
 
-  const linksHTML = herramientas.map(crearLinkHTML).join("");
+  const linksHTML = herramientas.map((h, i) => crearLinkHTML(h, i)).join("");
   const dropdownsHTML = [
     crearDropdownHTML(pick(labels.experimentos, currentLang), experimentos, "dd_experimentos"),
     crearDropdownHTML("wip", wip, "dd_wip"),
@@ -150,7 +160,12 @@ export function renderTools(data) {
   const formateadoresLabelEl = el.querySelector('[data-target="dd_formateadores"] .tools-dropdown-label');
   const websLabelEl = el.querySelector('[data-target="dd_webs"] .tools-dropdown-label');
   const variosLabelEl = el.querySelector('[data-target="dd_varios"] .tools-dropdown-label');
+  const descEls = el.querySelectorAll(".tool-link-desc");
   onLangChange((lang) => {
+    descEls.forEach(span => {
+      const item = herramientas[+span.dataset.desc];
+      if (item?.desc) span.innerHTML = escConEnlaces(pick(item.desc, lang));
+    });
     if (experimentosLabelEl) experimentosLabelEl.textContent = pick(labels.experimentos, lang);
     if (formateadoresLabelEl) formateadoresLabelEl.textContent = pick(labels.formateadores, lang);
     if (websLabelEl) websLabelEl.textContent = pick(labels.webs, lang);

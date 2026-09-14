@@ -18,20 +18,24 @@ export const esc = (s) => String(s ?? "")
   .replace(/"/g, "&quot;");
 
 /**
- * Como `esc`, pero deja pasar enlaces escritos en markdown: `[texto](url)`.
+ * Como `esc`, pero deja pasar enlaces en markdown, `[texto](url)`, y cursivas,
+ * `*texto*`.
  *
  * Los textos de data.json son texto plano a propósito —así nadie mete etiquetas
- * sin querer—, pero algún párrafo necesita citar su fuente. En vez de abrir el
- * HTML entero, se escapa todo primero y sólo después se reconstruyen los
- * enlaces, así que lo que no sea esta sintaxis exacta sigue saliendo literal.
- * Sólo se aceptan http(s) y rutas internas: un `javascript:` se queda en texto.
+ * sin querer—, pero algún párrafo necesita citar su fuente y algún resumen
+ * necesita una palabra en cursiva. En vez de abrir el HTML entero, se escapa
+ * todo primero y sólo después se reconstruyen esas dos cosas, así que lo que no
+ * sea esta sintaxis exacta sigue saliendo literal. Sólo se aceptan http(s) y
+ * rutas internas: un `javascript:` se queda en texto.
  */
-export const escConEnlaces = (s) => esc(s).replace(
-  /\[([^\]]+)\]\((https?:\/\/[^\s)]+|\/[^\s)]*)\)/g,
-  (_, texto, url) => url.startsWith("/")
-    ? `<a href="${url}">${texto}</a>`
-    : `<a href="${url}" target="_blank" rel="noopener">${texto}</a>`
-);
+export const escConEnlaces = (s) => esc(s)
+  .replace(
+    /\[([^\]]+)\]\((https?:\/\/[^\s)]+|\/[^\s)]*)\)/g,
+    (_, texto, url) => url.startsWith("/")
+      ? `<a href="${url}">${texto}</a>`
+      : `<a href="${url}" target="_blank" rel="noopener">${texto}</a>`
+  )
+  .replace(/\*([^*\n]+)\*/g, "<em>$1</em>");
 
 /**
  * Textos de interfaz por idioma: los encabezados de sección y las etiquetas del
@@ -293,7 +297,11 @@ export function linksHTML(data, lang) {
     { titulo: etiqueta("varios", "varios"), items: l.varios },
   ];
 
-  const enlace = (i) => `<li><a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.nombre)}</a></li>`;
+  // El resumen de una herramienta, cuando lo tiene. En la celda es un globo
+  // que sale al pasar por encima; aquí no hay hover que valga, así que va
+  // detrás del nombre y se lee sin más.
+  const enlace = (i) => `<li><a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.nombre)}</a>${
+    i.desc ? ` — <span class="easy-links-desc">${escConEnlaces(pickLang(i.desc, lang))}</span>` : ""}</li>`;
 
   const html = grupos
     .filter(g => Array.isArray(g.items) && g.items.length)
