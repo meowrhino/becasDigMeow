@@ -71,6 +71,28 @@ export const HERO = {
   cat: { eyebrow: "estudi de disseny web · barcelona", titular: "disseny web a barcelona: la teva web en un mes, sense quotes." },
 };
 
+/**
+ * Texto alternativo de la captura de un proyecto, en el idioma de la página.
+ *
+ * Vive aquí y se exporta porque lo comparten los dos sitios donde salen las
+ * capturas: el pre-render de la portada (`portfolioHTML`, abajo) y la rejilla
+ * que pinta portfolio.js en caliente. Estaban desincronizados de dos maneras
+ * distintas: el pre-render describía las 21 capturas en castellano también en
+ * /en y /ca, y la rejilla se limitaba a `p.nombre`, que no dice nada.
+ *
+ * Las tres cadenas ya existían por duplicado en welcome-card.js y en el UI de
+ * proyecto-template.js; esto es el tercer sitio, que era el que faltaba.
+ * Si un proyecto trae su propio `alt` en data.json, manda ese.
+ */
+const ALT_SUFIJO = {
+  es:  "web diseñada por meowrhino studio, Barcelona",
+  en:  "website designed by meowrhino studio, Barcelona",
+  cat: "web dissenyada per meowrhino studio, Barcelona",
+};
+
+export const altProyecto = (p, lang) =>
+  p?.alt || `${p?.nombre ?? ""} — ${ALT_SUFIJO[lang] || ALT_SUFIJO.es}`;
+
 export function heroHTML(data, lang) {
   const c = data.welcome.cupon;
   const t = c[lang] || c.es || {};
@@ -118,7 +140,7 @@ export function heroHTML(data, lang) {
 export function portfolioHTML(data, lang) {
   const t = ui(lang);
   const proyectos = data.portfolio?.proyectos || [];
-  const altFor = (p) => p.alt || `${p.nombre} — web diseñada por meowrhino studio, Barcelona`;
+  const altFor = (p) => altProyecto(p, lang);
 
   const fichas = proyectos.map(p => {
     // La captura va a la ficha del proyecto, no a la web del cliente: ver la

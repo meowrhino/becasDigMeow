@@ -17,6 +17,28 @@ import { escConEnlaces } from "./easy-template.js";
 /** true si el viewport es táctil / móvil (mismo criterio que portfolio usa para hover/pointer). */
 export const esMovil = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 
+/**
+ * Encabezado de sección de una celda: un <h2> real, oculto visualmente.
+ *
+ * El texto ya se ve en pantalla — es el zone label gigante del fondo — pero ese
+ * vive en un <div> decorativo FUERA de la celda, así que ni un lector de
+ * pantalla ni un buscador tenían forma de saber dónde empieza cada sección.
+ * De las ocho celdas del lienzo, cinco no tenían ningún encabezado: links,
+ * condiciones, portfolio, mapa y buscaminas. Esto se lo pone sin tocar el
+ * diseño (ver `.celda-h` en style.css).
+ *
+ * El texto sale de `data.zoneLabels`, la misma fuente que el zone label y el
+ * minimapa, así que no puede desincronizarse. Las celdas cuyo nombre es igual
+ * en los tres idiomas no están listadas ahí y se devuelven tal cual.
+ */
+export const tituloCelda = (data, nombre, lang) => {
+  const t = data?.zoneLabels?.[nombre];
+  return t ? (t[lang] ?? t.es ?? nombre) : nombre;
+};
+
+export const celdaHeadingHTML = (data, nombre, lang) =>
+  `<h2 class="celda-h">${escapeHTML(tituloCelda(data, nombre, lang))}</h2>`;
+
 /** Escoge la variante de idioma (con fallback a es) de un objeto {es,en,cat}. */
 const pick = (obj, lang) => (obj?.[lang] ?? obj?.es ?? "");
 
@@ -115,6 +137,7 @@ export function renderTools(data) {
   ].join("");
 
   el.innerHTML = `
+    ${celdaHeadingHTML(data, "links", currentLang)}
     <div class="scroll-wrapper tools-scroll-wrapper">
       <div class="scroll-content tools-content">
         <div class="tools-list">${linksHTML}${dropdownsHTML}</div>
@@ -327,6 +350,7 @@ export function renderCondiciones(data) {
   };
 
   el.innerHTML = `
+    ${celdaHeadingHTML(data, "condiciones", currentLang)}
     <div class="scroll-wrapper footer-scroll-wrapper">
       <div class="scroll-content footer-content">${buildSeccion(currentLang, activeIdx)}</div>
     </div>

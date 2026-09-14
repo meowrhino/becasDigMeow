@@ -3,7 +3,7 @@
 // ============================================
 
 import { fetchJson } from "./utils.js";
-import { celdaDeRuta } from "./rutas.js";
+import { celdaDeRuta, rutaCelda } from "./rutas.js";
 
 // --- Idioma global ---
 
@@ -96,11 +96,35 @@ export function onLangChange(cb) {
   langUpdateCallbacks.push({ container: document.body, cb });
 }
 
-/** Genera el HTML de los botones de idioma. */
+/** Código BCP-47 de un idioma interno (catalán se guarda como "cat"). */
+const bcp47 = (lang) => (lang === "cat" ? "ca" : lang);
+
+/**
+ * Genera el HTML de los botones de idioma.
+ *
+ * En el lienzo cada celda tiene URL propia por idioma, así que ahí se pintan
+ * como <a href> de verdad y no como <button>. No es cosmético: eran la única
+ * forma de llegar a /en y /ca desde el sitio, y al ser botones con
+ * `location.href` no existía NI UN enlace rastreable hacia esas páginas —
+ * Google solo las conocía por el sitemap y los hreflang.
+ *
+ * El destino es la misma celda en el otro idioma (/en/about → /ca/about). Antes
+ * el salto era siempre a la portada del idioma, así que cambiar de lengua
+ * mientras leías las condiciones te devolvía al principio.
+ *
+ * Fuera del lienzo (archive y demás) no hay variante por URL: siguen siendo
+ * <button> y el cambio se hace en caliente.
+ */
 export function buildLangButtons() {
-  return `<div class="lang-group">${LANGS.map(l =>
-    `<button class="lang-btn${l === currentLang ? " is-active" : ""}" data-lang="${l}" aria-pressed="${l === currentLang}">${l}</button>`
-  ).join("")}</div>`;
+  const aqui = celdaDeRuta(location.pathname);
+  return `<div class="lang-group">${LANGS.map(l => {
+    const activo = l === currentLang;
+    const clase = `lang-btn${activo ? " is-active" : ""}`;
+    const destino = aqui ? rutaCelda(aqui.nombre, l) : null;
+    return destino
+      ? `<a class="${clase}" href="${destino}" hreflang="${bcp47(l)}" data-lang="${l}"${activo ? ' aria-current="true"' : ""}>${l}</a>`
+      : `<button class="${clase}" data-lang="${l}" aria-pressed="${activo}">${l}</button>`;
+  }).join("")}</div>`;
 }
 
 /** Sincroniza el estado visual de TODOS los .lang-btn en la página. */
@@ -108,7 +132,14 @@ export function syncAllLangButtons() {
   document.querySelectorAll(".lang-btn").forEach(b => {
     const activo = b.dataset.lang === currentLang;
     b.classList.toggle("is-active", activo);
-    b.setAttribute("aria-pressed", activo ? "true" : "false");
+    // Los enlaces marcan el idioma activo con aria-current; aria-pressed es de
+    // botones de estado y sobre un <a> no significa nada.
+    if (b.tagName === "A") {
+      if (activo) b.setAttribute("aria-current", "true");
+      else b.removeAttribute("aria-current");
+    } else {
+      b.setAttribute("aria-pressed", activo ? "true" : "false");
+    }
   });
 }
 
@@ -121,16 +152,23 @@ export function attachLangListeners(container, onLangChange) {
   langUpdateCallbacks.push({ container, cb: onLangChange });
 
   container.querySelectorAll(".lang-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", (e) => {
       const lang = btn.dataset.lang;
-      if (lang === currentLang) return;
 
-      // En la home cada idioma es una URL propia, así que cambiar de idioma es
-      // navegar: si no, la URL diría /en mientras se lee catalán. El hash lleva
-      // la celda activa, así que arrastrarlo conserva dónde estabas.
+      // Cmd/Ctrl/Shift/Alt + clic: que el navegador haga lo suyo (abrir en
+      // pestaña o ventana nueva) en vez de que se lo comamos nosotros.
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if (lang === currentLang) { e.preventDefault(); return; }
+
+      // En el lienzo cada idioma es una URL propia, así que cambiar de idioma
+      // es navegar: si no, la URL diría /en mientras se lee catalán. El enlace
+      // ya apunta a la celda correcta; lo interceptamos solo para arrastrar el
+      // hash y guardar la preferencia.
       if (idiomaDeLaRuta()) {
+        e.preventDefault();
         localStorage.setItem("lang", lang);
-        location.href = RUTA_IDIOMA[lang] + location.hash;
+        const destino = btn.getAttribute("href") || RUTA_IDIOMA[lang];
+        location.href = destino + location.hash;
         return;
       }
 

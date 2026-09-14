@@ -42,6 +42,7 @@
 
 import { currentLang, buildLangButtons, attachLangListeners } from "./data.js";
 import { reconfigurarGrid } from "./navigation.js";
+import { celdaHeadingHTML } from "./pages.js";
 
 /** Lado del terreno. Cuadrado y fijo. */
 const LADO = 5;
@@ -129,6 +130,7 @@ export function renderMapa(data) {
   let cogida = null;
 
   el.innerHTML = `
+    ${celdaHeadingHTML(data, "mapa", currentLang)}
     <div class="mapa-terreno" role="group" aria-label="mapa del sitio"></div>
     <button class="mapa-reset" type="button" aria-label="volver al orden original">↺</button>
     ${buildLangButtons()}

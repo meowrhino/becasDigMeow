@@ -4,8 +4,10 @@
 
 import { currentLang, obtenerDatos, onLangChange } from "./data.js";
 import { slugify } from "./proyecto-template.js";
+import { altProyecto } from "./easy-template.js";
 import { rutaProyectos } from "./rutas.js";
 import { setupScrollGradients } from "./scroll-gradients.js";
+import { celdaHeadingHTML } from "./pages.js";
 import { bordeCelda } from "./navigation.js";
 
 /** Texto del enlace al caso de estudio, por idioma. */
@@ -169,6 +171,7 @@ export function renderPortfolio(data) {
   const proyectos = data.portfolio.proyectos;
 
   el.innerHTML = `
+    ${celdaHeadingHTML(data, "portfolio", currentLang)}
     <div class="scroll-wrapper portfolio-scroll-wrapper">
       <div class="scroll-content portfolio-scroll-content">
         <div class="portfolio-grid" id="portfolio-grid"></div>
@@ -246,7 +249,7 @@ function renderGridProyectos(proyectos) {
 
     const imgA = document.createElement("img");
     imgA.classList.add("pgrid-img", "pgrid-img-a");
-    imgA.alt = proyecto.nombre;
+    imgA.alt = altProyecto(proyecto, currentLang);
     imgA.loading = "lazy";
     imgA.decoding = "async";
     imgA.width = 800;          // aspect-ratio 4:3, el CSS reescala al 100%
@@ -261,7 +264,7 @@ function renderGridProyectos(proyectos) {
     if (tieneCiclo) {
       const imgB = document.createElement("img");
       imgB.classList.add("pgrid-img", "pgrid-img-b");
-      imgB.alt = proyecto.nombre;
+      imgB.alt = "";   // decorativa: es la misma web que imgA, en crossfade
       imgB.loading = "lazy";
       imgB.decoding = "async";
       imgB.width = 800;

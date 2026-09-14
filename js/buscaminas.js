@@ -347,6 +347,7 @@ export function renderBuscaminas() {
   let record = false;
 
   el.innerHTML = `
+    <h2 class="celda-h">buscaminas</h2>
     <div class="bm-juego">
       <div class="bm-tablero" role="grid"></div>
       <div class="bm-pie">
