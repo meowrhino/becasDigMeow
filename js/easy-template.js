@@ -199,8 +199,8 @@ export function aboutHTML(data, lang) {
       ${d.cierre ? `
       <div class="easy-about-cierre">
         ${(d.cierre.parrafos || []).map(p).join("")}
-        <p>${esc((d.cierre.precio || "").replace("{precio}", precio))}
-        · <a href="${esc(rutaCelda("metodología", lang))}">${esc(d.cierre.enlace || "")}</a></p>
+        <p>${d.cierre.precio ? `${esc(d.cierre.precio.replace("{precio}", precio))}
+        · ` : ""}<a href="${esc(rutaCelda("metodología", lang))}">${esc(d.cierre.enlace || "")}</a></p>
       </div>` : ""}
       <p class="easy-about-contacto">
         <a href="mailto:${esc(co.email)}?subject=${asunto}">${esc(co.email)}</a>

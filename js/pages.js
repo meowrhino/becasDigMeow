@@ -12,6 +12,7 @@ import { renderWelcomeCard } from "./welcome-card.js";
 import { renderWelcomeCupon } from "./welcome-cupon.js";
 import { repaintWithFade, escapeHTML } from "./utils.js";
 import { rutaProyectos, rutaCelda, slugify } from "./rutas.js";
+import { escConEnlaces } from "./easy-template.js";
 
 /** true si el viewport es táctil / móvil (mismo criterio que portfolio usa para hover/pointer). */
 export const esMovil = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
@@ -462,7 +463,10 @@ export function renderAbout(data) {
     if (!d) return "";
 
     const cvHref = pick(cv, lang);
-    const p = (t) => `<p>${escapeHTML(t.replace("{precio}", precio))}</p>`;
+    // `escConEnlaces` y no `escapeHTML`: algunos párrafos citan su fuente con un
+    // enlace en markdown (`[texto](url)`). El pre-render ya los pintaba; aquí
+    // salían literales, con los corchetes y el paréntesis a la vista.
+    const p = (t) => `<p>${escConEnlaces(t.replace("{precio}", precio))}</p>`;
 
     // La foto va SIN `loading="lazy"`: las celdas del lienzo viven todas apiladas
     // en el mismo hueco y el navegador nunca las da por visibles, así que una
@@ -484,7 +488,7 @@ export function renderAbout(data) {
     const cierre = c ? `
       <div class="about-cierre">
         ${(c.parrafos || []).map(p).join("")}
-        <p class="about-precio">${escapeHTML((c.precio || "").replace("{precio}", precio))}</p>
+        ${c.precio ? `<p class="about-precio">${escapeHTML(c.precio.replace("{precio}", precio))}</p>` : ""}
         <a class="about-enlace" href="${escapeHTML(rutaCelda("metodología", lang))}">${escapeHTML(c.enlace || "")}</a>
       </div>` : "";
 
