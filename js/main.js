@@ -109,8 +109,8 @@ document.getElementById("seo-prerender")?.remove();
 // vive en `/proyectos` como página lineal, que es donde le sirve a un buscador—
 // pero ya no ocupa una casilla del mapa.
 //
-// La rejilla ya no se escribe aquí: sale del reparto que tenga guardado este
-// navegador (js/mapa.js), que de fábrica es el de siempre —links arriba, la
+// La rejilla ya no se escribe aquí: sale del reparto que tenga guardado esta
+// pestaña (js/mapa.js), que de fábrica es el de siempre —links arriba, la
 // fila central, portfolio abajo— colocado en un terreno de 5×5 y con `mapa` a
 // la derecha del portfolio. Quien no haya tocado nada ve exactamente lo mismo
 // que antes: los minimapas dibujan solo el rectángulo ocupado, no las 25

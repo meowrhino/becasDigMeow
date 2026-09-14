@@ -3,7 +3,8 @@
 // ============================================
 //
 // La celda a la derecha del portfolio. Enseña las secciones del sitio como
-// casillas y te deja mudarlas donde quieras; se guarda en tu navegador.
+// casillas y te deja mudarlas donde quieras; se guarda mientras la pestaña
+// siga abierta.
 //
 // Por qué existe: el argumento de todo esto es que una web es un espacio
 // propio, no un molde que te prestan. Escrito en el about es una frase; aquí
@@ -26,6 +27,13 @@
 //    directamente, sin pedir vecindad: a una celda aislada se llega igual. Lo
 //    único que pierde es que no se llegue deslizando, y eso se avisa con el
 //    borde de puntos en vez de impedirse.
+//
+//  - El reparto se guarda en sessionStorage, no en localStorage. Con
+//    localStorage el mapa que dejaste hace meses te recibía desordenado en una
+//    visita que no tenía nada que ver, y eso no se lee como "tu espacio": se
+//    lee como que el sitio está roto. Con sessionStorage aguanta lo que dura
+//    la pestaña —recargas, irte a /about y volver— y empieza limpio en cada
+//    visita nueva.
 //
 //  - Recolocar no repinta ninguna celda. `pos_Y_X` es un selector, no una
 //    posición: las celdas están apiladas y solo se ve la `.activa`. Por eso
@@ -57,10 +65,14 @@ export const ORIGEN = Object.freeze({
 
 const GUARDADO = "meowrhino-mapa";
 
-/** El reparto guardado en este navegador, o el de fábrica. */
+/** El reparto guardado en esta pestaña, o el de fábrica. */
 export function leerMapa() {
   try {
-    const v = localStorage.getItem(GUARDADO);
+    // Barrido de los repartos que guardó la versión anterior en localStorage.
+    // Ya no se leen, pero sin esto se quedan ahí para siempre en el navegador
+    // de quien jugó con el mapa antes del cambio.
+    localStorage.removeItem(GUARDADO);
+    const v = sessionStorage.getItem(GUARDADO);
     if (!v) return { ...ORIGEN };
     const m = JSON.parse(v);
     // Un reparto guardado con OTRA versión del sitio (una sección que ya no
@@ -74,8 +86,8 @@ export function leerMapa() {
 
 function guardarMapa(mapa) {
   try {
-    if (esDeFabrica(mapa)) localStorage.removeItem(GUARDADO);
-    else localStorage.setItem(GUARDADO, JSON.stringify(mapa));
+    if (esDeFabrica(mapa)) sessionStorage.removeItem(GUARDADO);
+    else sessionStorage.setItem(GUARDADO, JSON.stringify(mapa));
   } catch { /* modo privado, o sin espacio: se pierde al recargar y ya está */ }
 }
 
