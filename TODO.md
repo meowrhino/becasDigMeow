@@ -73,8 +73,8 @@ de las clases viene de /easy, la página única que las precedió y que hoy
 redirige a /metodologia (ver `_redirects`).
 
 **Los textos** — about (el porqué) y metodología (el cómo) se reescribieron en
-septiembre a partir de `textos-v3.borrador.md`, ya volcado a `data.json`.
-Fórmula única en todo el sitio: 3 entregas · 1 ronda de revisión por entrega.
+septiembre y viven en `data.json`. Fórmula única en todo el sitio: 3 entregas ·
+1 ronda de revisión por entrega.
 
 **Lo demás** — tema claro/oscuro con anti-flash, i18n es/en/cat completa,
 accesibilidad (skip-nav, aria, focus-visible, reduced-motion), preloader con
@@ -90,4 +90,7 @@ aparte con su propio main.
 | [LINKS.md](LINKS.md) | Inventario de todo lo desplegado bajo meowrhino | Al día (8 sep) |
 | [cloudflarePROXY.md](cloudflarePROXY.md) | Tabla de proxy por dominio + pasos | Reverificada 14 sep |
 | [gbp-kit.md](gbp-kit.md) | Copiar-pegar para el alta en Google Business Profile | Sin usar aún |
-| `textos-*.borrador.md` | Borradores de los textos, ya volcados a data.json | Consumidos |
+
+Los borradores de texto (`textos-about`, `textos-proyectos`, `textos-v3`) se
+borraron el 14 sep 2026: estaban volcados en data.json y el de v3 todavía decía
+"nada de esto ha entrado todavía". Se recuperan con `git show 6e9e0a2:textos-v3.borrador.md`.
