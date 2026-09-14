@@ -1,5 +1,7 @@
 # Cloudflare proxy — guía portfolio
 
+> Tabla levantada en mayo 2026 y reverificada por DNS el 14 sep 2026.
+
 ## Hallazgo
 
 De los 16 proyectos del portfolio, solo 2 sacan **A** en Website Carbon. El resto (14) sacan **F** por una sola razón: el sitio se sirve **directamente desde GitHub Pages** (IPs `185.199.x.153`), y GitHub Pages no está en el registro verde de The Green Web Foundation.
@@ -30,13 +32,16 @@ Solución: activar el **proxy naranja** de Cloudflare en cada dominio. Si el dom
 | 14 | estructuras3000.com | `ns1.dns-parking.com` | 185.199.109-110.153 | NO CF DNS | Migrar DNS a CF |
 | 15 | bertaesteve.cat | `ns2.dondominio.com` | 185.199.109-111.153 | NO CF DNS | Migrar DNS a CF |
 | 16 | jaumeclotet.com | `eloise.ns.cloudflare.com` | 185.199.109-111.153 | CF DNS, proxy OFF | Activar proxy |
-| 17 | elmundodelasjordis.com | `ernest.ns.cloudflare.com` | 185.199.109-110.153 | CF DNS, proxy OFF | Activar proxy |
-| — | **meowrhino.studio** | `mimi.ns.cloudflare.com` | 185.199.110-111.153 | CF DNS, proxy OFF | **Activar proxy (1º paso)** |
+| 17 | **elmundodelasjordis.com** | `ernest.ns.cloudflare.com` | 172.67.x / 104.21.x | **CF DNS, proxy ON** ✅ | Ya OK |
+| — | **meowrhino.studio** | `mimi.ns.cloudflare.com` | 104.21.x / 172.67.x | **CF DNS, proxy ON** ✅ | Ya OK |
 
-**Resumen**:
-- 11 dominios con CF DNS y proxy OFF → 1 click cada uno.
+**Resumen** (reverificado por DNS el 14 sep 2026):
+- 9 dominios con CF DNS y proxy OFF → 1 click cada uno.
 - 4 dominios sin CF DNS → migrar (más curro pero único).
-- 2 dominios ya OK.
+- 4 dominios ya OK: andreacarilla.work, mikebros.com, elmundodelasjordis.com y meowrhino.studio.
+
+> noancittadino.com ya no aparece en la web (la ficha enlaza a
+> `meowrhino.github.io/noan/`), así que sale de la cuenta de pendientes.
 
 ## Pasos para activar proxy (CF DNS ya configurado)
 
