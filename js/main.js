@@ -88,7 +88,23 @@ setupResizeDebounce({
 // build-seo.js). Ya está oculto por CSS desde el primer pintado, pero lo
 // sacamos del DOM antes de montar el grid: crearCeldas() hace appendChild
 // sobre #content, así que si no, el bloque quedaría ahí de por vida.
-document.getElementById("seo-prerender")?.remove();
+//
+// Su <h1> SÍ se queda, oculto. Cada URL del lienzo trae en su HTML el titular
+// que le toca —la raíz el de la keyword, /about «¿te hago una web?», /mapa
+// «mapa»—, y al borrar el bloque entero desaparecía justo antes de que Google
+// renderizara la página. Lo que quedaba eran los titulares de las celdas
+// welcome y about, iguales en las ocho URLs: /condiciones anunciaba que era
+// una página sobre «meowrhino studio». Rescatarlo cuesta tres líneas y deja el
+// HTML crudo y el renderizado diciendo lo mismo.
+const prerender = document.getElementById("seo-prerender");
+if (prerender) {
+  const titular = prerender.querySelector("h1");
+  if (titular) {
+    titular.classList.add("celda-h");   // oculto visualmente, no para lectores
+    prerender.before(titular);
+  }
+  prerender.remove();
+}
 
 // La rejilla del lienzo. Cada celda es ahora una PÁGINA con su URL (ver
 // RUTA_CELDAS en rutas.js): el texto de cada una vive en un solo sitio y puede

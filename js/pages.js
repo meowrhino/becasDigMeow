@@ -223,7 +223,7 @@ export function renderWelcome(data) {
   // preguntando el precio.
   el.innerHTML = `
     <div class="welcome-content">
-      <h1 class="welcome-title">${escapeHTML(w.titulo)}</h1>
+      <p class="welcome-title">${escapeHTML(w.titulo)}</p>
       <p class="welcome-tagline">${escapeHTML(pick(w.tagline, currentLang))}</p>
     </div>
     ${buildLangButtons()}
@@ -527,7 +527,7 @@ export function renderAbout(data) {
     // su enlace a metodología dentro del texto; el precio vive en el cupón de
     // la portada. El about acaba en jardines digitales y de ahí al contacto.
     return `
-      <h1 class="about-pregunta">${escapeHTML(d.pregunta)}</h1>
+      <h2 class="about-pregunta">${escapeHTML(d.pregunta)}</h2>
       <div class="about-entrada">${(d.entrada || []).map(p).join("")}</div>
       <div class="about-texto">${secciones}</div>
       <div class="about-contacto">
