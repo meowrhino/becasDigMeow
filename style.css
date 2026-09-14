@@ -1128,29 +1128,30 @@ a.nav-label:visited {
    metodología. El precio ya no es un bloque de venta —está en el cupón de la
    portada y en condiciones—, aquí es solo el dato que falta antes de irse. */
 /* Los enlaces DENTRO del texto: el sitio entero tiene `a { color: inherit;
-   text-decoration: none }`, así que un enlace en medio de un párrafo era texto
-   normal y nadie lo encontraba. Subrayado fino para que se distinga siempre.
-   El `.about-enlace` del cierre ya trae el suyo, más separado. */
-.about-content p a {
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.18em;
-}
+   text-decoration: none }`, así que un enlace en medio de un párrafo es texto
+   normal. No lleva subrayado a propósito; lo único que lo delata es que
+   respira muy despacio, y al pasar por encima respira un poco más hondo.
+   El `.about-enlace` del cierre sí trae subrayado, y es otra cosa.
 
-/* Y un parpadeo corto al entrar: tres destellos y se queda quieto.
-   Cuelga de `.activa` a propósito. Las celdas viven todas apiladas y ocultas
-   en el mismo hueco, así que una animación que arranque al cargar la página se
-   habría gastado entera antes de que llegues al about; colgada de la clase que
-   enciende la celda, empieza cuando la miras. El retraso deja pasar los 0.6s
-   del fundido de `.celda.activa`.
-   `prefers-reduced-motion` la apaga desde el reset (sección 0). */
+   Cuelga de `.activa` a propósito: las celdas viven todas apiladas y ocultas
+   en el mismo hueco, así que sin esa condición el latido correría también en
+   las que nadie está mirando. `prefers-reduced-motion` lo para desde el reset
+   (sección 0), y entonces el enlace se queda a opacidad 1, legible. */
 .celda.about.activa .about-content p a {
-  animation: about-link-parpadeo 0.42s steps(1, end) 0.7s 3;
+  --about-link-valle: 0.75;
+  animation: about-link-latido 3.4s ease-in-out infinite;
 }
 
-@keyframes about-link-parpadeo {
+/* El hover no cambia de animación —eso la reiniciaría de golpe—: solo baja el
+   valle de la misma, así que el latido se hace más hondo sin dar un salto. */
+.celda.about.activa .about-content p a:hover,
+.celda.about.activa .about-content p a:focus-visible {
+  --about-link-valle: 0.45;
+}
+
+@keyframes about-link-latido {
   0%, 100% { opacity: 1; }
-  50%      { opacity: 0.15; }
+  50%      { opacity: var(--about-link-valle); }
 }
 
 .about-cierre { margin-top: 3rem; }
