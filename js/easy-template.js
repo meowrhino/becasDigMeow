@@ -218,6 +218,12 @@ export function aboutHTML(data, lang) {
  * data.json, no entrada de nadie. Los logos van con ruta absoluta porque esta
  * misma función pinta /condiciones y /en/terms, que están a distinta
  * profundidad.
+ *
+ * Los logos salen en su versión NEGRO, que es la del tema claro: este HTML se
+ * escribe una vez y no sabe con qué tema se va a abrir. `data-logo-name` es lo
+ * que deja a theme.js cambiarlos a BLANCO si el tema es oscuro. Sin ese
+ * atributo los logos se quedaban en negro sobre fondo negro. (No hay carpeta
+ * `light/`: los tonos se llaman NEGRO y BLANCO por el color de la tinta.)
  */
 export function condicionesHTML(data, lang) {
   const secciones = (data.footer?.[lang] || data.footer?.es || {}).secciones || [];
@@ -225,8 +231,8 @@ export function condicionesHTML(data, lang) {
   const bloques = secciones.map(sec => {
     if (sec.tipo === "subvencion") {
       const logos = (sec.logos || []).map(l =>
-        `<img class="easy-logo" src="/img/LOGOS/light/${esc(l.name)}.webp" alt="${esc(l.alt || "")}"
-              loading="lazy" decoding="async">`).join("");
+        `<img class="easy-logo" src="/img/LOGOS/NEGRO/${esc(l.name)}.webp" alt="${esc(l.alt || "")}"
+              data-logo-name="${esc(l.name)}" loading="lazy" decoding="async">`).join("");
       return `
       <div class="easy-legal-bloque" id="financiacion">
         <h2 class="easy-h">${esc(sec.label)}</h2>

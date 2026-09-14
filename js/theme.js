@@ -46,11 +46,25 @@ function aplicarTema(tema) {
     toggleEl.classList.toggle("is-dark", tema === "dark");
     actualizarAriaLabelToggle();
   }
+  sincronizarLogosTema(tema);
+  forzarRepaintCapasCompuestas();
+}
+
+/**
+ * Pone los logos de la subvención en la tinta que toca: NEGRO sobre claro,
+ * BLANCO sobre oscuro.
+ *
+ * Sin filtrar por clase: `.footer-logo` es el del lienzo (lo pinta pages.js ya
+ * con el tono bueno) y `.easy-logo` el de las páginas lineales, que son HTML
+ * escrito de antemano y siempre nace en NEGRO. Por eso hace falta llamarla al
+ * arrancar y no solo al cambiar de tema: quien abre /condiciones en oscuro
+ * vería cuatro logos negros sobre fondo negro.
+ */
+export function sincronizarLogosTema(tema = getTema()) {
   const tone = tema === "dark" ? "BLANCO" : "NEGRO";
-  document.querySelectorAll(".footer-logo[data-logo-name]").forEach(img => {
+  document.querySelectorAll("img[data-logo-name]").forEach(img => {
     img.src = `/img/LOGOS/${tone}/${img.dataset.logoName}.webp`;
   });
-  forzarRepaintCapasCompuestas();
 }
 
 /**
@@ -99,6 +113,7 @@ export function crearThemeToggle(parent = document.body) {
   // Sincronizar estado con el tema actual (ya aplicado por el script de <head>)
   toggleEl.classList.toggle("is-dark", getTema() === "dark");
   actualizarAriaLabelToggle();
+  sincronizarLogosTema();
   // Re-traduce el aria-label cuando cambia el idioma (sin depender de pages.js).
   onLangChange(actualizarAriaLabelToggle);
 
