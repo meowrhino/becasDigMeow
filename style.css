@@ -972,36 +972,7 @@ a.nav-label:visited {
 /* El scroll del contenido de dropdowns lo gestiona .tools-content */
 
 /* ============================================
-   10. PAGE: STATEMENT
-   Manifiesto del estudio: texto centrado.
-   ============================================ */
-
-.celda.statement {
-  flex-direction: column;
-}
-
-.statement-content {
-  text-align: center;
-  max-width: 720px;
-  width: 70dvw;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1.2em;
-  line-height: 1.7;
-  font-size: clamp(0.85rem, 1.2dvw, 1.15rem);
-  transition: opacity 0.25s ease;
-}
-
-.statement-content p {
-  margin: 0;
-  color: var(--text-content);
-}
-
-
-/* ============================================
-   11. PAGE: METODOLOGÍA
+   10. PAGE: METODOLOGÍA
    Proceso de trabajo en 5 pasos, mismo formato que statement.
    ============================================ */
 
@@ -1189,7 +1160,7 @@ a.nav-label:visited {
 
 
 /* ============================================
-   12. PAGE: FOOTER
+   11. PAGE: FOOTER
    Términos de pago y condiciones del estudio.
    ============================================ */
 
@@ -1654,7 +1625,7 @@ a.nav-label:visited {
 
 
 /* ============================================
-   13. PAGE: PORTFOLIO
+   12. PAGE: PORTFOLIO
    Grid de proyectos (cuadrícula estática ordenada).
    El antiguo modo "nubes flotantes" (WAAPI + deriva
    vertical) fue reemplazado por este grid; ya no queda
@@ -1800,22 +1771,9 @@ a.nav-label:visited {
 
 
 /* ============================================
-   14. PAGE: CONTACTO
-   Página minimalista de contacto: email + Instagram.
+   13. CONTACTO — email, instagram y cv
+   Ya no es una celda propia: son los enlaces del pie del about.
    ============================================ */
-
-.celda.contacto {
-  align-items: center;
-  justify-content: center;
-}
-
-.contacto-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5em;
-  padding-top: 5dvh;
-}
 
 .contacto-row {
   display: flex;
@@ -1852,7 +1810,7 @@ a.nav-label:visited {
 }
 
 /* ============================================
-   15. THEME TOGGLE
+   14. THEME TOGGLE
    SVG morph sun↔moon centrado abajo del minimap
    expandido (dentro de .minimap-overlay).
    ============================================ */
@@ -1895,7 +1853,7 @@ a.nav-label:visited {
 .theme-toggle.is-dark .toggle-moon { opacity: 1; }
 
 /* ============================================
-   16. ARCHIVE — Páginas del archivo personal
+   15. ARCHIVE — Páginas del archivo personal
    Comparte el sistema de grid, minimap y tema
    del studio. Grid diamante 4×4, estilo shooter.
    ============================================ */
@@ -2081,9 +2039,13 @@ a.nav-label:visited {
 }
 
 /* ============================================
-   17. MODO FÁCIL (easy.html)
-   Misma data.json que el grid, en scroll lineal.
-   Activado por <html class="easy"> + <body class="easy-mode">.
+   16. PÁGINAS LINEALES
+   La misma data.json que el lienzo, en scroll de arriba abajo: /about,
+   /metodologia, /condiciones, /proyectos, /mapa y sus traducciones.
+   Activado por <html class="easy"> + <body class="easy-mode">. El nombre
+   `easy` viene de /easy, la página única que las precedió y que hoy redirige
+   a /metodologia (ver _redirects); se conserva porque es el prefijo de todas
+   estas clases y renombrarlo no arregla nada.
    ============================================ */
 
 html.easy, html.easy body {
@@ -2094,27 +2056,7 @@ html.easy, html.easy body {
 
 #easy { display: block; }
 
-.easy-section, .easy-hero, .easy-footer { scroll-margin-top: 3rem; }
-
-/* --- Controles de /easy (idiomas + tema, sueltos arriba a la derecha) ---
-   Antes había una barra de cabecera pegajosa con wordmark, idiomas y tema.
-   Era el único elemento así del sitio —ni /proyectos, ni las 63 fichas, ni
-   /archive la tienen—, y bastaba para que /easy se leyera como otra web.
-   Ahora los controles van sueltos en la esquina, en la misma posición y con
-   el mismo peso que .proy-lang-switch en las fichas, y el wordmark baja al
-   pie con el resto. */
-.easy-controles {
-  position: fixed;
-  top: 3dvh;
-  right: 3dvw;
-  z-index: var(--z-nav);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.easy-controles .lang-group { position: static; inset: auto; gap: 0.35rem; }
-.easy-controles .lang-btn { font-size: 0.8rem; padding: 0.2rem 0.3rem; }
-.easy-controles .theme-toggle { position: relative; inset: auto; flex: none; width: 26px; height: 26px; }
+.easy-section, .easy-hero { scroll-margin-top: 3rem; }
 
 /* --- Hero --- */
 .easy-hero {
@@ -2193,16 +2135,7 @@ html.easy, html.easy body {
   transition: background 0.45s ease;
 }
 
-/* Stepper de progreso al scrollear: nº y conectores se encienden acumulativamente. */
-/* Mismo motivo que el statement: los pasos apagados eran ilegibles y aquí lo
-   que se apaga son las condiciones del presupuesto, que conviene poder leer. */
-.easy-steps.is-scrolly .easy-step { opacity: 0.6; transition: opacity 0.45s ease; }
-.easy-steps.is-scrolly .easy-step.is-on { opacity: 1; }
 .easy-step-num { transition: background 0.45s ease, color 0.45s ease, border-color 0.45s ease; }
-.easy-steps.is-scrolly .easy-step.is-on .easy-step-num {
-  background: var(--text); color: var(--bg); border-color: var(--text);
-}
-.easy-steps.is-scrolly .easy-step.link-on::before { background: var(--text); }
 
 /* Titular de apartado dentro de una sección: los del about y el bloque de
    condiciones de metodología. Mismo tono que .easy-h, un punto menos de peso
@@ -2215,58 +2148,6 @@ html.easy, html.easy body {
 .easy-importante .easy-h3 { margin-top: 0; }
 .easy-about-cierre { margin-top: 2.6rem; }
 .easy-about-foto { display: block; width: 100%; max-width: 46rem; height: auto; margin: 1.6rem 0; border-radius: 2px; }
-
-/* --- Statement (manifiesto centrado; resalta la línea del centro al scrollear) --- */
-.easy-statement { text-align: center; padding-top: clamp(4rem, 10dvh, 6.5rem); padding-bottom: clamp(4rem, 10dvh, 6.5rem); }
-.easy-statement-line {
-  font-size: clamp(1.3rem, 3.3dvw, 2rem); line-height: 1.5; letter-spacing: -0.01em;
-  color: var(--text); margin: 0 auto 1.7rem; max-width: 40rem;
-  transition: opacity 0.45s ease;
-}
-.easy-statement-line:last-child { margin-bottom: 0; }
-/* Karaoke: con JS, las líneas se atenúan y solo brilla la del centro.
-   0.55 y no 0.28: esta es la página que existe para leerse del tirón, y a 0.28
-   casi todo el texto quedaba semiborrado en cualquier momento. Se nota que algo
-   iba mal en que con `prefers-reduced-motion` el efecto se desactiva entero —
-   o sea que la versión accesible se leía mejor que la normal. La línea activa
-   sigue destacando; el resto ya se puede leer. */
-.easy-statement.is-scrolly .easy-statement-line { opacity: 0.55; }
-.easy-statement.is-scrolly .easy-statement-line.is-active { opacity: 1; }
-
-/* --- Contacto (más pequeño, con aire) --- */
-.easy-contacto { text-align: center; padding-top: clamp(4.5rem, 11dvh, 7rem); padding-bottom: clamp(4.5rem, 11dvh, 7rem); }
-.easy-contacto .easy-h { margin-bottom: 3rem; }
-.easy-email { font-size: clamp(1.6rem, 5dvw, 2.7rem); letter-spacing: -0.02em; color: var(--text); }
-.easy-email:hover { text-decoration: underline; text-underline-offset: 0.12em; }
-.easy-contacto-cta { margin-top: 3rem; }
-.easy-contacto-links { margin-top: 2.8rem; display: flex; gap: 1.8rem; justify-content: center; color: var(--text-secondary); font-size: 0.95rem; }
-.easy-contacto-links a { color: inherit; }
-.easy-contacto-links a:hover { color: var(--text); }
-
-/* --- Footer (solo el wordmark, centrado) --- */
-/* El pie de /easy hereda de .proy-pie, que reparte sus enlaces con
-   `space-between`. En las fichas eso funciona porque el pie vive dentro de una
-   columna de 46rem; aquí colgaba del cuerpo entero y los dos enlaces se iban a
-   los bordes de la pantalla. Se le da el ancho de .easy-section para que sea
-   la misma caja que el resto de la página, y los enlaces se agrupan en el
-   centro en vez de repartirse: /easy se lee del tirón y su pie es el final del
-   recorrido, no una barra de navegación con extremos.
-
-   El selector lleva las dos clases (.proy-pie.easy-footer) y no una sola por
-   un tema de cascada: .proy-pie está declarado MÁS ABAJO en este archivo y con
-   la misma especificidad, así que su `justify-content: space-between` ganaba a
-   cualquier regla que pusiéramos aquí arriba con un solo nombre de clase. */
-.proy-pie.easy-footer {
-  max-width: 64rem;
-  margin: 0 auto;
-  padding: 2.6rem clamp(1.5rem, 5dvw, 4rem);
-  justify-content: center;
-  gap: 2.2rem;
-  font-size: 0.95rem;
-  color: var(--text-muted);
-}
-.easy-footer a { color: inherit; letter-spacing: -0.01em; }
-.easy-footer a:hover { color: var(--text); }
 
 /* ============================================
    PORTFOLIO — Skeleton + blur-up (preloader)
@@ -2370,7 +2251,7 @@ html.js #seo-prerender {
 
 /* Sin JS es la única versión navegable de la home, así que al menos se lee:
    una columna centrada y con aire. Las clases `easy-*` que trae dentro solo
-   están estilizadas bajo `html.easy` (sección 17), así que aquí el contenido
+   están estilizadas bajo `html.easy` (sección 16), así que aquí el contenido
    cae en su HTML semántico, que es exactamente lo que necesita un bot. */
 #seo-prerender {
   max-width: 42rem;
@@ -2400,7 +2281,7 @@ html.js #seo-prerender {
 }
 
 /* ============================================
-   18. PÁGINAS DE PROYECTO (/proyectos/<slug>)
+   17. PÁGINAS DE PROYECTO (/proyectos/<slug>)
    Generadas por build-seo.js. Reutilizan el chasis del modo fácil
    (html.easy + body.easy-mode): mismo scroll lineal, misma tipografía,
    mismos botones. Aquí solo vive lo que no existía todavía.
@@ -2512,7 +2393,7 @@ html.js #seo-prerender {
 .proy-card a:hover .proy-card-kw { color: var(--text-secondary); }
 
 /* ============================================
-   19. WELCOME CARD — tarjeta de proyecto que rebota
+   18. WELCOME CARD — tarjeta de proyecto que rebota
    Segunda tarjeta rebotante de la welcome, junto al cupón. El movimiento lo
    pone rebote.js vía transform; aquí solo el aspecto y el fundido del cambio.
    Va por DEBAJO del cupón (--z-card < --z-cupon): si se cruzan, la oferta
