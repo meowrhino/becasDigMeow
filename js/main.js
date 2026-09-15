@@ -90,7 +90,7 @@ setupResizeDebounce({
 // sobre #content, así que si no, el bloque quedaría ahí de por vida.
 //
 // Su <h1> SÍ se queda, oculto. Cada URL del lienzo trae en su HTML el titular
-// que le toca —la raíz el de la keyword, /about «¿te hago una web?», /mapa
+// que le toca —la raíz el de la keyword, /about «¿quieres una web?», /mapa
 // «mapa»—, y al borrar el bloque entero desaparecía justo antes de que Google
 // renderizara la página. Lo que quedaba eran los titulares de las celdas
 // welcome y about, iguales en las ocho URLs: /condiciones anunciaba que era
