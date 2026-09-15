@@ -259,7 +259,11 @@ export function aboutHTML(data, lang) {
       <p class="easy-about-contacto">
         <a href="mailto:${esc(co.email)}?subject=${asunto}">${esc(co.email)}</a>
         ${co.instagram ? `<a href="${esc(co.instagram.url)}" target="_blank" rel="noopener">${esc(co.instagram.usuario)}</a>` : ""}
+        ${co.linkedin ? `<a href="${esc(co.linkedin.url)}" target="_blank" rel="noopener">${esc(co.linkedin.usuario)}</a>` : ""}
         ${cv ? `<a href="/${esc(cv)}" target="_blank" rel="noopener">cv</a>` : ""}
+        ${(co.archivo || []).map(a => a.url.startsWith("/")
+          ? `<a href="${esc(a.url)}">${esc(a.nombre)}</a>`
+          : `<a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.nombre)}</a>`).join("\n        ")}
       </p>
     </section>`;
 }

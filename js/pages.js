@@ -495,7 +495,7 @@ export function renderAbout(data) {
   const el = document.querySelector(".celda.about");
   if (!el || !data?.about) return;
 
-  const { email, instagram, asunto, cv } = data.contacto || {};
+  const { email, instagram, linkedin, asunto, cv, archivo } = data.contacto || {};
   const precio = data.welcome?.cupon?.precio ?? "";
 
   const buildMailto = (lang) => {
@@ -541,9 +541,18 @@ export function renderAbout(data) {
       <div class="about-contacto">
         <a class="contacto-email" href="${escapeHTML(buildMailto(lang))}">${escapeHTML(email)}</a>
         <div class="contacto-row">
-          <a class="contacto-instagram" href="${escapeHTML(instagram.url)}"${esMovil ? "" : ' target="_blank"'} rel="noopener">${escapeHTML(instagram.usuario)}</a>
-          ${cvHref ? `<a class="contacto-cv" href="/${escapeHTML(cvHref)}" target="_blank" rel="noopener">cv</a>` : ""}
+          <a class="contacto-link" href="${escapeHTML(instagram.url)}"${esMovil ? "" : ' target="_blank"'} rel="noopener">${escapeHTML(instagram.usuario)}</a>
+          ${linkedin ? `<a class="contacto-link" href="${escapeHTML(linkedin.url)}" target="_blank" rel="noopener">${escapeHTML(linkedin.usuario)}</a>` : ""}
+          ${cvHref ? `<a class="contacto-link" href="/${escapeHTML(cvHref)}" target="_blank" rel="noopener">cv</a>` : ""}
         </div>
+        ${(archivo || []).length ? `<div class="contacto-row">
+          ${archivo.map(a => {
+            // /archive es nuestro y se abre en la misma pestaña; neocities es
+            // de fuera y se va a la suya.
+            const externo = !a.url.startsWith("/");
+            return `<a class="contacto-link${externo ? "" : " contacto-archive"}" href="${escapeHTML(a.url)}"${externo ? ' target="_blank" rel="noopener"' : ""}>${escapeHTML(a.nombre)}</a>`;
+          }).join("")}
+        </div>` : ""}
       </div>`;
   };
 
@@ -558,6 +567,16 @@ export function renderAbout(data) {
   const content = el.querySelector(".about-content");
   const checkScroll = setupScrollGradients(wrapper, content);
   const applyScale = setupZoom(el, content, checkScroll);
+
+  // El archivo se siente oscuro por defecto: fija el tema destino en vez de
+  // invertir el actual, como hacía el enlace que vivía en el borde del
+  // portfolio. Delegado en la celda porque el contenido se repinta al cambiar
+  // de idioma y un listener sobre el propio enlace se perdería.
+  el.addEventListener("click", (e) => {
+    if (e.target.closest(".contacto-archive")) {
+      localStorage.setItem("meowrhino-theme", "dark");
+    }
+  });
 
   attachLangListeners(el, (lang) => {
     repaintWithFade(el, content,

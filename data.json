@@ -1114,10 +1114,18 @@
       "usuario": "@meowrhino",
       "url": "https://instagram.com/meowrhino"
     },
+    "linkedin": {
+      "usuario": "linkedin",
+      "url": "https://www.linkedin.com/in/meowrhino/"
+    },
     "cv": {
       "es": "cv_manu_es.pdf",
       "en": "cv_manu_en.pdf",
       "cat": "cv_manu_ca.pdf"
-    }
+    },
+    "archivo": [
+      { "nombre": "archive", "url": "/archive" },
+      { "nombre": "neocities", "url": "https://meowrhino.neocities.org/" }
+    ]
   }
 }

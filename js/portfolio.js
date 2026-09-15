@@ -8,7 +8,6 @@ import { altProyecto } from "./easy-template.js";
 import { rutaProyectos } from "./rutas.js";
 import { setupScrollGradients } from "./scroll-gradients.js";
 import { celdaHeadingHTML } from "./pages.js";
-import { bordeCelda } from "./navigation.js";
 
 /** Texto del enlace al caso de estudio, por idioma. */
 const CASO = { es: "ver el caso →", en: "see the case →", cat: "veure el cas →" };
@@ -197,22 +196,9 @@ export function renderPortfolio(data) {
   const content = el.querySelector(".portfolio-scroll-content");
   setupScrollGradients(wrapper, content);
 
-  // "archive" en el borde de abajo. Es de esta celda, no navegación del lienzo:
-  // `data-permanent` es lo que le dice a crearNavLabels() que no lo barra al
-  // repintar. Si algún día pones una sección debajo del portfolio, la
-  // navegación a ella se antepone en el mismo borde y esto se aparta hacia
-  // dentro (ver bordeCelda en js/navigation.js).
-  const archiveLabel = document.createElement("a");
-  archiveLabel.href = "/archive";   // "archive.html" responde 307 en Cloudflare
-  archiveLabel.classList.add("nav-label");
-  archiveLabel.dataset.permanent = "true";
-  archiveLabel.textContent = "archive";
-  // El archivo se siente oscuro por defecto: fija el tema destino en vez de
-  // invertir el actual (determinista; no pisa de forma rara una elección manual).
-  archiveLabel.addEventListener("click", () => {
-    localStorage.setItem("meowrhino-theme", "dark");
-  });
-  bordeCelda(el, "bottom").appendChild(archiveLabel);
+  // El enlace a "archive" vivía aquí, en el borde de abajo. Se fue al pie del
+  // about, junto al de neocities: el archivo es de manu, no del portfolio de
+  // clientes, y ahí está el resto de sitios donde encontrarle.
 }
 
 function renderGridProyectos(proyectos) {

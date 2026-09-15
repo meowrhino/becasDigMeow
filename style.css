@@ -1839,12 +1839,14 @@ a.nav-label:visited {
 
 
 /* ============================================
-   13. CONTACTO — email, instagram y cv
+   13. CONTACTO — email, redes, cv y archivo
    Ya no es una celda propia: son los enlaces del pie del about.
    ============================================ */
 
 .contacto-row {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: baseline;
   gap: 1em;
 }
@@ -1862,8 +1864,7 @@ a.nav-label:visited {
   color: var(--text-secondary);
 }
 
-.contacto-instagram,
-.contacto-cv {
+.contacto-link {
   font-size: clamp(0.7rem, 1dvw, 0.95rem);
   font-weight: 400;
   color: var(--text-secondary);
@@ -1872,8 +1873,7 @@ a.nav-label:visited {
   transition: color 0.3s ease;
 }
 
-.contacto-instagram:hover,
-.contacto-cv:hover {
+.contacto-link:hover {
   color: var(--text);
 }
 
