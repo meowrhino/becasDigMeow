@@ -13,6 +13,7 @@ import { renderWelcomeCupon } from "./welcome-cupon.js";
 import { repaintWithFade, escapeHTML } from "./utils.js";
 import { rutaProyectos, rutaCelda, slugify } from "./rutas.js";
 import { escConEnlaces } from "./easy-template.js";
+import { bordeCelda } from "./navigation.js";
 
 /** true si el viewport es táctil / móvil (mismo criterio que portfolio usa para hover/pointer). */
 export const esMovil = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
@@ -354,9 +355,16 @@ export function renderCondiciones(data) {
     <div class="scroll-wrapper footer-scroll-wrapper">
       <div class="scroll-content footer-content">${buildSeccion(currentLang, activeIdx)}</div>
     </div>
-    ${buildSectionNav(currentLang)}
     ${buildLangButtons()}
   `;
+
+  // Las pestañas van DENTRO del borde de abajo, no sueltas encima de él. Antes
+  // eran un absolute con las mismas coordenadas que `.nav-slot.bottom`, así que
+  // si movías una sección debajo de esta celda su etiqueta de navegación caía
+  // justo encima de la pestaña del medio y se la comía: ilegibles las dos e
+  // inclicable la pestaña. Compartiendo slot, la navegación se queda pegada al
+  // canto y las pestañas se apartan hacia dentro (ver bordeCelda).
+  bordeCelda(el, "bottom").insertAdjacentHTML("beforeend", buildSectionNav(currentLang));
 
   const wrapper = el.querySelector(".footer-scroll-wrapper");
   const content = el.querySelector(".footer-content");

@@ -2061,36 +2061,25 @@ a.nav-label:visited {
 
 /* Nav inferior: tabs entre secciones (auto-rotación).
    Mismo estilo que .lang-btn para coherencia visual.
-   En móvil sube una fila para no solapar con +/- y es/en/cat. */
+
+   Dónde va lo dice el `.nav-slot.bottom` que las contiene, no estas reglas: son
+   un control de esta celda, como los niveles del buscaminas o `archive` en el
+   portfolio. Se posicionaron solas (absolute en bottom:3dvh, left:50%) hasta
+   que el mapa dejó mover secciones: con una debajo, la etiqueta de navegación
+   caía en esas mismas coordenadas y tapaba la pestaña del medio. */
 .footer-section-nav {
-  position: absolute;
-  bottom: 3dvh;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  z-index: var(--z-nav);
 }
 
 @media (max-width: 768px) {
   .footer-section-nav {
     --tab-fs: clamp(0.6rem, 2.5dvw, 0.8rem);
-    --tab-h: calc(var(--tab-fs) * 1.4);
-    --tab-gap: calc(var(--tab-fs) * 0.3);
-    bottom: 3dvh;
     flex-direction: column;
     align-items: center;
-    gap: var(--tab-gap);
+    gap: calc(var(--tab-fs) * 0.3);
     max-width: 92dvw;
-    /* alinea el centro óptico del tab medio con el de una .nav-label dentro de
-       un .nav-slot.bottom (el slot lleva el bottom:3dvh; la etiqueta acaba en
-       el mismo sitio que cuando se posicionaba ella sola).
-       .nav-label usa line-height:normal (Inknut Antiqua ≈ 2.5×), el tab usa 1.4.
-       Offset base (border inferior tab medio en 3dvh) = tab_h + gap = 1.7·fs.
-       Compensamos la diferencia de line-boxes: (2.5 − 1.4)/2 = 0.55·fs.
-       Total = 1.15·fs. */
-    transform: translateX(-50%) translateY(calc(var(--tab-fs) * 1.15));
   }
   .footer-section-tab {
     padding: 0;
