@@ -20,7 +20,7 @@
 //    rebote también lo cambia, pero solo si ya lleva DWELL_MIN visible, para
 //    que dos choques seguidos no provoquen un parpadeo.
 //
-//  - Con `prefers-reduced-motion` la tarjeta rebota a un cuarto de velocidad
+//  - Con `prefers-reduced-motion` la tarjeta rebota a media velocidad
 //    (de eso se encarga rebote.js) y sigue rotando de proyecto, con corte seco
 //    en vez de fundido. El ajuste pide menos movimiento, no ninguno: congelarla
 //    del todo dejaba la portada de cualquier iPhone con «Reducir movimiento»

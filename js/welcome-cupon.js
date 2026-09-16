@@ -14,7 +14,7 @@
 //
 // Puntos clave:
 //  - Solo anima cuando la celda está activa, sin hover y sin flip.
-//  - Con `prefers-reduced-motion` no se para: va a un cuarto de velocidad.
+//  - Con `prefers-reduced-motion` no se para: va a media velocidad.
 //  - Bounds contra offsetWidth/Height (sin rotar) para rebotes estables.
 //  - Click en el CTA → mailto (no toggle); click en el resto del cupón → flip.
 //

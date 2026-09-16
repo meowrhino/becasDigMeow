@@ -23,13 +23,15 @@
  * portada no se leía como calmada sino como rota, con las tarjetas amontonadas
  * en una esquina y quietas.
  *
- * A la cuarta parte la deriva queda en unos 10 px/s: cruzar la pantalla lleva
- * más de medio minuto, así que se nota si te quedas mirando y no arrastra la
- * vista de quien ha pedido que nada se mueva solo. El mismo freno se aplica al
- * golpe de rotación de cada choque, que es la parte brusca del efecto: de 8-22º
- * de golpe pasa a 2-5,5º.
+ * A la mitad la deriva queda en unos 21 px/s en móvil: cruzar la pantalla lleva
+ * cosa de veinte segundos. Se ve que se mueve de un vistazo, sin perseguir a
+ * nadie por la pantalla. Empezó en 0,25 y a esa velocidad —medio minuto largo
+ * por travesía— parecía parada salvo que te quedaras mirando a propósito.
+ *
+ * El mismo freno se aplica al golpe de rotación de cada choque, que es la parte
+ * brusca del efecto: de 8-22º de golpe pasa a 4-11º.
  */
-const FRENO_REDUCIDO = 0.25;
+const FRENO_REDUCIDO = 0.5;
 
 /**
  * Arranca el rebote de `elemento` dentro de `celda`.
@@ -106,8 +108,8 @@ export function iniciarRebote(celda, elemento, opciones = {}) {
     };
   };
 
-  // Cada choque suma un golpe de rotación de golpe (sin easing): 8..22º, o el
-  // cuarto de eso con movimiento reducido.
+  // Cada choque suma un golpe de rotación de golpe (sin easing): 8..22º, o la
+  // mitad de eso con movimiento reducido.
   // El ángulo queda acotado a ±limiteRot: si un lado se pasa, el golpe va hacia
   // el otro, así nunca queda "pegado" al tope.
   const golpearRotacion = () => {
