@@ -653,10 +653,22 @@ a.nav-label:visited {
   user-select: none;
 }
 
+/* Las dos caras van apiladas en la MISMA celda de un grid, no una en flujo y la
+   otra absoluta encima. Con la back absoluta el tamaño lo marcaba solo la
+   front, que es la del precio y ocupa cuatro líneas cortas: el dorso, que lleva
+   un párrafo, no cabía y se salía por arriba y por abajo del marco. Medido en
+   390px de ancho: 133px de texto en una caja de 88, o sea 23px asomando por
+   cada lado. Apiladas en grid la caja mide lo que la cara más alta y el dorso
+   no puede desbordar, ni ahora ni cuando cambie el texto o el idioma. */
 .welcome-cupon-inner {
-  position: relative;
+  display: grid;
   transform-style: preserve-3d;
   transition: transform 0.6s cubic-bezier(0.5, 0, 0.3, 1);
+}
+
+.welcome-cupon-front,
+.welcome-cupon-back {
+  grid-area: 1 / 1;
 }
 
 .welcome-cupon-wrapper.flipped .welcome-cupon-inner {
@@ -683,16 +695,14 @@ a.nav-label:visited {
 }
 
 .welcome-cupon-front {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;   /* la caja la marca el dorso: el precio va centrado en ella */
   gap: 0.3rem;
 }
 
 .welcome-cupon-back {
-  position: absolute;
-  inset: 0;
   /* Hereda padding de .welcome-cupon-face para respirar igual que el anverso
      (y para que el ajuste mobile del face también le afecte) */
   transform: rotateY(180deg);
