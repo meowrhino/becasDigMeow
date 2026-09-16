@@ -90,8 +90,14 @@ export function renderWelcomeCupon(celda, cuponData) {
 
   // Mientras está girado se queda quieto: leer el dorso con la tarjeta
   // moviéndose es incómodo.
+  //
+  // Sale del centro, no de un punto al azar. Es la pieza que manda de la
+  // portada —lleva el precio— y las tarjetas de proyecto nacen en las esquinas
+  // de arriba y de abajo: el centro es el único sitio donde no le cae encima
+  // ninguna en el primer segundo.
   iniciarRebote(celda, wrapperEl, {
     velocidad: esMovil ? 60 : 90,
     pausar: () => wrapperEl.classList.contains("flipped"),
+    inicio: (b) => ({ x: (b.minX + b.maxX) / 2, y: (b.minY + b.maxY) / 2 }),
   });
 }

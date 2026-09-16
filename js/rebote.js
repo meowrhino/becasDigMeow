@@ -48,6 +48,10 @@ const FRENO_REDUCIDO = 0.5;
  *        de dónde sale, en coordenadas de `translate`. Por defecto, un punto al
  *        azar dentro de los límites. La card de proyecto lo usa para no nacer
  *        encima del cupón, que comparte celda con ella.
+ * @param {{x?: -1|1, y?: -1|1}} [opciones.sentido]
+ *        hacia dónde sale. Lo que no se diga va al azar. Quien nace pegado a un
+ *        borde lo usa para apuntar hacia dentro: si no, el primer frame ya es un
+ *        rebote y la pieza arranca dando un golpe de rotación.
  * @returns {{ detener: () => void }} para poder pararlo (tests, cleanup)
  */
 export function iniciarRebote(celda, elemento, opciones = {}) {
@@ -58,6 +62,7 @@ export function iniciarRebote(celda, elemento, opciones = {}) {
     pausar = () => false,
     alChocar = () => {},
     inicio = null,
+    sentido = {},
   } = opciones;
 
   const reducirMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -65,8 +70,9 @@ export function iniciarRebote(celda, elemento, opciones = {}) {
   const velocidadReal = velocidad * freno;
   const diag = Math.SQRT1_2;   // componente x,y de un vector unitario a 45º
 
-  let vx = (Math.random() < 0.5 ? -1 : 1) * diag;
-  let vy = (Math.random() < 0.5 ? -1 : 1) * diag;
+  const alAzar = () => (Math.random() < 0.5 ? -1 : 1);
+  let vx = (sentido.x ?? alAzar()) * diag;
+  let vy = (sentido.y ?? alAzar()) * diag;
   let x = 0, y = 0;
   let rotacion = Math.random() * rotInicial * 2 - rotInicial;
   let hoverPausa = false;
