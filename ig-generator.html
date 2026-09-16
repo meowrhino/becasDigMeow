@@ -10,7 +10,7 @@
        variante y tema y se descargan los PNG. Dibuja en <canvas> con la
        tipografía y los colores del sitio, y las cifras salen del cupón.
 
-       Hay cinco variantes del mismo carrusel, cada una con su propia
+       Hay seis variantes del mismo carrusel, cada una con su propia
        gramática visual, para poder probar cuál tira:
 
          manifiesto     el original afinado: tipografía enorme, marco, blanco.
@@ -23,6 +23,8 @@
                         y cifras a la derecha. Nadie publica esto.
          consentimiento quién tiene permiso para usar tu trabajo, con gramática
                         de formulario: casillas marcadas y sin marcar.
+         preguntas      seis preguntas sobre la web que ya estás pagando, con la
+                        raya en blanco donde iría la respuesta.
 
        El botón «corte pagado (6)» (o ?pagado=1) deja el subconjunto de 6
        tarjetas de cada variante y, en el manifiesto, cambia la diapositiva 1
@@ -703,7 +705,77 @@
       escribirAjustado(ctx, "no es", { y: 700, weight: 600, tracking: -3, maxWidth: ANCHO * .62, max: 150, color: c.text });
       escribirAjustado(ctx, "internet.", { y: 860, weight: 600, tracking: -3, maxWidth: ANCHO, max: 150, color: c.text });
       escribir(ctx, "(y aun así, aquí estamos)", { y: 980, size: 30, color: c.muted });
+      regla(ctx, 1050, c);
+      escribir(ctx, "webs hechas a mano desde barcelona.", { y: 1130, size: 36, color: c.text });
     };
+
+    // ---------- F · preguntas ----------
+    // El ángulo que no cubría ninguna de las otras cinco: mucha gente ya paga
+    // una cuota por algo que no es suyo y nunca se ha preguntado de quién es.
+    // La gramática es un interrogatorio que no puedes contestar — la pregunta
+    // grande y, debajo, la raya en blanco donde iría la respuesta.
+    //
+    // Se mantiene en preguntas a propósito: nombrar competidores no es problema
+    // de política (no son marcas de Meta), pero una afirmación comparativa sí
+    // invita a reclamaciones. Una pregunta no afirma nada.
+
+    function pregunta(ctx, c, txt, o = {}) {
+      const fin = escribir(ctx, txt, {
+        y: o.y || 520, size: 58, weight: 600, lineHeight: 96, tracking: -2, color: c.text,
+      });
+      // La raya en blanco: donde iría la respuesta, y no la hay. Se cuelga del
+      // final real del texto, que hay preguntas que ocupan dos líneas.
+      const y = fin + (o.hueco || 150);
+      ctx.strokeStyle = c.muted; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(M, y); ctx.lineTo(M + ANCHO * 0.62, y); ctx.stroke();
+      return y;
+    }
+
+    const PREGUNTAS = [
+      // 1 · identifica al público y abre el bucle, sin afirmar nada
+      (ctx, c) => {
+        escribir(ctx, "si tu web está en squarespace, wix, webflow o cualquier plantilla:",
+          { y: 300, size: 32, lineHeight: 54, color: c.muted });
+        const y = pregunta(ctx, c, "¿de quién es el dominio?", { y: 560 });
+        escribir(ctx, "(sigue →)", { y: y + 110, size: 30, color: c.muted });
+      },
+
+      (ctx, c) => pregunta(ctx, c, "¿dónde está el código?"),
+      (ctx, c) => pregunta(ctx, c, "¿puedes descargarla entera hoy?", { y: 480 }),
+      (ctx, c) => pregunta(ctx, c, "¿cuánto llevas pagando, en total?", { y: 480 }),
+      (ctx, c) => pregunta(ctx, c, "¿y si mañana suben el precio?", { y: 480 }),
+
+      // 6 · el giro
+      (ctx, c) => {
+        escribir(ctx, "si no sabes la respuesta,", { y: 500, size: 58, weight: 600, lineHeight: 96, tracking: -2, color: c.muted });
+        escribir(ctx, "ya sabes la respuesta.", { y: 640, size: 58, weight: 600, lineHeight: 96, tracking: -2, color: c.text });
+      },
+
+      // 7 · la oferta, por fin
+      (ctx, c) => {
+        escribir(ctx, "una web hecha desde cero.",
+          { y: 400, size: 56, weight: 600, lineHeight: 94, tracking: -2, color: c.text });
+        regla(ctx, 500, c);
+        escribir(ctx, "el dominio, el código y el repositorio, a tu nombre. sin plantilla y sin cuota mensual.",
+          { y: 600, size: 34, lineHeight: 58, color: c.muted });
+        regla(ctx, 830, c);
+        escribir(ctx, "850 € · un mes · 3 entregas", { y: 940, size: 46, weight: 600, tracking: -1, color: c.acento });
+        escribir(ctx, "(iva no incluido)", { y: 1010, size: 26, color: c.muted });
+      },
+
+      // 8 · la llamada
+      (ctx, c) => {
+        escribir(ctx, "la primera reunión es gratis y no compromete a nada.",
+          { y: 320, size: 60, weight: 600, lineHeight: 96, tracking: -2, color: c.text });
+        escribir(ctx, "mándame un mensaje →", { y: 700, size: 46, weight: 600, color: c.acento });
+        regla(ctx, 800, c);
+        cubrir(ctx, imgs[FOTO], M, 880, 300, 300);
+        ctx.strokeStyle = c.line; ctx.lineWidth = 2; ctx.strokeRect(M, 880, 300, 300);
+        escribir(ctx, "detrás de meowrhino está manu latour. diseño y programo webs a medida desde barcelona.",
+          { y: 950, x: M + 340, size: 30, lineHeight: 52, color: c.muted, maxWidth: ANCHO - 340 });
+        return { etiqueta: "hola@meowrhino.studio" };
+      },
+    ];
 
     // ---------- las variantes ----------
 
@@ -792,6 +864,25 @@ el primer año entero, desde 862 €. y desde 12 € al año mientras la quieras
 te la entrego en persona y sales de esa reunión sabiendo actualizarla. el dominio, el código y el repositorio son tuyos: puedes llevártela cuando quieras.
 
 lo pongo por escrito porque casi nadie lo hace. la primera reunión es gratis y no compromete a nada — mándame un mensaje.
+
+meowrhino.studio`,
+      },
+      preguntas: {
+        nombre: "F · preguntas",
+        tema: "light",
+        marco: true,
+        slides: PREGUNTAS,
+        corto: [0, 1, 3, 5, 6, 7],
+        nota: "seis preguntas sobre la web que ya estás pagando, con la raya en blanco donde iría la respuesta. el ángulo que no cubría ninguna otra variante: no ataca a las plataformas, solo pregunta de quién es lo que tienes dentro. se queda en preguntas a propósito — una afirmación comparativa sobre un competidor invita a reclamaciones, una pregunta no.",
+        caption: `si tu web está en squarespace, wix, webflow o cualquier plantilla: ¿de quién es el dominio? ¿dónde está el código? ¿puedes descargarla entera hoy? ¿cuánto llevas pagando, en total? ¿y si mañana suben el precio?
+
+si no sabes la respuesta, ya sabes la respuesta.
+
+hago webs desde cero, sin plantillas. el dominio, el código y el repositorio son tuyos, y puedes llevártela cuando quieras. sin servidores, sin suscripciones y sin cuotas mensuales: el alojamiento puede ser gratuito y el dominio es prácticamente el único gasto que se repite.
+
+850 € (iva no incluido), un mes, 3 entregas con 1 ronda de cambios en cada una. después, 60 €/hora para lo que quieras tocar — y si aprendiste a tocarla tú, no pagas.
+
+la primera reunión es gratis y no compromete a nada. mándame un mensaje.
 
 meowrhino.studio`,
       },
