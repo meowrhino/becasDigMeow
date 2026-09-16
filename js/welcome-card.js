@@ -154,9 +154,21 @@ function crearTarjeta(celda, orden, enPantalla, turno, config, arranque) {
   let reloj = null;
   enPantalla.add(i);
 
+  // Mientras la captura no ha llegado, el <img> no ocupa nada y la card se
+  // desinfla (medido: de 135px a 85px, y a menos aún si el src es nuevo del
+  // todo). Pasaba en CADA cambio de proyecto, o sea cada 4,5s: la card daba un
+  // salto de medio tamaño y, si estaba pegada a un borde, al volver a crecer
+  // asomaba fuera de la celda —que es overflow:hidden— y se veía recortada
+  // hasta que el ResizeObserver del rebote la recolocaba.
+  //
+  // La clase la pone el `load` y la quita cada `src` nuevo; el hueco reservado
+  // vive en el CSS, que es donde está la proporción.
+  imgEl.addEventListener("load", () => imgEl.classList.add("cargada"));
+
   const pintar = () => {
     const p = orden[i];
 
+    imgEl.classList.remove("cargada");
     imgEl.src = `/${p.imagen}`;
     nombreEl.textContent = p.nombre;
     // El destino y los textos dependen del idioma: en /en y /ca la card

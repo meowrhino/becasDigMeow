@@ -2515,6 +2515,16 @@ html.js #seo-prerender {
   border-radius: 3px;
 }
 
+/* Hueco reservado mientras la captura descarga. No lleva width/height en el
+   HTML porque cada proyecto tiene la suya y la proporción real no se sabe hasta
+   que llega; 1,45 es el centro del rango que usan (van de 1,34 a 1,56), así que
+   el reajuste al cargar es de unos 9px en vez de los 50 que se desinflaba antes.
+   `height: auto` de la regla de arriba deja mandar a la proporción de verdad en
+   cuanto la imagen está: esto solo actúa sobre el hueco vacío. */
+.welcome-card-img:not(.cargada) {
+  aspect-ratio: 1.45;
+}
+
 .welcome-card-pie {
   display: flex;
   flex-direction: column;

@@ -189,8 +189,12 @@ export function iniciarRebote(celda, elemento, opciones = {}) {
   const ajustar = () => {
     if (!colocado) return;
     const b = bounds();
-    x = Math.min(Math.max(b.minX, x), b.maxX);
-    y = Math.min(Math.max(b.minY, y), b.maxY);
+    // Si el elemento no cabe en la celda los límites salen invertidos
+    // (maxX < minX) y el clamp normal devolvía el máximo, o sea un negativo:
+    // el elemento se iba fuera por arriba a la izquierda en vez de quedarse
+    // dentro. Cuando no cabe, el mejor sitio es pegado al borde de salida.
+    x = b.maxX > b.minX ? Math.min(Math.max(b.minX, x), b.maxX) : b.minX;
+    y = b.maxY > b.minY ? Math.min(Math.max(b.minY, y), b.maxY) : b.minY;
     render();
   };
 
