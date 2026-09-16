@@ -112,6 +112,14 @@ export function renderWelcomeCard(celda, proyectos) {
   // Los índices que hay ahora mismo a la vista, compartidos por las tarjetas.
   const enPantalla = new Set();
 
+  // Las esquinas que ya ha pedido otra tarjeta, en centros. Es una lista
+  // compartida y no una consulta al DOM a propósito: cuál ha cogido la vecina
+  // se sabe en cuanto lo decide, sin depender de si le ha dado tiempo a
+  // pintarse. Leyéndolo del DOM, una tarjeta todavía sin colocar mide en 0,0 y
+  // la siguiente creía que estaba en la esquina de arriba a la izquierda: las
+  // dos huían al mismo sitio y nacían una encima de la otra.
+  const tomadas = [];
+
   // Cuándo cambió por última vez CUALQUIERA de las tarjetas. Es lo que les
   // permite cederse el turno en vez de cambiar a la vez.
   const turno = { ultimo: -Infinity };
@@ -125,7 +133,7 @@ export function renderWelcomeCard(celda, proyectos) {
     // primeras capturas son vecinas del mismo barajado y parecen relacionadas.
     // Y el primer cambio de cada una va desfasado un trozo de CADENCIA, para
     // que el reparto de turnos empiece ya separado y no tenga que corregirse.
-    crearTarjeta(celda, orden, enPantalla, turno, config, {
+    crearTarjeta(celda, orden, enPantalla, turno, tomadas, config, {
       indice:  Math.floor(k * orden.length / cuantas),
       desfase: Math.round(CADENCIA * (k + 1) / cuantas),
     });
@@ -133,7 +141,7 @@ export function renderWelcomeCard(celda, proyectos) {
 }
 
 /** Una tarjeta: la pinta, la traduce, la hace rotar de proyecto y rebotar. */
-function crearTarjeta(celda, orden, enPantalla, turno, config, arranque) {
+function crearTarjeta(celda, orden, enPantalla, turno, tomadas, config, arranque) {
   celda.insertAdjacentHTML("beforeend", `
     <a class="welcome-card" href="#">
       <img class="welcome-card-img" alt="" decoding="async">
@@ -238,7 +246,7 @@ function crearTarjeta(celda, orden, enPantalla, turno, config, arranque) {
   iniciarRebote(celda, cardEl, {
     velocidad: esMovil ? config.velocidadMovil : config.velocidad,
     limiteRot: config.limiteRot,
-    inicio: (b) => esquinaMasLibre(celda, b, cardEl),
+    inicio: (b) => esquinaMasLibre(celda, b, cardEl, tomadas),
     // El choque no llama a `avanzar` directo: pasa por el mismo turno que el
     // reloj, así un rebote tampoco puede caer encima del cambio de la vecina.
     alChocar: () => {
@@ -270,33 +278,51 @@ function proximoIndice(actual, total, enPantalla) {
  * portada. Que se crucen luego, en movimiento, no molesta — para eso van por
  * debajo del cupón (--z-card < --z-cupon) y la oferta nunca queda tapada.
  *
- * Se mide contra el cupón Y contra las demás tarjetas (`excluir` es la que se
- * está colocando ahora, que ya está en el DOM). El criterio es maximizar la
- * distancia al vecino MÁS CERCANO: una esquina lejísimos del cupón pero pegada
- * a la otra tarjeta no sirve de nada.
+ * Se mide contra el cupón y contra las esquinas que ya han pedido las otras
+ * tarjetas (`tomadas`). El criterio es maximizar la distancia al vecino MÁS
+ * CERCANO: una esquina lejísimos del cupón pero pegada a la otra tarjeta no
+ * sirve de nada.
+ *
+ * Dos cosas que hay que comparar con cuidado:
+ *
+ *  - Todo se mide de CENTRO a CENTRO. Las esquinas son posiciones de
+ *    `translate`, o sea el pico de arriba a la izquierda, y antes se comparaban
+ *    contra el centro del cupón. En una celda ancha da igual, pero en un móvil
+ *    de 390px la tarjeta mide 187 y el cupón 242: la esquina derecha cae en
+ *    x=190 y el centro del cupón en x=195, así que las dos esquinas de la
+ *    derecha parecían pegadas al cupón y no se elegían nunca. Medido en seis
+ *    recargas seguidas: las dos tarjetas siempre en el borde izquierdo.
+ *
+ *  - El cupón solo cuenta si ya se ha colocado. Sin `transform` mide en 0,0 y
+ *    lo tomábamos por una tarjeta aparcada en la esquina de arriba a la
+ *    izquierda, que es justo la lectura que empuja a las demás al rincón
+ *    opuesto.
  */
-function esquinaMasLibre(celda, b, excluir) {
+function esquinaMasLibre(celda, b, el, tomadas) {
+  const w = el.offsetWidth;
+  const h = el.offsetHeight;
   const esquinas = [
     { x: b.minX, y: b.minY }, { x: b.maxX, y: b.minY },
     { x: b.minX, y: b.maxY }, { x: b.maxX, y: b.maxY },
-  ];
+  ].map(e => ({ ...e, cx: e.x + w / 2, cy: e.y + h / 2 }));
 
-  const rc = celda.getBoundingClientRect();
-  // getBoundingClientRect ya incluye el transform del rebote, que es justo la
-  // posición que nos importa.
-  const centros = [...celda.querySelectorAll("#welcomeCupon, .welcome-card")]
-    .filter(el => el !== excluir)
-    .map(el => {
-      const r = el.getBoundingClientRect();
-      return { x: r.left - rc.left + r.width / 2, y: r.top - rc.top + r.height / 2 };
-    });
+  const centros = [...tomadas];
+  const cupon = celda.querySelector("#welcomeCupon");
+  if (cupon && cupon.style.transform) {
+    const rc = celda.getBoundingClientRect();
+    const r = cupon.getBoundingClientRect();
+    centros.push({ x: r.left - rc.left + r.width / 2, y: r.top - rc.top + r.height / 2 });
+  }
 
-  if (!centros.length) return esquinas[Math.floor(Math.random() * esquinas.length)];
+  const elegida = centros.length
+    ? esquinas.reduce((mejor, e) => {
+        const d = Math.min(...centros.map(c => (e.cx - c.x) ** 2 + (e.cy - c.y) ** 2));
+        return d > mejor.d ? { ...e, d } : mejor;
+      }, { ...esquinas[0], d: -1 })
+    : esquinas[Math.floor(Math.random() * esquinas.length)];
 
-  return esquinas.reduce((mejor, e) => {
-    const d = Math.min(...centros.map(c => (e.x - c.x) ** 2 + (e.y - c.y) ** 2));
-    return d > mejor.d ? { ...e, d } : mejor;
-  }, { ...esquinas[0], d: -1 });
+  tomadas.push({ x: elegida.cx, y: elegida.cy });
+  return { x: elegida.x, y: elegida.y };
 }
 
 /** Fisher-Yates sobre una copia; no toca el array de data.json. */
