@@ -5,10 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ig-generator — meowrhino studio</title>
   <meta name="robots" content="noindex">
-  <!-- Generador del carrusel de instagram (1080×1350, 4:5). Igual que
-       og-generator.html: no es una página pública, se abre a mano, se elige
-       variante y tema y se descargan los PNG. Dibuja en <canvas> con la
-       tipografía y los colores del sitio, y las cifras salen del cupón.
+  <!-- Generador del carrusel de instagram. Igual que og-generator.html: no es
+       una página pública, se abre a mano, se elige variante, formato y tema, y
+       se descargan los PNG. Dibuja en <canvas> con la tipografía y los colores
+       del sitio, y las cifras salen del cupón.
+
+       Tres formatos (?f=4x5|1x1|9x16): 4:5 para el feed, 1:1 para las
+       ubicaciones que recortan a cuadrado, 9:16 para stories y reels. Las
+       diapositivas se dibujan siempre contra una caja de 1080×1350 que se
+       centra en el lienzo, así que no hay que reflowar nada.
 
        Hay seis variantes del mismo carrusel, cada una con su propia
        gramática visual, para poder probar cuál tira:
@@ -80,8 +85,9 @@
 </head>
 <body>
   <header>
-    <h1>ig-generator — carrusel 1080×1350</h1>
+    <h1>ig-generator — carrusel</h1>
     <select id="variante"></select>
+    <select id="formato"></select>
     <button id="toggle">cambiar a oscuro</button>
     <button id="pagado" aria-pressed="false">corte pagado (6)</button>
     <button id="guia" aria-pressed="false">guía de recorte</button>
@@ -97,7 +103,27 @@
   </section>
 
   <script>
-    const W = 1080, H = 1350;
+    const W = 1080, H = 1350;   // H es el alto de la CAJA DE COMPOSICIÓN, no del lienzo
+
+    // Los tres formatos. Todas las diapositivas se dibujan contra una caja de
+    // 1080×1350 y luego se centran verticalmente en el lienzo del formato, así
+    // que ninguna de las 48 funciones de dibujo necesita saber nada de esto:
+    //
+    //   4x5   el lienzo ES la caja. Lo de siempre.
+    //   9x16  sobran 285px arriba y abajo, que se quedan de fondo. Justo lo que
+    //         recomienda meta para stories, donde la interfaz se come los
+    //         extremos: el letterbox hace de safe zone.
+    //   1x1   faltan 135px arriba y abajo, así que se recorta por el centro.
+    //         Comprobado con la guía: lo único que caía fuera era el pie, y el
+    //         pie se redibuja en las coordenadas del lienzo, no de la caja.
+    const FORMATOS = {
+      "4x5":  { alto: 1350, nombre: "4:5 · feed" },
+      "1x1":  { alto: 1080, nombre: "1:1 · feed cuadrado" },
+      "9x16": { alto: 1920, nombre: "9:16 · stories y reels" },
+    };
+    let formatoActual = "4x5";
+    const alto = () => FORMATOS[formatoActual].alto;
+    const desfase = () => Math.round((alto() - H) / 2);
 
     const TEMAS = {
       light: { bg: "#ffffff", text: "#000000", muted: "#717171", line: "rgba(0,0,0,.14)", acento: "#1c48d8" },
@@ -256,12 +282,18 @@
     // cambiarlos: {marco:false} lo quita, {pieY} lo mueve, {etiqueta} cambia
     // el texto de la izquierda.
     function chrome(ctx, c, n, total, o = {}) {
+      const hh = alto(), d = desfase();
+      // Marco y pie se pegan al borde del lienzo, salvo en 9:16, donde se
+      // quedan pegados a la caja de composición: si no, caen dentro de las
+      // bandas de 250px que tapa la interfaz de stories.
+      const arriba = Math.max(44, d + 44);
+      const abajo = Math.min(hh - 44, d + H - 44);
       if (o.marco !== false) {
         ctx.strokeStyle = c.line; ctx.lineWidth = 2;
-        ctx.strokeRect(44, 44, W - 88, H - 88);
+        ctx.strokeRect(44, arriba, W - 88, abajo - arriba);
       }
       if (o.pie === false) return;
-      const y = o.pieY || 1272;
+      const y = o.pieY || abajo - 34;
       escribir(ctx, o.etiqueta || "meowrhino.studio", { y, size: 22, color: c.muted });
       escribir(ctx, n + "/" + total, { y, size: 22, color: c.muted, align: "right", x: W - M });
     }
@@ -270,19 +302,32 @@
     // ubicación recorta a cuadrado) y el 80% central, que es la safe zone que
     // recomienda meta. No sale en el PNG: solo se pinta en pantalla.
     function guiaRecorte(ctx) {
+      const hh = alto();
       ctx.save();
       ctx.setLineDash([14, 10]);
       ctx.lineWidth = 3;
-      ctx.strokeStyle = "rgba(255,0,140,.85)";
-      ctx.strokeRect(0, (H - W) / 2, W, W);
-      ctx.strokeStyle = "rgba(0,200,255,.85)";
-      ctx.strokeRect(W * 0.1, H * 0.1, W * 0.8, H * 0.8);
-      ctx.setLineDash([]);
       ctx.font = fuente(20, 600);
-      ctx.fillStyle = "rgba(255,0,140,.85)";
-      ctx.fillText("1:1", 12, (H - W) / 2 - 12);
+
+      // el 80% central que recomienda meta, en cualquier formato
+      ctx.strokeStyle = "rgba(0,200,255,.85)";
+      ctx.strokeRect(W * 0.1, hh * 0.1, W * 0.8, hh * 0.8);
       ctx.fillStyle = "rgba(0,200,255,.85)";
-      ctx.fillText("safe zone 80%", W * 0.1 + 10, H * 0.1 - 12);
+      ctx.fillText("safe zone 80%", W * 0.1 + 10, hh * 0.1 - 12);
+
+      ctx.strokeStyle = "rgba(255,0,140,.85)";
+      ctx.fillStyle = "rgba(255,0,140,.85)";
+      if (formatoActual === "4x5") {
+        // qué se pierde si la ubicación recorta a cuadrado
+        ctx.strokeRect(0, (hh - W) / 2, W, W);
+        ctx.fillText("1:1", 12, (hh - W) / 2 - 12);
+      } else if (formatoActual === "9x16") {
+        // las bandas que se come la interfaz de stories
+        for (const y of [250, hh - 250]) {
+          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+        }
+        ctx.fillText("interfaz de stories", 12, 240);
+      }
+      ctx.setLineDash([]);
       ctx.restore();
     }
 
@@ -939,6 +984,20 @@ meowrhino.studio`,
     }
     selector.value = varActual;
 
+    const selFormato = document.getElementById("formato");
+    for (const [k, f] of Object.entries(FORMATOS)) {
+      const op = document.createElement("option");
+      op.value = k; op.textContent = f.nombre;
+      selFormato.append(op);
+    }
+    if (FORMATOS[params.get("f")]) formatoActual = params.get("f");
+    selFormato.value = formatoActual;
+    selFormato.addEventListener("change", () => {
+      formatoActual = selFormato.value;
+      montar();
+      render();
+    });
+
     let canvases = [];
 
     function montar() {
@@ -946,7 +1005,7 @@ meowrhino.studio`,
       canvases = activas().map((_, i) => {
         const fig = document.createElement("figure");
         const cv = document.createElement("canvas");
-        cv.width = W; cv.height = H;
+        cv.width = W; cv.height = alto();
         const cap = document.createElement("figcaption");
         const b = document.createElement("button");
         b.textContent = "png";
@@ -963,9 +1022,14 @@ meowrhino.studio`,
       const c = TEMAS[temaActual];
       const lista = activas();
       const ctx = canvases[i].getContext("2d");
-      ctx.fillStyle = c.bg; ctx.fillRect(0, 0, W, H);
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.fillStyle = c.bg; ctx.fillRect(0, 0, W, alto());
       ctx.textBaseline = "alphabetic";
+      // la diapositiva se dibuja contra la caja de 1350, centrada en el lienzo
+      ctx.save();
+      ctx.translate(0, desfase());
       const o = lista[i](ctx, c) || {};
+      ctx.restore();
       chrome(ctx, c, i + 1, lista.length, { marco: v.marco, ...o });
       if (guia) guiaRecorte(ctx);
     }
@@ -973,7 +1037,7 @@ meowrhino.studio`,
     function descargar(i) {
       if (conGuia) pintar(i, false);   // la guía no va en el png
       const a = document.createElement("a");
-      a.download = `meowrhino-ig-${varActual}${pagado ? "-pagado" : ""}-${String(i + 1).padStart(2, "0")}-${temaActual}.png`;
+      a.download = `meowrhino-ig-${varActual}${pagado ? "-pagado" : ""}-${String(i + 1).padStart(2, "0")}-${temaActual}-${formatoActual}.png`;
       a.href = canvases[i].toDataURL("image/png");
       a.click();
       if (conGuia) pintar(i, true);
@@ -982,7 +1046,7 @@ meowrhino.studio`,
     function render() {
       const v = VARIANTES[varActual];
       const lista = activas();
-      if (canvases.length !== lista.length) montar();
+      if (canvases.length !== lista.length || (canvases[0] && canvases[0].height !== alto())) montar();
       document.getElementById("toggle").textContent =
         temaActual === "light" ? "cambiar a oscuro" : "cambiar a claro";
       document.getElementById("pagado").setAttribute("aria-pressed", String(pagado));
@@ -1037,7 +1101,7 @@ meowrhino.studio`,
         f.style.display = i === solo - 1 ? "block" : "none";
       });
       const cv = canvases[solo - 1];
-      cv.style.cssText = "width:1080px;height:1350px;box-shadow:none;display:block";
+      cv.style.cssText = `width:1080px;height:${alto()}px;box-shadow:none;display:block`;
       cv.nextElementSibling.style.display = "none";
     }
 
