@@ -7,8 +7,29 @@
   <meta name="robots" content="noindex">
   <!-- Generador del carrusel de instagram (1080×1350, 4:5). Igual que
        og-generator.html: no es una página pública, se abre a mano, se elige
-       tema y se descargan los PNG. Dibuja en <canvas> con la tipografía y los
-       colores del sitio, y los textos salen tal cual del about y del cupón.
+       variante y tema y se descargan los PNG. Dibuja en <canvas> con la
+       tipografía y los colores del sitio, y las cifras salen del cupón.
+
+       Hay cinco variantes del mismo carrusel, cada una con su propia
+       gramática visual, para poder probar cuál tira:
+
+         manifiesto     el original afinado: tipografía enorme, marco, blanco.
+         sin            lista de lo que NO hay: fondo oscuro, 3-6 palabras por
+                        diapositiva. La que menos texto tiene, y por eso la que
+                        mejor entrega debería tener en publicidad.
+         catalogo       la prueba primero: una captura de portfolio por
+                        diapositiva y un pie de una línea. Casi cero texto.
+         factura        el desglose completo del precio, con puntos de relleno
+                        y cifras a la derecha. Nadie publica esto.
+         consentimiento quién tiene permiso para usar tu trabajo, con gramática
+                        de formulario: casillas marcadas y sin marcar.
+
+       El botón «corte pagado (6)» (o ?pagado=1) deja el subconjunto de 6
+       tarjetas de cada variante y, en el manifiesto, cambia la diapositiva 1
+       por una que no nombra ninguna plataforma: la política de uso de marcas
+       de Meta prohíbe que una marca suya sea «la característica más destacada
+       o distintiva» de un anuncio, y la palabra a 150px lo es sin discusión.
+       El gancho bueno se queda para el orgánico.
 
        No se despliega: está en .assetsignore a propósito, para que no exista
        en el dominio y no haya nada que indexar. Vive en local.
@@ -32,11 +53,12 @@
     }
     header { max-width: 1200px; margin: 0 auto 2rem; display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; }
     h1 { font-size: 1rem; font-weight: 600; margin: 0 auto 0 0; }
-    button {
+    button, select {
       font-family: inherit; font-size: .8rem; padding: .5rem .9rem; cursor: pointer;
       border: 1px solid #888; background: #fff; color: #111; border-radius: 4px;
     }
     button:hover { background: #ddd; }
+    button[aria-pressed="true"] { background: #1c48d8; color: #fff; border-color: #1c48d8; }
     .slides {
       max-width: 1200px; margin: 0 auto;
       display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2rem;
@@ -47,6 +69,7 @@
     figcaption button { font-size: .7rem; padding: .3rem .6rem; }
     .copy { max-width: 1200px; margin: 3rem auto 0; }
     .copy h2 { font-size: .9rem; }
+    .copy p { font-size: .75rem; color: #bbb; line-height: 1.7; max-width: 60ch; }
     textarea {
       width: 100%; min-height: 15rem; padding: 1rem; font-family: ui-monospace, monospace;
       font-size: .8rem; line-height: 1.6; border-radius: 6px; border: 1px solid #888;
@@ -56,7 +79,10 @@
 <body>
   <header>
     <h1>ig-generator — carrusel 1080×1350</h1>
+    <select id="variante"></select>
     <button id="toggle">cambiar a oscuro</button>
+    <button id="pagado" aria-pressed="false">corte pagado (6)</button>
+    <button id="guia" aria-pressed="false">guía de recorte</button>
     <button id="download-all">descargar todas</button>
   </header>
 
@@ -65,6 +91,7 @@
   <section class="copy">
     <h2>texto del post (para copiar)</h2>
     <textarea id="caption" spellcheck="false"></textarea>
+    <p id="nota"></p>
   </section>
 
   <script>
@@ -74,9 +101,8 @@
       light: { bg: "#ffffff", text: "#000000", muted: "#717171", line: "rgba(0,0,0,.14)", acento: "#1c48d8" },
       dark:  { bg: "#121212", text: "#e0e0e0", muted: "#808080", line: "rgba(224,224,224,.16)", acento: "#6f8dff" },
     };
-    let temaActual = "light";
 
-    // Las cuatro capturas del portfolio que van en la diapositiva de prueba:
+    // Las cuatro capturas que van en la diapositiva de prueba del manifiesto:
     // dos claras y dos oscuras, en diagonal, para que la retícula no se apelmace.
     const CAPTURAS = [
       "img/elmundodelasjordis/1.webp",
@@ -84,6 +110,18 @@
       "img/villagranota/1.webp",
       "img/viciostorpes/1.webp",
     ];
+
+    // El catálogo: una web por diapositiva, con el resumen tal cual está en
+    // proyectos-seo.json. Elegidas por lo raras que son, no por lo bonitas.
+    const CATALOGO = [
+      { img: "img/villagranota/1.webp",      nombre: "villagranota",          pie: "una web experimento con rana" },
+      { img: "img/mikebros/1.webp",          nombre: "mike bros",             pie: "un portfolio que es una disquetera" },
+      { img: "img/christine/1.webp",         nombre: "christine",             pie: "un portfolio que se reordena según lo que preguntes" },
+      { img: "img/estructuras3000/1.webp",   nombre: "estructuras3000",       pie: "una web para colectivizar materiales" },
+      { img: "img/ladiega/1.webp",           nombre: "la diega",              pie: "un portfolio de sonido que suena" },
+      { img: "img/elmundodelasjordis/1.webp", nombre: "el mundo de las jordis", pie: "un diario a varias manos" },
+    ];
+
     const FOTO = "img/manu/manu.webp";
     const imgs = {};
 
@@ -130,12 +168,75 @@
       ctx.font = fuente(100, o.weight || 600);
       const medido = ctx.measureText(txt).width;
       const size = Math.min(o.max || 160, Math.round((100 * maxW) / medido));
-      return escribir(ctx, txt, { ...o, size, lineHeight: size * 1.18 });
+      return escribir(ctx, txt, { ...o, size, lineHeight: size * 1.18, maxWidth: W * 4 });
+    }
+
+    // Varias líneas, cada una ajustada al ancho: el bloque queda justificado
+    // por los dos lados y con tamaños distintos. Es el gesto de la variante
+    // «sin». Devuelve la y de la última línea.
+    function gigante(ctx, lineas, o = {}) {
+      const maxW = o.maxWidth || ANCHO;
+      const tamanos = lineas.map((l) => {
+        ctx.font = fuente(100, 600);
+        return Math.min(o.max || 170, Math.round((100 * maxW) / ctx.measureText(l).width));
+      });
+      let y = o.y0 + Math.round(tamanos[0] * 0.82);
+      lineas.forEach((l, i) => {
+        escribir(ctx, l, {
+          y, size: tamanos[i], weight: 600, tracking: -3,
+          color: o.color, maxWidth: W * 4, lineHeight: tamanos[i],
+        });
+        y += Math.round(tamanos[i] * 1.06);
+      });
+      return y - Math.round(tamanos[tamanos.length - 1] * 1.06);
     }
 
     function regla(ctx, y, c, ancho = ANCHO) {
       ctx.strokeStyle = c.line; ctx.lineWidth = 2;
       ctx.beginPath(); ctx.moveTo(M, y); ctx.lineTo(M + ancho, y); ctx.stroke();
+    }
+
+    // Una fila de factura: concepto a la izquierda, cifra a la derecha y
+    // puntos de relleno en medio.
+    function fila(ctx, c, y, izq, der, o = {}) {
+      const size = o.size || 34;
+      ctx.letterSpacing = "0px";
+      ctx.textAlign = "left";
+      ctx.font = fuente(size, 400);
+      ctx.fillStyle = o.color || c.text;
+      ctx.fillText(izq, M, y);
+      const wIzq = ctx.measureText(izq).width;
+      ctx.font = fuente(size, o.pesoDer || 600);
+      ctx.fillStyle = o.colorDer || o.color || c.text;
+      const wDer = ctx.measureText(der).width;
+      ctx.textAlign = "right";
+      ctx.fillText(der, W - M, y);
+      ctx.textAlign = "left";
+      const x0 = M + wIzq + 14, x1 = W - M - wDer - 14;
+      if (x1 > x0) {
+        ctx.font = fuente(size, 400);
+        ctx.fillStyle = c.muted;
+        for (let x = x0; x < x1; x += 20) ctx.fillText("·", x, y);
+      }
+    }
+
+    // Una casilla de formulario de consentimiento, marcada o sin marcar, con
+    // su etiqueta al lado. Es el gesto de la variante «consentimiento».
+    // Devuelve la y de la última línea de la etiqueta.
+    function casilla(ctx, c, y, txt, o = {}) {
+      const lado = 34, x = M;
+      ctx.strokeStyle = o.color || c.text; ctx.lineWidth = 3;
+      ctx.strokeRect(x, y - lado + 6, lado, lado);
+      if (o.marcada) {
+        ctx.beginPath();
+        ctx.moveTo(x + 7, y - lado + 13); ctx.lineTo(x + lado - 7, y - 1);
+        ctx.moveTo(x + lado - 7, y - lado + 13); ctx.lineTo(x + 7, y - 1);
+        ctx.stroke();
+      }
+      return escribir(ctx, txt, {
+        y, x: x + lado + 26, size: o.size || 34, lineHeight: 54,
+        color: o.color || c.text, maxWidth: ANCHO - lado - 26,
+      });
     }
 
     // Dibuja una imagen recortada (object-fit: cover) dentro de un rectángulo.
@@ -149,60 +250,85 @@
       ctx.restore();
     }
 
-    // Marco y pie comunes a todas las diapositivas.
-    function chrome(ctx, c, n, etiqueta = "meowrhino.studio") {
-      ctx.strokeStyle = c.line; ctx.lineWidth = 2;
-      ctx.strokeRect(44, 44, W - 88, H - 88);
-      escribir(ctx, etiqueta, { y: 1272, size: 22, color: c.muted });
-      escribir(ctx, n + "/" + SLIDES.length, { y: 1272, size: 22, color: c.muted, align: "right", x: W - M });
+    // Marco y pie comunes. Cada diapositiva puede devolver opciones para
+    // cambiarlos: {marco:false} lo quita, {pieY} lo mueve, {etiqueta} cambia
+    // el texto de la izquierda.
+    function chrome(ctx, c, n, total, o = {}) {
+      if (o.marco !== false) {
+        ctx.strokeStyle = c.line; ctx.lineWidth = 2;
+        ctx.strokeRect(44, 44, W - 88, H - 88);
+      }
+      if (o.pie === false) return;
+      const y = o.pieY || 1272;
+      escribir(ctx, o.etiqueta || "meowrhino.studio", { y, size: 22, color: c.muted });
+      escribir(ctx, n + "/" + total, { y, size: 22, color: c.muted, align: "right", x: W - M });
     }
 
-    // ---------- las diapositivas ----------
+    // La guía de recorte: el cuadrado 1:1 centrado (lo que se ve si la
+    // ubicación recorta a cuadrado) y el 80% central, que es la safe zone que
+    // recomienda meta. No sale en el PNG: solo se pinta en pantalla.
+    function guiaRecorte(ctx) {
+      ctx.save();
+      ctx.setLineDash([14, 10]);
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = "rgba(255,0,140,.85)";
+      ctx.strokeRect(0, (H - W) / 2, W, W);
+      ctx.strokeStyle = "rgba(0,200,255,.85)";
+      ctx.strokeRect(W * 0.1, H * 0.1, W * 0.8, H * 0.8);
+      ctx.setLineDash([]);
+      ctx.font = fuente(20, 600);
+      ctx.fillStyle = "rgba(255,0,140,.85)";
+      ctx.fillText("1:1", 12, (H - W) / 2 - 12);
+      ctx.fillStyle = "rgba(0,200,255,.85)";
+      ctx.fillText("safe zone 80%", W * 0.1 + 10, H * 0.1 - 12);
+      ctx.restore();
+    }
 
-    const SLIDES = [
+    // ---------- A · manifiesto ----------
+    // El original, con un 40% menos de palabras: en publicidad los bloques
+    // densos de texto se entregan peor. El gancho no se toca, y «si aprendiste
+    // a tocarla tú, no pagas» sube a la diapositiva del precio.
+
+    const MANIFIESTO = [
       // 1 · el gancho: el anuncio se ríe del sitio donde está
       (ctx, c) => {
-        escribirAjustado(ctx, "internet", { y: 520, weight: 600, tracking: -3, maxWidth: ANCHO, max: 150 });
-        escribirAjustado(ctx, "no es", { y: 680, weight: 600, tracking: -3, maxWidth: ANCHO * .62, max: 150 });
-        escribirAjustado(ctx, "instagram.", { y: 840, weight: 600, tracking: -3, maxWidth: ANCHO, max: 150 });
+        escribirAjustado(ctx, "internet", { y: 520, weight: 600, tracking: -3, maxWidth: ANCHO, max: 150, color: c.text });
+        escribirAjustado(ctx, "no es", { y: 680, weight: 600, tracking: -3, maxWidth: ANCHO * .62, max: 150, color: c.text });
+        escribirAjustado(ctx, "instagram.", { y: 840, weight: 600, tracking: -3, maxWidth: ANCHO, max: 150, color: c.text });
         escribir(ctx, "(y aun así, aquí estamos)", { y: 960, size: 30, color: c.muted });
       },
 
       // 2 · qué es internet entonces
       (ctx, c) => {
-        escribir(ctx, "internet son también todas esas pequeñas páginas que alguien hizo porque quería contar, enseñar o compartir algo.",
-          { y: 420, size: 44, lineHeight: 72, color: c.text });
+        escribir(ctx, "internet son también todas esas páginas pequeñas que alguien hizo porque quería contar, enseñar o compartir algo.",
+          { y: 440, size: 46, lineHeight: 76, color: c.text });
         regla(ctx, 880, c);
-        escribir(ctx, "y merece la pena que tengas un espacio propio, que sea como tú quieras.",
-          { y: 960, size: 32, lineHeight: 54, color: c.muted });
+        escribir(ctx, "un sitio al que se llega a propósito.",
+          { y: 960, size: 34, lineHeight: 56, color: c.muted });
       },
 
-      // 3 · la propiedad, que es el argumento fuerte
+      // 3 · la propiedad, explicada en vez de afirmada
       (ctx, c) => {
-        escribir(ctx, "tu web es tuya", { y: 300, size: 68, weight: 600, tracking: -2, color: c.text });
-        regla(ctx, 360, c);
-        const puntos = [
-          "el repositorio es tuyo",
-          "el dominio es tuyo",
-          "el código es tuyo",
-          "sin anuncios, sin plantillas",
-          "puedes llevártela cuando quieras",
-        ];
-        let y = 500;
-        for (const p of puntos) {
-          escribir(ctx, "·", { y, size: 38, color: c.muted });
-          escribir(ctx, p, { y, x: M + 46, size: 38, color: c.text, maxWidth: ANCHO - 46 });
+        escribir(ctx, "¿qué significa que una web sea tuya?",
+          { y: 300, size: 58, weight: 600, tracking: -2, lineHeight: 88, color: c.text });
+        regla(ctx, 500, c);
+        let y = 640;
+        for (const p of ["el dominio.", "el código.", "el repositorio."]) {
+          escribir(ctx, "·", { y, size: 42, color: c.muted });
+          escribir(ctx, p, { y, x: M + 46, size: 42, color: c.text });
           y += 120;
         }
+        regla(ctx, 1030, c);
+        escribir(ctx, "todo a tu nombre.", { y: 1130, size: 46, weight: 600, tracking: -1, color: c.acento });
       },
 
       // 4 · lo que no hay: cuotas
       (ctx, c) => {
-        escribir(ctx, "sin servidores, sin suscripciones, sin tasas mensuales.",
-          { y: 460, size: 56, weight: 600, lineHeight: 92, tracking: -1, color: c.text });
+        escribir(ctx, "sin servidores, sin suscripciones, sin cuotas.",
+          { y: 460, size: 58, weight: 600, lineHeight: 94, tracking: -1, color: c.text });
         regla(ctx, 820, c);
-        escribir(ctx, "el alojamiento puede ser gratuito y el dominio es prácticamente el único gasto que se repite.",
-          { y: 900, size: 32, lineHeight: 54, color: c.muted });
+        escribir(ctx, "el dominio es prácticamente el único gasto que se repite.",
+          { y: 900, size: 34, lineHeight: 56, color: c.muted });
       },
 
       // 5 · la prueba: cuatro webs de verdad
@@ -220,23 +346,15 @@
           { y: y0 + 2 * (ch + gap) + 70, size: 32, lineHeight: 54, color: c.muted });
       },
 
-      // 6 · el proceso, que es lo que quita el miedo
+      // 6 · lo que quita el miedo, sin la lista de pasos
       (ctx, c) => {
-        escribir(ctx, "cómo va", { y: 280, size: 68, weight: 600, tracking: -2, color: c.text });
-        regla(ctx, 340, c);
-        const pasos = [
-          "la primera reunión es gratis y no compromete a nada.",
-          "me enseñas qué haces y 3–5 referentes que te gusten.",
-          "un mes desde que recibimos todo tu material.",
-          "te la entrego en persona y sales sabiendo actualizarla.",
-        ];
-        let y = 470;
-        pasos.forEach((p, i) => {
-          escribir(ctx, String(i + 1), { y, size: 36, weight: 600, color: c.muted });
-          const fin = escribir(ctx, p, { y, x: M + 64, size: 36, lineHeight: 58, color: c.text, maxWidth: ANCHO - 64 });
-          y = fin + 110;
-        });
-        escribir(ctx, "3 entregas · 1 ronda de cambios en cada una", { y: 1180, size: 26, color: c.muted });
+        escribir(ctx, "no hace falta que sepas hacer una web.",
+          { y: 380, size: 56, weight: 600, lineHeight: 92, tracking: -1, color: c.text });
+        escribir(ctx, "hace falta que sepas qué quieres enseñar.",
+          { y: 660, size: 56, weight: 600, lineHeight: 92, tracking: -1, color: c.muted });
+        regla(ctx, 960, c);
+        escribir(ctx, "me lo cuentas, la hago en un mes, te la entrego en persona y sales sabiendo actualizarla.",
+          { y: 1040, size: 30, lineHeight: 52, color: c.muted });
       },
 
       // 7 · el precio, sin rodeos
@@ -245,100 +363,585 @@
         escribirAjustado(ctx, "850 €", { y: 640, weight: 600, tracking: -4, align: "center", maxWidth: ANCHO * .8, max: 220, color: c.acento });
         escribir(ctx, "(iva no incluido)", { y: 710, size: 26, color: c.muted, align: "center" });
         regla(ctx, 830, c);
-        escribir(ctx, "después, 60 €/hora para los cambios que quieras.",
-          { y: 920, size: 32, lineHeight: 54, color: c.text, align: "center", x: W / 2, maxWidth: ANCHO });
-        escribir(ctx, "y si aprendiste a tocarlo tú, no pagas.",
-          { y: 1050, size: 32, lineHeight: 54, color: c.muted, align: "center", x: W / 2, maxWidth: ANCHO });
+        escribir(ctx, "3 entregas · 1 ronda de cambios en cada una",
+          { y: 910, size: 28, color: c.muted, align: "center", x: W / 2 });
+        escribir(ctx, "después, 60 €/hora para lo que quieras tocar.",
+          { y: 1010, size: 34, lineHeight: 56, color: c.text, align: "center", x: W / 2 });
+        escribir(ctx, "y si aprendiste a tocarla tú, no pagas.",
+          { y: 1110, size: 34, lineHeight: 56, color: c.acento, align: "center", x: W / 2 });
       },
 
-      // 8 · la cara y la llamada
+      // 8 · la llamada primero, la cara como firma
       (ctx, c) => {
-        const fw = ANCHO, fh = 420;
-        cubrir(ctx, imgs[FOTO], M, 150, fw, fh);
-        ctx.strokeStyle = c.line; ctx.lineWidth = 2; ctx.strokeRect(M, 150, fw, fh);
-        escribir(ctx, "detrás de meowrhino está manu latour.", { y: 660, size: 34, lineHeight: 56, color: c.muted });
-        escribir(ctx, "diseño y programo webs a medida desde barcelona.", { y: 730, size: 34, lineHeight: 56, color: c.muted });
-        escribir(ctx, "la primera reunión es gratis.", { y: 930, size: 58, weight: 600, lineHeight: 92, tracking: -2, color: c.text });
-        regla(ctx, 1070, c);
-        escribir(ctx, "escríbeme por aquí →", { y: 1160, size: 44, weight: 600, color: c.acento });
+        escribir(ctx, "la primera reunión es gratis y no compromete a nada.",
+          { y: 320, size: 60, weight: 600, lineHeight: 96, tracking: -2, color: c.text });
+        escribir(ctx, "mándame un mensaje →", { y: 700, size: 46, weight: 600, color: c.acento });
+        regla(ctx, 800, c);
+        cubrir(ctx, imgs[FOTO], M, 880, 300, 300);
+        ctx.strokeStyle = c.line; ctx.lineWidth = 2; ctx.strokeRect(M, 880, 300, 300);
+        escribir(ctx, "detrás de meowrhino está manu latour. diseño y programo webs a medida desde barcelona.",
+          { y: 950, x: M + 340, size: 30, lineHeight: 52, color: c.muted, maxWidth: ANCHO - 340 });
+        return { etiqueta: "hola@meowrhino.studio" };
       },
     ];
 
-    const CAPTION = `¿quieres una web?
+    // ---------- B · sin ----------
+    // Un anuncio que enumera lo que NO te da. Tres a seis palabras por
+    // diapositiva: es la variante con menos texto y la más incómoda de leer
+    // como publicidad, que es justo el punto.
 
-internet no es instagram. internet son también todas esas pequeñas páginas que alguien hizo porque quería contar, enseñar o compartir algo. y merece la pena que tengas un espacio propio.
+    function sinSlide(sustantivo, nota) {
+      return (ctx, c) => {
+        escribir(ctx, "sin", { y: 470, size: 40, color: c.muted, tracking: 2 });
+        gigante(ctx, sustantivo, { y0: 520, color: c.text, max: 170 });
+        regla(ctx, 1000, c);
+        escribir(ctx, nota, { y: 1075, size: 31, lineHeight: 52, color: c.muted });
+        return { marco: false };
+      };
+    }
 
-hago webs desde cero, sin plantillas: el repositorio es tuyo, el dominio es tuyo, el código es tuyo. sin servidores, sin suscripciones, sin tasas mensuales. el alojamiento puede ser gratuito y el dominio es prácticamente el único gasto que se repite.
+    const SIN = [
+      // 1 · el gancho deja la frase a medias: hay que deslizar para cerrarla
+      (ctx, c) => {
+        escribirAjustado(ctx, "una web", { y: 580, weight: 600, tracking: -3, maxWidth: ANCHO, max: 150, color: c.text });
+        escribirAjustado(ctx, "sin", { y: 810, weight: 600, tracking: -3, maxWidth: ANCHO * .5, max: 200, color: c.acento });
+        escribir(ctx, "(sigue →)", { y: 930, size: 30, color: c.muted });
+        return { marco: false };
+      },
+
+      sinSlide(["plantilla"], "nada de esto sale de una plantilla: se dibuja desde cero, contigo."),
+      sinSlide(["suscripción"], "el alojamiento puede ser gratuito y el dominio es prácticamente el único gasto que se repite."),
+      sinSlide(["permiso"], "el dominio, el código y el repositorio son tuyos: cámbiala cuando quieras, sin avisarme."),
+      sinSlide(["dependencia"], "te la entrego en persona y sales de esa reunión sabiendo actualizarla tú."),
+      sinSlide(["letra", "pequeña"], "850 € (iva no incluido) · un mes · 3 entregas. después, 60 €/hora — y si aprendiste a tocarla tú, no pagas."),
+
+      // 7 · lo que sí hay
+      (ctx, c) => {
+        escribir(ctx, "lo que sí hay:", { y: 470, size: 40, color: c.muted });
+        gigante(ctx, ["una web", "tuya"], { y0: 520, color: c.text, max: 160 });
+        regla(ctx, 1010, c);
+        escribir(ctx, "21 desde 2020: sencillas, extrañas, experimentales o completamente absurdas.",
+          { y: 1090, size: 32, lineHeight: 54, color: c.muted });
+        return { marco: false };
+      },
+
+      // 8 · la llamada
+      (ctx, c) => {
+        escribir(ctx, "la primera reunión es gratis y no compromete a nada.",
+          { y: 400, size: 58, weight: 600, lineHeight: 96, tracking: -2, color: c.text });
+        regla(ctx, 780, c);
+        escribir(ctx, "mándame un mensaje →", { y: 880, size: 50, weight: 600, color: c.acento });
+        escribir(ctx, "diseño y programo webs a medida desde barcelona.",
+          { y: 1000, size: 30, lineHeight: 52, color: c.muted });
+        return { marco: false, etiqueta: "hola@meowrhino.studio" };
+      },
+    ];
+
+    // ---------- C · catálogo ----------
+    // La prueba primero. Una web por diapositiva, a sangre por los lados, con
+    // el resumen que ya está escrito en proyectos-seo.json. Para este público
+    // el argumento entra por el ojo antes que por la lectura.
+
+    function catalogoSlide(item, kicker) {
+      return (ctx, c) => {
+        const iy = kicker ? 360 : 300;
+        cubrir(ctx, imgs[item.img], 0, iy, W, 610);
+        if (kicker) escribir(ctx, kicker, { y: 260, size: 50, weight: 600, tracking: -1, color: c.text });
+        escribir(ctx, item.nombre, { y: iy + 700, size: 40, weight: 600, tracking: -1, color: c.text });
+        escribir(ctx, item.pie, { y: iy + 760, size: 30, lineHeight: 50, color: c.muted });
+        return { marco: false };
+      };
+    }
+
+    const CATALOGO_SLIDES = [
+      catalogoSlide(CATALOGO[0], "21 webs. ninguna plantilla."),
+      catalogoSlide(CATALOGO[1]),
+      catalogoSlide(CATALOGO[2]),
+      catalogoSlide(CATALOGO[3]),
+      catalogoSlide(CATALOGO[4]),
+      catalogoSlide(CATALOGO[5]),
+
+      // 7 · el argumento, ahora que ya has visto las webs
+      (ctx, c) => {
+        escribir(ctx, "todas desde cero, cada una para una persona o un colectivo.",
+          { y: 400, size: 54, weight: 600, lineHeight: 90, tracking: -1, color: c.text });
+        regla(ctx, 740, c);
+        escribir(ctx, "el dominio, el código y el repositorio son suyos. y el código está a la vista: abre cualquiera y pulsa «ver código fuente».",
+          { y: 820, size: 32, lineHeight: 54, color: c.muted });
+        regla(ctx, 1030, c);
+        escribir(ctx, "850 € · un mes · 3 entregas", { y: 1130, size: 44, weight: 600, tracking: -1, color: c.acento });
+        return { marco: false };
+      },
+
+      // 8 · la llamada
+      (ctx, c) => {
+        cubrir(ctx, imgs[FOTO], 0, 200, W, 500);
+        escribir(ctx, "detrás de meowrhino está manu latour. diseño y programo webs a medida desde barcelona.",
+          { y: 790, size: 32, lineHeight: 54, color: c.muted });
+        escribir(ctx, "la primera reunión es gratis.", { y: 980, size: 52, weight: 600, tracking: -2, color: c.text });
+        escribir(ctx, "mándame un mensaje →", { y: 1080, size: 46, weight: 600, color: c.acento });
+        return { marco: false, etiqueta: "hola@meowrhino.studio" };
+      },
+    ];
+
+    // ---------- D · factura ----------
+    // Transparencia radical: el desglose entero, incluido lo que no cuesta
+    // nada y lo que no hace falta pagar nunca. Publicar esto es la postura.
+
+    function cabecera(ctx, c, txt) {
+      escribir(ctx, txt, { y: 260, size: 50, weight: 600, tracking: -2, color: c.text });
+      regla(ctx, 320, c);
+    }
+
+    const FACTURA = [
+      // 1 · el gancho: nadie publica esto
+      (ctx, c) => {
+        escribirAjustado(ctx, "lo que cuesta", { y: 560, weight: 600, tracking: -3, maxWidth: ANCHO, max: 130, color: c.text });
+        escribirAjustado(ctx, "una web.", { y: 700, weight: 600, tracking: -3, maxWidth: ANCHO * .8, max: 130, color: c.text });
+        escribirAjustado(ctx, "entero.", { y: 840, weight: 600, tracking: -3, maxWidth: ANCHO * .6, max: 130, color: c.acento });
+        regla(ctx, 940, c);
+        escribir(ctx, "sin pedirte el correo antes.", { y: 1020, size: 32, color: c.muted });
+      },
+
+      // 2 · el trabajo
+      (ctx, c) => {
+        cabecera(ctx, c, "el trabajo");
+        fila(ctx, c, 480, "diseño desde cero", "850 €", { colorDer: c.acento, size: 36 });
+        fila(ctx, c, 580, "programación", "incluida", { size: 36 });
+        fila(ctx, c, 680, "3 entregas", "incluidas", { size: 36 });
+        fila(ctx, c, 780, "1 ronda de cambios en cada una", "incluida", { size: 32 });
+        regla(ctx, 880, c);
+        escribir(ctx, "iva no incluido. el mes empieza cuando recibo tu material.",
+          { y: 960, size: 30, lineHeight: 52, color: c.muted });
+      },
+
+      // 3 · lo que no cuesta nada
+      (ctx, c) => {
+        cabecera(ctx, c, "lo que no cuesta");
+        fila(ctx, c, 480, "alojamiento", "0 €/mes", { size: 36 });
+        fila(ctx, c, 580, "mantenimiento obligatorio", "no hay", { size: 34 });
+        fila(ctx, c, 680, "licencias de plantilla", "no hay", { size: 34 });
+        fila(ctx, c, 780, "panel que no entiendes", "no hay", { size: 34 });
+        regla(ctx, 880, c);
+        escribir(ctx, "las webs que hago son pequeñas y estáticas: caben en un alojamiento gratuito y no necesitan servidor.",
+          { y: 960, size: 30, lineHeight: 52, color: c.muted });
+      },
+
+      // 4 · lo que se repite
+      (ctx, c) => {
+        cabecera(ctx, c, "lo que se repite");
+        fila(ctx, c, 500, "dominio", "desde 12 €/año", { size: 36 });
+        regla(ctx, 600, c);
+        escribir(ctx, "y ya está.", { y: 720, size: 64, weight: 600, tracking: -2, color: c.text });
+        escribir(ctx, "el dominio se contrata a tu nombre, no al mío. si algún día te vas, te lo llevas.",
+          { y: 860, size: 34, lineHeight: 58, color: c.muted });
+      },
+
+      // 5 · después de la entrega
+      (ctx, c) => {
+        cabecera(ctx, c, "después de la entrega");
+        fila(ctx, c, 500, "cambios que me pidas", "60 €/hora", { size: 36 });
+        fila(ctx, c, 620, "cambios que hagas tú", "0 €", { size: 36, colorDer: c.acento });
+        regla(ctx, 720, c);
+        escribir(ctx, "te la entrego en persona y sales de esa reunión sabiendo actualizarla. si aprendiste a tocarla tú, no me pagas nunca más.",
+          { y: 810, size: 34, lineHeight: 58, color: c.muted });
+      },
+
+      // 6 · el total
+      (ctx, c) => {
+        escribir(ctx, "el primer año, entero", { y: 400, size: 40, color: c.muted, align: "center" });
+        escribirAjustado(ctx, "862 €", { y: 620, weight: 600, tracking: -4, align: "center", maxWidth: ANCHO * .8, max: 220, color: c.acento });
+        escribir(ctx, "(850 € + el dominio, iva no incluido)", { y: 690, size: 26, color: c.muted, align: "center" });
+        regla(ctx, 810, c);
+        escribir(ctx, "y desde 12 € al año mientras la quieras tener.",
+          { y: 900, size: 36, lineHeight: 60, color: c.text, align: "center", x: W / 2 });
+      },
+
+      // 7 · lo que te llevas
+      (ctx, c) => {
+        cabecera(ctx, c, "lo que te llevas");
+        fila(ctx, c, 480, "el dominio", "a tu nombre", { size: 36 });
+        fila(ctx, c, 580, "el código", "tuyo", { size: 36 });
+        fila(ctx, c, 680, "el repositorio", "tuyo", { size: 36 });
+        fila(ctx, c, 780, "la web entera", "tuya", { size: 36, colorDer: c.acento });
+        regla(ctx, 880, c);
+        escribir(ctx, "puedes llevártela cuando quieras, y no necesitas mi permiso para cambiarla.",
+          { y: 960, size: 30, lineHeight: 52, color: c.muted });
+      },
+
+      // 8 · la llamada
+      (ctx, c) => {
+        escribir(ctx, "lo pongo por escrito porque casi nadie lo hace.",
+          { y: 340, size: 54, weight: 600, lineHeight: 90, tracking: -2, color: c.text });
+        regla(ctx, 640, c);
+        escribir(ctx, "la primera reunión es gratis y no compromete a nada.",
+          { y: 740, size: 36, lineHeight: 62, color: c.muted });
+        escribir(ctx, "mándame un mensaje →", { y: 960, size: 48, weight: 600, color: c.acento });
+        cubrir(ctx, imgs[FOTO], M, 1000, 180, 180);
+        ctx.strokeStyle = c.line; ctx.lineWidth = 2; ctx.strokeRect(M, 1000, 180, 180);
+        escribir(ctx, "manu latour, barcelona.", { y: 1105, x: M + 220, size: 30, color: c.muted });
+        return { etiqueta: "hola@meowrhino.studio" };
+      },
+    ];
+
+    // ---------- E · consentimiento ----------
+    // El detonante real de 2024-2026 para este público: descubrir que su obra
+    // estaba dentro de una máquina que aprende de ella. La gramática es un
+    // formulario de consentimiento —casillas marcadas y sin marcar—, que es
+    // formalmente lo que va el asunto.
+    //
+    // Dos reglas que se respetan a propósito: no se nombra ninguna
+    // plataforma (la política de marcas de Meta lo limita mucho en anuncios) y
+    // no se le dice a nadie que se vaya de ningún sitio. La escena tiene
+    // fatiga del sermón: se muestra, no se predica.
+
+    const CONSENTIMIENTO = [
+      // 1 · el gancho
+      (ctx, c) => {
+        escribirAjustado(ctx, "nadie te", { y: 580, weight: 600, tracking: -3, maxWidth: ANCHO * .9, max: 150, color: c.text });
+        escribirAjustado(ctx, "preguntó.", { y: 740, weight: 600, tracking: -3, maxWidth: ANCHO, max: 150, color: c.text });
+        regla(ctx, 850, c);
+        escribir(ctx, "y tu trabajo lleva años ahí dentro.", { y: 940, size: 34, color: c.muted });
+      },
+
+      // 2 · lo que aceptaste sin leer
+      (ctx, c) => {
+        escribir(ctx, "lo que aceptaste sin leer", { y: 260, size: 46, weight: 600, tracking: -2, color: c.text });
+        regla(ctx, 320, c);
+        let y = 470;
+        for (const t of [
+          "que las condiciones cambien sin avisarte",
+          "que tu obra entrene a una máquina",
+          "que el alcance se decida en otro sitio",
+          "que un día se apague y ya está",
+        ]) y = casilla(ctx, c, y, t, { marcada: true }) + 110;
+        regla(ctx, 1090, c);
+        escribir(ctx, "nada de esto se negoció contigo.", { y: 1160, size: 30, color: c.muted });
+      },
+
+      // 3 · lo que decides tú
+      (ctx, c) => {
+        escribir(ctx, "lo que decides en una web tuya", { y: 260, size: 46, weight: 600, tracking: -2, color: c.acento });
+        regla(ctx, 320, c);
+        let y = 470;
+        for (const t of [
+          "la licencia de tus imágenes",
+          "si hay analítica o no, y de qué tipo",
+          "quién puede rastrearla, en un archivo que escribes tú",
+          "cuándo cambia, y a qué",
+        ]) y = casilla(ctx, c, y, t, { color: c.acento }) + 110;
+        regla(ctx, 1090, c);
+        escribir(ctx, "y si cambias de idea, no tienes que pedírselo a nadie.", { y: 1160, size: 30, color: c.muted });
+      },
+
+      // 4 · la frase que resume
+      (ctx, c) => {
+        escribir(ctx, "tu web no tiene condiciones de uso.",
+          { y: 440, size: 62, weight: 600, lineHeight: 100, tracking: -2, color: c.text });
+        regla(ctx, 820, c);
+        escribir(ctx, "no hay un contrato entre tú y algo que ya es tuyo.",
+          { y: 900, size: 34, lineHeight: 58, color: c.muted });
+      },
+
+      // 5 · la prueba está en el producto: código a la vista
+      (ctx, c) => {
+        escribir(ctx, "puedes mirar cómo está hecha.",
+          { y: 380, size: 54, weight: 600, lineHeight: 90, tracking: -2, color: c.text });
+        regla(ctx, 520, c);
+        escribir(ctx, "ábrela y pulsa «ver código fuente». está todo ahí: html, css y javascript escritos a mano.",
+          { y: 620, size: 36, lineHeight: 62, color: c.text });
+        regla(ctx, 900, c);
+        escribir(ctx, "sin frameworks, sin backend y sin nada que no hayas pedido.",
+          { y: 980, size: 32, lineHeight: 54, color: c.muted });
+      },
+
+      // 6 · el anti-sermón: no hay que irse de ningún sitio
+      (ctx, c) => {
+        escribir(ctx, "no hace falta que te vayas de ningún sitio.",
+          { y: 400, size: 56, weight: 600, lineHeight: 94, tracking: -2, color: c.text });
+        regla(ctx, 800, c);
+        escribir(ctx, "una web propia no sustituye nada: es el sitio al que enlazas desde todo lo demás, y el único que no puede cambiarte las normas.",
+          { y: 880, size: 34, lineHeight: 58, color: c.muted });
+      },
+
+      // 7 · el precio
+      (ctx, c) => {
+        escribir(ctx, "tu web en un mes por", { y: 420, size: 40, color: c.muted, align: "center" });
+        escribirAjustado(ctx, "850 €", { y: 640, weight: 600, tracking: -4, align: "center", maxWidth: ANCHO * .8, max: 220, color: c.acento });
+        escribir(ctx, "(iva no incluido)", { y: 710, size: 26, color: c.muted, align: "center" });
+        regla(ctx, 830, c);
+        escribir(ctx, "3 entregas · 1 ronda de cambios en cada una",
+          { y: 910, size: 28, color: c.muted, align: "center", x: W / 2 });
+        escribir(ctx, "después, 60 €/hora para lo que quieras tocar.",
+          { y: 1010, size: 34, lineHeight: 56, color: c.text, align: "center", x: W / 2 });
+        escribir(ctx, "y si aprendiste a tocarla tú, no pagas.",
+          { y: 1110, size: 34, lineHeight: 56, color: c.acento, align: "center", x: W / 2 });
+      },
+
+      // 8 · la llamada
+      (ctx, c) => {
+        escribir(ctx, "la primera reunión es gratis y no compromete a nada.",
+          { y: 320, size: 60, weight: 600, lineHeight: 96, tracking: -2, color: c.text });
+        escribir(ctx, "mándame un mensaje →", { y: 700, size: 46, weight: 600, color: c.acento });
+        regla(ctx, 800, c);
+        cubrir(ctx, imgs[FOTO], M, 880, 300, 300);
+        ctx.strokeStyle = c.line; ctx.lineWidth = 2; ctx.strokeRect(M, 880, 300, 300);
+        escribir(ctx, "detrás de meowrhino está manu latour. diseño y programo webs a medida desde barcelona.",
+          { y: 950, x: M + 340, size: 30, lineHeight: 52, color: c.muted, maxWidth: ANCHO - 340 });
+        return { etiqueta: "hola@meowrhino.studio" };
+      },
+    ];
+
+    // El gancho del manifiesto, sin nombrar la plataforma. La política de uso
+    // de marcas de Meta permite «referencias limitadas» a Facebook o Instagram
+    // en el texto del anuncio, pero prohíbe que una marca suya sea «la
+    // característica más destacada o distintiva del contenido» — que es
+    // exactamente lo que es la palabra a 150px de la diapositiva 1. En
+    // orgánico se publica el gancho bueno; en pagado, este.
+    const GANCHO_PAGADO = (ctx, c) => {
+      escribirAjustado(ctx, "esto", { y: 540, weight: 600, tracking: -3, maxWidth: ANCHO * .55, max: 150, color: c.text });
+      escribirAjustado(ctx, "no es", { y: 700, weight: 600, tracking: -3, maxWidth: ANCHO * .62, max: 150, color: c.text });
+      escribirAjustado(ctx, "internet.", { y: 860, weight: 600, tracking: -3, maxWidth: ANCHO, max: 150, color: c.text });
+      escribir(ctx, "(y aun así, aquí estamos)", { y: 980, size: 30, color: c.muted });
+    };
+
+    // ---------- las variantes ----------
+
+    const VARIANTES = {
+      manifiesto: {
+        nombre: "A · manifiesto",
+        tema: "light",
+        marco: true,
+        slides: MANIFIESTO,
+        corto: [0, 2, 3, 4, 6, 7],
+        sust: { 0: GANCHO_PAGADO },   // el gancho bueno no pasa la política de marcas
+        nota: "el original afinado. mismo sistema visual, un 40% menos de palabras. es el que mejor funciona en orgánico: el gancho es el activo de marca.",
+        caption: `¿quieres una web?
+
+internet no es instagram. internet son también todas esas páginas pequeñas que alguien hizo porque quería contar, enseñar o compartir algo. un sitio al que se llega a propósito.
+
+hago webs desde cero, sin plantillas: el dominio, el código y el repositorio son tuyos. sin servidores, sin suscripciones, sin cuotas mensuales. el alojamiento puede ser gratuito y el dominio es prácticamente el único gasto que se repite.
 
 tu web en un mes por 850 € (iva no incluido). 3 entregas, 1 ronda de cambios en cada una. después, 60 €/hora para lo que quieras tocar — y si aprendiste a hacerlo tú, no pagas.
 
 te la entrego en persona y sales de esa reunión sabiendo actualizarla por tu cuenta.
 
-la primera reunión es gratis y no compromete a nada. escríbeme por aquí o a hola@meowrhino.studio
+la primera reunión es gratis y no compromete a nada. mándame un mensaje por aquí, o escríbeme a hola@meowrhino.studio
 
-meowrhino.studio`;
+meowrhino.studio`,
+      },
+      sin: {
+        nombre: "B · sin",
+        tema: "dark",
+        marco: false,
+        slides: SIN,
+        corto: [0, 1, 2, 5, 6, 7],
+        nota: "la lista de lo que no hay. tres a seis palabras por diapositiva: en publicidad los bloques densos de texto se entregan peor, así que esta es la candidata fuerte para el pagado. el gancho deja la frase a medias a propósito.",
+        caption: `una web sin plantilla, sin suscripción, sin pedir permiso y sin depender de mí.
+
+hago webs desde cero para gente que tiene algo que enseñar. el dominio, el código y el repositorio son tuyos: puedes llevártela cuando quieras y cambiarla sin avisarme.
+
+sin servidores y sin cuotas mensuales: el alojamiento puede ser gratuito y el dominio es prácticamente el único gasto que se repite.
+
+850 € (iva no incluido), un mes, 3 entregas con 1 ronda de cambios en cada una. después, 60 €/hora para lo que quieras tocar — y si aprendiste a tocarla tú, no pagas.
+
+21 webs desde 2020: sencillas, extrañas, experimentales o completamente absurdas.
+
+la primera reunión es gratis y no compromete a nada. mándame un mensaje.
+
+meowrhino.studio`,
+      },
+      catalogo: {
+        nombre: "C · catálogo",
+        tema: "light",
+        marco: false,
+        slides: CATALOGO_SLIDES,
+        corto: [0, 1, 2, 3, 6, 7],
+        nota: "la prueba primero: una web por diapositiva y un pie de una línea. para artistas el argumento entra por el ojo antes que por la lectura. segunda creatividad del mismo conjunto de anuncios, para ver si tira más que la B.",
+        caption: `21 webs desde cero, desde 2020. sencillas, extrañas, experimentales o completamente absurdas.
+
+una web experimento con rana. un portfolio que es una disquetera. otro que se reordena según lo que preguntes. una web para colectivizar materiales. un portfolio de sonido que suena. un diario a varias manos.
+
+ninguna salió de una plantilla, y todas son de quien las encargó: el dominio, el código y el repositorio, suyos. sin servidores, sin suscripciones, sin cuotas mensuales.
+
+850 € (iva no incluido), un mes, 3 entregas. después, 60 €/hora para lo que quieras tocar — y si aprendiste a hacerlo tú, no pagas.
+
+la primera reunión es gratis y no compromete a nada. mándame un mensaje.
+
+meowrhino.studio`,
+      },
+      factura: {
+        nombre: "D · factura",
+        tema: "light",
+        marco: true,
+        slides: FACTURA,
+        corto: [0, 1, 2, 5, 6, 7],
+        nota: "el desglose entero, incluido lo que no cuesta nada. publicar el precio es la postura política, y es la variante que más se guarda y se reenvía. ojo con las cifras del dominio: revísalas antes de publicar.",
+        caption: `lo que cuesta una web, entero. sin pedirte el correo antes.
+
+diseño y programación desde cero: 850 € (iva no incluido), un mes, 3 entregas con 1 ronda de cambios en cada una.
+alojamiento: 0 €/mes.
+mantenimiento obligatorio: no hay.
+licencias de plantilla: no hay.
+dominio: desde 12 €/año, contratado a tu nombre y no al mío.
+cambios que me pidas después de la entrega: 60 €/hora.
+cambios que hagas tú: 0 €.
+
+el primer año entero, desde 862 €. y desde 12 € al año mientras la quieras tener.
+
+te la entrego en persona y sales de esa reunión sabiendo actualizarla. el dominio, el código y el repositorio son tuyos: puedes llevártela cuando quieras.
+
+lo pongo por escrito porque casi nadie lo hace. la primera reunión es gratis y no compromete a nada — mándame un mensaje.
+
+meowrhino.studio`,
+      },
+      consentimiento: {
+        nombre: "E · consentimiento",
+        tema: "light",
+        marco: true,
+        slides: CONSENTIMIENTO,
+        corto: [0, 1, 2, 4, 6, 7],
+        nota: "el detonante de 2024-2026: descubrir que tu obra estaba dentro de una máquina que aprende de ella. gramática de formulario de consentimiento. no nombra ninguna plataforma y no le dice a nadie que se vaya: la escena tiene fatiga del sermón, así que la diapositiva 5 enseña el código en vez de predicar.",
+        caption: `nadie te preguntó.
+
+cuando subes tu trabajo a una plataforma aceptas unas condiciones que no escribiste: que cambien sin avisarte, que tu obra entrene a una máquina, que el alcance se decida en otro sitio, que un día se apague y ya está.
+
+en una web tuya decides tú: la licencia de tus imágenes, si hay analítica o no y de qué tipo, quién puede rastrearla y cuándo cambia.
+
+puedes mirar cómo está hecha: ábrela y pulsa «ver código fuente». html, css y javascript escritos a mano, sin frameworks, sin backend y sin nada que no hayas pedido.
+
+y no hace falta que te vayas de ningún sitio: una web propia no sustituye nada, es el sitio al que enlazas desde todo lo demás y el único que no puede cambiarte las normas.
+
+850 € (iva no incluido), un mes, 3 entregas con 1 ronda de cambios en cada una. después, 60 €/hora — y si aprendiste a tocarla tú, no pagas.
+
+la primera reunión es gratis y no compromete a nada. mándame un mensaje.
+
+meowrhino.studio`,
+      },
+    };
 
     // ---------- montaje ----------
 
-    const cont = document.getElementById("slides");
-    const canvases = SLIDES.map((_, i) => {
-      const fig = document.createElement("figure");
-      const cv = document.createElement("canvas");
-      cv.width = W; cv.height = H;
-      const cap = document.createElement("figcaption");
-      const b = document.createElement("button");
-      b.textContent = "png";
-      b.addEventListener("click", () => descargar(cv, i));
-      cap.append(document.createTextNode(String(i + 1).padStart(2, "0")), b);
-      fig.append(cv, cap);
-      cont.append(fig);
-      return cv;
-    });
+    const params = new URLSearchParams(location.search);
+    let varActual = VARIANTES[params.get("v")] ? params.get("v") : "manifiesto";
+    let temaActual = params.get("tema") === "dark" ? "dark"
+      : params.get("tema") === "light" ? "light" : VARIANTES[varActual].tema;
+    let conGuia = false;
+    let pagado = params.get("pagado") === "1";
 
-    function descargar(cv, i) {
-      const a = document.createElement("a");
-      a.download = `meowrhino-ig-${String(i + 1).padStart(2, "0")}-${temaActual}.png`;
-      a.href = cv.toDataURL("image/png");
-      a.click();
+    // Las diapositivas que se pintan: las 8 en orgánico, el corte de 6 en
+    // pagado (los anuncios de carrusel admiten de 2 a 10 tarjetas, y 8 de
+    // texto denso se entregan peor que 6).
+    function activas() {
+      const v = VARIANTES[varActual];
+      if (!pagado || !v.corto) return v.slides;
+      return v.corto.map((i) => (v.sust && v.sust[i]) || v.slides[i]);
     }
+    const solo = parseInt(params.get("solo"), 10);
 
-    function render(tema) {
-      temaActual = tema;
-      document.getElementById("toggle").textContent =
-        tema === "light" ? "cambiar a oscuro" : "cambiar a claro";
-      const c = TEMAS[tema];
-      SLIDES.forEach((dibujar, i) => {
-        const ctx = canvases[i].getContext("2d");
-        ctx.fillStyle = c.bg; ctx.fillRect(0, 0, W, H);
-        ctx.textBaseline = "alphabetic";
-        dibujar(ctx, c);
-        chrome(ctx, c, i + 1, i === SLIDES.length - 1 ? "hola@meowrhino.studio" : undefined);
+    const cont = document.getElementById("slides");
+    const selector = document.getElementById("variante");
+    for (const [k, v] of Object.entries(VARIANTES)) {
+      const op = document.createElement("option");
+      op.value = k; op.textContent = v.nombre;
+      selector.append(op);
+    }
+    selector.value = varActual;
+
+    let canvases = [];
+
+    function montar() {
+      cont.textContent = "";
+      canvases = activas().map((_, i) => {
+        const fig = document.createElement("figure");
+        const cv = document.createElement("canvas");
+        cv.width = W; cv.height = H;
+        const cap = document.createElement("figcaption");
+        const b = document.createElement("button");
+        b.textContent = "png";
+        b.addEventListener("click", () => descargar(i));
+        cap.append(document.createTextNode(String(i + 1).padStart(2, "0")), b);
+        fig.append(cv, cap);
+        cont.append(fig);
+        return cv;
       });
     }
 
+    function pintar(i, guia) {
+      const v = VARIANTES[varActual];
+      const c = TEMAS[temaActual];
+      const lista = activas();
+      const ctx = canvases[i].getContext("2d");
+      ctx.fillStyle = c.bg; ctx.fillRect(0, 0, W, H);
+      ctx.textBaseline = "alphabetic";
+      const o = lista[i](ctx, c) || {};
+      chrome(ctx, c, i + 1, lista.length, { marco: v.marco, ...o });
+      if (guia) guiaRecorte(ctx);
+    }
+
+    function descargar(i) {
+      if (conGuia) pintar(i, false);   // la guía no va en el png
+      const a = document.createElement("a");
+      a.download = `meowrhino-ig-${varActual}${pagado ? "-pagado" : ""}-${String(i + 1).padStart(2, "0")}-${temaActual}.png`;
+      a.href = canvases[i].toDataURL("image/png");
+      a.click();
+      if (conGuia) pintar(i, true);
+    }
+
+    function render() {
+      const v = VARIANTES[varActual];
+      const lista = activas();
+      if (canvases.length !== lista.length) montar();
+      document.getElementById("toggle").textContent =
+        temaActual === "light" ? "cambiar a oscuro" : "cambiar a claro";
+      document.getElementById("pagado").setAttribute("aria-pressed", String(pagado));
+      document.getElementById("guia").setAttribute("aria-pressed", String(conGuia));
+      lista.forEach((_, i) => pintar(i, conGuia));
+      document.getElementById("caption").value = v.caption;
+      document.getElementById("nota").textContent = v.nota;
+      aplicarSolo();
+    }
+
+    selector.addEventListener("change", () => {
+      varActual = selector.value;
+      temaActual = VARIANTES[varActual].tema;   // cada variante tiene su tema base
+      montar();
+      render();
+    });
     document.getElementById("toggle").addEventListener("click", () => {
-      render(temaActual === "light" ? "dark" : "light");
+      temaActual = temaActual === "light" ? "dark" : "light";
+      render();
+    });
+    document.getElementById("pagado").addEventListener("click", (e) => {
+      pagado = !pagado;
+      e.currentTarget.setAttribute("aria-pressed", String(pagado));
+      montar();
+      render();
+    });
+    document.getElementById("guia").addEventListener("click", (e) => {
+      conGuia = !conGuia;
+      e.currentTarget.setAttribute("aria-pressed", String(conGuia));
+      render();
     });
     document.getElementById("download-all").addEventListener("click", () => {
-      canvases.forEach((cv, i) => setTimeout(() => descargar(cv, i), i * 350));
+      canvases.forEach((_, i) => setTimeout(() => descargar(i), i * 350));
     });
-    document.getElementById("caption").value = CAPTION;
 
     // Modo pieza suelta: ?solo=3 deja una sola diapositiva a tamaño real
     // (1080×1350) y esconde el resto de la página. Sirve para mirarla de cerca
     // y, sobre todo, para exportarlas en lote desde fuera:
     //   brave --headless --window-size=1080,1350 \
-    //     --screenshot=01.png "…/ig-generator.html?solo=1"
+    //     --screenshot=01.png "http://localhost:3000/ig-generator?v=sin&solo=1"
     // Con ?tema=dark sale la versión oscura.
-    const params = new URLSearchParams(location.search);
-    const tema0 = params.get("tema") === "dark" ? "dark" : "light";
-    const solo = parseInt(params.get("solo"), 10);
-    if (solo >= 1 && solo <= SLIDES.length) {
+    // OJO: sin el .html. `npx serve` redirige /ig-generator.html a
+    // /ig-generator y por el camino se pierde la query, así que con la
+    // extensión los parámetros no llegan nunca.
+    function aplicarSolo() {
+      if (!(solo >= 1 && solo <= canvases.length)) return;
       document.body.style.cssText = "margin:0;padding:0;background:#fff";
       document.querySelector("header").style.display = "none";
       document.querySelector(".copy").style.display = "none";
-      const grid = document.querySelector(".slides");
-      grid.style.cssText = "max-width:none;margin:0;display:block";
+      cont.style.cssText = "max-width:none;margin:0;display:block";
       document.querySelectorAll("figure").forEach((f, i) => {
         f.style.display = i === solo - 1 ? "block" : "none";
       });
@@ -356,11 +959,14 @@ meowrhino.studio`;
       });
     }
 
+    const TODAS = [...new Set([...CAPTURAS, ...CATALOGO.map((x) => x.img), FOTO])];
+
+    montar();
     Promise.all([
       document.fonts.load('600 160px "Inknut Antiqua"'),
       document.fonts.load('400 38px "Inknut Antiqua"'),
-      ...CAPTURAS.map(cargar), cargar(FOTO),
-    ]).then(() => render(tema0)).catch(() => render(tema0));
+      ...TODAS.map(cargar),
+    ]).then(render).catch(render);
   </script>
 </body>
 </html>
