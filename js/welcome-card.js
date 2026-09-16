@@ -20,10 +20,11 @@
 //    rebote también lo cambia, pero solo si ya lleva DWELL_MIN visible, para
 //    que dos choques seguidos no provoquen un parpadeo.
 //
-//  - Con `prefers-reduced-motion` la tarjeta no rebota (de eso se encarga
-//    rebote.js) pero SÍ sigue rotando de proyecto: quien pide menos movimiento
-//    quiere que no se muevan las cosas por la pantalla, no quedarse sin ver el
-//    portfolio. El cambio en ese caso es un corte seco, sin fundido.
+//  - Con `prefers-reduced-motion` la tarjeta rebota a un cuarto de velocidad
+//    (de eso se encarga rebote.js) y sigue rotando de proyecto, con corte seco
+//    en vez de fundido. El ajuste pide menos movimiento, no ninguno: congelarla
+//    del todo dejaba la portada de cualquier iPhone con «Reducir movimiento»
+//    puesto con las tarjetas amontonadas y quietas donde les tocara nacer.
 //
 //  - NO lleva `aria-live`. Lo llevaba, y con un cambio cada 4,5 s convertía a
 //    la tarjeta en un altavoz que interrumpía al lector de pantalla para

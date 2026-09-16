@@ -9,9 +9,27 @@
 // (welcome-cupon.js) y la card de proyectos (welcome-card.js). Estaba escrito
 // dentro del cupón; extraerlo evita mantener dos copias del mismo bucle.
 //
-// Sigue animando solo cuando tiene sentido: celda activa, elemento visible en
-// pantalla (IntersectionObserver) y sin que el usuario haya pedido menos
-// movimiento (`prefers-reduced-motion`).
+// Sigue animando solo cuando tiene sentido: celda activa y elemento visible en
+// pantalla (IntersectionObserver). Con `prefers-reduced-motion` no se para: se
+// frena (ver FRENO_REDUCIDO).
+
+/**
+ * Cuánto se frena el rebote cuando el sistema pide menos movimiento.
+ *
+ * El ajuste se llama «reducir movimiento», no «eliminarlo». Antes el bloque que
+ * mueve no llegaba a ejecutarse y el elemento se quedaba congelado en el punto
+ * al azar donde le tocara nacer: en un iPhone con «Reducir movimiento» puesto
+ * —que lo respetan por igual Safari, Brave y el navegador de Instagram— la
+ * portada no se leía como calmada sino como rota, con las tarjetas amontonadas
+ * en una esquina y quietas.
+ *
+ * A la cuarta parte la deriva queda en unos 10 px/s: cruzar la pantalla lleva
+ * más de medio minuto, así que se nota si te quedas mirando y no arrastra la
+ * vista de quien ha pedido que nada se mueva solo. El mismo freno se aplica al
+ * golpe de rotación de cada choque, que es la parte brusca del efecto: de 8-22º
+ * de golpe pasa a 2-5,5º.
+ */
+const FRENO_REDUCIDO = 0.25;
 
 /**
  * Arranca el rebote de `elemento` dentro de `celda`.
@@ -41,6 +59,8 @@ export function iniciarRebote(celda, elemento, opciones = {}) {
   } = opciones;
 
   const reducirMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const freno = reducirMovimiento ? FRENO_REDUCIDO : 1;
+  const velocidadReal = velocidad * freno;
   const diag = Math.SQRT1_2;   // componente x,y de un vector unitario a 45º
 
   let vx = (Math.random() < 0.5 ? -1 : 1) * diag;
@@ -86,11 +106,12 @@ export function iniciarRebote(celda, elemento, opciones = {}) {
     };
   };
 
-  // Cada choque suma un golpe de rotación de golpe (sin easing): 8..22º.
+  // Cada choque suma un golpe de rotación de golpe (sin easing): 8..22º, o el
+  // cuarto de eso con movimiento reducido.
   // El ángulo queda acotado a ±limiteRot: si un lado se pasa, el golpe va hacia
   // el otro, así nunca queda "pegado" al tope.
   const golpearRotacion = () => {
-    const delta = Math.random() * 14 + 8;
+    const delta = (Math.random() * 14 + 8) * freno;
     const cabeSubir = rotacion + delta <= limiteRot;
     const cabeBajar = rotacion - delta >= -limiteRot;
     let signo;
@@ -135,10 +156,10 @@ export function iniciarRebote(celda, elemento, opciones = {}) {
 
     if (!colocado) colocado = colocarInicial();
 
-    if (celda.classList.contains("activa") && !hoverPausa && !reducirMovimiento && !pausar()) {
+    if (celda.classList.contains("activa") && !hoverPausa && !pausar()) {
       const b = bounds();
-      x += vx * velocidad * dt;
-      y += vy * velocidad * dt;
+      x += vx * velocidadReal * dt;
+      y += vy * velocidadReal * dt;
 
       let boto = false;
       if (x <= b.minX)      { x = b.minX; vx = -vx; boto = true; }
@@ -160,10 +181,10 @@ export function iniciarRebote(celda, elemento, opciones = {}) {
    * Devuelve el elemento a los límites de ahora, y lo repinta.
    *
    * El repintado no es opcional: sin él la corrección solo se ve en el
-   * siguiente frame del tick, y el tick no siempre llega —con
-   * `prefers-reduced-motion` el bloque que mueve y recorta no se ejecuta nunca,
-   * así que el elemento se quedaba visualmente fuera para siempre aunque sus
-   * coordenadas ya estuvieran bien.
+   * siguiente frame del tick, y con movimiento reducido ese frame puede tardar
+   * —el elemento avanza tan poco que el recorte del tick no se aprecia—, así
+   * que el elemento se quedaría visualmente fuera aunque sus coordenadas ya
+   * estuvieran bien.
    */
   const ajustar = () => {
     if (!colocado) return;
@@ -183,10 +204,9 @@ export function iniciarRebote(celda, elemento, opciones = {}) {
   // los 129px que crece se salen de la celda.
   //
   // El tick ya recorta la posición cada frame, pero solo dentro del `if` que
-  // exige movimiento: con `prefers-reduced-motion` no se ejecuta nunca y la
-  // tarjeta se queda medio fuera para siempre. Y no basta con esperar a la
-  // primera imagen: la card cambia de proyecto cada 4,5s y cada `src` nuevo la
-  // vuelve a colapsar a 23px mientras descarga.
+  // exige la celda activa y sin pausa, así que no siempre llega a tiempo. Y no
+  // basta con esperar a la primera imagen: la card cambia de proyecto cada 4,5s
+  // y cada `src` nuevo la vuelve a colapsar a 23px mientras descarga.
   if (typeof ResizeObserver !== "undefined") {
     new ResizeObserver(ajustar).observe(elemento);
   }
