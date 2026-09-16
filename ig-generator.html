@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ig-generator — meowrhino studio</title>
+  <meta name="robots" content="noindex">
+  <!-- Generador del carrusel de instagram (1080×1350, 4:5). Igual que
+       og-generator.html: no es una página pública, se abre a mano, se elige
+       tema y se descargan los PNG. Dibuja en <canvas> con la tipografía y los
+       colores del sitio, y los textos salen tal cual del about y del cupón.
+
+       No se despliega: está en .assetsignore a propósito, para que no exista
+       en el dominio y no haya nada que indexar. Vive en local.
+
+       OJO: ábrelo servido (npx serve . y luego localhost:3000/ig-generator.html),
+       no con doble clic desde el Finder: con file:// las capturas de portfolio
+       contaminan el canvas y el navegador bloquea la descarga. -->
+  <style>
+    @font-face {
+      font-family: "Inknut Antiqua"; font-style: normal; font-weight: 400; font-display: block;
+      src: url("fonts/inknut-400-latin.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Inknut Antiqua"; font-style: normal; font-weight: 600; font-display: block;
+      src: url("fonts/inknut-600-latin.woff2") format("woff2");
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 2rem 1.5rem 4rem; background: #444;
+      font-family: "Inknut Antiqua", serif; color: #eee;
+    }
+    header { max-width: 1200px; margin: 0 auto 2rem; display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; }
+    h1 { font-size: 1rem; font-weight: 600; margin: 0 auto 0 0; }
+    button {
+      font-family: inherit; font-size: .8rem; padding: .5rem .9rem; cursor: pointer;
+      border: 1px solid #888; background: #fff; color: #111; border-radius: 4px;
+    }
+    button:hover { background: #ddd; }
+    .slides {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2rem;
+    }
+    figure { margin: 0; display: flex; flex-direction: column; gap: .6rem; }
+    canvas { width: 100%; height: auto; box-shadow: 0 6px 30px rgba(0,0,0,.45); background: #fff; }
+    figcaption { display: flex; align-items: center; gap: .6rem; font-size: .7rem; color: #bbb; }
+    figcaption button { font-size: .7rem; padding: .3rem .6rem; }
+    .copy { max-width: 1200px; margin: 3rem auto 0; }
+    .copy h2 { font-size: .9rem; }
+    textarea {
+      width: 100%; min-height: 15rem; padding: 1rem; font-family: ui-monospace, monospace;
+      font-size: .8rem; line-height: 1.6; border-radius: 6px; border: 1px solid #888;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ig-generator — carrusel 1080×1350</h1>
+    <button id="toggle">cambiar a oscuro</button>
+    <button id="download-all">descargar todas</button>
+  </header>
+
+  <div class="slides" id="slides"></div>
+
+  <section class="copy">
+    <h2>texto del post (para copiar)</h2>
+    <textarea id="caption" spellcheck="false"></textarea>
+  </section>
+
+  <script>
+    const W = 1080, H = 1350;
+
+    const TEMAS = {
+      light: { bg: "#ffffff", text: "#000000", muted: "#717171", line: "rgba(0,0,0,.14)", acento: "#1c48d8" },
+      dark:  { bg: "#121212", text: "#e0e0e0", muted: "#808080", line: "rgba(224,224,224,.16)", acento: "#6f8dff" },
+    };
+    let temaActual = "light";
+
+    // Las cuatro capturas del portfolio que van en la diapositiva de prueba:
+    // dos claras y dos oscuras, en diagonal, para que la retícula no se apelmace.
+    const CAPTURAS = [
+      "img/elmundodelasjordis/1.webp",
+      "img/estructuras3000/1.webp",
+      "img/villagranota/1.webp",
+      "img/viciostorpes/1.webp",
+    ];
+    const FOTO = "img/manu/manu.webp";
+    const imgs = {};
+
+    // ---------- helpers de dibujo ----------
+
+    const M = 96;            // margen lateral
+    const ANCHO = W - M * 2; // ancho útil
+
+    function fuente(size, weight = 400) { return `${weight} ${size}px "Inknut Antiqua"`; }
+
+    // Parte un texto en líneas que quepan en maxW.
+    function partir(ctx, txt, maxW) {
+      const palabras = txt.split(" ");
+      const lineas = [];
+      let linea = "";
+      for (const p of palabras) {
+        const prueba = linea ? linea + " " + p : p;
+        if (ctx.measureText(prueba).width > maxW && linea) { lineas.push(linea); linea = p; }
+        else linea = prueba;
+      }
+      if (linea) lineas.push(linea);
+      return lineas;
+    }
+
+    // Escribe texto (con salto automático) y devuelve la y de la última línea.
+    function escribir(ctx, txt, o = {}) {
+      const size = o.size || 38, weight = o.weight || 400;
+      const alto = o.lineHeight || size * 1.5;
+      const maxW = o.maxWidth || ANCHO;
+      ctx.font = fuente(size, weight);
+      ctx.fillStyle = o.color || "#000";
+      ctx.textAlign = o.align || "left";
+      ctx.letterSpacing = (o.tracking || 0) + "px";
+      const x = o.x != null ? o.x : (o.align === "center" ? W / 2 : M);
+      let y = o.y;
+      for (const l of partir(ctx, txt, maxW)) { ctx.fillText(l, x, y); y += alto; }
+      ctx.letterSpacing = "0px";
+      return y - alto;
+    }
+
+    // Ajusta el cuerpo para que una sola línea ocupe el ancho pedido.
+    function escribirAjustado(ctx, txt, o = {}) {
+      const maxW = o.maxWidth || ANCHO;
+      ctx.font = fuente(100, o.weight || 600);
+      const medido = ctx.measureText(txt).width;
+      const size = Math.min(o.max || 160, Math.round((100 * maxW) / medido));
+      return escribir(ctx, txt, { ...o, size, lineHeight: size * 1.18 });
+    }
+
+    function regla(ctx, y, c, ancho = ANCHO) {
+      ctx.strokeStyle = c.line; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(M, y); ctx.lineTo(M + ancho, y); ctx.stroke();
+    }
+
+    // Dibuja una imagen recortada (object-fit: cover) dentro de un rectángulo.
+    function cubrir(ctx, img, x, y, w, h, zoom = 1) {
+      if (!img) { ctx.fillStyle = "rgba(128,128,128,.25)"; ctx.fillRect(x, y, w, h); return; }
+      const escala = Math.max(w / img.width, h / img.height) * zoom;
+      const iw = img.width * escala, ih = img.height * escala;
+      ctx.save();
+      ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
+      ctx.drawImage(img, x + (w - iw) / 2, y + (h - ih) / 2, iw, ih);
+      ctx.restore();
+    }
+
+    // Marco y pie comunes a todas las diapositivas.
+    function chrome(ctx, c, n, etiqueta = "meowrhino.studio") {
+      ctx.strokeStyle = c.line; ctx.lineWidth = 2;
+      ctx.strokeRect(44, 44, W - 88, H - 88);
+      escribir(ctx, etiqueta, { y: 1272, size: 22, color: c.muted });
+      escribir(ctx, n + "/" + SLIDES.length, { y: 1272, size: 22, color: c.muted, align: "right", x: W - M });
+    }
+
+    // ---------- las diapositivas ----------
+
+    const SLIDES = [
+      // 1 · el gancho: el anuncio se ríe del sitio donde está
+      (ctx, c) => {
+        escribirAjustado(ctx, "internet", { y: 520, weight: 600, tracking: -3, maxWidth: ANCHO, max: 150 });
+        escribirAjustado(ctx, "no es", { y: 680, weight: 600, tracking: -3, maxWidth: ANCHO * .62, max: 150 });
+        escribirAjustado(ctx, "instagram.", { y: 840, weight: 600, tracking: -3, maxWidth: ANCHO, max: 150 });
+        escribir(ctx, "(y aun así, aquí estamos)", { y: 960, size: 30, color: c.muted });
+      },
+
+      // 2 · qué es internet entonces
+      (ctx, c) => {
+        escribir(ctx, "internet son también todas esas pequeñas páginas que alguien hizo porque quería contar, enseñar o compartir algo.",
+          { y: 420, size: 44, lineHeight: 72, color: c.text });
+        regla(ctx, 880, c);
+        escribir(ctx, "y merece la pena que tengas un espacio propio, que sea como tú quieras.",
+          { y: 960, size: 32, lineHeight: 54, color: c.muted });
+      },
+
+      // 3 · la propiedad, que es el argumento fuerte
+      (ctx, c) => {
+        escribir(ctx, "tu web es tuya", { y: 300, size: 68, weight: 600, tracking: -2, color: c.text });
+        regla(ctx, 360, c);
+        const puntos = [
+          "el repositorio es tuyo",
+          "el dominio es tuyo",
+          "el código es tuyo",
+          "sin anuncios, sin plantillas",
+          "puedes llevártela cuando quieras",
+        ];
+        let y = 500;
+        for (const p of puntos) {
+          escribir(ctx, "·", { y, size: 38, color: c.muted });
+          escribir(ctx, p, { y, x: M + 46, size: 38, color: c.text, maxWidth: ANCHO - 46 });
+          y += 120;
+        }
+      },
+
+      // 4 · lo que no hay: cuotas
+      (ctx, c) => {
+        escribir(ctx, "sin servidores, sin suscripciones, sin tasas mensuales.",
+          { y: 460, size: 56, weight: 600, lineHeight: 92, tracking: -1, color: c.text });
+        regla(ctx, 820, c);
+        escribir(ctx, "el alojamiento puede ser gratuito y el dominio es prácticamente el único gasto que se repite.",
+          { y: 900, size: 32, lineHeight: 54, color: c.muted });
+      },
+
+      // 5 · la prueba: cuatro webs de verdad
+      (ctx, c) => {
+        escribir(ctx, "21 webs desde cero, desde 2020", { y: 230, size: 40, weight: 600, tracking: -1, color: c.text });
+        const gap = 36, cw = (ANCHO - gap) / 2, ch = Math.round(cw * 0.66);
+        const y0 = 320;
+        CAPTURAS.forEach((src, i) => {
+          const x = M + (i % 2) * (cw + gap);
+          const y = y0 + Math.floor(i / 2) * (ch + gap);
+          cubrir(ctx, imgs[src], x, y, cw, ch, 1.1);
+          ctx.strokeStyle = c.line; ctx.lineWidth = 2; ctx.strokeRect(x, y, cw, ch);
+        });
+        escribir(ctx, "sencillas, extrañas, experimentales o completamente absurdas.",
+          { y: y0 + 2 * (ch + gap) + 70, size: 32, lineHeight: 54, color: c.muted });
+      },
+
+      // 6 · el proceso, que es lo que quita el miedo
+      (ctx, c) => {
+        escribir(ctx, "cómo va", { y: 280, size: 68, weight: 600, tracking: -2, color: c.text });
+        regla(ctx, 340, c);
+        const pasos = [
+          "la primera reunión es gratis y no compromete a nada.",
+          "me enseñas qué haces y 3–5 referentes que te gusten.",
+          "un mes desde que recibimos todo tu material.",
+          "te la entrego en persona y sales sabiendo actualizarla.",
+        ];
+        let y = 470;
+        pasos.forEach((p, i) => {
+          escribir(ctx, String(i + 1), { y, size: 36, weight: 600, color: c.muted });
+          const fin = escribir(ctx, p, { y, x: M + 64, size: 36, lineHeight: 58, color: c.text, maxWidth: ANCHO - 64 });
+          y = fin + 110;
+        });
+        escribir(ctx, "3 entregas · 1 ronda de cambios en cada una", { y: 1180, size: 26, color: c.muted });
+      },
+
+      // 7 · el precio, sin rodeos
+      (ctx, c) => {
+        escribir(ctx, "tu web en un mes por", { y: 420, size: 40, color: c.muted, align: "center" });
+        escribirAjustado(ctx, "850 €", { y: 640, weight: 600, tracking: -4, align: "center", maxWidth: ANCHO * .8, max: 220, color: c.acento });
+        escribir(ctx, "(iva no incluido)", { y: 710, size: 26, color: c.muted, align: "center" });
+        regla(ctx, 830, c);
+        escribir(ctx, "después, 60 €/hora para los cambios que quieras.",
+          { y: 920, size: 32, lineHeight: 54, color: c.text, align: "center", x: W / 2, maxWidth: ANCHO });
+        escribir(ctx, "y si aprendiste a tocarlo tú, no pagas.",
+          { y: 1050, size: 32, lineHeight: 54, color: c.muted, align: "center", x: W / 2, maxWidth: ANCHO });
+      },
+
+      // 8 · la cara y la llamada
+      (ctx, c) => {
+        const fw = ANCHO, fh = 420;
+        cubrir(ctx, imgs[FOTO], M, 150, fw, fh);
+        ctx.strokeStyle = c.line; ctx.lineWidth = 2; ctx.strokeRect(M, 150, fw, fh);
+        escribir(ctx, "detrás de meowrhino está manu latour.", { y: 660, size: 34, lineHeight: 56, color: c.muted });
+        escribir(ctx, "diseño y programo webs a medida desde barcelona.", { y: 730, size: 34, lineHeight: 56, color: c.muted });
+        escribir(ctx, "la primera reunión es gratis.", { y: 930, size: 58, weight: 600, lineHeight: 92, tracking: -2, color: c.text });
+        regla(ctx, 1070, c);
+        escribir(ctx, "escríbeme por aquí →", { y: 1160, size: 44, weight: 600, color: c.acento });
+      },
+    ];
+
+    const CAPTION = `¿quieres una web?
+
+internet no es instagram. internet son también todas esas pequeñas páginas que alguien hizo porque quería contar, enseñar o compartir algo. y merece la pena que tengas un espacio propio.
+
+hago webs desde cero, sin plantillas: el repositorio es tuyo, el dominio es tuyo, el código es tuyo. sin servidores, sin suscripciones, sin tasas mensuales. el alojamiento puede ser gratuito y el dominio es prácticamente el único gasto que se repite.
+
+tu web en un mes por 850 € (iva no incluido). 3 entregas, 1 ronda de cambios en cada una. después, 60 €/hora para lo que quieras tocar — y si aprendiste a hacerlo tú, no pagas.
+
+te la entrego en persona y sales de esa reunión sabiendo actualizarla por tu cuenta.
+
+la primera reunión es gratis y no compromete a nada. escríbeme por aquí o a hola@meowrhino.studio
+
+meowrhino.studio`;
+
+    // ---------- montaje ----------
+
+    const cont = document.getElementById("slides");
+    const canvases = SLIDES.map((_, i) => {
+      const fig = document.createElement("figure");
+      const cv = document.createElement("canvas");
+      cv.width = W; cv.height = H;
+      const cap = document.createElement("figcaption");
+      const b = document.createElement("button");
+      b.textContent = "png";
+      b.addEventListener("click", () => descargar(cv, i));
+      cap.append(document.createTextNode(String(i + 1).padStart(2, "0")), b);
+      fig.append(cv, cap);
+      cont.append(fig);
+      return cv;
+    });
+
+    function descargar(cv, i) {
+      const a = document.createElement("a");
+      a.download = `meowrhino-ig-${String(i + 1).padStart(2, "0")}-${temaActual}.png`;
+      a.href = cv.toDataURL("image/png");
+      a.click();
+    }
+
+    function render(tema) {
+      temaActual = tema;
+      document.getElementById("toggle").textContent =
+        tema === "light" ? "cambiar a oscuro" : "cambiar a claro";
+      const c = TEMAS[tema];
+      SLIDES.forEach((dibujar, i) => {
+        const ctx = canvases[i].getContext("2d");
+        ctx.fillStyle = c.bg; ctx.fillRect(0, 0, W, H);
+        ctx.textBaseline = "alphabetic";
+        dibujar(ctx, c);
+        chrome(ctx, c, i + 1, i === SLIDES.length - 1 ? "hola@meowrhino.studio" : undefined);
+      });
+    }
+
+    document.getElementById("toggle").addEventListener("click", () => {
+      render(temaActual === "light" ? "dark" : "light");
+    });
+    document.getElementById("download-all").addEventListener("click", () => {
+      canvases.forEach((cv, i) => setTimeout(() => descargar(cv, i), i * 350));
+    });
+    document.getElementById("caption").value = CAPTION;
+
+    // Modo pieza suelta: ?solo=3 deja una sola diapositiva a tamaño real
+    // (1080×1350) y esconde el resto de la página. Sirve para mirarla de cerca
+    // y, sobre todo, para exportarlas en lote desde fuera:
+    //   brave --headless --window-size=1080,1350 \
+    //     --screenshot=01.png "…/ig-generator.html?solo=1"
+    // Con ?tema=dark sale la versión oscura.
+    const params = new URLSearchParams(location.search);
+    const tema0 = params.get("tema") === "dark" ? "dark" : "light";
+    const solo = parseInt(params.get("solo"), 10);
+    if (solo >= 1 && solo <= SLIDES.length) {
+      document.body.style.cssText = "margin:0;padding:0;background:#fff";
+      document.querySelector("header").style.display = "none";
+      document.querySelector(".copy").style.display = "none";
+      const grid = document.querySelector(".slides");
+      grid.style.cssText = "max-width:none;margin:0;display:block";
+      document.querySelectorAll("figure").forEach((f, i) => {
+        f.style.display = i === solo - 1 ? "block" : "none";
+      });
+      const cv = canvases[solo - 1];
+      cv.style.cssText = "width:1080px;height:1350px;box-shadow:none;display:block";
+      cv.nextElementSibling.style.display = "none";
+    }
+
+    function cargar(src) {
+      return new Promise((res) => {
+        const img = new Image();
+        img.onload = () => { imgs[src] = img; res(); };
+        img.onerror = () => res();
+        img.src = src;
+      });
+    }
+
+    Promise.all([
+      document.fonts.load('600 160px "Inknut Antiqua"'),
+      document.fonts.load('400 38px "Inknut Antiqua"'),
+      ...CAPTURAS.map(cargar), cargar(FOTO),
+    ]).then(() => render(tema0)).catch(() => render(tema0));
+  </script>
+</body>
+</html>
