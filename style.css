@@ -1721,8 +1721,17 @@ a.nav-label:visited {
   height: 4rem;
 }
 
+/* El mismo aire que metodología, about y condiciones: 30dvh del borde de la
+   pantalla al primer elemento. Iba en rem (5 y 6), así que en una pantalla alta
+   la rejilla arrancaba pegada al borde mientras las páginas de texto
+   respiraban, y las dos cosas se ven seguidas al navegar por el lienzo.
+
+   Son 30 y no 20 porque esta celda lleva `padding: 0` para que la rejilla use
+   todo el ancho: las otras reparten su aire entre los 10dvh del padding de
+   `.celda` y los 20dvh del scroll, y aquí el scroll los pone todos. En dvh el
+   aire escala con la pantalla y no hace falta un ajuste aparte para móvil. */
 .portfolio-scroll-content {
-  padding: 5rem 0 6rem;
+  padding: 30dvh 0;
   box-sizing: border-box;
 }
 
@@ -1831,9 +1840,6 @@ a.nav-label:visited {
   }
   .portfolio-scroll-wrapper {
     padding: 0 10dvw;
-  }
-  .portfolio-scroll-content {
-    padding: 4rem 0 5rem;
   }
 }
 
