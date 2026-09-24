@@ -15,6 +15,16 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://meowrhino.studio/portfolio</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/portfolio"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/portfolio"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/portfolio"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/portfolio"/>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://meowrhino.studio/about</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/about"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/about"/>
@@ -65,16 +75,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://meowrhino.studio/portfolio</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/portfolio"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/portfolio"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/portfolio"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/portfolio"/>
-    <lastmod>2026-09-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://meowrhino.studio/buscaminas</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/buscaminas"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/minesweeper"/>
@@ -93,6 +93,16 @@
     <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/en/portfolio</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/portfolio"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/portfolio"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/portfolio"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/portfolio"/>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/en/about</loc>
@@ -145,16 +155,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://meowrhino.studio/en/portfolio</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/portfolio"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/portfolio"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/portfolio"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/portfolio"/>
-    <lastmod>2026-09-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://meowrhino.studio/en/minesweeper</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/buscaminas"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/minesweeper"/>
@@ -173,6 +173,16 @@
     <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://meowrhino.studio/ca/portfolio</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/portfolio"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/portfolio"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/portfolio"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/portfolio"/>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://meowrhino.studio/ca/about</loc>
@@ -220,16 +230,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/map"/>
     <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/mapa"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/mapa"/>
-    <lastmod>2026-09-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://meowrhino.studio/ca/portfolio</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://meowrhino.studio/portfolio"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/portfolio"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/portfolio"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/portfolio"/>
     <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

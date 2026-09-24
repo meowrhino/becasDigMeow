@@ -82,36 +82,40 @@ export const slugify = (s) => String(s ?? "")
  * idioma es el segmento de URL.
  *
  * `welcome` es la raíz de cada idioma: es la celda de entrada del lienzo.
+ *
+ * El orden importa: es el del pie de navegación sin JS de cada celda, el del
+ * mapa sin JS y el del sitemap. Por eso el portfolio va justo detrás de la
+ * portada: es lo segundo que tiene que encontrar quien llega.
  */
 export const RUTA_CELDAS = {
   es: {
     welcome: "/",
+    portfolio: "/portfolio",
     about: "/about",
     "metodología": "/metodologia",
     condiciones: "/condiciones",
     links: "/links",
     mapa: "/mapa",
-    portfolio: "/portfolio",
     buscaminas: "/buscaminas",
   },
   en: {
     welcome: "/en",
+    portfolio: "/en/portfolio",
     about: "/en/about",
     "metodología": "/en/methodology",
     condiciones: "/en/terms",
     links: "/en/links",
     mapa: "/en/map",
-    portfolio: "/en/portfolio",
     buscaminas: "/en/minesweeper",
   },
   cat: {
     welcome: "/ca",
+    portfolio: "/ca/portfolio",
     about: "/ca/about",
     "metodología": "/ca/metodologia",
     condiciones: "/ca/condicions",
     links: "/ca/links",
     mapa: "/ca/mapa",
-    portfolio: "/ca/portfolio",
     buscaminas: "/ca/buscamines",
   },
 };
