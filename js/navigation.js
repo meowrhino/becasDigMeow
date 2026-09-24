@@ -501,12 +501,12 @@ const normalizar = (ruta) =>
 
 /**
  * Coloca el lienzo según la URL de entrada. Primero el pathname (si hay tabla
- * de rutas) y después el hash, que sigue funcionando: las 66 fichas de proyecto
- * enlazan a `/#portfolio` y los enlaces viejos de fuera no se pueden arreglar.
+ * de rutas) y después el hash, que sigue funcionando: los enlaces viejos de
+ * fuera (`/#portfolio`, `/#contacto`…) no se pueden arreglar.
  */
 export function leerURL() {
-  // El hash manda cuando lo hay: las 66 fichas enlazan a `/#portfolio`, y los
-  // hash viejos (`#contacto`, `#statement`) siguen llevando a donde fue a parar
+  // El hash manda cuando lo hay: los hash viejos (`#portfolio`, `#contacto`,
+  // `#statement`) siguen llevando a donde fue a parar
   // su contenido. Si mirásemos primero el pathname, `/#contacto` se quedaría en
   // la portada porque "/" ya resuelve a una celda.
   if (leerHash()) return true;

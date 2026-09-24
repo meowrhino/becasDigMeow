@@ -23,9 +23,10 @@
 //  - Los controles van en los bordes de la celda, como en el resto del lienzo.
 //  - Los textos van por idioma, como el resto del lienzo.
 //
-// La celda NO tiene ruta propia, igual que `portfolio`: se entra por el lienzo
-// o por `/#buscaminas`. Un buscaminas no es una página que un buscador pueda
-// leer, y darle URL solo serviría para generar un html vacío en tres idiomas.
+// La celda tiene ruta propia (/buscaminas, /en/minesweeper, /ca/buscamines).
+// Estuvo sin ella, y al entrar la barra se quedaba con la URL de la celda
+// anterior: compartir o recargar te mandaba a otro sitio. Sin JS la página
+// cuenta en dos párrafos qué es (buscaminasHTML, en js/easy-template.js).
 
 import { currentLang, buildLangButtons, attachLangListeners } from "./data.js";
 import { bordeCelda } from "./navigation.js";

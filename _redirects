@@ -4,3 +4,17 @@
 # hubiera indexado se traspase en vez de perderse.
 /easy /metodologia 301
 /easy.html /metodologia 301
+
+# El índice suelto de proyectos y sus fichas se mudaron a la celda portfolio
+# (septiembre de 2026): /portfolio es a la vez la rejilla y el índice, y las
+# fichas cuelgan de ella. 301 para traspasar lo indexado y no romper enlaces.
+# Las líneas .html van aparte porque el comodín no las cubre para el índice.
+/proyectos /portfolio 301
+/proyectos.html /portfolio 301
+/proyectos/* /portfolio/:splat 301
+/en/projects /en/portfolio 301
+/en/projects.html /en/portfolio 301
+/en/projects/* /en/portfolio/:splat 301
+/ca/projectes /ca/portfolio 301
+/ca/projectes.html /ca/portfolio 301
+/ca/projectes/* /ca/portfolio/:splat 301

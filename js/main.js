@@ -121,9 +121,9 @@ if (prerender) {
 //
 // `proyectos` llegó a estar aquí, a la derecha del portfolio, y duró un día: era
 // la lista de las 21 al lado de la rejilla de capturas, o sea lo mismo contado
-// sin lo único que convence, que son las imágenes. El índice no se ha perdido —
-// vive en `/proyectos` como página lineal, que es donde le sirve a un buscador—
-// pero ya no ocupa una casilla del mapa.
+// sin lo único que convence, que son las imágenes. El índice no se ha perdido:
+// es el pre-render de la celda portfolio, en `/portfolio`, que es donde le sirve
+// a un buscador.
 //
 // La rejilla ya no se escribe aquí: sale del reparto que tenga guardado esta
 // pestaña (js/mapa.js), que de fábrica es el de siempre —links arriba, la
@@ -149,7 +149,8 @@ configurarNavegacion({
     "links": ["tools"],
     // Los hash viejos siguen llevando a alguna parte: `#contacto` es ahora el
     // about, y `#footer` y `#statement` no existen pero apuntan a lo más
-    // parecido. Hay 66 fichas de proyecto enlazando a `/#portfolio`.
+    // parecido. `/#portfolio` también, que fue la entrada al portfolio antes de
+    // que tuviera ruta y está en enlaces de fuera.
     "about": ["contacto"],
     "condiciones": ["footer"],
     "welcome": ["statement"],

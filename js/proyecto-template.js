@@ -1,5 +1,5 @@
 // ============================================
-// PROYECTO TEMPLATE — plantillas de las páginas /proyectos/<slug> (sin DOM).
+// PROYECTO TEMPLATE — plantillas de las fichas /portfolio/<slug> (sin DOM).
 // ============================================
 //
 // Funciones puras que devuelven strings de HTML. Igual que easy-template.js, no
@@ -10,9 +10,9 @@
 // Contenido: la copia (title, description, texto) sale de proyectos-seo.json y
 // las imágenes y enlaces de data.json. Se unen por el campo `nombre`.
 //
-// OJO con las rutas: estas páginas se sirven en /proyectos/<slug>, un nivel por
+// OJO con las rutas: estas páginas se sirven en /portfolio/<slug>, un nivel por
 // debajo de la raíz, así que TODAS las rutas a assets van absolutas (/style.css,
-// /img/…). Con rutas relativas el navegador las buscaría en /proyectos/.
+// /img/…). Con rutas relativas el navegador las buscaría en /portfolio/.
 
 import { esc, pickLang } from "./easy-template.js";
 // `slugify` se mudó a rutas.js (lo necesita también easy-template.js, y tenerlo
@@ -24,21 +24,21 @@ export { slugify } from "./rutas.js";
  * porque solo los usan estas plantillas; data.json es el contenido del sitio.
  */
 export const UI = {
-  es:  { eyebrow: "proyecto", visitar: "visitar", indiceTitulo: "proyectos", indiceEyebrow: "estudio de diseño web · barcelona",
+  es:  { eyebrow: "proyecto", visitar: "visitar", indiceTitulo: "portfolio", indiceEyebrow: "estudio de diseño web · barcelona",
          ctaBoton: "¿quieres una web así?",
          asunto: "quiero una web!", detalle: "detalle", disenada: "web diseñada por meowrhino studio, Barcelona",
          anterior: "anterior", siguiente: "siguiente", idiomas: "idioma",
          volverRejilla: "← volver al portfolio",
          intro: (n) => `${n} webs hechas a medida, desde cero y sin plantillas, para artistas, fotógrafos, músicos y pequeños negocios. cada una cuenta cómo se hizo y por qué acabó siendo así.`,
          navegar: "seguir navegando" },
-  en:  { eyebrow: "project", visitar: "visit", indiceTitulo: "projects", indiceEyebrow: "web design studio · barcelona",
+  en:  { eyebrow: "project", visitar: "visit", indiceTitulo: "portfolio", indiceEyebrow: "web design studio · barcelona",
          ctaBoton: "want a website like this?",
          asunto: "i want a website!", detalle: "detail", disenada: "website designed by meowrhino studio, Barcelona",
          anterior: "previous", siguiente: "next", idiomas: "language",
          volverRejilla: "← back to the portfolio",
          intro: (n) => `${n} websites built from scratch, custom-made and without templates, for artists, photographers, musicians and small businesses. each one tells how it was made and why it ended up like this.`,
          navegar: "keep browsing" },
-  cat: { eyebrow: "projecte", visitar: "visitar", indiceTitulo: "projectes", indiceEyebrow: "estudi de disseny web · barcelona",
+  cat: { eyebrow: "projecte", visitar: "visitar", indiceTitulo: "portfolio", indiceEyebrow: "estudi de disseny web · barcelona",
          ctaBoton: "vols una web així?",
          asunto: "vull una web!", detalle: "detall", disenada: "web dissenyada per meowrhino studio, Barcelona",
          anterior: "anterior", siguiente: "següent", idiomas: "idioma",
@@ -152,7 +152,7 @@ export function renderProyectoHTML(proyecto, seo, lang = "es", rutas = {}, medir
       <div class="proy-galeria">${galeria}
       </div>${acciones}
       <nav class="proy-pie" aria-label="${esc(t.navegar)}">
-        <a href="${esc(rutas.indice || "/#portfolio")}">${esc(t.volverRejilla)}</a>
+        <a href="${esc(rutas.indice || "/portfolio")}">${esc(t.volverRejilla)}</a>
         <a href="${esc(rutas.home || "/")}">meowrhino studio</a>
       </nav>
     </article>`;
@@ -166,7 +166,10 @@ function altDe(proyecto, i, t) {
 }
 
 /**
- * Índice de /proyectos: la rejilla con los 20, cada uno a su página.
+ * Índice del portfolio: la rejilla con las 21, cada una a su ficha. Es el
+ * pre-render de la celda portfolio (lo que ve un buscador en /portfolio); con
+ * `rutas.sinPie` no lleva el pie de «volver al portfolio», que ahí sería volver
+ * a sí mismo.
  *
  * Bajo el nombre va `resumen`, no `keyword`: la keyword está escrita en plural
  * y en genérico («web para músicos barcelona») porque su sitio es el <title> y
@@ -176,7 +179,7 @@ function altDe(proyecto, i, t) {
  */
 export function renderIndiceHTML(fichas, lang = "es", rutas = {}, medirImagen = null) {
   const t = UI[lang] || UI.es;
-  const base = rutas.base || "/proyectos";
+  const base = rutas.base || "/portfolio";
   const items = fichas.map(({ proyecto, seo }) => {
     // Las 21 capturas van `lazy` y sin medidas no reservaban sitio: al entrar,
     // la página saltaba entera cada vez que llegaba una. Las fichas ya medían
@@ -200,10 +203,10 @@ export function renderIndiceHTML(fichas, lang = "es", rutas = {}, medirImagen = 
       <h1 class="proy-title">${esc(t.indiceTitulo)}</h1>
       <p class="proy-texto">${esc(t.intro(fichas.length))}</p>
       <ul class="proy-grid">${items}
-      </ul>
+      </ul>${rutas.sinPie ? "" : `
       <nav class="proy-pie" aria-label="${esc(t.navegar)}">
-        <a href="${esc(rutas.rejilla || "/#portfolio")}">${esc(t.volverRejilla)}</a>
+        <a href="${esc(rutas.rejilla || "/portfolio")}">${esc(t.volverRejilla)}</a>
         <a href="${esc(rutas.home || "/")}">meowrhino studio</a>
-      </nav>
+      </nav>`}
     </section>`;
 }

@@ -7,19 +7,19 @@
 // cada uno llevaba su propia copia de la tabla. Con dos copias basta con que
 // alguien añada un idioma en una para que la otra mande a la página equivocada:
 // justo lo que pasaba con la card, que enlazaba a /proyectos desde /en y /ca.
+// Ahora la tabla es una sola, RUTA_CELDAS, y las fichas cuelgan de la celda
+// portfolio.
 //
 // Los segmentos están traducidos porque son los que genera build-seo.js; el
 // slug del proyecto NO se traduce (es un nombre propio).
 
-/** Índice de proyectos de cada idioma. Las claves son las de data.json. */
-export const RUTA_PROYECTOS = {
-  es: "/proyectos",
-  en: "/en/projects",
-  cat: "/ca/projectes",
-};
-
-/** Base de la ruta de proyectos en un idioma, con fallback a castellano. */
-export const rutaProyectos = (lang) => RUTA_PROYECTOS[lang] || RUTA_PROYECTOS.es;
+/**
+ * Base de las fichas de proyecto de un idioma: /portfolio/<slug>,
+ * /en/portfolio/<slug>… Es la ruta de la celda portfolio, que es a la vez el
+ * índice: las fichas cuelgan de ella. Hasta septiembre de 2026 colgaban de
+ * /proyectos, /en/projects y /ca/projectes (ahora 301 en _redirects).
+ */
+export const rutaProyectos = (lang) => rutaCelda("portfolio", lang);
 
 /**
  * Convierte el `nombre` de data.json en slug de URL.
@@ -57,16 +57,18 @@ export const slugify = (s) => String(s ?? "")
 // El archive NO entra en esta tabla: es otro documento con su propio lienzo de
 // once celdas, y sigue navegando por hash exactamente como antes.
 //
-// `portfolio` tampoco: es la celda de las capturas en movimiento y no tiene URL
-// propia; se entra por `/#portfolio`, que leerHash() resuelve al cargar.
+// `portfolio` y `buscaminas` estuvieron fuera de la tabla, entrando solo por
+// `/#portfolio` y `/#buscaminas`. Salía caro: al deslizarte a una de las dos, la
+// URL se quedaba con la de la celda anterior (estabas en el portfolio y la barra
+// decía /mapa), así que compartir, recargar o volver atrás mentían. Ahora las
+// dos tienen ruta como las demás.
 //
-// `proyectos` ESTUVO aquí y ya no está. Fue celda del lienzo durante un día: la
-// lista de las 21 al lado de la rejilla. Contaba lo mismo que el portfolio pero
-// sin las capturas, y en un sitio donde el trabajo es lo visual, una columna de
-// nombres al lado de las imágenes solo podía ser la versión pobre. El índice
-// sigue vivo en `/proyectos` como página lineal suelta —con sus fichas, sus
-// resúmenes y su hreflang— porque ahí sí sirve: es lo que rastrea un buscador.
-// Lo que se fue del mapa es la celda, no la página.
+// Y el portfolio se come a `/proyectos`: el índice lineal de las 21 (con sus
+// resúmenes, para quien no ejecuta JS) es ahora el pre-render de la celda, y
+// las fichas cuelgan de ella, /portfolio/<slug>. Una sola página para el
+// trabajo en vez de la rejilla por un lado y la lista por otro. «portfolio» se
+// dice igual en los tres idiomas, así que el segmento no se traduce; el del
+// buscaminas sí, como el de metodología.
 //
 // `mapa` ocupa ahora esa casilla, a la derecha del portfolio: el plano del
 // sitio, que además puedes recolocar. Sí tiene ruta, aunque lo que se guarda
@@ -77,7 +79,7 @@ export const slugify = (s) => String(s ?? "")
 /**
  * Celda → ruta, por idioma. La clave es el identificador interno de la celda
  * (el de NOMBRES_CELDAS en main.js), que no se traduce nunca; lo que cambia por
- * idioma es el segmento de URL, igual que ya pasaba con /proyectos.
+ * idioma es el segmento de URL.
  *
  * `welcome` es la raíz de cada idioma: es la celda de entrada del lienzo.
  */
@@ -89,6 +91,8 @@ export const RUTA_CELDAS = {
     condiciones: "/condiciones",
     links: "/links",
     mapa: "/mapa",
+    portfolio: "/portfolio",
+    buscaminas: "/buscaminas",
   },
   en: {
     welcome: "/en",
@@ -97,6 +101,8 @@ export const RUTA_CELDAS = {
     condiciones: "/en/terms",
     links: "/en/links",
     mapa: "/en/map",
+    portfolio: "/en/portfolio",
+    buscaminas: "/en/minesweeper",
   },
   cat: {
     welcome: "/ca",
@@ -105,6 +111,8 @@ export const RUTA_CELDAS = {
     condiciones: "/ca/condicions",
     links: "/ca/links",
     mapa: "/ca/mapa",
+    portfolio: "/ca/portfolio",
+    buscaminas: "/ca/buscamines",
   },
 };
 

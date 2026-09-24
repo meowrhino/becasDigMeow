@@ -168,7 +168,7 @@ export function heroHTML(data, lang) {
  * la versión que se lee del tirón, no la que se mira.
  *
  * Cada ficha lleva los dos destinos de la home: la captura y la url van a la
- * web del cliente, y «ver el caso» a /proyectos/<slug> en el idioma de la
+ * web del cliente, y «ver el caso» a /portfolio/<slug> en el idioma de la
  * página. El alt sale del campo `alt` de data.json si existe.
  */
 export function portfolioHTML(data, lang) {
@@ -391,12 +391,11 @@ export function linksHTML(data, lang) {
  * recoloca vive en el navegador de cada visitante y esto es HTML para todos.
  */
 export function mapaHTML(data, lang) {
-  const t = ui(lang);
   const zone = data.zoneLabels || {};
   const nombre = (celda) => pickLang(zone[celda], lang) || celda;
   const m = MAPA[lang] || MAPA.es;
 
-  const secciones = ["welcome", "about", "metodología", "condiciones", "links"]
+  const secciones = ["welcome", "portfolio", "about", "metodología", "condiciones", "links", "buscaminas"]
     .map(celda => {
       const ruta = rutaCelda(celda, lang);
       return ruta ? `<li><a href="${esc(ruta)}">${esc(nombre(celda))}</a></li>` : "";
@@ -408,7 +407,6 @@ export function mapaHTML(data, lang) {
       <h1 class="easy-h">${esc(titularCelda("mapa", lang))}</h1>
       <p>${esc(m.texto)}</p>
       <ul class="easy-links-lista">${secciones}
-        <li><a href="${esc(rutaProyectos(lang))}">${esc(t.portfolio)}</a></li>
       </ul>
     </section>`;
 }
@@ -424,6 +422,30 @@ const MAPA = {
 };
 
 /**
+ * Buscaminas: la partida es JavaScript de arriba abajo, así que sin él no hay
+ * nada que enseñar salvo qué es y por qué está aquí. Corto a propósito: es una
+ * página con ruta para que se pueda compartir y recargar, no para competir.
+ */
+export function buscaminasHTML(data, lang) {
+  const b = BUSCAMINAS[lang] || BUSCAMINAS.es;
+  return `
+    <section class="easy-section easy-buscaminas" id="buscaminas">
+      <h1 class="easy-h">${esc(pickLang(data.zoneLabels?.buscaminas, lang) || "buscaminas")}</h1>
+      ${b.map(t => `<p>${esc(t)}</p>`).join("")}
+    </section>`;
+}
+
+/** Los textos de la celda buscaminas sin JS, por idioma. */
+const BUSCAMINAS = {
+  es:  ["un buscaminas de los de siempre, metido en una casilla de la web: tres niveles, primera casilla siempre segura y tu mejor tiempo guardado en este navegador.",
+        "una web no solo cuenta lo que haces, también cómo lo enseña. esta casilla es el ejemplo funcionando. para jugar hace falta javascript."],
+  en:  ["a good old minesweeper, tucked into one square of the website: three levels, the first square is always safe and your best time is saved in this browser.",
+        "a website doesn't just say what you do, it also shows how you show it. this square is that idea working. you need javascript to play."],
+  cat: ["un buscamines dels de sempre, ficat en una casella de la web: tres nivells, la primera casella sempre segura i el teu millor temps guardat en aquest navegador.",
+        "una web no només explica el que fas, també com ho ensenya. aquesta casella n'és l'exemple funcionant. per jugar cal javascript."],
+};
+
+/**
  * El cuerpo pre-renderizado de UNA celda.
  *
  * Es el cambio de fondo de todo esto: hasta ahora la raíz servía el texto de
@@ -434,7 +456,7 @@ const MAPA = {
  * La portada es la excepción y lleva dos cosas: el titular de venta y las cinco
  * líneas de entrada del about, que dejaron de ser una celda aparte.
  */
-export function renderCeldaPrerenderHTML(data, lang, celda, enlaces = []) {
+export function renderCeldaPrerenderHTML(data, lang, celda, enlaces = [], cuerpoPropio = null) {
   const cuerpo = {
     // La portada lleva el hero Y la rejilla del portfolio. No es decoración:
     // en el HTML crudo de "/" no había NI UN enlace a las 21 fichas. Existían,
@@ -454,13 +476,17 @@ export function renderCeldaPrerenderHTML(data, lang, celda, enlaces = []) {
     links: () => linksHTML(data, lang),
     portfolio: () => portfolioHTML(data, lang),
     mapa: () => mapaHTML(data, lang),
+    buscaminas: () => buscaminasHTML(data, lang),
   }[celda];
 
   // La celda `mapa` YA es la lista de secciones con sus enlaces: añadirle el
   // pie de navegación sería imprimir dos veces los mismos seis enlaces, uno
   // debajo del otro.
   const nota = celda === "mapa" ? "" : notaCeldaHTML(enlaces, lang);
-  return (cuerpo ? cuerpo() : "") + nota;
+  // `cuerpoPropio` lo pasa build-seo.js cuando la celda necesita algo que aquí
+  // no llega: el portfolio pre-renderiza el índice con los resúmenes de
+  // proyectos-seo.json, que este módulo no lee.
+  return (cuerpoPropio ?? (cuerpo ? cuerpo() : "")) + nota;
 }
 
 /**

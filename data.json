@@ -73,6 +73,18 @@
         "en": "the map of meowrhino studio, and you can rearrange it: move the sections wherever you like and they stay that way in your browser. a website is a place of your own, not a borrowed template.",
         "cat": "el mapa de meowrhino studio, i el pots recol·locar: mou les seccions on vulguis i es queden així al teu navegador. una web és un espai propi, no un motlle prestat."
       }
+    },
+    "buscaminas": {
+      "title": {
+        "es": "buscaminas — una partida sin salir de la web · meowrhino studio",
+        "en": "minesweeper — a quick game without leaving the website · meowrhino studio",
+        "cat": "buscamines — una partida sense sortir de la web · meowrhino studio"
+      },
+      "description": {
+        "es": "un buscaminas de los de siempre metido en una casilla de meowrhino studio: tres niveles, la primera casilla siempre segura y tu mejor tiempo guardado en el navegador.",
+        "en": "a good old minesweeper tucked into one square of meowrhino studio: three levels, the first square always safe and your best time saved in your browser.",
+        "cat": "un buscamines dels de sempre ficat en una casella de meowrhino studio: tres nivells, la primera casella sempre segura i el teu millor temps guardat al navegador."
+      }
     }
   },
   "prerender": {

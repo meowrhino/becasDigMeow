@@ -1,5 +1,5 @@
 {
-  "_comment": "Copia de las páginas de proyecto (/proyectos/<slug> y sus variantes /en y /ca). Cada campo es un objeto {es,en,cat}. Fuente única: build-seo.js lee de aquí. Se unen con data.json.portfolio.proyectos por el campo `nombre`, que debe coincidir EXACTAMENTE; las imágenes y las urls salen de allí, no de aquí. El borrador con las anécdotas y el porqué de cada keyword vive en textos-proyectos.borrador.md (no se despliega).",
+  "_comment": "Copia de las páginas de proyecto (/portfolio/<slug> y sus variantes /en y /ca). Cada campo es un objeto {es,en,cat}. Fuente única: build-seo.js lee de aquí. Se unen con data.json.portfolio.proyectos por el campo `nombre`, que debe coincidir EXACTAMENTE; las imágenes y las urls salen de allí, no de aquí. El borrador con las anécdotas y el porqué de cada keyword vive en textos-proyectos.borrador.md (no se despliega).",
   "proyectos": [
     {
       "nombre": "rikamichie",

@@ -181,8 +181,8 @@ export function renderPortfolio(data) {
   iniciarCiclosImagenes(proyectos);
   renderGridProyectos(proyectos);
 
-  // El enlace al caso cambia de texto Y de ruta con el idioma (/proyectos,
-  // /en/projects, /ca/projectes), así que hay que repintar los dos.
+  // El enlace al caso cambia de texto Y de ruta con el idioma (/portfolio,
+  // /en/portfolio, /ca/portfolio), así que hay que repintar los dos.
   onLangChange((lang) => {
     el.querySelectorAll(".pgrid-caso").forEach((a, i) => {
       const p = proyectos[i];

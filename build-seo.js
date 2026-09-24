@@ -1,6 +1,6 @@
 // ============================================
-// BUILD SEO — genera las variantes por idioma de la home, el pre-render de
-// /easy y de /archive, las páginas de proyecto y el sitemap.
+// BUILD SEO — genera las páginas de celda por idioma (con su pre-render), el
+// de /archive, las fichas de proyecto y el sitemap.
 // ============================================
 //
 // Por qué el pre-render: las páginas llegan con su contenedor vacío y el
@@ -90,13 +90,16 @@ function modulepreloadHTML(entrada) {
  * pública (Cloudflare sirve en.html en /en).
  */
 const IDIOMAS = [
-  { code: "es",  htmlLang: "es", ogLocale: "es_ES", file: "index.html", path: "/",
-    proyBase: "/proyectos",     proyDir: "proyectos",     proyFile: "proyectos.html" },
-  { code: "en",  htmlLang: "en", ogLocale: "en_GB", file: "en.html",    path: "/en",
-    proyBase: "/en/projects",   proyDir: "en/projects",   proyFile: "en/projects.html" },
-  { code: "cat", htmlLang: "ca", ogLocale: "ca_ES", file: "ca.html",    path: "/ca",
-    proyBase: "/ca/projectes",  proyDir: "ca/projectes",  proyFile: "ca/projectes.html" },
-];
+  { code: "es",  htmlLang: "es", ogLocale: "es_ES", file: "index.html", path: "/" },
+  { code: "en",  htmlLang: "en", ogLocale: "en_GB", file: "en.html",    path: "/en" },
+  { code: "cat", htmlLang: "ca", ogLocale: "ca_ES", file: "ca.html",    path: "/ca" },
+].map(i => ({
+  ...i,
+  // Las fichas cuelgan de la celda portfolio (/portfolio/<slug>…): la base sale
+  // de la tabla de rutas y no se escribe dos veces.
+  proyBase: RUTA_CELDAS[i.code].portfolio,
+  proyDir: RUTA_CELDAS[i.code].portfolio.slice(1),
+}));
 
 /** El idioma por defecto: la raíz y el x-default de los hreflang. */
 const POR_DEFECTO = IDIOMAS[0];
@@ -222,25 +225,22 @@ function enlacesEntreCeldas(data, idioma, celdaActual) {
   const zone = data.zoneLabels || {};
   const nombreVisible = (c) => pick(zone[c], idioma.code) || c;
 
-  const otras = Object.entries(tabla)
+  // El portfolio sale de la tabla como las demás: es la página que enlaza las
+  // 21 fichas, y estar en este pie es lo que evita que quede huérfana.
+  return Object.entries(tabla)
     .filter(([c]) => c !== celdaActual)
     .map(([c, ruta]) => ({ href: ruta, texto: nombreVisible(c) }));
-
-  // El índice de proyectos ya no es una celda, así que no sale de la tabla de
-  // arriba: se añade a mano. Es la página con más contenido del sitio y la que
-  // enlaza las 21 fichas — dejarla fuera de este pie la convertiría en huérfana,
-  // que es la forma más rápida de que un buscador deje de visitarla.
-  otras.push({ href: idioma.proyBase, texto: pick(data.zoneLabels?.proyectos, idioma.code) || "proyectos" });
-  return otras;
 }
 
 /** Cabecera de una página de celda: su title, su description y su canonical. */
-function headCeldaHTML(data, idioma, celda, url) {
+function headCeldaHTML(data, idioma, celda, url, fichas) {
   // La portada sigue usando `meta`, que es el title por el que compite el sitio
-  // entero; las demás celdas tienen el suyo en `seoCeldas`.
+  // entero; las demás celdas tienen el suyo en `seoCeldas`. El portfolio no:
+  // su title lleva el número de proyectos, que sale de las fichas (ver INDICE).
+  const indice = celda === "portfolio" ? INDICE(fichas.length)[idioma.code] : null;
   const fuente = celda === "welcome" ? data.meta : data.seoCeldas?.[celda];
-  const titulo = pick(fuente?.title, idioma.code);
-  const desc = pick(fuente?.description, idioma.code);
+  const titulo = indice?.title ?? pick(fuente?.title, idioma.code);
+  const desc = indice?.description ?? pick(fuente?.description, idioma.code);
 
   return [
     `  <meta name="description" content="${esc(desc)}">`,
@@ -257,14 +257,33 @@ function headCeldaHTML(data, idioma, celda, url) {
     // idioma: repetirlo en cinco URLs sería declarar cinco veces el mismo
     // negocio.
     celda === "welcome" ? jsonLdHTML(data, idioma) : "",
+    // Las fichas declaran `isPartOf` apuntando aquí: esta es su colección.
+    indice ? scriptLdHTML({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: indice.schemaName,
+      description: indice.description,
+      url,
+      inLanguage: idioma.htmlLang,
+    }) : "",
   ].filter(Boolean).join("\n");
 }
 
+/**
+ * El pre-render de la celda portfolio es el índice que antes vivía suelto en
+ * /proyectos: las 21 con su resumen y enlazadas a su ficha. Es lo que lee un
+ * buscador y lo único navegable sin JS; con JS se ve la rejilla de capturas.
+ * Sin el pie de «volver al portfolio», que aquí sería volver a sí mismo.
+ */
+const cuerpoPortfolio = (fichas, idioma) =>
+  renderIndiceHTML(fichas, idioma.code, { base: idioma.proyBase, sinPie: true }, medidasDe);
+
 /** El HTML de una página de celda, a partir de la plantilla de la home. */
-function paginaCelda(plantilla, data, idioma, { celda, url }) {
+function paginaCelda(plantilla, data, idioma, { celda, url }, fichas) {
   const enlaces = enlacesEntreCeldas(data, idioma, celda);
-  const cuerpo = renderCeldaPrerenderHTML(data, idioma.code, celda, enlaces);
-  let html = reemplazarBloque(plantilla, "head", headCeldaHTML(data, idioma, celda, url));
+  const cuerpo = renderCeldaPrerenderHTML(data, idioma.code, celda, enlaces,
+    celda === "portfolio" ? cuerpoPortfolio(fichas, idioma) : null);
+  let html = reemplazarBloque(plantilla, "head", headCeldaHTML(data, idioma, celda, url, fichas));
   html = reemplazarBloque(html, "preload", modulepreloadHTML("main.js"));
   html = reemplazarBloque(html, "home", cuerpo);
   html = html.replace(/<html lang="[^"]*"/, `<html lang="${idioma.htmlLang}"`);
@@ -273,7 +292,7 @@ function paginaCelda(plantilla, data, idioma, { celda, url }) {
 
 
 // ============================================
-// PÁGINAS DE PROYECTO (/proyectos/<slug>)
+// PÁGINAS DE PROYECTO (/portfolio/<slug>)
 // ============================================
 //
 // Una página por proyecto, cada una atacando una long-tail distinta ("web para
@@ -285,12 +304,15 @@ function paginaCelda(plantilla, data, idioma, { celda, url }) {
 // ensuciarían el árbol. A cambio, sus rutas a assets tienen que ser absolutas
 // (ver la nota en js/proyecto-template.js).
 //
-// Las tres variantes por idioma, con el segmento de ruta traducido:
-//   /proyectos/<slug>  ·  /en/projects/<slug>  ·  /ca/projectes/<slug>
+// Las tres variantes por idioma cuelgan de la celda portfolio:
+//   /portfolio/<slug>  ·  /en/portfolio/<slug>  ·  /ca/portfolio/<slug>
 // El slug NO se traduce: sale del nombre del proyecto, que es un nombre propio.
-// Los índices salen de un archivo suelto (proyectos.html, en/projects.html…) y
-// no de un index.html dentro del directorio, porque Cloudflare trata el índice
-// de un directorio como /proyectos/ y redirige /proyectos ahí con un 307.
+// Hasta septiembre de 2026 vivían en /proyectos, /en/projects y /ca/projectes,
+// que ahora responden 301 (ver _redirects).
+//
+// El índice es la propia celda (portfolio.html, en/portfolio.html…), un archivo
+// suelto al lado del directorio y no un index.html dentro: Cloudflare trataría
+// este último como /portfolio/ y redirigiría /portfolio ahí con un 307.
 
 // --- Medidas de las capturas ---
 //
@@ -433,7 +455,7 @@ function scriptLdHTML(schema) {
 }
 
 /**
- * Esqueleto común de las páginas de /proyectos.
+ * Esqueleto común de las fichas de proyecto (/portfolio/<slug>).
  *
  * Reutiliza el CSS del modo fácil (html.easy + body.easy-mode): son páginas de
  * scroll lineal, igual que /easy, así que heredan tipografía, ritmo vertical y
@@ -491,14 +513,11 @@ ${cuerpo}
 /** Página de un proyecto, en un idioma. */
 function paginaProyecto({ proyecto, seo }, idioma, vecinos = {}) {
   const rutas = {
-    // La vuelta de una ficha es la REJILLA del portfolio, no el índice suelto.
-    // Estas páginas son puro visual —seis capturas a pantalla completa— y salir
-    // de ellas a una lista de nombres era caer en seco: pierdes de golpe lo
-    // único por lo que alguien mira un portfolio. `/#portfolio` lo resuelve
-    // leerHash() en navigation.js, que coloca el lienzo en esa celda al cargar.
-    indice: `${idioma.path}#portfolio`,
+    // La vuelta de una ficha es la REJILLA del portfolio: estas páginas son
+    // puro visual y salir de ellas a una lista de nombres era caer en seco.
+    // Desde que la celda tiene ruta, /portfolio ES la rejilla.
+    indice: idioma.proyBase,
     home: idioma.path,
-    rejilla: `${idioma.path}#portfolio`,
     // El selector de idioma de ESTA ficha: las mismas tres URLs que ya declara
     // el hreflang, pero clicables. La etiqueta es el código corto porque es lo
     // que usa la home ("es en cat") y así las dos pantallas se leen igual.
@@ -540,63 +559,25 @@ function paginaProyecto({ proyecto, seo }, idioma, vecinos = {}) {
  */
 const INDICE = (n) => ({
   es: {
-    schemaName: "proyectos — meowrhino studio",
-    title: `proyectos — ${n} webs a medida hechas en barcelona · meowrhino studio`,
+    schemaName: "portfolio — meowrhino studio",
+    title: `portfolio — ${n} webs a medida hechas en barcelona · meowrhino studio`,
     description: `${n} webs diseñadas a medida en Barcelona para artistas, fotógrafos, ` +
       "músicos y pequeños negocios. Cada proyecto cuenta cómo se hizo y por qué acabó siendo así.",
   },
   en: {
-    schemaName: "projects — meowrhino studio",
-    title: `projects — ${n} custom websites made in barcelona · meowrhino studio`,
+    schemaName: "portfolio — meowrhino studio",
+    title: `portfolio — ${n} custom websites made in barcelona · meowrhino studio`,
     description: `${n} websites custom-built in Barcelona for artists, photographers, ` +
       "musicians and small businesses. Each project tells how it was made and why it ended up like this.",
   },
   cat: {
-    schemaName: "projectes — meowrhino studio",
-    title: `projectes — ${n} webs a mida fetes a barcelona · meowrhino studio`,
+    schemaName: "portfolio — meowrhino studio",
+    title: `portfolio — ${n} webs a mida fetes a barcelona · meowrhino studio`,
     description: `${n} webs dissenyades a mida a Barcelona per a artistes, fotògrafs, ` +
       "músics i petits negocis. Cada projecte explica com es va fer i per què va acabar sent així.",
   },
 });
 
-/**
- * El índice suelto de proyectos (/proyectos, /en/projects, /ca/projectes).
- *
- * Es una página lineal, no una celda del lienzo: se sirve con el mismo esqueleto
- * que las 63 fichas y NO carga la aplicación del lienzo. Fue celda durante un
- * día y volvió aquí — la lista de nombres al lado de la rejilla de capturas era
- * la versión pobre de lo mismo (ver la nota en js/rutas.js).
- *
- * Que siga existiendo no es nostalgia: es la única página que enlaza las 21
- * fichas de un idioma en un solo documento, y por eso está en el sitemap y en el
- * pie de todas las celdas. Lo que se fue del mapa es la celda, no la página.
- */
-function paginaIndice(fichas, idioma) {
-  const meta = INDICE(fichas.length)[idioma.code] || INDICE(fichas.length).es;
-  const url = `${SITE}${idioma.proyBase}`;
-  return paginaProyectoHTML({
-    idioma,
-    ogType: "website",
-    title: meta.title,
-    description: meta.description,
-    url,
-    imagen: `${SITE}/favicon/og-image.png`,
-    hreflang: hreflangProyectoHTML(""),
-    jsonLd: scriptLdHTML({
-      "@context": "https://schema.org",
-      "@type": "CollectionPage",
-      name: meta.schemaName,
-      description: meta.description,
-      url,
-      inLanguage: idioma.htmlLang,
-    }),
-    cuerpo: renderIndiceHTML(fichas, idioma.code, {
-      base: idioma.proyBase,
-      home: idioma.path,
-      rejilla: `${idioma.path}#portfolio`,
-    }, medidasDe),
-  });
-}
 
 /**
  * Los `lastmod` del sitemap anterior, indexados por URL.
@@ -664,7 +645,7 @@ function sitemapXML(fichas = [], cambiadas = new Set()) {
 ${alternasCelda(celda)}
     <lastmod>${fechaDe(url, archivo)}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>${celda === "welcome" ? "1.0" : "0.8"}</priority>
+    <priority>${celda === "welcome" ? "1.0" : celda === "buscaminas" ? "0.3" : "0.8"}</priority>
   </url>`)).join("\n");
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -680,13 +661,6 @@ ${homes}
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-${IDIOMAS.map(i => `  <url>
-    <loc>${SITE}${i.proyBase}</loc>
-${alternasProy("")}
-    <lastmod>${fechaDe(`${SITE}${i.proyBase}`, i.proyFile)}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>`).join("\n")}
 ${fichas.flatMap(({ seo }) => IDIOMAS.map(i => `  <url>
     <loc>${SITE}${i.proyBase}/${seo.slug}</loc>
 ${alternasProy(`/${seo.slug}`)}
@@ -743,7 +717,7 @@ function main() {
       for (const pagina of celdasDe(idioma)) {
         const dir = dirname(join(ROOT, pagina.archivo));
         mkdirSync(dir, { recursive: true });
-        generar(pagina.archivo, paginaCelda(plantillaHome, data, idioma, pagina));
+        generar(pagina.archivo, paginaCelda(plantillaHome, data, idioma, pagina, fichas));
       }
     }
 
@@ -757,14 +731,10 @@ function main() {
       reemplazarBloque(archive, "preload", modulepreloadHTML("archive-main.js")),
       "archive", renderArchivePrerenderHTML(archiveData)));
 
-    // Cada idioma tiene su índice suelto (proyectos.html, en/projects.html…) y
-    // su directorio de fichas. El índice NO va como index.html dentro del
-    // directorio: Cloudflare lo trataría como /proyectos/ y redirigiría
-    // /proyectos ahí con un 307, dejando el canonical apuntando a una URL que
-    // redirige. Así se sirve en /proyectos sin salto, igual que /archive.
+    // Las fichas de cada idioma, en el directorio de su celda portfolio. El
+    // índice ya ha salido arriba: es la propia celda.
     for (const idioma of IDIOMAS) {
       mkdirSync(join(ROOT, idioma.proyDir), { recursive: true });
-      generar(idioma.proyFile, paginaIndice(fichas, idioma));
       // Los vecinos salen del orden de proyectos-seo.json, que es el mismo que
       // el de la rejilla. La lista es circular a propósito: desde el último,
       // "siguiente" vuelve al primero. Un cul-de-sac al final de una lista de
@@ -783,7 +753,7 @@ function main() {
     escribirSiCambia("sitemap.xml", sitemapXML(fichas, cambiadas));
 
     console.log(`\n${IDIOMAS.length} idiomas · ${fichas.length} proyectos ` +
-      `· ${IDIOMAS.length * (fichas.length + 1)} páginas de proyecto.`);
+      `· ${IDIOMAS.length * fichas.length} fichas de proyecto.`);
   } catch (err) {
     console.error(`✗ ${err.message}`);
     process.exit(1);

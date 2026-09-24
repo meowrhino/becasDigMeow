@@ -101,7 +101,7 @@ export function renderArchivePrerenderHTML(data) {
       <p>Esta página usa JavaScript para su navegación interactiva. También puedes ver:</p>
       <ul>
         <li><a href="/">meowrhino studio</a></li>
-        <li><a href="/proyectos">las páginas de cada proyecto</a></li>
+        <li><a href="/portfolio">las páginas de cada proyecto</a></li>
       </ul>
       <p>o escríbeme a
         <a href="mailto:hola@meowrhino.studio">hola@meowrhino.studio</a>.</p>

@@ -4,14 +4,30 @@
     {
       "name": "dev",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "."],
+      "runtimeArgs": [
+        "serve",
+        "."
+      ],
       "port": 3000,
       "autoPort": true
     },
     {
+      "name": "wrangler",
+      "runtimeExecutable": "wrangler",
+      "runtimeArgs": [
+        "dev",
+        "--port",
+        "8787"
+      ],
+      "port": 8787
+    },
+    {
       "name": "visualizer",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "/Users/manu/Documents/GitHub/visualizer"],
+      "runtimeArgs": [
+        "serve",
+        "/Users/manu/Documents/GitHub/visualizer"
+      ],
       "port": 5555
     }
   ]

@@ -2114,7 +2114,7 @@ a.nav-label:visited {
 /* ============================================
    16. PÁGINAS LINEALES
    La misma data.json que el lienzo, en scroll de arriba abajo: /about,
-   /metodologia, /condiciones, /proyectos, /mapa y sus traducciones.
+   /metodologia, /condiciones, /portfolio, /mapa, /buscaminas y sus traducciones.
    Activado por <html class="easy"> + <body class="easy-mode">. El nombre
    `easy` viene de /easy, la página única que las precedió y que hoy redirige
    a /metodologia (ver _redirects); se conserva porque es el prefijo de todas
@@ -2381,7 +2381,7 @@ html.js #seo-prerender {
 }
 
 /* ============================================
-   17. PÁGINAS DE PROYECTO (/proyectos/<slug>)
+   17. PÁGINAS DE PROYECTO (/portfolio/<slug>)
    Generadas por build-seo.js. Reutilizan el chasis del modo fácil
    (html.easy + body.easy-mode): mismo scroll lineal, misma tipografía,
    mismos botones. Aquí solo vive lo que no existía todavía.
@@ -2588,7 +2588,7 @@ html.js #seo-prerender {
   .welcome-card-pie { transition: none; }
 }
 
-/* Enlace al caso de estudio (/proyectos/<slug>) bajo cada proyecto del grid.
+/* Enlace al caso de estudio (/portfolio/<slug>) bajo cada proyecto del grid.
    Discreto por defecto: el enlace principal de la ficha sigue siendo la web del
    cliente, y este es el "y además, cómo se hizo". */
 .pgrid-caso {
@@ -2605,7 +2605,7 @@ html.js #seo-prerender {
    FICHA DE PROYECTO — el marco de celda
    ============================================
 
-   Las fichas (/proyectos/<slug>) eran una columna de texto centrada con dos
+   Las fichas (/portfolio/<slug>) eran una columna de texto centrada con dos
    capturas debajo: correcta y de nadie. Como son las páginas a las que llega
    la gente desde Google, tenían además tres agujeros — ni selector de idioma,
    ni cambio de tema, ni forma de ir a otro proyecto sin volver al índice.
@@ -2761,7 +2761,7 @@ html.js #seo-prerender {
   /* Mismo `order` en los dos y adyacentes en el HTML: la rejilla los coloca
      en la misma fila, en columna 1 y 2. */
   .proy > .proy-acciones { order: 97; }
-  /* Solo el pie DE LA FICHA: en /proyectos el pie va detrás de la rejilla de
+  /* Solo el pie DE LA FICHA: en el índice el pie va detrás de la rejilla de
      21 capturas y necesita mucho más aire (ver .proy-indice > .proy-pie). */
   .proy > .proy-pie { order: 98; margin-top: clamp(1.5rem, 4dvh, 2.5rem); }
 
