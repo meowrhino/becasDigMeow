@@ -2447,11 +2447,6 @@ html.js #seo-prerender {
 .proy-pie a { color: var(--text-secondary); }
 .proy-pie a:hover { color: var(--text); }
 
-/* El pie del ÍNDICE necesita más aire que el de la ficha: encima tiene una
-   rejilla de 21 capturas, no un párrafo. Con el margen de la ficha se pegaba
-   a la última fila de tarjetas y "volver al portfolio" parecía el pie de la
-   tarjeta de al lado en vez del pie de la página. */
-.proy-indice > .proy-pie { margin-top: clamp(4rem, 10dvh, 6.5rem); }
 
 /* --- Índice: rejilla de tarjetas --- */
 .proy-grid {
@@ -2761,8 +2756,7 @@ html.js #seo-prerender {
   /* Mismo `order` en los dos y adyacentes en el HTML: la rejilla los coloca
      en la misma fila, en columna 1 y 2. */
   .proy > .proy-acciones { order: 97; }
-  /* Solo el pie DE LA FICHA: en el índice el pie va detrás de la rejilla de
-     21 capturas y necesita mucho más aire (ver .proy-indice > .proy-pie). */
+  /* El pie de la ficha. */
   .proy > .proy-pie { order: 98; margin-top: clamp(1.5rem, 4dvh, 2.5rem); }
 
   /* Las flechas que en ancho daba la rotación: sin ellas, en horizontal, son

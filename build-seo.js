@@ -267,10 +267,9 @@ function headCeldaHTML(data, idioma, celda, url) {
  * El pre-render de la celda portfolio es el índice que antes vivía suelto en
  * /proyectos: las 21 con su resumen y enlazadas a su ficha. Es lo que lee un
  * buscador y lo único navegable sin JS; con JS se ve la rejilla de capturas.
- * Sin el pie de «volver al portfolio», que aquí sería volver a sí mismo.
  */
 const cuerpoPortfolio = (fichas, idioma) =>
-  renderIndiceHTML(fichas, idioma.code, { base: idioma.proyBase, sinPie: true }, medidasDe);
+  renderIndiceHTML(fichas, idioma.code, { base: idioma.proyBase }, medidasDe);
 
 /** El HTML de una página de celda, a partir de la plantilla de la home. */
 function paginaCelda(plantilla, data, idioma, { celda, url }, fichas) {
@@ -400,8 +399,8 @@ function fichasDeProyecto(data, seoDoc) {
 }
 
 /**
- * hreflang de una página de proyecto: enlaza sus tres variantes de idioma.
- * `sufijo` es "" para el índice y "/<slug>" para una página concreta.
+ * hreflang de una ficha de proyecto: enlaza sus tres variantes de idioma.
+ * `sufijo` es "/<slug>". (El índice es la celda portfolio y lleva los suyos.)
  */
 function hreflangProyectoHTML(sufijo) {
   const alternas = IDIOMAS.map(i =>

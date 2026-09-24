@@ -13,7 +13,7 @@
     }
   },
   "seoCeldas": {
-    "_comment": "Title y description de cada celda del lienzo, que ahora es una URL propia. La portada usa `meta`, que ya existía. Sin esto, las cuatro páginas nuevas heredarían el title de la home y competirían entre ellas.",
+    "_comment": "Title y description de cada celda del lienzo, que ahora es una URL propia. La portada usa `meta`, que ya existía. Sin esto, las páginas de celda heredarían el title de la home y competirían entre ellas.",
     "about": {
       "title": {
         "es": "quién está detrás — manu latour, diseño web a medida en barcelona",

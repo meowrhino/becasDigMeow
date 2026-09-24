@@ -8,7 +8,7 @@
 // Así el texto que ve Google es EXACTAMENTE el que ve el visitante, sin copias
 // que se desincronicen. Fuente única de contenido: data.json.
 
-import { rutaProyectos, rutaCelda, slugify } from "./rutas.js";
+import { rutaProyectos, rutaCelda, slugify, RUTA_CELDAS } from "./rutas.js";
 
 /** Escoge la variante de idioma de un objeto {es,en,cat}, con fallback a es. */
 export const pickLang = (obj, lang) => obj?.[lang] ?? obj?.es ?? "";
@@ -66,15 +66,9 @@ export const escConEnlaces = (s) => esc(s)
  * mismos términos que usan los nombres de celda del grid.
  */
 export const UI = {
-  es:  { portfolio: "portfolio", metodologia: "metodología",
-         contacto: "contacto", caso: "ver el caso →", navegar: "seguir navegando",
-         volverRejilla: "← volver al portfolio" },
-  en:  { portfolio: "portfolio", metodologia: "methodology",
-         contacto: "contact", caso: "see the case →", navegar: "keep browsing",
-         volverRejilla: "← back to the portfolio" },
-  cat: { portfolio: "portfolio", metodologia: "metodologia",
-         contacto: "contacte", caso: "veure el cas →",
-         volverRejilla: "← tornar al portfolio", navegar: "seguir navegant" },
+  es:  { portfolio: "portfolio", caso: "ver el caso →", navegar: "seguir navegando" },
+  en:  { portfolio: "portfolio", caso: "see the case →", navegar: "keep browsing" },
+  cat: { portfolio: "portfolio", caso: "veure el cas →", navegar: "seguir navegant" },
 };
 
 /** Los textos de interfaz del idioma pedido, con fallback a castellano. */
@@ -411,11 +405,10 @@ export function mapaHTML(data, lang) {
   const nombre = (celda) => pickLang(zone[celda], lang) || celda;
   const m = MAPA[lang] || MAPA.es;
 
-  const secciones = ["welcome", "portfolio", "about", "metodología", "condiciones", "links", "buscaminas"]
-    .map(celda => {
-      const ruta = rutaCelda(celda, lang);
-      return ruta ? `<li><a href="${esc(ruta)}">${esc(nombre(celda))}</a></li>` : "";
-    }).join("");
+  const secciones = Object.keys(RUTA_CELDAS.es)
+    .filter(celda => celda !== "mapa")
+    .map(celda => `<li><a href="${esc(rutaCelda(celda, lang))}">${esc(nombre(celda))}</a></li>`)
+    .join("");
 
   return `
     <section class="easy-section easy-mapa" id="mapa">
@@ -490,18 +483,16 @@ export function renderCeldaPrerenderHTML(data, lang, celda, enlaces = [], cuerpo
     "metodología": () => metodologiaHTML(data, lang),
     condiciones: () => condicionesHTML(data, lang),
     links: () => linksHTML(data, lang),
-    portfolio: () => portfolioHTML(data, lang),
+    // `portfolio` no está: su pre-render es el índice con los resúmenes de
+    // proyectos-seo.json, y lo pasa build-seo.js como `cuerpoPropio`.
     mapa: () => mapaHTML(data, lang),
     buscaminas: () => buscaminasHTML(data, lang),
   }[celda];
 
   // La celda `mapa` YA es la lista de secciones con sus enlaces: añadirle el
-  // pie de navegación sería imprimir dos veces los mismos seis enlaces, uno
+  // pie de navegación sería imprimir dos veces los mismos enlaces, uno
   // debajo del otro.
   const nota = celda === "mapa" ? "" : notaCeldaHTML(enlaces, lang);
-  // `cuerpoPropio` lo pasa build-seo.js cuando la celda necesita algo que aquí
-  // no llega: el portfolio pre-renderiza el índice con los resúmenes de
-  // proyectos-seo.json, que este módulo no lee.
   return (cuerpoPropio ?? (cuerpo ? cuerpo() : "")) + nota;
 }
 

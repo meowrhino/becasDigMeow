@@ -167,9 +167,8 @@ function altDe(proyecto, i, t) {
 
 /**
  * Índice del portfolio: la rejilla con las 21, cada una a su ficha. Es el
- * pre-render de la celda portfolio (lo que ve un buscador en /portfolio); con
- * `rutas.sinPie` no lleva el pie de «volver al portfolio», que ahí sería volver
- * a sí mismo.
+ * pre-render de la celda portfolio (lo que ve un buscador en /portfolio). No
+ * lleva pie propio: el de navegación entre celdas lo pone la página.
  *
  * Bajo el nombre va `resumen`, no `keyword`: la keyword está escrita en plural
  * y en genérico («web para músicos barcelona») porque su sitio es el <title> y
@@ -203,10 +202,6 @@ export function renderIndiceHTML(fichas, lang = "es", rutas = {}, medirImagen = 
       <h1 class="proy-title">${esc(t.indiceTitulo)}</h1>
       <p class="proy-texto">${esc(t.intro(fichas.length))}</p>
       <ul class="proy-grid">${items}
-      </ul>${rutas.sinPie ? "" : `
-      <nav class="proy-pie" aria-label="${esc(t.navegar)}">
-        <a href="${esc(rutas.rejilla || "/portfolio")}">${esc(t.volverRejilla)}</a>
-        <a href="${esc(rutas.home || "/")}">meowrhino studio</a>
-      </nav>`}
+      </ul>
     </section>`;
 }
