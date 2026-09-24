@@ -22,6 +22,7 @@ import {
   getGrid,
   getPosicion,
   setPosicion,
+  getNombrePagina,
 } from "./navigation.js";
 import {
   renderTools,
@@ -34,6 +35,7 @@ import { renderMapa, leerMapa, aGrid } from "./mapa.js";
 import { renderPortfolio } from "./portfolio.js";
 import { renderBuscaminas } from "./buscaminas.js";
 import { rutaCelda, celdaDeRuta } from "./rutas.js";
+import { cabeceraCelda } from "./easy-template.js";
 import { crearThemeToggle } from "./theme.js";
 import { setupKeyboardNav, setupResizeDebounce } from "./shell.js";
 
@@ -65,6 +67,27 @@ async function renderizarContenido() {
   renderMapa(data);
   renderAbout(data);
   renderBuscaminas();
+}
+
+/**
+ * Pone en el <head> el title y la description de la celda activa.
+ *
+ * Cada celda es una URL con su propio HTML, pero al deslizar no se recarga:
+ * sin esto la pestaña seguía con el title de la página por la que entraste
+ * (estabas en el portfolio y ponía «mapa — …»). Los textos salen de
+ * cabeceraCelda, la misma función que usa build-seo.js para el HTML servido.
+ *
+ * Antes de que llegue data.json no hace nada: el HTML ya trae los de la celda
+ * de entrada.
+ */
+function sincronizarCabecera() {
+  const data = obtenerDatos();
+  const celda = getNombrePagina();
+  if (!data || !celda) return;
+  const { titulo, descripcion } = cabeceraCelda(data, celda, currentLang);
+  if (titulo) document.title = titulo;
+  const meta = document.querySelector('meta[name="description"]');
+  if (meta && descripcion) meta.setAttribute("content", descripcion);
 }
 
 // ============================================
@@ -166,6 +189,7 @@ configurarNavegacion({
       .split("_").map(Number);
     return { y, x };
   })(),
+  onUpdate: sincronizarCabecera,
   rutas: {
     de: (nombre) => rutaCelda(nombre, currentLang),
     celdaDe: (pathname) => celdaDeRuta(pathname)?.nombre ?? null,
@@ -191,4 +215,5 @@ renderizarContenido().then(() => {
   actualizarVista();
   refrescarTextosCeldas();       // aplica traducción al minimapa expandido
   onLangChange(refrescarTextosCeldas);
+  onLangChange(sincronizarCabecera);
 });

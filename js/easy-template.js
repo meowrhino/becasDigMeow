@@ -13,6 +13,22 @@ import { rutaProyectos, rutaCelda, slugify } from "./rutas.js";
 /** Escoge la variante de idioma de un objeto {es,en,cat}, con fallback a es. */
 export const pickLang = (obj, lang) => obj?.[lang] ?? obj?.es ?? "";
 
+/**
+ * Title y description de una celda en un idioma. Los usan build-seo.js (para
+ * escribirlos en el <head> de cada página) y main.js (para cambiarlos al
+ * deslizar a otra celda). Tienen que salir de aquí los dos: si no, la pestaña
+ * diría una cosa y el HTML servido otra.
+ *
+ * La portada usa `meta`, que es el title por el que compite el sitio entero;
+ * las demás celdas, `seoCeldas`. `{n}` es el número de proyectos.
+ */
+export function cabeceraCelda(data, celda, lang) {
+  const fuente = celda === "welcome" ? data?.meta : data?.seoCeldas?.[celda];
+  const n = String(data?.portfolio?.proyectos?.length ?? "");
+  const texto = (campo) => pickLang(fuente?.[campo], lang).replaceAll("{n}", n);
+  return { titulo: texto("title"), descripcion: texto("description") };
+}
+
 export const esc = (s) => String(s ?? "")
   .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
   .replace(/"/g, "&quot;");

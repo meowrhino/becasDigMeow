@@ -1,6 +1,6 @@
 {
   "meta": {
-    "_comment": "Metadatos de la home por idioma. build-seo.js los escribe en index.html (es), en.html y ca.html; data.js sincroniza la description al cambiar de idioma en vivo.",
+    "_comment": "Metadatos de la home por idioma. build-seo.js los escribe en index.html (es), en.html y ca.html; main.js los vuelve a poner en el <head> al deslizar a la portada (cabeceraCelda, en js/easy-template.js).",
     "title": {
       "es": "meowrhino studio — diseño de páginas web en Barcelona",
       "en": "meowrhino studio — web design studio in Barcelona",
@@ -72,6 +72,19 @@
         "es": "el mapa de meowrhino studio, y lo puedes recolocar: mueve las secciones donde te apetezca y se quedan así en tu navegador. una web es un espacio propio, no un molde prestado.",
         "en": "the map of meowrhino studio, and you can rearrange it: move the sections wherever you like and they stay that way in your browser. a website is a place of your own, not a borrowed template.",
         "cat": "el mapa de meowrhino studio, i el pots recol·locar: mou les seccions on vulguis i es queden així al teu navegador. una web és un espai propi, no un motlle prestat."
+      }
+    },
+    "portfolio": {
+      "_comment": "{n} se sustituye por el número de proyectos de `portfolio.proyectos` (cabeceraCelda, en js/easy-template.js): así no hay que tocar estas seis cadenas cada vez que entra uno.",
+      "title": {
+        "es": "portfolio — {n} webs a medida hechas en barcelona · meowrhino studio",
+        "en": "portfolio — {n} custom websites made in barcelona · meowrhino studio",
+        "cat": "portfolio — {n} webs a mida fetes a barcelona · meowrhino studio"
+      },
+      "description": {
+        "es": "{n} webs diseñadas a medida en Barcelona para artistas, fotógrafos, músicos y pequeños negocios. Cada proyecto cuenta cómo se hizo y por qué acabó siendo así.",
+        "en": "{n} websites custom-built in Barcelona for artists, photographers, musicians and small businesses. Each project tells how it was made and why it ended up like this.",
+        "cat": "{n} webs dissenyades a mida a Barcelona per a artistes, fotògrafs, músics i petits negocis. Cada projecte explica com es va fer i per què va acabar sent així."
       }
     },
     "buscaminas": {

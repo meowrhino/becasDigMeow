@@ -25,7 +25,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import {
-  esc, renderCeldaPrerenderHTML,
+  esc, renderCeldaPrerenderHTML, cabeceraCelda,
 } from "./js/easy-template.js";
 import {
   enlacesDe, renderIndiceHTML, renderProyectoHTML,
@@ -233,14 +233,8 @@ function enlacesEntreCeldas(data, idioma, celdaActual) {
 }
 
 /** Cabecera de una página de celda: su title, su description y su canonical. */
-function headCeldaHTML(data, idioma, celda, url, fichas) {
-  // La portada sigue usando `meta`, que es el title por el que compite el sitio
-  // entero; las demás celdas tienen el suyo en `seoCeldas`. El portfolio no:
-  // su title lleva el número de proyectos, que sale de las fichas (ver INDICE).
-  const indice = celda === "portfolio" ? INDICE(fichas.length)[idioma.code] : null;
-  const fuente = celda === "welcome" ? data.meta : data.seoCeldas?.[celda];
-  const titulo = indice?.title ?? pick(fuente?.title, idioma.code);
-  const desc = indice?.description ?? pick(fuente?.description, idioma.code);
+function headCeldaHTML(data, idioma, celda, url) {
+  const { titulo, descripcion: desc } = cabeceraCelda(data, celda, idioma.code);
 
   return [
     `  <meta name="description" content="${esc(desc)}">`,
@@ -258,11 +252,11 @@ function headCeldaHTML(data, idioma, celda, url, fichas) {
     // negocio.
     celda === "welcome" ? jsonLdHTML(data, idioma) : "",
     // Las fichas declaran `isPartOf` apuntando aquí: esta es su colección.
-    indice ? scriptLdHTML({
+    celda === "portfolio" ? scriptLdHTML({
       "@context": "https://schema.org",
       "@type": "CollectionPage",
-      name: indice.schemaName,
-      description: indice.description,
+      name: "portfolio — meowrhino studio",
+      description: desc,
       url,
       inLanguage: idioma.htmlLang,
     }) : "",
@@ -283,7 +277,7 @@ function paginaCelda(plantilla, data, idioma, { celda, url }, fichas) {
   const enlaces = enlacesEntreCeldas(data, idioma, celda);
   const cuerpo = renderCeldaPrerenderHTML(data, idioma.code, celda, enlaces,
     celda === "portfolio" ? cuerpoPortfolio(fichas, idioma) : null);
-  let html = reemplazarBloque(plantilla, "head", headCeldaHTML(data, idioma, celda, url, fichas));
+  let html = reemplazarBloque(plantilla, "head", headCeldaHTML(data, idioma, celda, url));
   html = reemplazarBloque(html, "preload", modulepreloadHTML("main.js"));
   html = reemplazarBloque(html, "home", cuerpo);
   html = html.replace(/<html lang="[^"]*"/, `<html lang="${idioma.htmlLang}"`);
@@ -549,34 +543,6 @@ function paginaProyecto({ proyecto, seo }, idioma, vecinos = {}) {
 }
 
 
-/**
- * Metadatos del índice, por idioma.
- *
- * El número de proyectos NO se escribe a mano: se recibe como argumento y sale
- * de `fichas.length`. Estaba repetido en seis cadenas ("20 webs…") y cada vez
- * que entraba un proyecto nuevo había que acordarse de tocarlas todas — al
- * añadir la 21 se quedaron diciendo 20 en los tres idiomas.
- */
-const INDICE = (n) => ({
-  es: {
-    schemaName: "portfolio — meowrhino studio",
-    title: `portfolio — ${n} webs a medida hechas en barcelona · meowrhino studio`,
-    description: `${n} webs diseñadas a medida en Barcelona para artistas, fotógrafos, ` +
-      "músicos y pequeños negocios. Cada proyecto cuenta cómo se hizo y por qué acabó siendo así.",
-  },
-  en: {
-    schemaName: "portfolio — meowrhino studio",
-    title: `portfolio — ${n} custom websites made in barcelona · meowrhino studio`,
-    description: `${n} websites custom-built in Barcelona for artists, photographers, ` +
-      "musicians and small businesses. Each project tells how it was made and why it ended up like this.",
-  },
-  cat: {
-    schemaName: "portfolio — meowrhino studio",
-    title: `portfolio — ${n} webs a mida fetes a barcelona · meowrhino studio`,
-    description: `${n} webs dissenyades a mida a Barcelona per a artistes, fotògrafs, ` +
-      "músics i petits negocis. Cada projecte explica com es va fer i per què va acabar sent així.",
-  },
-});
 
 
 /**

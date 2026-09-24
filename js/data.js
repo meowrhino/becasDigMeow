@@ -9,8 +9,7 @@ import { celdaDeRuta, rutaCelda } from "./rutas.js";
 
 export const LANGS = ["es", "en", "cat"];
 
-/** Caché de data.json (declarado aquí para que sincronizarMetaDescripcion,
- * llamado desde el arranque más abajo, pueda leerlo sin TDZ). */
+/** Caché de data.json. */
 let dataCache = null;
 
 /**
@@ -59,24 +58,18 @@ const idiomaGuardado = localStorage.getItem("lang");
 export let currentLang = idiomaDeLaRuta()
   ?? (idiomaGuardado && LANGS.includes(idiomaGuardado) ? idiomaGuardado : detectarIdiomaNavegador());
 
-/** Refleja el idioma activo en <html lang> (catalán → código BCP-47 "ca"). */
+/**
+ * Refleja el idioma activo en <html lang> (catalán → código BCP-47 "ca").
+ *
+ * Aquí también se sincronizaba la meta description, pero con la de la portada
+ * (`meta.description`) en cualquier página: al cargar /about, el JS cambiaba
+ * su description por la de la home, y como Google ejecuta el JS veía la misma
+ * en todas las celdas. Ahora la pone main.js según la celda activa.
+ */
 function sincronizarLangDocumento(lang) {
   document.documentElement.lang = lang === "cat" ? "ca" : lang;
-  sincronizarMetaDescripcion(lang);
 }
 sincronizarLangDocumento(currentLang);
-
-/**
- * Actualiza <meta name="description"> con la variante del idioma activo.
- * No-op hasta que data.json está en caché (en el arranque, antes del primer
- * fetch, y también si data.json no trae `meta.description`).
- */
-function sincronizarMetaDescripcion(lang) {
-  const desc = dataCache?.meta?.description;
-  if (!desc) return;
-  const metaEl = document.querySelector('meta[name="description"]');
-  if (metaEl) metaEl.setAttribute("content", desc[lang] ?? desc.es ?? "");
-}
 
 /**
  * Callbacks de cada sección para actualizar su contenido al cambiar idioma.
@@ -199,10 +192,6 @@ export async function cargarDatos() {
   // el JSON en /en/data.json. Misma razón en las rutas de imagen del portfolio
   // y de los logos del pie.
   dataCache = await fetchJson("/data.json");
-  // En el arranque, sincronizarLangDocumento(currentLang) ya corrió antes de
-  // este fetch (dataCache aún era null), así que la meta description quedó
-  // sin actualizar: la sincronizamos ahora que ya hay datos.
-  sincronizarMetaDescripcion(currentLang);
   return dataCache;
 }
 
