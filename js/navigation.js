@@ -485,7 +485,9 @@ function actualizarURL(historial = true) {
   if (rutaDe) {
     const ruta = nombre ? rutaDe(nombre) : null;
     if (!ruta) return;
-    if (normalizar(window.location.pathname) === normalizar(ruta)) return;
+    // Con el hash vacío, o un `#buscaminas` de la entrada se queda pegado al
+    // volver a la portada (la ruta no cambia) y lo arrastra el cambio de idioma.
+    if (normalizar(window.location.pathname) === normalizar(ruta) && !window.location.hash) return;
     if (historial) history.pushState(null, "", ruta);
     else history.replaceState(null, "", ruta);
     return;

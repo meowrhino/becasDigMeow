@@ -4,7 +4,7 @@
 //
 // Orquesta la carga de todos los módulos del studio.
 
-import { cargarDatos, obtenerDatos, currentLang, onLangChange } from "./data.js";
+import { cargarDatos, obtenerDatos, currentLang, onLangChange, actualizarEnlacesIdioma } from "./data.js";
 import {
   configurarNavegacion,
   crearCeldas,
@@ -189,7 +189,7 @@ configurarNavegacion({
       .split("_").map(Number);
     return { y, x };
   })(),
-  onUpdate: sincronizarCabecera,
+  onUpdate: () => { sincronizarCabecera(); actualizarEnlacesIdioma(); },
   rutas: {
     de: (nombre) => rutaCelda(nombre, currentLang),
     celdaDe: (pathname) => celdaDeRuta(pathname)?.nombre ?? null,

@@ -93,6 +93,27 @@ export function onLangChange(cb) {
 const bcp47 = (lang) => (lang === "cat" ? "ca" : lang);
 
 /**
+ * La misma celda en el idioma `lang`, o null fuera del lienzo. Se lee de la URL
+ * actual, que navigation.js mantiene al día en cada deslizamiento.
+ */
+function destinoIdioma(lang) {
+  const aqui = celdaDeRuta(location.pathname);
+  return aqui ? rutaCelda(aqui.nombre, lang) : null;
+}
+
+/**
+ * Re-apunta los enlaces de idioma a la celda en la que estás. Se pintan una
+ * vez al cargar, y sin esto seguían llevando a la celda por la que entraste:
+ * entrar por /mapa, ir a la portada y pulsar «cat» te dejaba en /ca/mapa.
+ */
+export function actualizarEnlacesIdioma() {
+  document.querySelectorAll("a.lang-btn").forEach(a => {
+    const destino = destinoIdioma(a.dataset.lang);
+    if (destino) a.setAttribute("href", destino);
+  });
+}
+
+/**
  * Genera el HTML de los botones de idioma.
  *
  * En el lienzo cada celda tiene URL propia por idioma, así que ahí se pintan
@@ -109,11 +130,10 @@ const bcp47 = (lang) => (lang === "cat" ? "ca" : lang);
  * <button> y el cambio se hace en caliente.
  */
 export function buildLangButtons() {
-  const aqui = celdaDeRuta(location.pathname);
   return `<div class="lang-group">${LANGS.map(l => {
     const activo = l === currentLang;
     const clase = `lang-btn${activo ? " is-active" : ""}`;
-    const destino = aqui ? rutaCelda(aqui.nombre, l) : null;
+    const destino = destinoIdioma(l);
     return destino
       ? `<a class="${clase}" href="${destino}" hreflang="${bcp47(l)}" data-lang="${l}"${activo ? ' aria-current="true"' : ""}>${l}</a>`
       : `<button class="${clase}" data-lang="${l}" aria-pressed="${activo}">${l}</button>`;
@@ -154,14 +174,14 @@ export function attachLangListeners(container, onLangChange) {
       if (lang === currentLang) { e.preventDefault(); return; }
 
       // En el lienzo cada idioma es una URL propia, así que cambiar de idioma
-      // es navegar: si no, la URL diría /en mientras se lee catalán. El enlace
-      // ya apunta a la celda correcta; lo interceptamos solo para arrastrar el
-      // hash y guardar la preferencia.
+      // es navegar: si no, la URL diría /en mientras se lee catalán. El
+      // destino se calcula aquí y no se fía del href: es la celda en la que
+      // estás AHORA. Antes se le pegaba el hash que hubiera en la URL, y uno
+      // viejo (`#buscaminas`) te llevaba allí.
       if (idiomaDeLaRuta()) {
         e.preventDefault();
-        localStorage.setItem("lang", lang);
-        const destino = btn.getAttribute("href") || RUTA_IDIOMA[lang];
-        location.href = destino + location.hash;
+        try { localStorage.setItem("lang", lang); } catch { /* sin almacenamiento: la URL ya manda */ }
+        location.href = destinoIdioma(lang) || RUTA_IDIOMA[lang];
         return;
       }
 
