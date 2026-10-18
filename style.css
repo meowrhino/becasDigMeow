@@ -113,7 +113,6 @@
   --z-cell: 2;          /* celda */
   --z-card: 4;          /* card de proyecto flotante (welcome), debajo del cupón */
   --z-cupon: 5;         /* cupón flotante (welcome) */
-  --z-tooltip: 6;       /* globo de resumen (links), sobre los enlaces de al lado */
   --z-nav: 10;          /* nav-labels, lang/font/theme buttons, section-nav */
   --z-overlay-img: 30;  /* overlay sobre imagen (portfolio grid) */
   --z-header: 100;      /* header fijo (minimapa inline) */
@@ -619,6 +618,7 @@ a.nav-label:visited {
 }
 
 .welcome-title {
+  display: block;
   font-size: clamp(1.6rem, 3.5dvw, 3rem);
   font-weight: 400;
   letter-spacing: 0.05em;
@@ -878,54 +878,17 @@ a.nav-label:visited {
   transform: translateY(0);
 }
 
-/* --- El globo con el resumen de una herramienta --- */
-/* Solo lo llevan las herramientas sueltas, las cinco de arriba: las de los
-   desplegables salen plegadas y el globo taparía la lista. Vive DENTRO del
-   `<a>`, así que el hover es el del propio enlace y no hace falta JS.
-
-   Va por debajo del botón y no por encima: debajo de las cinco sueltas siempre
-   hay más lista, así que el globo cae sobre contenido que ya existe y no le
-   añade scroll al contenedor. */
-.tool-link {
-  position: relative;
-}
-
+/* --- El resumen de una herramienta, debajo del nombre --- */
+/* Solo lo llevan las cinco herramientas sueltas. Fue un globo que salía al
+   pasar por encima: no se leía bien y en móvil no existía. Ahora es una línea
+   fija dentro de la tarjeta, que la lee cualquiera, con o sin ratón. */
 .tool-link-desc {
-  position: absolute;
-  top: calc(100% + 0.35rem);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: var(--z-tooltip);
-  width: max-content;
-  max-width: min(30rem, 60dvw);
-  padding: 0.5rem 0.75rem;
-  background: var(--bg);
-  border: 1px solid var(--border-hover);
-  border-radius: 4px;
-  box-shadow: 0 4px 10px var(--shadow-md);
-  font-family: var(--font-serif);
-  font-size: clamp(0.65rem, 0.85dvw, 0.8rem);
+  display: block;
+  margin-top: 0.25rem;
+  font-size: clamp(0.62rem, 0.8dvw, 0.78rem);
   font-weight: 400;
-  line-height: 1.45;
-  text-align: left;
-  color: var(--text-content);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0.18s ease, visibility 0s linear 0.18s;
-}
-
-.tool-link:hover .tool-link-desc,
-.tool-link:focus-visible .tool-link-desc {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 0.18s ease, visibility 0s linear 0s;
-}
-
-/* Sin ratón no hay hover que enseñe el globo: se queda fuera del todo en vez
-   de aparecer al tocar y comerse el tap que iba al enlace. */
-@media (hover: none) {
-  .tool-link-desc { display: none; }
+  line-height: 1.4;
+  color: var(--text-secondary);
 }
 
 /* --- Botón doble (2 links en una línea) --- */
@@ -1177,9 +1140,10 @@ a.nav-label:visited {
   margin: 0 0 1.4rem;
 }
 
-/* El retrato de quién está detrás: redondo, sin marco, un poco más grande
-   que una miniatura. Fue la mesa sola (pesaba más que el texto) y luego un
-   cuadrado con doble borde encima del email, que se leía como una esquela. */
+/* El retrato de quién está detrás, entre la pregunta y el texto: es el
+   «hola» de la página, no la firma. Redondo, sin marco. Fue la mesa sola
+   (pesaba más que el texto) y luego un cuadrado con doble borde encima del
+   email, que se leía como una esquela. */
 .about-foto,
 .easy-about-foto {
   display: block;
@@ -1187,7 +1151,7 @@ a.nav-label:visited {
   height: 11rem;
   object-fit: cover;
   border-radius: 50%;
-  margin: 2.2rem auto 0;
+  margin: 0 auto 2.4rem;
 }
 
 @media (max-width: 768px) {

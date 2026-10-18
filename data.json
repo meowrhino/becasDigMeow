@@ -1089,28 +1089,28 @@
       "en": "I want a website!",
       "cat": "vull una web!"
     },
-    "instagram": {
-      "usuario": "@meowrhino",
-      "url": "https://instagram.com/meowrhino"
-    },
-    "linkedin": {
-      "usuario": "linkedin",
-      "url": "https://www.linkedin.com/in/meowrhino/"
-    },
-    "cv": {
-      "es": "cv_manu_es.pdf",
-      "en": "cv_manu_en.pdf",
-      "cat": "cv_manu_ca.pdf"
-    },
-    "archivo": [
+    "redes": [
       {
-        "nombre": "archive",
-        "url": "/archive"
+        "nombre": "instagram",
+        "url": "https://instagram.com/meowrhino"
       },
       {
         "nombre": "neocities",
         "url": "https://meowrhino.neocities.org/"
+      },
+      {
+        "nombre": "linkedin",
+        "url": "https://www.linkedin.com/in/meowrhino/"
+      },
+      {
+        "nombre": "archive",
+        "url": "/archive"
       }
-    ]
+    ],
+    "cv": {
+      "es": "cv_manu_es.pdf",
+      "en": "cv_manu_en.pdf",
+      "cat": "cv_manu_ca.pdf"
+    }
   }
 }

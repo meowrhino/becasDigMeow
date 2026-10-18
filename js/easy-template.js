@@ -254,25 +254,21 @@ export function aboutHTML(data, lang) {
   const d = a[lang] || a.es || {};
   const co = data.contacto || {};
   const asunto = encodeURIComponent(co.asunto?.[lang] || co.asunto?.es || "");
-  const cv = co.cv?.[lang] || co.cv?.es;
   const cta = d.cta || {};
   const p = (t) => `<p>${escConEnlaces(t)}</p>`;
 
   return `
     <section class="easy-section easy-about" id="about">
       <h1 class="easy-about-pregunta">${esc(d.pregunta || "")}</h1>
-      <div class="easy-about-entrada">${(d.entrada || []).map(p).join("")}</div>
       ${d.imagen ? `<img class="easy-about-foto" src="${esc(d.imagen.src)}" alt="${esc(d.imagen.alt || "")}" loading="lazy" decoding="async">` : ""}
+      <div class="easy-about-entrada">${(d.entrada || []).map(p).join("")}</div>
       <p class="easy-about-enlaces">
         <a href="${esc(rutaCelda("portfolio", lang))}">${esc(cta.portfolio || "portfolio →")}</a>
         ${cta.statement ? `<a href="${esc(rutaCelda("statement", lang))}">${esc(cta.statement)}</a>` : ""}
       </p>
       <p class="easy-about-contacto">
         <a href="mailto:${esc(co.email)}?subject=${asunto}">${esc(co.email)}</a>
-        ${co.instagram ? `<a href="${esc(co.instagram.url)}" target="_blank" rel="noopener">${esc(co.instagram.usuario)}</a>` : ""}
-        ${co.linkedin ? `<a href="${esc(co.linkedin.url)}" target="_blank" rel="noopener">${esc(co.linkedin.usuario)}</a>` : ""}
-        ${cv ? `<a href="/${esc(cv)}" target="_blank" rel="noopener">cv</a>` : ""}
-        ${(co.archivo || []).map(a => a.url.startsWith("/")
+        ${(co.redes || []).map(a => a.url.startsWith("/")
           ? `<a href="${esc(a.url)}">${esc(a.nombre)}</a>`
           : `<a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.nombre)}</a>`).join("\n        ")}
       </p>

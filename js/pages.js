@@ -46,10 +46,9 @@ const pick = (obj, lang) => (obj?.[lang] ?? obj?.es ?? "");
 /**
  * Genera el HTML de un enlace tipo tarjeta.
  *
- * Si el item trae `desc`, se le cuelga dentro un globo con el resumen de para
- * qué sirve, que sale al pasar por encima. Solo lo llevan las herramientas
- * sueltas: dentro de un desplegable el globo taparía la lista entera. Va
- * DENTRO del `<a>` para que el hover sea el del propio enlace, sin JS.
+ * Si el item trae `desc`, lleva debajo del nombre una línea con el resumen de
+ * para qué sirve. Solo lo llevan las herramientas sueltas. Fue un globo que
+ * salía al pasar por encima; no se leía bien y en móvil no existía.
  *
  * @param {{ nombre: string, url: string, desc?: Object }} item
  * @param {number} [idx] posición en su lista, para re-traducir el globo
@@ -209,34 +208,31 @@ export function renderWelcome(data) {
   // lang-btn por encima (z-index mayor); `renderWelcomeCupon` engancha sus
   // listeners al recorrer los .lang-btn dentro de la celda.
   //
-  // El título no enlaza a ninguna parte: un wordmark significa «inicio» o no
-  // significa nada, y usarlo de puerta a otra pantalla del mismo sitio era una
-  // trampa — nadie pulsa el nombre de un estudio esperando eso. Y debajo
-  // había un hint («navega con los botones de los lados») que explicaba la
-  // interfaz en vez de enseñar trabajo, llamaba «botones» a unas etiquetas de
-  // texto giradas, y era un <button> que nadie sabía que lo era. En su lugar,
-  // más portfolio moviéndose: renderWelcomeCard pinta varias tarjetas.
-  // El centro de la celda es lo primero que ve alguien que acaba de entrar:
-  // el nombre del estudio y qué somos. Nada más. La letra pequeña estuvo aquí
-  // un rato y era demasiado concreta demasiado pronto — condiciones de
-  // contrato a alguien que todavía no sabe si le interesamos. Se mudó al dorso
-  // del cupón, que es donde alguien ya está interesado.
+  // Debajo hubo un hint («navega con los botones de los lados») que explicaba
+  // la interfaz en vez de enseñar trabajo; en su lugar, más portfolio
+  // moviéndose: renderWelcomeCard pinta varias tarjetas. La letra pequeña
+  // también estuvo aquí y era demasiado concreta demasiado pronto; se mudó al
+  // dorso del cupón, que es donde alguien ya está interesado.
   //
-  // La tagline sí enlaza: «estudio de diseño web en barcelona» es la frase que
-  // alguien que acaba de llegar quiere ampliar, y el about está justo debajo.
+  // El nombre y la tagline enlazan los dos al about: «estudio de diseño web en
+  // barcelona» es la frase que alguien que acaba de llegar quiere ampliar, y
+  // el nombre del estudio es lo primero que se pulsa buscando quién hay detrás.
+  const hrefAbout = (lang) => escapeHTML(rutaCelda("about", lang));
   el.innerHTML = `
     <div class="welcome-content">
-      <p class="welcome-title">${escapeHTML(w.titulo)}</p>
-      <a class="welcome-tagline" href="${escapeHTML(rutaCelda("about", currentLang))}">${escapeHTML(pick(w.tagline, currentLang))}</a>
+      <a class="welcome-title" href="${hrefAbout(currentLang)}">${escapeHTML(w.titulo)}</a>
+      <a class="welcome-tagline" href="${hrefAbout(currentLang)}">${escapeHTML(pick(w.tagline, currentLang))}</a>
     </div>
     ${buildLangButtons()}
   `;
 
+  const titleEl = el.querySelector(".welcome-title");
   const taglineEl = el.querySelector(".welcome-tagline");
 
   // i18n en sitio: reusa el mecanismo de attachLangListeners (mismo patrón
   // que el cupón, que registra el suyo aparte sobre la misma celda).
   attachLangListeners(el, (lang) => {
+    titleEl.href = rutaCelda("about", lang);
     if (taglineEl) {
       taglineEl.textContent = pick(w.tagline, lang);
       taglineEl.href = rutaCelda("about", lang);
@@ -516,7 +512,7 @@ export function renderAbout(data) {
   const el = document.querySelector(".celda.about");
   if (!el || !data?.about) return;
 
-  const { email, instagram, linkedin, asunto, cv, archivo } = data.contacto || {};
+  const { email, asunto, redes } = data.contacto || {};
 
   const buildMailto = (lang) => {
     const subject = pick(asunto, lang);
@@ -528,7 +524,6 @@ export function renderAbout(data) {
   const buildContent = (lang) => {
     const d = data.about[lang] || data.about.es;
     if (!d) return "";
-    const cvHref = pick(cv, lang);
     const cta = d.cta || {};
 
     // La foto va SIN `loading="lazy"`: las celdas del lienzo viven todas apiladas
@@ -537,9 +532,9 @@ export function renderAbout(data) {
     // pre-render (easy-template.js), que es un documento normal, sí es lazy.
     return `
       <h2 class="about-pregunta">${escapeHTML(d.pregunta)}</h2>
-      <div class="about-entrada">${(d.entrada || []).map(parrafo).join("")}</div>
       ${d.imagen ? `<img class="about-foto" src="${escapeHTML(d.imagen.src)}"
            alt="${escapeHTML(d.imagen.alt || "")}" decoding="async">` : ""}
+      <div class="about-entrada">${(d.entrada || []).map(parrafo).join("")}</div>
       <p class="about-enlaces">
         <a href="${escapeHTML(rutaCelda("portfolio", lang))}">${escapeHTML(cta.portfolio || "portfolio →")}</a>
         ${cta.statement ? `<a href="${escapeHTML(rutaCelda("statement", lang))}">${escapeHTML(cta.statement)}</a>` : ""}
@@ -547,18 +542,14 @@ export function renderAbout(data) {
       <div class="about-contacto">
         <a class="contacto-email" href="${escapeHTML(buildMailto(lang))}">${escapeHTML(email)}</a>
         <div class="contacto-row">
-          <a class="contacto-link" href="${escapeHTML(instagram.url)}"${esMovil ? "" : ' target="_blank"'} rel="noopener">${escapeHTML(instagram.usuario)}</a>
-          ${linkedin ? `<a class="contacto-link" href="${escapeHTML(linkedin.url)}" target="_blank" rel="noopener">${escapeHTML(linkedin.usuario)}</a>` : ""}
-          ${cvHref ? `<a class="contacto-link" href="/${escapeHTML(cvHref)}" target="_blank" rel="noopener">cv</a>` : ""}
-        </div>
-        ${(archivo || []).length ? `<div class="contacto-row">
-          ${archivo.map(a => {
-            // /archive es nuestro y se abre en la misma pestaña; neocities es
-            // de fuera y se va a la suya.
+          ${(redes || []).map(a => {
+            // /archive es nuestro y se abre en la misma pestaña; el resto es
+            // de fuera y se va a la suya (en móvil, a la misma: ver esMovil).
             const externo = !a.url.startsWith("/");
-            return `<a class="contacto-link${externo ? "" : " contacto-archive"}" href="${escapeHTML(a.url)}"${externo ? ' target="_blank" rel="noopener"' : ""}>${escapeHTML(a.nombre)}</a>`;
+            const blank = externo && !esMovil ? ' target="_blank"' : "";
+            return `<a class="contacto-link${externo ? "" : " contacto-archive"}" href="${escapeHTML(a.url)}"${blank} rel="noopener">${escapeHTML(a.nombre)}</a>`;
           }).join("")}
-        </div>` : ""}
+        </div>
       </div>`;
   };
 
