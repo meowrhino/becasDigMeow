@@ -13,4 +13,3 @@ pruebas
 # Herramientas internas: se abren en local (npx serve .), no se suben al
 # dominio, así no hay nada que indexar.
 og-generator.html
-ig-generator.html
