@@ -540,11 +540,10 @@ export function renderAbout(data) {
       <div class="about-entrada">${(d.entrada || []).map(parrafo).join("")}</div>
       ${d.imagen ? `<img class="about-foto" src="${escapeHTML(d.imagen.src)}"
            alt="${escapeHTML(d.imagen.alt || "")}" decoding="async">` : ""}
-      <div class="about-cta">
-        <a class="about-btn" href="${escapeHTML(buildMailto(lang))}">${escapeHTML(cta.escribir || email)}</a>
-        <a class="about-btn about-btn-secundario" href="${escapeHTML(rutaCelda("portfolio", lang))}">${escapeHTML(cta.portfolio || "portfolio")}</a>
-      </div>
-      ${cta.statement ? `<p class="about-statement-link"><a href="${escapeHTML(rutaCelda("statement", lang))}">${escapeHTML(cta.statement)}</a></p>` : ""}
+      <p class="about-enlaces">
+        <a href="${escapeHTML(rutaCelda("portfolio", lang))}">${escapeHTML(cta.portfolio || "portfolio →")}</a>
+        ${cta.statement ? `<a href="${escapeHTML(rutaCelda("statement", lang))}">${escapeHTML(cta.statement)}</a>` : ""}
+      </p>
       <div class="about-contacto">
         <a class="contacto-email" href="${escapeHTML(buildMailto(lang))}">${escapeHTML(email)}</a>
         <div class="contacto-row">

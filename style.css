@@ -334,7 +334,8 @@ p, h1, h2, h3 {
 
 .minimap-inline-cell {
   background: var(--minimap-cell);
-  transition: background 0.2s ease;
+  /* Sin transición: con fade, al cambiar de celda la que dejas y la que
+     llegas se veían a medias las dos, como un parpadeo. */
 }
 
 .minimap-inline-cell.activa {
@@ -393,7 +394,7 @@ p, h1, h2, h3 {
   font-family: var(--font-serif);
   font-size: clamp(0.5rem, 1dvw, 0.85rem);
   color: var(--minimap-expanded-text);
-  transition: background 0.3s ease, transform 0.3s ease;
+  transition: transform 0.3s ease;
   text-transform: lowercase;
 }
 
@@ -1176,32 +1177,17 @@ a.nav-label:visited {
   margin: 0 0 1.4rem;
 }
 
-/* La foto de quién está detrás. La caja del about es estrecha (720px como
-   mucho) y la foto es apaisada, así que ocupa el ancho entero de la columna:
-   recortarla a un retrato cuadrado quitaría justo lo que la hace decir algo,
-   que es la mesa alrededor. */
-/* El retrato, pequeño y con el doble borde del cupón (borde fino y un segundo
-   a 4px): es el sello del estudio, no un avatar. Hasta octubre de 2026 era la
-   foto de la mesa a todo el ancho; en un about de tres párrafos pesaba más
-   que el texto. */
+/* La foto de quién está detrás, a todo el ancho de la columna y sin marco.
+   Fue la mesa sola (pesaba más que el texto) y luego un retrato cuadrado con
+   doble borde: encima del email y los enlaces se leía como una esquela. Ahora
+   es manu en la silla del estudio, justo después de «te la entregamos en
+   persona». */
 .about-foto,
 .easy-about-foto {
   display: block;
-  width: 9rem;
-  height: 9rem;
-  object-fit: cover;
-  margin: 2rem auto 0;
-  border: 1px solid var(--text);
-  outline: 1px solid var(--text);
-  outline-offset: 4px;
-}
-
-@media (max-width: 768px) {
-  .about-foto,
-  .easy-about-foto {
-    width: 8rem;
-    height: 8rem;
-  }
+  width: 100%;
+  height: auto;
+  margin: 2.2rem auto 0;
 }
 
 /* Los enlaces DENTRO del texto: el sitio entero tiene `a { color: inherit;
@@ -1233,51 +1219,19 @@ a.nav-label:visited {
   50%      { opacity: var(--about-link-valle); }
 }
 
-/* El about acaba en una llamada: escribir o ver el trabajo. Los botones son
-   los del cupón de la portada (borde fino, mayúsculas pequeñas, se rellenan al
-   pasar), para que la invitación se lea igual en las dos celdas. Debajo, una
-   línea al statement para quien quiera saber por qué, y luego el contacto. */
-.about-cta {
+/* El about acaba en dos enlaces en texto, discretos como el tagline de la
+   portada: el trabajo y lo que pensamos. Hubo dos botones (mayúsculas, borde)
+   y eran lo único con esa voz en una web toda en minúscula; además «escríbeme»
+   repetía el email grande de justo debajo. */
+.about-enlaces {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.8rem;
-  margin-top: 2.2rem;
-}
-
-.about-btn {
-  display: inline-block;
-  padding: 0.6rem 1.5rem;
-  border: 1px solid var(--text);
-  color: var(--text);
-  text-decoration: none;
-  font-size: 0.78rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.about-btn:hover,
-.about-btn:focus-visible {
-  background: var(--text);
-  color: var(--bg);
-}
-
-.about-btn-secundario {
-  border-color: var(--text-secondary);
-  color: var(--text-secondary);
-}
-
-.about-statement-link {
-  margin: 1.4rem 0 0;
-  text-align: center;
+  gap: 0.4rem 1.8rem;
+  margin: 2rem 0 0;
   font-size: 0.9rem;
   color: var(--text-secondary);
 }
-
-
-
-
 
 /* En móvil, 70dvw son 260px: demasiado estrecho para cinco apartados de texto
    seguidos. El about es la celda más larga del lienzo y se lee de arriba abajo,
