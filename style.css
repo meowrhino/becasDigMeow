@@ -1180,12 +1180,28 @@ a.nav-label:visited {
    mucho) y la foto es apaisada, así que ocupa el ancho entero de la columna:
    recortarla a un retrato cuadrado quitaría justo lo que la hace decir algo,
    que es la mesa alrededor. */
-.about-foto {
+/* El retrato, pequeño y con el doble borde del cupón (borde fino y un segundo
+   a 4px): es el sello del estudio, no un avatar. Hasta octubre de 2026 era la
+   foto de la mesa a todo el ancho; en un about de tres párrafos pesaba más
+   que el texto. */
+.about-foto,
+.easy-about-foto {
   display: block;
-  width: 100%;
-  height: auto;
-  margin-top: 1.6rem;
-  border-radius: 2px;
+  width: 9rem;
+  height: 9rem;
+  object-fit: cover;
+  margin: 2rem auto 0;
+  border: 1px solid var(--text);
+  outline: 1px solid var(--text);
+  outline-offset: 4px;
+}
+
+@media (max-width: 768px) {
+  .about-foto,
+  .easy-about-foto {
+    width: 8rem;
+    height: 8rem;
+  }
 }
 
 /* Los enlaces DENTRO del texto: el sitio entero tiene `a { color: inherit;
@@ -2263,7 +2279,6 @@ html.easy, html.easy body {
 }
 .easy-importante { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); max-width: 46rem; }
 .easy-importante .easy-h3 { margin-top: 0; }
-.easy-about-foto { display: block; width: 100%; max-width: 46rem; height: auto; margin: 1.6rem 0; border-radius: 2px; }
 
 /* ============================================
    PORTFOLIO — Skeleton + blur-up (preloader)
