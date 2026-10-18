@@ -187,7 +187,7 @@
         "grande": "tu web en un mes",
         "caduca": "primera reunión gratis",
         "subject": "quiero una web!",
-        "incluye": "diseño a medida. sin servidores ni cuotas. te enseñamos a mantenerla.",
+        "incluye": "diseñada contigo. sin servidores ni cuotas. te enseñamos a mantenerla.",
         "cta": "escríbeme",
         "condiciones": "3 entregas · 1 ronda de cambios cada una"
       },
@@ -196,7 +196,7 @@
         "grande": "your website in a month",
         "caduca": "first meeting free",
         "subject": "I want a website!",
-        "incluye": "custom design. no servers, no fees. we teach you to maintain it.",
+        "incluye": "designed with you. no servers, no fees. we teach you to maintain it.",
         "cta": "let's talk",
         "condiciones": "3 deliveries · 1 round of changes each"
       },
@@ -205,7 +205,7 @@
         "grande": "la teva web en un mes",
         "caduca": "primera reunió gratis",
         "subject": "vull una web!",
-        "incluye": "disseny a mida. sense servidors ni quotes. t'ensenyem a mantenir-la.",
+        "incluye": "dissenyada amb tu. sense servidors ni quotes. t'ensenyem a mantenir-la.",
         "cta": "escriu-me",
         "condiciones": "3 lliuraments · 1 ronda de canvis cadascun"
       }
@@ -435,7 +435,7 @@
           "parrafos": [
             "la primera reunión es gratis y no compromete a nada. empezamos por entender qué haces, qué necesitas y qué te gustaría que fuese tu web.",
             "trae 3–5 referentes de cosas que te gusten o que no: webs, carteles, videojuegos, interfaces que hayas visto por ahí. los miramos contigo y hablamos de estructura, estética y dinero.",
-            "no tenemos tarifa fija. el presupuesto lo cerramos contigo en esa reunión, según lo que necesita el proyecto y según quién lo encarga: no cuesta lo mismo una web para alguien que empieza que para una empresa.",
+            "no tenemos tarifa fija: el presupuesto lo cerramos contigo en esa reunión, según lo que necesita el proyecto.",
             "salimos con un primer boceto de lo que podría ser, una lista de lo que necesitamos de ti —textos, imágenes y tu identidad visual si la tienes— y una fecha para pasárnoslo."
           ]
         },
@@ -489,7 +489,7 @@
           "parrafos": [
             "the first meeting is free and commits you to nothing. we start by understanding what you do, what you need and what you would like your website to be.",
             "bring 3–5 references of things you like or don't: websites, posters, video games, interfaces you've come across anywhere. we go through them together and talk about structure, look and money.",
-            "we have no fixed rate. we settle the budget with you in that meeting, according to what the project needs and who is commissioning it: a website doesn't cost the same for someone starting out as for a company.",
+            "we have no fixed rate: we settle the budget with you in that meeting, according to what the project needs.",
             "we leave with a first sketch of what it could be, a list of what we need from you —texts, images and your visual identity if you have one— and a date to send it over."
           ]
         },
@@ -543,7 +543,7 @@
           "parrafos": [
             "la primera reunió és gratis i no compromet a res. comencem per entendre què fas, què necessites i què t'agradaria que fos la teva web.",
             "porta 3–5 referents de coses que t'agradin o que no: webs, cartells, videojocs, interfícies que hagis vist per aquí i per allà. els mirem amb tu i parlem d'estructura, estètica i diners.",
-            "no tenim tarifa fixa. el pressupost el tanquem amb tu en aquella reunió, segons el que necessita el projecte i segons qui l'encarrega: no costa el mateix una web per a algú que comença que per a una empresa.",
+            "no tenim tarifa fixa: el pressupost el tanquem amb tu en aquella reunió, segons el que necessita el projecte.",
             "en sortim amb un primer esbós del que podria ser, una llista del que necessitem de tu —textos, imatges i la teva identitat visual si en tens— i una data per passar-nos-ho."
           ]
         },
@@ -596,7 +596,7 @@
       "pregunta": "¿quieres una web?",
       "entrada": [
         "somos un pequeño estudio de diseño y desarrollo web en barcelona. detrás está [manu latour](https://www.linkedin.com/in/meowrhino/), que diseña y programa webs a medida desde 2020.",
-        "hacemos webs desde cero para personas que quieran tener un lugar único en internet, sin plantillas ni cuotas de mantenimiento. sencillas, extrañas, experimentales o completamente absurdas.",
+        "hacemos webs desde cero y las diseñamos contigo: tú decides qué cuenta y cómo se ve, nosotros la pensamos y la programamos. así la web es tuya de verdad, y no una que nos gustó a nosotros. sencillas, extrañas, experimentales o completamente absurdas, sin plantillas ni cuotas de mantenimiento.",
         "te la entregamos en persona y sales sabiendo actualizarla por tu cuenta. el código es tuyo, el dominio es tuyo, y no necesitas seguir pagándonos para que siga funcionando."
       ],
       "imagen": {
@@ -613,7 +613,7 @@
       "pregunta": "want a website?",
       "entrada": [
         "we are a small web design and development studio in barcelona. behind it is [manu latour](https://www.linkedin.com/in/meowrhino/), who has been designing and coding custom websites since 2020.",
-        "we make websites from scratch for people who want a place of their own on the internet, with no templates and no maintenance fees. simple, strange, experimental or completely absurd.",
+        "we make websites from scratch and design them with you: you decide what it says and how it looks, we think it out and code it. that way the website is truly yours, not one we happened to like. simple, strange, experimental or completely absurd, with no templates and no maintenance fees.",
         "we hand it over in person and you leave knowing how to update it yourself. the code is yours, the domain is yours, and you don't need to keep paying us for it to keep running."
       ],
       "imagen": {
@@ -630,7 +630,7 @@
       "pregunta": "vols una web?",
       "entrada": [
         "som un petit estudi de disseny i desenvolupament web a barcelona. al darrere hi ha [en manu latour](https://www.linkedin.com/in/meowrhino/), que dissenya i programa webs a mida des del 2020.",
-        "fem webs des de zero per a persones que vulguin tenir un lloc únic a internet, sense plantilles ni quotes de manteniment. senzilles, estranyes, experimentals o completament absurdes.",
+        "fem webs des de zero i les dissenyem amb tu: tu decideixes què explica i com es veu, nosaltres la pensem i la programem. així la web és teva de veritat, i no una que ens va agradar a nosaltres. senzilles, estranyes, experimentals o completament absurdes, sense plantilles ni quotes de manteniment.",
         "te l'entreguem en persona i en surts sabent actualitzar-la pel teu compte. el codi és teu, el domini és teu, i no necessites continuar pagant-nos perquè segueixi funcionant."
       ],
       "imagen": {
@@ -652,28 +652,24 @@
         "internet no es instagram, ni google.",
         "internet son también todas esas [pequeñas páginas](https://oneterabyteofkilobyteage.tumblr.com/) que alguien hizo porque quería contar, enseñar o compartir algo. pero cada vez más, como tantas cosas, está empezando a ser propiedad de unos pocos.",
         "y merece la pena que tengas un espacio propio, que sea como tú quieras y que lo haya hecho alguien siguiendo tus deseos.",
-        "hacemos cada web desde cero para que decidas qué quieres contar y cómo quieres contarlo. creamos el concepto, pensamos la estructura, diseñamos la interfaz y escribimos el código."
+        "por eso diseñamos cada web contigo, no para ti. tú decides qué quieres contar y cómo quieres contarlo; nosotros creamos el concepto, pensamos la estructura, dibujamos la interfaz y escribimos el código. no es dejarte el trabajo: es la única manera de que tu rincón en internet sea tuyo y te siga gustando dentro de cinco años."
       ],
       "secciones": [
+        {
+          "titular": "por qué lo hacemos",
+          "parrafos": [
+            "internet lleva mucho tiempo acompañándonos y nos ha hecho mucha compañía. hacer de internet un lugar un poquito mejor es la finalidad última de nuestro trabajo, de cada proyecto que construimos.",
+            "nos interesa entender qué haces, qué necesitas y qué puede funcionar mejor para ti: una fotógrafa, un pequeño negocio, alguien que quiere contar una historia y ponerla al alcance de quien quiera conocerla.",
+            "queremos que cuando terminemos tengas una web de la que presumas."
+          ]
+        },
         {
           "titular": "tu web es tuya",
           "parrafos": [
             "tú tienes tu repositorio en github y tu dominio en cloudflare. ni en tus textos, ni en tus imágenes, ni en tus proyectos habrá anuncios ni plantillas que te fuercen a hacer nada.",
             "el código que generemos lo podrás cambiar tú o quien tú quieras, y en github se te queda el historial de todo lo que has ido haciendo.",
-            "una web puede ser mucho más sencilla de lo que parece: textos, imágenes y código. usamos una estructura que te permite actualizar el contenido sin tener que saber programar.",
-            "el alojamiento puede ser gratuito y el dominio es prácticamente el único gasto que se repite.",
-            "y si algún día quieres cambiar de alojamiento, de estudio o de proveedor, puedes hacerlo. recomendamos siempre trabajar con proveedores de proximidad.",
-            "conservamos el acceso a tu web por si algún día necesitas ayuda, pero no tienes que seguir trabajando con el estudio para que siga funcionando, e incluso puedes revocarnos el acceso cuando quieras. está ahí para echarte una mano si algún día lo necesitas, o para que puedas pedirnos las actualizaciones que necesites.",
-            "si quieres que hagamos los cambios por ti, puedes contratarnos por horas. si quieres hacerlo tú, te enseñamos cómo."
-          ]
-        },
-        {
-          "titular": "por qué lo hacemos",
-          "parrafos": [
-            "internet lleva mucho tiempo acompañándonos y nos ha hecho mucha compañía. hacer de internet un lugar un poquito mejor es la finalidad última de nuestro trabajo, de cada proyecto que construimos.",
-            "nos interesa entender qué haces, qué necesitas y qué puede funcionar mejor para ti.",
-            "queremos que cuando terminemos tengas una web de la que presumas, que sirva para construir el relato que necesites: fotógrafa profesional, pequeña o mediana empresa, microcelebridad de internet, o, simplemente tú, alguien que quiere contar una historia y ponerla a disposición de quien pueda estar interesado en conocerla.",
-            "y te damos [las herramientas](/links) que necesites para mantenerla: [imgToWeb](https://meowrhino.github.io/imgToWeb/) para comprimir imágenes, [colorFun](https://meowrhino.github.io/colorFun/) para elegir colores…"
+            "una web puede ser mucho más sencilla de lo que parece: textos, imágenes y código. usamos una estructura que te permite actualizar el contenido sin tener que saber programar, y te enseñamos a hacerlo.",
+            "y si algún día quieres cambiar de alojamiento, de estudio o de proveedor, puedes hacerlo: no tienes que seguir trabajando con nosotros para que tu web siga funcionando."
           ]
         },
         {
@@ -692,28 +688,24 @@
         "the internet is not instagram, and it is not google.",
         "the internet is also all those [small pages](https://oneterabyteofkilobyteage.tumblr.com/) that someone made because they wanted to tell, teach or share something. but more and more, like so many things, it is becoming the property of a few.",
         "and it is worth having a space of your own, one that looks the way you want and that somebody actually made, following your wishes.",
-        "we make every website from scratch so that you decide what you want to tell and how you want to tell it. we come up with the concept, think out the structure, design the interface and write the code."
+        "that is why we design every website with you, not for you. you decide what you want to tell and how you want to tell it; we come up with the concept, think out the structure, draw the interface and write the code. it is not handing you the work: it is the only way your corner of the internet is yours, and still yours in five years."
       ],
       "secciones": [
+        {
+          "titular": "why we do this",
+          "parrafos": [
+            "the internet has been with us for a long time and it has kept us good company. making the internet a slightly better place is the whole point of our work, of every project we build.",
+            "we want to understand what you do, what you need and what can work best for you: a photographer, a small business, someone who wants to tell a story and put it within reach of whoever wants to know it.",
+            "we want you to end up with a website you show off."
+          ]
+        },
         {
           "titular": "your website is yours",
           "parrafos": [
             "the repository on github is yours and the domain on cloudflare is yours. there will be no ads and no templates forcing anything on you: not in your texts, not in your images, not in your projects.",
             "the code we write is yours to change, or anyone else's you choose, and github keeps the history of everything you have been doing.",
-            "a website can be far simpler than it looks: text, images and code. we use a structure that lets you update the content without having to know how to program.",
-            "hosting can be free and the domain is pretty much the only expense that comes back.",
-            "and if one day you want to change hosting, studio or provider, you can. we always recommend working with local providers.",
-            "we keep access to your website in case you ever need help, but you don't have to keep working with the studio for it to keep running, and you can revoke our access whenever you want. it is there so we can give you a hand if you ever need it, or so you can ask us for the updates you need.",
-            "if you want us to make the changes for you, you can hire us by the hour. if you want to do it yourself, we'll show you how."
-          ]
-        },
-        {
-          "titular": "why we do this",
-          "parrafos": [
-            "the internet has been with us for a long time and it has kept us good company. making the internet a slightly better place is the whole point of our work, of every project we build.",
-            "we want to understand what you do, what you need and what can work best for you.",
-            "we want you to end up with a website you show off, one that builds whatever story you need: professional photographer, small or medium-sized business, internet microcelebrity, or simply you, someone who wants to tell a story and put it within reach of whoever might be interested in it.",
-            "and we give you [the tools](/en/links) you need to look after it: [imgToWeb](https://meowrhino.github.io/imgToWeb/) to compress images, [colorFun](https://meowrhino.github.io/colorFun/) to pick colours…"
+            "a website can be far simpler than it looks: text, images and code. we use a structure that lets you update the content without having to know how to program, and we show you how.",
+            "and if one day you want to change hosting, studio or provider, you can: you don't have to keep working with us for your website to keep running."
           ]
         },
         {
@@ -732,28 +724,24 @@
         "internet no és instagram, ni google.",
         "internet també són totes aquelles [petites pàgines](https://oneterabyteofkilobyteage.tumblr.com/) que algú va fer perquè volia explicar, ensenyar o compartir alguna cosa. però cada cop més, com tantes coses, està començant a ser propietat d'uns quants.",
         "i val la pena que tinguis un espai propi, que sigui com tu vulguis i que l'hagi fet algú seguint els teus desitjos.",
-        "fem cada web des de zero perquè decideixis què vols explicar i com ho vols explicar. creem el concepte, pensem l'estructura, dissenyem la interfície i escrivim el codi."
+        "per això dissenyem cada web amb tu, no per a tu. tu decideixes què vols explicar i com ho vols explicar; nosaltres creem el concepte, pensem l'estructura, dibuixem la interfície i escrivim el codi. no és deixar-te la feina: és l'única manera que el teu racó a internet sigui teu i et segueixi agradant d'aquí a cinc anys."
       ],
       "secciones": [
+        {
+          "titular": "per què ho fem",
+          "parrafos": [
+            "internet fa molt temps que ens acompanya i ens ha fet molta companyia. fer d'internet un lloc una miqueta millor és la finalitat última de la nostra feina, de cada projecte que construïm.",
+            "ens interessa entendre què fas, què necessites i què pot funcionar millor per a tu: una fotògrafa, un petit negoci, algú que vol explicar una història i posar-la a l'abast de qui vulgui conèixer-la.",
+            "volem que quan acabem tinguis una web de la qual presumeixis."
+          ]
+        },
         {
           "titular": "la teva web és teva",
           "parrafos": [
             "tu tens el teu repositori a github i el teu domini a cloudflare. ni en els teus textos, ni en les teves imatges, ni en els teus projectes hi haurà anuncis ni plantilles que t'obliguin a res.",
             "el codi que generem el podràs canviar tu o qui tu vulguis, i a github et queda l'historial de tot el que has anat fent.",
-            "una web pot ser molt més senzilla del que sembla: textos, imatges i codi. fem servir una estructura que et permet actualitzar el contingut sense haver de saber programar.",
-            "l'allotjament pot ser gratuït i el domini és pràcticament l'única despesa que es repeteix.",
-            "i si algun dia vols canviar d'allotjament, d'estudi o de proveïdor, pots fer-ho. recomanem sempre treballar amb proveïdors de proximitat.",
-            "conservem l'accés a la teva web per si algun dia necessites ajuda, però no has de continuar treballant amb l'estudi perquè segueixi funcionant, i fins i tot ens pots revocar l'accés quan vulguis. serveix per donar-te un cop de mà si algun dia ho necessites, o perquè ens puguis demanar les actualitzacions que necessitis.",
-            "si vols que fem els canvis per tu, ens pots contractar per hores. si ho vols fer tu, t'ensenyem com."
-          ]
-        },
-        {
-          "titular": "per què ho fem",
-          "parrafos": [
-            "internet fa molt temps que ens acompanya i ens ha fet molta companyia. fer d'internet un lloc una miqueta millor és la finalitat última de la nostra feina, de cada projecte que construïm.",
-            "ens interessa entendre què fas, què necessites i què pot funcionar millor per a tu.",
-            "volem que quan acabem tinguis una web de la qual presumeixis, que serveixi per construir el relat que necessitis: fotògrafa professional, petita o mitjana empresa, microcelebritat d'internet, o, simplement tu, algú que vol explicar una història i posar-la a disposició de qui pugui estar interessat a conèixer-la.",
-            "i et donem [les eines](/ca/links) que necessitis per mantenir-la: [imgToWeb](https://meowrhino.github.io/imgToWeb/) per comprimir imatges, [colorFun](https://meowrhino.github.io/colorFun/) per triar colors…"
+            "una web pot ser molt més senzilla del que sembla: textos, imatges i codi. fem servir una estructura que et permet actualitzar el contingut sense haver de saber programar, i t'ensenyem a fer-ho.",
+            "i si algun dia vols canviar d'allotjament, d'estudi o de proveïdor, pots fer-ho: no has de continuar treballant amb nosaltres perquè la teva web segueixi funcionant."
           ]
         },
         {
