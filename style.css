@@ -1177,17 +1177,25 @@ a.nav-label:visited {
   margin: 0 0 1.4rem;
 }
 
-/* La foto de quién está detrás, a todo el ancho de la columna y sin marco.
-   Fue la mesa sola (pesaba más que el texto) y luego un retrato cuadrado con
-   doble borde: encima del email y los enlaces se leía como una esquela. Ahora
-   es manu en la silla del estudio, justo después de «te la entregamos en
-   persona». */
+/* El retrato de quién está detrás: redondo, sin marco, un poco más grande
+   que una miniatura. Fue la mesa sola (pesaba más que el texto) y luego un
+   cuadrado con doble borde encima del email, que se leía como una esquela. */
 .about-foto,
 .easy-about-foto {
   display: block;
-  width: 100%;
-  height: auto;
+  width: 11rem;
+  height: 11rem;
+  object-fit: cover;
+  border-radius: 50%;
   margin: 2.2rem auto 0;
+}
+
+@media (max-width: 768px) {
+  .about-foto,
+  .easy-about-foto {
+    width: 9rem;
+    height: 9rem;
+  }
 }
 
 /* Los enlaces DENTRO del texto: el sitio entero tiene `a { color: inherit;
