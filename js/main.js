@@ -30,6 +30,7 @@ import {
   renderMetodologia,
   renderCondiciones,
   renderAbout,
+  renderStatement,
 } from "./pages.js";
 import { renderMapa, leerMapa, aGrid } from "./mapa.js";
 import { renderPortfolio } from "./portfolio.js";
@@ -66,6 +67,7 @@ async function renderizarContenido() {
   renderPortfolio(data);
   renderMapa(data);
   renderAbout(data);
+  renderStatement(data);
   renderBuscaminas();
 }
 
@@ -134,9 +136,10 @@ if (prerender) {
 // competir por su búsqueda, en vez de amontonarse todo en la raíz.
 //
 // Cambios respecto a la rejilla anterior:
-//   · `statement` desaparece como celda: sus líneas son ahora la entrada del
-//     about, que es donde se explica qué es esto. Como pantalla aparte eran un
-//     cartel de cinco frases.
+//   · `statement` volvió como celda en octubre de 2026: el about se quedó en
+//     tres párrafos y un contacto (es la página a la que se llega para decidir
+//     si escribirnos), y lo que pensamos —internet puede ser otra cosa, tu web
+//     es tuya, jardines digitales— tiene su propia URL en vez de alargar esa.
 //   · `contacto` se convierte en `about`: cuatro datos de contacto no sostienen
 //     una página, pero quién eres y por qué haces esto sí, y el email sigue ahí.
 //   · `footer` pasa a llamarse `condiciones`, que es lo que de verdad contiene.
@@ -149,9 +152,8 @@ if (prerender) {
 // a un buscador.
 //
 // La rejilla ya no se escribe aquí: sale del reparto que tenga guardado esta
-// pestaña (js/mapa.js), que de fábrica es el de siempre —links arriba, la
-// fila central, portfolio abajo— colocado en un terreno de 5×5 y con `mapa` a
-// la derecha del portfolio. Quien no haya tocado nada ve exactamente lo mismo
+// pestaña (js/mapa.js), que de fábrica pone la portada en el centro de un
+// terreno de 5×5 con portfolio, about y statement pegados a ella. Quien no haya tocado nada ve exactamente lo mismo
 // que antes: los minimapas dibujan solo el rectángulo ocupado, no las 25
 // casillas del terreno.
 const reparto = leerMapa();
@@ -161,6 +163,7 @@ configurarNavegacion({
   clasesCss: {
     "links": "tools",
     "about": "about",
+    "statement": "statement",
     "metodología": "metodologia",
     "welcome": "welcome",
     "condiciones": "footer",
@@ -171,12 +174,11 @@ configurarNavegacion({
   redirects: {
     "links": ["tools"],
     // Los hash viejos siguen llevando a alguna parte: `#contacto` es ahora el
-    // about, y `#footer` y `#statement` no existen pero apuntan a lo más
-    // parecido. `/#portfolio` también, que fue la entrada al portfolio antes de
-    // que tuviera ruta y está en enlaces de fuera.
+    // about y `#footer` no existe pero apunta a lo más parecido. `/#portfolio`
+    // también, que fue la entrada al portfolio antes de que tuviera ruta y
+    // está en enlaces de fuera.
     "about": ["contacto"],
     "condiciones": ["footer"],
-    "welcome": ["statement"],
     // `#plano` fue el nombre de la celda mapa durante un commit. No lo enlaza
     // nada de fuera, pero el alias cuesta una línea y evita que un enlace que
     // alguien copiara ese día caiga en la portada sin explicación.

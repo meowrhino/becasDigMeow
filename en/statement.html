@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+  <!-- Bloque que depende del idioma (título, description, canonical, og/twitter
+       y los hreflang). Lo genera build-seo.js para las tres variantes de la home:
+       index.html (es), en.html y ca.html. NO editar a mano: los textos salen de
+       data.json (meta.title / meta.description). -->
+  <!-- BUILD:head:start -->
+  <meta name="description" content="what we think: that the internet is not just instagram and google, that your website has to be yours —code, domain and history— and that it can grow slowly, like a digital garden.">
+  <title>the internet can be something else — why we make custom websites | meowrhino studio</title>
+  <link rel="canonical" href="https://meowrhino.studio/en/statement">
+  <link rel="alternate" hreflang="es" href="https://meowrhino.studio/statement">
+  <link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/statement">
+  <link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/statement">
+  <link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/statement">
+  <meta property="og:title" content="the internet can be something else — why we make custom websites | meowrhino studio">
+  <meta property="og:description" content="what we think: that the internet is not just instagram and google, that your website has to be yours —code, domain and history— and that it can grow slowly, like a digital garden.">
+  <meta property="og:url" content="https://meowrhino.studio/en/statement">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:title" content="the internet can be something else — why we make custom websites | meowrhino studio">
+  <meta name="twitter:description" content="what we think: that the internet is not just instagram and google, that your website has to be yours —code, domain and history— and that it can grow slowly, like a digital garden.">
+  <!-- BUILD:head:end -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="meowrhino studio">
+  <meta property="og:image" content="https://meowrhino.studio/favicon/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="meowrhino studio — estudio de diseño web en Barcelona">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://meowrhino.studio/favicon/og-image.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="icon" href="/favicon/favicon.ico">
+  <link rel="preload" href="/fonts/inknut-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+  <script>
+    // Anti-flash: resuelve el tema antes del primer render.
+    // Prioridad: localStorage > prefers-color-scheme > light (default studio).
+    (function() {
+      var t = localStorage.getItem("meowrhino-theme");
+      if (!t && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";
+      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+      // Marca que hay JS ANTES de que el body se parsee, para que el CSS oculte
+      // el bloque pre-renderizado (#seo-prerender) desde el primer pintado: el
+      // visitante ve el grid, nunca un destello del contenido estático. Sin JS
+      // la clase no se pone y el bloque queda visible como fallback real.
+      document.documentElement.classList.add("js");
+    })();
+  </script>
+  <!-- BUILD:preload:start -->
+  <link rel="modulepreload" href="/js/main.js">
+  <link rel="modulepreload" href="/js/data.js">
+  <link rel="modulepreload" href="/js/navigation.js">
+  <link rel="modulepreload" href="/js/pages.js">
+  <link rel="modulepreload" href="/js/mapa.js">
+  <link rel="modulepreload" href="/js/portfolio.js">
+  <link rel="modulepreload" href="/js/buscaminas.js">
+  <link rel="modulepreload" href="/js/rutas.js">
+  <link rel="modulepreload" href="/js/easy-template.js">
+  <link rel="modulepreload" href="/js/theme.js">
+  <link rel="modulepreload" href="/js/shell.js">
+  <link rel="modulepreload" href="/js/utils.js">
+  <link rel="modulepreload" href="/js/zoom.js">
+  <link rel="modulepreload" href="/js/scroll-gradients.js">
+  <link rel="modulepreload" href="/js/welcome-card.js">
+  <link rel="modulepreload" href="/js/welcome-cupon.js">
+  <link rel="modulepreload" href="/js/proyecto-template.js">
+  <link rel="modulepreload" href="/js/rebote.js">
+  <!-- BUILD:preload:end -->
+</head>
+<body>
+  <a href="#content" class="skip-link">saltar al contenido</a>
+  <main id="content" role="main" tabindex="-1">
+    <!-- Contenido pre-renderizado por build-seo.js: el mismo texto que pintan
+         las celdas del grid, disponible en el primer byte para los buscadores.
+         Oculto por CSS en cuanto hay JS y eliminado del DOM por main.js; sin JS
+         se queda como versión estática navegable. NO editar a mano: se regenera
+         desde data.json en cada commit que la toque. -->
+    <div id="seo-prerender">
+      <!-- BUILD:home:start -->
+
+    <section class="easy-section easy-about" id="statement">
+      <h1 class="easy-about-pregunta">the internet can be something else</h1>
+      <div class="easy-about-entrada"><p>the internet is not instagram, and it is not google.</p><p>the internet is also all those <a href="https://oneterabyteofkilobyteage.tumblr.com/" target="_blank" rel="noopener">small pages</a> that someone made because they wanted to tell, teach or share something. but more and more, like so many things, it is becoming the property of a few.</p><p>and it is worth having a space of your own, one that looks the way you want and that somebody actually made, following your wishes.</p><p>we make every website from scratch so that you decide what you want to tell and how you want to tell it. we come up with the concept, think out the structure, design the interface and write the code.</p></div>
+      
+      <h2 class="easy-h3">your website is yours</h2>
+      <p>the repository on github is yours and the domain on cloudflare is yours. there will be no ads and no templates forcing anything on you: not in your texts, not in your images, not in your projects.</p><p>the code we write is yours to change, or anyone else's you choose, and github keeps the history of everything you have been doing.</p><p>a website can be far simpler than it looks: text, images and code. we use a structure that lets you update the content without having to know how to program.</p><p>hosting can be free and the domain is pretty much the only expense that comes back.</p><p>and if one day you want to change hosting, studio or provider, you can. we always recommend working with local providers.</p><p>we keep access to your website in case you ever need help, but you don't have to keep working with the studio for it to keep running, and you can revoke our access whenever you want. it is there so we can give you a hand if you ever need it, or so you can ask us for the updates you need.</p><p>if you want us to make the changes for you, you can hire us by the hour. if you want to do it yourself, we'll show you how.</p>
+      <h2 class="easy-h3">why we do this</h2>
+      <p>the internet has been with us for a long time and it has kept us good company. making the internet a slightly better place is the whole point of our work, of every project we build.</p><p>we want to understand what you do, what you need and what can work best for you.</p><p>we want you to end up with a website you show off, one that builds whatever story you need: professional photographer, small or medium-sized business, internet microcelebrity, or simply you, someone who wants to tell a story and put it within reach of whoever might be interested in it.</p><p>and we give you <a href="/en/links">the tools</a> you need to look after it: <a href="https://meowrhino.github.io/imgToWeb/" target="_blank" rel="noopener">imgToWeb</a> to compress images, <a href="https://meowrhino.github.io/colorFun/" target="_blank" rel="noopener">colorFun</a> to pick colours…</p>
+      <h2 class="easy-h3">digital gardens</h2>
+      <p>some people call this <a href="https://www.cccb.org/en/w/articles/digitals-gardens-an-end-to-the-infinite-scroll" target="_blank" rel="noopener">digital gardens</a>: small spaces of the internet that are cultivated instead of published and abandoned.</p><p>they grow slowly. they change shape. they have half-finished things and things that have been there for years.</p><p>they don't need to compete for our attention, they are simply there. we like to think your website can be one of those, a small place that exists because you decided it should exist.</p>
+    </section>
+    <nav class="prerender-nota" aria-label="keep browsing">
+      <ul><li><a href="/en">welcome</a></li><li><a href="/en/portfolio">portfolio</a></li><li><a href="/en/about">about</a></li><li><a href="/en/methodology">methodology</a></li><li><a href="/en/terms">terms</a></li><li><a href="/en/links">links</a></li><li><a href="/en/map">map</a></li><li><a href="/en/minesweeper">minesweeper</a></li></ul>
+    </nav>
+  <!-- BUILD:home:end -->
+    </div>
+  </main>
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

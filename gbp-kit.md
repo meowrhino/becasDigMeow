@@ -37,7 +37,7 @@ colectivos sin ánimo de lucro. escríbenos: la primera reunión no cuesta nada.
 
 ## Servicios (añádelos como "servicios" en la ficha)
 
-- diseño web a medida — desde 850 € *(ojo: si el cupón caduca a final de agosto, revisa el precio antes)*
+- diseño web a medida — presupuesto según proyecto *(sin precio público desde octubre de 2026; si la ficha aún dice «desde 850 €», quítalo)*
 - web para artistas y portfolios
 - web para pequeños negocios
 - mantenimiento web (opcional)

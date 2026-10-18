@@ -698,7 +698,7 @@ a.nav-label:visited {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;   /* la caja la marca el dorso: el precio va centrado en ella */
+  justify-content: center;   /* la caja la marca el dorso: la promesa va centrada en ella */
   gap: 0.3rem;
 }
 
@@ -728,8 +728,10 @@ a.nav-label:visited {
   color: var(--text-muted);
 }
 
-.welcome-cupon-precio {
-  font-size: 2.6rem;
+/* Fue el precio (850 €) hasta octubre de 2026; ahora es «tu web en un mes»,
+   que son dieciséis letras en una cara de 23rem con nowrap: de ahí el cuerpo. */
+.welcome-cupon-grande {
+  font-size: 1.7rem;
   font-weight: 600;
   letter-spacing: 0.02em;
   line-height: 1;
@@ -815,8 +817,8 @@ a.nav-label:visited {
     font-size: 0.6rem;
     letter-spacing: 0.15em;
   }
-  .welcome-cupon-precio {
-    font-size: 1.55rem;
+  .welcome-cupon-grande {
+    font-size: 1.1rem;
     margin: 0.15rem 0 0.3rem;
   }
   .welcome-cupon-iva {
@@ -1112,7 +1114,8 @@ a.nav-label:visited {
    metodología, con la foto y los apartados dentro.
    ============================================ */
 
-.celda.about {
+.celda.about,
+.celda.statement {
   flex-direction: column;
 }
 
@@ -1194,7 +1197,8 @@ a.nav-label:visited {
    en el mismo hueco, así que sin esa condición el latido correría también en
    las que nadie está mirando. `prefers-reduced-motion` lo para desde el reset
    (sección 0), y entonces el enlace se queda a opacidad 1, legible. */
-.celda.about.activa .about-content p a {
+.celda.about.activa .about-content p a,
+.celda.statement.activa .about-content p a {
   --about-link-valle: 0.75;
   animation: about-link-latido 3.4s ease-in-out infinite;
 }
@@ -1202,7 +1206,9 @@ a.nav-label:visited {
 /* El hover no cambia de animación —eso la reiniciaría de golpe—: solo baja el
    valle de la misma, así que el latido se hace más hondo sin dar un salto. */
 .celda.about.activa .about-content p a:hover,
-.celda.about.activa .about-content p a:focus-visible {
+.celda.about.activa .about-content p a:focus-visible,
+.celda.statement.activa .about-content p a:hover,
+.celda.statement.activa .about-content p a:focus-visible {
   --about-link-valle: 0.45;
 }
 
@@ -1211,9 +1217,47 @@ a.nav-label:visited {
   50%      { opacity: var(--about-link-valle); }
 }
 
-/* Ya no hay bloque de cierre: el precio vive en el cupón de la portada y
-   «cómo trabajamos» pasó a ser un apartado más, con su enlace a metodología
-   dentro del texto. El about acaba en jardines digitales y de ahí al contacto. */
+/* El about acaba en una llamada: escribir o ver el trabajo. Los botones son
+   los del cupón de la portada (borde fino, mayúsculas pequeñas, se rellenan al
+   pasar), para que la invitación se lea igual en las dos celdas. Debajo, una
+   línea al statement para quien quiera saber por qué, y luego el contacto. */
+.about-cta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 2.2rem;
+}
+
+.about-btn {
+  display: inline-block;
+  padding: 0.6rem 1.5rem;
+  border: 1px solid var(--text);
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.about-btn:hover,
+.about-btn:focus-visible {
+  background: var(--text);
+  color: var(--bg);
+}
+
+.about-btn-secundario {
+  border-color: var(--text-secondary);
+  color: var(--text-secondary);
+}
+
+.about-statement-link {
+  margin: 1.4rem 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
 
 
 
@@ -2152,7 +2196,7 @@ html.easy, html.easy body {
   outline-offset: 4px;
 }
 .easy-ticket-hazte { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); }
-.easy-ticket-precio { font-size: clamp(2.2rem, 7dvw, 3rem); font-weight: 600; letter-spacing: 0.02em; line-height: 1.1; margin: 0.3rem 0 0.2rem; }
+.easy-ticket-grande { font-size: clamp(1.4rem, 4.5dvw, 2rem); font-weight: 600; letter-spacing: 0.02em; line-height: 1.1; margin: 0.3rem 0 0.2rem; }
 .easy-ticket-iva { font-size: 0.7rem; font-style: italic; color: var(--text-muted); }
 .easy-ticket-caduca { font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-top: 0.4rem; }
 .easy-hero-incluye { font-size: 0.85rem; color: var(--text-content); line-height: 1.6; max-width: 30rem; margin: 1.8rem auto 0; }
@@ -2267,6 +2311,8 @@ html.easy, html.easy body {
 /* Tagline pegado al título: pequeño, secundario, mismo halo que el título
    para leerse por encima del cupón. */
 .welcome-tagline {
+  display: block;
+  text-decoration: none;
   font-size: clamp(0.7rem, 1.4dvw, 0.95rem);
   font-weight: 400;
   letter-spacing: 0.04em;

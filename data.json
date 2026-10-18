@@ -21,9 +21,21 @@
         "cat": "qui hi ha al darrere — manu latour, disseny web a mida a barcelona"
       },
       "description": {
-        "es": "creemos que una web propia puede ser otra cosa: un espacio tuyo, hecho a tu medida, que puedas cuidar y modificar con el tiempo. quiénes somos, cómo trabajamos y cuánto cuesta.",
-        "en": "we believe a website of your own can be something else: a space that is yours, made to your measure, that you can look after and change over time. who we are, how we work and what it costs.",
-        "cat": "creiem que una web pròpia pot ser una altra cosa: un espai teu, fet a la teva mida, que puguis cuidar i modificar amb el temps. qui som, com treballem i quant costa."
+        "es": "un pequeño estudio de diseño web en barcelona: webs a medida, sin plantillas ni cuotas, que aprendes a mantener tú. quiénes somos y cómo escribirnos.",
+        "en": "a small web design studio in barcelona: custom websites, no templates and no fees, that you learn to maintain yourself. who we are and how to reach us.",
+        "cat": "un petit estudi de disseny web a barcelona: webs a mida, sense plantilles ni quotes, que aprens a mantenir tu. qui som i com escriure'ns."
+      }
+    },
+    "statement": {
+      "title": {
+        "es": "internet puede ser otra cosa — por qué hacemos webs a medida | meowrhino studio",
+        "en": "the internet can be something else — why we make custom websites | meowrhino studio",
+        "cat": "internet pot ser una altra cosa — per què fem webs a mida | meowrhino studio"
+      },
+      "description": {
+        "es": "lo que pensamos: que internet no es solo instagram y google, que tu web tiene que ser tuya —código, dominio e historial— y que puede crecer despacio, como un jardín digital.",
+        "en": "what we think: that the internet is not just instagram and google, that your website has to be yours —code, domain and history— and that it can grow slowly, like a digital garden.",
+        "cat": "el que pensem: que internet no és només instagram i google, que la teva web ha de ser teva —codi, domini i historial— i que pot créixer a poc a poc, com un jardí digital."
       }
     },
     "metodología": {
@@ -169,37 +181,33 @@
       "cat": "estudi de disseny web a barcelona"
     },
     "cupon": {
-      "precio": "850 €",
       "email": "hola@meowrhino.studio",
       "es": {
-        "hazte": "tu web en un mes por",
-        "_iva": "(iva no incluido)",
-        "caduca": "",
+        "hazte": "¿quieres una web?",
+        "grande": "tu web en un mes",
+        "caduca": "primera reunión gratis",
         "subject": "quiero una web!",
         "incluye": "diseño a medida. sin servidores ni cuotas. te enseñamos a mantenerla.",
         "cta": "escríbeme",
-        "condiciones": "3 entregas · 1 ronda cada una",
-        "_primera": "primera reunión gratis"
+        "condiciones": "3 entregas · 1 ronda de cambios cada una"
       },
       "en": {
-        "hazte": "your website in a month for",
-        "_iva": "(vat not included)",
-        "caduca": "",
+        "hazte": "want a website?",
+        "grande": "your website in a month",
+        "caduca": "first meeting free",
         "subject": "I want a website!",
         "incluye": "custom design. no servers, no fees. we teach you to maintain it.",
         "cta": "let's talk",
-        "condiciones": "3 deliveries · 1 round each",
-        "_primera": "first meeting free"
+        "condiciones": "3 deliveries · 1 round of changes each"
       },
       "cat": {
-        "hazte": "la teva web en un mes per",
-        "_iva": "(iva no inclòs)",
-        "caduca": "",
+        "hazte": "vols una web?",
+        "grande": "la teva web en un mes",
+        "caduca": "primera reunió gratis",
         "subject": "vull una web!",
         "incluye": "disseny a mida. sense servidors ni quotes. t'ensenyem a mantenir-la.",
         "cta": "escriu-me",
-        "condiciones": "3 lliuraments · 1 ronda cadascun",
-        "_primera": "primera reunió gratis"
+        "condiciones": "3 lliuraments · 1 ronda de canvis cadascun"
       }
     },
     "formateadores": [
@@ -427,20 +435,15 @@
           "parrafos": [
             "la primera reunión es gratis y no compromete a nada. empezamos por entender qué haces, qué necesitas y qué te gustaría que fuese tu web.",
             "trae 3–5 referentes de cosas que te gusten o que no: webs, carteles, videojuegos, interfaces que hayas visto por ahí. los miramos contigo y hablamos de estructura, estética y dinero.",
-            "dejamos fecha para la siguiente y una lista de lo que necesitamos de ti: textos, imágenes y tu identidad visual si la tienes."
-          ]
-        },
-        {
-          "titular": "pensamos",
-          "parrafos": [
-            "con el material delante damos forma al proyecto: estructura, contenidos, estética y funcionamiento.",
-            "diseñamos contigo, no para ti."
+            "no tenemos tarifa fija. el presupuesto lo cerramos contigo en esa reunión, según lo que necesita el proyecto y según quién lo encarga: no cuesta lo mismo una web para alguien que empieza que para una empresa.",
+            "salimos con un primer boceto de lo que podría ser, una lista de lo que necesitamos de ti —textos, imágenes y tu identidad visual si la tienes— y una fecha para pasárnoslo."
           ]
         },
         {
           "titular": "diseñamos",
           "parrafos": [
-            "en una o dos semanas tienes una primera propuesta. la revisamos contigo y la vamos afinando hasta que tenga sentido.",
+            "el mes empieza el día que llega tu material. con tus textos y tus imágenes de verdad delante, el boceto se convierte en un diseño: estructura, contenidos, estética y funcionamiento. diseñamos contigo, no para ti.",
+            "en una o dos semanas tienes la primera entrega. la comentamos juntos y recoges todos tus cambios en una ronda: varios a la vez, sin problema, pero de una vez.",
             "tómate el tiempo que necesites para decidirte. es mucho más fácil cambiar de dirección aquí que cuando ya estamos programando."
           ]
         },
@@ -448,15 +451,15 @@
           "titular": "construimos",
           "parrafos": [
             "con el diseño aprobado empezamos a escribir código y la web empieza a existir de verdad.",
-            "el diseño evolucionará al adaptarlo a móvil y a otras resoluciones posibles: hay que hacerlo funcionar y resolver lo que aparece al construirlo. eso es parte del trabajo, no una ronda de revisión.",
-            "solemos tardar otras una o dos semanas. con el diseño y la programación seguidos, sale el mes."
+            "el diseño evolucionará al adaptarlo a móvil y a otras resoluciones posibles: hay que hacerlo funcionar y resolver lo que aparece al construirlo. eso es parte del trabajo, no una ronda de cambios.",
+            "aquí van la segunda y la tercera entrega —la web a medias y la web acabada—, cada una con su ronda. solemos tardar otras una o dos semanas: con el diseño y la programación seguidos, sale el mes."
           ]
         },
         {
           "titular": "te la entregamos",
           "parrafos": [
             "nos vemos una última vez delante de tu ordenador. sales de esa reunión sabiendo actualizar tu web por tu cuenta: ese es el objetivo, no un extra.",
-            "configuramos el dominio: lo mejor es que esperes a comprarlo en esa reunión —recomendamos cloudflare— y queda siempre a tu nombre."
+            "la web se queda en tu cuenta de github, a tu nombre, con una copia entera del proyecto. y configuramos el dominio: lo mejor es que esperes a comprarlo en esa reunión —recomendamos cloudflare— y queda siempre a tu nombre."
           ]
         },
         {
@@ -470,13 +473,11 @@
       "importante": {
         "titular": "algunas cosas importantes",
         "parrafos": [
-          "el proyecto dura aproximadamente un mes desde que recibimos todo el material necesario. no trabajamos con placeholders.",
-          "3 entregas · 1 ronda de revisión por entrega. cada ronda admite varios cambios; una vez enviada, lo que venga después pasa a la siguiente.",
-          "50% al confirmar el proyecto · 50% antes de la entrega final.",
-          "el primer pago reserva el proyecto y nos permite empezar a trabajar. el segundo se hace cuando la web está terminada y antes de ponerla en producción.",
-          "2 semanas de garantía después de la entrega. durante ese tiempo puedes avisarnos de cualquier cosa que falle.",
-          "después, 60 €/hora para cambios. y si aprendiste a tocarlo tú, no pagas.",
-          "si el proyecto queda parado más de dos semanas por falta de material, se reactiva con un 10%. te habíamos reservado un mes de agenda y tenemos que volver a hacerte hueco."
+          "el proyecto dura aproximadamente un mes desde que recibimos todo el material. el diseño final se hace con tus textos y tus imágenes, no con rellenos.",
+          "3 entregas · 1 ronda de cambios por entrega. cada ronda admite varios cambios; una vez enviada, lo que venga después pasa a la siguiente.",
+          "el pago va en dos partes: una al confirmar el proyecto y otra antes de la entrega final. entre el 40 y el 60% en cada una, como te vaya mejor. la primera reserva tu mes en la agenda; la segunda se hace con la web terminada, antes de publicarla.",
+          "2 semanas de garantía después de la entrega: si algo falla, lo arreglamos.",
+          "si, una vez confirmado, el proyecto se queda parado más de dos semanas esperando material, retomarlo cuesta un 10% más: te habíamos guardado un mes de agenda y tenemos que volver a hacerte sitio."
         ],
         "enlace": "la letra pequeña completa está en condiciones →"
       }
@@ -488,20 +489,15 @@
           "parrafos": [
             "the first meeting is free and commits you to nothing. we start by understanding what you do, what you need and what you would like your website to be.",
             "bring 3–5 references of things you like or don't: websites, posters, video games, interfaces you've come across anywhere. we go through them together and talk about structure, look and money.",
-            "we set a date for the next one and a list of what we need from you: texts, images and your visual identity if you have one."
-          ]
-        },
-        {
-          "titular": "we think",
-          "parrafos": [
-            "with the material in front of us we give the project its shape: structure, contents, look and behaviour.",
-            "we design with you, not for you."
+            "we have no fixed rate. we settle the budget with you in that meeting, according to what the project needs and who is commissioning it: a website doesn't cost the same for someone starting out as for a company.",
+            "we leave with a first sketch of what it could be, a list of what we need from you —texts, images and your visual identity if you have one— and a date to send it over."
           ]
         },
         {
           "titular": "we design",
           "parrafos": [
-            "in a week or two you have a first proposal. we go through it together and keep refining it until it makes sense.",
+            "the month starts the day your material arrives. with your real texts and images in front of us, the sketch becomes a design: structure, contents, look and behaviour. we design with you, not for you.",
+            "in a week or two you have the first delivery. we go through it together and you gather all your changes in one round: several at once is fine, but in one go.",
             "take as long as you need to decide. it is much easier to change direction here than once we are already coding."
           ]
         },
@@ -509,15 +505,15 @@
           "titular": "we build",
           "parrafos": [
             "with the design approved we start writing code and the website begins to exist for real.",
-            "the design will evolve as we adapt it to phones and other possible screens: it has to work, and whatever comes up while building it has to be solved. that is part of the job, not a round of revisions.",
-            "this usually takes another week or two. design and code back to back, and there is your month."
+            "the design will evolve as we adapt it to phones and other possible screens: it has to work, and whatever comes up while building it has to be solved. that is part of the job, not a round of changes.",
+            "this is where the second and third deliveries happen —the half-built website and the finished one—, each with its round. it usually takes another week or two: design and code back to back, and there is your month."
           ]
         },
         {
           "titular": "we hand it over",
           "parrafos": [
             "we meet one last time, in front of your computer. you leave that meeting knowing how to update your website without us: that is the point, not an extra.",
-            "we set up the domain: it is best if you wait and buy it with us —we recommend cloudflare— and it always stays in your name."
+            "the website stays in your github account, in your name, with a full copy of the project. and we set up the domain: it is best if you wait and buy it in that meeting —we recommend cloudflare— and it always stays in your name."
           ]
         },
         {
@@ -531,13 +527,11 @@
       "importante": {
         "titular": "a few things worth knowing",
         "parrafos": [
-          "the project takes roughly a month from the day we receive all the material we need. we don't work with placeholders.",
-          "3 deliveries · 1 round of revisions per delivery. each round can hold several changes; once it is sent, whatever comes next goes to the following one.",
-          "50% when the project is confirmed · 50% before the final delivery.",
-          "the first payment reserves the project and lets us start working. the second one happens once the website is finished and before it goes live.",
-          "2 weeks of warranty after delivery. during that time you can tell us about anything that breaks.",
-          "after that, 60 €/hour for changes. and if you learned to do it yourself, you don't pay.",
-          "if the project sits still for more than two weeks for lack of material, it restarts with a 10%. we had set aside a month of our calendar and we have to make room for you again."
+          "the project takes roughly a month from the day we receive all the material. the final design is made with your texts and your images, not with placeholders.",
+          "3 deliveries · 1 round of changes per delivery. each round can hold several changes; once it is sent, whatever comes next goes to the following one.",
+          "payment comes in two parts: one when the project is confirmed and one before the final delivery. between 40 and 60% each, whichever suits you. the first reserves your month in our calendar; the second happens once the website is finished, before it goes live.",
+          "2 weeks of warranty after delivery: if something breaks, we fix it.",
+          "if, once confirmed, the project sits still for more than two weeks waiting for material, picking it up again costs 10% more: we had set aside a month of our calendar and we have to make room for you again."
         ],
         "enlace": "the full small print is in terms →"
       }
@@ -549,20 +543,15 @@
           "parrafos": [
             "la primera reunió és gratis i no compromet a res. comencem per entendre què fas, què necessites i què t'agradaria que fos la teva web.",
             "porta 3–5 referents de coses que t'agradin o que no: webs, cartells, videojocs, interfícies que hagis vist per aquí i per allà. els mirem amb tu i parlem d'estructura, estètica i diners.",
-            "deixem data per a la següent i una llista del que necessitem de tu: textos, imatges i la teva identitat visual si en tens."
-          ]
-        },
-        {
-          "titular": "pensem",
-          "parrafos": [
-            "amb el material al davant donem forma al projecte: estructura, continguts, estètica i funcionament.",
-            "dissenyem amb tu, no per a tu."
+            "no tenim tarifa fixa. el pressupost el tanquem amb tu en aquella reunió, segons el que necessita el projecte i segons qui l'encarrega: no costa el mateix una web per a algú que comença que per a una empresa.",
+            "en sortim amb un primer esbós del que podria ser, una llista del que necessitem de tu —textos, imatges i la teva identitat visual si en tens— i una data per passar-nos-ho."
           ]
         },
         {
           "titular": "dissenyem",
           "parrafos": [
-            "en una o dues setmanes tens una primera proposta. la revisem amb tu i l'anem afinant fins que tingui sentit.",
+            "el mes comença el dia que arriba el teu material. amb els teus textos i les teves imatges de veritat al davant, l'esbós es converteix en un disseny: estructura, continguts, estètica i funcionament. dissenyem amb tu, no per a tu.",
+            "en una o dues setmanes tens el primer lliurament. el comentem junts i reculls tots els teus canvis en una ronda: diversos alhora, cap problema, però d'una vegada.",
             "pren-te el temps que necessitis per decidir-te. és molt més fàcil canviar de direcció aquí que quan ja estem programant."
           ]
         },
@@ -570,15 +559,15 @@
           "titular": "construïm",
           "parrafos": [
             "amb el disseny aprovat comencem a escriure codi i la web comença a existir de veritat.",
-            "el disseny evolucionarà en adaptar-lo al mòbil i a altres resolucions possibles: cal fer-lo funcionar i resoldre el que apareix en construir-lo. això forma part de la feina, no és una ronda de revisió.",
-            "solem trigar una o dues setmanes més. amb el disseny i la programació seguits, surt el mes."
+            "el disseny evolucionarà en adaptar-lo al mòbil i a altres resolucions possibles: cal fer-lo funcionar i resoldre el que apareix en construir-lo. això forma part de la feina, no és una ronda de canvis.",
+            "aquí van el segon i el tercer lliurament —la web a mitges i la web acabada—, cadascun amb la seva ronda. solem trigar una o dues setmanes més: amb el disseny i la programació seguits, surt el mes."
           ]
         },
         {
           "titular": "te l'entreguem",
           "parrafos": [
-            "ens veiem una última vegada davant del teu ordinador. surts d'aquesta reunió sabent actualitzar la teva web sense nosaltres: aquest és l'objectiu, no un extra.",
-            "configurem el domini: el millor és que esperis a comprar-lo amb nosaltres —recomanem cloudflare— i queda sempre al teu nom."
+            "ens veiem una última vegada davant del teu ordinador. surts d'aquesta reunió sabent actualitzar la teva web pel teu compte: aquest és l'objectiu, no un extra.",
+            "la web es queda al teu compte de github, al teu nom, amb una còpia sencera del projecte. i configurem el domini: el millor és que esperis a comprar-lo en aquella reunió —recomanem cloudflare— i queda sempre al teu nom."
           ]
         },
         {
@@ -592,13 +581,11 @@
       "importante": {
         "titular": "algunes coses importants",
         "parrafos": [
-          "el projecte dura aproximadament un mes des que rebem tot el material necessari. no treballem amb placeholders.",
-          "3 lliuraments · 1 ronda de revisió per lliurament. cada ronda admet diversos canvis; un cop enviada, el que vingui després passa a la següent.",
-          "50% en confirmar el projecte · 50% abans del lliurament final.",
-          "el primer pagament reserva el projecte i ens permet començar a treballar. el segon es fa quan la web està acabada i abans de posar-la en producció.",
-          "2 setmanes de garantia després del lliurament. durant aquest temps pots avisar-nos de qualsevol cosa que falli.",
-          "després, 60 €/hora per canvis. i si vas aprendre a tocar-ho tu, no pagues.",
-          "si el projecte queda parat més de dues setmanes per falta de material, es reactiva amb un 10%. t'havíem reservat un mes d'agenda i hem de tornar a fer-te lloc."
+          "el projecte dura aproximadament un mes des que rebem tot el material. el disseny final es fa amb els teus textos i les teves imatges, no amb farciments.",
+          "3 lliuraments · 1 ronda de canvis per lliurament. cada ronda admet diversos canvis; un cop enviada, el que vingui després passa a la següent.",
+          "el pagament va en dues parts: una en confirmar el projecte i una altra abans del lliurament final. entre el 40 i el 60% a cadascuna, com et vagi millor. la primera reserva el teu mes a l'agenda; la segona es fa amb la web acabada, abans de publicar-la.",
+          "2 setmanes de garantia després del lliurament: si alguna cosa falla, l'arreglem.",
+          "si, un cop confirmat, el projecte es queda aturat més de dues setmanes esperant material, reprendre'l costa un 10% més: t'havíem guardat un mes d'agenda i hem de tornar a fer-te lloc."
         ],
         "enlace": "la lletra petita completa és a condicions →"
       }
@@ -608,29 +595,66 @@
     "es": {
       "pregunta": "¿quieres una web?",
       "entrada": [
-        "somos un pequeño estudio de diseño y desarrollo web en barcelona.",
-        "hacemos webs desde cero para personas que quieran tener un lugar único en internet, sin plantillas ni mantenimientos innecesarios.",
-        "webs sencillas, extrañas, experimentales o completamente absurdas, que además puedas actualizar de manera autónoma."
+        "somos un pequeño estudio de diseño y desarrollo web en barcelona. detrás está [manu latour](https://www.linkedin.com/in/meowrhino/), que diseña y programa webs a medida desde 2020.",
+        "hacemos webs desde cero para personas que quieran tener un lugar único en internet, sin plantillas ni cuotas de mantenimiento. sencillas, extrañas, experimentales o completamente absurdas.",
+        "te la entregamos en persona y sales sabiendo actualizarla por tu cuenta. el código es tuyo, el dominio es tuyo, y no necesitas seguir pagándonos para que siga funcionando."
+      ],
+      "imagen": {
+        "src": "/img/manu/manu.webp",
+        "alt": "manu latour en la mesa donde trabaja, en casa."
+      },
+      "cta": {
+        "escribir": "escríbeme",
+        "portfolio": "ver el portfolio",
+        "statement": "lo que pensamos →"
+      }
+    },
+    "en": {
+      "pregunta": "want a website?",
+      "entrada": [
+        "we are a small web design and development studio in barcelona. behind it is [manu latour](https://www.linkedin.com/in/meowrhino/), who has been designing and coding custom websites since 2020.",
+        "we make websites from scratch for people who want a place of their own on the internet, with no templates and no maintenance fees. simple, strange, experimental or completely absurd.",
+        "we hand it over in person and you leave knowing how to update it yourself. the code is yours, the domain is yours, and you don't need to keep paying us for it to keep running."
+      ],
+      "imagen": {
+        "src": "/img/manu/manu.webp",
+        "alt": "manu latour at the desk where they work, at home."
+      },
+      "cta": {
+        "escribir": "let's talk",
+        "portfolio": "see the portfolio",
+        "statement": "what we think →"
+      }
+    },
+    "cat": {
+      "pregunta": "vols una web?",
+      "entrada": [
+        "som un petit estudi de disseny i desenvolupament web a barcelona. al darrere hi ha [en manu latour](https://www.linkedin.com/in/meowrhino/), que dissenya i programa webs a mida des del 2020.",
+        "fem webs des de zero per a persones que vulguin tenir un lloc únic a internet, sense plantilles ni quotes de manteniment. senzilles, estranyes, experimentals o completament absurdes.",
+        "te l'entreguem en persona i en surts sabent actualitzar-la pel teu compte. el codi és teu, el domini és teu, i no necessites continuar pagant-nos perquè segueixi funcionant."
+      ],
+      "imagen": {
+        "src": "/img/manu/manu.webp",
+        "alt": "manu latour a la taula on treballa, a casa."
+      },
+      "cta": {
+        "escribir": "escriu-me",
+        "portfolio": "veure el portfolio",
+        "statement": "el que pensem →"
+      }
+    }
+  },
+  "statement": {
+    "_comment": "La celda statement: lo que pensamos. Era la segunda mitad del about hasta octubre de 2026.",
+    "es": {
+      "titulo": "internet puede ser otra cosa",
+      "entrada": [
+        "internet no es instagram, ni google.",
+        "internet son también todas esas [pequeñas páginas](https://oneterabyteofkilobyteage.tumblr.com/) que alguien hizo porque quería contar, enseñar o compartir algo. pero cada vez más, como tantas cosas, está empezando a ser propiedad de unos pocos.",
+        "y merece la pena que tengas un espacio propio, que sea como tú quieras y que lo haya hecho alguien siguiendo tus deseos.",
+        "hacemos cada web desde cero para que decidas qué quieres contar y cómo quieres contarlo. creamos el concepto, pensamos la estructura, diseñamos la interfaz y escribimos el código."
       ],
       "secciones": [
-        {
-          "titular": "internet puede ser otra cosa",
-          "parrafos": [
-            "internet no es instagram, ni google.",
-            "internet son también todas esas [pequeñas páginas](https://oneterabyteofkilobyteage.tumblr.com/) que alguien hizo porque quería contar, enseñar o compartir algo. pero cada vez más, como tantas cosas, está empezando a ser propiedad de unos pocos.",
-            "y merece la pena que tengas un espacio propio, que sea como tú quieras y que lo haya hecho alguien siguiendo tus deseos.",
-            "hacemos cada web desde cero para que decidas qué quieres contar y cómo quieres contarlo. creamos el concepto, pensamos la estructura, diseñamos la interfaz y escribimos el código."
-          ]
-        },
-        {
-          "titular": "cómo trabajamos",
-          "parrafos": [
-            "la primera reunión es gratis y no compromete a nada: miramos contigo qué haces, qué necesitas y 3–5 referentes de cosas que te gusten o que no.",
-            "con tu material delante pensamos la estructura, la diseñamos y la programamos. tarda aproximadamente un mes desde que recibimos todo el material.",
-            "y te la entregamos personalmente, para que, desde el primer instante, puedas ver aquello que deseabas en tu ordenador: sales de esa reunión sabiendo acceder a ese espacio, y actualizarlo por tu cuenta.",
-            "el proceso entero, paso a paso, está en [metodología](/metodologia)."
-          ]
-        },
         {
           "titular": "tu web es tuya",
           "parrafos": [
@@ -644,19 +668,13 @@
           ]
         },
         {
-          "titular": "quién está detrás",
+          "titular": "por qué lo hacemos",
           "parrafos": [
-            "detrás de meowrhino está [manu latour](https://www.linkedin.com/in/meowrhino/).",
-            "estudió en la massana y en la uab, y desde 2020 diseña y programa webs a medida desde barcelona.",
             "internet lleva mucho tiempo acompañándonos y nos ha hecho mucha compañía. hacer de internet un lugar un poquito mejor es la finalidad última de nuestro trabajo, de cada proyecto que construimos.",
             "nos interesa entender qué haces, qué necesitas y qué puede funcionar mejor para ti.",
             "queremos que cuando terminemos tengas una web de la que presumas, que sirva para construir el relato que necesites: fotógrafa profesional, pequeña o mediana empresa, microcelebridad de internet, o, simplemente tú, alguien que quiere contar una historia y ponerla a disposición de quien pueda estar interesado en conocerla.",
             "y te damos [las herramientas](/links) que necesites para mantenerla: [imgToWeb](https://meowrhino.github.io/imgToWeb/) para comprimir imágenes, [colorFun](https://meowrhino.github.io/colorFun/) para elegir colores…"
-          ],
-          "imagen": {
-            "src": "/img/manu/manu.webp",
-            "alt": "manu latour en la mesa donde trabaja, en casa."
-          }
+          ]
         },
         {
           "titular": "jardines digitales",
@@ -669,31 +687,14 @@
       ]
     },
     "en": {
-      "pregunta": "want a website?",
+      "titulo": "the internet can be something else",
       "entrada": [
-        "we are a small web design and development studio in barcelona.",
-        "we make websites from scratch for people who want a place of their own on the internet, with no templates and no unnecessary maintenance.",
-        "websites that can be simple, strange, experimental or completely absurd, and that you can update on your own."
+        "the internet is not instagram, and it is not google.",
+        "the internet is also all those [small pages](https://oneterabyteofkilobyteage.tumblr.com/) that someone made because they wanted to tell, teach or share something. but more and more, like so many things, it is becoming the property of a few.",
+        "and it is worth having a space of your own, one that looks the way you want and that somebody actually made, following your wishes.",
+        "we make every website from scratch so that you decide what you want to tell and how you want to tell it. we come up with the concept, think out the structure, design the interface and write the code."
       ],
       "secciones": [
-        {
-          "titular": "the internet can be something else",
-          "parrafos": [
-            "the internet is not instagram, and it is not google.",
-            "the internet is also all those [small pages](https://oneterabyteofkilobyteage.tumblr.com/) that someone made because they wanted to tell, teach or share something. but more and more, like so many things, it is becoming the property of a few.",
-            "and it is worth having a space of your own, one that looks the way you want and that somebody actually made, following your wishes.",
-            "we make every website from scratch so that you decide what you want to tell and how you want to tell it. we come up with the concept, think out the structure, design the interface and write the code."
-          ]
-        },
-        {
-          "titular": "how we work",
-          "parrafos": [
-            "the first meeting is free and commits you to nothing: we look together at what you do, what you need and 3–5 references of things you like or don't.",
-            "with your material in front of us we think out the structure, design it and code it. it takes about a month from the moment we receive all the material.",
-            "and we hand it over in person, so that from the very first moment you can see what you wanted on your own computer: you leave that meeting knowing how to get into that space, and how to update it without us.",
-            "the whole process, step by step, is in [methodology](/en/methodology)."
-          ]
-        },
         {
           "titular": "your website is yours",
           "parrafos": [
@@ -707,19 +708,13 @@
           ]
         },
         {
-          "titular": "who's behind this",
+          "titular": "why we do this",
           "parrafos": [
-            "behind meowrhino there is [manu latour](https://www.linkedin.com/in/meowrhino/).",
-            "they studied at la massana and the uab, and since 2020 they have been designing and coding custom websites from barcelona.",
             "the internet has been with us for a long time and it has kept us good company. making the internet a slightly better place is the whole point of our work, of every project we build.",
             "we want to understand what you do, what you need and what can work best for you.",
             "we want you to end up with a website you show off, one that builds whatever story you need: professional photographer, small or medium-sized business, internet microcelebrity, or simply you, someone who wants to tell a story and put it within reach of whoever might be interested in it.",
             "and we give you [the tools](/en/links) you need to look after it: [imgToWeb](https://meowrhino.github.io/imgToWeb/) to compress images, [colorFun](https://meowrhino.github.io/colorFun/) to pick colours…"
-          ],
-          "imagen": {
-            "src": "/img/manu/manu.webp",
-            "alt": "manu latour at the desk where they work, at home."
-          }
+          ]
         },
         {
           "titular": "digital gardens",
@@ -732,31 +727,14 @@
       ]
     },
     "cat": {
-      "pregunta": "vols una web?",
+      "titulo": "internet pot ser una altra cosa",
       "entrada": [
-        "som un petit estudi de disseny i desenvolupament web a barcelona.",
-        "fem webs des de zero per a persones que vulguin tenir un lloc únic a internet, sense plantilles ni manteniments innecessaris.",
-        "webs senzilles, estranyes, experimentals o completament absurdes, que a més puguis actualitzar de manera autònoma."
+        "internet no és instagram, ni google.",
+        "internet també són totes aquelles [petites pàgines](https://oneterabyteofkilobyteage.tumblr.com/) que algú va fer perquè volia explicar, ensenyar o compartir alguna cosa. però cada cop més, com tantes coses, està començant a ser propietat d'uns quants.",
+        "i val la pena que tinguis un espai propi, que sigui com tu vulguis i que l'hagi fet algú seguint els teus desitjos.",
+        "fem cada web des de zero perquè decideixis què vols explicar i com ho vols explicar. creem el concepte, pensem l'estructura, dissenyem la interfície i escrivim el codi."
       ],
       "secciones": [
-        {
-          "titular": "internet pot ser una altra cosa",
-          "parrafos": [
-            "internet no és instagram, ni google.",
-            "internet també són totes aquelles [petites pàgines](https://oneterabyteofkilobyteage.tumblr.com/) que algú va fer perquè volia explicar, ensenyar o compartir alguna cosa. però cada cop més, com tantes coses, està començant a ser propietat d'uns quants.",
-            "i val la pena que tinguis un espai propi, que sigui com tu vulguis i que l'hagi fet algú seguint els teus desitjos.",
-            "fem cada web des de zero perquè decideixis què vols explicar i com ho vols explicar. creem el concepte, pensem l'estructura, dissenyem la interfície i escrivim el codi."
-          ]
-        },
-        {
-          "titular": "com treballem",
-          "parrafos": [
-            "la primera reunió és gratis i no et compromet a res: mirem amb tu què fas, què necessites i 3–5 referents de coses que t'agradin o que no.",
-            "amb el teu material al davant pensem l'estructura, la dissenyem i la programem. triga aproximadament un mes des que rebem tot el material.",
-            "i te l'entreguem personalment, perquè, des del primer instant, puguis veure allò que desitjaves al teu ordinador: surts d'aquella reunió sabent accedir a aquell espai, i actualitzar-lo pel teu compte.",
-            "el procés sencer, pas a pas, és a [metodologia](/ca/metodologia)."
-          ]
-        },
         {
           "titular": "la teva web és teva",
           "parrafos": [
@@ -770,19 +748,13 @@
           ]
         },
         {
-          "titular": "qui hi ha al darrere",
+          "titular": "per què ho fem",
           "parrafos": [
-            "darrere de meowrhino hi ha [en manu latour](https://www.linkedin.com/in/meowrhino/).",
-            "va estudiar a la massana i a la uab, i des del 2020 dissenya i programa webs a mida des de barcelona.",
             "internet fa molt temps que ens acompanya i ens ha fet molta companyia. fer d'internet un lloc una miqueta millor és la finalitat última de la nostra feina, de cada projecte que construïm.",
             "ens interessa entendre què fas, què necessites i què pot funcionar millor per a tu.",
             "volem que quan acabem tinguis una web de la qual presumeixis, que serveixi per construir el relat que necessitis: fotògrafa professional, petita o mitjana empresa, microcelebritat d'internet, o, simplement tu, algú que vol explicar una història i posar-la a disposició de qui pugui estar interessat a conèixer-la.",
             "i et donem [les eines](/ca/links) que necessitis per mantenir-la: [imgToWeb](https://meowrhino.github.io/imgToWeb/) per comprimir imatges, [colorFun](https://meowrhino.github.io/colorFun/) per triar colors…"
-          ],
-          "imagen": {
-            "src": "/img/manu/manu.webp",
-            "alt": "manu latour a la taula on treballa, a casa."
-          }
+          ]
         },
         {
           "titular": "jardins digitals",
@@ -804,15 +776,14 @@
           "tipo": "texto",
           "parrafos": [
             "diseñamos y desarrollamos páginas web a medida con tecnología jamstack. los datos de tu web los gestiona un archivo que aprendes a leer y modificar: puedes añadir, eliminar y cambiar textos, imágenes y archivos sin depender de nadie.",
-            "el código es tuyo. puedes usarlo, transformarlo, continuarlo o dárselo a quien quieras. meowrhino.studio conserva una copia de cada proyecto como registro de autoría y para garantizar que el código sea siempre libre y accesible.",
-            "no iniciamos un proyecto sin todo el material listo: textos, imágenes y contenido. también una identidad visual mínima (logo, paleta de color, tipografía). si no se dispone de ella, se puede presupuestar como parte del proyecto.",
-            "no trabajamos con placeholders. el mes de trabajo empieza el día que llega tu material.",
-            "cada proyecto incluye 3 entregas · 1 ronda de revisión por entrega (diseño, programación intermedia y programación final). cada ronda puede incluir varios cambios, pero una vez enviada, los siguientes cambios pertenecen a la siguiente ronda. lo aprobado en una entrega no se reabre en la siguiente. cualquier cambio derivado de trabajar con material incompleto cuenta como revisión. las rondas extra se presupuestan a 60€/hora.",
-            "pago en dos fases: 50% al confirmar el proyecto —reserva el mes de agenda y permite empezar a trabajar— y 50% antes de la entrega final, con la web ya terminada y antes de ponerla en producción.",
+            "el código es tuyo. puedes usarlo, transformarlo, continuarlo o dárselo a quien quieras. trabajamos en nuestro propio repositorio y, al entregar, te pasamos una copia entera a tu cuenta de github, a tu nombre. nosotros conservamos el original con todo el historial: es el registro de nuestro trabajo y lo que nos permite seguir enseñando el proyecto aunque algún día tu web deje de estar en línea. también nos quedamos como administradores de tu copia, para poder echarte una mano si lo necesitas; puedes quitarnos ese acceso cuando quieras.",
+            "en la primera reunión fijamos la fecha en que nos pasas el material: textos, imágenes y una identidad visual mínima (logo, paleta de color, tipografía). si no la tienes, se puede presupuestar como parte del proyecto. hasta esa fecha trabajamos sobre un boceto; el diseño final se hace con tu material real, no con rellenos, y el mes de trabajo empieza el día que llega.",
+            "cada proyecto incluye 3 entregas · 1 ronda de cambios por entrega (diseño, programación intermedia y programación final). cada ronda puede incluir varios cambios, pero una vez enviada, los siguientes pertenecen a la siguiente ronda. lo aprobado en una entrega no se reabre en la siguiente. las rondas extra se presupuestan a 60 €/hora.",
+            "el pago va en dos partes: una al confirmar el proyecto —reserva el mes de agenda y nos permite empezar— y otra antes de la entrega final, con la web ya terminada y antes de publicarla. el reparto lo eliges tú, entre el 40 y el 60% en cada parte.",
             "el dominio lo compras tú y queda registrado a tu nombre, no al nuestro. te ayudamos a elegirlo y a configurarlo —recomendamos cloudflare—, pero la titularidad y la renovación anual son tuyas. si el dominio caduca, la web deja de verse; los archivos siguen siendo tuyos y se pueden volver a publicar cuando quieras.",
             "la web se sirve como archivos estáticos, sin servidor propio ni base de datos. se aloja en un servicio de páginas estáticas —github pages, cloudflare o equivalente—, cuyo plan gratuito cubre de sobra un proyecto de este tamaño, así que el alojamiento no tiene coste mensual. el dominio es el único gasto recurrente del proyecto.",
-            "después de la entrega tienes dos semanas para avisarnos de cualquier cosa que falle. pasado ese plazo, los cambios se presupuestan a 60€/hora.",
-            "la primera reunión es gratuita, y la segunda también si la hacemos dentro de las dos semanas siguientes y con tu material listo. pasado ese plazo sin contenido, el proyecto queda en pausa y reactivarlo conlleva una tarifa del 10% del presupuesto. a partir de la primera entrega se consume parte del presupuesto. puedes parar el proyecto en cualquier momento abonando la parte proporcional de lo trabajado; si se retoma más adelante, se abre un nuevo presupuesto.",
+            "después de la entrega tienes dos semanas para avisarnos de cualquier cosa que falle. pasado ese plazo, los cambios se presupuestan a 60 €/hora.",
+            "la primera reunión es gratuita, y la segunda también si llega con tu material en la fecha que fijamos. si, una vez confirmado el proyecto, se queda parado más de dos semanas esperando material, retomarlo cuesta un 10% del presupuesto: te habíamos guardado el mes y tenemos que volver a hacerte sitio. puedes parar el proyecto cuando quieras abonando la parte proporcional de lo trabajado; si se retoma más adelante, se abre un nuevo presupuesto.",
             "nos reservamos la posibilidad de publicar el proyecto en nuestro portfolio y redes sociales. a la finalización de la web, planteamos la posibilidad de un post conjunto en instagram.",
             "nuestro compromiso es diseñar una web que entiendas, que puedas mantener y que pueda crecer contigo."
           ],
@@ -867,17 +838,16 @@
           "tipo": "texto",
           "parrafos": [
             "we design and develop custom websites using jamstack technology. your website data is managed through a file you learn to read and edit: you can add, remove and change texts, images and files without depending on anyone.",
-            "the code is yours. you can use it, transform it, continue it or give it to whoever you want. meowrhino.studio keeps a copy of each project as a record of authorship and to ensure the code remains free and accessible.",
-            "we do not start a project without all the material ready: texts, images and content. also a minimal visual identity (logo, colour palette, typography). if you don't have one, it can be quoted as part of the project.",
-            "we don't work with placeholders. the working month starts the day your material lands.",
-            "each project includes 3 deliveries · 1 round of revisions per delivery (design, mid-stage development and final development). each round may include several changes, but once submitted, subsequent changes belong to the next round. what is approved at one delivery is not reopened at the next. any change resulting from working with incomplete material counts as a revision. extra rounds are billed at 60€/hour.",
-            "payment in two phases: 50% when the project is confirmed —it reserves the month in the calendar and lets the work start— and 50% before the final delivery, with the website already finished and before it goes live.",
+            "the code is yours. you can use it, transform it, continue it or give it to whoever you want. we work in our own repository and, on delivery, we hand you a full copy in your github account, in your name. we keep the original with its whole history: it is the record of our work and what lets us keep showing the project even if one day your website goes offline. we also stay on as administrators of your copy, so we can give you a hand if you need it; you can remove that access whenever you want.",
+            "in the first meeting we set the date on which you send us the material: texts, images and a minimal visual identity (logo, colour palette, typography). if you don't have one, it can be quoted as part of the project. until that date we work on a sketch; the final design is made with your real material, not with placeholders, and the month of work starts the day it arrives.",
+            "each project includes 3 deliveries · 1 round of changes per delivery (design, mid-stage development and final development). each round may include several changes, but once it is sent, the next ones belong to the following round. what is approved in one delivery is not reopened in the next. extra rounds are quoted at 60 €/hour.",
+            "payment comes in two parts: one when the project is confirmed —it reserves the month in our calendar and lets us start— and one before the final delivery, with the website finished and before it goes live. you choose the split, between 40 and 60% each.",
             "you buy the domain and it is registered in your name, not ours. we help you choose it and set it up —we recommend cloudflare—, but ownership and the yearly renewal are yours. if the domain expires, the website stops being visible; the files are still yours and can be published again whenever you want.",
-            "the website is served as static files, with no server of our own and no database. it is hosted on a static page service —github pages, cloudflare or equivalent— whose free plan covers a project this size with room to spare, so hosting has no monthly cost. the domain is the project's only recurring expense.",
-            "after delivery you have two weeks to tell us about anything that breaks. after that, changes are quoted at 60€/hour.",
-            "the first meeting is free, and so is the second as long as we hold it within the next two weeks and your material is ready. after that period without content, the project is paused and restarting it carries a fee of 10% of the budget. from the first delivery onwards, part of the budget is used. you can stop the project at any time by paying the proportional share of the work done; if resumed later, a new quote is provided.",
-            "we reserve the option to publish the project in our portfolio and social media. upon completion of the website, we'll suggest a joint instagram post.",
-            "our commitment is to design a website you understand, can maintain, and that can grow with you."
+            "the website is served as static files, with no server of its own and no database. it is hosted on a static pages service —github pages, cloudflare or equivalent—, whose free plan more than covers a project of this size, so hosting has no monthly cost. the domain is the project's only recurring expense.",
+            "after delivery you have two weeks to tell us about anything that breaks. after that, changes are quoted at 60 €/hour.",
+            "the first meeting is free, and so is the second one if it comes with your material on the date we set. if, once the project is confirmed, it sits still for more than two weeks waiting for material, picking it up again costs 10% of the budget: we had set aside the month and we have to make room for you again. you can stop the project at any time by paying the proportional part of the work done; if it is picked up later, a new budget is opened.",
+            "we reserve the right to publish the project in our portfolio and social media. once the website is finished, we propose a joint post on instagram.",
+            "our commitment is to design a website you understand, that you can maintain and that can grow with you."
           ],
           "nota": "accepting the quote means accepting these conditions."
         },
@@ -930,16 +900,15 @@
           "tipo": "texto",
           "parrafos": [
             "dissenyem i desenvolupem pàgines web a mida amb tecnologia jamstack. les dades de la teva web les gestiona un arxiu que aprens a llegir i modificar: pots afegir, eliminar i canviar textos, imatges i arxius sense dependre de ningú.",
-            "el codi és teu. pots usar-lo, transformar-lo, continuar-lo o donar-lo a qui vulguis. meowrhino.studio conserva una còpia de cada projecte com a registre d'autoria i per garantir que el codi sigui sempre lliure i accessible.",
-            "no iniciem un projecte sense tot el material llest: textos, imatges i contingut. també una identitat visual mínima (logo, paleta de color, tipografia). si no es disposa d'ella, es pot pressupostar com a part del projecte.",
-            "no treballem amb placeholders. el mes de feina comença el dia que arriba el teu material.",
-            "cada projecte inclou 3 lliuraments · 1 ronda de revisió per lliurament (disseny, programació intermèdia i programació final). cada ronda pot incloure diversos canvis, però un cop enviada, els canvis següents pertanyen a la ronda següent. el que s'aprova en un lliurament no es reobre en el següent. qualsevol canvi derivat de treballar amb material incomplet compta com a revisió. les rondes extra es pressuposten a 60€/hora.",
-            "pagament en dues fases: 50% en confirmar el projecte —reserva el mes d'agenda i permet començar a treballar— i 50% abans del lliurament final, amb la web ja acabada i abans de posar-la en producció.",
-            "el domini el compres tu i queda registrat al teu nom, no al nostre. t'ajudem a triar-lo i a configurar-lo —recomanem cloudflare—, però la titularitat i la renovació anual són teves. si el domini caduca, la web deixa de veure's; els arxius segueixen sent teus i es poden tornar a publicar quan vulguis.",
+            "el codi és teu. pots fer-lo servir, transformar-lo, continuar-lo o donar-lo a qui vulguis. treballem al nostre propi repositori i, en entregar, et passem una còpia sencera al teu compte de github, al teu nom. nosaltres conservem l'original amb tot l'historial: és el registre de la nostra feina i el que ens permet continuar ensenyant el projecte encara que algun dia la teva web deixi d'estar en línia. també ens quedem com a administradors de la teva còpia, per poder donar-te un cop de mà si ho necessites; ens pots treure aquest accés quan vulguis.",
+            "a la primera reunió fixem la data en què ens passes el material: textos, imatges i una identitat visual mínima (logo, paleta de color, tipografia). si no en tens, es pot pressupostar com a part del projecte. fins aquella data treballem sobre un esbós; el disseny final es fa amb el teu material real, no amb farciments, i el mes de feina comença el dia que arriba.",
+            "cada projecte inclou 3 lliuraments · 1 ronda de canvis per lliurament (disseny, programació intermèdia i programació final). cada ronda pot incloure diversos canvis, però un cop enviada, els següents pertanyen a la ronda següent. el que s'aprova en un lliurament no es reobre en el següent. les rondes extra es pressuposten a 60 €/hora.",
+            "el pagament va en dues parts: una en confirmar el projecte —reserva el mes d'agenda i ens permet començar— i una altra abans del lliurament final, amb la web ja acabada i abans de publicar-la. el repartiment el tries tu, entre el 40 i el 60% a cada part.",
+            "el domini el compres tu i queda registrat al teu nom, no al nostre. t'ajudem a triar-lo i a configurar-lo —recomanem cloudflare—, però la titularitat i la renovació anual són teves. si el domini caduca, la web deixa de veure's; els arxius continuen sent teus i es poden tornar a publicar quan vulguis.",
             "la web se serveix com a arxius estàtics, sense servidor propi ni base de dades. s'allotja en un servei de pàgines estàtiques —github pages, cloudflare o equivalent—, el pla gratuït del qual cobreix de sobres un projecte d'aquesta mida, així que l'allotjament no té cost mensual. el domini és l'única despesa recurrent del projecte.",
-            "després del lliurament tens dues setmanes per avisar-nos de qualsevol cosa que falli. passat aquest termini, els canvis es pressuposten a 60€/hora.",
-            "la primera reunió és gratuïta, i la segona també si la fem dins de les dues setmanes següents i amb el teu material llest. passat aquest termini sense contingut, el projecte queda en pausa i reactivar-lo comporta una tarifa del 10% del pressupost. a partir del primer lliurament es consumeix part del pressupost. pots aturar el projecte en qualsevol moment abonant la part proporcional del treball fet; si es reprèn més endavant, s'obre un nou pressupost.",
-            "ens reservem la possibilitat de publicar el projecte al nostre portfolio i xarxes socials. en finalitzar la web, plantegem la possibilitat d'un post conjunt a instagram.",
+            "després del lliurament tens dues setmanes per avisar-nos de qualsevol cosa que falli. passat aquest termini, els canvis es pressuposten a 60 €/hora.",
+            "la primera reunió és gratuïta, i la segona també si arriba amb el teu material en la data que fixem. si, un cop confirmat el projecte, es queda aturat més de dues setmanes esperant material, reprendre'l costa un 10% del pressupost: t'havíem guardat el mes i hem de tornar a fer-te lloc. pots aturar el projecte quan vulguis abonant la part proporcional del que s'ha treballat; si es reprèn més endavant, s'obre un nou pressupost.",
+            "ens reservem la possibilitat de publicar el projecte al nostre portfolio i xarxes socials. en acabar la web, plantegem la possibilitat d'un post conjunt a instagram.",
             "el nostre compromís és dissenyar una web que entenguis, que puguis mantenir i que pugui créixer amb tu."
           ],
           "nota": "acceptar el pressupost significa acceptar aquestes condicions."
@@ -1149,8 +1118,14 @@
       "cat": "cv_manu_ca.pdf"
     },
     "archivo": [
-      { "nombre": "archive", "url": "/archive" },
-      { "nombre": "neocities", "url": "https://meowrhino.neocities.org/" }
+      {
+        "nombre": "archive",
+        "url": "/archive"
+      },
+      {
+        "nombre": "neocities",
+        "url": "https://meowrhino.neocities.org/"
+      }
     ]
   }
 }

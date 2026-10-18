@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+  <!-- Bloque que depende del idioma (título, description, canonical, og/twitter
+       y los hreflang). Lo genera build-seo.js para las tres variantes de la home:
+       index.html (es), en.html y ca.html. NO editar a mano: los textos salen de
+       data.json (meta.title / meta.description). -->
+  <!-- BUILD:head:start -->
+  <meta name="description" content="el que pensem: que internet no és només instagram i google, que la teva web ha de ser teva —codi, domini i historial— i que pot créixer a poc a poc, com un jardí digital.">
+  <title>internet pot ser una altra cosa — per què fem webs a mida | meowrhino studio</title>
+  <link rel="canonical" href="https://meowrhino.studio/ca/statement">
+  <link rel="alternate" hreflang="es" href="https://meowrhino.studio/statement">
+  <link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/statement">
+  <link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/statement">
+  <link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/statement">
+  <meta property="og:title" content="internet pot ser una altra cosa — per què fem webs a mida | meowrhino studio">
+  <meta property="og:description" content="el que pensem: que internet no és només instagram i google, que la teva web ha de ser teva —codi, domini i historial— i que pot créixer a poc a poc, com un jardí digital.">
+  <meta property="og:url" content="https://meowrhino.studio/ca/statement">
+  <meta property="og:locale" content="ca_ES">
+  <meta name="twitter:title" content="internet pot ser una altra cosa — per què fem webs a mida | meowrhino studio">
+  <meta name="twitter:description" content="el que pensem: que internet no és només instagram i google, que la teva web ha de ser teva —codi, domini i historial— i que pot créixer a poc a poc, com un jardí digital.">
+  <!-- BUILD:head:end -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="meowrhino studio">
+  <meta property="og:image" content="https://meowrhino.studio/favicon/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="meowrhino studio — estudio de diseño web en Barcelona">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://meowrhino.studio/favicon/og-image.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="icon" href="/favicon/favicon.ico">
+  <link rel="preload" href="/fonts/inknut-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+  <script>
+    // Anti-flash: resuelve el tema antes del primer render.
+    // Prioridad: localStorage > prefers-color-scheme > light (default studio).
+    (function() {
+      var t = localStorage.getItem("meowrhino-theme");
+      if (!t && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";
+      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+      // Marca que hay JS ANTES de que el body se parsee, para que el CSS oculte
+      // el bloque pre-renderizado (#seo-prerender) desde el primer pintado: el
+      // visitante ve el grid, nunca un destello del contenido estático. Sin JS
+      // la clase no se pone y el bloque queda visible como fallback real.
+      document.documentElement.classList.add("js");
+    })();
+  </script>
+  <!-- BUILD:preload:start -->
+  <link rel="modulepreload" href="/js/main.js">
+  <link rel="modulepreload" href="/js/data.js">
+  <link rel="modulepreload" href="/js/navigation.js">
+  <link rel="modulepreload" href="/js/pages.js">
+  <link rel="modulepreload" href="/js/mapa.js">
+  <link rel="modulepreload" href="/js/portfolio.js">
+  <link rel="modulepreload" href="/js/buscaminas.js">
+  <link rel="modulepreload" href="/js/rutas.js">
+  <link rel="modulepreload" href="/js/easy-template.js">
+  <link rel="modulepreload" href="/js/theme.js">
+  <link rel="modulepreload" href="/js/shell.js">
+  <link rel="modulepreload" href="/js/utils.js">
+  <link rel="modulepreload" href="/js/zoom.js">
+  <link rel="modulepreload" href="/js/scroll-gradients.js">
+  <link rel="modulepreload" href="/js/welcome-card.js">
+  <link rel="modulepreload" href="/js/welcome-cupon.js">
+  <link rel="modulepreload" href="/js/proyecto-template.js">
+  <link rel="modulepreload" href="/js/rebote.js">
+  <!-- BUILD:preload:end -->
+</head>
+<body>
+  <a href="#content" class="skip-link">saltar al contenido</a>
+  <main id="content" role="main" tabindex="-1">
+    <!-- Contenido pre-renderizado por build-seo.js: el mismo texto que pintan
+         las celdas del grid, disponible en el primer byte para los buscadores.
+         Oculto por CSS en cuanto hay JS y eliminado del DOM por main.js; sin JS
+         se queda como versión estática navegable. NO editar a mano: se regenera
+         desde data.json en cada commit que la toque. -->
+    <div id="seo-prerender">
+      <!-- BUILD:home:start -->
+
+    <section class="easy-section easy-about" id="statement">
+      <h1 class="easy-about-pregunta">internet pot ser una altra cosa</h1>
+      <div class="easy-about-entrada"><p>internet no és instagram, ni google.</p><p>internet també són totes aquelles <a href="https://oneterabyteofkilobyteage.tumblr.com/" target="_blank" rel="noopener">petites pàgines</a> que algú va fer perquè volia explicar, ensenyar o compartir alguna cosa. però cada cop més, com tantes coses, està començant a ser propietat d'uns quants.</p><p>i val la pena que tinguis un espai propi, que sigui com tu vulguis i que l'hagi fet algú seguint els teus desitjos.</p><p>fem cada web des de zero perquè decideixis què vols explicar i com ho vols explicar. creem el concepte, pensem l'estructura, dissenyem la interfície i escrivim el codi.</p></div>
+      
+      <h2 class="easy-h3">la teva web és teva</h2>
+      <p>tu tens el teu repositori a github i el teu domini a cloudflare. ni en els teus textos, ni en les teves imatges, ni en els teus projectes hi haurà anuncis ni plantilles que t'obliguin a res.</p><p>el codi que generem el podràs canviar tu o qui tu vulguis, i a github et queda l'historial de tot el que has anat fent.</p><p>una web pot ser molt més senzilla del que sembla: textos, imatges i codi. fem servir una estructura que et permet actualitzar el contingut sense haver de saber programar.</p><p>l'allotjament pot ser gratuït i el domini és pràcticament l'única despesa que es repeteix.</p><p>i si algun dia vols canviar d'allotjament, d'estudi o de proveïdor, pots fer-ho. recomanem sempre treballar amb proveïdors de proximitat.</p><p>conservem l'accés a la teva web per si algun dia necessites ajuda, però no has de continuar treballant amb l'estudi perquè segueixi funcionant, i fins i tot ens pots revocar l'accés quan vulguis. serveix per donar-te un cop de mà si algun dia ho necessites, o perquè ens puguis demanar les actualitzacions que necessitis.</p><p>si vols que fem els canvis per tu, ens pots contractar per hores. si ho vols fer tu, t'ensenyem com.</p>
+      <h2 class="easy-h3">per què ho fem</h2>
+      <p>internet fa molt temps que ens acompanya i ens ha fet molta companyia. fer d'internet un lloc una miqueta millor és la finalitat última de la nostra feina, de cada projecte que construïm.</p><p>ens interessa entendre què fas, què necessites i què pot funcionar millor per a tu.</p><p>volem que quan acabem tinguis una web de la qual presumeixis, que serveixi per construir el relat que necessitis: fotògrafa professional, petita o mitjana empresa, microcelebritat d'internet, o, simplement tu, algú que vol explicar una història i posar-la a disposició de qui pugui estar interessat a conèixer-la.</p><p>i et donem <a href="/ca/links">les eines</a> que necessitis per mantenir-la: <a href="https://meowrhino.github.io/imgToWeb/" target="_blank" rel="noopener">imgToWeb</a> per comprimir imatges, <a href="https://meowrhino.github.io/colorFun/" target="_blank" rel="noopener">colorFun</a> per triar colors…</p>
+      <h2 class="easy-h3">jardins digitals</h2>
+      <p>hi ha qui en diu <a href="https://www.cccb.org/ca/w/articles/jardins-digitals-la-fi-de-l-scroll-infinit" target="_blank" rel="noopener">jardins digitals</a>: espais petits d'internet que es cultiven en lloc de publicar-se i abandonar-se.</p><p>creixen a poc a poc. canvien de forma. tenen coses a mig fer i coses que fa anys que hi són.</p><p>no necessiten competir per la nostra atenció, simplement hi són. ens agrada pensar que la teva web pot ser una d'aquestes coses, un petit lloc que existeix perquè tu has decidit que existeixi.</p>
+    </section>
+    <nav class="prerender-nota" aria-label="seguir navegant">
+      <ul><li><a href="/ca">benvinguda</a></li><li><a href="/ca/portfolio">portfolio</a></li><li><a href="/ca/about">about</a></li><li><a href="/ca/metodologia">metodologia</a></li><li><a href="/ca/condicions">condicions</a></li><li><a href="/ca/links">links</a></li><li><a href="/ca/mapa">mapa</a></li><li><a href="/ca/buscamines">buscamines</a></li></ul>
+    </nav>
+  <!-- BUILD:home:end -->
+    </div>
+  </main>
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

@@ -9,7 +9,7 @@
 // Estructura DOM:
 //  .welcome-cupon-wrapper   ← recibe translate/rotate del rebote
 //    .welcome-cupon-inner   ← recibe rotateY(180deg) en `.flipped`
-//      .welcome-cupon-face.welcome-cupon-front  (sello con precio)
+//      .welcome-cupon-face.welcome-cupon-front  (sello: «tu web en un mes»)
 //      .welcome-cupon-face.welcome-cupon-back   (incluye + CTA)
 //
 // Puntos clave:
@@ -28,7 +28,9 @@ import { escapeHTML } from "./utils.js";
 /**
  * Renderiza el cupón dentro de la celda welcome y arranca la animación.
  * @param {HTMLElement} celda – elemento .celda.welcome (ya contiene el title)
- * @param {object} cuponData – `data.welcome.cupon` con precio, email y textos i18n
+ * @param {object} cuponData – `data.welcome.cupon` con email y textos i18n.
+ *   Llevó el precio hasta octubre de 2026; ahora el presupuesto se habla con
+ *   cada cliente y el cupón es solo la invitación a escribir.
  */
 export function renderWelcomeCupon(celda, cuponData) {
   if (!celda || !cuponData) return;
@@ -38,7 +40,7 @@ export function renderWelcomeCupon(celda, cuponData) {
       <div class="welcome-cupon-inner">
         <div class="welcome-cupon-face welcome-cupon-front">
           <span class="welcome-cupon-hazte"></span>
-          <span class="welcome-cupon-precio">${escapeHTML(cuponData.precio)}</span>
+          <span class="welcome-cupon-grande"></span>
           <span class="welcome-cupon-iva"></span>
           <span class="welcome-cupon-caduca"></span>
         </div>
@@ -53,13 +55,13 @@ export function renderWelcomeCupon(celda, cuponData) {
 
   const wrapperEl = celda.querySelector("#welcomeCupon");
   const hazteEl   = wrapperEl.querySelector(".welcome-cupon-hazte");
+  const grandeEl  = wrapperEl.querySelector(".welcome-cupon-grande");
   const ivaEl     = wrapperEl.querySelector(".welcome-cupon-iva");
   const caducaEl  = wrapperEl.querySelector(".welcome-cupon-caduca");
   const incluyeEl = wrapperEl.querySelector(".welcome-cupon-incluye");
-  // Las dos caras se reparten el trabajo: delante el precio, detrás el detalle
-  // (qué incluye y las condiciones que cuestan dinero). Quien gira el cupón ya
-  // está preguntando el precio: ahí la letra pequeña informa en vez de
-  // espantar.
+  // Las dos caras se reparten el trabajo: delante la promesa, detrás el detalle
+  // (qué incluye y cómo van las entregas). Quien gira el cupón ya está
+  // interesado: ahí la letra pequeña informa en vez de espantar.
   const condicionesEl = wrapperEl.querySelector(".welcome-cupon-condiciones");
   const ctaEl     = wrapperEl.querySelector(".welcome-cupon-cta");
   const email = cuponData.email || "hola@meowrhino.studio";
@@ -68,6 +70,7 @@ export function renderWelcomeCupon(celda, cuponData) {
   const applyLang = (lang) => {
     const t = cuponData[lang] || cuponData.es || {};
     hazteEl.textContent   = t.hazte   || "";
+    grandeEl.textContent  = t.grande  || "";
     ivaEl.textContent     = t.iva     || "";
     ivaEl.style.display   = t.iva ? "" : "none";   // aparcado en data.json (_iva)
     caducaEl.textContent  = t.caduca  || "";
@@ -92,7 +95,7 @@ export function renderWelcomeCupon(celda, cuponData) {
   // moviéndose es incómodo.
   //
   // Sale del centro, no de un punto al azar. Es la pieza que manda de la
-  // portada —lleva el precio— y las tarjetas de proyecto nacen en las esquinas
+  // portada —es la llamada a escribir— y las tarjetas de proyecto nacen en las esquinas
   // de arriba y de abajo: el centro es el único sitio donde no le cae encima
   // ninguna en el primer segundo.
   iniciarRebote(celda, wrapperEl, {

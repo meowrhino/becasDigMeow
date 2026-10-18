@@ -217,15 +217,17 @@ export function renderWelcome(data) {
   // texto giradas, y era un <button> que nadie sabía que lo era. En su lugar,
   // más portfolio moviéndose: renderWelcomeCard pinta varias tarjetas.
   // El centro de la celda es lo primero que ve alguien que acaba de entrar:
-  // el nombre del estudio y qué somos. Nada más. La letra pequeña del precio
-  // estuvo aquí un rato y era demasiado concreta demasiado pronto — condiciones
-  // de contrato a alguien que todavía no sabe si le interesamos. Se mudó al
-  // dorso del cupón, junto a lo que incluye, que es donde alguien ya está
-  // preguntando el precio.
+  // el nombre del estudio y qué somos. Nada más. La letra pequeña estuvo aquí
+  // un rato y era demasiado concreta demasiado pronto — condiciones de
+  // contrato a alguien que todavía no sabe si le interesamos. Se mudó al dorso
+  // del cupón, que es donde alguien ya está interesado.
+  //
+  // La tagline sí enlaza: «estudio de diseño web en barcelona» es la frase que
+  // alguien que acaba de llegar quiere ampliar, y el about está justo debajo.
   el.innerHTML = `
     <div class="welcome-content">
       <p class="welcome-title">${escapeHTML(w.titulo)}</p>
-      <p class="welcome-tagline">${escapeHTML(pick(w.tagline, currentLang))}</p>
+      <a class="welcome-tagline" href="${escapeHTML(rutaCelda("about", currentLang))}">${escapeHTML(pick(w.tagline, currentLang))}</a>
     </div>
     ${buildLangButtons()}
   `;
@@ -235,7 +237,10 @@ export function renderWelcome(data) {
   // i18n en sitio: reusa el mecanismo de attachLangListeners (mismo patrón
   // que el cupón, que registra el suyo aparte sobre la misma celda).
   attachLangListeners(el, (lang) => {
-    if (taglineEl) taglineEl.textContent = pick(w.tagline, lang);
+    if (taglineEl) {
+      taglineEl.textContent = pick(w.tagline, lang);
+      taglineEl.href = rutaCelda("about", lang);
+    }
   });
 
   renderWelcomeCupon(el, w.cupon);
@@ -467,36 +472,51 @@ export function renderCondiciones(data) {
   });
 }
 
-// --- Contacto ---
+// --- About y statement ---
 
 /**
- * La celda `about`: quién es manu, por qué hace esto y cómo trabaja.
- *
- * Era la celda `contacto`, que tenía cuatro datos —email, instagram y el cv— y
- * como página propia no se sostenía. El contacto sigue aquí, al final, que es
- * donde se busca cuando ya has leído a quién estás escribiendo.
- *
- * El precio no se escribe en el texto: se lee del cupón de la portada, que es
- * la única fuente. En la copia va como `{precio}` y se sustituye aquí, para
- * que subirlo siga siendo cambiar un número en un sitio.
+ * La caja de texto con scroll que comparten about y statement: pinta el
+ * contenido, engancha los degradados de scroll y el zoom, y lo repinta con
+ * fundido al cambiar de idioma. Es el mismo montaje que lleva metodología.
  */
+function montarCeldaTexto(el, prefijo, buildContent) {
+  el.innerHTML = `
+    <div class="scroll-wrapper ${prefijo}-scroll-wrapper">
+      <div class="scroll-content ${prefijo}-content">${buildContent(currentLang)}</div>
+    </div>
+    ${buildLangButtons()}
+  `;
+  const wrapper = el.querySelector(`.${prefijo}-scroll-wrapper`);
+  const content = el.querySelector(`.${prefijo}-content`);
+  const checkScroll = setupScrollGradients(wrapper, content);
+  const applyScale = setupZoom(el, content, checkScroll);
+  attachLangListeners(el, (lang) => {
+    repaintWithFade(el, content,
+      () => { content.innerHTML = buildContent(lang); },
+      () => { applyScale(); requestAnimationFrame(checkScroll); }
+    );
+  });
+}
+
+// `escConEnlaces` y no `escapeHTML`: algunos párrafos citan su fuente con un
+// enlace en markdown (`[texto](url)`). El pre-render ya los pintaba; aquí
+// salían literales, con los corchetes y el paréntesis a la vista.
+const parrafo = (t) => `<p>${escConEnlaces(t)}</p>`;
+
 /**
- * La celda `about`: quién es manu, por qué hace esto y cómo trabaja.
+ * La celda `about`: quién somos en tres párrafos, una foto y cómo escribirnos.
  *
- * Era la celda `contacto`, que tenía cuatro datos —email, instagram y el cv— y
- * como página propia no se sostenía. El contacto sigue aquí, al final, que es
- * donde se busca cuando ya has leído a quién estás escribiendo.
- *
- * El precio no se escribe en el texto: se lee del cupón de la portada, que es
- * la única fuente. En la copia va como `{precio}` y se sustituye aquí, para
- * que subirlo siga siendo cambiar un número en un sitio.
+ * Fue la celda `contacto` (cuatro datos que no sostenían una página) y luego
+ * el about largo, con el manifiesto dentro. En octubre de 2026 se partió: lo
+ * que pensamos se fue a `statement` y aquí queda lo que necesita alguien que
+ * está decidiendo si escribirnos. El contacto sigue al final, que es donde se
+ * busca cuando ya has leído a quién estás escribiendo.
  */
 export function renderAbout(data) {
   const el = document.querySelector(".celda.about");
   if (!el || !data?.about) return;
 
   const { email, instagram, linkedin, asunto, cv, archivo } = data.contacto || {};
-  const precio = data.welcome?.cupon?.precio ?? "";
 
   const buildMailto = (lang) => {
     const subject = pick(asunto, lang);
@@ -508,36 +528,23 @@ export function renderAbout(data) {
   const buildContent = (lang) => {
     const d = data.about[lang] || data.about.es;
     if (!d) return "";
-
     const cvHref = pick(cv, lang);
-    // `escConEnlaces` y no `escapeHTML`: algunos párrafos citan su fuente con un
-    // enlace en markdown (`[texto](url)`). El pre-render ya los pintaba; aquí
-    // salían literales, con los corchetes y el paréntesis a la vista.
-    const p = (t) => `<p>${escConEnlaces(t.replace("{precio}", precio))}</p>`;
+    const cta = d.cta || {};
 
     // La foto va SIN `loading="lazy"`: las celdas del lienzo viven todas apiladas
     // en el mismo hueco y el navegador nunca las da por visibles, así que una
     // imagen diferida se queda sin cargar aunque la tengas delante. En el
     // pre-render (easy-template.js), que es un documento normal, sí es lazy.
-    //
-    // El about pasó de ser un chorro de párrafos a tener apartados con titular:
-    // quién está detrás, internet puede ser otra cosa, tu web es tuya. El
-    // manifiesto y la persona dejaron de estar mezclados en el mismo bloque.
-    const secciones = (d.secciones || []).map(sec => `
-      <section class="about-seccion">
-        <h2 class="about-seccion-titular">${escapeHTML(sec.titular)}</h2>
-        ${(sec.parrafos || []).map(p).join("")}
-        ${sec.imagen ? `<img class="about-foto" src="${escapeHTML(sec.imagen.src)}"
-             alt="${escapeHTML(sec.imagen.alt || "")}" decoding="async">` : ""}
-      </section>`).join("");
-
-    // Ya no hay bloque de cierre. «cómo trabajamos» es un apartado más y lleva
-    // su enlace a metodología dentro del texto; el precio vive en el cupón de
-    // la portada. El about acaba en jardines digitales y de ahí al contacto.
     return `
       <h2 class="about-pregunta">${escapeHTML(d.pregunta)}</h2>
-      <div class="about-entrada">${(d.entrada || []).map(p).join("")}</div>
-      <div class="about-texto">${secciones}</div>
+      <div class="about-entrada">${(d.entrada || []).map(parrafo).join("")}</div>
+      ${d.imagen ? `<img class="about-foto" src="${escapeHTML(d.imagen.src)}"
+           alt="${escapeHTML(d.imagen.alt || "")}" decoding="async">` : ""}
+      <div class="about-cta">
+        <a class="about-btn" href="${escapeHTML(buildMailto(lang))}">${escapeHTML(cta.escribir || email)}</a>
+        <a class="about-btn about-btn-secundario" href="${escapeHTML(rutaCelda("portfolio", lang))}">${escapeHTML(cta.portfolio || "portfolio")}</a>
+      </div>
+      ${cta.statement ? `<p class="about-statement-link"><a href="${escapeHTML(rutaCelda("statement", lang))}">${escapeHTML(cta.statement)}</a></p>` : ""}
       <div class="about-contacto">
         <a class="contacto-email" href="${escapeHTML(buildMailto(lang))}">${escapeHTML(email)}</a>
         <div class="contacto-row">
@@ -556,17 +563,7 @@ export function renderAbout(data) {
       </div>`;
   };
 
-  el.innerHTML = `
-    <div class="scroll-wrapper about-scroll-wrapper">
-      <div class="scroll-content about-content">${buildContent(currentLang)}</div>
-    </div>
-    ${buildLangButtons()}
-  `;
-
-  const wrapper = el.querySelector(".about-scroll-wrapper");
-  const content = el.querySelector(".about-content");
-  const checkScroll = setupScrollGradients(wrapper, content);
-  const applyScale = setupZoom(el, content, checkScroll);
+  montarCeldaTexto(el, "about", buildContent);
 
   // El archivo se siente oscuro por defecto: fija el tema destino en vez de
   // invertir el actual, como hacía el enlace que vivía en el borde del
@@ -577,11 +574,31 @@ export function renderAbout(data) {
       localStorage.setItem("meowrhino-theme", "dark");
     }
   });
+}
 
-  attachLangListeners(el, (lang) => {
-    repaintWithFade(el, content,
-      () => { content.innerHTML = buildContent(lang); },
-      () => { applyScale(); requestAnimationFrame(checkScroll); }
-    );
-  });
+/**
+ * La celda `statement`: lo que pensamos. Un titular, una entrada y apartados
+ * con titular (tu web es tuya, por qué lo hacemos, jardines digitales). Es el
+ * texto que vivía dentro del about y lo hacía una página de treinta párrafos.
+ * Comparte la caja y las clases del about: es el mismo tipo de página.
+ */
+export function renderStatement(data) {
+  const el = document.querySelector(".celda.statement");
+  if (!el || !data?.statement) return;
+
+  const buildContent = (lang) => {
+    const d = data.statement[lang] || data.statement.es;
+    if (!d) return "";
+    const secciones = (d.secciones || []).map(sec => `
+      <section class="about-seccion">
+        <h2 class="about-seccion-titular">${escapeHTML(sec.titular)}</h2>
+        ${(sec.parrafos || []).map(parrafo).join("")}
+      </section>`).join("");
+    return `
+      <h2 class="about-pregunta">${escapeHTML(d.titulo)}</h2>
+      <div class="about-entrada">${(d.entrada || []).map(parrafo).join("")}</div>
+      <div class="about-texto">${secciones}</div>`;
+  };
+
+  montarCeldaTexto(el, "about", buildContent);
 }

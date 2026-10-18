@@ -149,7 +149,7 @@ export function heroHTML(data, lang) {
       <h1 class="easy-hero-title">${esc(h.titular)}</h1>
       <div class="easy-ticket">
         <p class="easy-ticket-hazte">${esc(t.hazte)}</p>
-        <p class="easy-ticket-precio">${esc(c.precio)}</p>
+        <p class="easy-ticket-grande">${esc(t.grande || "")}</p>
         ${t.iva ? `<p class="easy-ticket-iva">${esc(t.iva)}</p>` : ""}
         ${t.caduca ? `<p class="easy-ticket-caduca">${esc(t.caduca)}</p>` : ""}
       </div>
@@ -245,27 +245,29 @@ export function metodologiaHTML(data, lang) {
 /**
  * El about, pre-renderizado.
  *
- * Es la única versión sin JS de la celda `about`, así que lleva el texto
- * entero: la pregunta, la entrada, los apartados, el cierre y el contacto. El
- * precio se sustituye desde el cupón, que es donde vive el número.
+ * Es la única versión sin JS de la celda `about`: la pregunta, los tres
+ * párrafos, la foto, los dos botones y el contacto. Lo que pensamos está en
+ * `statementHTML`, que es otra página.
  */
 export function aboutHTML(data, lang) {
   const a = data.about || {};
   const d = a[lang] || a.es || {};
-  const precio = data.welcome?.cupon?.precio ?? "";
   const co = data.contacto || {};
   const asunto = encodeURIComponent(co.asunto?.[lang] || co.asunto?.es || "");
   const cv = co.cv?.[lang] || co.cv?.es;
-  const p = (t) => `<p>${escConEnlaces(t.replace("{precio}", precio))}</p>`;
+  const cta = d.cta || {};
+  const p = (t) => `<p>${escConEnlaces(t)}</p>`;
 
   return `
     <section class="easy-section easy-about" id="about">
       <h1 class="easy-about-pregunta">${esc(d.pregunta || "")}</h1>
       <div class="easy-about-entrada">${(d.entrada || []).map(p).join("")}</div>
-      ${(d.secciones || []).map(sec => `
-      <h2 class="easy-h3">${esc(sec.titular)}</h2>
-      ${(sec.parrafos || []).map(p).join("")}
-      ${sec.imagen ? `<img class="easy-about-foto" src="${esc(sec.imagen.src)}" alt="${esc(sec.imagen.alt || "")}" loading="lazy" decoding="async">` : ""}`).join("")}
+      ${d.imagen ? `<img class="easy-about-foto" src="${esc(d.imagen.src)}" alt="${esc(d.imagen.alt || "")}" loading="lazy" decoding="async">` : ""}
+      <div class="easy-hero-cta">
+        <a class="easy-btn" href="mailto:${esc(co.email)}?subject=${asunto}">${esc(cta.escribir || co.email || "")}</a>
+        <a class="easy-btn easy-btn-secundario" href="${esc(rutaCelda("portfolio", lang))}">${esc(cta.portfolio || "portfolio")}</a>
+      </div>
+      ${cta.statement ? `<p><a href="${esc(rutaCelda("statement", lang))}">${esc(cta.statement)}</a></p>` : ""}
       <p class="easy-about-contacto">
         <a href="mailto:${esc(co.email)}?subject=${asunto}">${esc(co.email)}</a>
         ${co.instagram ? `<a href="${esc(co.instagram.url)}" target="_blank" rel="noopener">${esc(co.instagram.usuario)}</a>` : ""}
@@ -275,6 +277,25 @@ export function aboutHTML(data, lang) {
           ? `<a href="${esc(a.url)}">${esc(a.nombre)}</a>`
           : `<a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.nombre)}</a>`).join("\n        ")}
       </p>
+    </section>`;
+}
+
+/**
+ * El statement, pre-renderizado: el titular, la entrada y los apartados. Es
+ * la versión sin JS de la celda `statement` y el texto que lee un buscador
+ * cuando alguien pregunta por qué una web propia y no una plantilla.
+ */
+export function statementHTML(data, lang) {
+  const st = data.statement || {};
+  const d = st[lang] || st.es || {};
+  const p = (t) => `<p>${escConEnlaces(t)}</p>`;
+  return `
+    <section class="easy-section easy-about" id="statement">
+      <h1 class="easy-about-pregunta">${esc(d.titulo || "")}</h1>
+      <div class="easy-about-entrada">${(d.entrada || []).map(p).join("")}</div>
+      ${(d.secciones || []).map(sec => `
+      <h2 class="easy-h3">${esc(sec.titular)}</h2>
+      ${(sec.parrafos || []).map(p).join("")}`).join("")}
     </section>`;
 }
 
@@ -480,6 +501,7 @@ export function renderCeldaPrerenderHTML(data, lang, celda, enlaces = [], cuerpo
     // que quieres — es la única versión navegable de la home.
     welcome: () => heroHTML(data, lang) + portfolioHTML(data, lang),
     about: () => aboutHTML(data, lang),
+    statement: () => statementHTML(data, lang),
     "metodología": () => metodologiaHTML(data, lang),
     condiciones: () => condicionesHTML(data, lang),
     links: () => linksHTML(data, lang),
