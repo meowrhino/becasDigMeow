@@ -298,9 +298,10 @@ export function renderMetodologia(data) {
 
 // --- Footer ---
 //
-// Vista única con auto-rotación entre N secciones (data.footer[lang].secciones[]).
-// Cada sección define su propio rotateMs. Nav inferior con botones (activo en bold).
-// Hover sobre el contenido pausa la rotación; mouseleave la reanuda.
+// Una sección a la vez (data.footer[lang].secciones[]), con pestañas abajo.
+// Rotaba sola cada pocos segundos; se quitó en octubre de 2026: con diez
+// apartados en «trabajo» nadie acababa de leerlos, y privacidad y financiación
+// están ahí a propósito sin llamar la atención.
 
 /**
  * La celda de la letra pequeña: condiciones, privacidad y financiación.
@@ -314,9 +315,7 @@ export function renderCondiciones(data) {
   const el = document.querySelector(".celda.footer");
   if (!el || !data?.footer) return;
 
-  // Estado: índice de sección activa (auto-rota entre las secciones)
   let activeIdx = 0;
-  let sectionTimeout = null;
 
   const buildSeccion = (lang, idx) => {
     const s = data.footer[lang]?.secciones?.[idx];
@@ -377,23 +376,6 @@ export function renderCondiciones(data) {
   const checkScroll = setupScrollGradients(wrapper, content);
   const applyScale = setupZoom(el, content, checkScroll);
 
-  const stopSectionRotator = () => {
-    if (sectionTimeout) {
-      clearTimeout(sectionTimeout);
-      sectionTimeout = null;
-    }
-  };
-
-  const scheduleNext = () => {
-    stopSectionRotator();
-    const secciones = data.footer[currentLang]?.secciones || [];
-    const ms = secciones[activeIdx]?.rotateMs;
-    if (!ms || secciones.length < 2) return;
-    sectionTimeout = setTimeout(() => {
-      activeIdx = (activeIdx + 1) % secciones.length;
-      repintar(currentLang);
-    }, ms);
-  };
 
   const updateNavActive = () => {
     el.querySelectorAll(".footer-section-tab").forEach((tab, i) =>
@@ -410,14 +392,12 @@ export function renderCondiciones(data) {
   };
 
   const repintar = (lang, withFade = true) => {
-    stopSectionRotator();
     const render = () => { content.innerHTML = buildSeccion(lang, activeIdx); };
     const after = () => {
       content.scrollTop = 0;
       applyScale();
       checkScroll();
       updateNavActive();
-      scheduleNext();
     };
     if (withFade) {
       repaintWithFade(el, content, render, after);
@@ -435,37 +415,8 @@ export function renderCondiciones(data) {
     if (idx !== activeIdx) {
       activeIdx = idx;
       repintar(currentLang);
-    } else {
-      scheduleNext();
     }
   });
-
-  // Pause on hover sobre el contenido o el nav (mouseover burbujea)
-  el.addEventListener("mouseover", (e) => {
-    if (e.target.closest(".footer-content, .footer-section-nav")) {
-      stopSectionRotator();
-    }
-  });
-  el.addEventListener("mouseout", (e) => {
-    const to = e.relatedTarget;
-    if (!to || !to.closest?.(".footer-content, .footer-section-nav")) {
-      scheduleNext();
-    }
-  });
-
-  // Pause on touch / scroll: reanudar tras 3 s de inactividad
-  const pauseAndResume = () => {
-    stopSectionRotator();
-    sectionTimeout = setTimeout(scheduleNext, 3000);
-  };
-  el.addEventListener("touchstart", (e) => {
-    if (e.target.closest(".footer-content, .footer-section-nav")) {
-      pauseAndResume();
-    }
-  }, { passive: true });
-  wrapper.addEventListener("scroll", pauseAndResume, { passive: true });
-
-  scheduleNext();
 
   attachLangListeners(el, (lang) => {
     repintarNav(lang);
