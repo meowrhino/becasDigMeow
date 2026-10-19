@@ -326,7 +326,12 @@ export function renderCondiciones(data) {
     if (s.tipo === "texto") {
       // `parrafos` lleva markup a propósito (la sección de privacidad trae
       // <strong>/<a>/<em>); NO se escapa. El resto de campos es texto plano.
-      body = (s.parrafos || []).map(p => `<p>${p.replace(/\n/g, "<br>")}</p>`).join("");
+      // `apartados` es la de trabajo: diez condiciones, cada una con su título,
+      // en vez de once párrafos seguidos.
+      const parrafos = (ps) => (ps || []).map(p => `<p>${p.replace(/\n/g, "<br>")}</p>`).join("");
+      body = s.apartados
+        ? s.apartados.map(a => `<h3 class="footer-apartado-titular">${escapeHTML(a.titulo)}</h3>${parrafos(a.parrafos)}`).join("")
+        : parrafos(s.parrafos);
       if (s.nota) body += `<p class="footer-nota">${escapeHTML(s.nota)}</p>`;
     } else if (s.tipo === "subvencion") {
       const intro = s.intro ? `<p>${escapeHTML(s.intro)}</p>` : "";
@@ -526,14 +531,8 @@ export function renderAbout(data) {
     if (!d) return "";
     const cta = d.cta || {};
 
-    // La foto va SIN `loading="lazy"`: las celdas del lienzo viven todas apiladas
-    // en el mismo hueco y el navegador nunca las da por visibles, así que una
-    // imagen diferida se queda sin cargar aunque la tengas delante. En el
-    // pre-render (easy-template.js), que es un documento normal, sí es lazy.
     return `
       <h2 class="about-pregunta">${escapeHTML(d.pregunta)}</h2>
-      ${d.imagen ? `<img class="about-foto" src="${escapeHTML(d.imagen.src)}"
-           alt="${escapeHTML(d.imagen.alt || "")}" decoding="async">` : ""}
       <div class="about-entrada">${(d.entrada || []).map(parrafo).join("")}</div>
       <p class="about-enlaces">
         <a href="${escapeHTML(rutaCelda("portfolio", lang))}">${escapeHTML(cta.portfolio || "portfolio →")}</a>

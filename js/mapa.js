@@ -55,14 +55,15 @@ const LADO = 5;
  * llegar tiene que encontrar sin buscar: el portfolio a la izquierda, el about
  * debajo, el statement a la derecha. `metodología` encima del statement (el
  * cómo encima del porqué) y `condiciones` cerrando la fila. `buscaminas`
- * cuelga de `mapa`, en la fila de abajo: es la única celda que no explica nada
- * del estudio, y llegar a ella es salirse por debajo de lo que sí lo explica.
+ * debajo del statement y `mapa` colgando de él, en la fila de abajo: el mapa
+ * es la celda que menos se visita, y llegar a él es salirse por debajo de
+ * todo lo demás.
  */
 export const ORIGEN = Object.freeze({
   "1_2": "links", "1_3": "metodología",
   "2_1": "portfolio", "2_2": "welcome", "2_3": "statement", "2_4": "condiciones",
-  "3_2": "about", "3_3": "mapa",
-  "4_3": "buscaminas",
+  "3_2": "about", "3_3": "buscaminas",
+  "4_3": "mapa",
 });
 
 const GUARDADO = "meowrhino-mapa";

@@ -260,7 +260,6 @@ export function aboutHTML(data, lang) {
   return `
     <section class="easy-section easy-about" id="about">
       <h1 class="easy-about-pregunta">${esc(d.pregunta || "")}</h1>
-      ${d.imagen ? `<img class="easy-about-foto" src="${esc(d.imagen.src)}" alt="${esc(d.imagen.alt || "")}" loading="lazy" decoding="async">` : ""}
       <div class="easy-about-entrada">${(d.entrada || []).map(p).join("")}</div>
       <p class="easy-about-enlaces">
         <a href="${esc(rutaCelda("portfolio", lang))}">${esc(cta.portfolio || "portfolio →")}</a>
@@ -328,6 +327,7 @@ export function condicionesHTML(data, lang) {
     return `
       <div class="easy-legal-bloque">
         <h2 class="easy-h">${esc(sec.label)}</h2>
+        ${(sec.apartados || []).map(a => `<h3 class="easy-h">${esc(a.titulo)}</h3>${a.parrafos.map(t => `<p>${t}</p>`).join("")}`).join("")}
         ${(sec.parrafos || []).map(t => `<p>${t}</p>`).join("")}
         ${sec.nota ? `<p class="easy-legal-nota">${esc(sec.nota)}</p>` : ""}
       </div>`;
