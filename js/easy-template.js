@@ -8,7 +8,7 @@
 // Así el texto que ve Google es EXACTAMENTE el que ve el visitante, sin copias
 // que se desincronicen. Fuente única de contenido: data.json.
 
-import { rutaProyectos, rutaCelda, slugify, RUTA_CELDAS } from "./rutas.js";
+import { rutaProyectos, rutaCelda, slugify, RUTA_CELDAS, ORIGEN, flechaHacia, textoConFlecha } from "./rutas.js";
 
 /** Escoge la variante de idioma de un objeto {es,en,cat}, con fallback a es. */
 export const pickLang = (obj, lang) => obj?.[lang] ?? obj?.es ?? "";
@@ -256,14 +256,16 @@ export function aboutHTML(data, lang) {
   const asunto = encodeURIComponent(co.asunto?.[lang] || co.asunto?.es || "");
   const cta = d.cta || {};
   const p = (t) => `<p>${escConEnlaces(t)}</p>`;
+  // Flechas según el reparto de fábrica: sin JS no hay mapa que recolocar.
+  const enlace = (celda, texto) => `<a href="${esc(rutaCelda(celda, lang))}">${esc(textoConFlecha(texto, flechaHacia(ORIGEN, "about", celda)))}</a>`;
 
   return `
     <section class="easy-section easy-about" id="about">
       <h1 class="easy-about-pregunta">${esc(d.pregunta || "")}</h1>
       <div class="easy-about-entrada">${(d.entrada || []).map(p).join("")}</div>
       <p class="easy-about-enlaces">
-        <a href="${esc(rutaCelda("portfolio", lang))}">${esc(cta.portfolio || "portfolio →")}</a>
-        ${cta.statement ? `<a href="${esc(rutaCelda("statement", lang))}">${esc(cta.statement)}</a>` : ""}
+        ${enlace("portfolio", cta.portfolio || "portfolio")}
+        ${cta.statement ? enlace("statement", cta.statement) : ""}
       </p>
       <p class="easy-about-contacto">
         <a href="mailto:${esc(co.email)}?subject=${asunto}">${esc(co.email)}</a>

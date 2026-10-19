@@ -32,11 +32,13 @@ import {
 } from "./js/proyecto-template.js";
 import { slugify, RUTA_CELDAS } from "./js/rutas.js";
 import { renderArchivePrerenderHTML } from "./js/archive-pages.js";
+import { renderLandingHTML } from "./js/landing-template.js";
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const DATA_PATH = join(ROOT, "data.json");
 const SEO_PATH = join(ROOT, "proyectos-seo.json");
 const ARCHIVE_PATH = join(ROOT, "archive-data.json");
+const LANDINGS_PATH = join(ROOT, "landings.json");
 const SITE = "https://meowrhino.studio";
 
 // ============================================
@@ -232,6 +234,17 @@ function enlacesEntreCeldas(data, idioma, celdaActual) {
     .map(([c, ruta]) => ({ href: ruta, texto: nombreVisible(c) }));
 }
 
+/**
+ * Los enlaces a las páginas long-tail en un idioma, con su h1 como texto. Van
+ * en el pie sin JS de cada celda, bajo la intro del índice del portfolio y en
+ * el pie de cada ficha: es lo que las conecta con el resto del sitio.
+ */
+function enlacesLandings(landingsDoc, idioma) {
+  return landingsDoc.landings.map(l => ({
+    href: pick(l.ruta, idioma.code), texto: pick(l.h1, idioma.code),
+  }));
+}
+
 /** Cabecera de una página de celda: su title, su description y su canonical. */
 function headCeldaHTML(data, idioma, celda, url) {
   const { titulo, descripcion: desc } = cabeceraCelda(data, celda, idioma.code);
@@ -268,14 +281,15 @@ function headCeldaHTML(data, idioma, celda, url) {
  * /proyectos: las 21 con su resumen y enlazadas a su ficha. Es lo que lee un
  * buscador y lo único navegable sin JS; con JS se ve la rejilla de capturas.
  */
-const cuerpoPortfolio = (fichas, idioma) =>
-  renderIndiceHTML(fichas, idioma.code, { base: idioma.proyBase }, medidasDe);
+const cuerpoPortfolio = (fichas, idioma, landings) =>
+  renderIndiceHTML(fichas, idioma.code, { base: idioma.proyBase, landings }, medidasDe);
 
 /** El HTML de una página de celda, a partir de la plantilla de la home. */
-function paginaCelda(plantilla, data, idioma, { celda, url }, fichas) {
-  const enlaces = enlacesEntreCeldas(data, idioma, celda);
+function paginaCelda(plantilla, data, idioma, { celda, url }, fichas, landingsDoc) {
+  const landings = enlacesLandings(landingsDoc, idioma);
+  const enlaces = enlacesEntreCeldas(data, idioma, celda).concat(landings);
   const cuerpo = renderCeldaPrerenderHTML(data, idioma.code, celda, enlaces,
-    celda === "portfolio" ? cuerpoPortfolio(fichas, idioma) : null);
+    celda === "portfolio" ? cuerpoPortfolio(fichas, idioma, landings) : null);
   let html = reemplazarBloque(plantilla, "head", headCeldaHTML(data, idioma, celda, url));
   html = reemplazarBloque(html, "preload", modulepreloadHTML("main.js"));
   html = reemplazarBloque(html, "home", cuerpo);
@@ -504,8 +518,9 @@ ${cuerpo}
 }
 
 /** Página de un proyecto, en un idioma. */
-function paginaProyecto({ proyecto, seo }, idioma, vecinos = {}) {
+function paginaProyecto({ proyecto, seo }, idioma, vecinos = {}, landingsDoc = { landings: [] }) {
   const rutas = {
+    landings: enlacesLandings(landingsDoc, idioma),
     // La vuelta de una ficha es la REJILLA del portfolio: estas páginas son
     // puro visual y salir de ellas a una lista de nombres era caer en seco.
     // Desde que la celda tiene ruta, /portfolio ES la rejilla.
@@ -544,6 +559,80 @@ function paginaProyecto({ proyecto, seo }, idioma, vecinos = {}) {
 
 
 
+// ============================================
+// PÁGINAS LONG-TAIL (landings.json)
+// ============================================
+//
+// Una página por idioma y por búsqueda que la portada no puede ganar («web
+// para músicos barcelona», «web sin cuotas mensuales»). Mismo esqueleto que
+// las fichas; su rejilla enseña los proyectos que landings.json nombra.
+
+/** Las landings de un idioma: su ruta, el archivo que la sirve y su URL. */
+function landingsDe(landingsDoc, idioma) {
+  return landingsDoc.landings.map(landing => {
+    const ruta = pick(landing.ruta, idioma.code);
+    return { landing, ruta, archivo: archivoDeRuta(ruta), url: `${SITE}${ruta}` };
+  });
+}
+
+/** hreflang de una landing: sus tres rutas, que landings.json declara. */
+function hreflangLandingHTML(landing) {
+  const alternas = IDIOMAS.map(i =>
+    `  <link rel="alternate" hreflang="${i.htmlLang}" href="${SITE}${pick(landing.ruta, i.code)}">`
+  ).join("\n");
+  return `${alternas}\n  <link rel="alternate" hreflang="x-default" href="${SITE}${pick(landing.ruta, POR_DEFECTO.code)}">`;
+}
+
+/** Los proyectos que enseña una landing, resueltos contra las fichas. */
+function fichasDeLanding(landing, fichas) {
+  const porNombre = new Map(fichas.map(f => [f.proyecto.nombre, f]));
+  return landing.proyectos.map(nombre => {
+    const f = porNombre.get(nombre);
+    if (!f) {
+      throw new Error(`landings.json (${landing.id}) habla de "${nombre}", que no ` +
+        `existe en data.json. Los nombres tienen que coincidir exactamente.`);
+    }
+    return f;
+  });
+}
+
+/** Página long-tail en un idioma. */
+function paginaLanding({ landing, url }, idioma, fichas, landingsDoc) {
+  const propias = fichasDeLanding(landing, fichas);
+  const title = pick(landing.title, idioma.code);
+  const description = pick(landing.description, idioma.code);
+  const rutas = {
+    portfolio: idioma.proyBase,
+    home: idioma.path,
+    idiomas: IDIOMAS.map(i => ({
+      etiqueta: i.code, htmlLang: i.htmlLang,
+      href: pick(landing.ruta, i.code), activo: i.code === idioma.code,
+    })),
+    // El pie enlaza las DEMÁS landings: la otra búsqueda que puede estar
+    // haciendo quien ha llegado aquí.
+    otras: enlacesLandings(landingsDoc, idioma).filter(o => o.href !== pick(landing.ruta, idioma.code)),
+  };
+  return paginaProyectoHTML({
+    idioma, title, description, url,
+    ogType: "website",
+    imagen: `${SITE}/favicon/og-image.png`,
+    hreflang: hreflangLandingHTML(landing),
+    jsonLd: scriptLdHTML({
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: pick(landing.h1, idioma.code),
+      description,
+      url,
+      inLanguage: idioma.htmlLang,
+      serviceType: "diseño web",
+      areaServed: { "@type": "City", name: "Barcelona" },
+      provider: { "@type": "ProfessionalService", name: "meowrhino studio", url: SITE },
+    }),
+    cuerpo: renderLandingHTML(landing, propias, idioma.code, rutas, medidasDe),
+  });
+}
+
+
 /**
  * Los `lastmod` del sitemap anterior, indexados por URL.
  *
@@ -568,7 +657,7 @@ function lastmodsPrevios() {
  * `cambiadas` son las rutas que este build ha reescrito de verdad; solo esas
  * estrenan fecha. Las demás heredan la que ya tenían.
  */
-function sitemapXML(fichas = [], cambiadas = new Set()) {
+function sitemapXML(fichas = [], cambiadas = new Set(), landingsDoc = { landings: [] }) {
   // Fecha LOCAL, no UTC: `toISOString()` convierte a UTC, así que un build
   // lanzado de madrugada en Barcelona (00:30 CEST = 22:30 UTC del día
   // anterior) sellaba el sitemap con la fecha de ayer. "sv" formatea como
@@ -613,6 +702,17 @@ ${alternasCelda(celda)}
     <priority>${celda === "welcome" ? "1.0" : celda === "buscaminas" ? "0.3" : "0.8"}</priority>
   </url>`)).join("\n");
 
+  // Las landings, con sus alternativas: son páginas de contenido, como las
+  // celdas, así que llevan su misma prioridad.
+  const landings = IDIOMAS.flatMap(i => landingsDe(landingsDoc, i).map(({ landing, url, archivo }) => `  <url>
+    <loc>${url}</loc>
+${IDIOMAS.map(j => `    <xhtml:link rel="alternate" hreflang="${j.htmlLang}" href="${SITE}${pick(landing.ruta, j.code)}"/>`).join("\n")}
+    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${pick(landing.ruta, POR_DEFECTO.code)}"/>
+    <lastmod>${fechaDe(url, archivo)}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>`)).join("\n");
+
   return `<?xml version="1.0" encoding="UTF-8"?>
 <!-- Generado por build-seo.js. No editar a mano. -->
 <!-- Solo URLs canónicas. /easy ya no existe: servía una copia del sitio
@@ -620,6 +720,7 @@ ${alternasCelda(celda)}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${homes}
+${landings}
   <url>
     <loc>${SITE}/archive</loc>
     <lastmod>${fechaDe(`${SITE}/archive`, "archive.html")}</lastmod>
@@ -659,6 +760,7 @@ function escribirSiCambia(nombre, contenido) {
 function main() {
   const data = JSON.parse(readFileSync(DATA_PATH, "utf8"));
   const seoDoc = JSON.parse(readFileSync(SEO_PATH, "utf8"));
+  const landingsDoc = JSON.parse(readFileSync(LANDINGS_PATH, "utf8"));
 
   // La plantilla se lee UNA vez, antes de escribir nada: index.html es a la vez
   // plantilla y salida, y si se releyera por idioma arrastraría lo ya escrito.
@@ -682,7 +784,15 @@ function main() {
       for (const pagina of celdasDe(idioma)) {
         const dir = dirname(join(ROOT, pagina.archivo));
         mkdirSync(dir, { recursive: true });
-        generar(pagina.archivo, paginaCelda(plantillaHome, data, idioma, pagina, fichas));
+        generar(pagina.archivo, paginaCelda(plantillaHome, data, idioma, pagina, fichas, landingsDoc));
+      }
+    }
+
+    // Las páginas long-tail, una por idioma, al lado de las celdas de su idioma.
+    for (const idioma of IDIOMAS) {
+      for (const pagina of landingsDe(landingsDoc, idioma)) {
+        mkdirSync(dirname(join(ROOT, pagina.archivo)), { recursive: true });
+        generar(pagina.archivo, paginaLanding(pagina, idioma, fichas, landingsDoc));
       }
     }
 
@@ -710,15 +820,16 @@ function main() {
           siguiente: fichas[(i + 1) % fichas.length],
         };
         generar(`${idioma.proyDir}/${ficha.seo.slug}.html`,
-          paginaProyecto(ficha, idioma, vecinos));
+          paginaProyecto(ficha, idioma, vecinos, landingsDoc));
       });
     }
 
     // El sitemap va el último: necesita saber qué se ha reescrito antes.
-    escribirSiCambia("sitemap.xml", sitemapXML(fichas, cambiadas));
+    escribirSiCambia("sitemap.xml", sitemapXML(fichas, cambiadas, landingsDoc));
 
     console.log(`\n${IDIOMAS.length} idiomas · ${fichas.length} proyectos ` +
-      `· ${IDIOMAS.length * fichas.length} fichas de proyecto.`);
+      `· ${IDIOMAS.length * fichas.length} fichas de proyecto ` +
+      `· ${IDIOMAS.length * landingsDoc.landings.length} páginas long-tail.`);
   } catch (err) {
     console.error(`✗ ${err.message}`);
     process.exit(1);

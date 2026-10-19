@@ -152,10 +152,41 @@ export function renderProyectoHTML(proyecto, seo, lang = "es", rutas = {}, medir
       <div class="proy-galeria">${galeria}
       </div>${acciones}
       <nav class="proy-pie" aria-label="${esc(t.navegar)}">
-        <a href="${esc(rutas.indice || "/portfolio")}">${esc(t.volverRejilla)}</a>
+        <a href="${esc(rutas.indice || "/portfolio")}">${esc(t.volverRejilla)}</a>${landingsPieHTML(rutas.landings)}
         <a href="${esc(rutas.home || "/")}">meowrhino studio</a>
       </nav>
     </article>`;
+}
+
+/**
+ * Los enlaces a las páginas long-tail (web para músicos y artistas, web sin
+ * cuotas), para el pie de cada ficha y del índice. Desde 63 fichas y la
+ * portada del portfolio es como esas páginas dejan de ser huérfanas; para una
+ * persona son, además, la respuesta a «¿y para mí?» al salir de un proyecto.
+ */
+export function landingsPieHTML(landings = []) {
+  if (!landings.length) return "";
+  return `
+        <span class="proy-pie-landings">${landings.map(l =>
+          `<a href="${esc(l.href)}">${esc(l.texto)}</a>`).join(" · ")}</span>`;
+}
+
+/** Una tarjeta del portfolio (captura, nombre y resumen) enlazada a su ficha. */
+export function tarjetaProyectoHTML({ proyecto, seo }, lang = "es", base = "/portfolio", medirImagen = null) {
+  // Las capturas van `lazy` y sin medidas no reservaban sitio: al entrar, la
+  // página saltaba entera cada vez que llegaba una. Las fichas ya medían sus
+  // imágenes (medidasDe, en build-seo.js); el índice no, y era justo la página
+  // donde más se notaba porque hay veintiuna a la vez.
+  const m = medirImagen?.(proyecto.imagen);
+  const tamano = m ? ` width="${m.ancho}" height="${m.alto}"` : "";
+  return `
+        <li class="proy-card">
+          <a href="${esc(base)}/${esc(seo.slug)}">
+            <img src="/${esc(proyecto.imagen)}" alt=""${tamano} loading="lazy" decoding="async">
+            <span class="proy-card-nombre">${esc(proyecto.nombre)}</span>
+            <span class="proy-card-kw">${esc(pickLang(seo.resumen, lang))}</span>
+          </a>
+        </li>`;
 }
 
 /** Alt de cada imagen: descriptivo y distinto entre sí, sin repetir keyword. */
@@ -179,28 +210,15 @@ function altDe(proyecto, i, t) {
 export function renderIndiceHTML(fichas, lang = "es", rutas = {}, medirImagen = null) {
   const t = UI[lang] || UI.es;
   const base = rutas.base || "/portfolio";
-  const items = fichas.map(({ proyecto, seo }) => {
-    // Las 21 capturas van `lazy` y sin medidas no reservaban sitio: al entrar,
-    // la página saltaba entera cada vez que llegaba una. Las fichas ya medían
-    // sus imágenes (medidasDe, en build-seo.js); el índice no, y era justo la
-    // página donde más se notaba porque hay veintiuna a la vez.
-    const m = medirImagen?.(proyecto.imagen);
-    const tamano = m ? ` width="${m.ancho}" height="${m.alto}"` : "";
-    return `
-        <li class="proy-card">
-          <a href="${esc(base)}/${esc(seo.slug)}">
-            <img src="/${esc(proyecto.imagen)}" alt=""${tamano} loading="lazy" decoding="async">
-            <span class="proy-card-nombre">${esc(proyecto.nombre)}</span>
-            <span class="proy-card-kw">${esc(pickLang(seo.resumen, lang))}</span>
-          </a>
-        </li>`;
-  }).join("");
+  const items = fichas.map(f => tarjetaProyectoHTML(f, lang, base, medirImagen)).join("");
+  const landings = (rutas.landings || []).map(l => `<a href="${esc(l.href)}">${esc(l.texto)}</a>`).join(" · ");
 
   return `
     <section class="proy-indice">
       <p class="easy-eyebrow">${esc(t.indiceEyebrow)}</p>
       <h1 class="proy-title">${esc(t.indiceTitulo)}</h1>
-      <p class="proy-texto">${esc(t.intro(fichas.length))}</p>
+      <p class="proy-texto">${esc(t.intro(fichas.length))}</p>${landings ? `
+      <p class="proy-texto proy-indice-landings">${landings}</p>` : ""}
       <ul class="proy-grid">${items}
       </ul>
     </section>`;

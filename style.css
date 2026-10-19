@@ -2809,3 +2809,27 @@ html.js #seo-prerender {
 }
 .pgrid-nombre:visited { color: var(--text); }
 .pgrid-nombre:hover   { opacity: 0.6; }
+
+/* ============================================
+   19. PÁGINAS LONG-TAIL (/web-para-artistas, /web-sin-cuotas-mensuales)
+   ============================================ */
+/* Son fichas (.proy) con varios párrafos y apartados en vez de un texto único
+   y una galería: solo hace falta el ritmo entre párrafos, los subtítulos y que
+   la rejilla de proyectos relacionados quede por encima de la palabra del fondo. */
+.landing .proy-texto + .proy-texto { margin-top: 1rem; }
+.landing .proy-h2 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  max-width: 36rem;
+  margin: 2.6rem 0 0.8rem;
+}
+.proy > .proy-h2,
+.proy > .proy-grid { position: relative; z-index: 1; }
+.landing .proy-grid { margin-top: 1.4rem; }
+
+/* Los enlaces a estas páginas en el pie de cada ficha, entre «volver» y el
+   nombre del estudio. */
+.proy-pie-landings { display: flex; flex-wrap: wrap; gap: 0.4rem 0.6rem; justify-content: center; }
+.proy-indice-landings { margin-top: 0.6rem; }
+.proy-indice-landings a { margin-right: 0.3rem; }

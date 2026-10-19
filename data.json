@@ -33,9 +33,9 @@
         "cat": "internet pot ser una altra cosa — per què fem webs a mida | meowrhino studio"
       },
       "description": {
-        "es": "lo que pensamos: que internet no es solo instagram y google, que tu web tiene que ser tuya —código, dominio e historial— y que puede crecer despacio, como un jardín digital.",
-        "en": "what we think: that the internet is not just instagram and google, that your website has to be yours —code, domain and history— and that it can grow slowly, like a digital garden.",
-        "cat": "el que pensem: que internet no és només instagram i google, que la teva web ha de ser teva —codi, domini i historial— i que pot créixer a poc a poc, com un jardí digital."
+        "es": "lo que pensamos: que internet no es solo instagram y google, que tu web tiene que ser tuya —código, dominio e historial— y que puede crecer despacio, cuidada con el tiempo, sin pertenecer a nadie más que a ti.",
+        "en": "what we think: that the internet is not just instagram and google, that your website has to be yours —code, domain and history— and that it can grow slowly, tended over time, belonging to no one but you.",
+        "cat": "el que pensem: que internet no és només instagram i google, que la teva web ha de ser teva —codi, domini i historial— i que pot créixer a poc a poc, cuidada amb el temps, sense pertànyer a ningú més que a tu."
       }
     },
     "metodología": {
@@ -592,37 +592,37 @@
     "es": {
       "pregunta": "¿quieres una web?",
       "entrada": [
-        "somos un pequeño estudio de diseño y desarrollo web en barcelona. detrás está [manu latour](https://www.linkedin.com/in/meowrhino/), que diseña y programa webs a medida desde 2020.",
+        "somos un pequeño estudio de diseño y desarrollo web en barcelona. detrás está [manu latour](https://www.linkedin.com/in/meowrhino/), que en poco más de un año ha diseñado y programado más de veinte webs a medida. estudió arte y diseño en la escola massana y forma parte de [estructuras 3000](https://estructuras3000.com/), colectivo por la colectivización del arte y la cultura.",
         "hacemos webs desde cero y las diseñamos contigo: tú decides qué cuenta y cómo se ve, nosotros la pensamos y la programamos. así la web es tuya de verdad, y no una que nos gustó a nosotros. sencillas, extrañas, experimentales o completamente absurdas, sin plantillas ni cuotas de mantenimiento.",
         "te la entregamos en persona y sales sabiendo actualizarla por tu cuenta. el código es tuyo, el dominio es tuyo, y no necesitas seguir pagándonos para que siga funcionando."
       ],
       "cta": {
-        "portfolio": "ver el portfolio →",
-        "statement": "lo que pensamos →"
+        "portfolio": "portfolio",
+        "statement": "statement"
       }
     },
     "en": {
       "pregunta": "want a website?",
       "entrada": [
-        "we are a small web design and development studio in barcelona. behind it is [manu latour](https://www.linkedin.com/in/meowrhino/), who has been designing and coding custom websites since 2020.",
+        "we are a small web design and development studio in barcelona. behind it is [manu latour](https://www.linkedin.com/in/meowrhino/), who has designed and coded more than twenty custom websites in just over a year. they studied art and design at escola massana and are part of [estructuras 3000](https://estructuras3000.com/), a collective working for the collectivisation of art and culture.",
         "we make websites from scratch and design them with you: you decide what it says and how it looks, we think it out and code it. that way the website is truly yours, not one we happened to like. simple, strange, experimental or completely absurd, with no templates and no maintenance fees.",
         "we hand it over in person and you leave knowing how to update it yourself. the code is yours, the domain is yours, and you don't need to keep paying us for it to keep running."
       ],
       "cta": {
-        "portfolio": "see the portfolio →",
-        "statement": "what we think →"
+        "portfolio": "portfolio",
+        "statement": "statement"
       }
     },
     "cat": {
       "pregunta": "vols una web?",
       "entrada": [
-        "som un petit estudi de disseny i desenvolupament web a barcelona. al darrere hi ha [en manu latour](https://www.linkedin.com/in/meowrhino/), que dissenya i programa webs a mida des del 2020.",
+        "som un petit estudi de disseny i desenvolupament web a barcelona. al darrere hi ha [en manu latour](https://www.linkedin.com/in/meowrhino/), que en poc més d'un any ha dissenyat i programat més de vint webs a mida. va estudiar art i disseny a l'escola massana i forma part d'[estructuras 3000](https://estructuras3000.com/), col·lectiu per la col·lectivització de l'art i la cultura.",
         "fem webs des de zero i les dissenyem amb tu: tu decideixes què explica i com es veu, nosaltres la pensem i la programem. així la web és teva de veritat, i no una que ens va agradar a nosaltres. senzilles, estranyes, experimentals o completament absurdes, sense plantilles ni quotes de manteniment.",
         "te l'entreguem en persona i en surts sabent actualitzar-la pel teu compte. el codi és teu, el domini és teu, i no necessites continuar pagant-nos perquè segueixi funcionant."
       ],
       "cta": {
-        "portfolio": "veure el portfolio →",
-        "statement": "el que pensem →"
+        "portfolio": "portfolio",
+        "statement": "statement"
       }
     }
   },
@@ -633,7 +633,7 @@
       "entrada": [
         "internet no es instagram, ni google.",
         "internet son también todas esas [pequeñas páginas](https://oneterabyteofkilobyteage.tumblr.com/) que alguien hizo porque quería contar, enseñar o compartir algo. pero cada vez más, como tantas cosas, está empezando a ser propiedad de unos pocos.",
-        "y merece la pena que tengas un espacio propio, que sea como tú quieras y que lo haya hecho alguien siguiendo tus deseos.",
+        "creemos en un internet distinto: hecho de sitios propios, pequeños y enlazados entre sí, que se cuidan con el tiempo y no pertenecen a nadie más que a quien los habita.",
         "por eso diseñamos cada web contigo, no para ti. tú decides qué quieres contar y cómo quieres contarlo; nosotros creamos el concepto, pensamos la estructura, dibujamos la interfaz y escribimos el código. es la única manera de que tu rincón en internet sea tuyo de verdad, y de que te siga gustando dentro de cinco años."
       ],
       "secciones": [
@@ -657,7 +657,7 @@
         {
           "titular": "jardines digitales",
           "parrafos": [
-            "hay quien llama a esto [jardines digitales](https://www.cccb.org/es/w/articulos/jardines-digitales-el-fin-del-scroll-infinito): espacios pequeños de internet que se cultivan en lugar de publicarse y abandonarse.",
+            "hay quien llama a esto [jardines digitales](https://www.cccb.org/es/w/articulos/jardines-digitales-el-fin-del-scroll-infinito): espacios pequeños de internet que se cultivan en lugar de publicarse y abandonarse. la idea viene de mike caulfield y maggie appleton.",
             "crecen despacio. cambian de forma. tienen cosas a medio hacer y cosas que llevan años ahí.",
             "no necesitan competir por nuestra atención, simplemente están. nos gusta pensar que tu web puede ser una de esas cosas, un pequeño lugar que existe porque tú has decidido que exista."
           ]
@@ -669,7 +669,7 @@
       "entrada": [
         "the internet is not instagram, and it is not google.",
         "the internet is also all those [small pages](https://oneterabyteofkilobyteage.tumblr.com/) that someone made because they wanted to tell, teach or share something. but more and more, like so many things, it is becoming the property of a few.",
-        "and it is worth having a space of your own, one that looks the way you want and that somebody actually made, following your wishes.",
+        "we believe in a different kind of internet: one made of small, self-owned, interlinked places that are tended over time and belong to no one but those who live in them.",
         "that is why we design every website with you, not for you. you decide what you want to tell and how you want to tell it; we come up with the concept, think out the structure, draw the interface and write the code. it is the only way your corner of the internet is truly yours, and still yours in five years."
       ],
       "secciones": [
@@ -693,7 +693,7 @@
         {
           "titular": "digital gardens",
           "parrafos": [
-            "some people call this [digital gardens](https://www.cccb.org/en/w/articles/digitals-gardens-an-end-to-the-infinite-scroll): small spaces of the internet that are cultivated instead of published and abandoned.",
+            "some people call this [digital gardens](https://www.cccb.org/en/w/articles/digitals-gardens-an-end-to-the-infinite-scroll): small spaces of the internet that are cultivated instead of published and abandoned. the idea comes from mike caulfield and maggie appleton.",
             "they grow slowly. they change shape. they have half-finished things and things that have been there for years.",
             "they don't need to compete for our attention, they are simply there. we like to think your website can be one of those, a small place that exists because you decided it should exist."
           ]
@@ -705,7 +705,7 @@
       "entrada": [
         "internet no és instagram, ni google.",
         "internet també són totes aquelles [petites pàgines](https://oneterabyteofkilobyteage.tumblr.com/) que algú va fer perquè volia explicar, ensenyar o compartir alguna cosa. però cada cop més, com tantes coses, està començant a ser propietat d'uns quants.",
-        "i val la pena que tinguis un espai propi, que sigui com tu vulguis i que l'hagi fet algú seguint els teus desitjos.",
+        "creiem en un internet diferent: fet de llocs propis, petits i enllaçats entre si, que es cuiden amb el temps i no pertanyen a ningú més que a qui els habita.",
         "per això dissenyem cada web amb tu, no per a tu. tu decideixes què vols explicar i com ho vols explicar; nosaltres creem el concepte, pensem l'estructura, dibuixem la interfície i escrivim el codi. és l'única manera que el teu racó a internet sigui teu de veritat, i que et segueixi agradant d'aquí a cinc anys."
       ],
       "secciones": [
@@ -729,7 +729,7 @@
         {
           "titular": "jardins digitals",
           "parrafos": [
-            "hi ha qui en diu [jardins digitals](https://www.cccb.org/ca/w/articles/jardins-digitals-la-fi-de-l-scroll-infinit): espais petits d'internet que es cultiven en lloc de publicar-se i abandonar-se.",
+            "hi ha qui en diu [jardins digitals](https://www.cccb.org/ca/w/articles/jardins-digitals-la-fi-de-l-scroll-infinit): espais petits d'internet que es cultiven en lloc de publicar-se i abandonar-se. la idea ve de mike caulfield i maggie appleton.",
             "creixen a poc a poc. canvien de forma. tenen coses a mig fer i coses que fa anys que hi són.",
             "no necessiten competir per la nostra atenció, simplement hi són. ens agrada pensar que la teva web pot ser una d'aquestes coses, un petit lloc que existeix perquè tu has decidit que existeixi."
           ]

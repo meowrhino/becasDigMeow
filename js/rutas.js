@@ -22,6 +22,44 @@
 export const rutaProyectos = (lang) => rutaCelda("portfolio", lang);
 
 /**
+ * El reparto de fábrica del lienzo (celda → casilla `y_x` de un 5×5), centrado.
+ *
+ * `welcome` cae en 2_2, el centro exacto: la portada en medio, como en el
+ * lienzo de siempre. Pegadas a ella, lo que alguien que acaba de llegar tiene
+ * que encontrar sin buscar: el portfolio a la izquierda, el about debajo, el
+ * statement a la derecha. `metodología` encima del statement (el cómo encima
+ * del porqué) y `condiciones` cerrando la fila. `buscaminas` debajo del
+ * statement y `mapa` colgando de él, en la fila de abajo: el mapa es la celda
+ * que menos se visita, y llegar a él es salirse por debajo de todo lo demás.
+ *
+ * Vive aquí y no en mapa.js porque el pre-render (node) lo necesita para
+ * pintar las flechas del about, y mapa.js arrastra DOM y localStorage.
+ */
+export const ORIGEN = Object.freeze({
+  "1_2": "links", "1_3": "metodología",
+  "2_1": "portfolio", "2_2": "welcome", "2_3": "statement", "2_4": "condiciones",
+  "3_2": "about", "3_3": "buscaminas",
+  "4_3": "mapa",
+});
+
+/**
+ * La flecha que, desde la celda `desde`, señala de verdad hacia `hasta` en el
+ * reparto `mapa`: ← → ↑ ↓ o una diagonal. `antes` dice si va delante del texto
+ * (apunta a la izquierda) o detrás. Si alguna celda no está, `→` y detrás.
+ */
+export function flechaHacia(mapa, desde, hasta) {
+  const pos = (n) => Object.keys(mapa).find((k) => mapa[k] === n)?.split("_").map(Number);
+  const a = pos(desde), b = pos(hasta);
+  if (!a || !b) return { flecha: "→", antes: false };
+  const dy = Math.sign(b[0] - a[0]), dx = Math.sign(b[1] - a[1]);
+  const flecha = { "-1,-1": "↖", "-1,0": "↑", "-1,1": "↗", "0,-1": "←", "0,1": "→", "1,-1": "↙", "1,0": "↓", "1,1": "↘" }[`${dy},${dx}`] || "→";
+  return { flecha, antes: dx < 0 };
+}
+
+/** Un enlace con su flecha pegada por el lado que señala. */
+export const textoConFlecha = (texto, { flecha, antes }) => (antes ? `${flecha} ${texto}` : `${texto} ${flecha}`);
+
+/**
  * Convierte el `nombre` de data.json en slug de URL.
  * Parte el camelCase antes de bajar a minúsculas (mokakopaTwins →
  * mokakopa-twins) y quita los acentos, que en una URL sobran.

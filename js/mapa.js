@@ -43,28 +43,12 @@
 import { currentLang, buildLangButtons, attachLangListeners } from "./data.js";
 import { reconfigurarGrid } from "./navigation.js";
 import { celdaHeadingHTML } from "./pages.js";
+import { ORIGEN } from "./rutas.js";
+export { ORIGEN };
 
 /** Lado del terreno. Cuadrado y fijo. */
 const LADO = 5;
 
-/**
- * El reparto de fábrica, centrado en el terreno.
- *
- * `welcome` cae en 2_2, que es el centro exacto del 5×5: la portada en medio,
- * como en el lienzo de siempre. Pegadas a ella, lo que alguien que acaba de
- * llegar tiene que encontrar sin buscar: el portfolio a la izquierda, el about
- * debajo, el statement a la derecha. `metodología` encima del statement (el
- * cómo encima del porqué) y `condiciones` cerrando la fila. `buscaminas`
- * debajo del statement y `mapa` colgando de él, en la fila de abajo: el mapa
- * es la celda que menos se visita, y llegar a él es salirse por debajo de
- * todo lo demás.
- */
-export const ORIGEN = Object.freeze({
-  "1_2": "links", "1_3": "metodología",
-  "2_1": "portfolio", "2_2": "welcome", "2_3": "statement", "2_4": "condiciones",
-  "3_2": "about", "3_3": "buscaminas",
-  "4_3": "mapa",
-});
 
 const GUARDADO = "meowrhino-mapa";
 
@@ -185,6 +169,8 @@ export function renderMapa(data) {
     guardarMapa(mapa);
     reconfigurarGrid(aGrid(mapa));
     pintar();
+    // El about pinta flechas que señalan a las celdas de verdad: avisarle.
+    window.dispatchEvent(new CustomEvent("mapa-cambiado", { detail: mapa }));
   }
 
   terreno.addEventListener("click", (e) => {

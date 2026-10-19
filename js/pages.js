@@ -9,9 +9,15 @@ import { currentLang, buildLangButtons, attachLangListeners, onLangChange } from
 import { setupZoom } from "./zoom.js";
 import { setupScrollGradients } from "./scroll-gradients.js";
 import { renderWelcomeCard } from "./welcome-card.js";
-import { renderWelcomeCupon } from "./welcome-cupon.js";
+// Cupón desactivado de momento (recuperable para una promoción): descomentar
+// este import (con comillas dobles) y la llamada en renderWelcome. Con comillas
+// simples el build no lo ve como import y quita el modulepreload.
+// import { renderWelcomeCupon } from './welcome-cupon.js';
 import { repaintWithFade, escapeHTML } from "./utils.js";
-import { rutaProyectos, rutaCelda, slugify } from "./rutas.js";
+import { rutaProyectos, rutaCelda, slugify, flechaHacia, textoConFlecha } from "./rutas.js";
+// Ciclo con mapa.js (que importa celdaHeadingHTML de aquí): inocuo, leerMapa
+// solo se llama en tiempo de ejecución.
+import { leerMapa } from "./mapa.js";
 import { escConEnlaces } from "./easy-template.js";
 import { bordeCelda } from "./navigation.js";
 
@@ -239,7 +245,7 @@ export function renderWelcome(data) {
     }
   });
 
-  renderWelcomeCupon(el, w.cupon);
+  // renderWelcomeCupon(el, w.cupon);
   renderWelcomeCard(el, data.portfolio?.proyectos);
 }
 
@@ -477,18 +483,26 @@ export function renderAbout(data) {
     return `mailto:${email}${params.toString() ? `?${params.toString()}` : ""}`;
   };
 
+  // Las flechas señalan a la celda de verdad según el reparto del mapa, y se
+  // repintan solas cuando alguien lo recoloca.
+  const enlaces = (lang, mapa = leerMapa()) => {
+    const cta = (data.about[lang] || data.about.es)?.cta || {};
+    const enlace = (celda, texto) => `<a href="${escapeHTML(rutaCelda(celda, lang))}">${escapeHTML(textoConFlecha(texto, flechaHacia(mapa, "about", celda)))}</a>`;
+    return enlace("portfolio", cta.portfolio || "portfolio") + (cta.statement ? enlace("statement", cta.statement) : "");
+  };
+  window.addEventListener("mapa-cambiado", (e) => {
+    const p = el.querySelector(".about-enlaces");
+    if (p) p.innerHTML = enlaces(currentLang, e.detail);
+  });
+
   const buildContent = (lang) => {
     const d = data.about[lang] || data.about.es;
     if (!d) return "";
-    const cta = d.cta || {};
 
     return `
       <h2 class="about-pregunta">${escapeHTML(d.pregunta)}</h2>
       <div class="about-entrada">${(d.entrada || []).map(parrafo).join("")}</div>
-      <p class="about-enlaces">
-        <a href="${escapeHTML(rutaCelda("portfolio", lang))}">${escapeHTML(cta.portfolio || "portfolio →")}</a>
-        ${cta.statement ? `<a href="${escapeHTML(rutaCelda("statement", lang))}">${escapeHTML(cta.statement)}</a>` : ""}
-      </p>
+      <p class="about-enlaces">${enlaces(lang)}</p>
       <div class="about-contacto">
         <a class="contacto-email" href="${escapeHTML(buildMailto(lang))}">${escapeHTML(email)}</a>
         <div class="contacto-row">

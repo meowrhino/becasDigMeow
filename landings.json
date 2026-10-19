@@ -1,0 +1,360 @@
+{
+  "_comment": "Páginas long-tail: una URL por idioma, generadas por build-seo.js con js/landing-template.js. Atacan búsquedas que la portada no puede ganar («web para músicos barcelona», «web sin cuotas mensuales»). Cada campo de texto es {es,en,cat}; `proyectos` son nombres EXACTOS de data.json.portfolio.proyectos (la rejilla sale de ahí, con el resumen de proyectos-seo.json). Los párrafos admiten enlaces [texto](url). `id` es el nombre del archivo que se genera: <id>.html, en/<id>.html, ca/<id>.html, y la URL pública es `ruta`.",
+  "landings": [
+    {
+      "id": "web-para-artistas",
+      "ruta": {
+        "es": "/web-para-artistas",
+        "en": "/en/websites-for-artists",
+        "cat": "/ca/web-per-a-artistes"
+      },
+      "etiqueta": { "es": "artistas", "en": "artists", "cat": "artistes" },
+      "title": {
+        "es": "webs para artistas en barcelona — a medida y sin cuotas · meowrhino studio",
+        "en": "websites for artists in barcelona — custom-made, no fees · meowrhino studio",
+        "cat": "webs per a artistes a barcelona — a mida i sense quotes · meowrhino studio"
+      },
+      "description": {
+        "es": "diseñamos webs a medida para artistas en barcelona: músicos, pintoras, fotógrafos, ilustradoras, performers. sin plantillas ni cuotas, y sales sabiendo actualizarla tú.",
+        "en": "custom websites for artists in barcelona: musicians, painters, photographers, illustrators, performers. no templates, no fees, and you leave knowing how to update it yourself.",
+        "cat": "dissenyem webs a mida per a artistes a barcelona: músics, pintores, fotògrafs, il·lustradores, performers. sense plantilles ni quotes, i en surts sabent actualitzar-la tu."
+      },
+      "eyebrow": {
+        "es": "estudio de diseño web · barcelona",
+        "en": "web design studio · barcelona",
+        "cat": "estudi de disseny web · barcelona"
+      },
+      "h1": {
+        "es": "webs para artistas en barcelona",
+        "en": "websites for artists in barcelona",
+        "cat": "webs per a artistes a barcelona"
+      },
+      "intro": {
+        "es": [
+          "de las webs que hemos hecho, casi todas son de gente que hace cosas: músicas, pintoras, fotógrafos, ilustradoras, diseñadores de sonido, performers. no es casualidad: es lo que nos gusta hacer y lo que mejor sabemos hacer.",
+          "una web de artista no es un catálogo. es el sitio donde tu trabajo se ve como tú quieres que se vea, sin un algoritmo que decida quién lo ve y sin una plantilla que lo haga parecerse al de los demás."
+        ],
+        "en": [
+          "almost every website we have made is for people who make things: musicians, painters, photographers, illustrators, sound designers, performers. that is no accident: it is what we like doing and what we do best.",
+          "an artist's website is not a catalogue. it is the place where your work looks the way you want it to look, with no algorithm deciding who sees it and no template making it look like everyone else's."
+        ],
+        "cat": [
+          "de les webs que hem fet, gairebé totes són de gent que fa coses: músiques, pintores, fotògrafs, il·lustradores, dissenyadors de so, performers. no és casualitat: és el que ens agrada fer i el que millor sabem fer.",
+          "una web d'artista no és un catàleg. és el lloc on la teva feina es veu com tu vols que es vegi, sense un algoritme que decideixi qui la veu i sense una plantilla que la faci semblar-se a la dels altres."
+        ]
+      },
+      "secciones": {
+        "es": [
+          {
+            "titular": "sin plantilla de artista",
+            "parrafos": [
+              "las plataformas de siempre te dan una rejilla de imágenes, una bio y un botón de contacto. todas iguales. nosotros empezamos por entender tu trabajo: la web de erika michi navega en cruz porque sus facetas no podían ir una debajo de otra; la de mike es una disquetera porque diseña portadas de disco; la de la diega suena. cada decisión sale de lo que haces, no de un tema descargado."
+            ]
+          },
+          {
+            "titular": "lo que suele necesitar una web de artista",
+            "parrafos": [
+              "un reproductor que no se corta al cambiar de página, como el de diego san marcos. una agenda de conciertos o exposiciones que puedas actualizar tú en dos minutos. un archivo privado para enseñar obra a galerías o clientes sin publicarla, como el de conor. y los idiomas que necesites: hacemos webs en castellano, catalán e inglés, con una url por idioma."
+            ]
+          },
+          {
+            "titular": "tú la mantienes",
+            "parrafos": [
+              "te la entregamos en persona, delante de tu ordenador, y sales sabiendo cambiar textos, subir fotos y añadir fechas. el contenido vive en un archivo que aprendes a leer. no dependes de nosotros ni de nadie para que la web siga viva."
+            ]
+          },
+          {
+            "titular": "sin cuotas mensuales",
+            "parrafos": [
+              "la web se publica como archivos estáticos desde una cuenta gratuita a tu nombre; el único gasto que se repite es el dominio, una vez al año. el código es tuyo. [aquí contamos cómo funciona una web sin cuotas →](/web-sin-cuotas-mensuales)"
+            ]
+          },
+          {
+            "titular": "cómo empezamos",
+            "parrafos": [
+              "la primera reunión es gratis: nos cuentas qué haces, traes tres o cinco referentes y salimos con un boceto, una lista de lo que necesitamos de ti y un presupuesto cerrado contigo. desde que llega tu material, la web está lista en un mes. [el método paso a paso →](/metodologia)"
+            ]
+          }
+        ],
+        "en": [
+          {
+            "titular": "no artist template",
+            "parrafos": [
+              "the usual platforms give you a grid of images, a bio and a contact button. all the same. we start by understanding your work: erika michi's website navigates in a cross because her sides could not sit one below the other; mike's is a cd rack because he designs record sleeves; la diega's makes sound. every decision comes from what you do, not from a downloaded theme."
+            ]
+          },
+          {
+            "titular": "what an artist's website usually needs",
+            "parrafos": [
+              "a player that does not stop when you change page, like diego san marcos's. a gig or exhibition calendar you can update yourself in two minutes. a private archive to show work to galleries or clients without publishing it, like conor's. and the languages you need: we make websites in spanish, catalan and english, with one url per language."
+            ]
+          },
+          {
+            "titular": "you maintain it",
+            "parrafos": [
+              "we hand it over in person, in front of your computer, and you leave knowing how to change texts, upload photos and add dates. the content lives in a file you learn to read. you do not depend on us, or on anyone, to keep the website alive."
+            ]
+          },
+          {
+            "titular": "no monthly fees",
+            "parrafos": [
+              "the website is published as static files from a free account in your name; the only recurring cost is the domain, once a year. the code is yours. [here is how a website without fees works →](/en/website-without-monthly-fees)"
+            ]
+          },
+          {
+            "titular": "how we start",
+            "parrafos": [
+              "the first meeting is free: you tell us what you do, bring three to five references, and we leave with a sketch, a list of what we need from you and a budget agreed with you. from the day your material arrives, the website is ready in a month. [the method, step by step →](/en/methodology)"
+            ]
+          }
+        ],
+        "cat": [
+          {
+            "titular": "sense plantilla d'artista",
+            "parrafos": [
+              "les plataformes de sempre et donen una graella d'imatges, una bio i un botó de contacte. totes iguals. nosaltres comencem per entendre la teva feina: la web de l'erika michi navega en creu perquè les seves facetes no podien anar una sota l'altra; la d'en mike és una disquetera perquè dissenya portades de disc; la de la diega sona. cada decisió surt del que fas, no d'un tema descarregat."
+            ]
+          },
+          {
+            "titular": "el que sol necessitar una web d'artista",
+            "parrafos": [
+              "un reproductor que no es talla en canviar de pàgina, com el d'en diego san marcos. una agenda de concerts o exposicions que puguis actualitzar tu en dos minuts. un arxiu privat per ensenyar obra a galeries o clients sense publicar-la, com el d'en conor. i els idiomes que necessitis: fem webs en català, castellà i anglès, amb una url per idioma."
+            ]
+          },
+          {
+            "titular": "tu la mantens",
+            "parrafos": [
+              "te l'entreguem en persona, davant del teu ordinador, i en surts sabent canviar textos, pujar fotos i afegir dates. el contingut viu en un arxiu que aprens a llegir. no depens de nosaltres ni de ningú perquè la web segueixi viva."
+            ]
+          },
+          {
+            "titular": "sense quotes mensuals",
+            "parrafos": [
+              "la web es publica com a arxius estàtics des d'un compte gratuït a nom teu; l'única despesa que es repeteix és el domini, un cop l'any. el codi és teu. [aquí expliquem com funciona una web sense quotes →](/ca/web-sense-quotes-mensuals)"
+            ]
+          },
+          {
+            "titular": "com comencem",
+            "parrafos": [
+              "la primera reunió és gratis: ens expliques què fas, portes tres o cinc referents i en sortim amb un esbós, una llista del que necessitem de tu i un pressupost tancat amb tu. des que arriba el teu material, la web està llesta en un mes. [el mètode pas a pas →](/ca/metodologia)"
+            ]
+          }
+        ]
+      },
+      "rejillaTitular": {
+        "es": "algunas webs que hemos hecho para artistas",
+        "en": "some websites we have made for artists",
+        "cat": "algunes webs que hem fet per a artistes"
+      },
+      "proyectos": [
+        "rikamichie", "diego san marcos", "la diega", "mike bros", "mokakopaTwins",
+        "jaume clotet", "barbara wong", "maxito", "930blurberrie"
+      ],
+      "cta": {
+        "es": "¿quieres una web para tu obra?",
+        "en": "want a website for your work?",
+        "cat": "vols una web per a la teva obra?"
+      },
+      "asunto": {
+        "es": "quiero una web para mi trabajo",
+        "en": "i want a website for my work",
+        "cat": "vull una web per a la meva feina"
+      }
+    },
+    {
+      "id": "web-sin-cuotas-mensuales",
+      "ruta": {
+        "es": "/web-sin-cuotas-mensuales",
+        "en": "/en/website-without-monthly-fees",
+        "cat": "/ca/web-sense-quotes-mensuals"
+      },
+      "etiqueta": { "es": "sin cuotas", "en": "no fees", "cat": "sense quotes" },
+      "title": {
+        "es": "web sin cuotas mensuales — una web que es tuya de verdad · meowrhino studio",
+        "en": "a website without monthly fees — one that is truly yours · meowrhino studio",
+        "cat": "web sense quotes mensuals — una web que és teva de veritat · meowrhino studio"
+      },
+      "description": {
+        "es": "una web a medida sin cuota mensual ni suscripción: archivos estáticos en una cuenta a tu nombre, código tuyo y el dominio como único gasto anual. barcelona.",
+        "en": "a custom website with no monthly fee or subscription: static files in an account in your name, code that is yours and the domain as the only yearly cost. barcelona.",
+        "cat": "una web a mida sense quota mensual ni subscripció: arxius estàtics en un compte a nom teu, codi teu i el domini com a única despesa anual. barcelona."
+      },
+      "eyebrow": {
+        "es": "estudio de diseño web · barcelona",
+        "en": "web design studio · barcelona",
+        "cat": "estudi de disseny web · barcelona"
+      },
+      "h1": {
+        "es": "una web sin cuotas mensuales",
+        "en": "a website without monthly fees",
+        "cat": "una web sense quotes mensuals"
+      },
+      "intro": {
+        "es": [
+          "muchas de las webs que se contratan hoy se alquilan: una cuota al mes por el constructor, otra por el alojamiento, otra por el mantenimiento. el día que dejas de pagar, la web desaparece. y no es tuya: no puedes llevártela, ni abrirla por dentro, ni dársela a otra persona.",
+          "las nuestras funcionan al revés. pagas una vez el trabajo de diseñarla y programarla, y la web es tuya: el código, el dominio y la cuenta donde está publicada."
+        ],
+        "en": [
+          "many of the websites people pay for today are rented: a monthly fee for the builder, another for the hosting, another for maintenance. the day you stop paying, the website disappears. and it is not yours: you cannot take it with you, open it up, or hand it to someone else.",
+          "ours work the other way round. you pay once for the work of designing and coding it, and the website is yours: the code, the domain and the account it is published from."
+        ],
+        "cat": [
+          "moltes de les webs que es contracten avui es lloguen: una quota al mes pel constructor, una altra per l'allotjament, una altra pel manteniment. el dia que deixes de pagar, la web desapareix. i no és teva: no te la pots endur, ni obrir-la per dins, ni donar-la a una altra persona.",
+          "les nostres funcionen al revés. pagues un cop la feina de dissenyar-la i programar-la, i la web és teva: el codi, el domini i el compte des d'on està publicada."
+        ]
+      },
+      "secciones": {
+        "es": [
+          {
+            "titular": "por qué no hay cuota",
+            "parrafos": [
+              "porque no hay nada que cobrar cada mes. la web se sirve como archivos estáticos, sin servidor propio ni base de datos, desde una cuenta de cloudflare o github que también es tuya y cuyo plan gratuito cubre de sobra un proyecto de este tamaño. no hay servidor que mantener, ni plugins que actualizar, ni base de datos que pueda caerse."
+            ]
+          },
+          {
+            "titular": "lo único que se renueva: el dominio",
+            "parrafos": [
+              "el dominio lo compras tú y queda a tu nombre, no al nuestro. te ayudamos a elegirlo y a configurarlo, pero la titularidad y la renovación anual son tuyas. si algún día caduca, la web deja de verse, pero los archivos siguen siendo tuyos y se pueden volver a publicar cuando quieras."
+            ]
+          },
+          {
+            "titular": "el código es tuyo",
+            "parrafos": [
+              "trabajamos en nuestro repositorio y, al entregar, te pasamos una copia entera a tu cuenta de github, a tu nombre. puedes usarlo, transformarlo, continuarlo o dárselo a quien quieras. nos quedamos como administradores de tu copia para poder echarte una mano si lo necesitas, y puedes quitarnos ese acceso cuando quieras."
+            ]
+          },
+          {
+            "titular": "tú la actualizas",
+            "parrafos": [
+              "te la entregamos en persona y sales sabiendo cambiar textos, imágenes y archivos: el contenido vive en un archivo que aprendes a leer y modificar. no necesitas pagarnos para cambiar una fecha o subir una foto."
+            ]
+          },
+          {
+            "titular": "y si algo falla",
+            "parrafos": [
+              "tienes dos semanas de garantía después de la entrega: si algo de lo que hemos hecho falla, lo arreglamos. después, los cambios nuevos se cobran por horas, como cualquier encargo, y solo cuando los pides. sin mantenimiento obligatorio. [la letra pequeña completa está en condiciones →](/condiciones)"
+            ]
+          },
+          {
+            "titular": "lo que sí cuesta aparte",
+            "parrafos": [
+              "si tu proyecto necesita algo que no sea estático —una tienda, reservas, usuarios— se presupuesta aparte y va igualmente en tus cuentas. te lo decimos en la primera reunión, que es gratis, antes de que decidas nada."
+            ]
+          },
+          {
+            "titular": "para quién tiene sentido",
+            "parrafos": [
+              "para quien quiere una web que dure: para quien hace música, arte o fotografía, y para estudios, asociaciones y pequeños negocios que no quieren otra suscripción más. [si eres artista, aquí contamos cómo las hacemos →](/web-para-artistas)"
+            ]
+          }
+        ],
+        "en": [
+          {
+            "titular": "why there is no fee",
+            "parrafos": [
+              "because there is nothing to charge for each month. the website is served as static files, with no server of its own and no database, from a cloudflare or github account that is also yours and whose free plan more than covers a project this size. there is no server to maintain, no plugins to update, no database that can go down."
+            ]
+          },
+          {
+            "titular": "the only thing you renew: the domain",
+            "parrafos": [
+              "you buy the domain and it stays in your name, not ours. we help you choose it and set it up, but the ownership and the yearly renewal are yours. if it ever expires, the website stops showing, but the files are still yours and can be published again whenever you like."
+            ]
+          },
+          {
+            "titular": "the code is yours",
+            "parrafos": [
+              "we work in our repository and, on delivery, we hand you a full copy in your own github account, in your name. you can use it, transform it, continue it or give it to whoever you like. we stay on as administrators of your copy so we can help if you need it, and you can remove that access whenever you want."
+            ]
+          },
+          {
+            "titular": "you update it",
+            "parrafos": [
+              "we hand it over in person and you leave knowing how to change texts, images and files: the content lives in a file you learn to read and edit. you do not need to pay us to change a date or upload a photo."
+            ]
+          },
+          {
+            "titular": "and if something breaks",
+            "parrafos": [
+              "you have two weeks of guarantee after delivery: if anything we made fails, we fix it. after that, new changes are billed by the hour, like any job, and only when you ask for them. no compulsory maintenance. [the full small print is in the terms →](/en/terms)"
+            ]
+          },
+          {
+            "titular": "what does cost extra",
+            "parrafos": [
+              "if your project needs something that is not static —a shop, bookings, user accounts— it is quoted separately and still goes in your own accounts. we tell you in the first meeting, which is free, before you decide anything."
+            ]
+          },
+          {
+            "titular": "who it makes sense for",
+            "parrafos": [
+              "for anyone who wants a website that lasts: people who make music, art or photography, and studios, associations and small businesses that do not want yet another subscription. [if you are an artist, here is how we make those →](/en/websites-for-artists)"
+            ]
+          }
+        ],
+        "cat": [
+          {
+            "titular": "per què no hi ha quota",
+            "parrafos": [
+              "perquè no hi ha res a cobrar cada mes. la web se serveix com a arxius estàtics, sense servidor propi ni base de dades, des d'un compte de cloudflare o github que també és teu i el pla gratuït del qual cobreix de sobres un projecte d'aquesta mida. no hi ha servidor a mantenir, ni plugins a actualitzar, ni base de dades que pugui caure."
+            ]
+          },
+          {
+            "titular": "l'únic que es renova: el domini",
+            "parrafos": [
+              "el domini el compres tu i queda a nom teu, no al nostre. t'ajudem a triar-lo i a configurar-lo, però la titularitat i la renovació anual són teves. si algun dia caduca, la web deixa de veure's, però els arxius continuen sent teus i es poden tornar a publicar quan vulguis."
+            ]
+          },
+          {
+            "titular": "el codi és teu",
+            "parrafos": [
+              "treballem al nostre repositori i, en entregar, et passem una còpia sencera al teu compte de github, a nom teu. el pots fer servir, transformar, continuar o donar-lo a qui vulguis. ens quedem com a administradors de la teva còpia per poder donar-te un cop de mà si ho necessites, i ens pots treure aquest accés quan vulguis."
+            ]
+          },
+          {
+            "titular": "tu l'actualitzes",
+            "parrafos": [
+              "te l'entreguem en persona i en surts sabent canviar textos, imatges i arxius: el contingut viu en un arxiu que aprens a llegir i modificar. no necessites pagar-nos per canviar una data o pujar una foto."
+            ]
+          },
+          {
+            "titular": "i si alguna cosa falla",
+            "parrafos": [
+              "tens dues setmanes de garantia després de l'entrega: si alguna cosa del que hem fet falla, ho arreglem. després, els canvis nous es cobren per hores, com qualsevol encàrrec, i només quan els demanes. sense manteniment obligatori. [la lletra petita completa és a condicions →](/ca/condicions)"
+            ]
+          },
+          {
+            "titular": "el que sí que costa a part",
+            "parrafos": [
+              "si el teu projecte necessita alguna cosa que no sigui estàtica —una botiga, reserves, usuaris— es pressuposta a part i va igualment als teus comptes. t'ho diem a la primera reunió, que és gratis, abans que decideixis res."
+            ]
+          },
+          {
+            "titular": "per a qui té sentit",
+            "parrafos": [
+              "per a qui vol una web que duri: per a qui fa música, art o fotografia, i per a estudis, associacions i petits negocis que no volen una subscripció més. [si ets artista, aquí expliquem com les fem →](/ca/web-per-a-artistes)"
+            ]
+          }
+        ]
+      },
+      "rejillaTitular": {
+        "es": "webs que no pagan cuota",
+        "en": "websites that pay no fee",
+        "cat": "webs que no paguen quota"
+      },
+      "proyectos": [
+        "estructuras3000", "vicios torpes", "paula barjau", "miranda", "berta esteve", "andrea carilla"
+      ],
+      "cta": {
+        "es": "¿quieres una web que sea tuya?",
+        "en": "want a website that is yours?",
+        "cat": "vols una web que sigui teva?"
+      },
+      "asunto": {
+        "es": "quiero una web sin cuotas",
+        "en": "i want a website without fees",
+        "cat": "vull una web sense quotes"
+      }
+    }
+  ]
+}
