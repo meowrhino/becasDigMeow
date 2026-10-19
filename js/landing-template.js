@@ -23,14 +23,21 @@ const UI_LANDING = {
 /**
  * Cuerpo de una landing.
  *
- * `fichas` son los proyectos a enseñar ({proyecto, seo}), ya resueltos por
- * quien llama. `rutas`: { portfolio, home, idiomas[], otras[] } — `otras` son
+ * `fichas` son los proyectos a enseñar, ya resueltos por quien llama:
+ * `{ porApartado: [[{proyecto, seo}…]…], cierre: [{proyecto, seo}…] }`. `rutas`: { portfolio, home, idiomas[], otras[] } — `otras` son
  * los enlaces del pie a las demás landings.
  */
 export function renderLandingHTML(landing, fichas, lang = "es", rutas = {}, medirImagen = null) {
   const t = UI[lang] || UI.es;
   const tl = UI_LANDING[lang] || UI_LANDING.es;
-  const p = (txt) => `<p class="proy-texto">${escConEnlaces(txt)}</p>`;
+  const p = (txt, clase = "proy-texto") => `<p class="${clase}">${escConEnlaces(txt)}</p>`;
+  const tarjetas = (lista) => lista.map(f => tarjetaProyectoHTML(f, lang, rutas.portfolio, medirImagen)).join("");
+  // Dos webs debajo de cada apartado, en vez de todas amontonadas al final: el
+  // texto dice «la web de erika navega en cruz» y la captura está justo debajo.
+  const rejillaInline = (lista = []) => lista.length
+    ? `
+      <ul class="proy-grid proy-grid-inline">${tarjetas(lista)}
+      </ul>` : "";
 
   const idiomas = (rutas.idiomas || []).map(i =>
     i.activo
@@ -38,11 +45,18 @@ export function renderLandingHTML(landing, fichas, lang = "es", rutas = {}, medi
       : `<a class="proy-lang" href="${esc(i.href)}" hreflang="${esc(i.htmlLang)}">${esc(i.etiqueta)}</a>`
   ).join("");
 
-  const secciones = (pickLang(landing.secciones, lang) || []).map(sec => `
+  const secciones = (pickLang(landing.secciones, lang) || []).map((sec, i) => `
       <h2 class="proy-h2">${esc(sec.titular)}</h2>
-      ${(sec.parrafos || []).map(p).join("\n      ")}`).join("");
+      ${(sec.parrafos || []).map(x => p(x)).join("\n      ")}${rejillaInline(fichas.porApartado?.[i])}`).join("");
 
-  const tarjetas = fichas.map(f => tarjetaProyectoHTML(f, lang, rutas.portfolio, medirImagen)).join("");
+  // La entrada: el primer párrafo va más grande, es el que dice de qué va esto.
+  const intro = (pickLang(landing.intro, lang) || [])
+    .map((x, i) => p(x, i === 0 ? "proy-texto proy-intro" : "proy-texto")).join("\n      ");
+
+  const cierre = fichas.cierre?.length ? `
+      <h2 class="proy-h2">${esc(pickLang(landing.rejillaTitular, lang))}</h2>
+      <ul class="proy-grid proy-grid-inline">${tarjetas(fichas.cierre)}
+      </ul>` : "";
 
   const otras = (rutas.otras || []).map(o => `<a href="${esc(o.href)}">${esc(o.texto)}</a>`).join("");
 
@@ -52,10 +66,7 @@ export function renderLandingHTML(landing, fichas, lang = "es", rutas = {}, medi
       <span class="proy-borde-etiqueta" aria-hidden="true">${esc(pickLang(landing.etiqueta, lang))}</span>
       <p class="easy-eyebrow">${esc(pickLang(landing.eyebrow, lang))}</p>
       <h1 class="proy-title">${esc(pickLang(landing.h1, lang))}</h1>
-      ${(pickLang(landing.intro, lang) || []).map(p).join("\n      ")}${secciones}
-      <h2 class="proy-h2">${esc(pickLang(landing.rejillaTitular, lang))}</h2>
-      <ul class="proy-grid">${tarjetas}
-      </ul>
+      ${intro}${secciones}${cierre}
       <p class="proy-acciones">
         <a class="easy-btn" href="mailto:hola@meowrhino.studio?subject=${encodeURIComponent(pickLang(landing.asunto, lang))}">${esc(pickLang(landing.cta, lang))}</a>
         <a class="easy-btn easy-btn-secundario" href="${esc(rutas.portfolio || "/portfolio")}">${esc(tl.verPortfolio)}</a>

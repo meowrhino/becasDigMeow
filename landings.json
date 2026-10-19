@@ -1,5 +1,5 @@
 {
-  "_comment": "Páginas long-tail: una URL por idioma, generadas por build-seo.js con js/landing-template.js. Atacan búsquedas que la portada no puede ganar («web para artistas barcelona», «web sin cuotas mensuales»). Cada campo de texto es {es,en,cat}; `proyectos` son nombres EXACTOS de data.json.portfolio.proyectos (la rejilla sale de ahí, con el resumen de proyectos-seo.json). Los párrafos admiten enlaces [texto](url): cada proyecto que se nombra enlaza a su ficha, y cada promesa a la página que la cuenta. `id` es el nombre del archivo que se genera: <id>.html, en/<id>.html, ca/<id>.html, y la URL pública es `ruta`. Para añadir una página más: otro bloque aquí y `node build-seo.js`.",
+  "_comment": "Páginas long-tail: una URL por idioma, generadas por build-seo.js con js/landing-template.js. Atacan búsquedas que la portada no puede ganar («web para artistas barcelona», «web sin cuotas mensuales»). Cada campo de texto es {es,en,cat}; `proyectosPorApartado` reparte las webs entre los apartados (una lista por apartado, en el mismo orden que `secciones`; salen como dos tarjetas debajo del texto) y `proyectos` son las que cierran la página; en los dos casos nombres EXACTOS de data.json.portfolio.proyectos (la tarjeta sale de ahí, con el resumen de proyectos-seo.json). Los párrafos admiten enlaces [texto](url): cada proyecto que se nombra enlaza a su ficha, y cada promesa a la página que la cuenta. `id` es el nombre del archivo que se genera: <id>.html, en/<id>.html, ca/<id>.html, y la URL pública es `ruta`. Para añadir una página más: otro bloque aquí y `node build-seo.js`.",
   "landings": [
     {
       "id": "web-para-artistas",
@@ -8,7 +8,11 @@
         "en": "/en/websites-for-artists",
         "cat": "/ca/web-per-a-artistes"
       },
-      "etiqueta": { "es": "artistas", "en": "artists", "cat": "artistes" },
+      "etiqueta": {
+        "es": "artistas",
+        "en": "artists",
+        "cat": "artistes"
+      },
       "title": {
         "es": "webs para artistas en barcelona — a medida y sin cuotas · meowrhino studio",
         "en": "websites for artists in barcelona — custom-made, no fees · meowrhino studio",
@@ -123,14 +127,32 @@
           }
         ]
       },
+      "proyectosPorApartado": [
+        [
+          "rikamichie",
+          "mike bros"
+        ],
+        [
+          "diego san marcos",
+          "conor"
+        ],
+        [
+          "mokakopaTwins",
+          "jaume clotet"
+        ],
+        [
+          "barbara wong",
+          "maxito"
+        ]
+      ],
       "rejillaTitular": {
-        "es": "algunas webs que hemos hecho para artistas",
-        "en": "some websites we have made for artists",
-        "cat": "algunes webs que hem fet per a artistes"
+        "es": "y dos más",
+        "en": "and two more",
+        "cat": "i dues més"
       },
       "proyectos": [
-        "rikamichie", "diego san marcos", "la diega", "mike bros", "mokakopaTwins",
-        "jaume clotet", "barbara wong", "maxito", "930blurberrie"
+        "la diega",
+        "930blurberrie"
       ],
       "cta": {
         "es": "¿quieres una web para tu obra?",
@@ -150,7 +172,11 @@
         "en": "/en/website-without-monthly-fees",
         "cat": "/ca/web-sense-quotes-mensuals"
       },
-      "etiqueta": { "es": "sin cuotas", "en": "no fees", "cat": "sense quotes" },
+      "etiqueta": {
+        "es": "sin cuotas",
+        "en": "no fees",
+        "cat": "sense quotes"
+      },
       "title": {
         "es": "web sin cuotas mensuales — una web que es tuya de verdad · meowrhino studio",
         "en": "a website without monthly fees — one that is truly yours · meowrhino studio",
@@ -283,13 +309,30 @@
           }
         ]
       },
+      "proyectosPorApartado": [
+        [
+          "estructuras3000",
+          "miranda"
+        ],
+        [
+          "berta esteve",
+          "andrea carilla"
+        ],
+        [
+          "vicios torpes",
+          "paula barjau"
+        ],
+        [],
+        []
+      ],
       "rejillaTitular": {
-        "es": "webs que no pagan cuota",
-        "en": "websites that pay no fee",
-        "cat": "webs que no paguen quota"
+        "es": "y dos más",
+        "en": "and two more",
+        "cat": "i dues més"
       },
       "proyectos": [
-        "estructuras3000", "vicios torpes", "paula barjau", "miranda", "berta esteve", "andrea carilla"
+        "valentin",
+        "christine"
       ],
       "cta": {
         "es": "¿quieres una web que sea tuya?",

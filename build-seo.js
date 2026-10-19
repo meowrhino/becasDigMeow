@@ -583,10 +583,14 @@ function hreflangLandingHTML(landing) {
   return `${alternas}\n  <link rel="alternate" hreflang="x-default" href="${SITE}${pick(landing.ruta, POR_DEFECTO.code)}">`;
 }
 
-/** Los proyectos que enseña una landing, resueltos contra las fichas. */
+/**
+ * Los proyectos que enseña una landing, resueltos contra las fichas: los de
+ * cada apartado (`proyectosPorApartado`, una lista por apartado) y los del
+ * cierre (`proyectos`).
+ */
 function fichasDeLanding(landing, fichas) {
   const porNombre = new Map(fichas.map(f => [f.proyecto.nombre, f]));
-  return landing.proyectos.map(nombre => {
+  const resolver = (nombres = []) => nombres.map(nombre => {
     const f = porNombre.get(nombre);
     if (!f) {
       throw new Error(`landings.json (${landing.id}) habla de "${nombre}", que no ` +
@@ -594,6 +598,15 @@ function fichasDeLanding(landing, fichas) {
     }
     return f;
   });
+  const apartados = landing.secciones?.es?.length ?? 0;
+  if ((landing.proyectosPorApartado || []).length > apartados) {
+    throw new Error(`landings.json (${landing.id}): proyectosPorApartado tiene más ` +
+      `listas (${landing.proyectosPorApartado.length}) que apartados (${apartados}).`);
+  }
+  return {
+    porApartado: (landing.proyectosPorApartado || []).map(resolver),
+    cierre: resolver(landing.proyectos),
+  };
 }
 
 /** Página long-tail en un idioma. */
