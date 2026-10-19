@@ -757,7 +757,7 @@
               "titulo": "el código es tuyo",
               "parrafos": [
                 "puedes usarlo, transformarlo, continuarlo o dárselo a quien quieras. trabajamos en nuestro repositorio y, al entregar, te pasamos una copia entera a tu cuenta de github, a tu nombre.",
-                "nosotros conservamos el original con todo el historial: es el registro de nuestro trabajo y lo que nos permite seguir enseñando el proyecto aunque algún día tu web deje de estar en línea. esa copia nuestra queda publicada, sin dominio, en una dirección de meowrhino: es la que enlazamos desde el portfolio. también nos quedamos como administradores de tu copia, para poder echarte una mano si lo necesitas; puedes quitarnos ese acceso cuando quieras."
+                "nosotros conservamos el original con todo el historial: es el registro de nuestro trabajo y lo que nos permite seguir enseñando el proyecto aunque algún día tu web deje de estar en línea. esa copia nuestra queda publicada, sin dominio, en una dirección de meowrhino, para poder enlazarla si algún día el dominio caduca o le pasa cualquier cosa a tu web. también nos quedamos como administradores de tu copia, para poder echarte una mano si lo necesitas; puedes quitarnos ese acceso cuando quieras."
               ]
             },
             {
@@ -771,7 +771,7 @@
               "titulo": "entregas y rondas",
               "parrafos": [
                 "cada proyecto incluye 3 entregas · 1 ronda de cambios por entrega: diseño, programación intermedia y programación final. cada ronda puede incluir varios cambios, pero una vez enviada, los siguientes pertenecen a la siguiente ronda. lo aprobado en una entrega no se reabre en la siguiente.",
-                "las rondas extra se presupuestan a 60 €/hora."
+                "las rondas extra se cobran por hora."
               ]
             },
             {
@@ -790,7 +790,7 @@
             {
               "titulo": "después de la entrega",
               "parrafos": [
-                "tienes dos semanas para avisarnos de cualquier cosa que falle de lo que hemos entregado, y lo arreglamos. si rompes algo editando la web (casi siempre es una coma), te ayudamos a 60 €/hora, igual que los cambios nuevos pasado ese plazo."
+                "tienes dos semanas de garantía: si algo de lo que hemos entregado falla, lo arreglamos. pasado ese plazo —o si el fallo viene de un cambio tuyo al editar la web— el arreglo se cobra por hora, como cualquier cambio nuevo."
               ]
             },
             {
@@ -798,7 +798,7 @@
               "parrafos": [
                 "la primera reunión es gratuita, y la segunda también si llega con tu material en la fecha que fijamos.",
                 "si, una vez confirmado el proyecto, se queda parado más de dos semanas esperando material, retomarlo cuesta un 10 % del presupuesto: te habíamos guardado el mes y tenemos que volver a hacerte sitio.",
-                "puedes parar el proyecto cuando quieras: se cobra la parte proporcional de lo trabajado, y si es menos de lo que ya has pagado te devolvemos la diferencia. si se retoma más adelante, se abre un nuevo presupuesto."
+                "puedes parar el proyecto cuando quieras abonando la parte proporcional de lo trabajado; si se retoma más adelante, se abre un nuevo presupuesto."
               ]
             },
             {
@@ -871,7 +871,7 @@
               "titulo": "the code is yours",
               "parrafos": [
                 "you can use it, transform it, continue it or give it to whoever you want. we work in our own repository and, on delivery, we hand you a full copy in your github account, in your name.",
-                "we keep the original with its whole history: it is the record of our work and what lets us keep showing the project even if one day your website goes offline. that copy of ours stays published, without a domain, at a meowrhino address: it is the one we link from the portfolio. we also stay on as administrators of your copy, so we can give you a hand if you need it; you can remove that access whenever you want."
+                "we keep the original with its whole history: it is the record of our work and what lets us keep showing the project even if one day your website goes offline. that copy of ours stays published, without a domain, at a meowrhino address, so we can link to it if one day the domain expires or anything happens to your website. we also stay on as administrators of your copy, so we can give you a hand if you need it; you can remove that access whenever you want."
               ]
             },
             {
@@ -885,7 +885,7 @@
               "titulo": "deliveries and rounds",
               "parrafos": [
                 "each project includes 3 deliveries · 1 round of changes per delivery: design, mid-stage development and final development. each round may include several changes, but once it is sent, the next ones belong to the following round. what is approved in one delivery is not reopened in the next.",
-                "extra rounds are quoted at 60 €/hour."
+                "extra rounds are charged by the hour."
               ]
             },
             {
@@ -904,7 +904,7 @@
             {
               "titulo": "after delivery",
               "parrafos": [
-                "you have two weeks to tell us about anything that breaks in what we delivered, and we fix it. if you break something while editing the website (it is almost always a comma), we help you at 60 €/hour, the same as new changes after that period."
+                "you have two weeks of warranty: if anything we delivered breaks, we fix it. after that —or if the problem comes from a change you made while editing the website— the fix is charged by the hour, like any new change."
               ]
             },
             {
@@ -912,7 +912,7 @@
               "parrafos": [
                 "the first meeting is free, and so is the second one if it comes with your material on the date we set.",
                 "if, once the project is confirmed, it sits still for more than two weeks waiting for material, picking it up again costs 10 % of the budget: we had set aside the month and we have to make room for you again.",
-                "you can stop the project at any time: we charge the proportional part of the work done, and if it is less than what you have already paid we refund the difference. if it is picked up later, a new budget is opened."
+                "you can stop the project at any time by paying the proportional part of the work done; if it is picked up later, a new budget is opened."
               ]
             },
             {
@@ -985,7 +985,7 @@
               "titulo": "el codi és teu",
               "parrafos": [
                 "pots fer-lo servir, transformar-lo, continuar-lo o donar-lo a qui vulguis. treballem al nostre repositori i, en entregar, et passem una còpia sencera al teu compte de github, al teu nom.",
-                "nosaltres conservem l'original amb tot l'historial: és el registre de la nostra feina i el que ens permet continuar ensenyant el projecte encara que algun dia la teva web deixi d'estar en línia. aquesta còpia nostra queda publicada, sense domini, en una adreça de meowrhino: és la que enllacem des del portfolio. també ens quedem com a administradors de la teva còpia, per poder donar-te un cop de mà si ho necessites; ens pots treure aquest accés quan vulguis."
+                "nosaltres conservem l'original amb tot l'historial: és el registre de la nostra feina i el que ens permet continuar ensenyant el projecte encara que algun dia la teva web deixi d'estar en línia. aquesta còpia nostra queda publicada, sense domini, en una adreça de meowrhino, per poder enllaçar-la si algun dia el domini caduca o li passa qualsevol cosa a la teva web. també ens quedem com a administradors de la teva còpia, per poder donar-te un cop de mà si ho necessites; ens pots treure aquest accés quan vulguis."
               ]
             },
             {
@@ -999,7 +999,7 @@
               "titulo": "lliuraments i rondes",
               "parrafos": [
                 "cada projecte inclou 3 lliuraments · 1 ronda de canvis per lliurament: disseny, programació intermèdia i programació final. cada ronda pot incloure diversos canvis, però un cop enviada, els següents pertanyen a la ronda següent. el que s'aprova en un lliurament no es reobre en el següent.",
-                "les rondes extra es pressuposten a 60 €/hora."
+                "les rondes extra es cobren per hora."
               ]
             },
             {
@@ -1018,7 +1018,7 @@
             {
               "titulo": "després del lliurament",
               "parrafos": [
-                "tens dues setmanes per avisar-nos de qualsevol cosa que falli del que hem entregat, i ho arreglem. si trenques alguna cosa editant la web (gairebé sempre és una coma), t'ajudem a 60 €/hora, igual que els canvis nous passat aquest termini."
+                "tens dues setmanes de garantia: si alguna cosa del que hem entregat falla, ho arreglem. passat aquest termini —o si la fallada ve d'un canvi teu en editar la web— l'arranjament es cobra per hora, com qualsevol canvi nou."
               ]
             },
             {
@@ -1026,7 +1026,7 @@
               "parrafos": [
                 "la primera reunió és gratuïta, i la segona també si arriba amb el teu material en la data que fixem.",
                 "si, un cop confirmat el projecte, es queda aturat més de dues setmanes esperant material, reprendre'l costa un 10 % del pressupost: t'havíem guardat el mes i hem de tornar a fer-te lloc.",
-                "pots aturar el projecte quan vulguis: es cobra la part proporcional del que s'ha treballat, i si és menys del que ja has pagat et tornem la diferència. si es reprèn més endavant, s'obre un nou pressupost."
+                "pots aturar el projecte quan vulguis abonant la part proporcional del que s'ha treballat; si es reprèn més endavant, s'obre un nou pressupost."
               ]
             },
             {
