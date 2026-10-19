@@ -148,7 +148,7 @@ export function heroHTML(data, lang) {
       <p class="easy-eyebrow">${esc(h.eyebrow)}</p>
       <h1 class="easy-hero-title">${esc(h.titular)}</h1>
       <div class="easy-ticket">
-        <p class="easy-ticket-hazte">${esc(t.hazte)}</p>
+        ${t.hazte ? `<p class="easy-ticket-hazte">${esc(t.hazte)}</p>` : ""}
         <p class="easy-ticket-grande">${esc(t.grande || "")}</p>
         ${t.iva ? `<p class="easy-ticket-iva">${esc(t.iva)}</p>` : ""}
         ${t.caduca ? `<p class="easy-ticket-caduca">${esc(t.caduca)}</p>` : ""}

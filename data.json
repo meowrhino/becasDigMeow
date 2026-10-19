@@ -183,31 +183,28 @@
     "cupon": {
       "email": "hola@meowrhino.studio",
       "es": {
-        "hazte": "¿quieres una web?",
-        "grande": "tu web en un mes",
-        "caduca": "primera reunión gratis",
+        "hazte": "",
+        "grande": "¿quieres una web?",
+        "caduca": "tu web en un mes",
         "subject": "quiero una web!",
         "incluye": "diseñada contigo. sin servidores ni cuotas. te enseñamos a mantenerla.",
-        "cta": "escríbeme",
-        "condiciones": "3 entregas · 1 ronda de cambios cada una"
+        "cta": "escríbeme"
       },
       "en": {
-        "hazte": "want a website?",
-        "grande": "your website in a month",
-        "caduca": "first meeting free",
+        "hazte": "",
+        "grande": "want a website?",
+        "caduca": "your website in a month",
         "subject": "I want a website!",
         "incluye": "designed with you. no servers, no fees. we teach you to maintain it.",
-        "cta": "let's talk",
-        "condiciones": "3 deliveries · 1 round of changes each"
+        "cta": "let's talk"
       },
       "cat": {
-        "hazte": "vols una web?",
-        "grande": "la teva web en un mes",
-        "caduca": "primera reunió gratis",
+        "hazte": "",
+        "grande": "vols una web?",
+        "caduca": "la teva web en un mes",
         "subject": "vull una web!",
         "incluye": "dissenyada amb tu. sense servidors ni quotes. t'ensenyem a mantenir-la.",
-        "cta": "escriu-me",
-        "condiciones": "3 lliuraments · 1 ronda de canvis cadascun"
+        "cta": "escriu-me"
       }
     },
     "formateadores": [
@@ -763,7 +760,7 @@
             {
               "titulo": "el material",
               "parrafos": [
-                "en la primera reunión fijamos la fecha en que nos pasas el material: textos, imágenes y una identidad visual mínima (logo, paleta de color, tipografía). si no la tienes, se puede presupuestar como parte del proyecto. los textos van en todos los idiomas que vaya a tener la web: las traducciones son parte del material.",
+                "en la primera reunión fijamos la fecha en que nos pasas el material: textos, imágenes y una identidad visual mínima (logo, paleta de color, tipografía). si no la tienes, se puede presupuestar como parte del proyecto.",
                 "hasta esa fecha trabajamos sobre un boceto; el diseño final se hace con tu material real, no con rellenos, y el mes de trabajo empieza el día que llega."
               ]
             },
@@ -877,7 +874,7 @@
             {
               "titulo": "the material",
               "parrafos": [
-                "in the first meeting we set the date on which you send us the material: texts, images and a minimal visual identity (logo, colour palette, typography). if you don't have one, it can be quoted as part of the project. the texts come in every language the website will have: translations are part of the material.",
+                "in the first meeting we set the date on which you send us the material: texts, images and a minimal visual identity (logo, colour palette, typography). if you don't have one, it can be quoted as part of the project.",
                 "until that date we work on a sketch; the final design is made with your real material, not with placeholders, and the month of work starts the day it arrives."
               ]
             },
@@ -991,7 +988,7 @@
             {
               "titulo": "el material",
               "parrafos": [
-                "a la primera reunió fixem la data en què ens passes el material: textos, imatges i una identitat visual mínima (logo, paleta de color, tipografia). si no en tens, es pot pressupostar com a part del projecte. els textos van en tots els idiomes que hagi de tenir la web: les traduccions són part del material.",
+                "a la primera reunió fixem la data en què ens passes el material: textos, imatges i una identitat visual mínima (logo, paleta de color, tipografia). si no en tens, es pot pressupostar com a part del projecte.",
                 "fins aquella data treballem sobre un esbós; el disseny final es fa amb el teu material real, no amb farciments, i el mes de feina comença el dia que arriba."
               ]
             },

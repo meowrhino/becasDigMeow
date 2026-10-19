@@ -604,8 +604,8 @@ a.nav-label:visited {
 
 /* Wordmark y tagline apilados en columna (la celda ya los centra).
    `pointer-events: none` deja pasar los clics a lo que rebota por detrás: el
-   cupón y las tarjetas de proyecto. Ya no hay hijos interactivos aquí — el
-   título dejó de ser enlace y el hint de navegación desapareció. */
+   cupón y las tarjetas de proyecto. Los dos enlaces (nombre y tagline, al
+   about) los recuperan: sin eso no se podían pulsar. */
 .welcome-content {
   display: flex;
   flex-direction: column;
@@ -615,6 +615,10 @@ a.nav-label:visited {
   position: relative;
   z-index: var(--z-nav);
   pointer-events: none;
+}
+
+.welcome-content a {
+  pointer-events: auto;
 }
 
 .welcome-title {
