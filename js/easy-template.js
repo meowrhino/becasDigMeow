@@ -143,18 +143,13 @@ export function heroHTML(data, lang) {
   const h = HERO[lang] || HERO.es;
   const subject = encodeURIComponent(t.subject || "");
   const mailto = `mailto:${c.email}?subject=${subject}`;
+  // Sin el cupón: la portada con JS ya no lo pinta (renderWelcomeCupon está
+  // desactivado en pages.js), y el pre-render enseña lo mismo que ve el
+  // visitante. Queda el titular con la keyword y el botón de escribir.
   return `
     <section class="easy-hero" id="top">
       <p class="easy-eyebrow">${esc(h.eyebrow)}</p>
       <h1 class="easy-hero-title">${esc(h.titular)}</h1>
-      <div class="easy-ticket">
-        ${t.hazte ? `<p class="easy-ticket-hazte">${esc(t.hazte)}</p>` : ""}
-        <p class="easy-ticket-grande">${esc(t.grande || "")}</p>
-        ${t.iva ? `<p class="easy-ticket-iva">${esc(t.iva)}</p>` : ""}
-        ${t.caduca ? `<p class="easy-ticket-caduca">${esc(t.caduca)}</p>` : ""}
-      </div>
-      ${t.incluye ? `<p class="easy-hero-incluye">${esc(t.incluye)}</p>` : ""}
-      ${t.condiciones ? `<p class="easy-hero-condiciones">${esc(t.condiciones)}</p>` : ""}
       <div class="easy-hero-cta">
         <a class="easy-btn" href="${mailto}">${esc(t.cta || "escríbeme")}</a>
       </div>

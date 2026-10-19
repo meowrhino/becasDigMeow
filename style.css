@@ -2827,6 +2827,14 @@ html.js #seo-prerender {
 .proy > .proy-h2,
 .proy > .proy-grid { position: relative; z-index: 1; }
 .landing .proy-grid { margin-top: 1.4rem; }
+/* Los enlaces dentro del texto (a las fichas que nombra, a metodología…) se
+   distinguen por el subrayado, como en condiciones: con el mismo color que el
+   párrafo no se veían. */
+.landing .proy-texto a {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
 
 /* Los enlaces a estas páginas en el pie de cada ficha, entre «volver» y el
    nombre del estudio. */
