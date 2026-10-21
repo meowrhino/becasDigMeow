@@ -26,7 +26,10 @@
     { "nombre": "VNGenerator", "url": "https://meowrhino.github.io/VNGenerator/" },
     { "nombre": "ajutsCat", "url": "https://meowrhino.github.io/ajutscat/" },
     { "nombre": "chords", "url": "https://meowrhino.github.io/chords/" },
-    { "nombre": "poporingGenerator", "url": "https://meowrhino.github.io/poporingGenerator/" }
+    { "nombre": "poporingGenerator", "url": "https://meowrhino.github.io/poporingGenerator/" },
+    { "nombre": "blobGenerator", "url": "https://meowrhino.github.io/blobGenerator/" },
+    { "nombre": "afinador ukulele", "url": "https://meowrhino.github.io/ukulele/" },
+    { "nombre": "visualizer", "url": "https://meowrhino.github.io/visualizer/" }
   ],
   "misc": [
     {
@@ -159,7 +162,12 @@
     {
       "nombre": "odin-recipes",
       "url": "https://meowrhino.github.io/odin-recipes/"
-    }
+    },
+    { "nombre": "kajiura", "url": "https://meowrhino.github.io/kajiura/" },
+    { "nombre": "RAADS-R amics", "url": "https://meowrhino.github.io/RAADS-R_amics/" },
+    { "nombre": "semana santa bcn 2026", "url": "https://meowrhino.github.io/SSBCN26/" },
+    { "nombre": "anella olímpica", "url": "https://meowrhino.github.io/anella-olimpica/" },
+    { "nombre": "taller escocesa", "url": "https://meowrhino.github.io/tallerEscocesa/" }
   ],
   "meowrhino": [
     { "nombre": "profilePics", "url": "https://meowrhino.github.io/profilePics/" },
@@ -174,14 +182,16 @@
     { "nombre": "meowrhino archive", "url": "https://meowrhino.neocities.org/" },
     { "nombre": "facts 2020", "url": "https://meowrhino.neocities.org/about_facts/facts" },
     { "nombre": "archivo kung fú", "url": "https://meowrhino.github.io/arwuchivo/" },
-    { "nombre": "cielo en barcelona", "url": "https://meowrhino.github.io/cielo/" },
+    { "nombre": "cielo en barcelona", "links": [{ "label": "link", "url": "https://meowrhino.github.io/cielo/" }, { "label": "v0", "url": "https://meowrhino.github.io/cielov0/" }] },
     {
       "nombre": "becas digMeow",
       "links": [
         { "label": "v1", "url": "https://meowrhino.github.io/becasDigMeow_v1/" },
-        { "label": "v0", "url": "https://meowrhino.github.io/becasDigMeow_v0/" }
+        { "label": "v0", "url": "https://meowrhino.github.io/becasDigMeow_v0/" },
+        { "label": "v2", "url": "https://meowrhino.github.io/becasDigMeow/" }
       ]
-    }
+    },
+    { "nombre": "descartes", "url": "https://meowrhino.github.io/descartes/" }
   ],
   "games": [
     { "nombre": "barcelona per eixample", "url": "https://meowrhino.neocities.org/barcelona.html" },
@@ -193,24 +203,28 @@
       ]
     },
     { "nombre": "joc de la vida", "url": "https://meowrhino.github.io/gameOfLife/" },
-    { "nombre": "minesweeper v0", "url": "https://meowrhino.github.io/etchASketch/" },
+    { "nombre": "minesweeper v0", "links": [{ "label": "link", "url": "https://meowrhino.github.io/etchASketch/" }, { "label": "repo", "url": "https://meowrhino.github.io/minesweeper/" }] },
     { "nombre": "minesweeperV2", "url": "https://meowrhino.github.io/minesweeperV2/" },
     { "nombre": "rockPaperScissors", "url": "https://meowrhino.github.io/rockPaperScissors/" },
     { "nombre": "5cards", "url": "https://meowrhino.github.io/5cards/" },
     { "nombre": "cards1", "url": "https://meowrhino.github.io/cards1/" },
     { "nombre": "letterSoup", "url": "https://meowrhino.github.io/letterSoup/" },
-    { "nombre": "horseLife", "url": "https://meowrhino.github.io/horseLife/" }
+    { "nombre": "horseLife", "url": "https://meowrhino.github.io/horseLife/" },
+    { "nombre": "midgard origins", "url": "https://meowrhino.github.io/ragnarok/" },
+    { "nombre": "elteto", "url": "https://meowrhino.github.io/elteto/" },
+    { "nombre": "pasatiempos", "url": "https://meowrhino.github.io/pasatiempos/" }
   ],
   "experiments": [
     { "nombre": "diego3", "url": "https://meowrhino.github.io/diego3/" },
-    { "nombre": "stars generator", "url": "https://meowrhino.github.io/randomStars/" },
+    { "nombre": "stars generator", "links": [{ "label": "link", "url": "https://meowrhino.github.io/randomStars/" }, { "label": "v2", "url": "https://meowrhino.github.io/randomStars2/" }] },
     { "nombre": "buddhabrot generator", "url": "https://meowrhino.github.io/buddhabrot/" },
     {
       "nombre": "iching",
       "links": [
         { "label": "music", "url": "https://meowrhino.github.io/8guamusic1" },
         { "label": "future", "url": "https://meowrhino.github.io/8guafuture1/" },
-        { "label": "trigrama", "url": "https://meowrhino.github.io/trigrama/" }
+        { "label": "trigrama", "url": "https://meowrhino.github.io/trigrama/" },
+        { "label": "3D", "url": "https://meowrhino.github.io/pakuafun/" }
       ]
     },
     { "nombre": "ichingPic", "url": "https://meowrhino.github.io/ichingPic/" },
@@ -232,7 +246,11 @@
         { "label": "003", "url": "https://meowrhino.github.io/investigaciones_003/" },
         { "label": "004", "url": "https://meowrhino.github.io/investigaciones_004/" }
       ]
-    }
+    },
+    { "nombre": "ver la armonía", "url": "https://meowrhino.github.io/music0/" },
+    { "nombre": "hierba y ríos", "url": "https://meowrhino.github.io/hierbaRios/" },
+    { "nombre": "MEWS", "url": "https://meowrhino.github.io/MEWS/" },
+    { "nombre": "parlamalament", "url": "https://meowrhino.github.io/parlamalament/" }
   ],
   "social": [
     { "nombre": "miaumiau", "url": "https://meowrhino.github.io/miaumiau/" },
@@ -279,7 +297,8 @@
     { "nombre": "taxrhino", "url": "https://meowrhino.github.io/taxrhino/" },
     { "nombre": "grid-web-generator", "url": "https://meowrhino.github.io/grid-web-generator/" },
     { "nombre": "paintOnline", "url": "https://meowrhino.github.io/paintOnline/" },
-    { "nombre": "pdfs", "url": "https://meowrhino.github.io/pdfs/" }
+    { "nombre": "pdfs", "url": "https://meowrhino.github.io/pdfs/" },
+    { "nombre": "meditest", "url": "https://meowrhino.github.io/meditest/" }
   ],
   "texts": [
     {
@@ -289,10 +308,14 @@
         { "label": "notas4", "url": "https://meowrhino.github.io/notas4/" },
         { "label": "notas3", "url": "https://meowrhino.github.io/notas3/" },
         { "label": "notas2", "url": "https://meowrhino.github.io/notas2/" },
-        { "label": "notas", "url": "https://meowrhino.github.io/notas/" }
+        { "label": "notas", "url": "https://meowrhino.github.io/notas/" },
+        { "label": "notas6", "url": "https://meowrhino.github.io/notas6/" },
+        { "label": "notas1", "url": "https://meowrhino.github.io/notas1/" },
+        { "label": "notas0", "url": "https://meowrhino.github.io/notas0/" },
+        { "label": "X", "url": "https://meowrhino.github.io/notasX/" }
       ]
     },
-    { "nombre": "TFG", "url": "https://meowrhino.cargo.site/tfg" },
+    { "nombre": "TFG", "links": [{ "label": "link", "url": "https://meowrhino.cargo.site/tfg" }, { "label": "copia", "url": "https://meowrhino.github.io/tfg/" }] },
     {
       "nombre": "hopeko",
       "links": [
@@ -351,7 +374,7 @@
     { "nombre": "maxito", "url": "https://meowrhino.github.io/maxito/" },
     { "nombre": "rikamichie", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/rikamichie/" }, { "label": "web", "url": "https://rikamichie.com" }] },
     { "nombre": "valentin", "links": [{ "label": "repo3", "url": "https://meowrhino.github.io/valentin3/" }, { "label": "repo2", "url": "https://meowrhino.github.io/valentin2/" }, { "label": "repo1", "url": "https://meowrhino.github.io/valentin/" }, { "label": "web", "url": "https://valentinbarrio.com" }] },
-    { "nombre": "polroig", "links": [{ "label": "web", "url": "https://meowrhino.github.io/polroig4/" }, { "label": "repo3", "url": "https://meowrhino.github.io/polroig3/" }, { "label": "repo2", "url": "https://meowrhino.github.io/polroig2/" }, { "label": "repo", "url": "https://meowrhino.github.io/polroig/" }] },
+    { "nombre": "polroig", "links": [{ "label": "web", "url": "https://meowrhino.github.io/polroig4/" }, { "label": "repo3", "url": "https://meowrhino.github.io/polroig3/" }, { "label": "repo2", "url": "https://meowrhino.github.io/polroig2/" }, { "label": "repo", "url": "https://meowrhino.github.io/polroig/" }, { "label": "v1", "url": "https://meowrhino.github.io/polroig1/" }, { "label": "diseños", "url": "https://meowrhino.github.io/polroig-disenos/" }] },
     { "nombre": "mikesx cd's", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/mikesx/" }, { "label": "web", "url": "https://mikebros.com" }] },
     { "nombre": "jaume clotet", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/jaumeclotet/" }, { "label": "web", "url": "https://jaumeclotet.com" }] },
     { "nombre": "conor", "url": "https://meowrhino.github.io/conor/" },
@@ -367,6 +390,20 @@
     { "nombre": "villa granota", "url": "https://meowrhino.github.io/villagranota/" },
     { "nombre": "noan cittadino", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/noan/" }] },
     { "nombre": "930blurberrie", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/blurberri/" }, { "label": "web", "url": "https://930blurberrie.com" }] },
-    { "nombre": "diarioBarbara", "url": "https://meowrhino.github.io/diarioBarbara/" }
+    { "nombre": "diarioBarbara", "url": "https://meowrhino.github.io/diarioBarbara/" },
+    { "nombre": "almarbra", "links": [{ "label": "web", "url": "https://meowrhino.github.io/almarbra/" }, { "label": "v0", "url": "https://meowrhino.github.io/almarbrav0/" }, { "label": "cms test", "url": "https://meowrhino.github.io/almarbraSveltia/" }] },
+    { "nombre": "oriol colomer", "links": [{ "label": "web", "url": "https://meowrhino.github.io/oriol-colomer/" }, { "label": "v0", "url": "https://meowrhino.github.io/oriol-colomerv0/" }] },
+    { "nombre": "lasadcum", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/lasadcum/" }, { "label": "web", "url": "https://lasadcum.com" }] },
+    { "nombre": "linda iriane", "url": "https://meowrhino.github.io/lindaporn/" },
+    { "nombre": "alekos", "url": "https://meowrhino.github.io/alekos/" },
+    { "nombre": "tat ara", "links": [{ "label": "web", "url": "https://tatara.cat" }, { "label": "v0", "url": "https://meowrhino.github.io/tatarav0/" }] },
+    { "nombre": "la diegol", "links": [{ "label": "web", "url": "https://meowrhino.github.io/ladiegol/" }, { "label": "v0", "url": "https://meowrhino.github.io/ladiegolv0/" }] },
+    { "nombre": "anna carreras", "links": [{ "label": "repo", "url": "https://meowrhino.github.io/annaCarreras/" }, { "label": "diseños", "url": "https://meowrhino.github.io/annaCarreras-disenos/" }, { "label": "web", "url": "https://annacarreras.com" }] },
+    { "nombre": "lisa tarot", "url": "https://meowrhino.github.io/lisa/" },
+    { "nombre": "miss pepi", "url": "https://meowrhino.github.io/misspepi/" },
+    { "nombre": "laorbit", "url": "https://meowrhino.github.io/laorbit/" },
+    { "nombre": "wushu sanchai", "url": "https://wushusanchai.com" },
+    { "nombre": "quien no corre, vuela", "url": "https://quiennocorrevuela.com" },
+    { "nombre": "camille", "url": "https://meowrhino.github.io/camille/" }
   ]
 }

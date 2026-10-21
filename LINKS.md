@@ -74,6 +74,46 @@ De todo eso, **45 cosas están vivas y no se enlazan desde ningún sitio de la w
 
 ---
 
+## 2026-10-21 — archive vs Neocities vs GitHub
+
+**Resumen**: el archive (`archive-data.json`) y el índice de Neocities (`meowrhino.neocities.org`) son la misma lista: 221 URLs en el archive, 222 externas en Neocities, y lo que difiere no son proyectos. Lo que falta por subir al archive son los **repos con Pages** de abajo (45, de los que 13 han aparecido desde el inventario de septiembre).
+
+Hay una herramienta para esto: `meowrhino/neocitiesUpdater` (pestaña «revisar github» y «publicar» regenera Neocities, clouds, archive y studio desde un JSON único). No se ha usado aquí; este cruce está hecho a mano.
+
+### Archive ↔ Neocities
+
+Está en Neocities y no en el archive (nada de esto es un proyecto):
+
+- redes y contacto: bluesky, twitter, instagram, paypal, mailto, CVs en pdf (`/CVs/cast.pdf`, `/CVs/eng.pdf`)
+- `meowrhino.cargo.site/portfolio_esp` y un prototipo de portfolio en Figma
+- `noancittadino.com` (el archive solo enlaza `github.io/noan`; el dominio está en clientHold)
+
+Está en el archive y no en Neocities:
+
+- `meowrhino.github.io/arxiu` (Neocities solo tiene `arxiu.meowrhino.studio`)
+
+El vídeo «AI (art direction)» es el mismo en los dos, con la URL escrita distinta.
+
+### Repos con GitHub Pages que no están ni en el archive ni en el portfolio
+
+Nuevos desde el 2026-09-08 (13):
+
+| repo | nota |
+| --- | --- |
+| `lasadcum`, `ladiegol`, `annaCarreras`, `polroig1`, `MEWS`, `descartes` | webs/proyectos nuevos |
+| `almarbrav0`, `tatarav0`, `oriol-colomerv0`, `ladiegolv0` | v0 archivadas (van a *unfinished* o junto a la web) |
+| `polroig-disenos`, `annaCarreras-disenos`, `almarbraSveltia` | pruebas de diseño / CMS |
+
+Ya estaban en la lista de septiembre y siguen sin enlazar (32): `alekos`, `almarbra`, `anella-olimpica`, `becasDigMeow`, `blobGenerator`, `camille`, `cielov0`, `elteto`, `hierbaRios`, `kajiura`, `laorbit`, `lindaporn`, `lisa`, `meditest`, `minesweeper`, `misspepi`, `music0`, `notas0`, `notas1`, `notas6`, `notasX`, `oriol-colomer`, `pakuafun`, `parlamalament`, `pasatiempos`, `RAADS-R_amics`, `ragnarok`, `randomStars2`, `SSBCN26`, `tallerEscocesa`, `tfg`, `ukulele`, `visualizer`.
+
+Enlaces del archive que apuntan a una versión vieja cuando ya hay repo nuevo: `TFG` → cargo.site (existe `meowrhino/tfg` con Pages); `piuler` → onrender (existe `piulerv2` en workers, enlazado como «piupiu»); `notas` enlaza notas…notas5 pero no notas0, notas1, notas6 ni notasX.
+
+### Sin Pages pero publicados en otro sitio y sin enlazar
+
+`tatara`, `wushusanchai`, `quien-no-corre-vuela`, `emilioHupe`, `manifiesto`, `fuckmarrykill`, `convertidor`, `diarioDeAbordo` (y los privados: `seres`, `petra`, `psico`, `lemuria`, `tabarra`, `meowboard`, `meowrhino-music`, `notas8`, `trackr-api`, `semillaEcommerce*`, `buscaminas-palestina`, `gontiveros-tienda`, `manga-reader`, `magical-mirai-2026`).
+
+---
+
 ## Ya enlazados (referencia)
 
 ### Cloudflare
