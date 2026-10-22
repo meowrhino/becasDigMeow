@@ -118,9 +118,9 @@
         "cat": "em poses una ressenya? — meowrhino studio"
       },
       "description": {
-        "es": "si tienes una web hecha por meowrhino studio, cuéntalo en google: qué web es, cómo fue el proceso y qué tal es mantenerla tú. dos minutos y nada a cambio.",
-        "en": "if meowrhino studio made your website, tell it on google: which site it is, how the process went and what it's like to keep it up yourself. two minutes, nothing in return.",
-        "cat": "si tens una web feta per meowrhino studio, explica-ho a google: quina web és, com va anar el procés i què tal és mantenir-la tu. dos minuts i res a canvi."
+        "es": "si tienes una web hecha por meowrhino studio, cuéntalo en google: qué web es, cómo fue el proceso, los cambios y la entrega. dos minutos y nada a cambio.",
+        "en": "if meowrhino studio made your website, tell it on google: which site it is, how the process went, the changes and the handover. two minutes, nothing in return.",
+        "cat": "si tens una web feta per meowrhino studio, explica-ho a google: quina web és, com va anar el procés, els canvis i l'entrega. dos minuts i res a canvi."
       }
     }
   },
@@ -760,47 +760,38 @@
     "es": {
       "titulo": "¿me pones una reseña?",
       "entrada": [
-        "estamos abriendo el estudio en google, y lo que más ayuda a que otra gente nos encuentre es que quienes ya tienen su web cuenten cómo fue.",
-        "son dos minutos y hace falta una cuenta de google. nada a cambio: solo tus palabras."
+        "estamos abriendo el estudio en google, y lo que más ayuda a que otra gente nos encuentre es que quienes ya tienen su web cuenten cómo fue."
       ],
-      "pistasTitulo": "qué contar",
+      "pistasTitulo": "¿qué puedes contar?",
       "pistas": [
         "qué web te hicimos y para qué la usas.",
-        "cómo fue el proceso: las reuniones, los cambios, la entrega.",
-        "qué tal es mantenerla tú, sin depender de nadie."
+        "cómo fue el proceso, los cambios y la entrega."
       ],
-      "boton": "escribir la reseña en google ↗",
-      "nota": "si algo no fue bien, cuéntalo también: una reseña sincera vale más que una perfecta."
+      "boton": "escribir la reseña en google ↗"
     },
     "en": {
       "titulo": "would you leave us a review?",
       "entrada": [
-        "we're opening the studio on google, and what helps most for other people to find us is that those who already have their website tell how it went.",
-        "it takes two minutes and a google account. nothing in return: just your words."
+        "we're opening the studio on google, and what helps most for other people to find us is that those who already have their website tell how it went."
       ],
-      "pistasTitulo": "what to tell",
+      "pistasTitulo": "what can you tell?",
       "pistas": [
         "which website we made for you and what you use it for.",
-        "how the process went: the meetings, the changes, the handover.",
-        "what it's like to keep it up yourself, without depending on anyone."
+        "how the process went, the changes and the handover."
       ],
-      "boton": "write the review on google ↗",
-      "nota": "if something didn't go well, say it too: an honest review is worth more than a perfect one."
+      "boton": "write the review on google ↗"
     },
     "cat": {
       "titulo": "em poses una ressenya?",
       "entrada": [
-        "estem obrint l'estudi a google, i el que més ajuda que altra gent ens trobi és que qui ja té la seva web expliqui com va anar.",
-        "són dos minuts i cal un compte de google. res a canvi: només les teves paraules."
+        "estem obrint l'estudi a google, i el que més ajuda que altra gent ens trobi és que qui ja té la seva web expliqui com va anar."
       ],
-      "pistasTitulo": "què explicar",
+      "pistasTitulo": "què pots explicar?",
       "pistas": [
         "quina web et vam fer i per a què la fas servir.",
-        "com va anar el procés: les reunions, els canvis, l'entrega.",
-        "què tal és mantenir-la tu, sense dependre de ningú."
+        "com va anar el procés, els canvis i l'entrega."
       ],
-      "boton": "escriure la ressenya a google ↗",
-      "nota": "si alguna cosa no va anar bé, explica-ho també: una ressenya sincera val més que una de perfecta."
+      "boton": "escriure la ressenya a google ↗"
     }
   },
   "footer": {

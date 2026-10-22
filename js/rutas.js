@@ -31,6 +31,8 @@ export const rutaProyectos = (lang) => rutaCelda("portfolio", lang);
  * del porqué) y `condiciones` cerrando la fila. `buscaminas` debajo del
  * statement y `mapa` colgando de él, en la fila de abajo: el mapa es la celda
  * que menos se visita, y llegar a él es salirse por debajo de todo lo demás.
+ * `reseña` debajo del about: es la página que se manda a un cliente, y queda
+ * al lado de quién somos y cómo escribirnos.
  *
  * Vive aquí y no en mapa.js porque el pre-render (node) lo necesita para
  * pintar las flechas del about, y mapa.js arrastra DOM y localStorage.
@@ -38,8 +40,8 @@ export const rutaProyectos = (lang) => rutaCelda("portfolio", lang);
 export const ORIGEN = Object.freeze({
   "1_2": "links", "1_3": "metodología",
   "2_1": "portfolio", "2_2": "welcome", "2_3": "statement", "2_4": "condiciones",
-  "3_1": "reseña", "3_2": "about", "3_3": "buscaminas",
-  "4_3": "mapa",
+  "3_2": "about", "3_3": "buscaminas",
+  "4_2": "reseña", "4_3": "mapa",
 });
 
 /**

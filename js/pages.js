@@ -583,7 +583,7 @@ export function renderResena(data) {
       <div class="about-contacto">
         <a class="contacto-email" href="${escapeHTML(r.url)}" target="_blank" rel="noopener">${escapeHTML(d.boton)}</a>
       </div>
-      <p class="about-enlaces">${escConEnlaces(d.nota || "")}</p>`;
+      ${d.nota ? `<p class="about-enlaces">${escConEnlaces(d.nota)}</p>` : ""}`;
   };
 
   montarCeldaTexto(el, "about", buildContent);
