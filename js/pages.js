@@ -559,7 +559,7 @@ export function renderStatement(data) {
 
 /**
  * La celda `reseña`: la página que se manda por whatsapp a un cliente para
- * pedirle una reseña en google. Qué nos ayuda que cuente y el enlace al
+ * pedirle una reseña en google. Dos párrafos (por qué, y qué contar) y el enlace al
  * formulario, sin nada a cambio (las normas de google lo prohíben). Comparte
  * la caja y las clases del about; el enlace va con el estilo del email grande.
  */
@@ -574,12 +574,6 @@ export function renderResena(data) {
     return `
       <h2 class="about-pregunta">${escapeHTML(d.titulo)}</h2>
       <div class="about-entrada">${(d.entrada || []).map(parrafo).join("")}</div>
-      <div class="about-texto">
-        <section class="about-seccion">
-          <h2 class="about-seccion-titular">${escapeHTML(d.pistasTitulo)}</h2>
-          ${(d.pistas || []).map(parrafo).join("")}
-        </section>
-      </div>
       <div class="about-contacto">
         <a class="contacto-email" href="${escapeHTML(r.url)}" target="_blank" rel="noopener">${escapeHTML(d.boton)}</a>
       </div>

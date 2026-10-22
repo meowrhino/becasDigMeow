@@ -760,36 +760,24 @@
     "es": {
       "titulo": "¿me pones una reseña?",
       "entrada": [
-        "estamos abriendo el estudio en google, y lo que más ayuda a que otra gente nos encuentre es que quienes ya tienen su web cuenten cómo fue."
-      ],
-      "pistasTitulo": "¿qué puedes contar?",
-      "pistas": [
-        "qué web te hicimos y para qué la usas.",
-        "cómo fue el proceso, los cambios y la entrega."
+        "estamos abriendo el estudio en google, y lo que más ayuda a que otra gente nos encuentre es que quienes ya tienen su web cuenten cómo fue.",
+        "¿qué puedes contar? qué web te hicimos y para qué la usas, cómo fue el proceso, los cambios y la entrega."
       ],
       "boton": "escribir la reseña en google ↗"
     },
     "en": {
       "titulo": "would you leave us a review?",
       "entrada": [
-        "we're opening the studio on google, and what helps most for other people to find us is that those who already have their website tell how it went."
-      ],
-      "pistasTitulo": "what can you tell?",
-      "pistas": [
-        "which website we made for you and what you use it for.",
-        "how the process went, the changes and the handover."
+        "we're opening the studio on google, and what helps most for other people to find us is that those who already have their website tell how it went.",
+        "what can you tell? which website we made for you and what you use it for, how the process went, the changes and the handover."
       ],
       "boton": "write the review on google ↗"
     },
     "cat": {
       "titulo": "em poses una ressenya?",
       "entrada": [
-        "estem obrint l'estudi a google, i el que més ajuda que altra gent ens trobi és que qui ja té la seva web expliqui com va anar."
-      ],
-      "pistasTitulo": "què pots explicar?",
-      "pistas": [
-        "quina web et vam fer i per a què la fas servir.",
-        "com va anar el procés, els canvis i l'entrega."
+        "estem obrint l'estudi a google, i el que més ajuda que altra gent ens trobi és que qui ja té la seva web expliqui com va anar.",
+        "què pots explicar? quina web et vam fer i per a què la fas servir, com va anar el procés, els canvis i l'entrega."
       ],
       "boton": "escriure la ressenya a google ↗"
     }

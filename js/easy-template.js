@@ -291,7 +291,7 @@ export function statementHTML(data, lang) {
 }
 
 /**
- * La petición de reseña, pre-renderizada: titular, entrada, qué contar y el
+ * La petición de reseña, pre-renderizada: titular, los dos párrafos y el
  * enlace al formulario de google. Versión sin JS de la celda `reseña`.
  */
 export function resenaHTML(data, lang) {
@@ -302,8 +302,6 @@ export function resenaHTML(data, lang) {
     <section class="easy-section easy-about" id="resena">
       <h1 class="easy-about-pregunta">${esc(d.titulo || "")}</h1>
       <div class="easy-about-entrada">${(d.entrada || []).map(p).join("")}</div>
-      <h2 class="easy-h3">${esc(d.pistasTitulo || "")}</h2>
-      ${(d.pistas || []).map(p).join("")}
       <p class="easy-about-contacto"><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(d.boton || "")}</a></p>
       ${d.nota ? p(d.nota) : ""}
     </section>`;
