@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+  <!-- Bloque que depende del idioma (título, description, canonical, og/twitter
+       y los hreflang). Lo genera build-seo.js para las tres variantes de la home:
+       index.html (es), en.html y ca.html. NO editar a mano: los textos salen de
+       data.json (meta.title / meta.description). -->
+  <!-- BUILD:head:start -->
+  <meta name="description" content="si tens una web feta per meowrhino studio, explica-ho a google: quina web és, com va anar el procés i què tal és mantenir-la tu. dos minuts i res a canvi.">
+  <title>em poses una ressenya? — meowrhino studio</title>
+  <link rel="canonical" href="https://meowrhino.studio/ca/ressenya">
+  <link rel="alternate" hreflang="es" href="https://meowrhino.studio/resena">
+  <link rel="alternate" hreflang="en" href="https://meowrhino.studio/en/review">
+  <link rel="alternate" hreflang="ca" href="https://meowrhino.studio/ca/ressenya">
+  <link rel="alternate" hreflang="x-default" href="https://meowrhino.studio/resena">
+  <meta property="og:title" content="em poses una ressenya? — meowrhino studio">
+  <meta property="og:description" content="si tens una web feta per meowrhino studio, explica-ho a google: quina web és, com va anar el procés i què tal és mantenir-la tu. dos minuts i res a canvi.">
+  <meta property="og:url" content="https://meowrhino.studio/ca/ressenya">
+  <meta property="og:locale" content="ca_ES">
+  <meta name="twitter:title" content="em poses una ressenya? — meowrhino studio">
+  <meta name="twitter:description" content="si tens una web feta per meowrhino studio, explica-ho a google: quina web és, com va anar el procés i què tal és mantenir-la tu. dos minuts i res a canvi.">
+  <!-- BUILD:head:end -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="meowrhino studio">
+  <meta property="og:image" content="https://meowrhino.studio/favicon/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="meowrhino studio — estudio de diseño web en Barcelona">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://meowrhino.studio/favicon/og-image.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="icon" href="/favicon/favicon.ico">
+  <link rel="preload" href="/fonts/inknut-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+  <script>
+    // Anti-flash: resuelve el tema antes del primer render.
+    // Prioridad: localStorage > prefers-color-scheme > light (default studio).
+    (function() {
+      var t = localStorage.getItem("meowrhino-theme");
+      if (!t && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";
+      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+      // Marca que hay JS ANTES de que el body se parsee, para que el CSS oculte
+      // el bloque pre-renderizado (#seo-prerender) desde el primer pintado: el
+      // visitante ve el grid, nunca un destello del contenido estático. Sin JS
+      // la clase no se pone y el bloque queda visible como fallback real.
+      document.documentElement.classList.add("js");
+    })();
+  </script>
+  <!-- BUILD:preload:start -->
+  <link rel="modulepreload" href="/js/main.js">
+  <link rel="modulepreload" href="/js/data.js">
+  <link rel="modulepreload" href="/js/navigation.js">
+  <link rel="modulepreload" href="/js/pages.js">
+  <link rel="modulepreload" href="/js/mapa.js">
+  <link rel="modulepreload" href="/js/portfolio.js">
+  <link rel="modulepreload" href="/js/buscaminas.js">
+  <link rel="modulepreload" href="/js/rutas.js">
+  <link rel="modulepreload" href="/js/easy-template.js">
+  <link rel="modulepreload" href="/js/theme.js">
+  <link rel="modulepreload" href="/js/shell.js">
+  <link rel="modulepreload" href="/js/utils.js">
+  <link rel="modulepreload" href="/js/zoom.js">
+  <link rel="modulepreload" href="/js/scroll-gradients.js">
+  <link rel="modulepreload" href="/js/welcome-card.js">
+  <link rel="modulepreload" href="/js/proyecto-template.js">
+  <link rel="modulepreload" href="/js/rebote.js">
+  <!-- BUILD:preload:end -->
+</head>
+<body>
+  <a href="#content" class="skip-link">saltar al contenido</a>
+  <main id="content" role="main" tabindex="-1">
+    <!-- Contenido pre-renderizado por build-seo.js: el mismo texto que pintan
+         las celdas del grid, disponible en el primer byte para los buscadores.
+         Oculto por CSS en cuanto hay JS y eliminado del DOM por main.js; sin JS
+         se queda como versión estática navegable. NO editar a mano: se regenera
+         desde data.json en cada commit que la toque. -->
+    <div id="seo-prerender">
+      <!-- BUILD:home:start -->
+
+    <section class="easy-section easy-about" id="resena">
+      <h1 class="easy-about-pregunta">em poses una ressenya?</h1>
+      <div class="easy-about-entrada"><p>estem obrint l'estudi a google, i el que més ajuda que altra gent ens trobi és que qui ja té la seva web expliqui com va anar.</p><p>són dos minuts i cal un compte de google. res a canvi: només les teves paraules.</p></div>
+      <h2 class="easy-h3">què explicar</h2>
+      <p>quina web et vam fer i per a què la fas servir.</p><p>com va anar el procés: les reunions, els canvis, l'entrega.</p><p>què tal és mantenir-la tu, sense dependre de ningú.</p>
+      <p class="easy-about-contacto"><a href="https://g.page/r/Cc-RnS9P-nsLEBM/review" target="_blank" rel="noopener">escriure la ressenya a google ↗</a></p>
+      <p>si alguna cosa no va anar bé, explica-ho també: una ressenya sincera val més que una de perfecta.</p>
+    </section>
+    <nav class="prerender-nota" aria-label="seguir navegant">
+      <ul><li><a href="/ca">benvinguda</a></li><li><a href="/ca/portfolio">portfolio</a></li><li><a href="/ca/about">about</a></li><li><a href="/ca/statement">statement</a></li><li><a href="/ca/metodologia">metodologia</a></li><li><a href="/ca/condicions">condicions</a></li><li><a href="/ca/links">links</a></li><li><a href="/ca/mapa">mapa</a></li><li><a href="/ca/buscamines">buscamines</a></li><li><a href="/ca/web-per-a-artistes">webs per a artistes a barcelona</a></li><li><a href="/ca/web-sense-quotes-mensuals">una web sense quotes mensuals</a></li></ul>
+    </nav>
+  <!-- BUILD:home:end -->
+    </div>
+  </main>
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

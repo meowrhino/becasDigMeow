@@ -59,3 +59,63 @@ colectivos sin ánimo de lucro. escríbenos: la primera reunión no cuesta nada.
 2. **Publica de vez en cuando**: cada web entregada es un "post" de la ficha (foto + 2 líneas + enlace).
 3. Cuando la ficha esté verificada, **avísame**: actualizo el JSON-LD de la web para que
    apunte a la ficha (`sameAs` + teléfono) y todo quede atado.
+
+## Pedir reseñas (octubre 2026)
+
+Estado de la ficha a 22 oct 2026: categoría «Diseñador de sitios web» ✓, teléfono y web ✓, 6 fotos ✓,
+**0 reseñas**, y en la vista pública no aparece la descripción (revisar en el panel de la ficha).
+Para «diseño web barcelona» Google muestra bloque de mapa: los tres de arriba tienen 231, 92 y 53 reseñas (4,7–5,0).
+
+**Enlace oficial para dejar reseña** (del panel de la ficha → «Pedir una reseña»; lleva al formulario, pide iniciar sesión en Google):
+
+```
+https://g.page/r/Cc-RnS9P-nsLEBM/review
+```
+
+Reglas: a todos los clientes, nada a cambio, por el canal que sea; 2–4 al mes, no de golpe. Contestar a cada una desde la ficha.
+
+**La página para mandar por WhatsApp** (celda `reseña` del lienzo, al lado del about): explica qué contar y lleva el enlace.
+
+```
+https://meowrhino.studio/resena        (es)
+https://meowrhino.studio/en/review     (en)
+https://meowrhino.studio/ca/ressenya   (ca)
+```
+
+### Mensaje (WhatsApp / correo)
+
+**es**
+
+```
+hola! una cosa rápida: estoy abriendo el estudio en google y me ayudaría mucho
+una reseña tuya. son dos minutos, aquí:
+
+https://g.page/r/Cc-RnS9P-nsLEBM/review
+
+si te apetece, cuenta qué te hice (la web, cómo fue el proceso, qué tal
+mantenerla tú). lo que te salga, con tus palabras. ¡gracias!
+```
+
+**en**
+
+```
+hey! quick one: I'm setting up the studio on google and a review from you would
+help a lot. two minutes, here:
+
+https://g.page/r/Cc-RnS9P-nsLEBM/review
+
+if you feel like it, say what I did for you (the website, how the process went,
+how it's been keeping it up yourself). whatever comes out, in your own words. thanks!
+```
+
+**ca**
+
+```
+hola! una cosa ràpida: estic obrint l'estudi a google i m'ajudaria molt una
+ressenya teva. són dos minuts, aquí:
+
+https://g.page/r/Cc-RnS9P-nsLEBM/review
+
+si et ve de gust, explica què et vaig fer (la web, com va anar el procés, què
+tal mantenir-la tu). el que et surti, amb les teves paraules. gràcies!
+```

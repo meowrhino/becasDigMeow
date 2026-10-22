@@ -38,7 +38,7 @@ export const rutaProyectos = (lang) => rutaCelda("portfolio", lang);
 export const ORIGEN = Object.freeze({
   "1_2": "links", "1_3": "metodología",
   "2_1": "portfolio", "2_2": "welcome", "2_3": "statement", "2_4": "condiciones",
-  "3_2": "about", "3_3": "buscaminas",
+  "3_1": "reseña", "3_2": "about", "3_3": "buscaminas",
   "4_3": "mapa",
 });
 
@@ -131,6 +131,7 @@ export const RUTA_CELDAS = {
     portfolio: "/portfolio",
     about: "/about",
     statement: "/statement",
+    "reseña": "/resena",
     "metodología": "/metodologia",
     condiciones: "/condiciones",
     links: "/links",
@@ -142,6 +143,7 @@ export const RUTA_CELDAS = {
     portfolio: "/en/portfolio",
     about: "/en/about",
     statement: "/en/statement",
+    "reseña": "/en/review",
     "metodología": "/en/methodology",
     condiciones: "/en/terms",
     links: "/en/links",
@@ -153,6 +155,7 @@ export const RUTA_CELDAS = {
     portfolio: "/ca/portfolio",
     about: "/ca/about",
     statement: "/ca/statement",
+    "reseña": "/ca/ressenya",
     "metodología": "/ca/metodologia",
     condiciones: "/ca/condicions",
     links: "/ca/links",

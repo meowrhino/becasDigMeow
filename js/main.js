@@ -31,6 +31,7 @@ import {
   renderCondiciones,
   renderAbout,
   renderStatement,
+  renderResena,
 } from "./pages.js";
 import { renderMapa, leerMapa, aGrid } from "./mapa.js";
 import { renderPortfolio } from "./portfolio.js";
@@ -68,6 +69,7 @@ async function renderizarContenido() {
   renderMapa(data);
   renderAbout(data);
   renderStatement(data);
+  renderResena(data);
   renderBuscaminas();
 }
 
@@ -164,6 +166,7 @@ configurarNavegacion({
     "links": "tools",
     "about": "about",
     "statement": "statement",
+    "reseña": "resena",
     "metodología": "metodologia",
     "welcome": "welcome",
     "condiciones": "footer",

@@ -291,6 +291,25 @@ export function statementHTML(data, lang) {
 }
 
 /**
+ * La petición de reseña, pre-renderizada: titular, entrada, qué contar y el
+ * enlace al formulario de google. Versión sin JS de la celda `reseña`.
+ */
+export function resenaHTML(data, lang) {
+  const r = data["reseña"] || {};
+  const d = r[lang] || r.es || {};
+  const p = (t) => `<p>${escConEnlaces(t)}</p>`;
+  return `
+    <section class="easy-section easy-about" id="resena">
+      <h1 class="easy-about-pregunta">${esc(d.titulo || "")}</h1>
+      <div class="easy-about-entrada">${(d.entrada || []).map(p).join("")}</div>
+      <h2 class="easy-h3">${esc(d.pistasTitulo || "")}</h2>
+      ${(d.pistas || []).map(p).join("")}
+      <p class="easy-about-contacto"><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(d.boton || "")}</a></p>
+      ${d.nota ? p(d.nota) : ""}
+    </section>`;
+}
+
+/**
  * Condiciones, privacidad y financiación: la letra pequeña del estudio.
  *
  * Los párrafos de privacidad traen etiquetas dentro (negritas y enlaces a la
@@ -494,6 +513,7 @@ export function renderCeldaPrerenderHTML(data, lang, celda, enlaces = [], cuerpo
     welcome: () => heroHTML(data, lang) + portfolioHTML(data, lang),
     about: () => aboutHTML(data, lang),
     statement: () => statementHTML(data, lang),
+    "reseña": () => resenaHTML(data, lang),
     "metodología": () => metodologiaHTML(data, lang),
     condiciones: () => condicionesHTML(data, lang),
     links: () => linksHTML(data, lang),

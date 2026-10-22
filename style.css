@@ -1083,7 +1083,8 @@ a.nav-label:visited {
    ============================================ */
 
 .celda.about,
-.celda.statement {
+.celda.statement,
+.celda.resena {
   flex-direction: column;
 }
 
@@ -1154,7 +1155,8 @@ a.nav-label:visited {
    las que nadie está mirando. `prefers-reduced-motion` lo para desde el reset
    (sección 0), y entonces el enlace se queda a opacidad 1, legible. */
 .celda.about.activa .about-content p a,
-.celda.statement.activa .about-content p a {
+.celda.statement.activa .about-content p a,
+.celda.resena.activa .about-content p a {
   --about-link-valle: 0.75;
   animation: about-link-latido 3.4s ease-in-out infinite;
 }
@@ -1164,7 +1166,9 @@ a.nav-label:visited {
 .celda.about.activa .about-content p a:hover,
 .celda.about.activa .about-content p a:focus-visible,
 .celda.statement.activa .about-content p a:hover,
-.celda.statement.activa .about-content p a:focus-visible {
+.celda.statement.activa .about-content p a:focus-visible,
+.celda.resena.activa .about-content p a:hover,
+.celda.resena.activa .about-content p a:focus-visible {
   --about-link-valle: 0.45;
 }
 
