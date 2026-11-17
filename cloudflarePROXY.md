@@ -40,8 +40,8 @@ Solución: activar el **proxy naranja** de Cloudflare en cada dominio. Si el dom
 - 4 dominios sin CF DNS → migrar (más curro pero único).
 - 4 dominios ya OK: andreacarilla.work, mikebros.com, elmundodelasjordis.com y meowrhino.studio.
 
-> noancittadino.com ya no aparece en la web (la ficha enlaza a
-> `meowrhino.github.io/noan/`), así que sale de la cuenta de pendientes.
+> noancittadino.com volvió a funcionar (GitHub Pages, DNS aún en Wix): desde el
+> 2026-11-17 la ficha y el archive enlazan al dominio otra vez.
 
 ## Pasos para activar proxy (CF DNS ya configurado)
 

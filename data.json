@@ -1129,6 +1129,42 @@
   "portfolio": {
     "proyectos": [
       {
+        "nombre": "oriol colomer",
+        "imagen": "img/oriolcolomer/1.webp",
+        "imagenesSecundarias": 2,
+        "url": "https://oriolcolomerdelgado.com"
+      },
+      {
+        "nombre": "pol roig",
+        "imagen": "img/polroig/1.webp",
+        "imagenesSecundarias": 2,
+        "url": "https://polroigvalldosera.com"
+      },
+      {
+        "nombre": "almudena gonzalez",
+        "imagen": "img/almarbra/1.webp",
+        "imagenesSecundarias": 2,
+        "url": "https://almarbra.com"
+      },
+      {
+        "nombre": "la diegol",
+        "imagen": "img/ladiegol/1.webp",
+        "imagenesSecundarias": 2,
+        "url": "https://ladiegol.com"
+      },
+      {
+        "nombre": "tat ara",
+        "imagen": "img/tatara/1.webp",
+        "imagenesSecundarias": 2,
+        "url": "https://tatara.cat"
+      },
+      {
+        "nombre": "quien no corre, vuela",
+        "imagen": "img/quiennocorrevuela/1.webp",
+        "imagenesSecundarias": 2,
+        "url": "https://quiennocorrevuela.com"
+      },
+      {
         "nombre": "rikamichie",
         "imagen": "img/rikamichie/1.webp",
         "imagenesSecundarias": 2,
@@ -1231,8 +1267,7 @@
         "nombre": "noan cittadino",
         "imagen": "img/noan/1.webp",
         "imagenesSecundarias": 2,
-        "url": "https://meowrhino.github.io/noan/",
-        "urlLabel": "noan cittadino"
+        "url": "https://noancittadino.com"
       },
       {
         "nombre": "estructuras3000",

@@ -2,6 +2,180 @@
   "_comment": "Copia de las páginas de proyecto (/portfolio/<slug> y sus variantes /en y /ca). Cada campo es un objeto {es,en,cat}. Fuente única: build-seo.js lee de aquí. Se unen con data.json.portfolio.proyectos por el campo `nombre`, que debe coincidir EXACTAMENTE; las imágenes y las urls salen de allí, no de aquí. El borrador con las anécdotas y el porqué de cada keyword vive en textos-proyectos.borrador.md (no se despliega).",
   "proyectos": [
     {
+      "nombre": "oriol colomer",
+      "slug": "oriol-colomer",
+      "keyword": {
+        "es": "web para diseñadores de iluminación y visuales",
+        "en": "website for lighting and visual designers",
+        "cat": "web per a dissenyadors d'il·luminació i visuals"
+      },
+      "title": {
+        "es": "una web en túnel para luz y visuales en directo — oriolcolomerdelgado.com · meowrhino studio",
+        "en": "a tunnel of a website for live lighting and visuals — oriolcolomerdelgado.com · meowrhino studio",
+        "cat": "una web en túnel per a llum i visuals en directe — oriolcolomerdelgado.com · meowrhino studio"
+      },
+      "description": {
+        "es": "la web de oriol colomer delgado, diseñador de iluminación y visuales para música en directo. portfolio a medida hecho en barcelona, sin cuotas mensuales.",
+        "en": "oriol colomer delgado's website, lighting and visual designer for live music. custom portfolio made in barcelona, no monthly fees.",
+        "cat": "la web de l'oriol colomer delgado, dissenyador d'il·luminació i visuals per a música en directe. portfolio a mida fet a barcelona, sense quotes mensuals."
+      },
+      "resumen": {
+        "es": "una web en túnel para luz y visuales en directo",
+        "en": "a tunnel of a website for live lighting and visuals",
+        "cat": "una web en túnel per a llum i visuals en directe"
+      },
+      "texto": {
+        "es": "oriol colomer diseña con luz y visuales, sobre todo para música en directo, del festival grec a la sala apolo. se formó en 3d y animación para videojuegos, y el título que mejor le describe, dice él, es technical artist. en su web se entra por una esfera que gira hacia el cursor, y lo que cambia al girar es dónde le da la luz. detrás, el trabajo es un túnel: los proyectos vienen de frente, del más reciente al más antiguo, sobre una línea del tiempo. quien busca algo concreto lo pasa a lista y ordena por proyecto, cliente, fecha o etiqueta. aparte hay un lab con piezas interactivas que funcionan en el mismo navegador. en catalán, castellano e inglés.",
+        "en": "oriol colomer designs with light and visuals, mostly for live music, from festival grec to sala apolo. he trained in 3d and animation for video games, and the title that describes him best, he says, is technical artist. you enter his website through a sphere that turns towards the cursor, and what changes as it turns is where the light falls on it. behind it, the work is a tunnel: projects come straight at you, newest first, along a timeline. if you're after something specific, switch to the list and sort by project, client, date or tag. there's also a lab with interactive pieces that run right in the browser. in catalan, spanish and english.",
+        "cat": "l'oriol colomer dissenya amb llum i visuals, sobretot per a música en directe, del festival grec a la sala apolo. es va formar en 3d i animació per a videojocs, i el títol que millor el descriu, diu ell, és technical artist. a la seva web s'hi entra per una esfera que gira cap al cursor, i el que canvia en girar és on li toca la llum. al darrere, la feina és un túnel: els projectes venen de cara, del més recent al més antic, sobre una línia del temps. qui busca alguna cosa concreta el passa a llista i ordena per projecte, client, data o etiqueta. a part hi ha un lab amb peces interactives que funcionen al mateix navegador. en català, castellà i anglès."
+      }
+    },
+    {
+      "nombre": "pol roig",
+      "slug": "pol-roig",
+      "keyword": {
+        "es": "web para escenógrafos",
+        "en": "website for set designers",
+        "cat": "web per a escenògrafs"
+      },
+      "title": {
+        "es": "una web para escenografía y dirección escénica — polroigvalldosera.com · meowrhino studio",
+        "en": "a website for scenography and stage direction — polroigvalldosera.com · meowrhino studio",
+        "cat": "una web per a escenografia i direcció escènica — polroigvalldosera.com · meowrhino studio"
+      },
+      "description": {
+        "es": "la web de pol roig valldosera, escenógrafo y director escénico: liceu, sala beckett, festival grec. portfolio a medida hecho en barcelona, sin cuotas mensuales.",
+        "en": "pol roig valldosera's website, set designer and stage director: liceu, sala beckett, festival grec. custom portfolio made in barcelona, no monthly fees.",
+        "cat": "la web del pol roig valldosera, escenògraf i director escènic: liceu, sala beckett, festival grec. portfolio a mida fet a barcelona, sense quotes mensuals."
+      },
+      "resumen": {
+        "es": "una web para escenografía y dirección escénica",
+        "en": "a website for scenography and stage direction",
+        "cat": "una web per a escenografia i direcció escènica"
+      },
+      "texto": {
+        "es": "pol roig valldosera (barcelona, 2000) es escenógrafo y director escénico, formado en el institut del teatre. ha presentado su trabajo en el liceu, la sala beckett, l'auditori, el mercat de les flors o el festival grec. su web empieza con una foto de escena a pantalla completa y una procesión de figuritas que entran caminando por una línea de puntos. después, una sola página en negro con sus obras propias y sus escenografías, y entre proyecto y proyecto, más figuritas: algunas son personajes escapados de una obra, y al pulsarlas llevan a ella. cada proyecto tiene su página, en blanco. en catalán e inglés.",
+        "en": "pol roig valldosera (barcelona, 2000) is a set designer and stage director, trained at the institut del teatre. he has shown his work at the liceu, sala beckett, l'auditori, mercat de les flors and festival grec. his website opens with a full-screen stage photo and a procession of little figures walking in along a dotted line. then comes a single black page with his own works and his scenography, and between projects, more figures: some are characters who have escaped from one of his pieces, and clicking them takes you to it. each project has its own page, in white. in catalan and english.",
+        "cat": "el pol roig valldosera (barcelona, 2000) és escenògraf i director escènic, format a l'institut del teatre. ha presentat la seva feina al liceu, la sala beckett, l'auditori, el mercat de les flors o el festival grec. la seva web comença amb una foto d'escena a pantalla completa i una processó de ninots que entren caminant per una línia de punts. després, una sola pàgina en negre amb les seves obres pròpies i les seves escenografies, i entre projecte i projecte, més ninots: alguns són personatges escapats d'una obra, i en clicar-los hi porten. cada projecte té la seva pàgina, en blanc. en català i anglès."
+      }
+    },
+    {
+      "nombre": "almudena gonzalez",
+      "slug": "almudena-gonzalez",
+      "keyword": {
+        "es": "web para artistas textiles",
+        "en": "website for textile artists",
+        "cat": "web per a artistes tèxtils"
+      },
+      "title": {
+        "es": "una web-mapa para una artista textil — almarbra.com · meowrhino studio",
+        "en": "a map-website for a textile artist — almarbra.com · meowrhino studio",
+        "cat": "una web-mapa per a una artista tèxtil — almarbra.com · meowrhino studio"
+      },
+      "description": {
+        "es": "la web de almudena gonzález, artista visual: fotografía, investigación de materiales y tejido jacquard digital. portfolio a medida, sin cuotas mensuales.",
+        "en": "almudena gonzález's website, visual artist: photography, material research and digital jacquard weaving. custom portfolio, no monthly fees.",
+        "cat": "la web de l'almudena gonzález, artista visual: fotografia, recerca de materials i teixit jacquard digital. portfolio a mida, sense quotes mensuals."
+      },
+      "resumen": {
+        "es": "una web-mapa para una artista textil",
+        "en": "a map-website for a textile artist",
+        "cat": "una web-mapa per a una artista tèxtil"
+      },
+      "texto": {
+        "es": "almudena gonzález es artista visual e investigadora: trabaja entre la fotografía, la investigación de materiales y el tejido jacquard digital. su portada es un mapa que se arrastra, con las fotos de todos sus proyectos, y las de un mismo proyecto van unidas por un hilo fino de su color. al pasar por una foto se enciende su proyecto, y sus hilos se descosen y se vuelven a coser por otro camino. cada proyecto tiene su color, y otro en neón para el modo oscuro. el trabajo se reparte en arte textil y editorial, y los diarios son una página de fotos sueltas que salen en otro orden en cada visita, porque así lo pidió ella. en castellano, inglés y catalán.",
+        "en": "almudena gonzález is a visual artist and researcher working between photography, material research and digital jacquard weaving. her home page is a map you can drag around, with the photos of all her projects, and the ones from the same project are joined by a fine thread in its colour. hover over a photo and its project lights up, while its threads come unstitched and sew themselves back along another path. each project has its own colour, plus a neon one for dark mode. the work is split into textile art and editorial, and the diaries are a page of loose photos that come up in a different order on every visit, because that's how she asked for it. in spanish, english and catalan.",
+        "cat": "l'almudena gonzález és artista visual i investigadora: treballa entre la fotografia, la recerca de materials i el teixit jacquard digital. la seva portada és un mapa que s'arrossega, amb les fotos de tots els seus projectes, i les d'un mateix projecte van unides per un fil fi del seu color. en passar per una foto s'encén el seu projecte, i els seus fils es descusen i es tornen a cosir per un altre camí. cada projecte té el seu color, i un altre en neó per al mode fosc. la feina es reparteix en art tèxtil i editorial, i els diaris són una pàgina de fotos soltes que surten en un altre ordre a cada visita, perquè així ho va demanar ella. en castellà, anglès i català."
+      }
+    },
+    {
+      "nombre": "la diegol",
+      "slug": "la-diegol",
+      "keyword": {
+        "es": "web para directoras de publicidad y videoclips",
+        "en": "website for commercial and music video directors",
+        "cat": "web per a directores de publicitat i videoclips"
+      },
+      "title": {
+        "es": "una web para una directora de publicidad y videoclips — ladiegol.com · meowrhino studio",
+        "en": "a website for a commercial and music video director — ladiegol.com · meowrhino studio",
+        "cat": "una web per a una directora de publicitat i videoclips — ladiegol.com · meowrhino studio"
+      },
+      "description": {
+        "es": "la web de la diegol (marta diego), directora de publicidad y videoclips en barcelona: loewe, cupra, fc barcelona. portfolio a medida, sin cuotas mensuales.",
+        "en": "the website of la diegol (marta diego), commercial and music video director in barcelona: loewe, cupra, fc barcelona. custom portfolio, no monthly fees.",
+        "cat": "la web de la diegol (marta diego), directora de publicitat i videoclips a barcelona: loewe, cupra, fc barcelona. portfolio a mida, sense quotes mensuals."
+      },
+      "resumen": {
+        "es": "una web para una directora de publicidad y videoclips",
+        "en": "a website for a commercial and music video director",
+        "cat": "una web per a una directora de publicitat i videoclips"
+      },
+      "texto": {
+        "es": "la diegol es marta diego, directora nacida y criada en barcelona. hace publicidad y videoclips, y entre sus clientes están loewe, samsung, cupra o el fc barcelona. viene de la danza y las artes escénicas, y el movimiento es central en cómo construye una escena. la web es negra: se entra por un pase de fotogramas suyos a pantalla completa, con el nombre encima, y debajo está la rejilla de trabajos, con un filtro que separa publicidad y videoclip. la portada de cada trabajo es la miniatura que el vídeo ya tiene en vimeo, así que no hay que prepararla aparte. el nombre va en wild trave y todo lo demás en una mono en mayúsculas.",
+        "en": "la diegol is marta diego, a director born and raised in barcelona. she makes commercials and music videos, and her clients include loewe, samsung, cupra and fc barcelona. she comes from dance and the performing arts, and movement is central to how she builds a scene. the website is black: you enter through a run of her stills, full screen, with her name on top, and below is the grid of work, with a filter that splits commercials from music videos. each cover is the thumbnail the video already has on vimeo, so there's no cover to prepare separately. her name is set in wild trave and everything else in an uppercase mono.",
+        "cat": "la diegol és la marta diego, directora nascuda i criada a barcelona. fa publicitat i videoclips, i entre els seus clients hi ha loewe, samsung, cupra o el fc barcelona. ve de la dansa i les arts escèniques, i el moviment és central en com construeix una escena. la web és negra: s'hi entra per una passada de fotogrames seus a pantalla completa, amb el nom a sobre, i a sota hi ha la graella de treballs, amb un filtre que separa publicitat i videoclip. la portada de cada treball és la miniatura que el vídeo ja té a vimeo, així que no cal preparar-la a part. el nom va en wild trave i tota la resta en una mono en majúscules."
+      }
+    },
+    {
+      "nombre": "tat ara",
+      "slug": "tat-ara",
+      "keyword": {
+        "es": "web para galerías de arte con tienda",
+        "en": "website for art galleries with a shop",
+        "cat": "web per a galeries d'art amb botiga"
+      },
+      "title": {
+        "es": "una web para una galería con tienda — tatara.cat · meowrhino studio",
+        "en": "a website for a gallery with a shop — tatara.cat · meowrhino studio",
+        "cat": "una web per a una galeria amb botiga — tatara.cat · meowrhino studio"
+      },
+      "description": {
+        "es": "la web de tat ara, espacio galería de arte, diseño y ecología en barcelona: agenda, exposiciones, investigación y tienda. en tres idiomas, sin cuotas mensuales.",
+        "en": "the website of tat ara, an art, design and ecology gallery space in barcelona: agenda, exhibitions, research and shop. in three languages, no monthly fees.",
+        "cat": "la web de tat ara, espai galeria d'art, disseny i ecologia a barcelona: agenda, exposicions, recerca i botiga. en tres idiomes, sense quotes mensuals."
+      },
+      "resumen": {
+        "es": "una web para una galería con tienda",
+        "en": "a website for a gallery with a shop",
+        "cat": "una web per a una galeria amb botiga"
+      },
+      "texto": {
+        "es": "tat ara es una asociación sin ánimo de lucro de barcelona: un espacio galería que conecta proyectos de arte, diseño y ecología. su web lo lleva todo: agenda, exposiciones, investigación, una tienda de publicaciones con carrito y una newsletter. es en blanco y negro, en letra monoespaciada. las seis letras del nombre se quedan fijas arriba y abajo de la columna, t a t y a r a, y el contenido pasa por en medio. cada sección se edita en su propio archivo, con un bloque por cosa (una exposición, un libro, una cita de la agenda), y el stock de la tienda se lleva desde un panel. en catalán, castellano e inglés.",
+        "en": "tat ara is a non-profit association in barcelona: a gallery space that connects art, design and ecology projects. its website holds everything: agenda, exhibitions, research, a shop of publications with a cart, and a newsletter. it's black and white, set in a monospaced typeface. the six letters of the name stay fixed at the top and bottom of the column, t a t and a r a, and the content scrolls between them. each section is edited in its own file, one block per thing (an exhibition, a book, an agenda date), and the shop's stock is managed from a panel. in catalan, spanish and english.",
+        "cat": "tat ara és una associació sense ànim de lucre de barcelona: un espai galeria que connecta projectes d'art, disseny i ecologia. la seva web ho porta tot: agenda, exposicions, recerca, una botiga de publicacions amb carretó i una newsletter. és en blanc i negre, en lletra monoespaiada. les sis lletres del nom es queden fixes a dalt i a baix de la columna, t a t i a r a, i el contingut passa pel mig. cada secció s'edita al seu propi arxiu, amb un bloc per cosa (una exposició, un llibre, una cita de l'agenda), i l'estoc de la botiga es porta des d'un panell. en català, castellà i anglès."
+      }
+    },
+    {
+      "nombre": "quien no corre, vuela",
+      "slug": "quien-no-corre-vuela",
+      "keyword": {
+        "es": "tienda online para fanzines y editoriales independientes",
+        "en": "online shop for zines and independent publishers",
+        "cat": "botiga en línia per a fanzines i editorials independents"
+      },
+      "title": {
+        "es": "una tienda online para fanzines — quiennocorrevuela.com · meowrhino studio",
+        "en": "an online shop for zines — quiennocorrevuela.com · meowrhino studio",
+        "cat": "una botiga en línia per a fanzines — quiennocorrevuela.com · meowrhino studio"
+      },
+      "description": {
+        "es": "la tienda de quien no corre, vuela, proyecto de autoedición de fanzines de fotografía. tienda online a medida con pago con tarjeta, sin cuotas mensuales.",
+        "en": "the shop of quien no corre, vuela, a self-publishing project of photography zines. custom online shop with card payments, no monthly fees.",
+        "cat": "la botiga de quien no corre, vuela, projecte d'autoedició de fanzines de fotografia. botiga en línia a mida amb pagament amb targeta, sense quotes mensuals."
+      },
+      "resumen": {
+        "es": "una tienda online para fanzines",
+        "en": "an online shop for zines",
+        "cat": "una botiga en línia per a fanzines"
+      },
+      "texto": {
+        "es": "quien no corre, vuela es un proyecto editorial de autoedición: fanzines de fotografía que abrazan el error y le dan un lugar al archivo, a lo íntimo y a lo cotidiano. su tienda está hecha a medida para ellas. cada fanzine tiene su ficha con los datos de la edición: autora, tirada, encuadernación, páginas y medidas. las autoras tienen página propia, y hay un calendario con las ferias y presentaciones. se paga con tarjeta, y por dentro hay un panel para el stock, los pedidos con su número de seguimiento y la newsletter. arriba, su logo caligráfico; los títulos, en garamond cursiva. en castellano, catalán e inglés.",
+        "en": "quien no corre, vuela is a self-publishing project: photography zines that embrace error and make room for the archive, the intimate and the everyday. their shop is custom-built for them. each zine has its own page with the details of the edition: author, print run, binding, pages and size. authors have their own pages too, and there's a calendar of fairs and launches. you pay by card, and behind the scenes there's a panel for stock, orders with their tracking number, and the newsletter. their calligraphic logo sits at the top, and titles are set in garamond italic. in spanish, catalan and english.",
+        "cat": "quien no corre, vuela és un projecte editorial d'autoedició: fanzines de fotografia que abracen l'error i donen un lloc a l'arxiu, a allò íntim i a allò quotidià. la seva botiga està feta a mida per a elles. cada fanzine té la seva fitxa amb les dades de l'edició: autora, tirada, enquadernació, pàgines i mides. les autores tenen pàgina pròpia, i hi ha un calendari amb les fires i presentacions. es paga amb targeta, i per dins hi ha un panell per a l'estoc, les comandes amb el seu número de seguiment i la newsletter. a dalt, el seu logo cal·ligràfic; els títols, en garamond cursiva. en castellà, català i anglès."
+      }
+    },
+    {
       "nombre": "rikamichie",
       "slug": "rikamichie",
       "keyword": {

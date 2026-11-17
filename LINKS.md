@@ -86,7 +86,6 @@ Está en Neocities y no en el archive (nada de esto es un proyecto):
 
 - redes y contacto: bluesky, twitter, instagram, paypal, mailto, CVs en pdf (`/CVs/cast.pdf`, `/CVs/eng.pdf`)
 - `meowrhino.cargo.site/portfolio_esp` y un prototipo de portfolio en Figma
-- `noancittadino.com` (el archive solo enlaza `github.io/noan`; el dominio está en clientHold)
 
 Está en el archive y no en Neocities:
 
