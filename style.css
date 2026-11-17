@@ -2854,6 +2854,5 @@ html.js #seo-prerender {
 
 /* Los enlaces a estas páginas en el pie de cada ficha, entre «volver» y el
    nombre del estudio. */
-.proy-pie-landings { display: flex; flex-wrap: wrap; gap: 0.4rem 0.6rem; justify-content: center; }
 .proy-indice-landings { margin-top: 0.6rem; }
 .proy-indice-landings a { margin-right: 0.3rem; }

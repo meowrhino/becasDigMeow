@@ -518,9 +518,8 @@ ${cuerpo}
 }
 
 /** Página de un proyecto, en un idioma. */
-function paginaProyecto({ proyecto, seo }, idioma, vecinos = {}, landingsDoc = { landings: [] }) {
+function paginaProyecto({ proyecto, seo }, idioma, vecinos = {}) {
   const rutas = {
-    landings: enlacesLandings(landingsDoc, idioma),
     // La vuelta de una ficha es la REJILLA del portfolio: estas páginas son
     // puro visual y salir de ellas a una lista de nombres era caer en seco.
     // Desde que la celda tiene ruta, /portfolio ES la rejilla.
@@ -833,7 +832,7 @@ function main() {
           siguiente: fichas[(i + 1) % fichas.length],
         };
         generar(`${idioma.proyDir}/${ficha.seo.slug}.html`,
-          paginaProyecto(ficha, idioma, vecinos, landingsDoc));
+          paginaProyecto(ficha, idioma, vecinos));
       });
     }
 

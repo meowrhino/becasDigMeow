@@ -152,23 +152,9 @@ export function renderProyectoHTML(proyecto, seo, lang = "es", rutas = {}, medir
       <div class="proy-galeria">${galeria}
       </div>${acciones}
       <nav class="proy-pie" aria-label="${esc(t.navegar)}">
-        <a href="${esc(rutas.indice || "/portfolio")}">${esc(t.volverRejilla)}</a>${landingsPieHTML(rutas.landings)}
-        <a href="${esc(rutas.home || "/")}">meowrhino studio</a>
+        <a href="${esc(rutas.indice || "/portfolio")}">${esc(t.volverRejilla)}</a>
       </nav>
     </article>`;
-}
-
-/**
- * Los enlaces a las páginas long-tail (web para músicos y artistas, web sin
- * cuotas), para el pie de cada ficha y del índice. Desde 63 fichas y la
- * portada del portfolio es como esas páginas dejan de ser huérfanas; para una
- * persona son, además, la respuesta a «¿y para mí?» al salir de un proyecto.
- */
-export function landingsPieHTML(landings = []) {
-  if (!landings.length) return "";
-  return `
-        <span class="proy-pie-landings">${landings.map(l =>
-          `<a href="${esc(l.href)}">${esc(l.texto)}</a>`).join(" · ")}</span>`;
 }
 
 /** Una tarjeta del portfolio (captura, nombre y resumen) enlazada a su ficha. */
