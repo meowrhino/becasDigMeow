@@ -121,22 +121,21 @@ export function crearCeldas() {
 }
 
 /**
- * El rectángulo que de verdad tiene celdas dentro del GRID.
- *
- * Lo usa el aterrizaje cuando la celda activa desaparece de la vista: hay que
- * caer en una esquina que exista. Los minimapas ya NO se recortan a este marco
- * —dibujan el terreno entero, ver `pintarMinimapInline`—, así que este cálculo
- * ha dejado de ser lo que define su tamaño.
- */
-/**
  * El terreno completo: el mismo 8×8 que se ve y se toca en la celda `mapa`.
- * Es lo que dibujan los dos minimapas, para que una sección esté en el mismo
+ * Es lo que dibuja el minimapa grande, para que una sección esté en el mismo
  * sitio en el juego y en la navegación.
  */
 function terreno() {
   return { y0: 0, y1: GRID.length - 1, x0: 0, x1: (GRID[0]?.length || 1) - 1 };
 }
 
+/**
+ * El rectángulo que de verdad tiene celdas dentro del GRID.
+ *
+ * Es lo que dibuja el minimapa de la esquina (ver `pintarMinimapInline`), y lo
+ * usa el aterrizaje cuando la celda activa desaparece de la vista: hay que
+ * caer en una esquina que exista.
+ */
 export function marcoOcupado() {
   const ys = [], xs = [];
   for (let y = 0; y < GRID.length; y++) {
@@ -225,18 +224,20 @@ export function actualizarTamanoMinimapInline() {
 }
 
 /**
- * Rellena el minimapa de la esquina con el terreno ENTERO.
+ * Rellena el minimapa de la esquina con el rectángulo OCUPADO, no con el
+ * terreno entero.
  *
- * Antes se recortaba al rectángulo ocupado, para no dibujar una rejilla de
- * casillas casi todas vacías. Pero entonces la celda `mapa` y el minimapa
- * contaban cosas distintas: colocabas una sección en una esquina del terreno y el
- * minimapa la enseñaba pegada al centro, porque había recortado el vacío. Si
- * el mapa es un sitio donde se juega a mover las cosas, lo que se mueve tiene
- * que quedarse donde lo pusiste. El vacío también es información.
+ * Durante un tiempo dibujó el terreno entero, para que una sección movida a
+ * una esquina se viera en esa esquina. Con el terreno de 8×8 eso son dos filas
+ * y dos columnas de aire por cada lado, y el minimapa quedaba flotando lejos
+ * de su esquina en todas las páginas. Recortado vuelve a estar pegado a ella.
+ * La forma se conserva (si alejas una sección, el rectángulo crece hasta
+ * ella); lo que se pierde es el aire de alrededor, y ese lo sigue enseñando
+ * el minimapa grande, que sí dibuja el terreno entero.
  */
 function pintarMinimapInline() {
   if (!minimapInlineEl) return;
-  const { y0, y1, x0, x1 } = terreno();
+  const { y0, y1, x0, x1 } = marcoOcupado();
   minimapInlineEl.innerHTML = "";
   minimapInlineEl.style.gridTemplateColumns = `repeat(${x1 - x0 + 1}, 1fr)`;
   minimapInlineEl.style.gridTemplateRows    = `repeat(${y1 - y0 + 1}, 1fr)`;
@@ -290,11 +291,11 @@ let minimapExpandedEl = null;
 
 export function actualizarTamanoMinimapExpandido() {
   if (!minimapExpandedEl) return;
-  // La casilla mide lo que quepa: todas las columnas a lo ancho, y todas las
-  // filas más el botón de tema (90px) a lo alto. Con 8 de lado, un tamaño fijo
-  // se salía del móvil.
+  // La casilla mide un 12% del ancho (120px como mucho), y menos si así no
+  // caben todas las columnas a lo ancho o todas las filas más el botón de tema
+  // (90px) a lo alto: con 8 de lado, el tamaño de siempre se salía del móvil.
   const hueco = 12, cols = GRID[0]?.length || 1, filas = GRID.length;
-  const base   = Math.min(120,
+  const base   = Math.min(120, window.innerWidth * 0.12,
     (window.innerWidth * 0.92 - hueco * (cols - 1)) / cols,
     (window.innerHeight - 90 - hueco * (filas - 1)) / filas * getAspectoViewport());
   const cellW  = Math.max(24, Math.round(base));

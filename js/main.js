@@ -156,8 +156,8 @@ if (prerender) {
 // La rejilla ya no se escribe aquí: sale del reparto que tenga guardado esta
 // pestaña (js/mapa.js), que de fábrica pone la portada en el centro de un
 // terreno de 8×8 con portfolio, about y statement pegados a ella. Quien no haya tocado nada ve exactamente lo mismo
-// que antes: los minimapas dibujan solo el rectángulo ocupado, no las 64
-// casillas del terreno.
+// que antes: el minimapa de la esquina dibuja solo el rectángulo ocupado, no
+// las 64 casillas del terreno (esas las enseña el minimapa grande).
 const reparto = leerMapa();
 
 configurarNavegacion({
@@ -187,7 +187,7 @@ configurarNavegacion({
     // alguien copiara ese día caiga en la portada sin explicación.
     "mapa": ["plano"],
   },
-  // La portada, esté donde esté: con el reparto de fábrica es 2_2, pero si
+  // La portada, esté donde esté: con el reparto de fábrica es 3_3, pero si
   // alguien la ha mudado, entrar sigue siendo entrar por la portada.
   posInicial: (() => {
     const [y, x] = (Object.entries(reparto).find(([, n]) => n === "welcome")?.[0] ?? "3_3")

@@ -15,9 +15,9 @@
 //
 //  - El terreno es de 8×8 SIEMPRE. Antes crecía y encogía según lo que
 //    ocupabas, y se sentía roto: al mudar una sección cambiaban solos los
-//    sitios a los que podías llevar la siguiente. Los minimapas sí se ajustan
-//    a lo ocupado (marcoOcupado, en navigation.js), que es donde importa que
-//    no haya casillas vacías de más.
+//    sitios a los que podías llevar la siguiente. El minimapa de la esquina sí se
+//    ajusta a lo ocupado (marcoOcupado, en navigation.js), que es donde
+//    importa que no haya casillas vacías de más.
 //
 //  - NO se prohíbe dejar una sección sin vecinas. La primera versión lo vetaba
 //    —deslizar solo ofrece las casillas ocupadas de al lado— y con esa regla
@@ -57,7 +57,9 @@ export { ORIGEN };
 const LADO = 8;
 
 
-const GUARDADO = "meowrhino-mapa";
+// El `-8` es el lado del terreno: un reparto guardado con el 5×5 lleva otras
+// coordenadas y saldría una casilla descentrado, así que no se lee.
+const GUARDADO = "meowrhino-mapa-8";
 
 /** El reparto guardado en esta pestaña, o el de fábrica. */
 export function leerMapa() {
@@ -65,7 +67,7 @@ export function leerMapa() {
     // Barrido de los repartos que guardó la versión anterior en localStorage.
     // Ya no se leen, pero sin esto se quedan ahí para siempre en el navegador
     // de quien jugó con el mapa antes del cambio.
-    localStorage.removeItem(GUARDADO);
+    localStorage.removeItem("meowrhino-mapa");
     const v = sessionStorage.getItem(GUARDADO);
     if (!v) return { ...ORIGEN };
     const m = JSON.parse(v);

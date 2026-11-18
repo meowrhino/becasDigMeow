@@ -310,15 +310,18 @@ p, h1, h2, h3 {
 
 .header-topright {
   position: fixed;
-  top: 3dvh;
-  right: 3dvw;
+  /* Medio punto más adentro que el resto de bordes (3dvh/3dvw): pegado del
+     todo se veía apretado contra la esquina. */
+  top: 4.5dvh;
+  right: 4.5dvw;
   z-index: var(--z-header);
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
-  /* El minimapa dibuja el terreno entero y casi todo es vacío: ese vacío no
-     puede tapar lo que hay debajo (las casillas de la esquina en la celda
-     mapa). Solo se pulsan las casillas que se ven. */
+  /* El rectángulo del minimapa tiene huecos (casillas sin sección) y crece
+     si alguien aleja una sección: ese vacío no puede tapar lo que hay debajo
+     (las casillas de la esquina en la celda mapa). Solo se pulsan las
+     casillas que se ven. */
   pointer-events: none;
 }
 
