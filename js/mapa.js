@@ -13,7 +13,7 @@
 //
 // Tres decisiones que no son obvias:
 //
-//  - El terreno es de 5×5 SIEMPRE. Antes crecía y encogía según lo que
+//  - El terreno es de 8×8 SIEMPRE. Antes crecía y encogía según lo que
 //    ocupabas, y se sentía roto: al mudar una sección cambiaban solos los
 //    sitios a los que podías llevar la siguiente. Los minimapas sí se ajustan
 //    a lo ocupado (marcoOcupado, en navigation.js), que es donde importa que
@@ -46,8 +46,15 @@ import { celdaHeadingHTML } from "./pages.js";
 import { ORIGEN } from "./rutas.js";
 export { ORIGEN };
 
-/** Lado del terreno. Cuadrado y fijo. */
-const LADO = 5;
+/**
+ * Lado del terreno. Cuadrado y fijo.
+ *
+ * Par, porque el reparto de fábrica ocupa 4×4 (filas y columnas 2 a 5): en un
+ * 8×8 le quedan dos casillas de aire por cada lado y cae centrado. En el 5×5
+ * de antes sobraba una sola fila y una sola columna, y el mapa y los minimapas
+ * salían media casilla hacia abajo y a la derecha.
+ */
+const LADO = 8;
 
 
 const GUARDADO = "meowrhino-mapa";
@@ -128,16 +135,20 @@ export function renderMapa(data) {
   // mapa se parece a lo que estás mirando. Cabe a lo ancho y a lo alto, y de
   // las dos medidas manda la que apriete más.
   function medidas() {
-    const gap = 10, sobra = gap * (LADO - 1);
+    // En móvil el hueco se estrecha: con 8 columnas, siete huecos de 10px se
+    // comían un quinto del ancho y las palabras partían en tres líneas.
+    const movil = window.innerWidth < 600;
+    const gap = movil ? 4 : 10, sobra = gap * (LADO - 1);
     const proporcion = window.innerHeight > 0 ? window.innerWidth / window.innerHeight : 1;
-    const porAncho = (window.innerWidth  * 0.74 - sobra) / LADO;
-    const porAlto  = (window.innerHeight * 0.60 - sobra) / LADO * proporcion;
+    const porAncho = (window.innerWidth  * 0.86 - sobra) / LADO;
+    const porAlto  = (window.innerHeight * (movil ? 0.78 : 0.70) - sobra) / LADO * proporcion;
     const ancho = Math.max(26, Math.min(porAncho, porAlto));
-    return { ancho, alto: ancho / proporcion };
+    return { ancho, alto: ancho / proporcion, gap };
   }
 
   function pintar(lang = currentLang) {
-    const { ancho, alto } = medidas();
+    const { ancho, alto, gap } = medidas();
+    terreno.style.gap = `${gap}px`;
     terreno.style.gridTemplateColumns = `repeat(${LADO}, ${ancho}px)`;
     terreno.style.gridTemplateRows    = `repeat(${LADO}, ${alto}px)`;
     terreno.classList.toggle("eligiendo", cogida !== null);

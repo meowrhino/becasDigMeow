@@ -22,10 +22,10 @@
 export const rutaProyectos = (lang) => rutaCelda("portfolio", lang);
 
 /**
- * El reparto de fábrica del lienzo (celda → casilla `y_x` de un 5×5), centrado.
+ * El reparto de fábrica del lienzo (celda → casilla `y_x` de un 8×8): ocupa las
+ * filas y columnas 2 a 5, con dos casillas de aire alrededor, o sea centrado.
  *
- * `welcome` cae en 2_2, el centro exacto: la portada en medio, como en el
- * lienzo de siempre. Pegadas a ella, lo que alguien que acaba de llegar tiene
+ * `welcome` cae en 3_3, junto al centro. Pegadas a ella, lo que alguien que acaba de llegar tiene
  * que encontrar sin buscar: el portfolio a la izquierda, el about debajo, el
  * statement a la derecha. `metodología` encima del statement (el cómo encima
  * del porqué) y `condiciones` cerrando la fila. `buscaminas` debajo del
@@ -38,10 +38,10 @@ export const rutaProyectos = (lang) => rutaCelda("portfolio", lang);
  * pintar las flechas del about, y mapa.js arrastra DOM y localStorage.
  */
 export const ORIGEN = Object.freeze({
-  "1_2": "links", "1_3": "metodología",
-  "2_1": "portfolio", "2_2": "welcome", "2_3": "statement", "2_4": "condiciones",
-  "3_2": "about", "3_3": "buscaminas",
-  "4_2": "reseña", "4_3": "mapa",
+  "2_3": "links", "2_4": "metodología",
+  "3_2": "portfolio", "3_3": "welcome", "3_4": "statement", "3_5": "condiciones",
+  "4_3": "about", "4_4": "buscaminas",
+  "5_3": "reseña", "5_4": "mapa",
 });
 
 /**

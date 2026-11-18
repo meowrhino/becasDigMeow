@@ -129,7 +129,7 @@ export function crearCeldas() {
  * ha dejado de ser lo que define su tamaño.
  */
 /**
- * El terreno completo: el mismo 5×5 que se ve y se toca en la celda `mapa`.
+ * El terreno completo: el mismo 8×8 que se ve y se toca en la celda `mapa`.
  * Es lo que dibujan los dos minimapas, para que una sección esté en el mismo
  * sitio en el juego y en la navegación.
  */
@@ -227,9 +227,9 @@ export function actualizarTamanoMinimapInline() {
 /**
  * Rellena el minimapa de la esquina con el terreno ENTERO.
  *
- * Antes se recortaba al rectángulo ocupado, para no dibujar una rejilla de 25
+ * Antes se recortaba al rectángulo ocupado, para no dibujar una rejilla de
  * casillas casi todas vacías. Pero entonces la celda `mapa` y el minimapa
- * contaban cosas distintas: colocabas una sección en una esquina del 5×5 y el
+ * contaban cosas distintas: colocabas una sección en una esquina del terreno y el
  * minimapa la enseñaba pegada al centro, porque había recortado el vacío. Si
  * el mapa es un sitio donde se juega a mover las cosas, lo que se mueve tiene
  * que quedarse donde lo pusiste. El vacío también es información.
@@ -290,9 +290,15 @@ let minimapExpandedEl = null;
 
 export function actualizarTamanoMinimapExpandido() {
   if (!minimapExpandedEl) return;
-  const base   = Math.min(window.innerWidth * 0.12, 120);
-  const cellW  = Math.max(40, Math.round(base));
-  const cellH  = Math.max(24, Math.round(base / getAspectoViewport()));
+  // La casilla mide lo que quepa: todas las columnas a lo ancho, y todas las
+  // filas más el botón de tema (90px) a lo alto. Con 8 de lado, un tamaño fijo
+  // se salía del móvil.
+  const hueco = 12, cols = GRID[0]?.length || 1, filas = GRID.length;
+  const base   = Math.min(120,
+    (window.innerWidth * 0.92 - hueco * (cols - 1)) / cols,
+    (window.innerHeight - 90 - hueco * (filas - 1)) / filas * getAspectoViewport());
+  const cellW  = Math.max(24, Math.round(base));
+  const cellH  = Math.max(14, Math.round(base / getAspectoViewport()));
   minimapExpandedEl.querySelectorAll(".minimap-expanded-cell").forEach(cell => {
     cell.style.width  = `${cellW}px`;
     cell.style.height = `${cellH}px`;

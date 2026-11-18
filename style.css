@@ -316,6 +316,10 @@ p, h1, h2, h3 {
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
+  /* El minimapa dibuja el terreno entero y casi todo es vacío: ese vacío no
+     puede tapar lo que hay debajo (las casillas de la esquina en la celda
+     mapa). Solo se pulsan las casillas que se ven. */
+  pointer-events: none;
 }
 
 .minimap-inline {
@@ -333,6 +337,8 @@ p, h1, h2, h3 {
 
 .minimap-inline-cell {
   background: var(--minimap-cell);
+  position: relative;
+  pointer-events: auto;
   /* Sin transición: con fade, al cambiar de celda la que dejas y la que
      llegas se veían a medias las dos, como un parpadeo. */
 }
@@ -346,6 +352,14 @@ p, h1, h2, h3 {
 
 .minimap-inline-cell.invisible {
   visibility: hidden;
+}
+
+/* Halo pulsable: tapa los huecos de 3px entre casillas y deja un margen
+   alrededor, para que en móvil el minimapa no sea más difícil de acertar. */
+.minimap-inline-cell::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
 }
 
 /* ============================================
@@ -1381,8 +1395,8 @@ a.nav-label:visited {
   display: grid;
   gap: 10px;
   user-select: none;
-  /* El terreno es 5×5 fijo. Las casillas vacías existen (mantienen la rejilla
-     cuadrada) pero en reposo son aire: con sus bordes puestos, veinte huecos se
+  /* El terreno es 8×8 fijo. Las casillas vacías existen (mantienen la rejilla
+     cuadrada) pero en reposo son aire: con sus bordes puestos, tantos huecos se
      leían como una hoja de cálculo y tapaban las secciones, que es lo único
      que hay que mirar. Solo se dibujan mientras tienes una cogida. */
 }
