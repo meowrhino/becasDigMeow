@@ -2860,8 +2860,8 @@ html.js #seo-prerender {
 .minimap-inline,
 .nav-ir { display: none; }
 
-/* --- La barra, arriba a la derecha y en una línea: lista/rejilla, las páginas
-   vecinas y «menú» (idioma y zoom van abajo a la derecha, más abajo aquí). Blanca con `difference`, como el
+/* --- La barra, arriba a la derecha y en una línea: las páginas vecinas y
+   «menú» (vista, zoom, modo e idioma van abajo a la derecha, más abajo aquí). Blanca con `difference`, como el
    menú de mokakopa: se invierte sola sobre lo que le pase por debajo. --- */
 .header-topright {
   top: var(--barra);
@@ -2887,11 +2887,8 @@ html.js #seo-prerender {
 .menu-btn:hover { color: #999; }
 .menu-vecinos .menu-btn::after { content: ","; margin-right: 0.45em; }
 /* Los controles van un paso atrás de las páginas; el último de su grupo deja aire. */
-.barra-vista { color: #999; }
-.barra-vista.is-active, .barra-vista:hover { color: #fff; }
-.menu-vecinos .barra-vista:not(:has(+ .barra-vista))::after { content: ""; margin-right: 1.6em; }
 
-/* --- Idioma y zoom, abajo a la derecha. Cada uno despliega sus opciones hacia
+/* --- Vista, zoom, modo e idioma, abajo a la derecha. Cada uno despliega sus opciones hacia
    arriba en una cajita, como un tooltip. Con el mismo `difference` de la barra:
    la caja blanca sale oscura sobre la página clara, y al revés en modo oscuro. --- */
 .controles {
@@ -2955,7 +2952,17 @@ html.js #seo-prerender {
   padding-right: var(--margen);
 }
 .about-scroll-wrapper, .metodologia-scroll-wrapper, .footer-scroll-wrapper { width: 100%; max-width: none; }
-.about-content, .metodologia-content, .footer-content { text-align: left; padding-top: 12dvh; }
+.about-content, .metodologia-content, .footer-content { text-align: left; }
+/* Las páginas con scroll ocupan toda la altura: el texto pasa por debajo de la
+   barra y de los controles, que se siguen leyendo por su `difference`. Sin los
+   fundidos de arriba y abajo: ya no hay un borde que disimular. */
+.celda.about, .celda.statement, .celda.resena, .celda.metodologia, .celda.footer, .celda.tools { padding-top: 0; padding-bottom: 0; }
+.about-scroll-wrapper, .metodologia-scroll-wrapper, .footer-scroll-wrapper, .tools-scroll-wrapper { height: 100%; }
+.about-content, .metodologia-content, .footer-content,
+.footer-scroll-wrapper.is-short .footer-content { padding-top: 18dvh; padding-bottom: 24dvh; }
+.footer-scroll-wrapper.is-short .footer-content { display: block; }
+.tools-scroll-wrapper > .scroll-content { padding-top: 16dvh; padding-bottom: 24dvh; box-sizing: border-box; }
+.celda .scroll-wrapper::before, .celda .scroll-wrapper::after { display: none; }
 .about-content, .about-seccion, .metodologia-paso, .metodologia-importante, .footer-seccion {
   display: grid;
   /* Ancho fijo y no en %: las secciones son rejillas anidadas y el % de cada
@@ -3027,17 +3034,21 @@ html.js #seo-prerender {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 7dvh;
   /* tanto aire arriba y abajo como para que la primera y la última lleguen al centro */
   padding: calc((100dvh - var(--wp-ancho) / 1.45) / 2) 0;
 }
+/* Las de antes y después esperan pequeñas y apagadas, pisándose un poco con la
+   del centro; la que llega al centro salta a su tamaño, como un pop-up. */
 .wp {
+  position: relative;
   width: var(--wp-ancho);
   opacity: 0.25;
+  scale: 0.78;
   scroll-snap-align: center;
-  transition: opacity 0.35s ease;
+  transition: opacity 0.3s ease, scale 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.wp.visible { opacity: 1; }
+.wp + .wp { margin-top: calc(var(--wp-ancho) / 1.45 * -0.24); }   /* un cuarto de su alto, también en el móvil */
+.wp.visible { opacity: 1; scale: 1; z-index: 1; }
 /* Cada web, un poco fuera de sitio hacia un lado (cinco posiciones que se repiten). */
 .wp:nth-child(5n + 2) { transform: translateX(-4dvw); }
 .wp:nth-child(5n + 3) { transform: translateX(5dvw); }
@@ -3091,7 +3102,7 @@ body > .welcome-content .welcome-tagline { color: #999; font-size: clamp(0.9rem,
 .plista-fila > :not(:first-child) { color: var(--text-secondary); }
 .plista-fila {
   display: grid;
-  grid-template-columns: 2.2rem 1.3fr 1fr 1.5fr;
+  grid-template-columns: 2.2rem 1.2fr 1.7fr 1fr;
   gap: 1rem;
   padding: 0.42rem 0;
   border-top: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
@@ -3107,9 +3118,9 @@ a.plista-fila::before { counter-increment: fila; content: counter(fila, decimal-
   position: absolute;
   right: var(--margen);
   top: 50%;
-  width: min(36dvw, 62dvh);
-  transform: translateY(-50%);
-  border-radius: 3px;
+  width: min(48dvw, 82dvh);
+  transform: translateY(-50%);   /* el sitio de cada web (translate, rotate) lo pone portfolio.js */
+  z-index: 2;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
@@ -3120,7 +3131,7 @@ a.plista-fila::before { counter-increment: fila; content: counter(fila, decimal-
 @media (max-width: 768px) {
   .plista { max-width: none; }
   .plista-fila { grid-template-columns: 2rem 1fr 1fr; }
-  .plista-fila > :nth-child(2) { display: none; }
+  .plista-fila > :nth-child(3) { display: none; }
   .plista-captura { display: none; }
 }
 

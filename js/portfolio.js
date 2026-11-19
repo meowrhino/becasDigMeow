@@ -222,11 +222,12 @@ export function renderPortfolio(data) {
 }
 
 const VISTA = {
-  es:  { lista: "lista",  rejilla: "rejilla", cols: ["web", "tipo", "sector"] },
-  en:  { lista: "list",   rejilla: "grid",    cols: ["site", "type", "field"] },
-  cat: { lista: "llista", rejilla: "graella", cols: ["web", "tipus", "sector"] },
+  es:  { lista: "lista",  rejilla: "rejilla", cols: ["web", "descripción", "tipo"] },
+  en:  { lista: "list",   rejilla: "grid",    cols: ["site", "description", "type"] },
+  cat: { lista: "llista", rejilla: "graella", cols: ["web", "descripció", "tipus"] },
 };
-const CAMPOS = ["nombre", "tipo", "sector"];
+// La columna «descripción» es el campo `sector` de proyectos.json.
+const CAMPOS = ["nombre", "sector", "tipo"];
 // `tipo` y `sector` van por idioma en proyectos.json; el nombre es un nombre propio.
 const textoCampo = (p, campo, lang) => (typeof p[campo] === "string" ? p[campo] : pick(p[campo], lang));
 
@@ -244,12 +245,17 @@ function renderListaProyectos(el, proyectos) {
   const filas = [...lista.querySelectorAll("a.plista-fila")];
   filas.forEach((a, i) => { a.proyecto = proyectos[i]; });
 
-  // Al pasar por una fila, su captura aparece al lado. Es decorativa (alt
-  // vacío): el nombre ya está en la fila.
+  // Al pasar por una fila aparece su captura, grande y cada vez en un sitio:
+  // cada web tiene el suyo, siempre el mismo, sacado de su posición en la
+  // lista. Puede pisar la lista; es decorativa (alt vacío): el nombre ya está
+  // en la fila.
   const captura = el.querySelector(".plista-captura");
   lista.addEventListener("mouseover", (e) => {
     const fila = e.target.closest("a.plista-fila");
     if (!fila) return;
+    const i = proyectos.indexOf(fila.proyecto);
+    captura.style.translate = `${-((i * 7) % 19)}dvw ${((i * 11) % 25) - 12}dvh`;
+    captura.style.rotate = `${((i * 3) % 5) - 2}deg`;
     captura.src = `/${fila.proyecto.imagen}`;
     captura.classList.add("visible");
   });

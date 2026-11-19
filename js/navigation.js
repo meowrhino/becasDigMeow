@@ -272,14 +272,22 @@ function pintarVecinosHeader() {
   vecinosEl.innerHTML = "";
   const activa = document.querySelector(".celda.activa");
 
-  // lista / rejilla, solo donde las hay (portfolio)
-  activa?.querySelectorAll(".pvista-btn").forEach(orig => {
-    const b = botonBarra(orig.textContent, "vista", () => { orig.click(); pintarVecinosHeader(); });
-    b.classList.toggle("is-active", orig.classList.contains("is-active"));
-  });
-
-  // Idioma y zoom van aparte, abajo a la derecha, y cada uno despliega lo suyo.
+  // Los controles van aparte, abajo a la derecha, y cada uno despliega lo suyo:
+  // vista (solo en el portfolio), zoom (solo en las páginas de texto), modo e idioma.
   controlesEl.innerHTML = "";
+  const en = document.documentElement.lang === "en";
+  const cat = document.documentElement.lang === "ca";
+
+  // vista(lista): lista o rejilla
+  const vistas = [...(activa?.querySelectorAll(".pvista-btn") || [])];
+  const vistaActiva = vistas.find(v => v.classList.contains("is-active"));
+  if (vistaActiva) {
+    desplegable(`${en ? "view" : "vista"}(${vistaActiva.textContent})`, vistas.map(orig => ({
+      texto: orig.textContent,
+      activa: orig === vistaActiva,
+      alPulsar: () => { orig.click(); pintarVecinosHeader(); },
+    })));
+  }
 
   // zoom(100%): solo en las páginas de texto; despliega el − y el +
   if (activa?.querySelector(".footer-bottom-bar")) {
@@ -289,12 +297,24 @@ function pintarVecinosHeader() {
       window.dispatchEvent(new Event("resize"));   // los degradados de scroll se recalculan
       zoom.querySelector("summary").textContent = `zoom(${ZOOMS[zoomIdx]}%)`;
     };
-    const en = document.documentElement.lang === "en";
     const zoom = desplegable(`zoom(${ZOOMS[zoomIdx]}%)`, [
       { texto: "−", nombre: en ? "smaller text" : "letra más pequeña", alPulsar: () => cambiar(-1) },
       { texto: "+", nombre: en ? "larger text" : "letra más grande", alPulsar: () => cambiar(1) },
     ]);
   }
+
+  // modo(claro): claro u oscuro. El interruptor de siempre sigue en «menú»;
+  // aquí se le pasa el clic.
+  const oscuro = document.documentElement.dataset.theme === "dark";
+  const MODOS = cat ? ["clar", "fosc"] : en ? ["light", "dark"] : ["claro", "oscuro"];
+  desplegable(`${en || cat ? "mode" : "modo"}(${MODOS[+oscuro]})`, MODOS.map((texto, i) => ({
+    texto,
+    activa: !!i === oscuro,
+    alPulsar: () => {
+      if (!!i !== oscuro) document.querySelector(".theme-toggle")?.click();
+      pintarVecinosHeader();
+    },
+  })));
 
   // idioma(es): despliega los tres
   const langActual = document.querySelector(".lang-btn.is-active")?.dataset.lang;

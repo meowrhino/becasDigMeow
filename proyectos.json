@@ -1,5 +1,5 @@
 {
-  "_comment": "Un bloque por web del portfolio, en el orden en que salen. Arriba, lo que pintan la rejilla, la lista y la portada (imagen, url, año, tipo, sector); abajo, lo que escribe su ficha (/portfolio/<slug> y sus variantes /en y /ca). Los textos van por idioma, {es,en,cat}. `slug` tiene que ser el que sale de `nombre` (el build lo comprueba). Las fotos de más (2.webp, 3.webp…) no se apuntan: el build las cuenta en la carpeta de `imagen`. Al navegador solo le llega la parte de arriba, dentro de data.json.",
+  "_comment": "Un bloque por web del portfolio, en el orden en que salen. Arriba, lo que pintan la rejilla, la lista y la portada (imagen, url, año, tipo, y sector, que en la lista es la columna «descripción»); abajo, lo que escribe su ficha (/portfolio/<slug> y sus variantes /en y /ca). Los textos van por idioma, {es,en,cat}. `slug` tiene que ser el que sale de `nombre` (el build lo comprueba). Las fotos de más (2.webp, 3.webp…) no se apuntan: el build las cuenta en la carpeta de `imagen`. Al navegador solo le llega la parte de arriba, dentro de data.json.",
   "proyectos": [
     {
       "nombre": "oriol colomer",
@@ -13,9 +13,9 @@
         "cat": "portfolio"
       },
       "sector": {
-        "es": "iluminación y visuales",
-        "en": "lighting and visuals",
-        "cat": "il·luminació i visuals"
+        "es": "luz y visuales en directo",
+        "en": "live lighting and visuals",
+        "cat": "llum i visuals en directe"
       },
       "keyword": {
         "es": "web para diseñadores de iluminación y visuales",
@@ -55,9 +55,9 @@
         "cat": "portfolio"
       },
       "sector": {
-        "es": "escenografía",
-        "en": "set design",
-        "cat": "escenografia"
+        "es": "escenografía y dirección escénica",
+        "en": "set design and stage direction",
+        "cat": "escenografia i direcció escènica"
       },
       "keyword": {
         "es": "web para escenógrafos",
@@ -139,9 +139,9 @@
         "cat": "portfolio"
       },
       "sector": {
-        "es": "publicidad y videoclips",
-        "en": "advertising and music videos",
-        "cat": "publicitat i videoclips"
+        "es": "dirección de publicidad y videoclips",
+        "en": "directing ads and music videos",
+        "cat": "direcció de publicitat i videoclips"
       },
       "keyword": {
         "es": "web para directoras de publicidad y videoclips",
@@ -181,9 +181,9 @@
         "cat": "galeria amb botiga"
       },
       "sector": {
-        "es": "arte",
-        "en": "art",
-        "cat": "art"
+        "es": "arte, diseño y ecología",
+        "en": "art, design and ecology",
+        "cat": "art, disseny i ecologia"
       },
       "keyword": {
         "es": "web para galerías de arte con tienda",
@@ -223,9 +223,9 @@
         "cat": "botiga"
       },
       "sector": {
-        "es": "fanzines y edición",
-        "en": "zines and publishing",
-        "cat": "fanzins i edició"
+        "es": "fanzines y edición independiente",
+        "en": "zines and independent publishing",
+        "cat": "fanzins i edició independent"
       },
       "keyword": {
         "es": "tienda online para fanzines y editoriales independientes",
@@ -265,9 +265,9 @@
         "cat": "portfolio"
       },
       "sector": {
-        "es": "música",
-        "en": "music",
-        "cat": "música"
+        "es": "trobadora moderna",
+        "en": "modern troubadour",
+        "cat": "trobadora moderna"
       },
       "keyword": {
         "es": "web para músicos barcelona",
@@ -307,9 +307,9 @@
         "cat": "portfolio"
       },
       "sector": {
-        "es": "fotografía de moda",
-        "en": "fashion photography",
-        "cat": "fotografia de moda"
+        "es": "fotografía de moda y editorial",
+        "en": "fashion and editorial photography",
+        "cat": "fotografia de moda i editorial"
       },
       "keyword": {
         "es": "web para fotógrafas de moda y editorial barcelona",
@@ -349,9 +349,9 @@
         "cat": "portfolio"
       },
       "sector": {
-        "es": "música y sonido",
-        "en": "music and sound",
-        "cat": "música i so"
+        "es": "música y audio inmersivo",
+        "en": "music and immersive audio",
+        "cat": "música i àudio immersiu"
       },
       "keyword": {
         "es": "web para músicos y técnicos de sonido",
@@ -391,9 +391,9 @@
         "cat": "portfolio"
       },
       "sector": {
-        "es": "portadas de disco",
-        "en": "album covers",
-        "cat": "portades de disc"
+        "es": "diseño de portadas de disco",
+        "en": "album cover design",
+        "cat": "disseny de portades de disc"
       },
       "keyword": {
         "es": "web para diseñadores de portadas de disco",
@@ -433,9 +433,9 @@
         "cat": "portfolio"
       },
       "sector": {
-        "es": "diseño gráfico",
-        "en": "graphic design",
-        "cat": "disseny gràfic"
+        "es": "diseño gráfico y editorial",
+        "en": "graphic and editorial design",
+        "cat": "disseny gràfic i editorial"
       },
       "keyword": {
         "es": "web para diseñadoras gráficas barcelona",
@@ -517,9 +517,9 @@
         "cat": "portfolio"
       },
       "sector": {
-        "es": "ilustración",
-        "en": "illustration",
-        "cat": "il·lustració"
+        "es": "ilustración y animación",
+        "en": "illustration and animation",
+        "cat": "il·lustració i animació"
       },
       "keyword": {
         "es": "web para ilustradoras",
@@ -559,9 +559,9 @@
         "cat": "portfolio"
       },
       "sector": {
-        "es": "artes visuales",
-        "en": "visual arts",
-        "cat": "arts visuals"
+        "es": "cine analógico y performance",
+        "en": "analogue film and performance",
+        "cat": "cinema analògic i performance"
       },
       "keyword": {
         "es": "web para artistas visuales",
@@ -610,9 +610,9 @@
         "cat": "portfolio"
       },
       "sector": {
-        "es": "pintura",
-        "en": "painting",
-        "cat": "pintura"
+        "es": "pintura y grabado",
+        "en": "painting and printmaking",
+        "cat": "pintura i gravat"
       },
       "keyword": {
         "es": "webs para pintoras / artistas plásticas",
@@ -652,9 +652,9 @@
         "cat": "portfolio"
       },
       "sector": {
-        "es": "tatuaje",
-        "en": "tattoo",
-        "cat": "tatuatge"
+        "es": "estudio de tatuaje",
+        "en": "tattoo studio",
+        "cat": "estudi de tatuatge"
       },
       "keyword": {
         "es": "web para tatuadores barcelona",
@@ -736,9 +736,9 @@
         "cat": "portfolio amb zona privada"
       },
       "sector": {
-        "es": "fotografía",
-        "en": "photography",
-        "cat": "fotografia"
+        "es": "fotografía con archivo privado",
+        "en": "photography with a private archive",
+        "cat": "fotografia amb arxiu privat"
       },
       "keyword": {
         "es": "web para fotógrafos con archivo privado (zona protegida por contraseña)",
@@ -778,9 +778,9 @@
         "cat": "portfolio"
       },
       "sector": {
-        "es": "performance",
-        "en": "performance",
-        "cat": "performance"
+        "es": "performance, entre el arte y la vida",
+        "en": "performance, between art and life",
+        "cat": "performance, entre l'art i la vida"
       },
       "keyword": {
         "es": "web para artistas de performance",
@@ -946,9 +946,9 @@
         "cat": "col·lectiu"
       },
       "sector": {
-        "es": "arte y cultura",
-        "en": "art and culture",
-        "cat": "art i cultura"
+        "es": "colectivización del arte y la cultura",
+        "en": "collectivising art and culture",
+        "cat": "col·lectivització de l'art i la cultura"
       },
       "keyword": {
         "es": "web para asociaciones y colectivos",
@@ -1030,9 +1030,9 @@
         "cat": "xarxa social privada"
       },
       "sector": {
-        "es": "diario compartido",
-        "en": "shared diary",
-        "cat": "diari compartit"
+        "es": "diario a varias manos",
+        "en": "a diary written by several hands",
+        "cat": "diari a diverses mans"
       },
       "keyword": {
         "es": "red social privada a medida / diario compartido",
@@ -1073,9 +1073,9 @@
         "cat": "portfolio"
       },
       "sector": {
-        "es": "diseño",
-        "en": "design",
-        "cat": "disseny"
+        "es": "diseño gráfico e ilustración",
+        "en": "graphic design and illustration",
+        "cat": "disseny gràfic i il·lustració"
       },
       "keyword": {
         "es": "portfolio web interactivo para diseñadores",
@@ -1115,9 +1115,9 @@
         "cat": "experiment"
       },
       "sector": {
-        "es": "proyecto propio",
-        "en": "own project",
-        "cat": "projecte propi"
+        "es": "html para jugar",
+        "en": "html to play with",
+        "cat": "html per jugar"
       },
       "keyword": {
         "es": "webs experimentales / proyectos raros",
