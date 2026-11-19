@@ -137,6 +137,10 @@ export function renderWelcome(data) {
   // entera y la de antes y la de después asoman, apagadas, así se ven venir.
   // El nombre y la frase pasan por encima en marquee.
   const proyectos = (data.portfolio?.proyectos || []).filter(p => p?.imagen && p?.nombre);
+  // El orden es el de la lista; el lado, a suertes en cada visita: zigzag que
+  // empieza por un lado cualquiera, cada una a una distancia del centro distinta.
+  const lado0 = Math.random() < 0.5 ? -1 : 1;
+  const dx = (i) => ((i % 2 ? -lado0 : lado0) * (0.15 + Math.random() * 0.85)).toFixed(2);
   // Copias pares: la pista se desplaza justo la mitad y el bucle no se nota.
   const marquee = (texto, copias) => `<span class="marquee-pista">${
     Array.from({ length: copias }, (_, i) =>
@@ -150,7 +154,7 @@ export function renderWelcome(data) {
     <div class="welcome-proyectos">
       <div class="wp-escena">
         ${proyectos.map((p, i) => `
-          <a class="wp${i ? "" : " visible"}" data-slug="${escapeHTML(slugify(p.nombre))}" href="${escapeHTML(`${rutaProyectos(currentLang)}/${slugify(p.nombre)}`)}">
+          <a class="wp${i ? "" : " visible"}" style="--dx:${dx(i)}" data-slug="${escapeHTML(slugify(p.nombre))}" href="${escapeHTML(`${rutaProyectos(currentLang)}/${slugify(p.nombre)}`)}">
             <img src="/${escapeHTML(p.imagen)}" alt="${escapeHTML(p.nombre)}"${i ? ' loading="lazy"' : ""} decoding="async">
           </a>`).join("")}
       </div>

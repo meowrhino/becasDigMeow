@@ -1,9 +1,8 @@
 // ============================================
-// THEME — Toggle claro/oscuro con SVG morph
+// THEME — modos de color
 // ============================================
 //
-// Gestiona el tema claro/oscuro con un toggle SVG
-// que hace morph suave entre luna y sol.
+// Gestiona el tema claro/oscuro y los tintes.
 // Persiste la preferencia en localStorage.
 // El tema se aplica ANTES del render mediante un script
 // inline en <head> (ver index.html) para evitar flash.
@@ -54,40 +53,15 @@ export function aplicarModo(modo) {
   aplicarTema(base);
 }
 
-/** Textos del aria-label del toggle por idioma (claves = LANGS de data.js). */
-const TEXTOS_TOGGLE = {
-  es: { aClaro: "Cambiar a modo claro", aOscuro: "Cambiar a modo oscuro" },
-  en: { aClaro: "Switch to light mode", aOscuro: "Switch to dark mode" },
-  cat: { aClaro: "Canvia a mode clar", aOscuro: "Canvia a mode fosc" },
-};
-
-const SVG_MOON = `<svg class="toggle-icon toggle-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
-
-const SVG_SUN = `<svg class="toggle-icon toggle-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
-
-let toggleEl = null;
-
 /** Devuelve el tema actual ("light" | "dark"). */
 function getTema() {
   return document.documentElement.getAttribute("data-theme") || "light";
 }
 
-/** Actualiza el aria-label del toggle según tema activo e idioma actual. */
-function actualizarAriaLabelToggle() {
-  if (!toggleEl) return;
-  const textos = TEXTOS_TOGGLE[currentLang] || TEXTOS_TOGGLE.es;
-  const tema = getTema();
-  toggleEl.setAttribute("aria-label", tema === "dark" ? textos.aClaro : textos.aOscuro);
-}
-
-/** Aplica el tema y actualiza los iconos SVG. */
+/** Aplica el tema. */
 function aplicarTema(tema) {
   document.documentElement.setAttribute("data-theme", tema);
   localStorage.setItem(STORAGE_KEY, tema);
-  if (toggleEl) {
-    toggleEl.classList.toggle("is-dark", tema === "dark");
-    actualizarAriaLabelToggle();
-  }
   sincronizarLogosTema(tema);
   forzarRepaintCapasCompuestas();
 }
@@ -118,9 +92,7 @@ export function sincronizarLogosTema(tema = getTema()) {
  * así que no parpadea.
  *
  * Capas afectadas:
- *  - .minimap-overlay  → es position:fixed y, además, contiene el propio toggle
- *    de tema, así que es la superficie que el usuario está mirando al cambiar.
- *    Recrearla re-rasteriza también sus celdas hijas (--minimap-*).
+ *  - .minimap-overlay  → es position:fixed. Recrearla re-rasteriza también sus celdas hijas (--minimap-*).
  *  - .zone-label-bg    → position:fixed + transform permanente (--zone-label).
  *  - .welcome-cupon-wrapper → capa permanente por su animación de rebote.
  */
@@ -132,33 +104,4 @@ function forzarRepaintCapasCompuestas() {
     void el.offsetHeight; // fuerza reflow → re-rasteriza al volver
     el.style.display = "";
   });
-}
-
-/** Alterna entre claro y oscuro con animación de rotación. */
-function alternarTema() {
-  if (toggleEl) {
-    toggleEl.animate(
-      [{ transform: "rotate(0deg)" }, { transform: "rotate(360deg)" }],
-      { duration: 500, easing: "ease-in-out" }
-    );
-  }
-  // El interruptor va de claro a oscuro y vuelta: si había un tinte, lo quita.
-  aplicarModo(getTema() === "dark" ? "claro" : "oscuro");
-}
-
-/** Crea el botón toggle de tema (SVG moon/sun) dentro del contenedor dado. */
-export function crearThemeToggle(parent = document.body) {
-  toggleEl = document.createElement("button");
-  toggleEl.classList.add("theme-toggle");
-  toggleEl.innerHTML = SVG_MOON + SVG_SUN;
-  toggleEl.addEventListener("click", alternarTema);
-
-  // Sincronizar estado con el tema actual (ya aplicado por el script de <head>)
-  toggleEl.classList.toggle("is-dark", getTema() === "dark");
-  actualizarAriaLabelToggle();
-  sincronizarLogosTema();
-  // Re-traduce el aria-label cuando cambia el idioma (sin depender de pages.js).
-  onLangChange(actualizarAriaLabelToggle);
-
-  parent.appendChild(toggleEl);
 }
