@@ -3011,59 +3011,73 @@ html.js #seo-prerender {
 }
 .proy-texto { font-family: var(--font-text); }
 
-/* --- Bienvenida: las webs, grandes y una tras otra; el nombre pasa por detrás --- */
-.celda.welcome { padding: 0; }
+/* --- Bienvenida: las webs, una debajo de otra, y se baja de verdad. La del
+   centro se ve entera; la de antes y la de después asoman, apagadas: así se ven
+   venir. --- */
+.celda.welcome { padding: 0; --wp-ancho: min(60dvw, 86dvh); }
 .welcome-proyectos {
   position: absolute;
   inset: 0;
   overflow-y: auto;
   overscroll-behavior-y: contain;
+  scroll-snap-type: y proximity;
   z-index: 3;
 }
-/* La escena se queda quieta mientras se baja; `.wp-recorrido` es solo el
-   recorrido de scroll (pages.js lo mide para saber qué web toca). */
-.wp-escena { position: sticky; top: 0; height: 100%; }
+.wp-escena {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7dvh;
+  /* tanto aire arriba y abajo como para que la primera y la última lleguen al centro */
+  padding: calc((100dvh - var(--wp-ancho) / 1.45) / 2) 0;
+}
 .wp {
-  position: absolute;
-  top: 9dvh;
-  left: 50%;
-  width: min(64dvw, 92dvh);
-  transform: translateX(-50%);
-  opacity: 0;
-  pointer-events: none;
+  width: var(--wp-ancho);
+  opacity: 0.25;
+  scroll-snap-align: center;
   transition: opacity 0.35s ease;
 }
-.wp.visible { opacity: 1; pointer-events: auto; }
-/* Cada web, un poco fuera de sitio (cinco posiciones que se repiten). */
-.wp:nth-child(5n + 2) { transform: translate(calc(-50% - 4dvw), 2dvh); }
-.wp:nth-child(5n + 3) { transform: translate(calc(-50% + 5dvw), 1dvh); }
-.wp:nth-child(5n + 4) { transform: translate(calc(-50% - 2dvw), -2dvh); }
-.wp:nth-child(5n)     { transform: translate(calc(-50% + 3dvw), 3dvh); }
+.wp.visible { opacity: 1; }
+/* Cada web, un poco fuera de sitio hacia un lado (cinco posiciones que se repiten). */
+.wp:nth-child(5n + 2) { transform: translateX(-4dvw); }
+.wp:nth-child(5n + 3) { transform: translateX(5dvw); }
+.wp:nth-child(5n + 4) { transform: translateX(-2dvw); }
+.wp:nth-child(5n)     { transform: translateX(3dvw); }
 /* Sin sombra propia: las capturas ya traen la de su ventana, con margen
-   transparente alrededor, y otra por fuera dibujaba un recuadro. */
+   transparente alrededor, y otra por fuera dibujaba un recuadro. La proporción
+   reserva el sitio de las que aún no han cargado. */
 .wp img { display: block; width: 100%; height: auto; aspect-ratio: auto 1.45; }
 
-.celda.welcome .welcome-content {
-  position: absolute;
+/* El nombre y la frase, en marquee por encima de las webs y con `difference`,
+   como la barra: oscuro sobre la página, claro sobre una captura oscura. Va
+   colgado del body y no dentro de la celda (pages.js dice por qué), y solo se
+   ve en la portada. No se pulsa: taparía el scroll de las webs. */
+body > .welcome-content {
+  position: fixed;
   left: 0;
   right: 0;
   bottom: calc(var(--barra) + 2.2rem);   /* por encima de idioma(es) */
-  z-index: 2;            /* por detrás de las webs */
+  z-index: calc(var(--z-header) - 1);
   align-items: stretch;
   gap: 0;
   overflow: hidden;
+  mix-blend-mode: difference;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
 }
-.celda.welcome .welcome-title,
-.celda.welcome .welcome-tagline { display: block; max-width: none; text-shadow: none; letter-spacing: 0; text-align: left; white-space: nowrap; }
-.celda.welcome .welcome-title { font-size: clamp(2.6rem, 8.5dvw, 10rem); line-height: 1.15; }
-.celda.welcome .welcome-tagline { font-size: clamp(0.9rem, 2dvw, 2rem); }
+body:has(.celda.welcome.activa) > .welcome-content { opacity: 1; }
+body > .welcome-content a { pointer-events: none; }
+body > .welcome-content .welcome-title,
+body > .welcome-content .welcome-tagline { display: block; max-width: none; text-shadow: none; letter-spacing: 0; text-align: left; white-space: nowrap; }
+body > .welcome-content .welcome-title { color: #fff; font-size: clamp(2.6rem, 8.5dvw, 10rem); line-height: 1.15; }
+body > .welcome-content .welcome-tagline { color: #999; font-size: clamp(0.9rem, 2dvw, 2rem); }
 .marquee-pista { display: inline-flex; animation: marquee 60s linear infinite; }
 .marquee-pista > span { padding-right: 0.7em; }
 .welcome-tagline .marquee-pista { animation-direction: reverse; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 @media (max-width: 768px) {
-  .wp { width: 88dvw; top: 14dvh; }
-  .celda.welcome .welcome-content { bottom: 10dvh; }
+  .celda.welcome { --wp-ancho: 88dvw; }
+  body > .welcome-content { bottom: 10dvh; }
 }
 
 /* --- Portfolio: lista al entrar, rejilla a un clic --- */
@@ -3110,35 +3124,17 @@ a.plista-fila::before { counter-increment: fila; content: counter(fila, decimal-
   .plista-captura { display: none; }
 }
 
-/* --- Fondo: el mapa 8×8 a pantalla completa (navigation.js pone una casilla
-   por celda del terreno). `fixed` en la trama para que case de una casilla a otra. --- */
-.fondo-mapa {
+/* --- Fondo: una trama de puntos muy suave, con un degradado desde el centro
+   que deja liso donde se lee; los puntos asoman hacia los bordes. --- */
+.fondo {
   position: fixed;
   inset: 0;
   z-index: 0;
-  display: grid;
   pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, var(--bg), transparent),
+    radial-gradient(color-mix(in srgb, var(--text) 9%, transparent) 1px, transparent 1px) 0 0 / 10px 10px;
 }
-/* Fuera del mapa, la trama de puntos. */
-.fondo-mapa > div {
-  background: radial-gradient(color-mix(in srgb, var(--text) 9%, transparent) 1px, transparent 1px) 0 0 / 10px 10px fixed;
-}
-/* Un degradado desde el centro: donde se lee, el fondo es liso; el mapa y los
-   puntos asoman hacia los bordes. */
-.fondo-mapa::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at center, var(--bg), transparent);
-}
-/* El mapa: manchas lisas y muy suaves, sin puntos, separadas por una rendija.
-   Hace de claro central: donde está el contenido no hay trama. */
-.fondo-mapa > .hay {
-  background: color-mix(in srgb, var(--text) 1.6%, transparent);
-  box-shadow: inset 0 0 0 4px var(--bg);
-  transition: background-color 0.6s ease;
-}
-.fondo-mapa > .activa { background: color-mix(in srgb, var(--text) 3.5%, transparent); }
 
 /* --- Rejilla del portfolio: piezas más grandes --- */
 .portfolio-grid { max-width: none; gap: 3.5rem 2rem; }
@@ -3147,19 +3143,19 @@ a.plista-fila::before { counter-increment: fila; content: counter(fila, decimal-
 @media (min-width: 1700px) { .pgrid-item { flex-basis: calc((100% - 4rem) / 3); max-width: calc((100% - 4rem) / 3); } }
 
 /* --- Entrada: al cargar, las cosas llegan de una en una y sin prisa. Primero
-   el mapa, casilla a casilla; después el nombre, la ventana (o el contenido de
+   el fondo; después el nombre, la ventana (o el contenido de
    la página por la que entres) y, al final, la barra. Unos dos segundos y
    medio. `html.entrando` solo existe durante la llegada (navigation.js). --- */
 @keyframes aparece { from { opacity: 0; } }
 @keyframes sube { from { opacity: 0; transform: translateY(1.5rem); } }
-.entrando .fondo-mapa > div { animation: aparece 0.9s ease both; animation-delay: calc(var(--i, 0) * 40ms); }
-.entrando .celda.welcome .welcome-content { animation: sube 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) 0.6s both; }
+.entrando .fondo { animation: aparece 0.9s ease both; }
+.entrando body > .welcome-content { animation: sube 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) 0.6s both; }
 .entrando .wp-escena,
 .entrando .celda.activa > .scroll-wrapper { animation: sube 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) 1.1s both; }
 .entrando .header-topright { animation: aparece 0.9s ease 1.6s both; }
 /* Con movimiento reducido el reset global deja la duración en nada pero no
    quita los retrasos: sin esto, todo saldría de golpe y tarde. */
 @media (prefers-reduced-motion: reduce) {
-  .entrando .fondo-mapa > div, .entrando .welcome-content, .entrando .wp-escena,
+  .entrando .fondo, .entrando .welcome-content, .entrando .wp-escena,
   .entrando .scroll-wrapper, .entrando .header-topright { animation: none !important; }
 }

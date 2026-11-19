@@ -226,10 +226,10 @@ export function renderWelcome(data) {
   // barcelona» es la frase que alguien que acaba de llegar quiere ampliar, y
   // el nombre del estudio es lo primero que se pulsa buscando quién hay detrás.
   const hrefAbout = (lang) => escapeHTML(rutaCelda("about", lang));
-  // PRUEBA (19 nov 2026): la portada son las webs, grandes y una tras otra, cada
-  // una con su línea de datos; el nombre y la frase pasan por detrás en marquee.
-  // Salen todas, en el orden de data.json, pero de una en una: hay una sola
-  // ventana quieta y el scroll decide qué web se ve dentro.
+  // PRUEBA (19 nov 2026): la portada son las webs, grandes y una debajo de otra,
+  // en el orden de proyectos.json. Se baja de verdad: la del centro se ve
+  // entera y la de antes y la de después asoman, apagadas, así se ven venir.
+  // El nombre y la frase pasan por encima en marquee.
   const proyectos = (data.portfolio?.proyectos || []).filter(p => p?.imagen && p?.nombre);
   // Copias pares: la pista se desplaza justo la mitad y el bucle no se nota.
   const marquee = (texto, copias) => `<span class="marquee-pista">${
@@ -245,35 +245,32 @@ export function renderWelcome(data) {
       <div class="wp-escena">
         ${proyectos.map((p, i) => `
           <a class="wp${i ? "" : " visible"}" data-slug="${escapeHTML(slugify(p.nombre))}" href="${escapeHTML(`${rutaProyectos(currentLang)}/${slugify(p.nombre)}`)}">
-            <img ${i ? "data-src" : "src"}="/${escapeHTML(p.imagen)}" alt="${escapeHTML(p.nombre)}" decoding="async">
+            <img src="/${escapeHTML(p.imagen)}" alt="${escapeHTML(p.nombre)}"${i ? ' loading="lazy"' : ""} decoding="async">
           </a>`).join("")}
       </div>
-      <div class="wp-recorrido" style="height: calc(${Math.max(0, proyectos.length - 1)} * 32dvh)"></div>
     </div>
     ${buildLangButtons()}
   `;
 
-  // Cada 32dvh de scroll, la web siguiente. Las capturas se piden de una en
-  // una (la que se ve y la que viene): están todas en el mismo sitio, así que
-  // `loading="lazy"` las descargaría las 27 de golpe.
+  // La web que está en el centro es la que se ve entera.
   const pista = el.querySelector(".welcome-proyectos");
   const webs = [...pista.querySelectorAll(".wp")];
-  const cargar = (a) => {
-    const img = a?.querySelector("img[data-src]");
-    if (img) { img.src = img.dataset.src; delete img.dataset.src; }
-  };
   pista.addEventListener("scroll", () => {
     const paso = (pista.scrollHeight - pista.clientHeight) / Math.max(1, webs.length - 1);
     if (!paso) return;
     const i = Math.min(webs.length - 1, Math.max(0, Math.round(pista.scrollTop / paso)));
     webs.forEach((a, k) => a.classList.toggle("visible", k === i));
-    cargar(webs[i]);
-    cargar(webs[i + 1]);
   }, { passive: true });
-  cargar(webs[1]);
 
-  const titleEl = el.querySelector(".welcome-title");
-  const taglineEl = el.querySelector(".welcome-tagline");
+  // El marquee sale de la celda y se cuelga del body, como la barra: lleva
+  // `mix-blend-mode: difference`, que solo mezcla con lo que hay dentro de su
+  // contexto de apilamiento, y la celda es uno. Dentro de ella no vería el
+  // fondo de la página y saldría blanco sobre blanco.
+  document.querySelector("body > .welcome-content")?.remove();
+  const nombre = el.querySelector(".welcome-content");
+  document.body.appendChild(nombre);
+  const titleEl = nombre.querySelector(".welcome-title");
+  const taglineEl = nombre.querySelector(".welcome-tagline");
 
   // i18n en sitio: reusa el mecanismo de attachLangListeners (mismo patrón
   // que el cupón, que registra el suyo aparte sobre la misma celda).

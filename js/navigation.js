@@ -393,6 +393,7 @@ export function crearHeader() {
   headerEl.appendChild(menuBtn);
   headerEl.appendChild(minimapInlineEl);
   document.body.appendChild(headerEl);
+  ponerFondo();
   controlesEl = document.createElement("div");
   controlesEl.classList.add("controles");
   document.body.appendChild(controlesEl);
@@ -491,46 +492,19 @@ function pintarMinimapExpandido() {
 function rehacerMinimapas() {
   pintarMinimapInline();
   pintarMinimapExpandido();
-  pintarFondoMapa();
 }
 
 // --- Fondo ---
 //
-// PRUEBA (19 nov 2026): el terreno entero a pantalla completa, por detrás de
-// todo, dibujado con una trama de puntos: casi invisibles donde no hay página,
-// algo más claros donde sí, y encendidos en la casilla en la que estás.
+// PRUEBA (19 nov 2026): una trama de puntos a pantalla completa, por detrás de
+// todo. Llegó a dibujar el mapa del sitio, casilla a casilla; se quitó: el mapa
+// ya está en «menú», y de fondo no decía nada.
 
-let fondoEl = null;
-
-function pintarFondoMapa() {
-  if (!fondoEl) {
-    fondoEl = document.createElement("div");
-    fondoEl.classList.add("fondo-mapa");
-    fondoEl.setAttribute("aria-hidden", "true");
-    document.body.prepend(fondoEl);
-  }
-  // Solo el rectángulo que tiene páginas, no el terreno entero: con las ocho
-  // filas y columnas el mapa se quedaba en una cruz pequeña en el centro.
-  const { y0, y1, x0, x1 } = marcoOcupado();
-  fondoEl.style.gridTemplate = `repeat(${y1 - y0 + 1}, 1fr) / repeat(${x1 - x0 + 1}, 1fr)`;
-  fondoEl.innerHTML = "";
-  for (let y = y0; y <= y1; y++) {
-    for (let x = x0; x <= x1; x++) {
-      const casilla = document.createElement("div");
-      casilla.dataset.y = y;
-      casilla.dataset.x = x;
-      if (GRID[y]?.[x] === 1) casilla.classList.add("hay");
-      casilla.style.setProperty("--i", fondoEl.children.length);   // turno en la entrada
-      fondoEl.appendChild(casilla);
-    }
-  }
-  actualizarFondoMapa();
-}
-
-function actualizarFondoMapa() {
-  fondoEl?.querySelectorAll("div").forEach(c => {
-    c.classList.toggle("activa", +c.dataset.y === posY && +c.dataset.x === posX);
-  });
+function ponerFondo() {
+  const fondo = document.createElement("div");
+  fondo.classList.add("fondo");
+  fondo.setAttribute("aria-hidden", "true");
+  document.body.prepend(fondo);
 }
 
 export function crearOverlay() {
@@ -746,8 +720,6 @@ export function actualizarVista({ historial = true } = {}) {
   }
   deslizar(saliente, activa);
   actualizarHeader();
-  if (!fondoEl) pintarFondoMapa();
-  actualizarFondoMapa();
   pintarVecinosHeader();
   actualizarZoneLabel();
   actualizarMinimapExpandido();
