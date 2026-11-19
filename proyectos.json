@@ -1,9 +1,22 @@
 {
-  "_comment": "Copia de las páginas de proyecto (/portfolio/<slug> y sus variantes /en y /ca). Cada campo es un objeto {es,en,cat}. Fuente única: build-seo.js lee de aquí. Se unen con data.json.portfolio.proyectos por el campo `nombre`, que debe coincidir EXACTAMENTE; las imágenes y las urls salen de allí, no de aquí. El borrador con las anécdotas y el porqué de cada keyword vive en textos-proyectos.borrador.md (no se despliega).",
+  "_comment": "Un bloque por web del portfolio, en el orden en que salen. Arriba, lo que pintan la rejilla, la lista y la portada (imagen, url, año, tipo, sector); abajo, lo que escribe su ficha (/portfolio/<slug> y sus variantes /en y /ca). Los textos van por idioma, {es,en,cat}. `slug` tiene que ser el que sale de `nombre` (el build lo comprueba). Las fotos de más (2.webp, 3.webp…) no se apuntan: el build las cuenta en la carpeta de `imagen`. Al navegador solo le llega la parte de arriba, dentro de data.json.",
   "proyectos": [
     {
       "nombre": "oriol colomer",
       "slug": "oriol-colomer",
+      "imagen": "img/oriolcolomer/1.webp",
+      "url": "https://oriolcolomerdelgado.com",
+      "año": "2026",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "iluminación y visuales",
+        "en": "lighting and visuals",
+        "cat": "il·luminació i visuals"
+      },
       "keyword": {
         "es": "web para diseñadores de iluminación y visuales",
         "en": "website for lighting and visual designers",
@@ -33,6 +46,19 @@
     {
       "nombre": "pol roig",
       "slug": "pol-roig",
+      "imagen": "img/polroig/1.webp",
+      "url": "https://polroigvalldosera.com",
+      "año": "2026",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "escenografía",
+        "en": "set design",
+        "cat": "escenografia"
+      },
       "keyword": {
         "es": "web para escenógrafos",
         "en": "website for set designers",
@@ -62,6 +88,19 @@
     {
       "nombre": "almudena gonzalez",
       "slug": "almudena-gonzalez",
+      "imagen": "img/almarbra/1.webp",
+      "url": "https://almarbra.com",
+      "año": "2026",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "arte textil",
+        "en": "textile art",
+        "cat": "art tèxtil"
+      },
       "keyword": {
         "es": "web para artistas textiles",
         "en": "website for textile artists",
@@ -91,6 +130,19 @@
     {
       "nombre": "la diegol",
       "slug": "la-diegol",
+      "imagen": "img/ladiegol/1.webp",
+      "url": "https://ladiegol.com",
+      "año": "2026",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "publicidad y videoclips",
+        "en": "advertising and music videos",
+        "cat": "publicitat i videoclips"
+      },
       "keyword": {
         "es": "web para directoras de publicidad y videoclips",
         "en": "website for commercial and music video directors",
@@ -120,6 +172,19 @@
     {
       "nombre": "tat ara",
       "slug": "tat-ara",
+      "imagen": "img/tatara/1.webp",
+      "url": "https://tatara.cat",
+      "año": "2026",
+      "tipo": {
+        "es": "galería con tienda",
+        "en": "gallery with shop",
+        "cat": "galeria amb botiga"
+      },
+      "sector": {
+        "es": "arte",
+        "en": "art",
+        "cat": "art"
+      },
       "keyword": {
         "es": "web para galerías de arte con tienda",
         "en": "website for art galleries with a shop",
@@ -149,6 +214,19 @@
     {
       "nombre": "quien no corre, vuela",
       "slug": "quien-no-corre-vuela",
+      "imagen": "img/quiennocorrevuela/1.webp",
+      "url": "https://quiennocorrevuela.com",
+      "año": "2026",
+      "tipo": {
+        "es": "tienda",
+        "en": "shop",
+        "cat": "botiga"
+      },
+      "sector": {
+        "es": "fanzines y edición",
+        "en": "zines and publishing",
+        "cat": "fanzins i edició"
+      },
       "keyword": {
         "es": "tienda online para fanzines y editoriales independientes",
         "en": "online shop for zines and independent publishers",
@@ -178,6 +256,19 @@
     {
       "nombre": "rikamichie",
       "slug": "rikamichie",
+      "imagen": "img/rikamichie/1.webp",
+      "url": "https://rikamichie.com",
+      "año": "2025",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "música",
+        "en": "music",
+        "cat": "música"
+      },
       "keyword": {
         "es": "web para músicos barcelona",
         "en": "website for musicians barcelona",
@@ -207,6 +298,19 @@
     {
       "nombre": "andrea carilla",
       "slug": "andrea-carilla",
+      "imagen": "img/andreacarilla/1.webp",
+      "url": "https://andreacarilla.work",
+      "año": "2025",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "fotografía de moda",
+        "en": "fashion photography",
+        "cat": "fotografia de moda"
+      },
       "keyword": {
         "es": "web para fotógrafas de moda y editorial barcelona",
         "en": "website for fashion and editorial photographers barcelona",
@@ -236,6 +340,19 @@
     {
       "nombre": "diego san marcos",
       "slug": "diego-san-marcos",
+      "imagen": "img/diegosanmarcos/1.webp",
+      "url": "https://diegosanmarcos.com",
+      "año": "2026",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "música y sonido",
+        "en": "music and sound",
+        "cat": "música i so"
+      },
       "keyword": {
         "es": "web para músicos y técnicos de sonido",
         "en": "website for musicians and sound engineers",
@@ -265,6 +382,19 @@
     {
       "nombre": "mike bros",
       "slug": "mike-bros",
+      "imagen": "img/mikebros/1.webp",
+      "url": "https://mikebros.com",
+      "año": "2025",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "portadas de disco",
+        "en": "album covers",
+        "cat": "portades de disc"
+      },
       "keyword": {
         "es": "web para diseñadores de portadas de disco",
         "en": "website for album cover designers",
@@ -294,6 +424,19 @@
     {
       "nombre": "miranda",
       "slug": "miranda",
+      "imagen": "img/miranda/1.webp",
+      "url": "https://mirandaperezhita.com",
+      "año": "2025",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "diseño gráfico",
+        "en": "graphic design",
+        "cat": "disseny gràfic"
+      },
       "keyword": {
         "es": "web para diseñadoras gráficas barcelona",
         "en": "website for graphic designers barcelona",
@@ -323,6 +466,19 @@
     {
       "nombre": "la diega",
       "slug": "la-diega",
+      "imagen": "img/ladiega/1.webp",
+      "url": "https://ladiega.com",
+      "año": "2026",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "sonido y música publicitaria",
+        "en": "sound and music for advertising",
+        "cat": "so i música publicitària"
+      },
       "keyword": {
         "es": "web para diseñadores de sonido y música publicitaria",
         "en": "website for sound designers and advertising composers",
@@ -352,6 +508,19 @@
     {
       "nombre": "930blurberrie",
       "slug": "930blurberrie",
+      "imagen": "img/blurberrie/1.webp",
+      "url": "https://930blurberrie.com",
+      "año": "2026",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "ilustración",
+        "en": "illustration",
+        "cat": "il·lustració"
+      },
       "keyword": {
         "es": "web para ilustradoras",
         "en": "website for illustrators",
@@ -381,6 +550,19 @@
     {
       "nombre": "barbara wong",
       "slug": "barbara-wong",
+      "imagen": "img/barbarawong/1.webp",
+      "url": "https://barbarawong.info",
+      "año": "2025",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "artes visuales",
+        "en": "visual arts",
+        "cat": "arts visuals"
+      },
       "keyword": {
         "es": "web para artistas visuales",
         "en": "website for visual artists",
@@ -410,6 +592,28 @@
     {
       "nombre": "mokakopaTwins",
       "slug": "mokakopa-twins",
+      "imagen": "img/mokakopatwins/1.webp",
+      "urls": [
+        {
+          "nombre": "ana lópez",
+          "url": "https://analopezserrano.com"
+        },
+        {
+          "nombre": "mokakopa",
+          "url": "https://mokakopa.com"
+        }
+      ],
+      "año": "2026",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "pintura",
+        "en": "painting",
+        "cat": "pintura"
+      },
       "keyword": {
         "es": "webs para pintoras / artistas plásticas",
         "en": "websites for painters and visual artists",
@@ -439,6 +643,19 @@
     {
       "nombre": "vicios torpes",
       "slug": "vicios-torpes",
+      "imagen": "img/viciostorpes/1.webp",
+      "url": "https://viciostorpes.com",
+      "año": "2026",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "tatuaje",
+        "en": "tattoo",
+        "cat": "tatuatge"
+      },
       "keyword": {
         "es": "web para tatuadores barcelona",
         "en": "website for tattoo artists barcelona",
@@ -468,6 +685,19 @@
     {
       "nombre": "valentin",
       "slug": "valentin",
+      "imagen": "img/valentin/1.webp",
+      "url": "https://valentinbarrio.com",
+      "año": "2026",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "fotografía",
+        "en": "photography",
+        "cat": "fotografia"
+      },
       "keyword": {
         "es": "web minimalista para fotógrafos y creativos",
         "en": "minimal website for photographers and creatives",
@@ -497,6 +727,19 @@
     {
       "nombre": "conor",
       "slug": "conor",
+      "imagen": "img/conor/1.webp",
+      "url": "https://conorashlee.com",
+      "año": "2026",
+      "tipo": {
+        "es": "portfolio con zona privada",
+        "en": "portfolio with private area",
+        "cat": "portfolio amb zona privada"
+      },
+      "sector": {
+        "es": "fotografía",
+        "en": "photography",
+        "cat": "fotografia"
+      },
       "keyword": {
         "es": "web para fotógrafos con archivo privado (zona protegida por contraseña)",
         "en": "website for photographers with a private archive",
@@ -526,6 +769,19 @@
     {
       "nombre": "maxito",
       "slug": "maxito",
+      "imagen": "img/maxito/1.webp",
+      "url": "https://maxazemar.com",
+      "año": "2026",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "performance",
+        "en": "performance",
+        "cat": "performance"
+      },
       "keyword": {
         "es": "web para artistas de performance",
         "en": "website for performance artists",
@@ -555,6 +811,19 @@
     {
       "nombre": "jaume clotet",
       "slug": "jaume-clotet",
+      "imagen": "img/jaumeclotet/1.webp",
+      "url": "https://jaumeclotet.com",
+      "año": "2025",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "arte multidisciplinar",
+        "en": "multidisciplinary art",
+        "cat": "art multidisciplinari"
+      },
       "keyword": {
         "es": "web para artistas multidisciplinares",
         "en": "website for multidisciplinary artists",
@@ -584,6 +853,19 @@
     {
       "nombre": "berta esteve",
       "slug": "berta-esteve",
+      "imagen": "img/bertaesteve/1.webp",
+      "url": "https://bertaesteve.cat",
+      "año": "2025",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "curaduría e investigación",
+        "en": "curating and research",
+        "cat": "comissariat i recerca"
+      },
       "keyword": {
         "es": "web para curadoras e investigadoras de arte",
         "en": "website for curators and art researchers",
@@ -613,6 +895,19 @@
     {
       "nombre": "noan cittadino",
       "slug": "noan-cittadino",
+      "imagen": "img/noan/1.webp",
+      "url": "https://noancittadino.com",
+      "año": "2026",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "composición y diseño de sonido",
+        "en": "composition and sound design",
+        "cat": "composició i disseny de so"
+      },
       "keyword": {
         "es": "web para compositores y sound designers",
         "en": "website for composers and sound designers",
@@ -642,6 +937,19 @@
     {
       "nombre": "estructuras3000",
       "slug": "estructuras3000",
+      "imagen": "img/estructuras3000/1.webp",
+      "url": "https://estructuras3000.com",
+      "año": "2024",
+      "tipo": {
+        "es": "colectivo",
+        "en": "collective",
+        "cat": "col·lectiu"
+      },
+      "sector": {
+        "es": "arte y cultura",
+        "en": "art and culture",
+        "cat": "art i cultura"
+      },
       "keyword": {
         "es": "web para asociaciones y colectivos",
         "en": "website for associations and collectives",
@@ -671,6 +979,19 @@
     {
       "nombre": "paula barjau",
       "slug": "paula-barjau",
+      "imagen": "img/paulabarjau/1.webp",
+      "url": "https://paulabarjau.studio",
+      "año": "2025",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "maquillaje y peluquería",
+        "en": "make-up and hair",
+        "cat": "maquillatge i perruqueria"
+      },
       "keyword": {
         "es": "web para maquilladoras y peluqueras barcelona",
         "en": "website for hair and makeup artists barcelona",
@@ -700,6 +1021,19 @@
     {
       "nombre": "el mundo de las jordis",
       "slug": "el-mundo-de-las-jordis",
+      "imagen": "img/elmundodelasjordis/1.webp",
+      "url": "https://elmundodelasjordis.com",
+      "año": "2025",
+      "tipo": {
+        "es": "red social privada",
+        "en": "private social network",
+        "cat": "xarxa social privada"
+      },
+      "sector": {
+        "es": "diario compartido",
+        "en": "shared diary",
+        "cat": "diari compartit"
+      },
       "keyword": {
         "es": "red social privada a medida / diario compartido",
         "en": "custom private social network / shared diary",
@@ -729,6 +1063,20 @@
     {
       "nombre": "christine",
       "slug": "christine",
+      "imagen": "img/christine/1.webp",
+      "url": "https://meowrhino.github.io/christine/",
+      "urlLabel": "christine",
+      "año": "2025",
+      "tipo": {
+        "es": "portfolio",
+        "en": "portfolio",
+        "cat": "portfolio"
+      },
+      "sector": {
+        "es": "diseño",
+        "en": "design",
+        "cat": "disseny"
+      },
       "keyword": {
         "es": "portfolio web interactivo para diseñadores",
         "en": "interactive web portfolio for designers",
@@ -758,6 +1106,19 @@
     {
       "nombre": "villagranota",
       "slug": "villagranota",
+      "imagen": "img/villagranota/1.webp",
+      "url": "https://meowrhino.github.io/villagranota/",
+      "urlLabel": "villagranota",
+      "tipo": {
+        "es": "experimento",
+        "en": "experiment",
+        "cat": "experiment"
+      },
+      "sector": {
+        "es": "proyecto propio",
+        "en": "own project",
+        "cat": "projecte propi"
+      },
       "keyword": {
         "es": "webs experimentales / proyectos raros",
         "en": "experimental websites / odd projects",

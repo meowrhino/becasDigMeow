@@ -516,7 +516,7 @@ export function renderCeldaPrerenderHTML(data, lang, celda, enlaces = [], cuerpo
     condiciones: () => condicionesHTML(data, lang),
     links: () => linksHTML(data, lang),
     // `portfolio` no está: su pre-render es el índice con los resúmenes de
-    // proyectos-seo.json, y lo pasa build-seo.js como `cuerpoPropio`.
+    // proyectos.json, y lo pasa build-seo.js como `cuerpoPropio`.
     mapa: () => mapaHTML(data, lang),
     buscaminas: () => buscaminasHTML(data, lang),
   }[celda];

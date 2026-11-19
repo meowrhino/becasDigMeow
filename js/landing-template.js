@@ -8,7 +8,7 @@
 // contestar con detalle. Son páginas lineales como las fichas de proyecto:
 // mismo esqueleto (html.easy + body.easy-mode), mismo CSS (.proy) y una rejilla
 // de proyectos relacionados con las tarjetas del portfolio. El texto sale de
-// landings.json; los proyectos, de data.json + proyectos-seo.json.
+// landings.json; los proyectos, de proyectos.json.
 
 import { esc, escConEnlaces, pickLang } from "./easy-template.js";
 import { UI, tarjetaProyectoHTML } from "./proyecto-template.js";

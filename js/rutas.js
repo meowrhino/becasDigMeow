@@ -70,7 +70,7 @@ export const textoConFlecha = (texto, { flecha, antes }) => (antes ? `${flecha} 
  * easy-template.js, y ese ya es de quien proyecto-template importa: tenerlo
  * allí montaba un import circular. Es código de URLs, su sitio es este.
  *
- * El resultado tiene que coincidir con el `slug` de proyectos-seo.json, que es
+ * El resultado tiene que coincidir con el `slug` de proyectos.json, que es
  * la URL canónica; si algún día dejan de cuadrar, estos enlaces darían 404.
  */
 export const slugify = (s) => String(s ?? "")

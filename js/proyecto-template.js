@@ -7,8 +7,8 @@
 // pero se mantienen puras para poder reutilizarlas desde el cliente si algún día
 // estas páginas dejan de ser estáticas.
 //
-// Contenido: la copia (title, description, texto) sale de proyectos-seo.json y
-// las imágenes y enlaces de data.json. Se unen por el campo `nombre`.
+// Contenido: todo sale del bloque del proyecto en proyectos.json: la copia
+// (title, description, texto), la imagen y los enlaces.
 //
 // OJO con las rutas: estas páginas se sirven en /portfolio/<slug>, un nivel por
 // debajo de la raíz, así que TODAS las rutas a assets van absolutas (/style.css,
@@ -47,12 +47,12 @@ export const UI = {
          navegar: "seguir navegant" },
 };
 
-/** Carpeta de imágenes del proyecto, deducida de `imagen` en data.json. */
+/** Carpeta de imágenes del proyecto, deducida de `imagen`. */
 const carpetaDe = (proyecto) => proyecto.imagen?.replace(/\/[^/]+$/, "") ?? "";
 
 /**
- * Todas las imágenes de un proyecto: la principal más las secundarias, que en
- * data.json se declaran como un CONTADOR (`imagenesSecundarias`) y en disco son
+ * Todas las imágenes de un proyecto: la principal más las secundarias, que
+ * llegan como un CONTADOR (`imagenesSecundarias`, lo cuenta el build) y en disco son
  * 2.webp, 3.webp… correlativas a partir de la principal (1.webp).
  */
 export function imagenesDe(proyecto) {

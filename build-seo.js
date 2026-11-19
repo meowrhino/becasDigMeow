@@ -13,15 +13,18 @@
 // uno (el pre-renderizado). Con /en y /ca cada idioma tiene su URL indexable,
 // su <html lang>, sus metadatos y los hreflang que las enlazan entre sí.
 //
-// Los tres archivos viven en la RAÍZ (index.html, en.html, ca.html) a propósito:
-// así las rutas relativas del HTML (style.css, js/, img/, data.json) siguen
-// resolviendo igual en las tres. Con /en/index.html habría que reescribirlas.
+// Todo se escribe en dist/, que no se guarda en git: lo construye Cloudflare al
+// publicar (wrangler.jsonc → build) y es lo único que se sirve. index.html y
+// archive.html, en la raíz, son solo las plantillas. Las portadas de idioma
+// salen sueltas (dist/index.html, dist/en.html, dist/ca.html) y no como
+// en/index.html: Cloudflare sirve en.html en /en sin redirigir a /en/.
 //
 // Uso:   node build-seo.js
-// Se ejecuta solo antes de cada commit que toque data.json (hook de pre-commit),
-// así el HTML estático nunca se desincroniza de data.json.
+// Corre también antes de cada commit (.githooks/pre-commit): si falla, el
+// commit no sale, y lastmod.json queda al día.
 
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import {
@@ -35,10 +38,8 @@ import { renderArchivePrerenderHTML } from "./js/archive-pages.js";
 import { renderLandingHTML } from "./js/landing-template.js";
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
-const DATA_PATH = join(ROOT, "data.json");
-const SEO_PATH = join(ROOT, "proyectos-seo.json");
-const ARCHIVE_PATH = join(ROOT, "archive-data.json");
-const LANDINGS_PATH = join(ROOT, "landings.json");
+const DIST = join(ROOT, "dist");
+const LASTMOD_PATH = join(ROOT, "lastmod.json");
 const SITE = "https://meowrhino.studio";
 
 // ============================================
@@ -380,34 +381,42 @@ function medidasDe(rutaRelativa) {
   return medidas;
 }
 
-/** Une cada proyecto de data.json con su copia en proyectos-seo.json. */
-function fichasDeProyecto(data, seoDoc) {
-  const proyectos = data.portfolio?.proyectos ?? [];
-  const porNombre = new Map(proyectos.map(p => [p.nombre, p]));
+/** Las fotos de más de un proyecto: 2.webp, 3.webp… seguidas, junto a su portada. */
+function contarSecundarias(imagen) {
+  const carpeta = dirname(join(ROOT, imagen));
+  let n = 0;
+  while (existsSync(join(carpeta, `${n + 2}.webp`))) n++;
+  return n;
+}
 
-  return seoDoc.proyectos.map(seo => {
-    const proyecto = porNombre.get(seo.nombre);
-    if (!proyecto) {
-      throw new Error(
-        `proyectos-seo.json habla de "${seo.nombre}", que no existe en ` +
-        `data.json. Los nombres tienen que coincidir exactamente.`
-      );
-    }
-    // El slug se calcula DOS veces: aquí sale de proyectos-seo.json (es el
-    // nombre del archivo que se escribe y la URL canónica) y en el navegador
-    // sale de slugify(nombre) — la card del welcome y la rejilla del portfolio
-    // enlazan con eso, no con este JSON. Mientras coincidan no pasa nada; el
-    // día que dejen de coincidir, esos enlaces darían 404 sin que se entere
-    // nadie. Que reviente el build es mucho más barato que descubrirlo en
-    // producción.
+/**
+ * Los proyectos de proyectos.json, cada uno partido en dos: `proyecto`, lo que
+ * pintan la rejilla, la lista y la portada (lo único que viaja al navegador,
+ * dentro de data.json), y `seo`, el bloque entero con los textos de su ficha.
+ */
+function fichasDeProyecto(doc) {
+  return doc.proyectos.map(seo => {
+    // El slug se calcula DOS veces: aquí sale de proyectos.json (es el nombre
+    // del archivo que se escribe y la URL canónica) y en el navegador sale de
+    // slugify(nombre) — la portada y la rejilla del portfolio enlazan con eso.
+    // Mientras coincidan no pasa nada; el día que dejen de coincidir, esos
+    // enlaces darían 404 sin que se entere nadie. Que reviente el build es
+    // mucho más barato que descubrirlo en producción.
     const calculado = slugify(seo.nombre);
     if (calculado !== seo.slug) {
       throw new Error(
-        `El slug de "${seo.nombre}" no cuadra: proyectos-seo.json dice ` +
-        `"${seo.slug}" y slugify() calcula "${calculado}". Los enlaces del ` +
-        `welcome y del portfolio usan slugify(), así que apuntarían a un 404.`
+        `proyectos.json: el slug de "${seo.nombre}" no cuadra. Dice ` +
+        `"${seo.slug}" y de su nombre sale "${calculado}", que es con el que ` +
+        `enlazan la portada y el portfolio: apuntarían a un 404.`
       );
     }
+    if (!seo.imagen || !existsSync(join(ROOT, seo.imagen))) {
+      throw new Error(`proyectos.json: "${seo.nombre}" no tiene su portada ` +
+        `(${seo.imagen ?? "falta el campo imagen"}).`);
+    }
+    const { slug, keyword, title, description, resumen, texto, ...proyecto } = seo;
+    // Las fotos de más no se apuntan en el JSON: se cuentan en la carpeta.
+    proyecto.imagenesSecundarias = contarSecundarias(seo.imagen);
     return { proyecto, seo };
   });
 }
@@ -475,7 +484,7 @@ function paginaProyectoHTML({ title, description, url, imagen, jsonLd, cuerpo, i
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Generado por build-seo.js a partir de proyectos-seo.json. No editar a mano. -->
+  <!-- Generado por build-seo.js a partir de proyectos.json. -->
   <meta name="description" content="${esc(description)}">
   <title>${esc(title)}</title>
   <link rel="canonical" href="${url}">
@@ -646,40 +655,27 @@ function paginaLanding({ landing, url }, idioma, fichas, landingsDoc) {
 
 
 /**
- * Los `lastmod` del sitemap anterior, indexados por URL.
+ * Las fechas del sitemap, apuntadas en lastmod.json: de cada página, la huella
+ * de su HTML y el día en que cambió por última vez.
  *
- * Se releen para poder CONSERVARLOS: `lastmod` significa "cuándo cambió esta
- * página", no "cuándo se ejecutó el build". Sellarlo con la fecha de hoy en cada
- * ejecución ensuciaba git con 25 líneas que no querían decir nada, y además le
- * mentía a Google — que usa la fecha para decidir qué merece la pena reindexar.
+ * `lastmod` significa "cuándo cambió esta página", no "cuándo se ejecutó el
+ * build": Google usa la fecha para decidir qué merece la pena reindexar. Como
+ * dist/ se construye de cero cada vez, no se puede mirar qué archivos se han
+ * reescrito: se compara la huella de cada página con la apuntada, y solo la que
+ * difiere estrena fecha. El archivo lo guarda el hook de pre-commit; si un
+ * commit sale sin él, la página cambiada lleva la fecha de cada publicación
+ * hasta que se vuelva a guardar.
  */
-function lastmodsPrevios() {
-  let xml = "";
-  try { xml = readFileSync(join(ROOT, "sitemap.xml"), "utf8"); } catch { return new Map(); }
-
-  const previos = new Map();
-  const bloque = /<loc>([^<]+)<\/loc>[\s\S]*?<lastmod>([^<]+)<\/lastmod>/g;
-  for (const [, loc, lastmod] of xml.matchAll(bloque)) previos.set(loc, lastmod);
-  return previos;
+function leerLastmod() {
+  try { return JSON.parse(readFileSync(LASTMOD_PATH, "utf8")); } catch { return {}; }
 }
 
 /**
  * Sitemap con las tres variantes de la home, el archivo y las de proyecto.
- *
- * `cambiadas` son las rutas que este build ha reescrito de verdad; solo esas
- * estrenan fecha. Las demás heredan la que ya tenían.
+ * `lastmod` trae la fecha de cada página generada, por nombre de archivo.
  */
-function sitemapXML(fichas = [], cambiadas = new Set(), landingsDoc = { landings: [] }) {
-  // Fecha LOCAL, no UTC: `toISOString()` convierte a UTC, así que un build
-  // lanzado de madrugada en Barcelona (00:30 CEST = 22:30 UTC del día
-  // anterior) sellaba el sitemap con la fecha de ayer. "sv" formatea como
-  // YYYY-MM-DD, que es justo lo que pide <lastmod>.
-  const hoy = new Date().toLocaleDateString("sv");
-  const previos = lastmodsPrevios();
-
-  // Una URL sin fecha previa es nueva: hoy es su fecha real de publicación.
-  const fechaDe = (loc, archivo) =>
-    cambiadas.has(archivo) ? hoy : (previos.get(loc) ?? hoy);
+function sitemapXML(fichas = [], lastmod = {}, landingsDoc = { landings: [] }) {
+  const fechaDe = (archivo) => lastmod[archivo].fecha;
 
   /** Alternativas hreflang de una página de proyecto, para el sitemap. */
   const alternasProy = (sufijo) =>
@@ -709,7 +705,7 @@ function sitemapXML(fichas = [], cambiadas = new Set(), landingsDoc = { landings
   const homes = IDIOMAS.flatMap(i => celdasDe(i).map(({ celda, url, archivo }) => `  <url>
     <loc>${url}</loc>
 ${alternasCelda(celda)}
-    <lastmod>${fechaDe(url, archivo)}</lastmod>
+    <lastmod>${fechaDe(archivo)}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>${celda === "welcome" ? "1.0" : celda === "buscaminas" ? "0.3" : "0.8"}</priority>
   </url>`)).join("\n");
@@ -720,7 +716,7 @@ ${alternasCelda(celda)}
     <loc>${url}</loc>
 ${IDIOMAS.map(j => `    <xhtml:link rel="alternate" hreflang="${j.htmlLang}" href="${SITE}${pick(landing.ruta, j.code)}"/>`).join("\n")}
     <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${pick(landing.ruta, POR_DEFECTO.code)}"/>
-    <lastmod>${fechaDe(url, archivo)}</lastmod>
+    <lastmod>${fechaDe(archivo)}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>`)).join("\n");
@@ -735,14 +731,14 @@ ${homes}
 ${landings}
   <url>
     <loc>${SITE}/archive</loc>
-    <lastmod>${fechaDe(`${SITE}/archive`, "archive.html")}</lastmod>
+    <lastmod>${fechaDe("archive.html")}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 ${fichas.flatMap(({ seo }) => IDIOMAS.map(i => `  <url>
     <loc>${SITE}${i.proyBase}/${seo.slug}</loc>
 ${alternasProy(`/${seo.slug}`)}
-    <lastmod>${fechaDe(`${SITE}${i.proyBase}/${seo.slug}`, `${i.proyDir}/${seo.slug}.html`)}</lastmod>
+    <lastmod>${fechaDe(`${i.proyDir}/${seo.slug}.html`)}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>`)).join("\n")}
@@ -750,52 +746,70 @@ ${alternasProy(`/${seo.slug}`)}
 `;
 }
 
-/**
- * Escribe solo si cambió, para que el build sea idempotente y no ensucie git.
- * Devuelve si ha escrito: el sitemap lo usa para saber a qué URLs les toca
- * `lastmod` nuevo y a cuáles hay que conservarles el que ya tenían.
- */
-function escribirSiCambia(nombre, contenido) {
-  const path = join(ROOT, nombre);
-  let actual = null;
-  try { actual = readFileSync(path, "utf8"); } catch { /* no existía */ }
-
-  if (actual === contenido) {
-    console.log(`· ${nombre} ya estaba al día.`);
-    return false;
-  }
+/** Escribe un archivo de dist/, creando su carpeta. */
+function escribir(nombre, contenido) {
+  const path = join(DIST, nombre);
+  mkdirSync(dirname(path), { recursive: true });
   writeFileSync(path, contenido);
-  console.log(`✓ ${nombre} ${actual === null ? "creado" : "actualizado"}.`);
-  return true;
+}
+
+/** Lee un JSON de la raíz; si está roto, dice cuál y dónde. */
+function leerJSON(nombre) {
+  try { return JSON.parse(readFileSync(join(ROOT, nombre), "utf8")); }
+  catch (err) { throw new Error(`${nombre} no se puede leer: ${err.message}`); }
+}
+
+/**
+ * Lo que se publica tal cual, además de los cv en pdf. dist/ lleva solo esto y
+ * lo generado: lo que no esté aquí no llega al dominio (las notas, este script).
+ */
+const ESTATICOS = ["style.css", "js", "img", "fonts", "favicon", "robots.txt",
+  "_redirects", "archive-data.json"];
+
+function copiarEstaticos() {
+  const pdfs = readdirSync(ROOT).filter(f => f.endsWith(".pdf"));
+  for (const nombre of [...ESTATICOS, ...pdfs]) {
+    cpSync(join(ROOT, nombre), join(DIST, nombre), {
+      recursive: true,
+      filter: (origen) => !/\/\.(DS_Store|gitkeep)$/.test(origen),
+    });
+  }
 }
 
 function main() {
-  const data = JSON.parse(readFileSync(DATA_PATH, "utf8"));
-  const seoDoc = JSON.parse(readFileSync(SEO_PATH, "utf8"));
-  const landingsDoc = JSON.parse(readFileSync(LANDINGS_PATH, "utf8"));
-
-  // La plantilla se lee UNA vez, antes de escribir nada: index.html es a la vez
-  // plantilla y salida, y si se releyera por idioma arrastraría lo ya escrito.
-  const plantillaHome = readFileSync(join(ROOT, "index.html"), "utf8");
-
   try {
-    // Se resuelve ANTES de escribir nada: si un nombre no casa entre los dos
-    // JSON, mejor fallar con el árbol intacto que a medio generar.
-    const fichas = fichasDeProyecto(data, seoDoc);
+    const data = leerJSON("data.json");
+    const proyectosDoc = leerJSON("proyectos.json");
+    const landingsDoc = leerJSON("landings.json");
+    const archiveData = leerJSON("archive-data.json");
+    const plantillaHome = readFileSync(join(ROOT, "index.html"), "utf8");
+    const plantillaArchive = readFileSync(join(ROOT, "archive.html"), "utf8");
 
-    // Qué páginas ha reescrito este build: de ahí salen los `lastmod` nuevos.
-    const cambiadas = new Set();
+    // Se resuelve ANTES de escribir nada: si a un proyecto le falta algo,
+    // mejor fallar con el dist/ anterior intacto que a medio generar.
+    const fichas = fichasDeProyecto(proyectosDoc);
+    data.portfolio = { proyectos: fichas.map(f => f.proyecto) };
+
+    // Fecha LOCAL, no UTC: `toISOString()` convierte a UTC, así que un build
+    // lanzado de madrugada en Barcelona (00:30 CEST = 22:30 UTC del día
+    // anterior) sellaba el sitemap con la fecha de ayer. "sv" formatea como
+    // YYYY-MM-DD, que es justo lo que pide <lastmod>.
+    const hoy = new Date().toLocaleDateString("sv");
+    const previo = leerLastmod();
+    const lastmod = {};
     const generar = (nombre, contenido) => {
-      if (escribirSiCambia(nombre, contenido)) cambiadas.add(nombre);
+      const huella = createHash("sha1").update(contenido).digest("hex").slice(0, 12);
+      // Una página sin huella apuntada es nueva: hoy es su fecha de publicación.
+      lastmod[nombre] = { huella, fecha: previo[nombre]?.huella === huella ? previo[nombre].fecha : hoy };
+      escribir(nombre, contenido);
     };
 
+    rmSync(DIST, { recursive: true, force: true });
+
     // Una página por celda y por idioma. La portada (index.html, en.html,
-    // ca.html) es la celda `welcome` y sale de aquí como las demás: antes se
-    // generaba aparte y era la única del lienzo con URL.
+    // ca.html) es la celda `welcome` y sale de aquí como las demás.
     for (const idioma of IDIOMAS) {
       for (const pagina of celdasDe(idioma)) {
-        const dir = dirname(join(ROOT, pagina.archivo));
-        mkdirSync(dir, { recursive: true });
         generar(pagina.archivo, paginaCelda(plantillaHome, data, idioma, pagina, fichas, landingsDoc));
       }
     }
@@ -803,26 +817,20 @@ function main() {
     // Las páginas long-tail, una por idioma, al lado de las celdas de su idioma.
     for (const idioma of IDIOMAS) {
       for (const pagina of landingsDe(landingsDoc, idioma)) {
-        mkdirSync(dirname(join(ROOT, pagina.archivo)), { recursive: true });
         generar(pagina.archivo, paginaLanding(pagina, idioma, fichas, landingsDoc));
       }
     }
 
-
-    // /archive está en el sitemap pero se montaba entero por JS sobre un <main>
-    // vacío: un rastreador sin JS veía la página en blanco. Era la única página
-    // indexable sin pre-render.
-    const archiveData = JSON.parse(readFileSync(ARCHIVE_PATH, "utf8"));
-    const archive = readFileSync(join(ROOT, "archive.html"), "utf8");
+    // /archive está en el sitemap pero se monta entero por JS sobre un <main>
+    // vacío: sin pre-render, un rastreador sin JS vería la página en blanco.
     generar("archive.html", reemplazarBloque(
-      reemplazarBloque(archive, "preload", modulepreloadHTML("archive-main.js")),
+      reemplazarBloque(plantillaArchive, "preload", modulepreloadHTML("archive-main.js")),
       "archive", renderArchivePrerenderHTML(archiveData)));
 
     // Las fichas de cada idioma, en el directorio de su celda portfolio. El
     // índice ya ha salido arriba: es la propia celda.
     for (const idioma of IDIOMAS) {
-      mkdirSync(join(ROOT, idioma.proyDir), { recursive: true });
-      // Los vecinos salen del orden de proyectos-seo.json, que es el mismo que
+      // Los vecinos salen del orden de proyectos.json, que es el mismo que
       // el de la rejilla. La lista es circular a propósito: desde el último,
       // "siguiente" vuelve al primero. Un cul-de-sac al final de una lista de
       // 21 es peor que dar la vuelta.
@@ -836,12 +844,17 @@ function main() {
       });
     }
 
-    // El sitemap va el último: necesita saber qué se ha reescrito antes.
-    escribirSiCambia("sitemap.xml", sitemapXML(fichas, cambiadas, landingsDoc));
+    escribir("sitemap.xml", sitemapXML(fichas, lastmod, landingsDoc));
+    // El data.json que baja el navegador: el de la raíz más los proyectos, sin
+    // sus textos de ficha ni las notas `_comment`, y en una línea.
+    escribir("data.json", JSON.stringify(data, (clave, valor) => (clave === "_comment" ? undefined : valor)));
+    copiarEstaticos();
 
-    console.log(`\n${IDIOMAS.length} idiomas · ${fichas.length} proyectos ` +
-      `· ${IDIOMAS.length * fichas.length} fichas de proyecto ` +
-      `· ${IDIOMAS.length * landingsDoc.landings.length} páginas long-tail.`);
+    const apuntado = JSON.stringify(lastmod, null, 2) + "\n";
+    if (apuntado !== JSON.stringify(previo, null, 2) + "\n") writeFileSync(LASTMOD_PATH, apuntado);
+
+    console.log(`✓ dist/: ${Object.keys(lastmod).length} páginas · ${IDIOMAS.length} idiomas · ` +
+      `${fichas.length} proyectos · ${landingsDoc.landings.length} páginas long-tail.`);
   } catch (err) {
     console.error(`✗ ${err.message}`);
     process.exit(1);

@@ -1,0 +1,14 @@
+#!/bin/sh
+# El HTML no se guarda en git: lo construye Cloudflare al publicar
+# (wrangler.jsonc → build). Aquí el build corre para dos cosas: que un commit
+# que lo rompe (una coma en un JSON, un proyecto sin portada) no llegue a
+# publicarse, y dejar al día lastmod.json, que es de donde salen las fechas del
+# sitemap.
+#
+# Se activa una vez por ordenador:  git config core.hooksPath .githooks
+
+node build-seo.js > /dev/null || {
+  echo "✗ build-seo.js falló; commit abortado." >&2
+  exit 1
+}
+git add lastmod.json

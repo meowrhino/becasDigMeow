@@ -2,7 +2,9 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "meowrhino-studio",
   "compatibility_date": "2026-05-07",
+  // En git va solo el fuente: Cloudflare construye dist/ al publicar.
+  "build": { "command": "node build-seo.js" },
   "assets": {
-    "directory": "./"
+    "directory": "./dist"
   }
 }

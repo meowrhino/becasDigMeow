@@ -227,6 +227,8 @@ const VISTA = {
   cat: { lista: "llista", rejilla: "graella", cols: ["web", "tipus", "sector"] },
 };
 const CAMPOS = ["nombre", "tipo", "sector"];
+// `tipo` y `sector` van por idioma en proyectos.json; el nombre es un nombre propio.
+const textoCampo = (p, campo, lang) => (typeof p[campo] === "string" ? p[campo] : pick(p[campo], lang));
 
 /**
  * La lista: una fila por web con sus datos, que se ordena al pulsar una columna.
@@ -240,10 +242,7 @@ function renderListaProyectos(el, proyectos) {
       <a class="plista-fila" data-slug="${slugify(p.nombre)}">${CAMPOS.map(c => `<span></span>`).join("")}</a>`).join("")}
   `;
   const filas = [...lista.querySelectorAll("a.plista-fila")];
-  filas.forEach((a, i) => {
-    a.proyecto = proyectos[i];
-    [...a.children].forEach((s, k) => { s.textContent = proyectos[i][CAMPOS[k]] || ""; });
-  });
+  filas.forEach((a, i) => { a.proyecto = proyectos[i]; });
 
   // Al pasar por una fila, su captura aparece al lado. Es decorativa (alt
   // vacío): el nombre ya está en la fila.
@@ -263,7 +262,7 @@ function renderListaProyectos(el, proyectos) {
     if (!campo) return;
     orden = { campo, dir: orden.campo === campo ? -orden.dir : 1 };
     filas
-      .sort((a, b) => orden.dir * String(a.proyecto[campo] || "").localeCompare(String(b.proyecto[campo] || ""), "es"))
+      .sort((a, b) => orden.dir * textoCampo(a.proyecto, campo, currentLang).localeCompare(textoCampo(b.proyecto, campo, currentLang), "es"))
       .forEach(a => lista.appendChild(a));
   });
 
@@ -271,7 +270,10 @@ function renderListaProyectos(el, proyectos) {
     const t = VISTA[lang] || VISTA.es;
     lista.querySelectorAll(".plista-cabecera button").forEach((b, k) => { b.textContent = t.cols[k]; });
     el.querySelectorAll(".pvista-btn").forEach(b => { b.textContent = t[b.dataset.vista]; });
-    filas.forEach(a => { a.href = `${rutaProyectos(lang)}/${a.dataset.slug}`; });
+    filas.forEach(a => {
+      [...a.children].forEach((s, k) => { s.textContent = textoCampo(a.proyecto, CAMPOS[k], lang); });
+      a.href = `${rutaProyectos(lang)}/${a.dataset.slug}`;
+    });
   };
   traducir(currentLang);
   return traducir;

@@ -6,3 +6,6 @@ node_modules/
 
 # Borradores sueltos de manu, que no son del sitio
 NO_*.html
+
+# Lo construye build-seo.js y lo publica Cloudflare: no va en git
+dist/
