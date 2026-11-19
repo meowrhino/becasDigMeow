@@ -12,6 +12,13 @@
   "env": {
     "com": {
       "name": "meowrhino-com",
+      // El dominio era del Worker meowrhino-com-redirect (301 a .studio), que
+      // sigue existiendo sin dominio: para deshacer, quitar estas rutas y
+      // volver a ponérselo a él.
+      "routes": [
+        { "pattern": "meowrhino.com", "custom_domain": true },
+        { "pattern": "www.meowrhino.com", "custom_domain": true }
+      ],
       "assets": {
         "directory": "./dist"
       }
