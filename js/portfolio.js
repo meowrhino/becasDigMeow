@@ -223,13 +223,13 @@ export function renderPortfolio(data) {
 }
 
 const VISTA = {
-  es:  { lista: "lista",  rejilla: "rejilla", cols: ["web", "descripción", "tipo"] },
-  en:  { lista: "list",   rejilla: "grid",    cols: ["site", "description", "type"] },
-  cat: { lista: "llista", rejilla: "graella", cols: ["web", "descripció", "tipus"] },
+  es:  { lista: "lista",  rejilla: "rejilla", cols: ["web", "descripción"] },
+  en:  { lista: "list",   rejilla: "grid",    cols: ["site", "description"] },
+  cat: { lista: "llista", rejilla: "graella", cols: ["web", "descripció"] },
 };
 // La columna «descripción» es el campo `sector` de proyectos.json.
-const CAMPOS = ["nombre", "sector", "tipo"];
-// `tipo` y `sector` van por idioma en proyectos.json; el nombre es un nombre propio.
+const CAMPOS = ["nombre", "sector"];
+// `sector` va por idioma en proyectos.json; el nombre es un nombre propio.
 const textoCampo = (p, campo, lang) => (typeof p[campo] === "string" ? p[campo] : pick(p[campo], lang));
 
 /**

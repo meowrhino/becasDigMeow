@@ -3029,6 +3029,7 @@ body > .welcome-content .welcome-tagline { color: #999; font-size: clamp(0.9rem,
   text-decoration: none;
 }
 .plista-cabecera { border-top: none; }
+#portfolio-lista .plista-fila > :last-child { grid-column: 3 / -1; }   /* una columna menos que links: su descripción llega al borde */
 .plista-fila::before { content: ""; }
 a.plista-fila::before { counter-increment: fila; content: counter(fila, decimal-leading-zero); color: var(--text-muted); }
 .plista:hover a.plista-fila:not(:hover) { opacity: 0.4; }
