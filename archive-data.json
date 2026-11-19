@@ -188,7 +188,7 @@
       "links": [
         { "label": "v1", "url": "https://meowrhino.github.io/becasDigMeow_v1/" },
         { "label": "v0", "url": "https://meowrhino.github.io/becasDigMeow_v0/" },
-        { "label": "v2", "url": "https://meowrhino.github.io/becasDigMeow/" }
+        { "label": "v2", "url": "https://meowrhino.github.io/becasDigMeow_v2/" }
       ]
     },
     { "nombre": "descartes", "url": "https://meowrhino.github.io/descartes/" }

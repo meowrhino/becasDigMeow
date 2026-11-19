@@ -104,7 +104,7 @@ function destinoIdioma(lang) {
 /**
  * Re-apunta los enlaces de idioma a la celda en la que estás. Se pintan una
  * vez al cargar, y sin esto seguían llevando a la celda por la que entraste:
- * entrar por /mapa, ir a la portada y pulsar «cat» te dejaba en /ca/mapa.
+ * entrar por /about, ir a la portada y pulsar «cat» te dejaba en /ca/about.
  */
 export function actualizarEnlacesIdioma() {
   document.querySelectorAll("a.lang-btn").forEach(a => {

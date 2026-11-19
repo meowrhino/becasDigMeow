@@ -14,14 +14,12 @@ import {
   leerURL,
   actualizarVista,
   actualizarTamanoMinimapInline,
-  actualizarTamanoMinimapExpandido,
+  pintarConstelacion,
   cerrarMinimapExpandido,
   setTraductorNombres,
   refrescarTextosCeldas,
   getOverlayEl,
-  getGrid,
-  getPosicion,
-  setPosicion,
+  irHacia,
   getNombrePagina,
 } from "./navigation.js";
 import {
@@ -33,11 +31,9 @@ import {
   renderStatement,
   renderResena,
 } from "./pages.js";
-import { renderMapa, leerMapa, aGrid } from "./mapa.js";
 import { renderPortfolio } from "./portfolio.js";
-import { rutaCelda, celdaDeRuta } from "./rutas.js";
+import { rutaCelda, celdaDeRuta, ORIGEN } from "./rutas.js";
 import { cabeceraCelda } from "./easy-template.js";
-import { crearThemeToggle } from "./theme.js";
 import { setupKeyboardNav, setupResizeDebounce } from "./shell.js";
 
 // ============================================
@@ -65,7 +61,6 @@ async function renderizarContenido() {
   renderMetodologia(data);
   renderCondiciones(data);
   renderPortfolio(data);
-  renderMapa(data);
   renderAbout(data);
   renderStatement(data);
   renderResena(data);
@@ -86,7 +81,7 @@ function cargarBuscaminas() {
  *
  * Cada celda es una URL con su propio HTML, pero al deslizar no se recarga:
  * sin esto la pestaña seguía con el title de la página por la que entraste
- * (estabas en el portfolio y ponía «mapa — …»). Los textos salen de
+ * (estabas en el portfolio y ponía el de la portada). Los textos salen de
  * cabeceraCelda, la misma función que usa build-seo.js para el HTML servido.
  *
  * Antes de que llegue data.json no hace nada: el HTML ya trae los de la celda
@@ -108,11 +103,11 @@ function sincronizarCabecera() {
 
 setupKeyboardNav({
   getOverlayEl, cerrarMinimapExpandido,
-  getGrid, getPosicion, setPosicion, actualizarVista,
+  irHacia,
 });
 setupResizeDebounce({
   actualizarTamanoMinimapInline,
-  actualizarTamanoMinimapExpandido,
+  pintarConstelacion,
 });
 
 // ============================================
@@ -125,8 +120,8 @@ setupResizeDebounce({
 // sobre #content, así que si no, el bloque quedaría ahí de por vida.
 //
 // Su <h1> SÍ se queda, oculto. Cada URL del lienzo trae en su HTML el titular
-// que le toca —la raíz el de la keyword, /about «¿quieres una web?», /mapa
-// «mapa»—, y al borrar el bloque entero desaparecía justo antes de que Google
+// que le toca —la raíz el de la keyword, /about «¿quieres una web?»—,
+// y al borrar el bloque entero desaparecía justo antes de que Google
 // renderizara la página. Lo que quedaba eran los titulares de las celdas
 // welcome y about, iguales en las ocho URLs: /condiciones anunciaba que era
 // una página sobre «meowrhino studio». Rescatarlo cuesta tres líneas y deja el
@@ -161,15 +156,14 @@ if (prerender) {
 // es el pre-render de la celda portfolio, en `/portfolio`, que es donde le sirve
 // a un buscador.
 //
-// La rejilla ya no se escribe aquí: sale del reparto que tenga guardado esta
-// pestaña (js/mapa.js), que de fábrica pone la portada en el centro de un
-// terreno de 8×8 con portfolio, about y statement pegados a ella. Quien no haya tocado nada ve exactamente lo mismo
-// que antes: el minimapa de la esquina dibuja solo el rectángulo ocupado, no
-// las 64 casillas del terreno (esas las enseña el minimapa grande).
-const reparto = leerMapa();
+// La rejilla sale del reparto fijo de rutas.js (ORIGEN: casilla `y_x` → celda),
+// sobre un terreno de 8×8. Los minimapas dibujan solo el rectángulo ocupado.
+const grid = Array.from({ length: 8 }, () => Array(8).fill(0));
+for (const k of Object.keys(ORIGEN)) { const [y, x] = k.split("_"); grid[y][x] = 1; }
 
 configurarNavegacion({
-  ...aGrid(reparto),
+  grid,
+  nombres: { ...ORIGEN },
   clasesCss: {
     "links": "tools",
     "about": "about",
@@ -179,7 +173,6 @@ configurarNavegacion({
     "welcome": "welcome",
     "condiciones": "footer",
     "portfolio": "portfolio",
-    "mapa": "mapa",
     "buscaminas": "buscaminas",
   },
   redirects: {
@@ -190,18 +183,9 @@ configurarNavegacion({
     // está en enlaces de fuera.
     "about": ["contacto"],
     "condiciones": ["footer"],
-    // `#plano` fue el nombre de la celda mapa durante un commit. No lo enlaza
-    // nada de fuera, pero el alias cuesta una línea y evita que un enlace que
-    // alguien copiara ese día caiga en la portada sin explicación.
-    "mapa": ["plano"],
   },
-  // La portada, esté donde esté: con el reparto de fábrica es 3_3, pero si
-  // alguien la ha mudado, entrar sigue siendo entrar por la portada.
-  posInicial: (() => {
-    const [y, x] = (Object.entries(reparto).find(([, n]) => n === "welcome")?.[0] ?? "3_3")
-      .split("_").map(Number);
-    return { y, x };
-  })(),
+  posInicial: { y: 3, x: 3 },   // welcome
+  editable: "meowrhino-constelacion",
   onUpdate: () => { sincronizarCabecera(); actualizarEnlacesIdioma(); cargarBuscaminas(); },
   rutas: {
     de: (nombre) => rutaCelda(nombre, currentLang),
@@ -213,7 +197,6 @@ crearCeldas();
 crearZoneLabel();
 crearHeader();
 crearOverlay();
-crearThemeToggle(getOverlayEl());
 leerURL();
 renderizarContenido().then(() => {
   // Zone labels traducibles: los identificadores de celda (hash, clase css)

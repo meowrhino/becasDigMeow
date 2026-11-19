@@ -1,11 +1,11 @@
 // ============================================
-// BUSCAMINAS — la celda de debajo del mapa
+// BUSCAMINAS — la celda de debajo del statement
 // ============================================
 //
 // Por qué está aquí: el about dice que una web no solo cuenta lo que haces,
 // también lo cuenta cómo lo enseña, y pone de ejemplo un buscaminas. Tenerlo
 // escrito y no tenerlo puesto era justo lo que el párrafo critica. Así que la
-// casilla de debajo del mapa, que estaba vacía, es el ejemplo funcionando.
+// casilla de debajo del statement, que estaba vacía, es el ejemplo funcionando.
 //
 // La lógica (Cell, Board, primera casilla siempre segura, flood fill, el ciclo
 // bandera → interrogante → nada) viene de github.com/meowrhino/minesweeperV2 y
@@ -16,8 +16,7 @@
 //  - No hay puntos. En la versión suelta el marcador daba una razón para
 //    volver; dentro de una celda solo era un número más peleando por el poco
 //    sitio que hay. Queda el tiempo, que es lo que de verdad se compara, y el
-//    mejor de cada nivel guardado en este navegador (igual que el mapa guarda
-//    dónde has puesto cada sección).
+//    mejor de cada nivel guardado en este navegador.
 //  - El tablero se mide contra la celda, no contra la ventana: aquí dentro hay
 //    padding de 10dvh/10dvw y dos bordes ocupados que también cuentan.
 //  - Los controles van en los bordes de la celda, como en el resto del lienzo.
@@ -321,13 +320,13 @@ class Tablero {
 //
 // Los controles viven en los BORDES, como los de cualquier otra celda:
 //
-//   arriba → la navegación a `mapa`, y debajo las minas y el tiempo
+//   arriba → la navegación a `statement`, y debajo las minas y el tiempo
 //   abajo  → los tres niveles, igual que `archive` en el portfolio
 //
 // Se cuelgan de `bordeCelda(el, lado)`: el borde es un sitio compartido, la
 // navegación se queda pegada al canto y lo de la celda se aparta hacia dentro.
-// Con el reparto de fábrica el de arriba ya viene compartido —`mapa` está
-// justo encima—, así que el caso raro es el caso normal y se ve siempre.
+// El de arriba ya viene compartido —`statement` está justo encima—, así que
+// el caso raro es el caso normal y se ve siempre.
 //
 // No hay menú de inicio: al entrar ya hay una partida fácil empezada. Un menú
 // era una pantalla intermedia para elegir algo que se puede cambiar en
@@ -609,9 +608,9 @@ export function renderBuscaminas() {
 
   window.addEventListener("resize", reajustarPronto);
 
-  // Los nav-label los pone navigation.js DESPUÉS de este render, y cambian
-  // cuando recolocas las secciones en el mapa: si el borde de arriba o el de
-  // abajo pasa a tener dos filas, al tablero le sobra alto del que creía tener.
+  // Los nav-label los pone navigation.js DESPUÉS de este render: si el borde
+  // de arriba o el de abajo pasa a tener dos filas, al tablero le sobra alto
+  // del que creía tener.
   // Observar la celda es la forma de enterarse sin que navigation.js tenga que
   // saber que el buscaminas existe. Solo mira los hijos directos, y reajustar()
   // no toca ninguno, así que no se muerde la cola.

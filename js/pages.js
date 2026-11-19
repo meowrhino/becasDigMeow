@@ -17,10 +17,7 @@ import { setupScrollGradients } from "./scroll-gradients.js";
 // simples el build no lo ve como import y quita el modulepreload.
 // import { renderWelcomeCupon } from './welcome-cupon.js';
 import { repaintWithFade, escapeHTML, pintarLista } from "./utils.js";
-import { rutaProyectos, rutaCelda, slugify, flechaHacia, textoConFlecha } from "./rutas.js";
-// Ciclo con mapa.js (que importa celdaHeadingHTML de aquí): inocuo, leerMapa
-// solo se llama en tiempo de ejecución.
-import { leerMapa } from "./mapa.js";
+import { rutaProyectos, rutaCelda, slugify, flechaHacia, textoConFlecha, ORIGEN } from "./rutas.js";
 import { escConEnlaces } from "./easy-template.js";
 
 /** true si el viewport es táctil / móvil (mismo criterio que portfolio usa para hover/pointer). */
@@ -33,7 +30,7 @@ export const esMovil = window.matchMedia("(hover: none) and (pointer: coarse)").
  * vive en un <div> decorativo FUERA de la celda, así que ni un lector de
  * pantalla ni un buscador tenían forma de saber dónde empieza cada sección.
  * De las ocho celdas del lienzo, cinco no tenían ningún encabezado: links,
- * condiciones, portfolio, mapa y buscaminas. Esto se lo pone sin tocar el
+ * condiciones, portfolio y buscaminas. Esto se lo pone sin tocar el
  * diseño (ver `.celda-h` en style.css).
  *
  * El texto sale de `data.zoneLabels`, la misma fuente que el zone label y el
@@ -375,17 +372,12 @@ export function renderAbout(data) {
     return `mailto:${email}${params.toString() ? `?${params.toString()}` : ""}`;
   };
 
-  // Las flechas señalan a la celda de verdad según el reparto del mapa, y se
-  // repintan solas cuando alguien lo recoloca.
-  const enlaces = (lang, mapa = leerMapa()) => {
+  // Las flechas señalan a la celda de verdad según el reparto (ORIGEN).
+  const enlaces = (lang) => {
     const cta = (data.about[lang] || data.about.es)?.cta || {};
-    const enlace = (celda, texto) => `<a href="${escapeHTML(rutaCelda(celda, lang))}">${escapeHTML(textoConFlecha(texto, flechaHacia(mapa, "about", celda)))}</a>`;
+    const enlace = (celda, texto) => `<a href="${escapeHTML(rutaCelda(celda, lang))}">${escapeHTML(textoConFlecha(texto, flechaHacia(ORIGEN, "about", celda)))}</a>`;
     return enlace("portfolio", cta.portfolio || "portfolio") + (cta.statement ? enlace("statement", cta.statement) : "");
   };
-  window.addEventListener("mapa-cambiado", (e) => {
-    const p = el.querySelector(".about-enlaces");
-    if (p) p.innerHTML = enlaces(currentLang, e.detail);
-  });
 
   const buildContent = (lang) => {
     const d = data.about[lang] || data.about.es;

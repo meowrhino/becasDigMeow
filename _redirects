@@ -18,3 +18,12 @@
 /ca/projectes /ca/portfolio 301
 /ca/projectes.html /ca/portfolio 301
 /ca/projectes/* /ca/portfolio/:splat 301
+
+# La celda `mapa` (recolocar las secciones) se quitó en noviembre de 2026:
+# a la portada de su idioma, para que los enlaces viejos no den 404.
+/mapa / 301
+/mapa.html / 301
+/en/map /en 301
+/en/map.html /en 301
+/ca/mapa /ca 301
+/ca/mapa.html /ca 301

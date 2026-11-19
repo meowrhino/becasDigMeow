@@ -14,15 +14,12 @@ import {
   leerHash,
   actualizarVista,
   actualizarTamanoMinimapInline,
-  actualizarTamanoMinimapExpandido,
+  pintarConstelacion,
   cerrarMinimapExpandido,
   getOverlayEl,
-  getGrid,
-  getPosicion,
-  setPosicion,
+  irHacia,
   bordeCelda,
 } from "./navigation.js";
-import { crearThemeToggle } from "./theme.js";
 import { renderSeccion, SECCIONES } from "./archive-pages.js";
 import { fetchJson } from "./utils.js";
 import { setupKeyboardNav, setupResizeDebounce } from "./shell.js";
@@ -88,11 +85,11 @@ async function renderizarContenido() {
 
 setupKeyboardNav({
   getOverlayEl, cerrarMinimapExpandido,
-  getGrid, getPosicion, setPosicion, actualizarVista,
+  irHacia,
 });
 setupResizeDebounce({
   actualizarTamanoMinimapInline,
-  actualizarTamanoMinimapExpandido,
+  pintarConstelacion,
 });
 
 // ============================================
@@ -145,6 +142,5 @@ crearCeldas();
 crearZoneLabel();
 crearHeader();
 crearOverlay();
-crearThemeToggle(getOverlayEl());
 leerHash();
 renderizarContenido().then(() => actualizarVista());

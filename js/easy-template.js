@@ -8,7 +8,7 @@
 // Así el texto que ve Google es EXACTAMENTE el que ve el visitante, sin copias
 // que se desincronicen. Fuente única de contenido: data.json.
 
-import { rutaProyectos, rutaCelda, slugify, RUTA_CELDAS, ORIGEN, flechaHacia, textoConFlecha } from "./rutas.js";
+import { rutaProyectos, rutaCelda, slugify, ORIGEN, flechaHacia, textoConFlecha } from "./rutas.js";
 
 /** Escoge la variante de idioma de un objeto {es,en,cat}, con fallback a es. */
 export const pickLang = (obj, lang) => obj?.[lang] ?? obj?.es ?? "";
@@ -108,8 +108,7 @@ export const altProyecto = (p, lang) =>
  *
  * Vive aquí y no en data.json por lo mismo que HERO: es el <h1> que lee un
  * buscador, no contenido que el cliente vaya a tocar. /links, /condiciones y
- * /metodologia salían sin titular ninguno, y el de /mapa era la etiqueta de la
- * celda —«mapa»— que no dice qué puedes hacer ahí.
+ * /metodologia salían sin titular ninguno.
  */
 const TITULARES = {
   "metodología": {
@@ -126,11 +125,6 @@ const TITULARES = {
     es:  "la letra pequeña",
     en:  "the small print",
     cat: "la lletra petita",
-  },
-  mapa: {
-    es:  "customiza el mapa",
-    en:  "customise the map",
-    cat: "personalitza el mapa",
   },
 };
 
@@ -251,7 +245,7 @@ export function aboutHTML(data, lang) {
   const asunto = encodeURIComponent(co.asunto?.[lang] || co.asunto?.es || "");
   const cta = d.cta || {};
   const p = (t) => `<p>${escConEnlaces(t)}</p>`;
-  // Flechas según el reparto de fábrica: sin JS no hay mapa que recolocar.
+  // Flechas según el reparto del lienzo (ORIGEN).
   const enlace = (celda, texto) => `<a href="${esc(rutaCelda(celda, lang))}">${esc(textoConFlecha(texto, flechaHacia(ORIGEN, "about", celda)))}</a>`;
 
   return `
@@ -418,49 +412,6 @@ export function linksHTML(data, lang) {
 }
 
 /**
- * Mapa: el índice de las secciones del sitio, con sus enlaces.
- *
- * En el navegador esta celda es una rejilla de casillas que puedes recolocar
- * (js/mapa.js), pero recolocar es JavaScript y arrastrar casillas no se le
- * cuenta a nadie sin él. Aquí abajo se convierte en lo que de verdad es por
- * debajo: la lista de las secciones y a dónde va cada una. Un rastreador ve el
- * índice del sitio entero y quien navega sin JS tiene por fin una página que
- * los enlaza todos.
- *
- * El orden es el de RUTA_CELDAS, no el que tenga guardado nadie: lo que se
- * recoloca vive en el navegador de cada visitante y esto es HTML para todos.
- */
-export function mapaHTML(data, lang) {
-  const zone = data.zoneLabels || {};
-  const nombre = (celda) => pickLang(zone[celda], lang) || celda;
-  const m = MAPA[lang] || MAPA.es;
-
-  const secciones = Object.keys(RUTA_CELDAS.es)
-    .filter(celda => celda !== "mapa")
-    .map(celda => `<li><a href="${esc(rutaCelda(celda, lang))}">${esc(nombre(celda))}</a></li>`)
-    .join("");
-
-  return `
-    <section class="easy-section easy-mapa" id="mapa">
-      <p class="easy-eyebrow">${esc(m.eyebrow)}</p>
-      <h1 class="easy-h">${esc(titularCelda("mapa", lang))}</h1>
-      <p>${esc(m.texto)}</p>
-      <ul class="easy-links-lista">${secciones}
-      </ul>
-    </section>`;
-}
-
-/** Los textos propios de la celda mapa, por idioma. */
-const MAPA = {
-  es:  { eyebrow: "estudio de diseño web · barcelona",
-         texto: "las secciones de esta web. en el navegador puedes moverlas de sitio y se quedan así para ti: una web es un espacio propio, no un molde prestado." },
-  en:  { eyebrow: "web design studio · barcelona",
-         texto: "the sections of this website. in the browser you can move them around and they stay that way for you: a website is a place of your own, not a borrowed template." },
-  cat: { eyebrow: "estudi de disseny web · barcelona",
-         texto: "les seccions d'aquesta web. al navegador les pots moure de lloc i es queden així per a tu: una web és un espai propi, no un motlle prestat." },
-};
-
-/**
  * Buscaminas: la partida es JavaScript de arriba abajo, así que sin él no hay
  * nada que enseñar salvo qué es y por qué está aquí. Corto a propósito: es una
  * página con ruta para que se pueda compartir y recargar, no para competir.
@@ -517,15 +468,10 @@ export function renderCeldaPrerenderHTML(data, lang, celda, enlaces = [], cuerpo
     links: () => linksHTML(data, lang),
     // `portfolio` no está: su pre-render es el índice con los resúmenes de
     // proyectos.json, y lo pasa build-seo.js como `cuerpoPropio`.
-    mapa: () => mapaHTML(data, lang),
     buscaminas: () => buscaminasHTML(data, lang),
   }[celda];
 
-  // La celda `mapa` YA es la lista de secciones con sus enlaces: añadirle el
-  // pie de navegación sería imprimir dos veces los mismos enlaces, uno
-  // debajo del otro.
-  const nota = celda === "mapa" ? "" : notaCeldaHTML(enlaces, lang);
-  return (cuerpoPropio ?? (cuerpo ? cuerpo() : "")) + nota;
+  return (cuerpoPropio ?? (cuerpo ? cuerpo() : "")) + notaCeldaHTML(enlaces, lang);
 }
 
 /**

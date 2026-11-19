@@ -8,17 +8,10 @@
 
 /**
  * Activa flechas + Escape:
- * - Escape: cierra el minimapa expandido si está visible.
- * - Arrow*: mueve la posición si la celda destino existe en el grid.
+ * - Escape: cierra el mapa de «menú» si está abierto.
+ * - Arrow*: va a la página conectada que cae en esa dirección, si la hay.
  */
-export function setupKeyboardNav({
-  getOverlayEl,
-  cerrarMinimapExpandido,
-  getGrid,
-  getPosicion,
-  setPosicion,
-  actualizarVista,
-}) {
+export function setupKeyboardNav({ getOverlayEl, cerrarMinimapExpandido, irHacia }) {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       const overlay = getOverlayEl();
@@ -27,39 +20,18 @@ export function setupKeyboardNav({
         return;
       }
     }
-
-    const { posY: curY, posX: curX } = getPosicion();
-    let newY = curY;
-    let newX = curX;
-    switch (e.key) {
-      case "ArrowUp":    newY--; break;
-      case "ArrowDown":  newY++; break;
-      case "ArrowLeft":  newX--; break;
-      case "ArrowRight": newX++; break;
-      default: return;
-    }
-
-    const GRID = getGrid();
-    if (GRID[newY]?.[newX] === 1) {
-      setPosicion(newY, newX);
-      actualizarVista();
-    }
+    const paso = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0] }[e.key];
+    if (paso) irHacia(...paso);
   });
 }
 
 /**
- * Debounce de resize/orientationchange para reajustar el minimapa.
+ * Debounce de resize/orientationchange: llama a cada función que reciba
+ * (reajustar el minimapa, recolocar los nombres del mapa).
  */
-export function setupResizeDebounce({
-  actualizarTamanoMinimapInline,
-  actualizarTamanoMinimapExpandido,
-}, debounceMs = 120) {
+export function setupResizeDebounce(alCambiar, debounceMs = 120) {
   let resizeTimeoutId = null;
-
-  const onResize = () => {
-    actualizarTamanoMinimapInline();
-    actualizarTamanoMinimapExpandido();
-  };
+  const onResize = () => Object.values(alCambiar).forEach(f => f());
 
   const schedule = () => {
     if (resizeTimeoutId) clearTimeout(resizeTimeoutId);

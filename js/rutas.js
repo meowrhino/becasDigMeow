@@ -29,19 +29,18 @@ export const rutaProyectos = (lang) => rutaCelda("portfolio", lang);
  * que encontrar sin buscar: el portfolio a la izquierda, el about debajo, el
  * statement a la derecha. `metodología` encima del statement (el cómo encima
  * del porqué) y `condiciones` cerrando la fila. `buscaminas` debajo del
- * statement y `mapa` colgando de él, en la fila de abajo: el mapa es la celda
- * que menos se visita, y llegar a él es salirse por debajo de todo lo demás.
- * `reseña` debajo del about: es la página que se manda a un cliente, y queda
+ * statement. `reseña` debajo del about: es la página que se manda a un cliente, y queda
  * al lado de quién somos y cómo escribirnos.
  *
- * Vive aquí y no en mapa.js porque el pre-render (node) lo necesita para
- * pintar las flechas del about, y mapa.js arrastra DOM y localStorage.
+ * Vive aquí porque lo usan el lienzo (main.js) y el pre-render (node), que
+ * pinta con él las flechas del about. Es fijo: hubo una celda `mapa` que
+ * dejaba recolocarlo (5_4), quitada en noviembre de 2026.
  */
 export const ORIGEN = Object.freeze({
   "2_3": "links", "2_4": "metodología",
   "3_2": "portfolio", "3_3": "welcome", "3_4": "statement", "3_5": "condiciones",
   "4_3": "about", "4_4": "buscaminas",
-  "5_3": "reseña", "5_4": "mapa",
+  "5_3": "reseña",
 });
 
 /**
@@ -100,7 +99,7 @@ export const slugify = (s) => String(s ?? "")
 // `portfolio` y `buscaminas` estuvieron fuera de la tabla, entrando solo por
 // `/#portfolio` y `/#buscaminas`. Salía caro: al deslizarte a una de las dos, la
 // URL se quedaba con la de la celda anterior (estabas en el portfolio y la barra
-// decía /mapa), así que compartir, recargar o volver atrás mentían. Ahora las
+// decía /about), así que compartir, recargar o volver atrás mentían. Ahora las
 // dos tienen ruta como las demás.
 //
 // Y el portfolio se come a `/proyectos`: el índice lineal de las 21 (con sus
@@ -109,12 +108,6 @@ export const slugify = (s) => String(s ?? "")
 // trabajo en vez de la rejilla por un lado y la lista por otro. «portfolio» se
 // dice igual en los tres idiomas, así que el segmento no se traduce; el del
 // buscaminas sí, como el de metodología.
-//
-// `mapa` ocupa ahora esa casilla, a la derecha del portfolio: el plano del
-// sitio, que además puedes recolocar. Sí tiene ruta, aunque lo que se guarda
-// (dónde has puesto cada sección) viva solo en tu navegador: la página existe
-// igual para quien llega de fuera, y sin JS se lee como lo que es, el índice
-// de las secciones con sus enlaces.
 
 /**
  * Celda → ruta, por idioma. La clave es el identificador interno de la celda
@@ -123,8 +116,8 @@ export const slugify = (s) => String(s ?? "")
  *
  * `welcome` es la raíz de cada idioma: es la celda de entrada del lienzo.
  *
- * El orden importa: es el del pie de navegación sin JS de cada celda, el del
- * mapa sin JS y el del sitemap. Por eso el portfolio va justo detrás de la
+ * El orden importa: es el del pie de navegación sin JS de cada celda y el
+ * del sitemap. Por eso el portfolio va justo detrás de la
  * portada: es lo segundo que tiene que encontrar quien llega.
  */
 export const RUTA_CELDAS = {
@@ -137,7 +130,6 @@ export const RUTA_CELDAS = {
     "metodología": "/metodologia",
     condiciones: "/condiciones",
     links: "/links",
-    mapa: "/mapa",
     buscaminas: "/buscaminas",
   },
   en: {
@@ -149,7 +141,6 @@ export const RUTA_CELDAS = {
     "metodología": "/en/methodology",
     condiciones: "/en/terms",
     links: "/en/links",
-    mapa: "/en/map",
     buscaminas: "/en/minesweeper",
   },
   cat: {
@@ -161,7 +152,6 @@ export const RUTA_CELDAS = {
     "metodología": "/ca/metodologia",
     condiciones: "/ca/condicions",
     links: "/ca/links",
-    mapa: "/ca/mapa",
     buscaminas: "/ca/buscamines",
   },
 };
