@@ -2685,6 +2685,33 @@ html.js #seo-prerender {
    ============================================ */
 :root { --fusion: #fff; }
 
+/* «ada»: la gama de Frente Amplio (frenteamplio.info, nov 2026): lima #CAE776,
+   bermellón #F03C00, lila #7370FD y su negro #18181b. El logo es lima sobre
+   bermellón, pero esa pareja da 2,9:1 y la letra pequeña no se leería. Aquí el
+   lima es el papel y la tinta es su negro (12,8:1); el bermellón va en el menú
+   y en los puntos del fondo, y el lila marca dónde estás. */
+[data-tinte="ada"] {
+  --bg: #cae776;
+  --bg-hover: #bcdc62;
+  --text: #18181b;
+  --text-content: #2b2c22;
+  --text-secondary: #4d5530;
+  --text-muted: #505833;
+  --border: rgba(24, 24, 27, 0.18);
+  --border-hover: rgba(24, 24, 27, 0.45);
+  --minimap-cell: #a9c95a;
+  --minimap-active: #7370fd;
+  --minimap-expanded-bg: #f03c00;
+  --minimap-expanded-hover: #f4ada1;
+  --minimap-expanded-text: #18181b;
+  --overlay-bg: rgba(202, 231, 118, 0.97);
+  --gradient-color: #cae776;
+}
+[data-tinte="ada"] .fondo {
+  background:
+    radial-gradient(ellipse at center, var(--bg), transparent),
+    radial-gradient(color-mix(in srgb, #f03c00 60%, transparent) 1px, transparent 1px) 0 0 / 10px 10px;
+}
 [data-tinte="papel"] {
   --bg: #f3eee2;
   --bg-hover: #eae3d2;
@@ -2802,8 +2829,9 @@ html.js #seo-prerender {
 /* Los controles van un paso atrás de las páginas; el último de su grupo deja aire. */
 
 /* --- Vista, zoom, modo e idioma, abajo a la derecha. Cada uno despliega sus opciones hacia
-   arriba en una cajita, como un tooltip. Con el mismo `difference` de la barra:
-   la caja blanca sale oscura sobre la página clara, y al revés en modo oscuro. --- */
+   arriba en una cajita, como un tooltip. Cerrados llevan el mismo `difference`
+   de la barra. Con una cajita abierta lo dejan: la caja tiene que tapar lo que
+   hay debajo, y con `difference` el marquee de la portada se leía a través. --- */
 .controles {
   position: fixed;
   right: var(--margen);
@@ -2818,6 +2846,9 @@ html.js #seo-prerender {
 .desplegable > summary { list-style: none; color: #999; }
 .desplegable > summary::-webkit-details-marker { display: none; }
 .desplegable > summary:hover, .desplegable[open] > summary { color: var(--fusion); }
+.controles:has(.desplegable[open]) { mix-blend-mode: normal; }
+.controles:has(.desplegable[open]) .desplegable > summary { color: var(--text-secondary); }
+.controles:has(.desplegable[open]) .desplegable[open] > summary { color: var(--text); }
 .desplegable-opciones {
   position: absolute;
   right: 0;
@@ -2825,7 +2856,7 @@ html.js #seo-prerender {
   display: flex;
   gap: 1em;
   padding: 0.15rem 0.75rem;
-  background: var(--fusion);
+  background: var(--text);
   white-space: nowrap;
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -2839,10 +2870,10 @@ html.js #seo-prerender {
   top: 100%;
   right: 0.9rem;
   border: 0.32rem solid transparent;
-  border-top-color: var(--fusion);
+  border-top-color: var(--text);
 }
-.desplegable-opciones .menu-btn { color: #000; }
-.desplegable-opciones .menu-btn:hover { color: #777; }
+.desplegable-opciones .menu-btn { color: var(--bg); }
+.desplegable-opciones .menu-btn:hover { color: color-mix(in srgb, var(--bg) 60%, var(--text)); }
 .desplegable-opciones .menu-btn.is-active { text-decoration: underline; text-underline-offset: 0.25em; }
 /* Los originales de cada celda siguen ahí (les pasa el clic la barra), sin verse. */
 .celda .lang-group, .celda .footer-bottom-bar, .pvista { display: none; }

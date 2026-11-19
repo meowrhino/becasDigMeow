@@ -14,8 +14,8 @@ const STORAGE_KEY = "meowrhino-theme";
 const TINTE_KEY = "meowrhino-tinte";
 
 /**
- * Los modos de color. Los dos de siempre son el tema (`data-theme`); los otros
- * cuatro son un tinte (`data-tinte`, sus colores están en style.css) puesto
+ * Los modos de color. Los dos de siempre son el tema (`data-theme`); los
+ * demás son un tinte (`data-tinte`, sus colores están en style.css) puesto
  * encima de uno de los dos, del que heredan lo que no cambian.
  */
 export const MODOS = {
@@ -25,6 +25,7 @@ export const MODOS = {
   chicle:    { base: "light", tinte: "chicle" },
   cianotipo: { base: "dark",  tinte: "cianotipo" },
   fosforo:   { base: "dark",  tinte: "fosforo" },
+  ada:       { base: "light", tinte: "ada" },
 };
 const NOMBRES_MODO = {
   es:  { claro: "claro", oscuro: "oscuro", papel: "papel", chicle: "chicle", cianotipo: "cianotipo", fosforo: "fósforo" },
