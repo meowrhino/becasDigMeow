@@ -6,5 +6,15 @@
   "build": { "command": "node build-seo.js" },
   "assets": {
     "directory": "./dist"
+  },
+  // Un segundo Worker con lo mismo, para enseñar una rama en otro dominio sin
+  // pisar el de siempre: `npx wrangler deploy --env com` (meowrhino.com).
+  "env": {
+    "com": {
+      "name": "meowrhino-com",
+      "assets": {
+        "directory": "./dist"
+      }
+    }
   }
 }
