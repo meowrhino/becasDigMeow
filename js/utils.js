@@ -73,3 +73,46 @@ export async function fetchJson(url) {
     return null;
   }
 }
+
+/**
+ * Una lista en columnas, una fila-enlace por cosa, que se ordena al pulsar una
+ * cabecera. La usan el portfolio y los links (estilos .plista en style.css).
+ *
+ * @param {HTMLElement} lista
+ * @param {Object[]} items  — cada fila guarda el suyo en `fila.item`
+ * @param {Object} o
+ * @param {string[]} o.campos                             — una columna por campo
+ * @param {(lang: string) => string[]} o.cols             — los títulos de las columnas
+ * @param {(item, campo, lang) => string} o.texto         — el texto de una casilla
+ * @param {(item, lang) => string} o.href                 — a dónde lleva la fila
+ * @returns {(lang: string) => void} pone textos y enlaces en un idioma; hay que
+ *   llamarla una vez al crear y otra en cada cambio de idioma
+ */
+export function pintarLista(lista, items, { campos, cols, texto, href }) {
+  lista.innerHTML = `
+    <div class="plista-fila plista-cabecera">${campos.map(c => `<button type="button" data-campo="${c}"></button>`).join("")}</div>
+    ${items.map(() => `<a class="plista-fila">${campos.map(() => "<span></span>").join("")}</a>`).join("")}`;
+  const filas = [...lista.querySelectorAll("a.plista-fila")];
+  filas.forEach((a, i) => { a.item = items[i]; });
+
+  // Pulsar una cabecera ordena por esa columna; volver a pulsarla, al revés.
+  let lang;
+  let orden = { campo: null, dir: 1 };
+  lista.querySelector(".plista-cabecera").addEventListener("click", (e) => {
+    const campo = e.target.dataset.campo;
+    if (!campo) return;
+    orden = { campo, dir: orden.campo === campo ? -orden.dir : 1 };
+    filas
+      .sort((a, b) => orden.dir * texto(a.item, campo, lang).localeCompare(texto(b.item, campo, lang), "es"))
+      .forEach(a => lista.appendChild(a));
+  });
+
+  return (l) => {
+    lang = l;
+    lista.querySelectorAll(".plista-cabecera button").forEach((b, k) => { b.textContent = cols(l)[k]; });
+    filas.forEach(a => {
+      [...a.children].forEach((s, k) => { s.textContent = texto(a.item, campos[k], l); });
+      a.href = href(a.item, l);
+    });
+  };
+}

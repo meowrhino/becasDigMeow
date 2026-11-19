@@ -16,7 +16,7 @@ import { setupScrollGradients } from "./scroll-gradients.js";
 // este import (con comillas dobles) y la llamada en renderWelcome. Con comillas
 // simples el build no lo ve como import y quita el modulepreload.
 // import { renderWelcomeCupon } from './welcome-cupon.js';
-import { repaintWithFade, escapeHTML } from "./utils.js";
+import { repaintWithFade, escapeHTML, pintarLista } from "./utils.js";
 import { rutaProyectos, rutaCelda, slugify, flechaHacia, textoConFlecha } from "./rutas.js";
 // Ciclo con mapa.js (que importa celdaHeadingHTML de aquí): inocuo, leerMapa
 // solo se llama en tiempo de ejecución.
@@ -51,157 +51,66 @@ export const celdaHeadingHTML = (data, nombre, lang) =>
 /** Escoge la variante de idioma (con fallback a es) de un objeto {es,en,cat}. */
 const pick = (obj, lang) => (obj?.[lang] ?? obj?.es ?? "");
 
+// --- Links ---
+
+const COLS_LINKS = {
+  es:  ["nombre", "descripción", "grupo"],
+  en:  ["name", "description", "group"],
+  cat: ["nom", "descripció", "grup"],
+};
+
 /**
- * Genera el HTML de un enlace tipo tarjeta.
+ * Los links, en la misma lista que el portfolio: una fila por enlace con su
+ * descripción (si la tiene) y su grupo, y se ordena al pulsar una columna.
  *
- * Si el item trae `desc`, lleva debajo del nombre una línea con el resumen de
- * para qué sirve. Solo lo llevan las herramientas sueltas. Fue un globo que
- * salía al pasar por encima; no se leía bien y en móvil no existía.
- *
- * @param {{ nombre: string, url: string, desc?: Object }} item
- * @param {number} [idx] posición en su lista, para re-traducir el globo
- * @returns {string}
+ * El orden de entrada es por PARA QUÉ SIRVE cada cosa: primero las
+ * herramientas que le sirven a alguien hoy, luego lo demás.
  */
-function crearLinkHTML(item, idx) {
-  const target = esMovil ? "" : ' target="_blank"';
-  const desc = item.desc
-    ? `<span class="tool-link-desc" data-desc="${idx}">${escConEnlaces(pick(item.desc, currentLang))}</span>`
-    : "";
-  return `<a class="tool-link" href="${escapeHTML(item.url)}"${target} rel="noopener">${escapeHTML(item.nombre)}${desc}</a>`;
-}
-
-/**
- * Genera el HTML de un par de enlaces duales (mismo proyecto, varias urls).
- * @param {{ urls: { nombre: string, url: string }[] }} item
- * @returns {string}
- */
-function crearDualLinkHTML(item) {
-  const target = esMovil ? "" : ' target="_blank"';
-  return `<div class="tool-link-dual">${item.urls.map(u =>
-    `<a class="tool-link" href="${escapeHTML(u.url)}"${target} rel="noopener">${escapeHTML(u.nombre)}</a>`
-  ).join("")}</div>`;
-}
-
-/**
- * Genera el HTML de un grupo desplegable (dropdown).
- * @param {string} titulo
- * @param {{ nombre: string, url: string }[]} items
- * @param {string} uid
- * @returns {string}
- */
-function crearDropdownHTML(titulo, items, uid) {
-  const linksHTML = items.map(i => i.urls ? crearDualLinkHTML(i) : crearLinkHTML(i)).join("");
-  return `
-    <div class="tools-dropdown-group">
-      <button class="tools-dropdown-btn" data-target="${uid}" aria-expanded="false">
-        <span class="tools-dropdown-label">${escapeHTML(titulo)}</span>
-        <svg class="tools-dropdown-icon" viewBox="0 0 16 16" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-          <polyline points="4,6 8,10 12,6"/>
-        </svg>
-      </button>
-      <div class="tools-dropdown-content" id="${uid}">
-        <div class="tools-dropdown-inner">${linksHTML}</div>
-      </div>
-    </div>
-  `;
-}
-
-// --- Tools ---
-
 export function renderTools(data) {
   const el = document.querySelector(".celda.tools");
   if (!el || !data?.links) return;
 
-  const herramientas  = data.links.herramientas || [];
-  const experimentos  = data.links.experimentos || [];
-  const wip           = data.links.wip || [];
-  const varios        = data.links.varios || [];
-  const formateadores = data.welcome?.formateadores || [];
-  const websTerminadas = (data.portfolio?.proyectos || []).map(p =>
-    p.urls ? { urls: p.urls } : { nombre: p.nombre, url: p.url }
-  );
-
-  // "wip" es un término ya usado igual en los tres idiomas (como el resto de
-  // nombres de celda); "experimentos", "formateadores", "webs terminadas" y
-  // "varios" sí varían y viven en data.json (links.labels) con {es,en,cat}.
-  //
-  // El corte de los grupos es por PARA QUÉ SIRVE cada cosa, no por qué es.
-  // Antes había un grupo "herramientas" y otro "tools" —la misma palabra en
-  // dos idiomas— y los dos llevaban utilidades de verdad, así que el
-  // generador de facturas y la calculadora de impuestos, que son argumento de
-  // venta puro, estaban escondidos en un desplegable debajo de un generador
-  // de poporings. Ahora las que le sirven a alguien hoy van sueltas y
-  // siempre visibles, y lo demás va plegado.
-  const labels = data.links.labels || {};
-
-  const linksHTML = herramientas.map((h, i) => crearLinkHTML(h, i)).join("");
-  const dropdownsHTML = [
-    crearDropdownHTML(pick(labels.experimentos, currentLang), experimentos, "dd_experimentos"),
-    crearDropdownHTML("wip", wip, "dd_wip"),
-    crearDropdownHTML(pick(labels.formateadores, currentLang), formateadores, "dd_formateadores"),
-    crearDropdownHTML(pick(labels.webs, currentLang), websTerminadas, "dd_webs"),
-    crearDropdownHTML(pick(labels.varios, currentLang), varios, "dd_varios"),
-  ].join("");
+  const l = data.links;
+  const labels = l.labels || {};
+  const grupo = (label, items = []) => items.map(i => ({ ...i, grupo: label }));
+  // Las webs terminadas salen del portfolio, con su `sector` de descripción;
+  // la que tiene dos direcciones (mokakopaTwins) da dos filas.
+  const webs = (data.portfolio?.proyectos || []).flatMap(p =>
+    (p.urls || [{ nombre: p.nombre, url: p.url }]).map(u => ({ ...u, desc: p.sector })));
+  const items = [
+    ...grupo(labels.herramientas, l.herramientas),
+    ...grupo(labels.experimentos, l.experimentos),
+    ...grupo("wip", l.wip),   // se dice igual en los tres idiomas
+    ...grupo(labels.formateadores, data.welcome?.formateadores),
+    ...grupo(labels.webs, webs),
+    ...grupo(labels.varios, l.varios),
+  ];
 
   el.innerHTML = `
     ${celdaHeadingHTML(data, "links", currentLang)}
     <div class="scroll-wrapper tools-scroll-wrapper">
       <div class="scroll-content tools-content">
-        <div class="tools-list">${linksHTML}${dropdownsHTML}</div>
+        <div class="plista plista-links"></div>
       </div>
     </div>
   `;
 
-  // Lógica de abrir/cerrar desplegables (accordion)
-  const toolsList = el.querySelector(".tools-list");
-  const lastDropdown = el.querySelector(".tools-dropdown-group:last-child .tools-dropdown-content");
-  el.querySelectorAll(".tools-dropdown-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const target = document.getElementById(btn.dataset.target);
-      if (!target) return;
-      const willOpen = !target.classList.contains("open");
-      el.querySelectorAll(".tools-dropdown-content.open").forEach(d => d.classList.remove("open"));
-      el.querySelectorAll(".tools-dropdown-btn.active").forEach(b => {
-        b.classList.remove("active");
-        b.setAttribute("aria-expanded", "false");
-      });
-      target.classList.toggle("open", willOpen);
-      btn.classList.toggle("active", willOpen);
-      btn.setAttribute("aria-expanded", String(willOpen));
-      toolsList?.classList.toggle("has-open-last-dropdown", willOpen && target === lastDropdown);
-    });
+  const lista = el.querySelector(".plista");
+  const pintar = pintarLista(lista, items, {
+    campos: ["nombre", "desc", "grupo"],
+    cols: (lang) => COLS_LINKS[lang] || COLS_LINKS.es,
+    // Sin los asteriscos de énfasis de data.json: la fila entera es un enlace.
+    texto: (i, campo, lang) => (typeof i[campo] === "string" ? i[campo] : pick(i[campo], lang)).replace(/\*/g, ""),
+    href: (i) => i.url,
   });
-
-  // Gradientes de scroll
-  const wrapper = el.querySelector(".tools-scroll-wrapper");
-  const content = el.querySelector(".tools-content");
-  if (content && wrapper) {
-    const list = el.querySelector(".tools-list");
-    setupScrollGradients(wrapper, content, {
-      bottomMargin: () => list ? parseFloat(getComputedStyle(list).paddingBottom) || 0 : 0,
-    });
-  }
-
-  // Re-traduce los labels que varían por idioma al cambiar de
-  // idioma. La celda tools no tiene botones .lang-btn propios (el cambio de
-  // idioma se dispara desde otra celda), así que usamos el callback global
-  // onLangChange (mismo mecanismo que theme.js para su aria-label).
-  const experimentosLabelEl = el.querySelector('[data-target="dd_experimentos"] .tools-dropdown-label');
-  const formateadoresLabelEl = el.querySelector('[data-target="dd_formateadores"] .tools-dropdown-label');
-  const websLabelEl = el.querySelector('[data-target="dd_webs"] .tools-dropdown-label');
-  const variosLabelEl = el.querySelector('[data-target="dd_varios"] .tools-dropdown-label');
-  const descEls = el.querySelectorAll(".tool-link-desc");
-  onLangChange((lang) => {
-    descEls.forEach(span => {
-      const item = herramientas[+span.dataset.desc];
-      if (item?.desc) span.innerHTML = escConEnlaces(pick(item.desc, lang));
-    });
-    if (experimentosLabelEl) experimentosLabelEl.textContent = pick(labels.experimentos, lang);
-    if (formateadoresLabelEl) formateadoresLabelEl.textContent = pick(labels.formateadores, lang);
-    if (websLabelEl) websLabelEl.textContent = pick(labels.webs, lang);
-    if (variosLabelEl) variosLabelEl.textContent = pick(labels.varios, lang);
+  lista.querySelectorAll("a.plista-fila").forEach(a => {
+    a.rel = "noopener";
+    if (!esMovil) a.target = "_blank";
   });
+  pintar(currentLang);
+  onLangChange(pintar);
+
+  setupScrollGradients(el.querySelector(".tools-scroll-wrapper"), el.querySelector(".tools-content"));
 }
 
 // --- Welcome ---

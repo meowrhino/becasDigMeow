@@ -7,6 +7,7 @@ import { slugify } from "./proyecto-template.js";
 import { altProyecto } from "./easy-template.js";
 import { rutaProyectos } from "./rutas.js";
 import { setupScrollGradients } from "./scroll-gradients.js";
+import { pintarLista } from "./utils.js";
 import { celdaHeadingHTML } from "./pages.js";
 
 /** Texto del enlace al caso de estudio, por idioma. */
@@ -237,13 +238,12 @@ const textoCampo = (p, campo, lang) => (typeof p[campo] === "string" ? p[campo] 
  */
 function renderListaProyectos(el, proyectos) {
   const lista = el.querySelector("#portfolio-lista");
-  lista.innerHTML = `
-    <div class="plista-fila plista-cabecera">${CAMPOS.map(c => `<button type="button" data-campo="${c}"></button>`).join("")}</div>
-    ${proyectos.map(p => `
-      <a class="plista-fila" data-slug="${slugify(p.nombre)}">${CAMPOS.map(c => `<span></span>`).join("")}</a>`).join("")}
-  `;
-  const filas = [...lista.querySelectorAll("a.plista-fila")];
-  filas.forEach((a, i) => { a.proyecto = proyectos[i]; });
+  const pintar = pintarLista(lista, proyectos, {
+    campos: CAMPOS,
+    cols: (lang) => (VISTA[lang] || VISTA.es).cols,
+    texto: textoCampo,
+    href: (p, lang) => `${rutaProyectos(lang)}/${slugify(p.nombre)}`,
+  });
 
   // Al pasar por una fila aparece su captura, grande y cada vez en un sitio:
   // cada web tiene el suyo, siempre el mismo, sacado de su posición en la
@@ -253,33 +253,18 @@ function renderListaProyectos(el, proyectos) {
   lista.addEventListener("mouseover", (e) => {
     const fila = e.target.closest("a.plista-fila");
     if (!fila) return;
-    const i = proyectos.indexOf(fila.proyecto);
+    const i = proyectos.indexOf(fila.item);
     captura.style.translate = `${-((i * 7) % 19)}dvw ${((i * 11) % 25) - 12}dvh`;
     captura.style.rotate = `${((i * 3) % 5) - 2}deg`;
-    captura.src = `/${fila.proyecto.imagen}`;
+    captura.src = `/${fila.item.imagen}`;
     captura.classList.add("visible");
   });
   lista.addEventListener("mouseleave", () => captura.classList.remove("visible"));
 
-  // Pulsar una cabecera ordena por esa columna; volver a pulsarla, al revés.
-  let orden = { campo: null, dir: 1 };
-  lista.querySelector(".plista-cabecera").addEventListener("click", (e) => {
-    const campo = e.target.dataset.campo;
-    if (!campo) return;
-    orden = { campo, dir: orden.campo === campo ? -orden.dir : 1 };
-    filas
-      .sort((a, b) => orden.dir * textoCampo(a.proyecto, campo, currentLang).localeCompare(textoCampo(b.proyecto, campo, currentLang), "es"))
-      .forEach(a => lista.appendChild(a));
-  });
-
   const traducir = (lang) => {
+    pintar(lang);
     const t = VISTA[lang] || VISTA.es;
-    lista.querySelectorAll(".plista-cabecera button").forEach((b, k) => { b.textContent = t.cols[k]; });
     el.querySelectorAll(".pvista-btn").forEach(b => { b.textContent = t[b.dataset.vista]; });
-    filas.forEach(a => {
-      [...a.children].forEach((s, k) => { s.textContent = textoCampo(a.proyecto, CAMPOS[k], lang); });
-      a.href = `${rutaProyectos(lang)}/${a.dataset.slug}`;
-    });
   };
   traducir(currentLang);
   return traducir;

@@ -575,36 +575,19 @@ a.nav-label:visited {
 
 /* ============================================
    8. PAGE: TOOLS
-   Herramientas internas del estudio.
-   Reutiliza los estilos de .tool-link y .tools-dropdown-*.
+   Los links del estudio, en la misma lista que el portfolio (.plista).
    ============================================ */
 
 .celda.tools {
   flex-direction: column;
+  padding-left: 0;    /* como el portfolio: el margen lo pone el wrapper */
+  padding-right: 0;
 }
 
 .tools-scroll-wrapper {
-  width: 90dvw;
-  max-width: 1000px;
-  height: 80dvh;
-}
-
-.tools-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.tools-list {
-  width: 70dvw;
-  max-width: 800px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.tools-list.has-open-last-dropdown {
-  padding-bottom: 30dvh;
+  width: 100%;
+  padding: 0 var(--margen);
+  box-sizing: border-box;
 }
 
 /* ============================================
@@ -868,156 +851,6 @@ a.nav-label:visited {
     letter-spacing: 0.15em;
   }
 }
-
-/* Link tipo tarjeta (cada herramienta/proyecto) */
-.tool-link {
-  display: block;
-  width: 100%;
-  text-align: center;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 0.4rem 1rem;
-  font-family: var(--font-serif);
-  font-size: clamp(0.7rem, 0.95dvw, 0.9rem);
-  font-weight: 600;
-  color: var(--text);
-  text-decoration: none;
-  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 1px 2px var(--shadow-sm);
-  position: relative;
-}
-
-.tool-link:hover {
-  border-color: var(--border-hover);
-  background: var(--bg-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px var(--shadow-md);
-}
-
-.tool-link:active {
-  transform: translateY(0);
-}
-
-/* --- El resumen de una herramienta, debajo del nombre --- */
-/* Solo lo llevan las cinco herramientas sueltas. Fue un globo que salía al
-   pasar por encima: no se leía bien y en móvil no existía. Ahora es una línea
-   fija dentro de la tarjeta, que la lee cualquiera, con o sin ratón. */
-.tool-link-desc {
-  display: block;
-  margin-top: 0.25rem;
-  font-size: clamp(0.62rem, 0.8dvw, 0.78rem);
-  font-weight: 400;
-  line-height: 1.4;
-  color: var(--text-secondary);
-}
-
-/* --- Botón doble (2 links en una línea) --- */
-
-.tool-link-dual {
-  display: flex;
-  gap: 0.4rem;
-}
-
-.tool-link-dual .tool-link {
-  flex: 1;
-  min-width: 0;
-}
-
-.tool-link-dual .tool-link:first-child {
-  text-align: right;
-}
-
-.tool-link-dual .tool-link:last-child {
-  text-align: left;
-}
-
-/* --- Dropdowns (formateadores, webs terminadas) --- */
-
-.tools-dropdown-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  width: 100%;
-}
-
-/* Botón del dropdown: mismo estilo visual que .tool-link */
-.tools-dropdown-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  width: 100%;
-  appearance: none;
-  -webkit-appearance: none;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 0.4rem 1rem;
-  font-family: var(--font-serif);
-  font-size: clamp(0.7rem, 0.95dvw, 0.9rem);
-  font-weight: 600;
-  color: var(--text);
-  cursor: pointer;
-  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 1px 2px var(--shadow-sm);
-  text-align: center;
-}
-
-.tools-dropdown-btn:hover {
-  border-color: var(--border-hover);
-  background: var(--bg-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px var(--shadow-md);
-}
-
-.tools-dropdown-btn.active {
-  border-color: var(--border-hover);
-  background: var(--bg-hover);
-}
-
-/* Flecha del dropdown: rota 180deg al abrir */
-.tools-dropdown-icon {
-  width: 12px;
-  height: 12px;
-  transition: transform 0.3s ease;
-  flex-shrink: 0;
-  opacity: 0.5;
-}
-
-.tools-dropdown-btn.active .tools-dropdown-icon {
-  transform: rotate(180deg);
-}
-
-/* Contenido desplegable: animado con grid-template-rows 0fr→1fr */
-.tools-dropdown-content {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.3s ease;
-  overflow: hidden;
-  width: 100%;
-  background: var(--bg);
-}
-
-.tools-dropdown-content.open {
-  grid-template-rows: 1fr;
-}
-
-.tools-dropdown-inner {
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 0;
-  transition: margin-top 0.2s ease;
-}
-
-.tools-dropdown-content.open .tools-dropdown-inner {
-  margin-top: 0.5rem;
-}
-
-
-/* El scroll del contenido de dropdowns lo gestiona .tools-content */
 
 /* ============================================
    10. PAGE: METODOLOGÍA
@@ -3218,6 +3051,14 @@ a.plista-fila::before { counter-increment: fila; content: counter(fila, decimal-
   .plista-fila { grid-template-columns: 2rem 1fr 1fr; }
   .plista-fila > :nth-child(3) { display: none; }
   .plista-captura { display: none; }
+}
+/* Links en móvil: nombre y grupo en la fila, y la descripción (si hay) debajo. */
+@media (max-width: 768px) {
+  .plista-links .plista-fila { grid-template-columns: 2rem 1fr auto; row-gap: 0.15rem; }
+  .plista-links .plista-fila > :nth-child(3) { display: block; }
+  .plista-links .plista-fila > :nth-child(2) { grid-area: 2 / 2 / auto / -1; }
+  .plista-links .plista-fila > :nth-child(2):empty,
+  .plista-links .plista-cabecera > :nth-child(2) { display: none; }
 }
 
 /* --- Fondo: una trama de puntos muy suave, con un degradado desde el centro
