@@ -227,19 +227,39 @@
     "formateadores": [
       {
         "nombre": "paula",
-        "url": "https://meowrhino.github.io/paulabarjau/formateador.html"
+        "url": "https://meowrhino.github.io/paulabarjau/formateador.html",
+        "desc": {
+          "es": "formateador de textos de la web de paula barjau",
+          "en": "the text formatter for paula barjau's website",
+          "cat": "formatador de textos de la web de paula barjau"
+        }
       },
       {
         "nombre": "miranda",
-        "url": "https://meowrhino.github.io/mirandaperezhita/formateador.html"
+        "url": "https://meowrhino.github.io/mirandaperezhita/formateador.html",
+        "desc": {
+          "es": "formateador de textos de la web de miranda pérez-hita",
+          "en": "the text formatter for miranda pérez-hita's website",
+          "cat": "formatador de textos de la web de miranda pérez-hita"
+        }
       },
       {
         "nombre": "andrea",
-        "url": "https://meowrhino.github.io/andreacarilla/formateador.html"
+        "url": "https://meowrhino.github.io/andreacarilla/formateador.html",
+        "desc": {
+          "es": "editor de proyectos de la web de andrea carilla",
+          "en": "the project editor for andrea carilla's website",
+          "cat": "editor de projectes de la web d'andrea carilla"
+        }
       },
       {
         "nombre": "jaume",
-        "url": "https://meowrhino.github.io/jaumeclotet/formateador.html"
+        "url": "https://meowrhino.github.io/jaumeclotet/formateador.html",
+        "desc": {
+          "es": "formateador de textos de la web de jaume clotet",
+          "en": "the text formatter for jaume clotet's website",
+          "cat": "formatador de textos de la web de jaume clotet"
+        }
       }
     ]
   },
@@ -321,123 +341,268 @@
     "experimentos": [
       {
         "nombre": "piuler",
-        "url": "https://piuler.meowrhino.studio/"
+        "url": "https://piuler.meowrhino.studio/",
+        "desc": {
+          "es": "microblog con una sola línea de tiempo para todo el mundo",
+          "en": "a microblog with one timeline for everyone",
+          "cat": "microblog amb una sola línia de temps per a tothom"
+        }
       },
       {
         "nombre": "twoitter",
-        "url": "https://twoitter.meowrhino.studio/"
+        "url": "https://twoitter.meowrhino.studio/",
+        "desc": {
+          "es": "twitter privado para guardar notas, citas y notas de voz",
+          "en": "a private twitter to keep notes, quotes and voice memos",
+          "cat": "twitter privat per guardar notes, cites i notes de veu"
+        }
       },
       {
         "nombre": "profilePics",
-        "url": "https://profile.meowrhino.studio/"
+        "url": "https://profile.meowrhino.studio/",
+        "desc": {
+          "es": "archivo de todas mis fotos de perfil de telegram",
+          "en": "an archive of all my telegram profile pictures",
+          "cat": "arxiu de totes les meves fotos de perfil de telegram"
+        }
       },
       {
         "nombre": "chords",
-        "url": "https://chords.meowrhino.studio/"
+        "url": "https://chords.meowrhino.studio/",
+        "desc": {
+          "es": "acordes libres para guitarra, ukelele, bajo y piano",
+          "en": "free chords for guitar, ukulele, bass and piano",
+          "cat": "acords lliures per a guitarra, ukelele, baix i piano"
+        }
       },
       {
         "nombre": "poporingGenerator",
-        "url": "https://meowrhino.github.io/poporingGenerator/"
+        "url": "https://meowrhino.github.io/poporingGenerator/",
+        "desc": {
+          "es": "generador de poporings: png, stickers y gifs",
+          "en": "a poporing generator: png, stickers and gifs",
+          "cat": "generador de poporings: png, stickers i gifs"
+        }
       },
       {
         "nombre": "animeTest",
-        "url": "https://meowrhino.github.io/animeTest/"
+        "url": "https://meowrhino.github.io/animeTest/",
+        "desc": {
+          "es": "suite de adivinación: i-ching, horóscopo chino y carta natal",
+          "en": "a divination suite: i-ching, chinese zodiac and birth chart",
+          "cat": "suite d'endevinació: i-ching, horòscop xinès i carta natal"
+        }
       },
       {
         "nombre": "carta astral (zodiaco)",
-        "url": "https://meowrhino.github.io/wholeSignHouseChart/"
+        "url": "https://meowrhino.github.io/wholeSignHouseChart/",
+        "desc": {
+          "es": "carta natal con casas de signo entero",
+          "en": "a birth chart with whole sign houses",
+          "cat": "carta natal amb cases de signe sencer"
+        }
       },
       {
         "nombre": "carta astral (i-ching)",
-        "url": "https://meowrhino.github.io/hexagramaNacimiento/"
+        "url": "https://meowrhino.github.io/hexagramaNacimiento/",
+        "desc": {
+          "es": "tu hexagrama natal del i-ching, según tu fecha y hora de nacimiento",
+          "en": "your i-ching birth hexagram, from your date and time of birth",
+          "cat": "el teu hexagrama natal de l'i-ching, segons la teva data i hora de naixement"
+        }
       },
       {
         "nombre": "moixi",
-        "url": "https://meowrhino.github.io/moixi/"
+        "url": "https://meowrhino.github.io/moixi/",
+        "desc": {
+          "es": "juegos pequeños tipo bitsy, para jugar, hacer y copiar",
+          "en": "small bitsy-like games to play, make and fork",
+          "cat": "jocs petits tipus bitsy, per jugar, fer i copiar"
+        }
       },
       {
         "nombre": "arxiu",
-        "url": "https://arxiu.meowrhino.studio"
+        "url": "https://arxiu.meowrhino.studio",
+        "desc": {
+          "es": "archivo anónimo de pdfs y textos",
+          "en": "an anonymous archive of pdfs and texts",
+          "cat": "arxiu anònim de pdfs i textos"
+        }
       }
     ],
     "wip": [
       {
         "nombre": "retals",
-        "url": "https://meowrhino.github.io/retals/"
+        "url": "https://meowrhino.github.io/retals/",
+        "desc": {
+          "es": "bloques y editor para hacerte una web; el código es tuyo",
+          "en": "blocks and an editor to build your own website; the code is yours",
+          "cat": "blocs i editor per fer-te una web; el codi és teu"
+        }
       },
       {
         "nombre": "VNGenerator",
-        "url": "https://meowrhino.github.io/VNGenerator/"
+        "url": "https://meowrhino.github.io/VNGenerator/",
+        "desc": {
+          "es": "motor de novelas visuales en el navegador",
+          "en": "a visual novel engine for the browser",
+          "cat": "motor de novel·les visuals al navegador"
+        }
       },
       {
         "nombre": "ajutsCat",
-        "url": "https://meowrhino.github.io/ajutscat/"
+        "url": "https://meowrhino.github.io/ajutscat/",
+        "desc": {
+          "es": "ayudas y subvenciones de cataluña, por fin entendibles",
+          "en": "grants and subsidies in catalonia, finally understandable",
+          "cat": "ajuts i subvencions de catalunya, finalment entenedors"
+        }
       }
     ],
     "varios": [
       {
         "nombre": "calculadora impuestos",
-        "url": "https://meowrhino.github.io/calculadoraInversa/"
+        "url": "https://meowrhino.github.io/calculadoraInversa/",
+        "desc": {
+          "es": "iva e irpf, del total a la base y al revés",
+          "en": "vat and income tax, from total to base and back",
+          "cat": "iva i irpf, del total a la base i a l'inrevés"
+        }
       },
       {
         "nombre": "generador facturas",
-        "url": "https://meowrhino.github.io/generadorFacturas/"
+        "url": "https://meowrhino.github.io/generadorFacturas/",
+        "desc": {
+          "es": "facturas en pdf, sin subir nada a ningún servidor",
+          "en": "pdf invoices, with nothing uploaded to any server",
+          "cat": "factures en pdf, sense pujar res a cap servidor"
+        }
       },
       {
         "nombre": "contarTexto",
-        "url": "https://meowrhino.github.io/contarTexto/"
+        "url": "https://meowrhino.github.io/contarTexto/",
+        "desc": {
+          "es": "contador de palabras, caracteres y tiempo de lectura",
+          "en": "a counter for words, characters and reading time",
+          "cat": "comptador de paraules, caràcters i temps de lectura"
+        }
       },
       {
         "nombre": "limpiatexto",
-        "url": "https://meowrhino.github.io/fcyp/"
+        "url": "https://meowrhino.github.io/fcyp/",
+        "desc": {
+          "es": "copia un texto sin formato ni saltos de línea",
+          "en": "copies text without formatting or line breaks",
+          "cat": "copia un text sense format ni salts de línia"
+        }
       },
       {
         "nombre": "bici",
-        "url": "https://bici.meowrhino.studio/"
+        "url": "https://bici.meowrhino.studio/",
+        "desc": {
+          "es": "registro personal de dónde dejas la bici",
+          "en": "a personal log of where you leave your bike",
+          "cat": "registre personal d'on deixes la bici"
+        }
       },
       {
         "nombre": "foro",
-        "url": "https://foro.meowrhino.studio/"
+        "url": "https://foro.meowrhino.studio/",
+        "desc": {
+          "es": "foro anónimo minimalista, sin cuentas",
+          "en": "a minimal anonymous forum, no accounts",
+          "cat": "fòrum anònim minimalista, sense comptes"
+        }
       },
       {
         "nombre": "geomag",
-        "url": "https://geomag.meowrhino.studio/"
+        "url": "https://geomag.meowrhino.studio/",
+        "desc": {
+          "es": "modelador de geomag en 3d, en el navegador",
+          "en": "a 3d geomag modeller in the browser",
+          "cat": "modelador de geomag en 3d, al navegador"
+        }
       },
       {
         "nombre": "lemuria",
-        "url": "https://lemuria.meowrhino.studio/"
+        "url": "https://lemuria.meowrhino.studio/",
+        "desc": {
+          "es": "archivo de mundos e historias de rei hachijo",
+          "en": "an archive of worlds and stories by rei hachijo",
+          "cat": "arxiu de mons i històries de rei hachijo"
+        }
       },
       {
         "nombre": "meowboard",
-        "url": "https://meowboard.meowrhino.studio/"
+        "url": "https://meowboard.meowrhino.studio/",
+        "desc": {
+          "es": "panel para seguir los encargos del estudio",
+          "en": "a board to follow the studio's commissions",
+          "cat": "tauler per seguir els encàrrecs de l'estudi"
+        }
       },
       {
         "nombre": "messenger",
-        "url": "https://messenger.meowrhino.studio/"
+        "url": "https://messenger.meowrhino.studio/",
+        "desc": {
+          "es": "messenger como los de antes: sin feed, sin likes, sin algoritmo",
+          "en": "an old-school messenger: no feed, no likes, no algorithm",
+          "cat": "messenger com els d'abans: sense feed, sense likes, sense algoritme"
+        }
       },
       {
         "nombre": "networking",
-        "url": "https://networking.meowrhino.studio/"
+        "url": "https://networking.meowrhino.studio/",
+        "desc": {
+          "es": "libreta de contactos para el sónar+d 2026",
+          "en": "a contacts notebook for sónar+d 2026",
+          "cat": "llibreta de contactes per al sónar+d 2026"
+        }
       },
       {
         "nombre": "petra",
-        "url": "https://petra.meowrhino.studio/"
+        "url": "https://petra.meowrhino.studio/",
+        "desc": {
+          "es": "cuaderno de proyectos musicales a dos",
+          "en": "a notebook for two-person music projects",
+          "cat": "quadern de projectes musicals a dos"
+        }
       },
       {
         "nombre": "pspsps",
-        "url": "https://pspsps.meowrhino.studio/"
+        "url": "https://pspsps.meowrhino.studio/",
+        "desc": {
+          "es": "mensajería cifrada para colectivos pequeños",
+          "en": "encrypted messaging for small collectives",
+          "cat": "missatgeria xifrada per a col·lectius petits"
+        }
       },
       {
         "nombre": "rumrum",
-        "url": "https://rumrum.meowrhino.studio/"
+        "url": "https://rumrum.meowrhino.studio/",
+        "desc": {
+          "es": "chat anónimo por salas, en tiempo real",
+          "en": "an anonymous chat in rooms, in real time",
+          "cat": "xat anònim per sales, en temps real"
+        }
       },
       {
         "nombre": "toctoc",
-        "url": "https://toctoc.meowrhino.studio/"
+        "url": "https://toctoc.meowrhino.studio/",
+        "desc": {
+          "es": "messenger privado, de tú a tú",
+          "en": "a private one-to-one messenger",
+          "cat": "messenger privat, de tu a tu"
+        }
       },
       {
         "nombre": "guia setup cloudflare pages",
-        "url": "https://meowrhino.github.io/guiaSetupCloudflarePages/"
+        "url": "https://meowrhino.github.io/guiaSetupCloudflarePages/",
+        "desc": {
+          "es": "checklist para montar una web con cloudflare pages, vscode y git",
+          "en": "a checklist to set up a site with cloudflare pages, vscode and git",
+          "cat": "checklist per muntar una web amb cloudflare pages, vscode i git"
+        }
       }
     ]
   },
