@@ -2685,33 +2685,45 @@ html.js #seo-prerender {
    ============================================ */
 :root { --fusion: #fff; }
 
-/* «ada»: la gama de Frente Amplio (frenteamplio.info, nov 2026): lima #CAE776,
-   bermellón #F03C00, lila #7370FD y su negro #18181b. El logo es lima sobre
-   bermellón, pero esa pareja da 2,9:1 y la letra pequeña no se leería. Aquí el
-   lima es el papel y la tinta es su negro (12,8:1); el bermellón va en el menú
-   y en los puntos del fondo, y el lila marca dónde estás. */
+/* «ada»: la gama de Frente Amplio tal como la usa su web (frenteamplio.info,
+   nov 2026): fondo bermellón #F03C00, titulares grandes en lima #CAE776, letra
+   pequeña en su negro #18181b y botones lima con letra negra. El lima sobre
+   bermellón da 2,9:1, así que solo va en letra grande; la pequeña es negra
+   (4,5:1). Sobre un tono medio el `difference` no se lee, así que aquí la
+   barra, los controles y el marquee van con su color y sin fusión. */
 [data-tinte="ada"] {
-  --bg: #cae776;
-  --bg-hover: #bcdc62;
+  --bg: #f03c00;
+  --bg-hover: #dc3700;
   --text: #18181b;
-  --text-content: #2b2c22;
-  --text-secondary: #4d5530;
-  --text-muted: #505833;
-  --border: rgba(24, 24, 27, 0.18);
-  --border-hover: rgba(24, 24, 27, 0.45);
-  --minimap-cell: #a9c95a;
-  --minimap-active: #7370fd;
-  --minimap-expanded-bg: #f03c00;
-  --minimap-expanded-hover: #f4ada1;
+  --text-content: #18181b;
+  --text-secondary: #2a0d03;
+  --text-muted: #2a0d03;
+  --border: rgba(24, 24, 27, 0.25);
+  --border-hover: rgba(24, 24, 27, 0.55);
+  --minimap-cell: #c23000;
+  --minimap-active: #cab9ee;
+  --minimap-expanded-bg: #cae776;
+  --minimap-expanded-hover: #d6ff56;
   --minimap-expanded-text: #18181b;
-  --overlay-bg: rgba(202, 231, 118, 0.97);
-  --gradient-color: #cae776;
+  --overlay-bg: rgba(240, 60, 0, 0.97);
+  --gradient-color: #f03c00;
+  --fusion: #18181b;
 }
-[data-tinte="ada"] .fondo {
-  background:
-    radial-gradient(ellipse at center, var(--bg), transparent),
-    radial-gradient(color-mix(in srgb, #f03c00 60%, transparent) 1px, transparent 1px) 0 0 / 10px 10px;
-}
+[data-tinte="ada"] .header-topright,
+[data-tinte="ada"] .controles,
+[data-tinte="ada"] body > .welcome-content { mix-blend-mode: normal; }
+[data-tinte="ada"] .menu-btn:hover { color: #cae776; }
+[data-tinte="ada"] .desplegable > summary { color: var(--text-secondary); }
+[data-tinte="ada"] .desplegable > summary:hover,
+[data-tinte="ada"] .desplegable[open] > summary { color: var(--text); }
+[data-tinte="ada"] .desplegable-opciones { background: #cae776; }
+[data-tinte="ada"] .desplegable-opciones::after { border-top-color: #cae776; }
+[data-tinte="ada"] .desplegable-opciones .menu-btn { color: #18181b; }
+[data-tinte="ada"] .desplegable-opciones .menu-btn:hover { color: #6e1c05; }
+[data-tinte="ada"] body > .welcome-content .welcome-title,
+[data-tinte="ada"] .about-pregunta,
+[data-tinte="ada"] .footer-seccion-titular { color: #cae776; }
+[data-tinte="ada"] body > .welcome-content .welcome-tagline { color: #18181b; }
 [data-tinte="papel"] {
   --bg: #f3eee2;
   --bg-hover: #eae3d2;
