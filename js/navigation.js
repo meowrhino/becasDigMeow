@@ -365,9 +365,11 @@ function pintarVecinosHeader() {
     ]);
   }
 
-  // modo(claro): claro, oscuro y los tintes (js/theme.js)
+  // modo(claro): claro, oscuro y los tintes (js/theme.js). En el mapa, solo
+  // claro y oscuro, y de tercero el tinte que llevas, si llevas uno.
   const modo = modoActual();
-  desplegable(`${en || cat ? "mode" : "modo"}(${nombreModo(modo)})`, Object.keys(MODOS).map(m => ({
+  const modos = abierto ? [...new Set(["claro", "oscuro", modo])] : Object.keys(MODOS);
+  desplegable(`${en || cat ? "mode" : "modo"}(${nombreModo(modo)})`, modos.map(m => ({
     texto: nombreModo(m),
     activa: m === modo,
     alPulsar: () => { aplicarModo(m); pintarVecinosHeader(); },
