@@ -35,7 +35,6 @@ import {
 } from "./pages.js";
 import { renderMapa, leerMapa, aGrid } from "./mapa.js";
 import { renderPortfolio } from "./portfolio.js";
-import { renderBuscaminas } from "./buscaminas.js";
 import { rutaCelda, celdaDeRuta } from "./rutas.js";
 import { cabeceraCelda } from "./easy-template.js";
 import { crearThemeToggle } from "./theme.js";
@@ -70,7 +69,16 @@ async function renderizarContenido() {
   renderAbout(data);
   renderStatement(data);
   renderResena(data);
-  renderBuscaminas();
+}
+
+// El buscaminas es la celda que menos se visita y la que más pesa, así que su
+// módulo no viaja con cada página: se pide al entrar en ella, o al llegar
+// directo a /buscaminas.
+let buscaminasPedido = false;
+function cargarBuscaminas() {
+  if (buscaminasPedido || getNombrePagina() !== "buscaminas") return;
+  buscaminasPedido = true;
+  import("./buscaminas.js").then(m => m.renderBuscaminas());
 }
 
 /**
@@ -194,7 +202,7 @@ configurarNavegacion({
       .split("_").map(Number);
     return { y, x };
   })(),
-  onUpdate: () => { sincronizarCabecera(); actualizarEnlacesIdioma(); },
+  onUpdate: () => { sincronizarCabecera(); actualizarEnlacesIdioma(); cargarBuscaminas(); },
   rutas: {
     de: (nombre) => rutaCelda(nombre, currentLang),
     celdaDe: (pathname) => celdaDeRuta(pathname)?.nombre ?? null,

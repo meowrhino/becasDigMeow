@@ -8,7 +8,10 @@
 import { currentLang, buildLangButtons, attachLangListeners, onLangChange } from "./data.js";
 import { setupZoom } from "./zoom.js";
 import { setupScrollGradients } from "./scroll-gradients.js";
-import { renderWelcomeCard } from "./welcome-card.js";
+// Las tarjetas que rebotan, apagadas con la portada nueva (PRUEBA): mientras no
+// se pinten, su módulo y el del rebote no se piden. Vuelven igual que el cupón:
+// este import con comillas dobles y su llamada en renderWelcome.
+// import { renderWelcomeCard } from './welcome-card.js';
 // Cupón desactivado de momento (recuperable para una promoción): descomentar
 // este import (con comillas dobles) y la llamada en renderWelcome. Con comillas
 // simples el build no lo ve como import y quita el modulepreload.

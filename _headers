@@ -1,0 +1,10 @@
+# Lo que casi nunca cambia se guarda un día en el navegador: sin esto, cada
+# carga volvía a preguntar por cada foto y cada fuente. El HTML, el CSS, el JS
+# y los JSON no llevan regla: se comprueban siempre, así un cambio sale al
+# momento.
+/img/*
+  Cache-Control: public, max-age=86400
+/fonts/*
+  Cache-Control: public, max-age=86400
+/favicon/*
+  Cache-Control: public, max-age=86400

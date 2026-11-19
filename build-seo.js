@@ -764,7 +764,7 @@ function leerJSON(nombre) {
  * lo generado: lo que no esté aquí no llega al dominio (las notas, este script).
  */
 const ESTATICOS = ["style.css", "js", "img", "fonts", "favicon", "robots.txt",
-  "_redirects", "archive-data.json"];
+  "_redirects", "_headers", "archive-data.json"];
 
 function copiarEstaticos() {
   const pdfs = readdirSync(ROOT).filter(f => f.endsWith(".pdf"));
