@@ -226,15 +226,6 @@
     },
     "formateadores": [
       {
-        "nombre": "paula",
-        "url": "https://meowrhino.github.io/paulabarjau/formateador.html",
-        "desc": {
-          "es": "formateador de textos de la web de paula barjau",
-          "en": "the text formatter for paula barjau's website",
-          "cat": "formatador de textos de la web de paula barjau"
-        }
-      },
-      {
         "nombre": "miranda",
         "url": "https://meowrhino.github.io/mirandaperezhita/formateador.html",
         "desc": {
@@ -250,15 +241,6 @@
           "es": "editor de proyectos de la web de andrea carilla",
           "en": "the project editor for andrea carilla's website",
           "cat": "editor de projectes de la web d'andrea carilla"
-        }
-      },
-      {
-        "nombre": "jaume",
-        "url": "https://meowrhino.github.io/jaumeclotet/formateador.html",
-        "desc": {
-          "es": "formateador de textos de la web de jaume clotet",
-          "en": "the text formatter for jaume clotet's website",
-          "cat": "formatador de textos de la web de jaume clotet"
         }
       }
     ]
@@ -530,15 +512,6 @@
           "es": "archivo de mundos e historias de rei hachijo",
           "en": "an archive of worlds and stories by rei hachijo",
           "cat": "arxiu de mons i històries de rei hachijo"
-        }
-      },
-      {
-        "nombre": "meowboard",
-        "url": "https://meowboard.meowrhino.studio/",
-        "desc": {
-          "es": "panel para seguir los encargos del estudio",
-          "en": "a board to follow the studio's commissions",
-          "cat": "tauler per seguir els encàrrecs de l'estudi"
         }
       },
       {
