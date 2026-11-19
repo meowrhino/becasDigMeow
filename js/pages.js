@@ -22,7 +22,6 @@ import { rutaProyectos, rutaCelda, slugify, flechaHacia, textoConFlecha } from "
 // solo se llama en tiempo de ejecución.
 import { leerMapa } from "./mapa.js";
 import { escConEnlaces } from "./easy-template.js";
-import { bordeCelda } from "./navigation.js";
 
 /** true si el viewport es táctil / móvil (mismo criterio que portfolio usa para hover/pointer). */
 export const esMovil = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
@@ -364,11 +363,9 @@ export function renderCondiciones(data) {
   const el = document.querySelector(".celda.footer");
   if (!el || !data?.footer) return;
 
-  let activeIdx = 0;
-
-  const buildSeccion = (lang, idx) => {
-    const s = data.footer[lang]?.secciones?.[idx];
-    if (!s) return "";
+  // Trabajo, privacidad y financiación van seguidas, cada una con su título.
+  // Antes eran tres pestañas en el borde de abajo y había que saber que estaban.
+  const buildSeccion = (s) => {
 
     let body = "";
     if (s.tipo === "texto") {
@@ -393,32 +390,18 @@ export function renderCondiciones(data) {
       const frase = s.frase ? `<p class="footer-frase">${escapeHTML(s.frase)}</p>` : "";
       body = intro + logos + frase;
     }
-    return `<div class="footer-seccion">${body}</div>`;
+    return `<div class="footer-seccion"><h2 class="footer-seccion-titular">${escapeHTML(s.label)}</h2>${body}</div>`;
   };
-
-  const buildSectionNav = (lang) => {
-    const secciones = data.footer[lang]?.secciones || [];
-    if (secciones.length < 2) return "";
-    return `<div class="footer-section-nav">${secciones.map((s, i) =>
-      `<button type="button" class="footer-section-tab${i === activeIdx ? ' is-active' : ''}" data-idx="${i}">${escapeHTML(s.label)}</button>`
-    ).join("")}</div>`;
-  };
+  const buildContent = (lang) =>
+    ((data.footer[lang] || data.footer.es)?.secciones || []).map(buildSeccion).join("");
 
   el.innerHTML = `
     ${celdaHeadingHTML(data, "condiciones", currentLang)}
     <div class="scroll-wrapper footer-scroll-wrapper">
-      <div class="scroll-content footer-content">${buildSeccion(currentLang, activeIdx)}</div>
+      <div class="scroll-content footer-content">${buildContent(currentLang)}</div>
     </div>
     ${buildLangButtons()}
   `;
-
-  // Las pestañas van DENTRO del borde de abajo, no sueltas encima de él. Antes
-  // eran un absolute con las mismas coordenadas que `.nav-slot.bottom`, así que
-  // si movías una sección debajo de esta celda su etiqueta de navegación caía
-  // justo encima de la pestaña del medio y se la comía: ilegibles las dos e
-  // inclicable la pestaña. Compartiendo slot, la navegación se queda pegada al
-  // canto y las pestañas se apartan hacia dentro (ver bordeCelda).
-  bordeCelda(el, "bottom").insertAdjacentHTML("beforeend", buildSectionNav(currentLang));
 
   const wrapper = el.querySelector(".footer-scroll-wrapper");
   const content = el.querySelector(".footer-content");
@@ -426,50 +409,10 @@ export function renderCondiciones(data) {
   const applyScale = setupZoom(el, content, checkScroll);
 
 
-  const updateNavActive = () => {
-    el.querySelectorAll(".footer-section-tab").forEach((tab, i) =>
-      tab.classList.toggle("is-active", i === activeIdx)
-    );
-  };
-
-  const repintarNav = (lang) => {
-    const oldNav = el.querySelector(".footer-section-nav");
-    const tmp = document.createElement("div");
-    tmp.innerHTML = buildSectionNav(lang);
-    const newNav = tmp.firstElementChild;
-    if (oldNav && newNav) oldNav.replaceWith(newNav);
-  };
-
-  const repintar = (lang, withFade = true) => {
-    const render = () => { content.innerHTML = buildSeccion(lang, activeIdx); };
-    const after = () => {
-      content.scrollTop = 0;
-      applyScale();
-      checkScroll();
-      updateNavActive();
-    };
-    if (withFade) {
-      repaintWithFade(el, content, render, after);
-    } else {
-      render();
-      after();
-    }
-  };
-
-  // Click delegation: tabs del nav (que está fuera del content)
-  el.addEventListener("click", (e) => {
-    const tabBtn = e.target.closest(".footer-section-tab");
-    if (!tabBtn) return;
-    const idx = parseInt(tabBtn.dataset.idx, 10);
-    if (idx !== activeIdx) {
-      activeIdx = idx;
-      repintar(currentLang);
-    }
-  });
-
   attachLangListeners(el, (lang) => {
-    repintarNav(lang);
-    repintar(lang);
+    repaintWithFade(el, content,
+      () => { content.innerHTML = buildContent(lang); },
+      () => { content.scrollTop = 0; applyScale(); checkScroll(); });
   });
 }
 

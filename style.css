@@ -1311,8 +1311,7 @@ a.nav-label:visited {
   z-index: var(--z-nav);
 }
 
-.lang-btn,
-.footer-section-tab {
+.lang-btn {
   border: none;
   background: none;
   color: var(--btn-subtle);
@@ -1323,13 +1322,11 @@ a.nav-label:visited {
   transition: color 0.2s ease;
 }
 
-.lang-btn:hover,
-.footer-section-tab:hover {
+.lang-btn:hover {
   color: var(--btn-subtle-hover);
 }
 
-.lang-btn.is-active,
-.footer-section-tab.is-active {
+.lang-btn.is-active {
   font-weight: 600;
   color: var(--text);
 }
@@ -2074,35 +2071,6 @@ a.nav-label:visited {
   height: clamp(40px, 5dvh, 60px);
   width: auto;
   display: block;
-}
-
-/* Nav inferior: tabs entre secciones (auto-rotación).
-   Mismo estilo que .lang-btn para coherencia visual.
-
-   Dónde va lo dice el `.nav-slot.bottom` que las contiene, no estas reglas: son
-   un control de esta celda, como los niveles del buscaminas o `archive` en el
-   portfolio. Se posicionaron solas (absolute en bottom:3dvh, left:50%) hasta
-   que el mapa dejó mover secciones: con una debajo, la etiqueta de navegación
-   caía en esas mismas coordenadas y tapaba la pestaña del medio. */
-.footer-section-nav {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-}
-
-@media (max-width: 768px) {
-  .footer-section-nav {
-    --tab-fs: clamp(0.6rem, 2.5dvw, 0.8rem);
-    flex-direction: column;
-    align-items: center;
-    gap: calc(var(--tab-fs) * 0.3);
-    max-width: 92dvw;
-  }
-  .footer-section-tab {
-    padding: 0;
-    font-size: var(--tab-fs);
-    line-height: 1.4;
-  }
 }
 
 .footer-frase {
@@ -2892,8 +2860,8 @@ html.js #seo-prerender {
 .minimap-inline,
 .nav-ir { display: none; }
 
-/* --- La barra, arriba a la derecha y en una línea: lista/rejilla, idioma(es),
-   zoom(100%), las páginas vecinas y «menú». Blanca con `difference`, como el
+/* --- La barra, arriba a la derecha y en una línea: lista/rejilla, las páginas
+   vecinas y «menú» (idioma y zoom van abajo a la derecha, más abajo aquí). Blanca con `difference`, como el
    menú de mokakopa: se invierte sola sobre lo que le pase por debajo. --- */
 .header-topright {
   top: var(--barra);
@@ -2919,10 +2887,48 @@ html.js #seo-prerender {
 .menu-btn:hover { color: #999; }
 .menu-vecinos .menu-btn::after { content: ","; margin-right: 0.45em; }
 /* Los controles van un paso atrás de las páginas; el último de su grupo deja aire. */
-.barra-vista, .barra-control { color: #999; }
-.barra-vista.is-active, .barra-vista:hover, .barra-control:hover { color: #fff; }
-.menu-vecinos .barra-vista:not(:has(+ .barra-vista))::after,
-.menu-vecinos .barra-control:not(:has(+ .barra-control))::after { content: ""; margin-right: 1.6em; }
+.barra-vista { color: #999; }
+.barra-vista.is-active, .barra-vista:hover { color: #fff; }
+.menu-vecinos .barra-vista:not(:has(+ .barra-vista))::after { content: ""; margin-right: 1.6em; }
+
+/* --- Idioma y zoom, abajo a la derecha. Cada uno despliega sus opciones hacia
+   arriba en una cajita, como un tooltip. Con el mismo `difference` de la barra:
+   la caja blanca sale oscura sobre la página clara, y al revés en modo oscuro. --- */
+.controles {
+  position: fixed;
+  right: var(--margen);
+  bottom: var(--barra);
+  z-index: var(--z-header);
+  display: flex;
+  align-items: baseline;
+  gap: 1.4em;
+  mix-blend-mode: difference;
+}
+.desplegable { position: relative; }
+.desplegable > summary { list-style: none; color: #999; }
+.desplegable > summary::-webkit-details-marker { display: none; }
+.desplegable > summary:hover, .desplegable[open] > summary { color: #fff; }
+.desplegable-opciones {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 0.55rem);
+  display: flex;
+  gap: 1em;
+  padding: 0.15rem 0.75rem;
+  background: #fff;
+  white-space: nowrap;
+}
+.desplegable-opciones::after {      /* la punta */
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 0.9rem;
+  border: 0.32rem solid transparent;
+  border-top-color: #fff;
+}
+.desplegable-opciones .menu-btn { color: #000; }
+.desplegable-opciones .menu-btn:hover { color: #777; }
+.desplegable-opciones .menu-btn.is-active { text-decoration: underline; text-underline-offset: 0.25em; }
 /* Los originales de cada celda siguen ahí (les pasa el clic la barra), sin verse. */
 .celda .lang-group, .celda .footer-bottom-bar, .pvista { display: none; }
 .about-content, .metodologia-content, .footer-content { font-size: calc(0.95rem * var(--zoom, 1)) !important; }
@@ -2973,9 +2979,26 @@ html.js #seo-prerender {
   color: var(--text);
 }
 .metodologia-num { color: var(--text-muted); }
+/* Los títulos, grandes: salen del margen izquierdo e invaden la columna del
+   texto, que empieza debajo. Dos tamaños: el de la página (o el de cada parte
+   de condiciones) y el de cada apartado. */
+.about-pregunta, .footer-seccion-titular,
+.about-seccion-titular, .metodologia-titular, .metodologia-importante-titular, .footer-apartado-titular {
+  grid-column: 1 / -1;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--text);
+}
+.about-pregunta, .footer-seccion-titular { font-size: clamp(1.7rem, 3.2dvw, 2.8rem); line-height: 1.15; margin: 0 0 1.6rem; }
+.about-seccion-titular, .metodologia-titular, .metodologia-importante-titular, .footer-apartado-titular {
+  font-size: clamp(1.2rem, 1.9dvw, 1.7rem); line-height: 1.25; margin-bottom: 0.7rem;
+}
+.footer-seccion + .footer-seccion { margin-top: 5rem; }
+.metodologia-titular + p, .metodologia-importante-titular + p { margin-top: 0; }
 .about-seccion, .about-seccion:first-child, .metodologia-importante { margin-top: 2.6rem; }
-.footer-apartado-titular:not(:first-child),
-.footer-apartado-titular:not(:first-child) + p { margin-top: 2rem; }
+.footer-apartado-titular { margin-top: 2.4rem; }
+.footer-seccion-titular + .footer-apartado-titular { margin-top: 0; }
 .about-entrada, .about-seccion p, .metodologia-content p:not(.metodologia-titular), .footer-content p { font-family: var(--font-text); }
 /* Entrada y apartados, la misma letra y el mismo gris: es una sola columna. */
 .about-entrada, .about-texto p { font-size: 1em; color: var(--text-content); }
@@ -3024,7 +3047,7 @@ html.js #seo-prerender {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 5dvh;
+  bottom: calc(var(--barra) + 2.2rem);   /* por encima de idioma(es) */
   z-index: 2;            /* por detrás de las webs */
   align-items: stretch;
   gap: 0;
@@ -3098,16 +3121,24 @@ a.plista-fila::before { counter-increment: fila; content: counter(fila, decimal-
 }
 /* Fuera del mapa, la trama de puntos. */
 .fondo-mapa > div {
-  background: radial-gradient(color-mix(in srgb, var(--text) 17%, transparent) 1px, transparent 1px) 0 0 / 10px 10px fixed;
+  background: radial-gradient(color-mix(in srgb, var(--text) 9%, transparent) 1px, transparent 1px) 0 0 / 10px 10px fixed;
+}
+/* Un degradado desde el centro: donde se lee, el fondo es liso; el mapa y los
+   puntos asoman hacia los bordes. */
+.fondo-mapa::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, var(--bg), transparent);
 }
 /* El mapa: manchas lisas y muy suaves, sin puntos, separadas por una rendija.
    Hace de claro central: donde está el contenido no hay trama. */
 .fondo-mapa > .hay {
-  background: color-mix(in srgb, var(--text) 3.5%, transparent);
+  background: color-mix(in srgb, var(--text) 1.6%, transparent);
   box-shadow: inset 0 0 0 4px var(--bg);
   transition: background-color 0.6s ease;
 }
-.fondo-mapa > .activa { background: color-mix(in srgb, var(--text) 7%, transparent); }
+.fondo-mapa > .activa { background: color-mix(in srgb, var(--text) 3.5%, transparent); }
 
 /* --- Rejilla del portfolio: piezas más grandes --- */
 .portfolio-grid { max-width: none; gap: 3.5rem 2rem; }

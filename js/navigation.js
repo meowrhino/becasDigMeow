@@ -219,8 +219,38 @@ let vecinosEl = null;
 const ORDEN_CSS = ["top", "right", "bottom", "left"];
 
 const IDIOMAS = ["es", "en", "cat"];
-const ZOOMS = [100, 115, 130, 85];
-let zoomIdx = 0;
+const ZOOMS = [85, 100, 115, 130];
+let zoomIdx = 1;
+let controlesEl = null;
+
+/**
+ * Un control que despliega sus opciones hacia arriba, como un tooltip. Es un
+ * <details>: abre y cierra solo, también con el teclado, y con el mismo `name`
+ * el navegador deja abierto uno a la vez.
+ */
+function desplegable(etiqueta, opciones) {
+  const caja = document.createElement("details");
+  caja.classList.add("desplegable");
+  caja.setAttribute("name", "controles");
+  const resumen = document.createElement("summary");
+  resumen.classList.add("menu-btn");
+  resumen.textContent = etiqueta;
+  const lista = document.createElement("div");
+  lista.classList.add("desplegable-opciones");
+  opciones.forEach(({ texto, nombre, activa, alPulsar }) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.classList.add("menu-btn");
+    b.classList.toggle("is-active", !!activa);
+    b.textContent = texto;
+    if (nombre) b.setAttribute("aria-label", nombre);
+    b.addEventListener("click", alPulsar);
+    lista.appendChild(b);
+  });
+  caja.append(resumen, lista);
+  controlesEl.appendChild(caja);
+  return caja;
+}
 
 /** Un botón de la barra. `grupo` separa los controles de las páginas. */
 function botonBarra(texto, grupo, alPulsar) {
@@ -238,7 +268,7 @@ function botonBarra(texto, grupo, alPulsar) {
  * pintan como texto y se les pasa el clic, para no duplicar su lógica.
  */
 function pintarVecinosHeader() {
-  if (!vecinosEl) return;
+  if (!vecinosEl || !controlesEl) return;
   vecinosEl.innerHTML = "";
   const activa = document.querySelector(".celda.activa");
 
@@ -248,23 +278,32 @@ function pintarVecinosHeader() {
     b.classList.toggle("is-active", orig.classList.contains("is-active"));
   });
 
-  // idioma(es): cada clic pasa al siguiente
-  const langActual = document.querySelector(".lang-btn.is-active")?.dataset.lang;
-  if (langActual) {
-    const siguiente = IDIOMAS[(IDIOMAS.indexOf(langActual) + 1) % IDIOMAS.length];
-    botonBarra(`${langActual === "en" ? "language" : "idioma"}(${langActual})`, "control", () => {
-      document.querySelector(`.lang-btn[data-lang="${siguiente}"]`)?.click();
-    });
-  }
+  // Idioma y zoom van aparte, abajo a la derecha, y cada uno despliega lo suyo.
+  controlesEl.innerHTML = "";
 
-  // zoom(100%): solo en las páginas de texto; cada clic, el siguiente tamaño
+  // zoom(100%): solo en las páginas de texto; despliega el − y el +
   if (activa?.querySelector(".footer-bottom-bar")) {
-    botonBarra(`zoom(${ZOOMS[zoomIdx]}%)`, "control", () => {
-      zoomIdx = (zoomIdx + 1) % ZOOMS.length;
+    const cambiar = (paso) => {
+      zoomIdx = Math.min(ZOOMS.length - 1, Math.max(0, zoomIdx + paso));
       document.documentElement.style.setProperty("--zoom", ZOOMS[zoomIdx] / 100);
       window.dispatchEvent(new Event("resize"));   // los degradados de scroll se recalculan
-      pintarVecinosHeader();
-    });
+      zoom.querySelector("summary").textContent = `zoom(${ZOOMS[zoomIdx]}%)`;
+    };
+    const en = document.documentElement.lang === "en";
+    const zoom = desplegable(`zoom(${ZOOMS[zoomIdx]}%)`, [
+      { texto: "−", nombre: en ? "smaller text" : "letra más pequeña", alPulsar: () => cambiar(-1) },
+      { texto: "+", nombre: en ? "larger text" : "letra más grande", alPulsar: () => cambiar(1) },
+    ]);
+  }
+
+  // idioma(es): despliega los tres
+  const langActual = document.querySelector(".lang-btn.is-active")?.dataset.lang;
+  if (langActual) {
+    desplegable(`${langActual === "en" ? "language" : "idioma"}(${langActual})`, IDIOMAS.map(l => ({
+      texto: l,
+      activa: l === langActual,
+      alPulsar: () => document.querySelector(`.lang-btn[data-lang="${l}"]`)?.click(),
+    })));
   }
 
   const vecinos = getVecinos();
@@ -354,6 +393,13 @@ export function crearHeader() {
   headerEl.appendChild(menuBtn);
   headerEl.appendChild(minimapInlineEl);
   document.body.appendChild(headerEl);
+  controlesEl = document.createElement("div");
+  controlesEl.classList.add("controles");
+  document.body.appendChild(controlesEl);
+  // Un clic fuera cierra el desplegable que esté abierto.
+  document.addEventListener("click", (e) => {
+    controlesEl.querySelectorAll("details[open]").forEach(d => { if (!d.contains(e.target)) d.open = false; });
+  });
   actualizarHeader();
 }
 
