@@ -2942,6 +2942,7 @@ html.js #seo-prerender {
 .about-entrada p:last-child, .about-seccion p:last-child, .metodologia-paso p:last-child { margin-bottom: 0; }
 /* con `p` delante: `.metodologia-content p` le ponía 1.4em de su letra grande */
 .metodologia-content p.metodologia-titular { margin-bottom: 0.7rem; }
+.footer-content p.footer-nota { margin-top: 2em; }
 .about-enlaces, .about-contacto { margin-top: 2.4rem; }
 /* Una línea fina encima de cada apartado, de margen a margen. */
 .about-seccion, .about-seccion:first-child, .metodologia-paso, .metodologia-importante, .footer-apartado-titular {
