@@ -224,13 +224,51 @@ export function renderWelcome(data) {
   // barcelona» es la frase que alguien que acaba de llegar quiere ampliar, y
   // el nombre del estudio es lo primero que se pulsa buscando quién hay detrás.
   const hrefAbout = (lang) => escapeHTML(rutaCelda("about", lang));
+  // PRUEBA (19 nov 2026): la portada son las webs, grandes y una tras otra, cada
+  // una con su línea de datos; el nombre y la frase pasan por detrás en marquee.
+  // Salen todas, en el orden de data.json, pero de una en una: hay una sola
+  // ventana quieta y el scroll decide qué web se ve dentro.
+  const proyectos = (data.portfolio?.proyectos || []).filter(p => p?.imagen && p?.nombre);
+  // Copias pares: la pista se desplaza justo la mitad y el bucle no se nota.
+  const marquee = (texto, copias) => `<span class="marquee-pista">${
+    Array.from({ length: copias }, (_, i) =>
+      `<span${i ? ' aria-hidden="true"' : ""}>${escapeHTML(texto)}</span>`).join("")
+  }</span>`;
   el.innerHTML = `
     <div class="welcome-content">
-      <a class="welcome-title" href="${hrefAbout(currentLang)}">${escapeHTML(w.titulo)}</a>
-      <a class="welcome-tagline" href="${hrefAbout(currentLang)}">${escapeHTML(pick(w.tagline, currentLang))}</a>
+      <a class="welcome-title" href="${hrefAbout(currentLang)}">${marquee(w.titulo, 4)}</a>
+      <a class="welcome-tagline" href="${hrefAbout(currentLang)}">${marquee(pick(w.tagline, currentLang), 8)}</a>
+    </div>
+    <div class="welcome-proyectos">
+      <div class="wp-escena">
+        ${proyectos.map((p, i) => `
+          <a class="wp${i ? "" : " visible"}" data-slug="${escapeHTML(slugify(p.nombre))}" href="${escapeHTML(`${rutaProyectos(currentLang)}/${slugify(p.nombre)}`)}">
+            <img ${i ? "data-src" : "src"}="/${escapeHTML(p.imagen)}" alt="${escapeHTML(p.nombre)}" decoding="async">
+          </a>`).join("")}
+      </div>
+      <div class="wp-recorrido" style="height: calc(${Math.max(0, proyectos.length - 1)} * 32dvh)"></div>
     </div>
     ${buildLangButtons()}
   `;
+
+  // Cada 32dvh de scroll, la web siguiente. Las capturas se piden de una en
+  // una (la que se ve y la que viene): están todas en el mismo sitio, así que
+  // `loading="lazy"` las descargaría las 27 de golpe.
+  const pista = el.querySelector(".welcome-proyectos");
+  const webs = [...pista.querySelectorAll(".wp")];
+  const cargar = (a) => {
+    const img = a?.querySelector("img[data-src]");
+    if (img) { img.src = img.dataset.src; delete img.dataset.src; }
+  };
+  pista.addEventListener("scroll", () => {
+    const paso = (pista.scrollHeight - pista.clientHeight) / Math.max(1, webs.length - 1);
+    if (!paso) return;
+    const i = Math.min(webs.length - 1, Math.max(0, Math.round(pista.scrollTop / paso)));
+    webs.forEach((a, k) => a.classList.toggle("visible", k === i));
+    cargar(webs[i]);
+    cargar(webs[i + 1]);
+  }, { passive: true });
+  cargar(webs[1]);
 
   const titleEl = el.querySelector(".welcome-title");
   const taglineEl = el.querySelector(".welcome-tagline");
@@ -240,13 +278,15 @@ export function renderWelcome(data) {
   attachLangListeners(el, (lang) => {
     titleEl.href = rutaCelda("about", lang);
     if (taglineEl) {
-      taglineEl.textContent = pick(w.tagline, lang);
+      taglineEl.querySelectorAll(".marquee-pista > span").forEach(s => { s.textContent = pick(w.tagline, lang); });
       taglineEl.href = rutaCelda("about", lang);
     }
+    el.querySelectorAll(".wp").forEach(a => { a.href = `${rutaProyectos(lang)}/${a.dataset.slug}`; });
   });
 
   // renderWelcomeCupon(el, w.cupon);
-  renderWelcomeCard(el, data.portfolio?.proyectos);
+  // PRUEBA: las tarjetas que rebotaban quedan apagadas mientras se prueba la portada nueva.
+  // renderWelcomeCard(el, data.portfolio?.proyectos);
 }
 
 // --- Metodología ---

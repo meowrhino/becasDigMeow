@@ -173,13 +173,33 @@ export function renderPortfolio(data) {
     ${celdaHeadingHTML(data, "portfolio", currentLang)}
     <div class="scroll-wrapper portfolio-scroll-wrapper">
       <div class="scroll-content portfolio-scroll-content">
-        <div class="portfolio-grid" id="portfolio-grid"></div>
+        <div class="pvista">
+          <span>(${proyectos.length})</span>
+          <button type="button" class="pvista-btn is-active" data-vista="lista"></button>
+          <button type="button" class="pvista-btn" data-vista="rejilla"></button>
+        </div>
+        <div class="plista" id="portfolio-lista"></div>
+        <img class="plista-captura" alt="" decoding="async">
+        <div class="portfolio-grid" id="portfolio-grid" hidden></div>
       </div>
     </div>
   `;
 
   iniciarCiclosImagenes(proyectos);
   renderGridProyectos(proyectos);
+  const traducirLista = renderListaProyectos(el, proyectos);
+  onLangChange(traducirLista);
+
+  // PRUEBA (19 nov 2026): dos vistas, lista al entrar y la rejilla de siempre a un clic.
+  el.querySelector(".pvista").addEventListener("click", (e) => {
+    const btn = e.target.closest(".pvista-btn");
+    if (!btn) return;
+    const lista = btn.dataset.vista === "lista";
+    el.querySelector("#portfolio-lista").hidden = !lista;
+    el.querySelector(".plista-captura").classList.remove("visible");
+    el.querySelector("#portfolio-grid").hidden = lista;
+    el.querySelectorAll(".pvista-btn").forEach(b => b.classList.toggle("is-active", b === btn));
+  });
 
   // El enlace al caso cambia de texto Y de ruta con el idioma (/portfolio,
   // /en/portfolio, /ca/portfolio), así que hay que repintar los dos.
@@ -199,6 +219,62 @@ export function renderPortfolio(data) {
   // El enlace a "archive" vivía aquí, en el borde de abajo. Se fue al pie del
   // about, junto al de neocities: el archivo es de manu, no del portfolio de
   // clientes, y ahí está el resto de sitios donde encontrarle.
+}
+
+const VISTA = {
+  es:  { lista: "lista",  rejilla: "rejilla", cols: ["web", "tipo", "sector"] },
+  en:  { lista: "list",   rejilla: "grid",    cols: ["site", "type", "field"] },
+  cat: { lista: "llista", rejilla: "graella", cols: ["web", "tipus", "sector"] },
+};
+const CAMPOS = ["nombre", "tipo", "sector"];
+
+/**
+ * La lista: una fila por web con sus datos, que se ordena al pulsar una columna.
+ * Devuelve la función que la retraduce (cabeceras, botones de vista y rutas).
+ */
+function renderListaProyectos(el, proyectos) {
+  const lista = el.querySelector("#portfolio-lista");
+  lista.innerHTML = `
+    <div class="plista-fila plista-cabecera">${CAMPOS.map(c => `<button type="button" data-campo="${c}"></button>`).join("")}</div>
+    ${proyectos.map(p => `
+      <a class="plista-fila" data-slug="${slugify(p.nombre)}">${CAMPOS.map(c => `<span></span>`).join("")}</a>`).join("")}
+  `;
+  const filas = [...lista.querySelectorAll("a.plista-fila")];
+  filas.forEach((a, i) => {
+    a.proyecto = proyectos[i];
+    [...a.children].forEach((s, k) => { s.textContent = proyectos[i][CAMPOS[k]] || ""; });
+  });
+
+  // Al pasar por una fila, su captura aparece al lado. Es decorativa (alt
+  // vacío): el nombre ya está en la fila.
+  const captura = el.querySelector(".plista-captura");
+  lista.addEventListener("mouseover", (e) => {
+    const fila = e.target.closest("a.plista-fila");
+    if (!fila) return;
+    captura.src = `/${fila.proyecto.imagen}`;
+    captura.classList.add("visible");
+  });
+  lista.addEventListener("mouseleave", () => captura.classList.remove("visible"));
+
+  // Pulsar una cabecera ordena por esa columna; volver a pulsarla, al revés.
+  let orden = { campo: null, dir: 1 };
+  lista.querySelector(".plista-cabecera").addEventListener("click", (e) => {
+    const campo = e.target.dataset.campo;
+    if (!campo) return;
+    orden = { campo, dir: orden.campo === campo ? -orden.dir : 1 };
+    filas
+      .sort((a, b) => orden.dir * String(a.proyecto[campo] || "").localeCompare(String(b.proyecto[campo] || ""), "es"))
+      .forEach(a => lista.appendChild(a));
+  });
+
+  const traducir = (lang) => {
+    const t = VISTA[lang] || VISTA.es;
+    lista.querySelectorAll(".plista-cabecera button").forEach((b, k) => { b.textContent = t.cols[k]; });
+    el.querySelectorAll(".pvista-btn").forEach(b => { b.textContent = t[b.dataset.vista]; });
+    filas.forEach(a => { a.href = `${rutaProyectos(lang)}/${a.dataset.slug}`; });
+  };
+  traducir(currentLang);
+  return traducir;
 }
 
 function renderGridProyectos(proyectos) {

@@ -8,6 +8,12 @@
 // --- Elemento raíz ---
 const app = document.getElementById("content");
 
+// PRUEBA (19 nov 2026): durante la llegada, `html.entrando` deja que el CSS haga
+// entrar las cosas de una en una. Se pone aquí, antes de pintar nada, y se
+// quita sola: después, cambiar de página no vuelve a disparar la entrada.
+document.documentElement.classList.add("entrando");
+setTimeout(() => document.documentElement.classList.remove("entrando"), 3500);
+
 // --- Estado configurable ---
 
 let GRID = [];
@@ -207,6 +213,70 @@ function actualizarZoneLabel() {
 // --- Minimap inline ---
 
 let minimapInlineEl = null;
+let vecinosEl = null;
+
+// El orden de `padding` y `border` en CSS: arriba, derecha, abajo, izquierda.
+const ORDEN_CSS = ["top", "right", "bottom", "left"];
+
+const IDIOMAS = ["es", "en", "cat"];
+const ZOOMS = [100, 115, 130, 85];
+let zoomIdx = 0;
+
+/** Un botón de la barra. `grupo` separa los controles de las páginas. */
+function botonBarra(texto, grupo, alPulsar) {
+  const boton = document.createElement("button");
+  boton.classList.add("menu-btn", `barra-${grupo}`);
+  boton.textContent = texto;
+  boton.addEventListener("click", alPulsar);
+  vecinosEl.appendChild(boton);
+  return boton;
+}
+
+/**
+ * PRUEBA: pinta la barra entera. Los controles de cada celda (lista/rejilla,
+ * idiomas, zoom) siguen existiendo en la celda, escondidos por CSS; aquí se
+ * pintan como texto y se les pasa el clic, para no duplicar su lógica.
+ */
+function pintarVecinosHeader() {
+  if (!vecinosEl) return;
+  vecinosEl.innerHTML = "";
+  const activa = document.querySelector(".celda.activa");
+
+  // lista / rejilla, solo donde las hay (portfolio)
+  activa?.querySelectorAll(".pvista-btn").forEach(orig => {
+    const b = botonBarra(orig.textContent, "vista", () => { orig.click(); pintarVecinosHeader(); });
+    b.classList.toggle("is-active", orig.classList.contains("is-active"));
+  });
+
+  // idioma(es): cada clic pasa al siguiente
+  const langActual = document.querySelector(".lang-btn.is-active")?.dataset.lang;
+  if (langActual) {
+    const siguiente = IDIOMAS[(IDIOMAS.indexOf(langActual) + 1) % IDIOMAS.length];
+    botonBarra(`${langActual === "en" ? "language" : "idioma"}(${langActual})`, "control", () => {
+      document.querySelector(`.lang-btn[data-lang="${siguiente}"]`)?.click();
+    });
+  }
+
+  // zoom(100%): solo en las páginas de texto; cada clic, el siguiente tamaño
+  if (activa?.querySelector(".footer-bottom-bar")) {
+    botonBarra(`zoom(${ZOOMS[zoomIdx]}%)`, "control", () => {
+      zoomIdx = (zoomIdx + 1) % ZOOMS.length;
+      document.documentElement.style.setProperty("--zoom", ZOOMS[zoomIdx] / 100);
+      window.dispatchEvent(new Event("resize"));   // los degradados de scroll se recalculan
+      pintarVecinosHeader();
+    });
+  }
+
+  const vecinos = getVecinos();
+  ORDEN_CSS.forEach((pos) => {
+    const info = vecinos[pos];
+    if (!info) return;
+    botonBarra(traducirNombre(info.nombre), "pagina", () => {
+      setPosicion(info.y, info.x);
+      actualizarVista();
+    });
+  });
+}
 
 function getAspectoViewport() {
   return window.innerHeight > 0 ? window.innerWidth / window.innerHeight : 1;
@@ -272,6 +342,16 @@ export function crearHeader() {
       abrirMinimapExpandido();
     }
   });
+  // PRUEBA (19 nov 2026): en la esquina, las páginas vecinas y «menú», que abre
+  // el mapa. El minimapa pequeño sigue en el DOM pero el CSS lo esconde.
+  vecinosEl = document.createElement("nav");
+  vecinosEl.classList.add("menu-vecinos");
+  headerEl.appendChild(vecinosEl);
+  const menuBtn = document.createElement("button");
+  menuBtn.classList.add("menu-btn");
+  menuBtn.textContent = document.documentElement.lang === "en" ? "menu" : "menú";
+  menuBtn.addEventListener("click", () => abrirMinimapExpandido());
+  headerEl.appendChild(menuBtn);
   headerEl.appendChild(minimapInlineEl);
   document.body.appendChild(headerEl);
   actualizarHeader();
@@ -288,6 +368,7 @@ function actualizarHeader() {
 
 let overlayEl = null;
 let minimapExpandedEl = null;
+let listaEl = null;
 
 export function actualizarTamanoMinimapExpandido() {
   if (!minimapExpandedEl) return;
@@ -295,9 +376,13 @@ export function actualizarTamanoMinimapExpandido() {
   // caben todas las columnas a lo ancho o todas las filas más el botón de tema
   // (90px) a lo alto: con 8 de lado, el tamaño de siempre se salía del móvil.
   const hueco = 12, cols = GRID[0]?.length || 1, filas = GRID.length;
+  // PRUEBA: en móvil la lista de enlaces va encima del mapa (260px).
+  const movil = window.innerWidth <= 768;
+  const ancho = window.innerWidth * 0.92;
+  const alto  = window.innerHeight - 90 - (movil ? 260 : 0);
   const base   = Math.min(120, window.innerWidth * 0.12,
-    (window.innerWidth * 0.92 - hueco * (cols - 1)) / cols,
-    (window.innerHeight - 90 - hueco * (filas - 1)) / filas * getAspectoViewport());
+    (ancho - hueco * (cols - 1)) / cols,
+    (alto - hueco * (filas - 1)) / filas * getAspectoViewport());
   const cellW  = Math.max(24, Math.round(base));
   const cellH  = Math.max(14, Math.round(base / getAspectoViewport()));
   minimapExpandedEl.querySelectorAll(".minimap-expanded-cell").forEach(cell => {
@@ -311,6 +396,7 @@ function pintarMinimapExpandido() {
   if (!minimapExpandedEl) return;
   const { y0, y1, x0, x1 } = terreno();
   minimapExpandedEl.innerHTML = "";
+  if (listaEl) listaEl.innerHTML = "";
   minimapExpandedEl.style.gridTemplateColumns = `repeat(${x1 - x0 + 1}, 1fr)`;
   minimapExpandedEl.style.gridTemplateRows    = `repeat(${y1 - y0 + 1}, 1fr)`;
 
@@ -330,12 +416,23 @@ function pintarMinimapExpandido() {
         // Ya es un <button> (foco y teclado nativos); el aria-label añade
         // el verbo de la acción, más claro que solo el nombre destino.
         if (nombreCelda) cell.setAttribute("aria-label", `Ir a ${visible}`);
-        cell.addEventListener("click", () => {
+        const ir = () => {
           setPosicion(y, x);
           actualizarVista();
           actualizarMinimapExpandido();
           setTimeout(() => cerrarMinimapExpandido(), 650);
-        });
+        };
+        cell.addEventListener("click", ir);
+        // PRUEBA: el mismo destino como enlace de texto, en la lista del menú.
+        if (listaEl && nombreCelda) {
+          const enlace = document.createElement("button");
+          enlace.classList.add("menu-enlace");
+          enlace.dataset.y = y;
+          enlace.dataset.x = x;
+          enlace.textContent = visible;
+          enlace.addEventListener("click", ir);
+          listaEl.appendChild(enlace);
+        }
       }
 
       minimapExpandedEl.appendChild(cell);
@@ -348,6 +445,46 @@ function pintarMinimapExpandido() {
 function rehacerMinimapas() {
   pintarMinimapInline();
   pintarMinimapExpandido();
+  pintarFondoMapa();
+}
+
+// --- Fondo ---
+//
+// PRUEBA (19 nov 2026): el terreno entero a pantalla completa, por detrás de
+// todo, dibujado con una trama de puntos: casi invisibles donde no hay página,
+// algo más claros donde sí, y encendidos en la casilla en la que estás.
+
+let fondoEl = null;
+
+function pintarFondoMapa() {
+  if (!fondoEl) {
+    fondoEl = document.createElement("div");
+    fondoEl.classList.add("fondo-mapa");
+    fondoEl.setAttribute("aria-hidden", "true");
+    document.body.prepend(fondoEl);
+  }
+  // Solo el rectángulo que tiene páginas, no el terreno entero: con las ocho
+  // filas y columnas el mapa se quedaba en una cruz pequeña en el centro.
+  const { y0, y1, x0, x1 } = marcoOcupado();
+  fondoEl.style.gridTemplate = `repeat(${y1 - y0 + 1}, 1fr) / repeat(${x1 - x0 + 1}, 1fr)`;
+  fondoEl.innerHTML = "";
+  for (let y = y0; y <= y1; y++) {
+    for (let x = x0; x <= x1; x++) {
+      const casilla = document.createElement("div");
+      casilla.dataset.y = y;
+      casilla.dataset.x = x;
+      if (GRID[y]?.[x] === 1) casilla.classList.add("hay");
+      casilla.style.setProperty("--i", fondoEl.children.length);   // turno en la entrada
+      fondoEl.appendChild(casilla);
+    }
+  }
+  actualizarFondoMapa();
+}
+
+function actualizarFondoMapa() {
+  fondoEl?.querySelectorAll("div").forEach(c => {
+    c.classList.toggle("activa", +c.dataset.y === posY && +c.dataset.x === posX);
+  });
 }
 
 export function crearOverlay() {
@@ -356,10 +493,15 @@ export function crearOverlay() {
 
   minimapExpandedEl = document.createElement("div");
   minimapExpandedEl.classList.add("minimap-expanded");
+  listaEl = document.createElement("nav");
+  listaEl.classList.add("menu-lista");
   pintarMinimapExpandido();
-  overlayEl.appendChild(minimapExpandedEl);
+  const cuerpo = document.createElement("div");
+  cuerpo.classList.add("menu-cuerpo");
+  cuerpo.append(listaEl, minimapExpandedEl);
+  overlayEl.appendChild(cuerpo);
   overlayEl.addEventListener("click", e => {
-    if (e.target === overlayEl) cerrarMinimapExpandido();
+    if (e.target === overlayEl || e.target === cuerpo) cerrarMinimapExpandido();
   });
   document.body.appendChild(overlayEl);
 }
@@ -375,7 +517,7 @@ export function cerrarMinimapExpandido() {
 
 function actualizarMinimapExpandido() {
   if (!overlayEl) return;
-  overlayEl.querySelectorAll(".minimap-expanded-cell").forEach(cell => {
+  overlayEl.querySelectorAll(".minimap-expanded-cell, .menu-enlace").forEach(cell => {
     cell.classList.toggle("activa", +cell.dataset.y === posY && +cell.dataset.x === posX);
   });
 }
@@ -450,7 +592,7 @@ function crearNavLabels(celda) {
 
   Object.entries(getVecinos()).forEach(([pos, info]) => {
     const label = document.createElement("button");
-    label.classList.add("nav-label");
+    label.classList.add("nav-label", "nav-ir");
     label.textContent = traducirNombre(info.nombre);
     label.addEventListener("click", () => {
       setPosicion(info.y, info.x);
@@ -531,14 +673,36 @@ export function leerHash() {
 
 // --- Actualizar vista ---
 
+/**
+ * PRUEBA: al cambiar de página, la que llega entra desde el lado hacia el que
+ * vas y la que se va sale por el contrario, como moverse por el mapa. El
+ * fundido lo sigue haciendo el CSS (.celda / .celda.activa); esto solo añade
+ * el desplazamiento, y no deja nada puesto al acabar.
+ */
+function deslizar(saliente, entrante) {
+  if (!saliente || !entrante || saliente === entrante) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const dx = Math.sign(entrante.dataset.x - saliente.dataset.x);
+  const dy = Math.sign(entrante.dataset.y - saliente.dataset.y);
+  const paso = 56;
+  const tiempo = { duration: 700, easing: "cubic-bezier(0.2, 0.7, 0.2, 1)" };
+  saliente.animate([{ transform: "none" }, { transform: `translate(${-dx * paso}px, ${-dy * paso}px)` }], tiempo);
+  entrante.animate([{ transform: `translate(${dx * paso}px, ${dy * paso}px)` }, { transform: "none" }], tiempo);
+}
+
 export function actualizarVista({ historial = true } = {}) {
+  const saliente = document.querySelector(".celda.activa");
   document.querySelectorAll(".celda").forEach(c => c.classList.remove("activa"));
   const activa = document.querySelector(`.pos_${posY}_${posX}`);
   if (activa) {
     activa.classList.add("activa");
     crearNavLabels(activa);
   }
+  deslizar(saliente, activa);
   actualizarHeader();
+  if (!fondoEl) pintarFondoMapa();
+  actualizarFondoMapa();
+  pintarVecinosHeader();
   actualizarZoneLabel();
   actualizarMinimapExpandido();
   actualizarURL(historial);
@@ -555,7 +719,7 @@ export function refrescarTextosCeldas() {
   actualizarZoneLabel();
 
   if (minimapExpandedEl) {
-    minimapExpandedEl.querySelectorAll(".minimap-expanded-cell").forEach(cell => {
+    overlayEl.querySelectorAll(".minimap-expanded-cell, .menu-enlace").forEach(cell => {
       const nombre = NOMBRES_CELDAS[`${cell.dataset.y}_${cell.dataset.x}`];
       if (!nombre) return;
       const visible = traducirNombre(nombre);
@@ -566,4 +730,5 @@ export function refrescarTextosCeldas() {
 
   const activa = document.querySelector(`.pos_${posY}_${posX}`);
   if (activa) crearNavLabels(activa);
+  pintarVecinosHeader();
 }
