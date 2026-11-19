@@ -11,6 +11,47 @@
 import { currentLang, onLangChange } from "./data.js";
 
 const STORAGE_KEY = "meowrhino-theme";
+const TINTE_KEY = "meowrhino-tinte";
+
+/**
+ * Los modos de color. Los dos de siempre son el tema (`data-theme`); los otros
+ * cuatro son un tinte (`data-tinte`, sus colores están en style.css) puesto
+ * encima de uno de los dos, del que heredan lo que no cambian.
+ */
+export const MODOS = {
+  claro:     { base: "light" },
+  oscuro:    { base: "dark" },
+  papel:     { base: "light", tinte: "papel" },
+  chicle:    { base: "light", tinte: "chicle" },
+  cianotipo: { base: "dark",  tinte: "cianotipo" },
+  fosforo:   { base: "dark",  tinte: "fosforo" },
+};
+const NOMBRES_MODO = {
+  es:  { claro: "claro", oscuro: "oscuro", papel: "papel", chicle: "chicle", cianotipo: "cianotipo", fosforo: "fósforo" },
+  en:  { claro: "light", oscuro: "dark",   papel: "paper", chicle: "bubblegum", cianotipo: "cyanotype", fosforo: "phosphor" },
+  cat: { claro: "clar",  oscuro: "fosc",   papel: "paper", chicle: "xiclet", cianotipo: "cianotip", fosforo: "fòsfor" },
+};
+
+/** El nombre de un modo en el idioma de la página. */
+export const nombreModo = (modo) => (NOMBRES_MODO[currentLang] || NOMBRES_MODO.es)[modo] || modo;
+
+/** El modo que se está viendo. */
+export function modoActual() {
+  return document.documentElement.dataset.tinte || (getTema() === "dark" ? "oscuro" : "claro");
+}
+
+/** Pone un modo y lo recuerda: su tinte, si lo tiene, y el tema del que cuelga. */
+export function aplicarModo(modo) {
+  const { base, tinte } = MODOS[modo] || MODOS.claro;
+  if (tinte) {
+    document.documentElement.dataset.tinte = tinte;
+    localStorage.setItem(TINTE_KEY, tinte);
+  } else {
+    delete document.documentElement.dataset.tinte;
+    localStorage.removeItem(TINTE_KEY);
+  }
+  aplicarTema(base);
+}
 
 /** Textos del aria-label del toggle por idioma (claves = LANGS de data.js). */
 const TEXTOS_TOGGLE = {
@@ -100,7 +141,8 @@ function alternarTema() {
       { duration: 500, easing: "ease-in-out" }
     );
   }
-  aplicarTema(getTema() === "dark" ? "light" : "dark");
+  // El interruptor va de claro a oscuro y vuelta: si había un tinte, lo quita.
+  aplicarModo(getTema() === "dark" ? "claro" : "oscuro");
 }
 
 /** Crea el botón toggle de tema (SVG moon/sun) dentro del contenedor dado. */

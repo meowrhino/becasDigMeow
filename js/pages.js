@@ -509,6 +509,7 @@ export function renderAbout(data) {
   el.addEventListener("click", (e) => {
     if (e.target.closest(".contacto-archive")) {
       localStorage.setItem("meowrhino-theme", "dark");
+      localStorage.removeItem("meowrhino-tinte");
     }
   });
 }

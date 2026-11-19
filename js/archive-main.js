@@ -76,6 +76,7 @@ async function renderizarContenido() {
     // invertir el actual (determinista; no pisa de forma rara una elección manual).
     studioLabel.addEventListener("click", () => {
       localStorage.setItem("meowrhino-theme", "light");
+      localStorage.removeItem("meowrhino-tinte");
     });
     bordeCelda(meowEl, "bottom").appendChild(studioLabel);
   }

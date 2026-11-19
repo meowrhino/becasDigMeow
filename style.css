@@ -2843,6 +2843,86 @@ html.js #seo-prerender {
 .proy-indice-landings a { margin-right: 0.3rem; }
 
 /* ============================================
+   MODOS DE COLOR — además de claro y oscuro, cuatro tintes. Cada uno va encima
+   de uno de los dos de siempre (js/theme.js dice cuál) y solo cambia el papel
+   y la tinta; lo demás (sombras, números del buscaminas, logos) lo hereda.
+   Fondos muy claros o muy oscuros a propósito: lo que va con `difference`
+   (barra, controles, marquee) sale del color contrario al fondo, y sobre un
+   tono medio no se leería. `--fusion` es la tinta de esos elementos.
+   ============================================ */
+:root { --fusion: #fff; }
+
+[data-tinte="papel"] {
+  --bg: #f3eee2;
+  --bg-hover: #eae3d2;
+  --text: #1d1a16;
+  --text-content: #39342c;
+  --text-secondary: #6f6555;
+  --text-muted: #736958;
+  --border: rgba(29, 26, 22, 0.14);
+  --border-hover: rgba(29, 26, 22, 0.4);
+  --minimap-cell: #d8d0bd;
+  --minimap-active: #1d1a16;
+  --minimap-expanded-bg: #c6bda7;
+  --minimap-expanded-hover: #5c5445;
+  --minimap-expanded-text: #f3eee2;
+  --overlay-bg: rgba(243, 238, 226, 0.97);
+  --gradient-color: #f3eee2;
+}
+[data-tinte="chicle"] {
+  --bg: #ffd9ea;
+  --bg-hover: #ffc9e0;
+  --text: #3d0a26;
+  --text-content: #55173a;
+  --text-secondary: #93386a;
+  --text-muted: #963b6d;
+  --border: rgba(61, 10, 38, 0.16);
+  --border-hover: rgba(61, 10, 38, 0.45);
+  --minimap-cell: #f3b4d0;
+  --minimap-active: #3d0a26;
+  --minimap-expanded-bg: #e89bbf;
+  --minimap-expanded-hover: #93386a;
+  --minimap-expanded-text: #fff3f8;
+  --overlay-bg: rgba(255, 217, 234, 0.97);
+  --gradient-color: #ffd9ea;
+}
+[data-tinte="cianotipo"] {
+  --bg: #0f2f80;
+  --bg-hover: #173d9b;
+  --text: #eef2ff;
+  --text-content: #dbe3ff;
+  --text-secondary: #a9b8ee;
+  --text-muted: #a3b3ec;
+  --border: rgba(238, 242, 255, 0.18);
+  --border-hover: rgba(238, 242, 255, 0.45);
+  --minimap-cell: #2a4ba8;
+  --minimap-active: #ffffff;
+  --minimap-expanded-bg: #3b5cc0;
+  --minimap-expanded-hover: #8fa6ee;
+  --minimap-expanded-text: #0f2f80;
+  --overlay-bg: rgba(15, 47, 128, 0.97);
+  --gradient-color: #0f2f80;
+}
+[data-tinte="fosforo"] {
+  --bg: #07130b;
+  --bg-hover: #0d2014;
+  --text: #8dffb0;
+  --text-content: #7ee8a0;
+  --text-secondary: #4fae6c;
+  --text-muted: #4ca968;
+  --border: rgba(141, 255, 176, 0.18);
+  --border-hover: rgba(141, 255, 176, 0.45);
+  --minimap-cell: #1c3d27;
+  --minimap-active: #8dffb0;
+  --minimap-expanded-bg: #24553a;
+  --minimap-expanded-hover: #3f8a5c;
+  --minimap-expanded-text: #07130b;
+  --overlay-bg: rgba(7, 19, 11, 0.97);
+  --gradient-color: #07130b;
+  --fusion: #93ffb9;   /* con `difference` sobre este fondo, sale verde y no blanco */
+}
+
+/* ============================================
    PRUEBA (19 nov 2026) — aire más sobrio. Sin commitear hasta que manu elija.
    Todo pequeño y en su sitio: una barra arriba (páginas vecinas, «menú»,
    idiomas y zoom), textos en dos columnas, la portada con las webs una tras
@@ -2882,7 +2962,7 @@ html.js #seo-prerender {
   cursor: pointer;
   font-family: var(--font-serif);
   font-size: var(--chico);
-  color: #fff;
+  color: var(--fusion);
 }
 .menu-btn:hover { color: #999; }
 .menu-vecinos .menu-btn::after { content: ","; margin-right: 0.45em; }
@@ -2904,7 +2984,7 @@ html.js #seo-prerender {
 .desplegable { position: relative; }
 .desplegable > summary { list-style: none; color: #999; }
 .desplegable > summary::-webkit-details-marker { display: none; }
-.desplegable > summary:hover, .desplegable[open] > summary { color: #fff; }
+.desplegable > summary:hover, .desplegable[open] > summary { color: var(--fusion); }
 .desplegable-opciones {
   position: absolute;
   right: 0;
@@ -2912,8 +2992,13 @@ html.js #seo-prerender {
   display: flex;
   gap: 1em;
   padding: 0.15rem 0.75rem;
-  background: #fff;
+  background: var(--fusion);
   white-space: nowrap;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  width: max-content;
+  max-width: calc(100dvw - 2 * var(--margen));
+  box-sizing: border-box;
 }
 .desplegable-opciones::after {      /* la punta */
   content: "";
@@ -2921,7 +3006,7 @@ html.js #seo-prerender {
   top: 100%;
   right: 0.9rem;
   border: 0.32rem solid transparent;
-  border-top-color: #fff;
+  border-top-color: var(--fusion);
 }
 .desplegable-opciones .menu-btn { color: #000; }
 .desplegable-opciones .menu-btn:hover { color: #777; }
@@ -3018,16 +3103,15 @@ html.js #seo-prerender {
 }
 .proy-texto { font-family: var(--font-text); }
 
-/* --- Bienvenida: las webs, una debajo de otra, y se baja de verdad. La del
-   centro se ve entera; la de antes y la de después asoman, apagadas: así se ven
-   venir. --- */
-.celda.welcome { padding: 0; --wp-ancho: min(60dvw, 86dvh); }
+/* --- Bienvenida: las webs, esparcidas a un lado y a otro mientras se baja. La
+   que pasa por el centro se ve entera; la de antes y la de después asoman,
+   apagadas: así se ven venir. `--wp-juego` es cuánto se apartan del centro. --- */
+.celda.welcome { padding: 0; --wp-ancho: min(52dvw, 80dvh); --wp-juego: 17dvw; }
 .welcome-proyectos {
   position: absolute;
   inset: 0;
   overflow-y: auto;
   overscroll-behavior-y: contain;
-  scroll-snap-type: y proximity;
   z-index: 3;
 }
 .wp-escena {
@@ -3044,16 +3128,17 @@ html.js #seo-prerender {
   width: var(--wp-ancho);
   opacity: 0.25;
   scale: 0.78;
-  scroll-snap-align: center;
+  translate: calc(var(--dx, 0) * var(--wp-juego)) 0;
   transition: opacity 0.3s ease, scale 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.wp + .wp { margin-top: calc(var(--wp-ancho) / 1.45 * -0.24); }   /* un cuarto de su alto, también en el móvil */
+.wp + .wp { margin-top: calc(var(--wp-ancho) / 1.45 * -0.2); }   /* se pisan una esquina */
 .wp.visible { opacity: 1; scale: 1; z-index: 1; }
-/* Cada web, un poco fuera de sitio hacia un lado (cinco posiciones que se repiten). */
-.wp:nth-child(5n + 2) { transform: translateX(-4dvw); }
-.wp:nth-child(5n + 3) { transform: translateX(5dvw); }
-.wp:nth-child(5n + 4) { transform: translateX(-2dvw); }
-.wp:nth-child(5n)     { transform: translateX(3dvw); }
+/* Cada web, a un lado o a otro: cinco posiciones que se repiten, en zigzag. */
+.wp:nth-child(5n + 1) { --dx: -0.5; }
+.wp:nth-child(5n + 2) { --dx: 0.9; }
+.wp:nth-child(5n + 3) { --dx: -1; }
+.wp:nth-child(5n + 4) { --dx: 0.45; }
+.wp:nth-child(5n)     { --dx: -0.15; }
 /* Sin sombra propia: las capturas ya traen la de su ventana, con margen
    transparente alrededor, y otra por fuera dibujaba un recuadro. La proporción
    reserva el sitio de las que aún no han cargado. */
@@ -3080,14 +3165,14 @@ body:has(.celda.welcome.activa) > .welcome-content { opacity: 1; }
 body > .welcome-content a { pointer-events: none; }
 body > .welcome-content .welcome-title,
 body > .welcome-content .welcome-tagline { display: block; max-width: none; text-shadow: none; letter-spacing: 0; text-align: left; white-space: nowrap; }
-body > .welcome-content .welcome-title { color: #fff; font-size: clamp(2.6rem, 8.5dvw, 10rem); line-height: 1.15; }
+body > .welcome-content .welcome-title { color: var(--fusion); font-size: clamp(2.6rem, 8.5dvw, 10rem); line-height: 1.15; }
 body > .welcome-content .welcome-tagline { color: #999; font-size: clamp(0.9rem, 2dvw, 2rem); }
 .marquee-pista { display: inline-flex; animation: marquee 60s linear infinite; }
 .marquee-pista > span { padding-right: 0.7em; }
 .welcome-tagline .marquee-pista { animation-direction: reverse; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 @media (max-width: 768px) {
-  .celda.welcome { --wp-ancho: 88dvw; }
+  .celda.welcome { --wp-ancho: 80dvw; --wp-juego: 8dvw; }
   body > .welcome-content { bottom: 10dvh; }
 }
 

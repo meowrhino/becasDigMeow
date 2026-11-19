@@ -36,6 +36,8 @@
       var t = localStorage.getItem("meowrhino-theme");
       if (!t) t = (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) ? "light" : "dark";
       if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+      var c = localStorage.getItem("meowrhino-tinte");
+      if (c) document.documentElement.setAttribute("data-tinte", c);
       // Marca que hay JS ANTES de que el body se parsee, para que el CSS oculte
       // el bloque pre-renderizado (#seo-prerender) desde el primer pintado.
       // Sin JS la clase no se pone y el bloque queda como versión navegable.

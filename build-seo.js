@@ -514,6 +514,8 @@ ${jsonLd}
       var t = localStorage.getItem("meowrhino-theme");
       if (!t && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";
       if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+      var c = localStorage.getItem("meowrhino-tinte");
+      if (c) document.documentElement.setAttribute("data-tinte", c);
     })();
   </script>
 </head>

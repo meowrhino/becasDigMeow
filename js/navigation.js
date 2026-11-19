@@ -5,6 +5,8 @@
 // Configurable: cada página (studio, archive) pasa su
 // propio grid, nombres y callbacks mediante configurarNavegacion().
 
+import { MODOS, modoActual, aplicarModo, nombreModo } from "./theme.js";
+
 // --- Elemento raíz ---
 const app = document.getElementById("content");
 
@@ -303,17 +305,12 @@ function pintarVecinosHeader() {
     ]);
   }
 
-  // modo(claro): claro u oscuro. El interruptor de siempre sigue en «menú»;
-  // aquí se le pasa el clic.
-  const oscuro = document.documentElement.dataset.theme === "dark";
-  const MODOS = cat ? ["clar", "fosc"] : en ? ["light", "dark"] : ["claro", "oscuro"];
-  desplegable(`${en || cat ? "mode" : "modo"}(${MODOS[+oscuro]})`, MODOS.map((texto, i) => ({
-    texto,
-    activa: !!i === oscuro,
-    alPulsar: () => {
-      if (!!i !== oscuro) document.querySelector(".theme-toggle")?.click();
-      pintarVecinosHeader();
-    },
+  // modo(claro): claro, oscuro y los tintes (js/theme.js)
+  const modo = modoActual();
+  desplegable(`${en || cat ? "mode" : "modo"}(${nombreModo(modo)})`, Object.keys(MODOS).map(m => ({
+    texto: nombreModo(m),
+    activa: m === modo,
+    alPulsar: () => { aplicarModo(m); pintarVecinosHeader(); },
   })));
 
   // idioma(es): despliega los tres
