@@ -2599,6 +2599,11 @@ html.js #seo-prerender {
   --gradient-color: #07130b;
   --fusion: #93ffb9;   /* con `difference` sobre este fondo, sale verde y no blanco */
 }
+/* El azul del cianotipo es un tono medio: con `difference`, el blanco salía
+   mostaza. La barra y los controles van con su tinta y sin fusión, como en ada. */
+[data-tinte="cianotipo"] .header-topright,
+[data-tinte="cianotipo"] .controles { mix-blend-mode: normal; --fusion: var(--text); }
+[data-tinte="cianotipo"] .desplegable > summary { color: var(--text-secondary); }
 
 /* ============================================
    PRUEBA (19 nov 2026) — aire más sobrio. Sin commitear hasta que manu elija.
@@ -2996,7 +3001,7 @@ body > .welcome-content .welcome-tagline { color: #999; font-size: clamp(0.9rem,
 .welcome-tagline .marquee-pista { animation-direction: reverse; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 @media (max-width: 768px) {
-  .celda.welcome { --wp-ancho: 80dvw; --wp-juego: 8dvw; }
+  .celda.welcome { --wp-ancho: 72dvw; --wp-juego: 8dvw; }   /* 72 × 1,15 + 8 de juego cabe sin cortarse */
   body > .welcome-content { bottom: 10dvh; }
 }
 
