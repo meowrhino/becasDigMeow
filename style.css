@@ -2671,38 +2671,36 @@ html.js #seo-prerender {
 }
 .metodologia-paso { margin-bottom: 0; }
 .about-pregunta + .metodologia-paso, .footer-seccion-titular + .footer-apartado > .footer-apartado-titular { margin-top: 0; }
-/* Donde la columna llega hasta la barra de arriba y los controles de abajo
-   (móvil y pantallas estrechas), el texto se funde antes de pasarles por
-   debajo: letra sobre letra no se leía ninguna de las dos. */
-@media (max-width: 1280px) {
-  .about-scroll-wrapper, .metodologia-scroll-wrapper, .footer-scroll-wrapper,
-  .tools-scroll-wrapper, .portfolio-scroll-wrapper, .archive-scroll-wrapper {
-    --funde-arriba: 3rem;
-    -webkit-mask-image: linear-gradient(to bottom, transparent var(--funde-arriba), #000 calc(var(--funde-arriba) + 2.5rem), #000 calc(100% - 5.5rem), transparent calc(100% - 3rem));
-    mask-image: linear-gradient(to bottom, transparent var(--funde-arriba), #000 calc(var(--funde-arriba) + 2.5rem), #000 calc(100% - 5.5rem), transparent calc(100% - 3rem));
-  }
-}
+/* La lista va de arriba abajo y se funde justo en el borde (manu, 21 nov
+   2026): el degradado empieza en el mismo borde y acaba pasados los menús, así
+   lo que pasa por debajo de ellos se ve medio transparente y el menú se lee. */
+.about-scroll-wrapper, .metodologia-scroll-wrapper, .footer-scroll-wrapper,
+.tools-scroll-wrapper, .portfolio-scroll-wrapper, .archive-scroll-wrapper,
+.easy-mode { --funde: 4.5rem; }
 /* en móvil la barra puede ocupar dos líneas */
 @media (max-width: 768px) {
   .about-scroll-wrapper, .metodologia-scroll-wrapper, .footer-scroll-wrapper,
   .tools-scroll-wrapper, .portfolio-scroll-wrapper, .archive-scroll-wrapper,
-  .easy-mode { --funde-arriba: 5.2rem; }
+  .easy-mode { --funde: 6.5rem; }
+}
+.about-scroll-wrapper, .metodologia-scroll-wrapper, .footer-scroll-wrapper,
+.tools-scroll-wrapper, .portfolio-scroll-wrapper, .archive-scroll-wrapper {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 var(--funde), #000 calc(100% - var(--funde)), transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 var(--funde), #000 calc(100% - var(--funde)), transparent);
 }
 /* Las fichas, las landings y la 404 se desplazan con la página entera, así que
    la máscara no les sirve: encima del texto va un trozo del fondo de puntos
-   (el mismo, alineado con él) que solo se ve arriba y abajo, donde está la barra. */
-@media (max-width: 1280px) {
-  .easy-mode::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-    background: var(--fondo-trama);
-    background-color: var(--bg);
-    -webkit-mask-image: linear-gradient(to bottom, #000 var(--funde-arriba, 3rem), transparent calc(var(--funde-arriba, 3rem) + 2.5rem), transparent calc(100% - 5.5rem), #000 calc(100% - 3rem));
-    mask-image: linear-gradient(to bottom, #000 var(--funde-arriba, 3rem), transparent calc(var(--funde-arriba, 3rem) + 2.5rem), transparent calc(100% - 5.5rem), #000 calc(100% - 3rem));
-  }
+   (el mismo, alineado con él) que solo se ve arriba y abajo, en el borde. */
+.easy-mode::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: var(--fondo-trama);
+  background-color: var(--bg);
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent var(--funde), transparent calc(100% - var(--funde)), #000);
+  mask-image: linear-gradient(to bottom, #000, transparent var(--funde), transparent calc(100% - var(--funde)), #000);
 }
 .about-entrada, .about-seccion p, .metodologia-content p:not(.metodologia-titular), .footer-content p { font-family: var(--font-text); }
 /* Entrada y apartados, la misma letra y el mismo gris: es una sola columna. */
