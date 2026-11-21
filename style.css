@@ -1551,85 +1551,36 @@ a.nav-label:visited {
 
 /* ============================================
    15. ARCHIVE — Páginas del archivo personal
-   Comparte el sistema de grid, minimap y tema
-   del studio. Grid diamante 4×4, estilo shooter.
+   Comparte el grid, la barra y los modos del studio (grid diamante). Cada
+   categoría es una página de la v3: su nombre grande desde el margen, como el
+   título del about, y sus cosas en la lista de los links (.plista).
    ============================================ */
 
-/* --- Meowrhino hub (archive) --- */
+/* El scroll ocupa la celda entera, como el portfolio y los links: la barra y
+   los controles flotan encima. */
+.archive-scroll-wrapper {
+  position: absolute;
+  inset: 0;
+  padding: 0 var(--margen);
+}
+.archive-content { padding: 16dvh 0 24dvh; }
+.archive-titulo { margin: 0 0 1.6rem; }
 
-.celda.archive-meowrhino {
-  align-items: center;
-  justify-content: center;
+/* La fila es un <div> (dentro van enlaces), así que el número y el apagado al
+   pasar, que en links cuelgan de a.plista-fila, se repiten aquí. */
+.plista-archive .plista-fila { grid-template-columns: 2.2rem minmax(0, 1fr) minmax(0, 1fr); }
+.plista-archive .plista-fila::before { counter-increment: fila; content: counter(fila, decimal-leading-zero); color: var(--text-muted); }
+.plista-archive:hover .plista-fila:not(:hover) { opacity: 0.4; }
+.plista-archive .plista-fila:first-child { border-top: none; }
+.plista-archive .plista-fila > :last-child a + a { margin-left: 0.3em; }
+.plista-archive a:hover { color: var(--text); }
+@media (max-width: 768px) {
+  .plista-archive .plista-fila { grid-template-columns: 2rem minmax(0, 1fr) auto; }
 }
 
-/* --- Secciones shooter (genérico) --- */
-
-.archive-section {
-  width: 80dvw;
-  height: 80dvh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: crosshair;
-}
-
-.archive-section-items {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.6em;
-  max-height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  overscroll-behavior-y: contain;
-  padding: 4dvh 2dvw;
-}
-
-/* Cada item: staggered reveal */
-.archive-item {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5em;
-  opacity: 0;
-  transform: scale(0.7);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  transition-delay: calc(var(--i) * 80ms);
-}
-
-/* Activar animación cuando la celda es activa */
-.celda.activa .archive-item {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.archive-item-name {
-  font-size: clamp(0.8rem, 1.1dvw, 1rem);
-  font-weight: 400;
-  color: var(--text);
-  text-decoration: none;
-  transition: color 0.2s ease;
-  white-space: nowrap;
-}
-
-.archive-item-name:hover {
-  color: var(--text-secondary);
-}
-
-.archive-item-links {
-  display: flex;
-  gap: 0.4em;
-}
-
-.archive-item-link {
-  font-size: clamp(0.55rem, 0.75dvw, 0.7rem);
-  color: var(--text-muted);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.archive-item-link:hover {
-  color: var(--text);
-}
+/* «studio» en la barra (js/archive-main.js): va fuera de .menu-vecinos, así
+   que la coma que separa de «menú» la pone él. */
+.barra-studio::after { content: ","; margin-right: 0.45em; }
 
 /* ============================================
    FOOTER — hub con secciones
@@ -2214,6 +2165,15 @@ html.js #seo-prerender {
 @media (max-width: 768px) {
   .proy-ficha .proy-resumen { margin-bottom: 0.8rem; }
 }
+/* En la ficha de un proyecto, todo al margen izquierdo, con el título: el
+   texto y las capturas en una segunda columna se veían sangrados (manu, 21 nov
+   2026). También la 404. Las landings siguen con las dos columnas del about. */
+.proy-ficha:not(.landing) { grid-template-columns: minmax(0, 1fr); }
+.proy-ficha:not(.landing) > * { grid-column: 1; }
+.proy-ficha:not(.landing) > .proy-resumen { margin-bottom: 0.8rem; }
+/* Las capturas traen el mockup con un 4 % de margen transparente por lado:
+   sin esto, la ventana se veía sangrada aunque la imagen ya estuviera al borde. */
+.proy-ficha:not(.landing) .proy-img { margin-left: -4%; }
 
 /* La letra pequeña del cupón: fuera de la tarjeta y siempre a la vista.
    Ver la nota en js/welcome-cupon.js — es una decisión de marca, no de

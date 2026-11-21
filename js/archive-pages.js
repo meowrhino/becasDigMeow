@@ -2,8 +2,8 @@
 // ARCHIVE PAGES — Renderizado de secciones del archive
 // ============================================
 //
-// renderSeccion() genérico para todas las categorías
-// con estilo "shooter" (items aparecen y crecen).
+// renderSeccion() genérico para todas las categorías: el nombre grande y la
+// lista de los links, una fila por cosa.
 //
 // Las funciones que arman HTML son puras (no tocan el DOM) para poder
 // compartirlas con build-seo.js, que pre-renderiza el archivo entero dentro de
@@ -25,42 +25,45 @@ export const SECCIONES = [
   "texts", "WIP", "hidden",
 ];
 
-// --- Sección genérica (shooter) ---
+// --- Sección: el título y la lista, como los links ---
 
-function renderItem(item, index) {
+function renderItem(item) {
   // Un item con `links` y sin `url` enlazaba dos veces al mismo sitio: el
   // nombre se llevaba links[0] y la lista lo repetía justo al lado. Ahora el
   // nombre solo enlaza si tiene destino propio, y los links se pintan enteros;
   // cuando no hay `url`, el nombre es el rótulo de su fila de enlaces.
+  // La fila es un <div> y no un <a> como en links: dentro van otros enlaces.
   const linksHtml = (item.links || []).map(l =>
-    `<a href="${escapeHTML(l.url)}" target="_blank" rel="noopener" class="archive-item-link">${escapeHTML(l.label)}</a>`
+    `<a href="${escapeHTML(l.url)}" target="_blank" rel="noopener">${escapeHTML(l.label)}</a>`
   ).join(" ");
 
   const nombre = item.url
-    ? `<a href="${escapeHTML(item.url)}" target="_blank" rel="noopener" class="archive-item-name">${escapeHTML(item.nombre)}</a>`
-    : `<span class="archive-item-name">${escapeHTML(item.nombre)}</span>`;
+    ? `<a href="${escapeHTML(item.url)}" target="_blank" rel="noopener">${escapeHTML(item.nombre)}</a>`
+    : `<span>${escapeHTML(item.nombre)}</span>`;
 
   return `
-    <div class="archive-item" style="--i: ${index}">
-      ${nombre}
-      ${linksHtml ? `<span class="archive-item-links">${linksHtml}</span>` : ""}
-    </div>
-  `;
+          <div class="plista-fila">${nombre}<span>${linksHtml}</span></div>`;
 }
 
-/** El HTML interior de una sección, sin tocar el DOM. */
-export function seccionHTML(items) {
+/**
+ * El HTML interior de una sección, sin tocar el DOM: el nombre de la categoría
+ * grande, como el título de las páginas de texto, y sus cosas en la lista de
+ * los links (.plista), una fila por cosa.
+ */
+export function seccionHTML(key, items) {
   return `
-    <div class="archive-section">
-      <div class="archive-section-items">
-        ${items.map((item, i) => renderItem(item, i)).join("")}
+    <div class="scroll-wrapper archive-scroll-wrapper">
+      <div class="scroll-content archive-content">
+        <h2 class="about-pregunta archive-titulo">${escapeHTML(key)}</h2>
+        <div class="plista plista-archive">${items.map(renderItem).join("")}
+        </div>
       </div>
     </div>
   `;
 }
 
 /**
- * Renderiza una sección genérica con estilo shooter.
+ * Pinta una sección en su celda.
  * @param {string} key — nombre de la categoría
  * @param {Array} items — array de proyectos/items
  */
@@ -69,7 +72,7 @@ export function renderSeccion(key, items) {
   const el = document.querySelector(`.celda.archive-${cssKey}`);
   if (!el || !items?.length) return;
 
-  el.innerHTML = seccionHTML(items);
+  el.innerHTML = seccionHTML(key, items);
 }
 
 /**
@@ -87,9 +90,7 @@ export function renderArchivePrerenderHTML(data) {
   const secciones = SECCIONES
     .filter(key => data[key]?.length)
     .map(key => `
-      <section class="archive-prerender-seccion">
-        <h2>${escapeHTML(key)}</h2>
-        ${seccionHTML(data[key])}
+      <section class="archive-prerender-seccion">${seccionHTML(key, data[key])}
       </section>`)
     .join("");
 

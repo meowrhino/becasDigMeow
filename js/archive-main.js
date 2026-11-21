@@ -18,7 +18,6 @@ import {
   cerrarMinimapExpandido,
   getOverlayEl,
   irHacia,
-  bordeCelda,
 } from "./navigation.js";
 import { renderSeccion, SECCIONES } from "./archive-pages.js";
 import { fetchJson } from "./utils.js";
@@ -39,8 +38,8 @@ async function cargarDatosArchive() {
 // Renderizado
 // ============================================
 
-// Las categorías que se renderizan como secciones shooter viven en
-// archive-pages.js: las comparte con el pre-render de build-seo.js.
+// Las categorías y cómo se pinta cada una viven en archive-pages.js: las
+// comparte con el pre-render de build-seo.js.
 
 async function renderizarContenido() {
   const data = await cargarDatosArchive();
@@ -60,23 +59,6 @@ async function renderizarContenido() {
   SECCIONES.forEach(key => {
     if (data[key]) renderSeccion(key, data[key]);
   });
-
-  // Nav-label "studio" permanente en la celda meowrhino
-  const meowEl = document.querySelector(".celda.archive-meowrhino");
-  if (meowEl) {
-    const studioLabel = document.createElement("a");
-    studioLabel.href = data.welcome.studioUrl;
-    studioLabel.classList.add("nav-label");
-    studioLabel.dataset.permanent = "true";
-    studioLabel.textContent = "studio";
-    // El estudio se siente claro por defecto: fija el tema destino en vez de
-    // invertir el actual (determinista; no pisa de forma rara una elección manual).
-    studioLabel.addEventListener("click", () => {
-      localStorage.setItem("meowrhino-theme", "light");
-      localStorage.removeItem("meowrhino-tinte");
-    });
-    bordeCelda(meowEl, "bottom").appendChild(studioLabel);
-  }
 }
 
 // ============================================
@@ -141,6 +123,14 @@ configurarNavegacion({
 crearCeldas();
 crearZoneLabel();
 crearHeader();
+// «studio», la vuelta a la web, va en la barra de arriba, entre las páginas
+// vecinas y «menú». Fuera de .menu-vecinos: esa la rehace navigation.js cada
+// vez que cambias de celda.
+const studio = document.createElement("a");
+studio.href = "/";
+studio.className = "menu-btn barra-studio";
+studio.textContent = "studio";
+document.querySelector(".header-topright .menu-vecinos")?.after(studio);
 crearOverlay();
 leerHash();
 renderizarContenido().then(() => actualizarVista());
