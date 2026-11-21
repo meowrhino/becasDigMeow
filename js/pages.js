@@ -199,9 +199,10 @@ export function renderWelcome(data) {
     e.preventDefault();
     pista.scrollLeft += e.deltaY * (e.deltaMode === 1 ? 40 : 1);
   }, { passive: false });
-  // Si nadie la toca en tres segundos, la fila avanza sola, despacio.
+  // Si nadie la toca en tres segundos, la fila avanza sola, despacio. Pasar el
+  // ratón no cuenta: así las webs pasan por debajo de él haciendo la ola.
   let tocada = 0, antes = 0;
-  ["wheel", "pointerdown", "pointermove", "touchstart", "keydown"].forEach(t =>
+  ["wheel", "pointerdown", "touchstart", "keydown"].forEach(t =>
     pista.addEventListener(t, () => { tocada = performance.now(); }, { passive: true }));
   // La ola: las webs que pasan bajo el ratón (o el dedo) se levantan, crecen y
   // se encienden, y al irte se quedan bailando un poco: un muelle por web, con
