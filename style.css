@@ -69,22 +69,6 @@
   --minimap-expanded-text: #ffffff;
   --overlay-bg: rgba(255, 255, 255, 0.97);
 
-  /* Buscaminas: los números del juego de siempre, bajados de saturación para
-     que convivan con el gris del estudio. Es el único color de todo el sitio,
-     y está donde tiene sentido: contar minas por color es la mecánica. */
-  --bm-1: #1c48d8;
-  --bm-2: #1d7a34;
-  --bm-3: #c62828;
-  --bm-4: #2b2f7a;
-  --bm-5: #8a2a24;
-  --bm-6: #12716e;
-  --bm-7: #1a1a1a;
-  --bm-8: #6e6e6e;
-  --bm-mina: #b3261e;
-  --bm-marca: #a01a12;
-  --bm-acierto: #1d7a34;
-  --bm-fallo: #b3261e;
-
   /* Buttons (subtle) */
   --btn-subtle: rgba(0, 0, 0, 0.3);
   --btn-subtle-hover: rgba(0, 0, 0, 0.6);
@@ -155,21 +139,6 @@
   --minimap-expanded-hover: #999999;
   --minimap-expanded-text: #121212;
   --overlay-bg: rgba(18, 18, 18, 0.97);
-
-  /* Buscaminas: los mismos números, subidos de luz para que se lean sobre el
-     gris oscuro de la casilla abierta. */
-  --bm-1: #6f9bff;
-  --bm-2: #5fc177;
-  --bm-3: #ff6f6b;
-  --bm-4: #9aa4ff;
-  --bm-5: #e08b84;
-  --bm-6: #4fd2ce;
-  --bm-7: #e0e0e0;
-  --bm-8: #9a9a9a;
-  --bm-mina: #d1534c;
-  --bm-marca: #ff8a80;
-  --bm-acierto: #3f9d59;
-  --bm-fallo: #d1534c;
 
   /* Buttons (subtle) */
   --btn-subtle: rgba(255, 255, 255, 0.3);
@@ -1183,11 +1152,14 @@ a.nav-label:visited {
    en el portfolio) y minas/tiempo a los lados. Lo
    que hay dentro de la celda es solo el tablero.
 
-   Es el único sitio del estudio con color: los
-   números del buscaminas son los del buscaminas
-   desde 1990 y cambiarlos por grises no lo haría
-   más nuestro, lo haría menos legible. El resto de
-   la celda va con las variables de siempre.
+   Fue el único sitio con color (los números de
+   1990) y casillas grises de minimapa: parecía de
+   otra web. Ahora es una tabla en la tinta de la
+   página: rejilla de pelo, la casilla por abrir con
+   un velo de tinta, la abierta en blanco, números
+   en negro y la mina invertida. Se reconoce por la
+   rejilla y el ⚑, no por los colores. Todo sale de
+   --text y --bg, así que sigue a cada modo solo.
    ============================================ */
 
 .celda.buscaminas {
@@ -1263,7 +1235,10 @@ a.nav-label:visited {
 
 .bm-tablero {
   display: grid;
+  /* Los huecos de 1px dejan ver el fondo del tablero: esa es la rejilla. */
   gap: 1px;
+  padding: 1px;
+  background: var(--border);
   user-select: none;
   /* Con el mínimo de 13px por casilla, la partida difícil no siempre cabe en
      un móvil. Antes de encoger las casillas hasta que no se puedan tocar,
@@ -1280,36 +1255,22 @@ a.nav-label:visited {
   border: none;
   font-family: var(--font-serif);
   line-height: 1;
-  background: var(--minimap-expanded-bg);
-  color: var(--minimap-expanded-text);
+  background: color-mix(in srgb, var(--text) 10%, var(--bg));
+  color: var(--text);
   cursor: pointer;
   transition: background var(--transition-fast);
 }
-.bm-casilla:hover:not(.abierta) { background: var(--minimap-expanded-hover); }
+.bm-casilla:hover:not(.abierta) { background: color-mix(in srgb, var(--text) 20%, var(--bg)); }
 
 .bm-casilla.abierta {
-  background: var(--bg-hover);
-  color: var(--text-content);
+  background: var(--bg);
   cursor: default;
 }
 
-.bm-casilla.mina { background: var(--bm-mina); color: #ffffff; }
+.bm-casilla.mina { background: var(--text); color: var(--bg); }
 
-.bm-casilla.bandera,
-.bm-casilla.duda { color: var(--bm-marca); }
-
-/* Al acabar la partida, cada marca dice si estaba bien puesta. */
-.bm-casilla.acierto { background: var(--bm-acierto); color: #ffffff; }
-.bm-casilla.fallo   { background: var(--bm-fallo);   color: #ffffff; text-decoration: line-through; }
-
-.bm-casilla[data-n="1"] { color: var(--bm-1); }
-.bm-casilla[data-n="2"] { color: var(--bm-2); }
-.bm-casilla[data-n="3"] { color: var(--bm-3); }
-.bm-casilla[data-n="4"] { color: var(--bm-4); }
-.bm-casilla[data-n="5"] { color: var(--bm-5); }
-.bm-casilla[data-n="6"] { color: var(--bm-6); }
-.bm-casilla[data-n="7"] { color: var(--bm-7); }
-.bm-casilla[data-n="8"] { color: var(--bm-8); }
+/* Al acabar la partida, la marca mal puesta se tacha; la buena se queda. */
+.bm-casilla.fallo { color: var(--text-secondary); text-decoration: line-through; }
 
 /* --- el pie del tablero: la ayuda, o abrir/marcar en táctil --- */
 
@@ -1328,18 +1289,33 @@ a.nav-label:visited {
 
 .bm-modos { display: flex; gap: 0.5rem; }
 
+/* Abrir/marcar, en texto como los niveles: el activo en tinta, el otro en
+   gris. Sin caja, pero con 44px de alto para el dedo. */
 .bm-modo {
   font-family: var(--font-serif);
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   text-transform: lowercase;
-  padding: 0.4em 1em;
+  min-height: 44px;
+  padding: 0 0.8em;
   background: none;
-  border: 1px solid var(--border);
+  border: none;
   color: var(--text-secondary);
   cursor: pointer;
-  transition: border-color var(--transition-fast), color var(--transition-fast);
+  transition: color var(--transition-fast);
 }
-.bm-modo.activo { border-color: var(--border-hover); color: var(--text); }
+.bm-modo.activo { color: var(--text); text-decoration: underline; text-underline-offset: 0.3em; }
+
+/* En el móvil, minas/tiempo y los niveles iban centrados y los pisaban la
+   barra (arriba a la derecha) y los controles (abajo a la derecha): se van a
+   la izquierda, que está libre. */
+@media (max-width: 768px) {
+  .celda.buscaminas > .nav-slot.top,
+  .celda.buscaminas > .nav-slot.bottom {
+    left: var(--margen, 1rem);
+    transform: none;
+    align-items: flex-start;
+  }
+}
 
 /* --- el final de la partida --- */
 
@@ -1374,12 +1350,13 @@ a.nav-label:visited {
   text-transform: lowercase;
   padding: 0.55em 1.2em;
   border: none;
-  background: var(--minimap-expanded-bg);
-  color: var(--minimap-expanded-text);
+  background: none;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
   cursor: pointer;
-  transition: background var(--transition-fast), transform var(--transition-fast);
 }
-.bm-otra:hover { background: var(--minimap-expanded-hover); transform: scale(1.05); }
+.bm-otra:hover { text-decoration-thickness: 2px; }
 
 
 /* ============================================
