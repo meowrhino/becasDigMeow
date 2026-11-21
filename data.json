@@ -563,7 +563,8 @@
             "trae 3–5 referentes de cosas que te gusten o que no: webs, carteles, videojuegos, interfaces que hayas visto por ahí. los miramos contigo y hablamos de estructura, estética y dinero.",
             "no tenemos tarifa fija: el presupuesto lo cerramos contigo en esa reunión, según lo que necesita el proyecto.",
             "salimos con un primer boceto de lo que podría ser, una lista de lo que necesitamos de ti —textos, imágenes y tu identidad visual si la tienes— y una fecha para pasárnoslo."
-          ]
+          ],
+          "emoji": "💬"
         },
         {
           "titular": "diseñamos",
@@ -571,7 +572,8 @@
             "el mes empieza el día que llega tu material. con tus textos y tus imágenes de verdad delante, el boceto se convierte en un diseño: estructura, contenidos, estética y funcionamiento. diseñamos contigo, no para ti.",
             "en una o dos semanas tienes la primera entrega. la comentamos juntos y recoges todos tus cambios en una ronda: varios a la vez, sin problema, pero de una vez.",
             "tómate el tiempo que necesites para decidirte. es mucho más fácil cambiar de dirección aquí que cuando ya estamos programando."
-          ]
+          ],
+          "emoji": "✏️"
         },
         {
           "titular": "construimos",
@@ -579,21 +581,24 @@
             "con el diseño aprobado empezamos a escribir código y la web empieza a existir de verdad.",
             "el diseño evolucionará al adaptarlo a móvil y a otras resoluciones posibles: hay que hacerlo funcionar y resolver lo que aparece al construirlo. eso es parte del trabajo, no una ronda de cambios.",
             "aquí van la segunda y la tercera entrega —la web a medias y la web acabada—, cada una con su ronda. solemos tardar otras una o dos semanas: con el diseño y la programación seguidos, sale el mes."
-          ]
+          ],
+          "emoji": "🧱"
         },
         {
           "titular": "te la entregamos",
           "parrafos": [
             "nos vemos una última vez delante de tu ordenador. sales de esa reunión sabiendo actualizar tu web por tu cuenta: ese es el objetivo, no un extra.",
             "la web se queda en tu cuenta de github, a tu nombre, con una copia entera del proyecto. y configuramos el dominio: lo mejor es que esperes a comprarlo en esa reunión —recomendamos cloudflare— y queda siempre a tu nombre."
-          ]
+          ],
+          "emoji": "🎁"
         },
         {
           "titular": "y después",
           "parrafos": [
             "el código es tuyo. puedes seguir por tu cuenta o pedirnos ayuda cuando la necesites.",
             "no necesitas pagarnos una cuota mensual para tener una web funcionando."
-          ]
+          ],
+          "emoji": "🌱"
         }
       ],
       "importante": {
@@ -605,7 +610,8 @@
           "2 semanas de garantía después de la entrega: si algo falla, lo arreglamos.",
           "si, una vez confirmado, el proyecto se queda parado más de dos semanas esperando material, retomarlo cuesta un 10% más: te habíamos guardado un mes de agenda y tenemos que volver a hacerte sitio."
         ],
-        "enlace": "la letra pequeña completa está en condiciones"
+        "enlace": "la letra pequeña completa está en condiciones",
+        "emoji": "📌"
       }
     },
     "en": {
@@ -617,7 +623,8 @@
             "bring 3–5 references of things you like or don't: websites, posters, video games, interfaces you've come across anywhere. we go through them together and talk about structure, look and money.",
             "we have no fixed rate: we settle the budget with you in that meeting, according to what the project needs.",
             "we leave with a first sketch of what it could be, a list of what we need from you —texts, images and your visual identity if you have one— and a date to send it over."
-          ]
+          ],
+          "emoji": "💬"
         },
         {
           "titular": "we design",
@@ -625,7 +632,8 @@
             "the month starts the day your material arrives. with your real texts and images in front of us, the sketch becomes a design: structure, contents, look and behaviour. we design with you, not for you.",
             "in a week or two you have the first delivery. we go through it together and you gather all your changes in one round: several at once is fine, but in one go.",
             "take as long as you need to decide. it is much easier to change direction here than once we are already coding."
-          ]
+          ],
+          "emoji": "✏️"
         },
         {
           "titular": "we build",
@@ -633,21 +641,24 @@
             "with the design approved we start writing code and the website begins to exist for real.",
             "the design will evolve as we adapt it to phones and other possible screens: it has to work, and whatever comes up while building it has to be solved. that is part of the job, not a round of changes.",
             "this is where the second and third deliveries happen —the half-built website and the finished one—, each with its round. it usually takes another week or two: design and code back to back, and there is your month."
-          ]
+          ],
+          "emoji": "🧱"
         },
         {
           "titular": "we hand it over",
           "parrafos": [
             "we meet one last time, in front of your computer. you leave that meeting knowing how to update your website without us: that is the point, not an extra.",
             "the website stays in your github account, in your name, with a full copy of the project. and we set up the domain: it is best if you wait and buy it in that meeting —we recommend cloudflare— and it always stays in your name."
-          ]
+          ],
+          "emoji": "🎁"
         },
         {
           "titular": "and after that",
           "parrafos": [
             "the code is yours. you can carry on by yourself or ask us for help whenever you need it.",
             "you don't need to pay us a monthly fee to keep a website running."
-          ]
+          ],
+          "emoji": "🌱"
         }
       ],
       "importante": {
@@ -659,7 +670,8 @@
           "2 weeks of warranty after delivery: if something breaks, we fix it.",
           "if, once confirmed, the project sits still for more than two weeks waiting for material, picking it up again costs 10% more: we had set aside a month of our calendar and we have to make room for you again."
         ],
-        "enlace": "the full small print is in terms"
+        "enlace": "the full small print is in terms",
+        "emoji": "📌"
       }
     },
     "cat": {
@@ -671,7 +683,8 @@
             "porta 3–5 referents de coses que t'agradin o que no: webs, cartells, videojocs, interfícies que hagis vist per aquí i per allà. els mirem amb tu i parlem d'estructura, estètica i diners.",
             "no tenim tarifa fixa: el pressupost el tanquem amb tu en aquella reunió, segons el que necessita el projecte.",
             "en sortim amb un primer esbós del que podria ser, una llista del que necessitem de tu —textos, imatges i la teva identitat visual si en tens— i una data per passar-nos-ho."
-          ]
+          ],
+          "emoji": "💬"
         },
         {
           "titular": "dissenyem",
@@ -679,7 +692,8 @@
             "el mes comença el dia que arriba el teu material. amb els teus textos i les teves imatges de veritat al davant, l'esbós es converteix en un disseny: estructura, continguts, estètica i funcionament. dissenyem amb tu, no per a tu.",
             "en una o dues setmanes tens el primer lliurament. el comentem junts i reculls tots els teus canvis en una ronda: diversos alhora, cap problema, però d'una vegada.",
             "pren-te el temps que necessitis per decidir-te. és molt més fàcil canviar de direcció aquí que quan ja estem programant."
-          ]
+          ],
+          "emoji": "✏️"
         },
         {
           "titular": "construïm",
@@ -687,21 +701,24 @@
             "amb el disseny aprovat comencem a escriure codi i la web comença a existir de veritat.",
             "el disseny evolucionarà en adaptar-lo al mòbil i a altres resolucions possibles: cal fer-lo funcionar i resoldre el que apareix en construir-lo. això forma part de la feina, no és una ronda de canvis.",
             "aquí van el segon i el tercer lliurament —la web a mitges i la web acabada—, cadascun amb la seva ronda. solem trigar una o dues setmanes més: amb el disseny i la programació seguits, surt el mes."
-          ]
+          ],
+          "emoji": "🧱"
         },
         {
           "titular": "te l'entreguem",
           "parrafos": [
             "ens veiem una última vegada davant del teu ordinador. surts d'aquesta reunió sabent actualitzar la teva web pel teu compte: aquest és l'objectiu, no un extra.",
             "la web es queda al teu compte de github, al teu nom, amb una còpia sencera del projecte. i configurem el domini: el millor és que esperis a comprar-lo en aquella reunió —recomanem cloudflare— i queda sempre al teu nom."
-          ]
+          ],
+          "emoji": "🎁"
         },
         {
           "titular": "i després",
           "parrafos": [
             "el codi és teu. pots seguir pel teu compte o demanar-nos ajuda quan la necessitis.",
             "no necessites pagar-nos una quota mensual per tenir una web funcionant."
-          ]
+          ],
+          "emoji": "🌱"
         }
       ],
       "importante": {
@@ -713,7 +730,8 @@
           "2 setmanes de garantia després del lliurament: si alguna cosa falla, l'arreglem.",
           "si, un cop confirmat, el projecte es queda aturat més de dues setmanes esperant material, reprendre'l costa un 10% més: t'havíem guardat un mes d'agenda i hem de tornar a fer-te lloc."
         ],
-        "enlace": "la lletra petita completa és a condicions"
+        "enlace": "la lletra petita completa és a condicions",
+        "emoji": "📌"
       }
     }
   },
@@ -772,7 +790,8 @@
             "internet lleva mucho tiempo acompañándonos y nos ha hecho mucha compañía. hacer de internet un lugar un poquito mejor es la finalidad última de nuestro trabajo, de cada proyecto que construimos.",
             "nos interesa entender qué haces, qué necesitas y qué puede funcionar mejor para ti: una ilustradora que no quiere depender de instagram, un tatuador, un músico con tres discos, un colectivo, alguien que escribe y quiere un sitio donde leerle.",
             "queremos que cuando terminemos tengas una web de la que presumas."
-          ]
+          ],
+          "emoji": "💭"
         },
         {
           "titular": "tu web es tuya",
@@ -781,7 +800,8 @@
             "el código que generemos lo podrás cambiar tú o quien tú quieras, y en github se te queda el historial de todo lo que has ido haciendo.",
             "una web puede ser mucho más sencilla de lo que parece: textos, imágenes y código. usamos una estructura que te permite actualizar el contenido sin tener que saber programar, y te enseñamos a hacerlo.",
             "y si algún día quieres cambiar de alojamiento, de estudio o de proveedor, puedes hacerlo: no tienes que seguir trabajando con nosotros para que tu web siga funcionando."
-          ]
+          ],
+          "emoji": "🏡"
         },
         {
           "titular": "jardines digitales",
@@ -789,7 +809,8 @@
             "hay quien llama a esto [jardines digitales](https://www.cccb.org/es/w/articulos/jardines-digitales-el-fin-del-scroll-infinito): espacios pequeños de internet que se cultivan en lugar de publicarse y abandonarse. la idea viene de mike caulfield y maggie appleton.",
             "crecen despacio. cambian de forma. tienen cosas a medio hacer y cosas que llevan años ahí.",
             "no necesitan competir por nuestra atención, simplemente están. nos gusta pensar que tu web puede ser una de esas cosas, un pequeño lugar que existe porque tú has decidido que exista."
-          ]
+          ],
+          "emoji": "🪴"
         }
       ]
     },
@@ -808,7 +829,8 @@
             "the internet has been with us for a long time and it has kept us good company. making the internet a slightly better place is the whole point of our work, of every project we build.",
             "we want to understand what you do, what you need and what can work best for you: an illustrator who doesn't want to depend on instagram, a tattoo artist, a musician with three records, a collective, someone who writes and wants a place to be read.",
             "we want you to end up with a website you show off."
-          ]
+          ],
+          "emoji": "💭"
         },
         {
           "titular": "your website is yours",
@@ -817,7 +839,8 @@
             "the code we write is yours to change, or anyone else's you choose, and github keeps the history of everything you have been doing.",
             "a website can be far simpler than it looks: text, images and code. we use a structure that lets you update the content without having to know how to program, and we show you how.",
             "and if one day you want to change hosting, studio or provider, you can: you don't have to keep working with us for your website to keep running."
-          ]
+          ],
+          "emoji": "🏡"
         },
         {
           "titular": "digital gardens",
@@ -825,7 +848,8 @@
             "some people call this [digital gardens](https://www.cccb.org/en/w/articles/digitals-gardens-an-end-to-the-infinite-scroll): small spaces of the internet that are cultivated instead of published and abandoned. the idea comes from mike caulfield and maggie appleton.",
             "they grow slowly. they change shape. they have half-finished things and things that have been there for years.",
             "they don't need to compete for our attention, they are simply there. we like to think your website can be one of those, a small place that exists because you decided it should exist."
-          ]
+          ],
+          "emoji": "🪴"
         }
       ]
     },
@@ -844,7 +868,8 @@
             "internet fa molt temps que ens acompanya i ens ha fet molta companyia. fer d'internet un lloc una miqueta millor és la finalitat última de la nostra feina, de cada projecte que construïm.",
             "ens interessa entendre què fas, què necessites i què pot funcionar millor per a tu: una il·lustradora que no vol dependre d'instagram, un tatuador, un músic amb tres discos, un col·lectiu, algú que escriu i vol un lloc on llegir-lo.",
             "volem que quan acabem tinguis una web de la qual presumeixis."
-          ]
+          ],
+          "emoji": "💭"
         },
         {
           "titular": "la teva web és teva",
@@ -853,7 +878,8 @@
             "el codi que generem el podràs canviar tu o qui tu vulguis, i a github et queda l'historial de tot el que has anat fent.",
             "una web pot ser molt més senzilla del que sembla: textos, imatges i codi. fem servir una estructura que et permet actualitzar el contingut sense haver de saber programar, i t'ensenyem a fer-ho.",
             "i si algun dia vols canviar d'allotjament, d'estudi o de proveïdor, pots fer-ho: no has de continuar treballant amb nosaltres perquè la teva web segueixi funcionant."
-          ]
+          ],
+          "emoji": "🏡"
         },
         {
           "titular": "jardins digitals",
@@ -861,7 +887,8 @@
             "hi ha qui en diu [jardins digitals](https://www.cccb.org/ca/w/articles/jardins-digitals-la-fi-de-l-scroll-infinit): espais petits d'internet que es cultiven en lloc de publicar-se i abandonar-se. la idea ve de mike caulfield i maggie appleton.",
             "creixen a poc a poc. canvien de forma. tenen coses a mig fer i coses que fa anys que hi són.",
             "no necessiten competir per la nostra atenció, simplement hi són. ens agrada pensar que la teva web pot ser una d'aquestes coses, un petit lloc que existeix perquè tu has decidit que existeixi."
-          ]
+          ],
+          "emoji": "🪴"
         }
       ]
     }
@@ -905,47 +932,54 @@
               "titulo": "qué hacemos",
               "parrafos": [
                 "diseñamos y desarrollamos webs a medida. son webs estáticas: archivos, sin servidor. el contenido vive en un archivo que aprendes a leer y modificar: textos, imágenes y archivos, sin depender de nadie."
-              ]
+              ],
+              "emoji": "🛠️"
             },
             {
               "titulo": "el código es tuyo",
               "parrafos": [
                 "puedes usarlo, transformarlo, continuarlo o dárselo a quien quieras. trabajamos en nuestro repositorio y, al entregar, te pasamos una copia entera a tu cuenta de github, a tu nombre.",
                 "nosotros conservamos el original con todo el historial: es el registro de nuestro trabajo y lo que nos permite seguir enseñando el proyecto aunque algún día tu web deje de estar en línea. esa copia nuestra queda publicada, sin dominio, en una dirección de meowrhino, para poder enlazarla si algún día el dominio caduca o le pasa cualquier cosa a tu web. también nos quedamos como administradores de tu copia, para poder echarte una mano si lo necesitas; puedes quitarnos ese acceso cuando quieras."
-              ]
+              ],
+              "emoji": "🔑"
             },
             {
               "titulo": "el material",
               "parrafos": [
                 "en la primera reunión fijamos la fecha en que nos pasas el material: textos, imágenes y una identidad visual mínima (logo, paleta de color, tipografía). si no la tienes, se puede presupuestar como parte del proyecto.",
                 "hasta esa fecha trabajamos sobre un boceto; el diseño final se hace con tu material real, no con rellenos, y el mes de trabajo empieza el día que llega."
-              ]
+              ],
+              "emoji": "🖼️"
             },
             {
               "titulo": "entregas y rondas",
               "parrafos": [
                 "cada proyecto incluye 3 entregas · 1 ronda de cambios por entrega: diseño, programación intermedia y programación final. cada ronda puede incluir varios cambios, pero una vez enviada, los siguientes pertenecen a la siguiente ronda. lo aprobado en una entrega no se reabre en la siguiente.",
                 "las rondas extra se cobran por hora."
-              ]
+              ],
+              "emoji": "🔁"
             },
             {
               "titulo": "el pago",
               "parrafos": [
                 "en dos partes: una al confirmar el proyecto —reserva el mes de agenda y nos permite empezar— y otra antes de la entrega final, con la web terminada y antes de publicarla. el reparto lo eliges tú, entre el 40 y el 60 % en cada parte."
-              ]
+              ],
+              "emoji": "💶"
             },
             {
               "titulo": "dominio y alojamiento",
               "parrafos": [
                 "el dominio lo compras tú y queda a tu nombre, no al nuestro. te ayudamos a elegirlo y a configurarlo —recomendamos cloudflare—, pero la titularidad y la renovación anual son tuyas. si caduca, la web deja de verse; los archivos siguen siendo tuyos y se pueden volver a publicar cuando quieras.",
                 "la web se sirve como archivos estáticos, sin servidor propio ni base de datos, desde una cuenta de cloudflare —o github— que también es tuya y cuyo plan gratuito cubre de sobra un proyecto de este tamaño. el alojamiento no tiene coste mensual: el dominio es el único gasto recurrente. si el proyecto necesita algo más —una tienda, por ejemplo—, se presupuesta aparte y va igualmente en tus cuentas."
-              ]
+              ],
+              "emoji": "🌐"
             },
             {
               "titulo": "después de la entrega",
               "parrafos": [
                 "tienes dos semanas de garantía: si algo de lo que hemos entregado falla, lo arreglamos. pasado ese plazo —o si el fallo viene de un cambio tuyo al editar la web— el arreglo se cobra por hora, como cualquier cambio nuevo."
-              ]
+              ],
+              "emoji": "🧰"
             },
             {
               "titulo": "plazos y cancelación",
@@ -953,19 +987,22 @@
                 "la primera reunión es gratuita, y la segunda también si llega con tu material en la fecha que fijamos.",
                 "si, una vez confirmado el proyecto, se queda parado más de dos semanas esperando material, retomarlo cuesta un 10 % del presupuesto: te habíamos guardado el mes y tenemos que volver a hacerte sitio.",
                 "puedes parar el proyecto cuando quieras abonando la parte proporcional de lo trabajado; si se retoma más adelante, se abre un nuevo presupuesto."
-              ]
+              ],
+              "emoji": "⏳"
             },
             {
               "titulo": "portfolio",
               "parrafos": [
                 "nos reservamos la posibilidad de publicar el proyecto en nuestro portfolio y redes. al terminar la web, te proponemos un post conjunto en instagram."
-              ]
+              ],
+              "emoji": "👀"
             },
             {
               "titulo": "nuestro compromiso",
               "parrafos": [
                 "diseñar una web que entiendas, que puedas mantener y que pueda crecer contigo."
-              ]
+              ],
+              "emoji": "🤝"
             }
           ],
           "nota": "aceptar el presupuesto significa aceptar estas condiciones."
@@ -981,7 +1018,8 @@
             "<strong>tus derechos:</strong> acceso, rectificación, supresión, oposición, portabilidad y limitación. escribe a <a href=\"mailto:hola@meowrhino.studio\">hola@meowrhino.studio</a>.",
             "<strong>reclamación:</strong> si crees que no se respetan tus derechos, puedes presentar reclamación ante la <a href=\"https://www.aepd.es\" target=\"_blank\" rel=\"noopener\">aepd</a>.",
             "<em>última actualización: mayo 2026.</em>"
-          ]
+          ],
+          "emoji": "🔒"
         },
         {
           "label": "financiación",
@@ -1005,7 +1043,8 @@
               "alt": "Sistema Nacional de Garantía Juvenil"
             }
           ],
-          "frase": "Aquesta actuació està impulsada i subvencionada pel Departament d'Empresa i Treball i cofinançada per la Unió Europea mitjançant el Fons Social Europeu Plus."
+          "frase": "Aquesta actuació està impulsada i subvencionada pel Departament d'Empresa i Treball i cofinançada per la Unió Europea mitjançant el Fons Social Europeu Plus.",
+          "emoji": "🏛️"
         }
       ]
     },
@@ -1019,47 +1058,54 @@
               "titulo": "what we do",
               "parrafos": [
                 "we design and develop custom websites. they are static websites: files, no server. the content lives in a file you learn to read and edit: texts, images and files, without depending on anyone."
-              ]
+              ],
+              "emoji": "🛠️"
             },
             {
               "titulo": "the code is yours",
               "parrafos": [
                 "you can use it, transform it, continue it or give it to whoever you want. we work in our own repository and, on delivery, we hand you a full copy in your github account, in your name.",
                 "we keep the original with its whole history: it is the record of our work and what lets us keep showing the project even if one day your website goes offline. that copy of ours stays published, without a domain, at a meowrhino address, so we can link to it if one day the domain expires or anything happens to your website. we also stay on as administrators of your copy, so we can give you a hand if you need it; you can remove that access whenever you want."
-              ]
+              ],
+              "emoji": "🔑"
             },
             {
               "titulo": "the material",
               "parrafos": [
                 "in the first meeting we set the date on which you send us the material: texts, images and a minimal visual identity (logo, colour palette, typography). if you don't have one, it can be quoted as part of the project.",
                 "until that date we work on a sketch; the final design is made with your real material, not with placeholders, and the month of work starts the day it arrives."
-              ]
+              ],
+              "emoji": "🖼️"
             },
             {
               "titulo": "deliveries and rounds",
               "parrafos": [
                 "each project includes 3 deliveries · 1 round of changes per delivery: design, mid-stage development and final development. each round may include several changes, but once it is sent, the next ones belong to the following round. what is approved in one delivery is not reopened in the next.",
                 "extra rounds are charged by the hour."
-              ]
+              ],
+              "emoji": "🔁"
             },
             {
               "titulo": "payment",
               "parrafos": [
                 "in two parts: one when the project is confirmed —it reserves the month in our calendar and lets us start— and one before the final delivery, with the website finished and before it goes live. you choose the split, between 40 and 60 % each."
-              ]
+              ],
+              "emoji": "💶"
             },
             {
               "titulo": "domain and hosting",
               "parrafos": [
                 "you buy the domain and it stays in your name, not ours. we help you choose it and set it up —we recommend cloudflare—, but ownership and the yearly renewal are yours. if it expires, the website stops being visible; the files are still yours and can be published again whenever you want.",
                 "the website is served as static files, with no server of its own and no database, from a cloudflare —or github— account that is also yours and whose free plan more than covers a project of this size. hosting has no monthly cost: the domain is the only recurring expense. if the project needs something more —a shop, for example—, it is quoted separately and also lives in your accounts."
-              ]
+              ],
+              "emoji": "🌐"
             },
             {
               "titulo": "after delivery",
               "parrafos": [
                 "you have two weeks of warranty: if anything we delivered breaks, we fix it. after that —or if the problem comes from a change you made while editing the website— the fix is charged by the hour, like any new change."
-              ]
+              ],
+              "emoji": "🧰"
             },
             {
               "titulo": "deadlines and cancellation",
@@ -1067,19 +1113,22 @@
                 "the first meeting is free, and so is the second one if it comes with your material on the date we set.",
                 "if, once the project is confirmed, it sits still for more than two weeks waiting for material, picking it up again costs 10 % of the budget: we had set aside the month and we have to make room for you again.",
                 "you can stop the project at any time by paying the proportional part of the work done; if it is picked up later, a new budget is opened."
-              ]
+              ],
+              "emoji": "⏳"
             },
             {
               "titulo": "portfolio",
               "parrafos": [
                 "we reserve the right to publish the project in our portfolio and social media. once the website is finished, we propose a joint post on instagram."
-              ]
+              ],
+              "emoji": "👀"
             },
             {
               "titulo": "our commitment",
               "parrafos": [
                 "to design a website you understand, that you can maintain and that can grow with you."
-              ]
+              ],
+              "emoji": "🤝"
             }
           ],
           "nota": "accepting the quote means accepting these conditions."
@@ -1095,7 +1144,8 @@
             "<strong>your rights:</strong> access, rectification, erasure, objection, portability and restriction. email <a href=\"mailto:hola@meowrhino.studio\">hola@meowrhino.studio</a>.",
             "<strong>complaint:</strong> you can lodge a complaint with the spanish dpa (<a href=\"https://www.aepd.es/en\" target=\"_blank\" rel=\"noopener\">aepd</a>).",
             "<em>last updated: may 2026.</em>"
-          ]
+          ],
+          "emoji": "🔒"
         },
         {
           "label": "funding",
@@ -1119,7 +1169,8 @@
               "alt": "National Youth Guarantee System"
             }
           ],
-          "frase": "Aquesta actuació està impulsada i subvencionada pel Departament d'Empresa i Treball i cofinançada per la Unió Europea mitjançant el Fons Social Europeu Plus."
+          "frase": "Aquesta actuació està impulsada i subvencionada pel Departament d'Empresa i Treball i cofinançada per la Unió Europea mitjançant el Fons Social Europeu Plus.",
+          "emoji": "🏛️"
         }
       ]
     },
@@ -1133,47 +1184,54 @@
               "titulo": "què fem",
               "parrafos": [
                 "dissenyem i desenvolupem webs a mida. són webs estàtiques: arxius, sense servidor. el contingut viu en un arxiu que aprens a llegir i modificar: textos, imatges i arxius, sense dependre de ningú."
-              ]
+              ],
+              "emoji": "🛠️"
             },
             {
               "titulo": "el codi és teu",
               "parrafos": [
                 "pots fer-lo servir, transformar-lo, continuar-lo o donar-lo a qui vulguis. treballem al nostre repositori i, en entregar, et passem una còpia sencera al teu compte de github, al teu nom.",
                 "nosaltres conservem l'original amb tot l'historial: és el registre de la nostra feina i el que ens permet continuar ensenyant el projecte encara que algun dia la teva web deixi d'estar en línia. aquesta còpia nostra queda publicada, sense domini, en una adreça de meowrhino, per poder enllaçar-la si algun dia el domini caduca o li passa qualsevol cosa a la teva web. també ens quedem com a administradors de la teva còpia, per poder donar-te un cop de mà si ho necessites; ens pots treure aquest accés quan vulguis."
-              ]
+              ],
+              "emoji": "🔑"
             },
             {
               "titulo": "el material",
               "parrafos": [
                 "a la primera reunió fixem la data en què ens passes el material: textos, imatges i una identitat visual mínima (logo, paleta de color, tipografia). si no en tens, es pot pressupostar com a part del projecte.",
                 "fins aquella data treballem sobre un esbós; el disseny final es fa amb el teu material real, no amb farciments, i el mes de feina comença el dia que arriba."
-              ]
+              ],
+              "emoji": "🖼️"
             },
             {
               "titulo": "lliuraments i rondes",
               "parrafos": [
                 "cada projecte inclou 3 lliuraments · 1 ronda de canvis per lliurament: disseny, programació intermèdia i programació final. cada ronda pot incloure diversos canvis, però un cop enviada, els següents pertanyen a la ronda següent. el que s'aprova en un lliurament no es reobre en el següent.",
                 "les rondes extra es cobren per hora."
-              ]
+              ],
+              "emoji": "🔁"
             },
             {
               "titulo": "el pagament",
               "parrafos": [
                 "en dues parts: una en confirmar el projecte —reserva el mes d'agenda i ens permet començar— i una altra abans del lliurament final, amb la web acabada i abans de publicar-la. el repartiment el tries tu, entre el 40 i el 60 % a cada part."
-              ]
+              ],
+              "emoji": "💶"
             },
             {
               "titulo": "domini i allotjament",
               "parrafos": [
                 "el domini el compres tu i queda al teu nom, no al nostre. t'ajudem a triar-lo i a configurar-lo —recomanem cloudflare—, però la titularitat i la renovació anual són teves. si caduca, la web deixa de veure's; els arxius continuen sent teus i es poden tornar a publicar quan vulguis.",
                 "la web se serveix com a arxius estàtics, sense servidor propi ni base de dades, des d'un compte de cloudflare —o github— que també és teu i el pla gratuït del qual cobreix de sobres un projecte d'aquesta mida. l'allotjament no té cost mensual: el domini és l'única despesa recurrent. si el projecte necessita alguna cosa més —una botiga, per exemple—, es pressuposta a part i va igualment als teus comptes."
-              ]
+              ],
+              "emoji": "🌐"
             },
             {
               "titulo": "després del lliurament",
               "parrafos": [
                 "tens dues setmanes de garantia: si alguna cosa del que hem entregat falla, ho arreglem. passat aquest termini —o si la fallada ve d'un canvi teu en editar la web— l'arranjament es cobra per hora, com qualsevol canvi nou."
-              ]
+              ],
+              "emoji": "🧰"
             },
             {
               "titulo": "terminis i cancel·lació",
@@ -1181,19 +1239,22 @@
                 "la primera reunió és gratuïta, i la segona també si arriba amb el teu material en la data que fixem.",
                 "si, un cop confirmat el projecte, es queda aturat més de dues setmanes esperant material, reprendre'l costa un 10 % del pressupost: t'havíem guardat el mes i hem de tornar a fer-te lloc.",
                 "pots aturar el projecte quan vulguis abonant la part proporcional del que s'ha treballat; si es reprèn més endavant, s'obre un nou pressupost."
-              ]
+              ],
+              "emoji": "⏳"
             },
             {
               "titulo": "portfolio",
               "parrafos": [
                 "ens reservem la possibilitat de publicar el projecte al nostre portfolio i xarxes. en acabar la web, et proposem un post conjunt a instagram."
-              ]
+              ],
+              "emoji": "👀"
             },
             {
               "titulo": "el nostre compromís",
               "parrafos": [
                 "dissenyar una web que entenguis, que puguis mantenir i que pugui créixer amb tu."
-              ]
+              ],
+              "emoji": "🤝"
             }
           ],
           "nota": "acceptar el pressupost significa acceptar aquestes condicions."
@@ -1209,7 +1270,8 @@
             "<strong>els teus drets:</strong> accés, rectificació, supressió, oposició, portabilitat i limitació. escriu a <a href=\"mailto:hola@meowrhino.studio\">hola@meowrhino.studio</a>.",
             "<strong>reclamació:</strong> si creus que no es respecten els teus drets, pots presentar reclamació davant l'<a href=\"https://www.aepd.es\" target=\"_blank\" rel=\"noopener\">aepd</a>.",
             "<em>última actualització: maig 2026.</em>"
-          ]
+          ],
+          "emoji": "🔒"
         },
         {
           "label": "finançament",
@@ -1233,7 +1295,8 @@
               "alt": "Sistema Nacional de Garantia Juvenil"
             }
           ],
-          "frase": "Aquesta actuació està impulsada i subvencionada pel Departament d'Empresa i Treball i cofinançada per la Unió Europea mitjançant el Fons Social Europeu Plus."
+          "frase": "Aquesta actuació està impulsada i subvencionada pel Departament d'Empresa i Treball i cofinançada per la Unió Europea mitjançant el Fons Social Europeu Plus.",
+          "emoji": "🏛️"
         }
       ]
     }

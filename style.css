@@ -1006,7 +1006,7 @@ a.nav-label:visited {
 }
 
 /* Último párrafo más tenue (compromiso del estudio) */
-.footer-content p:last-child {
+.footer-seccion > p:last-child {
   margin-bottom: 0;
   color: var(--text-muted);
   font-size: 0.88em;
@@ -1571,7 +1571,7 @@ a.nav-label:visited {
   margin: 0 0 0.7rem;
 }
 
-.footer-seccion p:last-child {
+.footer-seccion > p:last-child {
   margin-bottom: 0;
 }
 
@@ -2670,7 +2670,7 @@ html.js #seo-prerender {
   margin-top: 2.6rem;
 }
 .metodologia-paso { margin-bottom: 0; }
-.about-pregunta + .metodologia-paso, .footer-seccion-titular + .footer-apartado-titular { margin-top: 0; }
+.about-pregunta + .metodologia-paso, .footer-seccion-titular + .footer-apartado > .footer-apartado-titular { margin-top: 0; }
 /* Donde la columna llega hasta la barra de arriba y los controles de abajo
    (móvil y pantallas estrechas), el texto se funde antes de pasarles por
    debajo: letra sobre letra no se leía ninguna de las dos. */
@@ -2717,6 +2717,35 @@ html.js #seo-prerender {
   .about-pregunta, .about-seccion-titular, .metodologia-titular, .metodologia-importante-titular, .footer-apartado-titular { margin-bottom: 0.6rem; }
 }
 .proy-texto { font-family: var(--font-text); }
+
+/* --- Un emoji por bloque (metodología, statement, condiciones): en ordenador,
+   grande en el hueco de la derecha y fijo mientras se lee su bloque, como la
+   captura del portfolio al pasar por una fila (manu, 21 nov 2026: «para que
+   rellene ese espacio»). El bloque gana una segunda columna solo para él; el
+   texto sigue en la primera, desde el margen. En móvil no sale. --- */
+.footer-seccion > .footer-apartado { max-width: none; }
+.footer-apartado > p { max-width: 33em; }
+.bloque-emoji { display: none; }
+@media (min-width: 1025px) {
+  :is(.metodologia-paso, .metodologia-importante, .about-seccion, .footer-seccion, .footer-apartado):has(> .bloque-emoji) {
+    display: grid;
+    grid-template-columns: minmax(0, 33em) minmax(0, 1fr);
+  }
+  :is(.metodologia-paso, .metodologia-importante, .about-seccion, .footer-seccion, .footer-apartado):has(> .bloque-emoji) > :not(.bloque-emoji) { grid-column: 1; }
+  .bloque-emoji {
+    display: block;
+    grid-column: 2;
+    grid-row: 1 / span 40;   /* toda la altura del bloque, tenga las filas que tenga */
+    justify-self: center;
+    align-self: start;
+    position: sticky;
+    top: 22dvh;
+    height: 0;               /* no estira el bloque: el emoji cuelga hacia abajo y puede pisar al de al lado */
+    font-size: clamp(8rem, 16vw, 17rem);
+    line-height: 1;
+    user-select: none;
+  }
+}
 
 /* --- Bienvenida: las webs en fila, pasando de lado, cada una un poco más
    arriba o más abajo. La que pasa por el centro se ve entera; la de antes y la
