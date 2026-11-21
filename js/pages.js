@@ -135,7 +135,8 @@ export function renderWelcome(data) {
   // PRUEBA (21 nov 2026): la portada son las webs, grandes y en fila, en el
   // orden de proyectos.json, pasando de lado. La del centro se ve entera y la
   // de antes y la de después asoman, apagadas, así se ven venir. La fila no se
-  // acaba (tras la última vuelve la primera) y, si nadie la toca, avanza sola.
+  // acaba (tras la última vuelve la primera), si nadie la toca avanza sola y,
+  // al pasar el ratón, las webs se levantan como una ola.
   // El nombre y la frase pasan por encima en marquee.
   const proyectos = (data.portfolio?.proyectos || []).filter(p => p?.imagen && p?.nombre);
   // El orden es el de la lista; arriba o abajo, a suertes en cada visita: zigzag
@@ -202,6 +203,37 @@ export function renderWelcome(data) {
   let tocada = 0, antes = 0;
   ["wheel", "pointerdown", "pointermove", "touchstart", "keydown"].forEach(t =>
     pista.addEventListener(t, () => { tocada = performance.now(); }, { passive: true }));
+  // La ola: las webs que pasan bajo el ratón (o el dedo) se levantan, crecen y
+  // se encienden, y al irte se quedan bailando un poco: un muelle por web, con
+  // poco freno. La del centro no pasa de su 1,15; las demás crecen hasta ahí.
+  let hx = null;   // dónde está el ratón, en px de la pantalla
+  pista.addEventListener("pointermove", (e) => { hx = e.clientX; }, { passive: true });
+  pista.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") hx = null; });
+  pista.addEventListener("touchmove", (e) => { hx = e.touches[0].clientX; }, { passive: true });
+  pista.addEventListener("touchend", () => { hx = null; }, { passive: true });
+  const ola = webs.map(() => ({ y: 0, vy: 0, s: 1, vs: 0 }));
+  const muelle = (x, v, meta, k, z, dt) => {
+    v += (k * (meta - x) - 2 * z * Math.sqrt(k) * v) * dt;
+    return [x + v * dt, v];
+  };
+  const mecer = (dt) => {
+    const izq = pista.scrollLeft, ancho = webs[0]?.offsetWidth || 0, alto = pista.clientHeight;
+    webs.forEach((a, i) => {
+      const o = ola[i];
+      const cx = a.offsetLeft + ancho / 2 - izq;
+      const quieta = !o.y && !o.vy && o.s === 1 && !o.vs;
+      if (quieta && (hx == null || Math.abs(cx - hx) > ancho * 1.5)) return;
+      const g = hx == null ? 0 : Math.exp(-(((cx - hx) / (ancho * 0.55)) ** 2));
+      const base = a.classList.contains("visible") ? 1.15 : 0.78;
+      [o.y, o.vy] = muelle(o.y, o.vy, -g * alto * 0.16, 70, 0.22, dt);
+      [o.s, o.vs] = muelle(o.s, o.vs, Math.max(base, 0.78 + g * 0.37) / base, 220, 0.5, dt);
+      if (!g && Math.abs(o.y) < 0.2 && Math.abs(o.vy) < 0.2 && Math.abs(o.s - 1) < 0.002 && Math.abs(o.vs) < 0.002) {
+        o.y = o.vy = o.vs = 0; o.s = 1;
+      }
+      a.style.transform = o.y || o.s !== 1 ? `translateY(${o.y.toFixed(1)}px) scale(${o.s.toFixed(3)})` : "";
+      a.style.opacity = g > 0.05 && base < 1 ? (0.25 + 0.75 * g).toFixed(2) : "";
+    });
+  };
   const avanzar = (t) => {
     const dt = Math.min(100, t - antes);
     antes = t;
@@ -210,6 +242,7 @@ export function renderWelcome(data) {
       pos += dt * 0.03;   // 30 px por segundo
       pista.scrollLeft = pos;
     }
+    if (copia && el.classList.contains("activa")) mecer(Math.min(0.033, dt / 1000));
     requestAnimationFrame(avanzar);
   };
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) requestAnimationFrame(avanzar);
