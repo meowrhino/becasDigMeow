@@ -110,22 +110,38 @@ export function montarFila(pista, { activa = () => true, rueda = true } = {}) {
   // El vídeo de una web (si lo tiene) solo suena en la del centro y con la fila a la vista; las
   // demás enseñan su captura (el póster) sin bajarlo. Con ahorro de datos o conexión lenta, ni ese:
   // navigator.connection solo existe en Chrome y Android; en Safari, mientras carga, se ve la captura.
+  // En móvil, una cosa cada vez: el vídeo suena solo con su web parada en el centro, y la fila
+  // espera a que dé una vuelta (o 4 s, si no llega a cargar) antes de seguir. La misma consulta que
+  // esMovil (pages.js), que no se importa: pages.js ya importa este archivo.
+  const movil = matchMedia("(hover: none) and (pointer: coarse)").matches;
   const videos = webs.map(a => a.querySelector("video"));
   const red = navigator.connection;
-  const sonar = () => {
+  // El vídeo aparece (fundido, en el CSS) cuando ya pinta su primer fotograma, no antes.
+  videos.forEach(v => v && (v.requestVideoFrameCallback
+    ? v.requestVideoFrameCallback(() => v.classList.add("sonando"))
+    : v.addEventListener("playing", () => v.classList.add("sonando"), { once: true })));
+  videos.forEach(v => v?.addEventListener("playing", () => { v.desde ||= performance.now(); }));
+  // Cuánto le falta a la web k para llegar al centro (px; positivo: aún viene por la derecha).
+  const alCentro = (k) => webs[k].offsetLeft + webs[k].offsetWidth / 2 - pista.scrollLeft - pista.clientWidth / 2;
+  let esperar = false;   // la fila se queda quieta (móvil, mientras suena su primera vuelta)
+  const sonar = (t) => {
     const lenta = !!red && (red.saveData || /2g|3g/.test(red.effectiveType));
+    esperar = false;
     videos.forEach((v, k) => {
       if (!v || v.dataset.bloqueado) return;
-      const toca = !lenta && activa() && webs[k].classList.contains("visible");
+      const toca = !lenta && activa() && webs[k].classList.contains("visible") && (!movil || Math.abs(alCentro(k)) < 12);
+      if (toca && !v.toca) { v.desde = 0; v.centrada = t; }   // acaba de llegar
+      v.toca = toca;
       if (toca && v.paused) v.play().catch(e => { if (e.name !== "AbortError") v.dataset.bloqueado = "1"; });   // si no deja o no puede, se queda la captura (AbortError es solo un pause() a media carga)
       else if (!toca && !v.paused) v.pause();
+      if (movil && toca && alCentro(k) <= 0.5) esperar = v.desde ? t - v.desde < v.duration * 1000 : t - v.centrada < 4000;
     });
   };
   const avanzar = (t) => {
     const dt = Math.min(100, t - antes);
     antes = t;
-    sonar();
-    if (copia && t - tocada > 3000 && activa()) {
+    sonar(t);
+    if (copia && t - tocada > 3000 && activa() && !esperar) {
       if (Math.abs(pista.scrollLeft - pos) > 2) pos = pista.scrollLeft;   // la movió alguien, o el salto del bucle
       pos += dt * 0.03;   // 30 px por segundo
       pista.scrollLeft = pos;

@@ -159,18 +159,18 @@ export function renderWelcome(data) {
     const p = proyectos[i];
     const slug = escapeHTML(slugify(p.nombre));
     const img = escapeHTML(p.imagen);
-    // Con vídeo, la captura es su póster: se ve mientras no suena (fila.js decide cuándo).
+    // Con vídeo, va encima de la captura y aparece con un fundido cuando ya se mueve (fila.js decide
+    // cuándo suena): Safari enseñaba un momento el vídeo sin pintar al pasar de la captura al vídeo.
     // El .mov (HEVC con transparencia) es para Safari, que pinta negro el fondo del webm; Chrome no lo entiende y salta al webm.
     const vid = (ext) => `/${img.replace(/[^/]+$/, `video.${ext}`)}`;
-    const medio = p.video
-      ? `<video muted loop playsinline preload="none" poster="/${img}"${copia === 1 ? ` aria-label="${escapeHTML(p.nombre)}"` : ""}>
+    const video = p.video ? `
+            <video muted loop playsinline preload="none" aria-hidden="true">
               <source src="${vid("mov")}" type='video/quicktime; codecs="hvc1"'>
               <source src="${vid("webm")}" type="video/webm">
-            </video>`
-      : `<img src="/${img}" alt="${copia === 1 ? escapeHTML(p.nombre) : ""}"${primera ? "" : ' loading="lazy"'} decoding="async">`;
+            </video>` : "";
     return `
           <a class="wp${primera ? " visible" : ""}" data-slug="${slug}" href="${escapeHTML(`${rutaProyectos(currentLang)}/${slugify(p.nombre)}`)}"${copia === 1 ? "" : ' aria-hidden="true" tabindex="-1"'}>
-            ${medio}
+            <img src="/${img}" alt="${copia === 1 ? escapeHTML(p.nombre) : ""}"${primera ? "" : ' loading="lazy"'} decoding="async">${video}
           </a>`;
   };
   // Copias pares: la pista se desplaza justo la mitad y el bucle no se nota.
