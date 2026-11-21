@@ -161,33 +161,6 @@ if (prerender) {
 const grid = Array.from({ length: 8 }, () => Array(8).fill(0));
 for (const k of Object.keys(ORIGEN)) { const [y, x] = k.split("_"); grid[y][x] = 1; }
 
-// El mapa de «menú» es Orión, con cada estrella donde está en el cielo
-// (ascensión recta y declinación; una unidad son 1,5°, el este a la izquierda).
-// Las páginas siguen a quien llega: se entra por el centro del cinturón, con la
-// obra y quién la hace a un paso; encima de cada una, lo que la explica (lo que
-// dicen de la obra, lo que pensamos); en la cabeza, lo de fuera; en los pies,
-// el trato; y colgando del cinturón, en la espada, el juego. Saiph–Rigel no es
-// del dibujo de siempre: une metodología con condiciones, que van seguidas.
-const ORION = {
-  pos: {
-    "welcome": [0, 0],              // Alnilam, el centro del cinturón
-    "portfolio": [-0.75, 0.49],     // Alnitak
-    "about": [0.71, -0.6],          // Mintaka
-    "reseña": [-3.15, -5.74],       // Betelgeuse, el hombro sobre portfolio
-    "statement": [1.85, -5.03],     // Bellatrix, el hombro sobre about
-    "links": [0.19, -7.42],         // Meissa, la cabeza
-    "condiciones": [-1.92, 5.65],   // Saiph
-    "metodología": [3.62, 4.67],    // Rigel
-    "buscaminas": [0.16, 2.79],     // M42, la nebulosa de la espada
-  },
-  conex: [
-    ["welcome", "portfolio"], ["welcome", "about"], ["welcome", "buscaminas"],
-    ["portfolio", "reseña"], ["about", "statement"],
-    ["reseña", "links"], ["statement", "links"],
-    ["portfolio", "condiciones"], ["about", "metodología"], ["metodología", "condiciones"],
-  ],
-};
-
 configurarNavegacion({
   grid,
   nombres: { ...ORIGEN },
@@ -213,7 +186,6 @@ configurarNavegacion({
   },
   posInicial: { y: 3, x: 3 },   // welcome
   editable: "meowrhino-constelacion",
-  constelacion: ORION,
   onUpdate: () => { sincronizarCabecera(); actualizarEnlacesIdioma(); cargarBuscaminas(); },
   rutas: {
     de: (nombre) => rutaCelda(nombre, currentLang),
