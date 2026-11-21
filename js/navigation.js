@@ -37,7 +37,8 @@ let celdaDeRutaFn = null;
 // --- La constelación: el lienzo como grafo ---
 // Las celdas siguen teniendo su casilla (`pos_Y_X`, que es solo un selector),
 // pero a dónde se va desde cada una ya no lo decide la rejilla: lo deciden las
-// conexiones. De fábrica salen de la rejilla (cada celda con las de al lado), y
+// conexiones. De fábrica, las que traiga `constelacion` (en la web, Orión:
+// js/main.js) o, si no trae, las de la rejilla (cada celda con las de al lado); y
 // quien visita puede mover las estrellas y unirlas a su gusto en «menú».
 let POS = {};        // nombre → [x, y] en unidades de casilla, con decimales
 let CONEX = [];      // pares [a, b] de nombres de celda
@@ -66,7 +67,7 @@ export function setTraductorNombres(fn) {
  * `redirects` mapea destino → [aliases]. Resuelve en cadena:
  * { macarrones: ["links"], links: ["tools"] } hace que #tools → #links → #macarrones.
  */
-export function configurarNavegacion({ grid, nombres, clasesCss, posInicial, onUpdate, redirects, rutas, editable }) {
+export function configurarNavegacion({ grid, nombres, clasesCss, posInicial, onUpdate, redirects, rutas, editable, constelacion }) {
   GRID = grid;
   NOMBRES_CELDAS = nombres;
   CLASE_CSS = clasesCss || {};
@@ -77,7 +78,7 @@ export function configurarNavegacion({ grid, nombres, clasesCss, posInicial, onU
   rutaDe = typeof rutas?.de === "function" ? rutas.de : null;
   celdaDeRutaFn = typeof rutas?.celdaDe === "function" ? rutas.celdaDe : null;
   GUARDADO = editable || null;
-  FABRICA = deFabrica();
+  FABRICA = constelacion ? structuredClone(constelacion) : deFabrica();
   ({ pos: POS, conex: CONEX } = leerConstelacion() || structuredClone(FABRICA));
 
   // Volver atrás tiene que deshacer el último deslizamiento, no sacarte del
@@ -204,7 +205,7 @@ export function crearCeldas() {
 /**
  * El rectángulo que de verdad tiene celdas dentro del GRID.
  *
- * Es lo que dibuja el minimapa de la esquina, y el marco del mapa de «menú».
+ * Es lo que dibuja el minimapa de la esquina.
  */
 export function marcoOcupado() {
   const ys = [], xs = [];
@@ -493,10 +494,28 @@ let editando = false;
 let elegida = null;      // en edición: la estrella pulsada, esperando pareja
 let saltarClic = false;  // el clic que llega al soltar un arrastre no cuenta
 
-/** El marco del dibujo, en casillas: lo ocupado más media de aire por lado. */
+/** El marco del dibujo: lo que ocupa la constelación de fábrica más media casilla de aire por lado. */
 function marcoCielo() {
-  const { y0, y1, x0, x1 } = marcoOcupado();
-  return { x0: x0 - 0.5, y0: y0 - 0.5, ancho: x1 - x0 + 1, alto: y1 - y0 + 1 };
+  const xs = Object.values(FABRICA.pos).map(p => p[0]), ys = Object.values(FABRICA.pos).map(p => p[1]);
+  const x0 = Math.min(...xs) - 0.5, y0 = Math.min(...ys) - 0.5;
+  return { x0, y0, ancho: Math.max(...xs) + 0.5 - x0, alto: Math.max(...ys) + 0.5 - y0 };
+}
+
+/**
+ * Cómo cae el marco en la caja sin deformarse: la misma escala en los dos ejes,
+ * centrado. Si no, Orión saldría ancho en escritorio y estirado en el móvil.
+ * `s` es lo que mide una casilla en píxeles.
+ */
+function encaje() {
+  const m = marcoCielo(), caja = cieloEl.getBoundingClientRect();
+  const W = caja.width || 1, H = caja.height || 1;
+  const s = Math.min(W / m.ancho, H / m.alto);
+  const ox = (W - m.ancho * s) / 2, oy = (H - m.alto * s) / 2;
+  return {
+    caja, s,
+    pct: ([x, y]) => [(ox + (x - m.x0) * s) / W * 100, (oy + (y - m.y0) * s) / H * 100],
+    deFraccion: (fx, fy) => [m.x0 + (fx * W - ox) / s, m.y0 + (fy * H - oy) / s],
+  };
 }
 
 /**
@@ -530,11 +549,9 @@ function ladoEtiqueta(nombre, [px, py], [ancho, alto], [cw, ch], puestas, puntos
 
 export function pintarConstelacion() {
   if (!cieloEl) return;
-  const m = marcoCielo();
-  const pct = ([x, y]) => [(x - m.x0) / m.ancho * 100, (y - m.y0) / m.alto * 100];
+  const { caja, s, pct } = encaje();
   const actual = getNombrePagina();
-  const caja = cieloEl.getBoundingClientRect();
-  const casilla = [caja.width / m.ancho || 1, caja.height / m.alto || 1];
+  const casilla = [s, s];
   const enPantalla = (nombre) => { const [x, y] = pct(POS[nombre]); return [caja.left + x / 100 * caja.width, caja.top + y / 100 * caja.height]; };
   const puntos = Object.values(NOMBRES_CELDAS).map(enPantalla), puestas = [];
   // Lo que ocupa un nombre, a ojo: basta para saber si pisa algo o se sale.
@@ -602,7 +619,7 @@ function empezarArrastre(e) {
   const estrella = e.target.closest(".estrella");
   if (!editando || !estrella) return;
   const nombre = estrella.dataset.nombre;
-  const caja = cieloEl.getBoundingClientRect(), m = marcoCielo();
+  const { caja, deFraccion } = encaje();
   let movida = false;
 
   const mover = (ev) => {
@@ -610,7 +627,7 @@ function empezarArrastre(e) {
     movida = true;
     const fx = Math.min(1, Math.max(0, (ev.clientX - caja.left) / caja.width));
     const fy = Math.min(1, Math.max(0, (ev.clientY - caja.top) / caja.height));
-    POS[nombre] = [m.x0 + fx * m.ancho, m.y0 + fy * m.alto];
+    POS[nombre] = deFraccion(fx, fy);
     estrella.style.left = `${fx * 100}%`;
     estrella.style.top = `${fy * 100}%`;
     cieloEl.querySelectorAll("line").forEach(l => {
@@ -854,10 +871,11 @@ function deslizar(saliente, entrante) {
   if (!saliente || !entrante || saliente === entrante) return;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   // Hacia dónde cae la que llega, según el mapa. Solo cuenta el eje en el que
-  // de verdad te mueves: el desorden de una estrella no es una diagonal.
+  // más te mueves: una línea un poco torcida (el cinturón de Orión, el baile de
+  // la rejilla) no es una diagonal.
   const [x0, y0] = POS[saliente.dataset.nombre] || [], [x1, y1] = POS[entrante.dataset.nombre] || [];
-  const eje = (d) => (Math.abs(d) > 0.5 ? Math.sign(d) : 0);
-  const dx = eje(x1 - x0), dy = eje(y1 - y0);
+  const ancho = Math.abs(x1 - x0) >= Math.abs(y1 - y0);
+  const dx = ancho ? Math.sign(x1 - x0) || 0 : 0, dy = ancho ? 0 : Math.sign(y1 - y0) || 0;
   const paso = 56;
   const tiempo = { duration: 700, easing: "cubic-bezier(0.2, 0.7, 0.2, 1)" };
   saliente.animate([{ transform: "none" }, { transform: `translate(${-dx * paso}px, ${-dy * paso}px)` }], tiempo);
