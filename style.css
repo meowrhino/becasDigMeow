@@ -834,14 +834,13 @@ a.nav-label:visited {
   margin-bottom: 1em;
 }
 
-/* Plazos, dinero y qué pasa si algo se para. Separado de los pasos por una
-   línea: los seis pasos cuentan cómo va a ser trabajar juntos, y esto de aquí
+/* Plazos, dinero y qué pasa si algo se para. Separado de los pasos por
+   aire: los seis pasos cuentan cómo va a ser trabajar juntos, y esto de aquí
    son los datos con los que se decide. Cada frase va suelta para poder
    escanearlas; el número primero y la explicación después. */
 .metodologia-importante {
   margin-top: 4rem;
   padding-top: 2.4rem;
-  border-top: 1px solid var(--border);
 }
 
 .metodologia-importante-titular {
@@ -1802,7 +1801,7 @@ html.easy, html.easy body {
   font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--text-muted); font-weight: 400; margin: 2.6rem 0 1.2rem;
 }
-.easy-importante { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); max-width: 46rem; }
+.easy-importante { margin-top: 3rem; padding-top: 2rem; max-width: 46rem; }
 .easy-importante .easy-h3 { margin-top: 0; }
 
 /* ============================================
@@ -2730,9 +2729,8 @@ html.js #seo-prerender {
 .metodologia-content p.metodologia-titular { margin-bottom: 0.7rem; }
 .footer-content p.footer-nota { margin-top: 2em; }
 .about-enlaces, .about-contacto { margin-top: 2.4rem; }
-/* Una línea fina encima de cada apartado, de margen a margen. */
+/* Cada apartado se separa del anterior solo con aire, sin línea (manu, 21 nov 2026). */
 .about-seccion, .about-seccion:first-child, .metodologia-paso, .metodologia-importante, .footer-apartado-titular {
-  border-top: 1px solid var(--border);
   padding-top: 1.1rem;
   margin-top: 2.6rem;
 }
@@ -2858,12 +2856,10 @@ body > .welcome-content .welcome-tagline { color: #999; font-size: clamp(0.9rem,
   grid-template-columns: 2.2rem 1.2fr 1.7fr 1fr;
   gap: 1rem;
   padding: 0.42rem 0;
-  border-top: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
   transition: opacity 0.2s ease;
   color: var(--text);
   text-decoration: none;
 }
-.plista-cabecera { border-top: none; }
 #portfolio-lista .plista-fila > :last-child { grid-column: 3 / -1; }   /* una columna menos que links: su descripción llega al borde */
 .plista-fila::before { content: ""; }
 a.plista-fila::before { counter-increment: fila; content: counter(fila, decimal-leading-zero); color: var(--text-muted); }
