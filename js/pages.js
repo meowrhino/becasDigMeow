@@ -233,6 +233,8 @@ export function renderWelcome(data) {
       }
       a.style.transform = o.y || o.s !== 1 ? `translateY(${o.y.toFixed(1)}px) scale(${o.s.toFixed(3)})` : "";
       a.style.opacity = g > 0.05 && base < 1 ? (0.25 + 0.75 * g).toFixed(2) : "";
+      // La que está bajo el ratón pasa delante de sus vecinas (y de la del centro).
+      a.style.zIndex = g > 0.05 ? String(1 + Math.round(g * 10)) : "";
     });
   };
   const avanzar = (t) => {
