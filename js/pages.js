@@ -42,8 +42,8 @@ export const tituloCelda = (data, nombre, lang) => {
   return t ? (t[lang] ?? t.es ?? nombre) : nombre;
 };
 
-export const celdaHeadingHTML = (data, nombre, lang) =>
-  `<h2 class="celda-h">${escapeHTML(tituloCelda(data, nombre, lang))}</h2>`;
+export const celdaHeadingHTML = (data, nombre, lang, clase = "celda-h") =>
+  `<h2 class="${clase}">${escapeHTML(tituloCelda(data, nombre, lang))}</h2>`;
 
 /** Escoge la variante de idioma (con fallback a es) de un objeto {es,en,cat}. */
 const pick = (obj, lang) => (obj?.[lang] ?? obj?.es ?? "");
@@ -84,9 +84,9 @@ export function renderTools(data) {
   ];
 
   el.innerHTML = `
-    ${celdaHeadingHTML(data, "links", currentLang)}
     <div class="scroll-wrapper tools-scroll-wrapper">
       <div class="scroll-content tools-content">
+        ${celdaHeadingHTML(data, "links", currentLang, "about-pregunta")}
         <div class="plista plista-links"></div>
       </div>
     </div>
@@ -303,7 +303,8 @@ export function renderMetodologia(data) {
         ${imp.enlace ? `<a class="metodologia-enlace" href="${escapeHTML(rutaCelda("condiciones", lang))}">${escapeHTML(imp.enlace)}</a>` : ""}
       </div>` : "";
 
-    return lista + importante;
+    // El nombre de la página, grande, como el título del about (manu, 21 nov 2026).
+    return `<h2 class="about-pregunta">${escapeHTML(tituloCelda(data, "metodología", lang))}</h2>` + lista + importante;
   };
 
   el.innerHTML = `
@@ -465,9 +466,8 @@ export function renderAbout(data) {
     return `
       <h2 class="about-pregunta">${escapeHTML(d.pregunta)}</h2>
       <div class="about-entrada">${(d.entrada || []).map(parrafo).join("")}</div>
-      <p class="about-enlaces">${enlaces(lang)}</p>
       <div class="about-contacto">
-        <a class="contacto-email" href="${escapeHTML(buildMailto(lang))}">${escapeHTML(email).replace(/\./g, "<wbr>.")}</a>
+        <a class="contacto-email" href="${escapeHTML(buildMailto(lang))}">${escapeHTML(email)}</a>
         <div class="contacto-row">
           ${(redes || []).map(a => {
             // /archive es nuestro y se abre en la misma pestaña; el resto es
@@ -477,7 +477,8 @@ export function renderAbout(data) {
             return `<a class="contacto-link${externo ? "" : " contacto-archive"}" href="${escapeHTML(a.url)}"${blank} rel="noopener">${escapeHTML(a.nombre)}</a>`;
           }).join("")}
         </div>
-      </div>`;
+      </div>
+      <p class="about-enlaces">${enlaces(lang)}</p>`;
   };
 
   montarCeldaTexto(el, "about", buildContent);

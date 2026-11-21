@@ -929,36 +929,15 @@ a.nav-label:visited {
   margin: 0 0 1.4rem;
 }
 
-/* Los enlaces DENTRO del texto: el sitio entero tiene `a { color: inherit;
-   text-decoration: none }`, así que un enlace en medio de un párrafo es texto
-   normal. No lleva subrayado a propósito; lo único que lo delata es que
-   respira muy despacio, y al pasar por encima respira un poco más hondo.
-
-   Cuelga de `.activa` a propósito: las celdas viven todas apiladas y ocultas
-   en el mismo hueco, así que sin esa condición el latido correría también en
-   las que nadie está mirando. `prefers-reduced-motion` lo para desde el reset
-   (sección 0), y entonces el enlace se queda a opacidad 1, legible. */
-.celda.about.activa .about-content p a,
-.celda.statement.activa .about-content p a,
-.celda.resena.activa .about-content p a {
-  --about-link-valle: 0.75;
-  animation: about-link-latido 3.4s ease-in-out infinite;
-}
-
-/* El hover no cambia de animación —eso la reiniciaría de golpe—: solo baja el
-   valle de la misma, así que el latido se hace más hondo sin dar un salto. */
-.celda.about.activa .about-content p a:hover,
-.celda.about.activa .about-content p a:focus-visible,
-.celda.statement.activa .about-content p a:hover,
-.celda.statement.activa .about-content p a:focus-visible,
-.celda.resena.activa .about-content p a:hover,
-.celda.resena.activa .about-content p a:focus-visible {
-  --about-link-valle: 0.45;
-}
-
-@keyframes about-link-latido {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: var(--about-link-valle); }
+/* Los enlaces DENTRO del texto, iguales en todas las páginas: del color del
+   texto y subrayados, como ya iban en condiciones, metodología y las landings.
+   En el about y el statement eran grises, sin subrayar y respiraban (manu,
+   21 nov 2026: que se vean igual en todas). Los de cierre (.about-enlaces)
+   son otra cosa y siguen en gris. */
+.about-entrada a, .about-texto p a, .proy-texto a, .footer-seccion a {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
 }
 
 /* El about acaba en dos enlaces en texto, discretos como el tagline de la
@@ -1563,7 +1542,7 @@ a.nav-label:visited {
   inset: 0;
   padding: 0 var(--margen);
 }
-.archive-content { padding: 16dvh 0 24dvh; }
+.archive-content { padding: 18dvh 0 24dvh; }
 .archive-titulo { margin: 0 0 1.6rem; }
 
 /* La fila es un <div> (dentro van enlaces), así que el número y el apagado al
@@ -1596,12 +1575,7 @@ a.nav-label:visited {
   margin-bottom: 0;
 }
 
-.footer-seccion a {
-  color: var(--text);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  transition: color 0.2s ease;
-}
+.footer-seccion a { transition: color 0.2s ease; }
 
 .footer-seccion a:hover {
   color: var(--text-secondary);
@@ -2151,26 +2125,15 @@ html.js #seo-prerender {
 
 .proy-ficha { max-width: none; margin: 0; padding-left: var(--margen); padding-right: var(--margen); }
 .proy-ficha .proy-texto { font-size: inherit; line-height: inherit; }
-/* El resumen («una web para fotografía de moda y editorial»), en la columna
-   de la izquierda, a la altura del texto. */
+/* El resumen («una web para fotografía de moda y editorial»), debajo del título. */
 .proy-ficha .proy-resumen {
-  grid-column: 1;
-  margin: 0;
+  margin: 0 0 0.8rem;
   font-family: var(--font-serif);
   font-size: var(--chico);
   line-height: 1.6;
   color: var(--text-secondary);
 }
 .proy-ficha .proy-galeria { max-width: 60rem; margin-top: 2.4rem; gap: 1.6rem; }
-@media (max-width: 768px) {
-  .proy-ficha .proy-resumen { margin-bottom: 0.8rem; }
-}
-/* En la ficha de un proyecto, todo al margen izquierdo, con el título: el
-   texto y las capturas en una segunda columna se veían sangrados (manu, 21 nov
-   2026). También la 404. Las landings siguen con las dos columnas del about. */
-.proy-ficha:not(.landing) { grid-template-columns: minmax(0, 1fr); }
-.proy-ficha:not(.landing) > * { grid-column: 1; }
-.proy-ficha:not(.landing) > .proy-resumen { margin-bottom: 0.8rem; }
 /* Las capturas traen el mockup con un 4 % de margen transparente por lado:
    sin esto, la ventana se veía sangrada aunque la imagen ya estuviera al borde. */
 .proy-ficha:not(.landing) .proy-img { margin-left: -4%; }
@@ -2248,15 +2211,6 @@ html.js #seo-prerender {
 @media (max-width: 560px) {
   .landing .proy-grid-inline { grid-template-columns: 1fr; }
 }
-/* Los enlaces dentro del texto (a las fichas que nombra, a metodología…) se
-   distinguen por el subrayado, como en condiciones: con el mismo color que el
-   párrafo no se veían. */
-.landing .proy-texto a {
-  color: var(--text);
-  text-decoration: underline;
-  text-underline-offset: 0.18em;
-}
-
 /* Los enlaces a estas páginas en el pie de cada ficha, entre «volver» y el
    nombre del estudio. */
 .proy-indice-landings { margin-top: 0.6rem; }
@@ -2615,7 +2569,7 @@ html.js #seo-prerender {
   .estrella { font-size: 0.7rem; }
 }
 
-/* --- Páginas de texto: títulos al margen izquierdo, texto en su columna --- */
+/* --- Páginas de texto: todo al margen izquierdo, en una sola columna --- */
 .celda.about, .celda.statement, .celda.resena, .celda.metodologia, .celda.footer {
   justify-content: flex-start;
   padding-left: var(--margen);
@@ -2631,23 +2585,22 @@ html.js #seo-prerender {
 .about-content, .metodologia-content, .footer-content,
 .footer-scroll-wrapper.is-short .footer-content { padding-top: 18dvh; padding-bottom: 24dvh; }
 .footer-scroll-wrapper.is-short .footer-content { display: block; }
-.tools-scroll-wrapper > .scroll-content { padding-top: 16dvh; padding-bottom: 24dvh; box-sizing: border-box; }
+/* Links, portfolio y archive: el título a la misma altura que en las páginas de texto. */
+.tools-scroll-wrapper > .scroll-content { padding-top: 18dvh; padding-bottom: 24dvh; box-sizing: border-box; }
 .celda .scroll-wrapper::before, .celda .scroll-wrapper::after { display: none; }
 .about-content, .about-seccion, .metodologia-paso, .metodologia-importante, .footer-seccion {
   display: grid;
-  /* Ancho fijo y no en %: las secciones son rejillas anidadas y el % de cada
-     una saldría distinto, con las columnas desalineadas entre apartados. */
-  grid-template-columns: clamp(9rem, 20dvw, 18rem) minmax(0, 1fr);
-  column-gap: 3rem;
+  /* Una sola columna en todas las páginas: hubo una segunda para el texto, con
+     el contacto del about en la de la izquierda, y se leía sangrado (manu,
+     21 nov 2026: «título, texto, y luego el mail, y los contactos en una línea»). */
+  grid-template-columns: minmax(0, 1fr);
   align-items: start;
   /* sin esto, en una página corta (reseña) las filas se reparten el alto que
      sobra y los huecos salen distintos en cada página */
   align-content: start;
 }
-/* El texto, a 30rem: unas 70 letras por línea (a 38rem eran más de 90). La
-   rejilla llega de margen a margen para que las líneas entre apartados
-   crucen la página entera. */
-.about-content > *, .about-seccion > *, .metodologia-paso > *, .metodologia-importante > *, .footer-seccion > * { grid-column: 2; max-width: 30rem; }
+/* El texto, a 30rem: unas 70 letras por línea (a 38rem eran más de 90). */
+.about-content > *, .about-seccion > *, .metodologia-paso > *, .metodologia-importante > *, .footer-seccion > * { grid-column: 1; max-width: 30rem; }
 .about-content > .about-texto { grid-column: 1 / -1; max-width: none; }
 .about-pregunta, .about-seccion-titular, .metodologia-num, .metodologia-titular,
 .metodologia-importante-titular, .footer-apartado-titular {
@@ -2695,12 +2648,13 @@ html.js #seo-prerender {
   margin-top: 2.6rem;
 }
 .metodologia-paso { margin-bottom: 0; }
-.metodologia-paso:first-child, .footer-seccion-titular + .footer-apartado-titular { margin-top: 0; }
+.about-pregunta + .metodologia-paso, .footer-seccion-titular + .footer-apartado-titular { margin-top: 0; }
 /* Donde la columna llega hasta la barra de arriba y los controles de abajo
    (móvil y pantallas estrechas), el texto se funde antes de pasarles por
    debajo: letra sobre letra no se leía ninguna de las dos. */
 @media (max-width: 1280px) {
-  .about-scroll-wrapper, .metodologia-scroll-wrapper, .footer-scroll-wrapper {
+  .about-scroll-wrapper, .metodologia-scroll-wrapper, .footer-scroll-wrapper,
+  .tools-scroll-wrapper, .portfolio-scroll-wrapper, .archive-scroll-wrapper {
     --funde-arriba: 3rem;
     -webkit-mask-image: linear-gradient(to bottom, transparent var(--funde-arriba), #000 calc(var(--funde-arriba) + 2.5rem), #000 calc(100% - 5.5rem), transparent calc(100% - 3rem));
     mask-image: linear-gradient(to bottom, transparent var(--funde-arriba), #000 calc(var(--funde-arriba) + 2.5rem), #000 calc(100% - 5.5rem), transparent calc(100% - 3rem));
@@ -2708,23 +2662,36 @@ html.js #seo-prerender {
 }
 /* en móvil la barra puede ocupar dos líneas */
 @media (max-width: 768px) {
-  .about-scroll-wrapper, .metodologia-scroll-wrapper, .footer-scroll-wrapper { --funde-arriba: 5.2rem; }
+  .about-scroll-wrapper, .metodologia-scroll-wrapper, .footer-scroll-wrapper,
+  .tools-scroll-wrapper, .portfolio-scroll-wrapper, .archive-scroll-wrapper,
+  .easy-mode { --funde-arriba: 5.2rem; }
+}
+/* Las fichas, las landings y la 404 se desplazan con la página entera, así que
+   la máscara no les sirve: encima del texto va un trozo del fondo de puntos
+   (el mismo, alineado con él) que solo se ve arriba y abajo, donde está la barra. */
+@media (max-width: 1280px) {
+  .easy-mode::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: var(--fondo-trama);
+    background-color: var(--bg);
+    -webkit-mask-image: linear-gradient(to bottom, #000 var(--funde-arriba, 3rem), transparent calc(var(--funde-arriba, 3rem) + 2.5rem), transparent calc(100% - 5.5rem), #000 calc(100% - 3rem));
+    mask-image: linear-gradient(to bottom, #000 var(--funde-arriba, 3rem), transparent calc(var(--funde-arriba, 3rem) + 2.5rem), transparent calc(100% - 5.5rem), #000 calc(100% - 3rem));
+  }
 }
 .about-entrada, .about-seccion p, .metodologia-content p:not(.metodologia-titular), .footer-content p { font-family: var(--font-text); }
 /* Entrada y apartados, la misma letra y el mismo gris: es una sola columna. */
 .about-entrada, .about-texto p { font-size: 1em; color: var(--text-content); }
 .about-enlaces { justify-content: flex-start; }
 .about-contacto { align-items: flex-start; }
-/* About y reseña: el contacto (o el botón de google) ocupa la columna de la
-   izquierda, a la altura del texto; antes quedaba vacía bajo el título (manu,
-   21 nov 2026). Las redes, una debajo de otra. En móvil, una sola columna. */
-@media (min-width: 769px) {
-  .about-content > .about-contacto { grid-column: 1; grid-row: 2 / span 2; margin-top: 0; }
-  .about-content > .about-contacto .contacto-row { flex-direction: column; gap: 0.3rem; }
-}
+/* El email en una línea, sin partirlo nunca: si no cabe (móvil), baja de
+   tamaño. Las redes, seguidas en otra línea debajo. */
+.about-contacto .contacto-email { white-space: nowrap; font-size: min(clamp(1rem, 2dvw, 1.6rem), 5.6dvw); }
+.about-contacto .contacto-row { justify-content: flex-start; }
 @media (max-width: 768px) {
-  .about-content, .about-seccion, .metodologia-paso, .metodologia-importante, .footer-seccion { grid-template-columns: minmax(0, 1fr); }
-  .about-content > *, .about-seccion > *, .metodologia-paso > *, .metodologia-importante > *, .footer-seccion > * { grid-column: 1; }
   .about-pregunta, .about-seccion-titular, .metodologia-titular, .metodologia-importante-titular, .footer-apartado-titular { margin-bottom: 0.6rem; }
 }
 .proy-texto { font-family: var(--font-text); }
@@ -2804,7 +2771,7 @@ body > .welcome-content .welcome-tagline { color: #999; font-size: clamp(0.9rem,
 
 /* --- Portfolio: lista al entrar, rejilla a un clic --- */
 .portfolio-scroll-wrapper { padding: 0 var(--margen); }
-.portfolio-scroll-content { padding: 14dvh 0 20dvh; }
+.portfolio-scroll-content { padding: 18dvh 0 20dvh; }
 .plista-cabecera button {
   background: none; border: none; padding: 0; cursor: pointer;
   font: inherit; color: var(--text-secondary); text-align: left;
@@ -2860,7 +2827,10 @@ a.plista-fila::before { counter-increment: fila; content: counter(fila, decimal-
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background:
+  background: var(--fondo-trama);
+}
+:root {
+  --fondo-trama:
     radial-gradient(ellipse at center, var(--bg), transparent),
     radial-gradient(color-mix(in srgb, var(--text) 9%, transparent) 1px, transparent 1px) 0 0 / 10px 10px;
 }

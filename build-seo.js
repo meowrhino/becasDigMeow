@@ -483,7 +483,7 @@ function scriptLdHTML(schema) {
  * idioma, y la trama de puntos de fondo. Los modos los mueve js/ficha.js.
  */
 function paginaProyectoHTML({ title, description, url, imagen, jsonLd, cuerpo, idioma, hreflang,
-                             ogType = "article", barra = [], idiomas = [], noindex = false }) {
+                             ogType = "article", barra = [], idiomas = [], noindex = false, zoom = true }) {
   return `<!DOCTYPE html>
 <html lang="${idioma.htmlLang}" class="easy">
 <head>
@@ -534,7 +534,7 @@ ${jsonLd}
   <main id="easy" role="main">
 ${cuerpo}
   </main>
-${controlesHTML(idioma, idiomas)}
+${controlesHTML(idioma, idiomas, zoom)}
   <script type="module" src="/js/ficha.js"></script>
 </body>
 </html>
@@ -543,10 +543,11 @@ ${controlesHTML(idioma, idiomas)}
 
 /**
  * Abajo a la derecha, como en el lienzo (navigation.js, pintarVecinosHeader):
- * `modo(…)` con todos los modos e `idioma(…)` con las tres versiones de esta
- * página. Mismos <details> y mismas clases, así que se ven igual.
+ * `zoom(…)` (en las que tienen texto que leer), `modo(…)` con todos los modos
+ * e `idioma(…)` con las tres versiones de esta página. Mismos <details> y
+ * mismas clases, así que se ven igual. El zoom lo mueve js/ficha.js.
  */
-function controlesHTML(idioma, idiomas) {
+function controlesHTML(idioma, idiomas, zoom = true) {
   const nombres = NOMBRES_MODO[idioma.code] || NOMBRES_MODO.es;
   const modos = Object.entries(MODOS).map(([m, { base, tinte }]) =>
     `<button type="button" class="menu-btn" data-modo="${m}" data-modo-base="${base}"${tinte ? ` data-modo-tinte="${tinte}"` : ""}>${nombres[m] || m}</button>`
@@ -556,7 +557,9 @@ function controlesHTML(idioma, idiomas) {
   ).join("");
   const etiquetaModo = idioma.code === "es" ? "modo" : "mode";
   const etiquetaIdioma = idioma.code === "en" ? "language" : "idioma";
-  return `  <div class="controles">
+  const [menos, mas] = idioma.code === "en" ? ["smaller text", "larger text"] : ["letra más pequeña", "letra más grande"];
+  return `  <div class="controles">${zoom ? `
+    <details class="desplegable" name="controles"><summary class="menu-btn">zoom(100%)</summary><div class="desplegable-opciones"><button type="button" class="menu-btn" data-zoom="-1" aria-label="${menos}">−</button><button type="button" class="menu-btn" data-zoom="1" aria-label="${mas}">+</button></div></details>` : ""}
     <details class="desplegable" name="controles"><summary class="menu-btn">${etiquetaModo}(${nombres.claro})</summary><div class="desplegable-opciones">${modos}</div></details>${langs ? `
     <details class="desplegable" name="controles"><summary class="menu-btn">${etiquetaIdioma}(${esc(idioma.code)})</summary><div class="desplegable-opciones">${langs}</div></details>` : ""}
   </div>`;
@@ -578,6 +581,7 @@ function pagina404() {
     jsonLd: "",
     ogType: "website",
     noindex: true,
+    zoom: false,   // tres frases: no hay nada que leer más grande
     barra: [{ texto: "portfolio", href: idioma.proyBase }],
     cuerpo: `
     <article class="proy proy-ficha about-content">

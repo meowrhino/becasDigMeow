@@ -115,8 +115,7 @@ export function renderProyectoHTML(proyecto, seo, lang = "es", rutas = {}, medir
       </p>`;
 
   // La misma maqueta que el about (about-content): el nombre grande desde el
-  // margen y el texto en su columna. El resumen va en la columna de la
-  // izquierda, a la altura del texto. La barra (vecinos, portfolio, modo e
+  // margen, el resumen y el texto debajo, en una sola columna. La barra (vecinos, portfolio, modo e
   // idioma) la pone el esqueleto de la página, en build-seo.js.
   return `
     <article class="proy proy-ficha about-content">

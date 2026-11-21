@@ -66,9 +66,9 @@ export const escConEnlaces = (s) => esc(s)
  * mismos términos que usan los nombres de celda del grid.
  */
 export const UI = {
-  es:  { portfolio: "portfolio", caso: "ver el caso →", navegar: "seguir navegando" },
-  en:  { portfolio: "portfolio", caso: "see the case →", navegar: "keep browsing" },
-  cat: { portfolio: "portfolio", caso: "veure el cas →", navegar: "seguir navegant" },
+  es:  { portfolio: "portfolio", caso: "ver el caso", navegar: "seguir navegando" },
+  en:  { portfolio: "portfolio", caso: "see the case", navegar: "keep browsing" },
+  cat: { portfolio: "portfolio", caso: "veure el cas", navegar: "seguir navegant" },
 };
 
 /** Los textos de interfaz del idioma pedido, con fallback a castellano. */

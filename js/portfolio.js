@@ -11,7 +11,7 @@ import { pintarLista } from "./utils.js";
 import { celdaHeadingHTML } from "./pages.js";
 
 /** Texto del enlace al caso de estudio, por idioma. */
-const CASO = { es: "ver el caso →", en: "see the case →", cat: "veure el cas →" };
+const CASO = { es: "ver el caso", en: "see the case", cat: "veure el cas" };
 
 const pick = (obj, lang) => obj?.[lang] ?? obj?.es ?? "";
 
@@ -171,9 +171,9 @@ export function renderPortfolio(data) {
   const proyectos = data.portfolio.proyectos;
 
   el.innerHTML = `
-    ${celdaHeadingHTML(data, "portfolio", currentLang)}
     <div class="scroll-wrapper portfolio-scroll-wrapper">
       <div class="scroll-content portfolio-scroll-content">
+        ${celdaHeadingHTML(data, "portfolio", currentLang, "about-pregunta")}
         <div class="pvista">
           <span>(${proyectos.length})</span>
           <button type="button" class="pvista-btn is-active" data-vista="lista"></button>

@@ -39,7 +39,7 @@ export function renderLandingHTML(landing, fichas, lang = "es", rutas = {}, medi
       </ul>` : "";
 
   // La misma maqueta que el about (pages.js): entrada y apartados con su
-  // titular, cada uno con la línea fina encima y el texto en su columna.
+  // titular y el texto debajo.
   const seccion = (titular, cuerpo) => `
         <section class="about-seccion">
           <h2 class="about-seccion-titular">${esc(titular)}</h2>${cuerpo}

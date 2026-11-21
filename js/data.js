@@ -34,8 +34,8 @@ function detectarIdiomaNavegador() {
 /**
  * Idioma que impone la URL, o null si la página no es una variante por idioma.
  *
- * Lo son todas las celdas del lienzo. En /archive devuelve null y manda
- * la preferencia guardada, como siempre.
+ * Lo son todas las celdas del lienzo. /archive, que no tiene traducción, va
+ * siempre en castellano.
  *
  * Cuando aplica, manda sobre localStorage y sobre el navegador a propósito: si
  * alguien llega a /en desde una búsqueda en inglés tiene que ver inglés aunque
@@ -45,7 +45,9 @@ function detectarIdiomaNavegador() {
 function idiomaDeLaRuta() {
   // Cloudflare sirve en.html como /en, así que normalizamos ambas formas.
   const ruta = location.pathname.replace(/\.html$/, "").replace(/\/+$/, "") || "/";
-  if (ruta === "/index") return "es";
+  // /archive no tiene traducción: va en castellano, como su <html lang>, y no
+  // con el idioma del navegador (decía «mode(light)» y no había cómo cambiarlo).
+  if (ruta === "/index" || ruta === "/archive") return "es";
   // Todas las celdas del lienzo tienen ruta por idioma, no solo la portada:
   // quien cae en /en/about desde una búsqueda en inglés tiene que ver inglés
   // aunque su última visita fuera en otro idioma. La tabla es la de rutas.js,
