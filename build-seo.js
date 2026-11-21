@@ -599,8 +599,8 @@ function paginaProyecto({ proyecto, seo }, idioma, vecinos = {}) {
     idiomas: rutas.idiomas,
     // La lista es circular, así que siempre hay anterior y siguiente.
     barra: [
-      rutas.anterior && { texto: `← ${rutas.anterior.nombre}`, href: rutas.anterior.href, rel: "prev" },
-      rutas.siguiente && { texto: `${rutas.siguiente.nombre} →`, href: rutas.siguiente.href, rel: "next" },
+      rutas.anterior && { texto: rutas.anterior.nombre, href: rutas.anterior.href, rel: "prev" },
+      rutas.siguiente && { texto: rutas.siguiente.nombre, href: rutas.siguiente.href, rel: "next" },
       { texto: "portfolio", href: idioma.proyBase },
     ].filter(Boolean),
   });
