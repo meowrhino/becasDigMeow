@@ -2799,37 +2799,42 @@ html.js #seo-prerender {
 }
 .proy-texto { font-family: var(--font-text); }
 
-/* --- Bienvenida: las webs, esparcidas a un lado y a otro mientras se baja. La
-   que pasa por el centro se ve entera; la de antes y la de después asoman,
-   apagadas: así se ven venir. `--wp-juego` es cuánto se apartan del centro. --- */
-.celda.welcome { padding: 0; --wp-ancho: min(52dvw, 80dvh); --wp-juego: 17dvw; }
+/* --- Bienvenida: las webs en fila, pasando de lado, cada una un poco más
+   arriba o más abajo. La que pasa por el centro se ve entera; la de antes y la
+   de después asoman, apagadas: así se ven venir. La fila no tiene fin (pages.js
+   la repite) y no lleva aire a los lados. `--wp-juego` es cuánto se apartan
+   del centro en vertical. --- */
+.celda.welcome { padding: 0; --wp-ancho: min(52dvw, 80dvh); --wp-juego: 10dvh; }
 .welcome-proyectos {
   position: absolute;
   inset: 0;
-  overflow-y: auto;
-  overscroll-behavior-y: contain;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
   z-index: 3;
 }
+.welcome-proyectos::-webkit-scrollbar { display: none; }
 .wp-escena {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  /* tanto aire arriba y abajo como para que la primera y la última lleguen al centro */
-  padding: calc((100dvh - var(--wp-ancho) / 1.45) / 2) 0;
+  width: max-content;
+  height: 100%;
 }
 /* Las de antes y después esperan pequeñas y apagadas, pisándose un poco con la
    del centro; la que llega al centro salta a su tamaño, como un pop-up. */
 .wp {
   position: relative;
+  flex: none;
   width: var(--wp-ancho);
   opacity: 0.25;
   scale: 0.78;
-  translate: calc(var(--dx, 0) * var(--wp-juego)) 0;
+  translate: 0 calc(var(--dx, 0) * var(--wp-juego));
   transition: opacity 0.3s ease, scale 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.wp + .wp { margin-top: calc(var(--wp-ancho) / 1.45 * -0.2); }   /* se pisan una esquina */
+.wp + .wp { margin-left: calc(var(--wp-ancho) * -0.2); }   /* se pisan una esquina */
 .wp.visible { opacity: 1; scale: 1.15; z-index: 1; }
-/* El lado de cada web (--dx, de -1 a 1) lo sortea pages.js en cada visita. */
+/* Arriba o abajo (--dx, de -1 a 1) lo sortea pages.js en cada visita. */
 /* Sin sombra propia: las capturas ya traen la de su ventana, con margen
    transparente alrededor, y otra por fuera dibujaba un recuadro. La proporción
    reserva el sitio de las que aún no han cargado. */
@@ -2863,7 +2868,7 @@ body > .welcome-content .welcome-tagline { color: #999; font-size: clamp(0.9rem,
 .welcome-tagline .marquee-pista { animation-direction: reverse; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 @media (max-width: 768px) {
-  .celda.welcome { --wp-ancho: 72dvw; --wp-juego: 8dvw; }   /* 72 × 1,15 + 8 de juego cabe sin cortarse */
+  .celda.welcome { --wp-ancho: 80dvw; --wp-juego: 14dvh; }   /* 80 × 1,15 cabe de ancho; en alto sobra sitio para el zigzag */
   body > .welcome-content { bottom: 10dvh; }
 }
 
