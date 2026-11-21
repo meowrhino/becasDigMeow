@@ -90,9 +90,9 @@ export async function fetchJson(url) {
  */
 /**
  * Al pasar por una fila aparece su captura, grande y cada vez en un sitio:
- * cada fila tiene el suyo, siempre el mismo, sacado de su posición en `items`.
- * Puede pisar la lista; es decorativa (alt vacío): el nombre ya está en la
- * fila. En móvil no sale (style.css, `.plista-captura`).
+ * cada fila tiene el suyo, siempre el mismo, sacado de su posición en `items`
+ * (--dx, --dy, --giro; style.css decide cuánto se mueve en cada página). Es
+ * decorativa (alt vacío): el nombre ya está en la fila. En móvil no sale.
  *
  * @param {HTMLElement} lista    — la de `pintarLista`
  * @param {HTMLImageElement} captura
@@ -105,8 +105,9 @@ export function capturaAlPasar(lista, captura, items, src) {
     const fila = e.target.closest("a.plista-fila");
     if (!fila) return;
     const i = items.indexOf(fila.item);
-    captura.style.translate = `${-((i * 7) % 19)}dvw ${((i * 11) % 25) - 12}dvh`;
-    captura.style.rotate = `${((i * 3) % 5) - 2}deg`;
+    captura.style.setProperty("--dx", -((i * 7) % 19));
+    captura.style.setProperty("--dy", ((i * 11) % 25) - 12);
+    captura.style.setProperty("--giro", ((i * 3) % 5) - 2);
     captura.src = src(fila.item);
     captura.classList.add("visible");
   });

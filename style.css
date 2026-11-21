@@ -2850,13 +2850,23 @@ a.plista-fila::before { counter-increment: fila; content: counter(fila, decimal-
   right: var(--margen);
   top: 50%;
   width: min(48dvw, 82dvh);
-  transform: translateY(-50%);   /* el sitio de cada web (translate, rotate) lo pone portfolio.js */
+  transform: translateY(-50%);
+  /* el sitio de cada web (--dx, --dy, --giro) lo pone capturaAlPasar (utils.js);
+     en el portfolio puede pisar la lista, que solo tiene dos columnas */
+  translate: calc(var(--dx, 0) * 1dvw) calc(var(--dy, 0) * 1dvh);
+  rotate: calc(var(--giro, 0) * 1deg);
   z-index: 2;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
 }
 .plista-captura.visible { opacity: 1; }
+/* En links la lista tiene tres columnas y la última llega al borde de la
+   lista: la captura va en el hueco de la derecha, sin moverse de lado. */
+.plista-links ~ .plista-captura {
+  width: min(48dvw, 82dvh, 100% - 2 * var(--margen) - min(56rem, 56dvw) - 2.5rem);
+  translate: 0 calc(var(--dy, 0) * 1dvh);
+}
 @media (hover: none) { .plista-captura { display: none; } }
 .portfolio-grid[hidden], .plista[hidden] { display: none; }
 @media (max-width: 768px) {
