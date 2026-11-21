@@ -132,7 +132,13 @@ export function montarFila(pista, { activa = () => true, rueda = true } = {}) {
       const toca = !lenta && activa() && webs[k].classList.contains("visible") && (!movil || Math.abs(alCentro(k)) < 12);
       if (toca && !v.toca) { v.desde = 0; v.centrada = t; }   // acaba de llegar
       v.toca = toca;
-      if (toca && v.paused) v.play().catch(e => { if (e.name !== "AbortError") v.dataset.bloqueado = "1"; });   // si no deja o no puede, se queda la captura (AbortError es solo un pause() a media carga)
+      // Si no deja o no puede, se reintenta cada 1,5 s (Safari dice que no si llega nada más cargar la
+      // página) y a los 3 fallos se queda la captura. AbortError es solo un pause() a media carga.
+      if (toca && v.paused && !(t < v.reintento)) v.play().catch(e => {
+        if (e.name === "AbortError") return;
+        v.fallos = (v.fallos || 0) + 1;
+        if (v.fallos >= 3) v.dataset.bloqueado = "1"; else v.reintento = performance.now() + 1500;
+      });
       else if (!toca && !v.paused) v.pause();
       if (movil && toca && alCentro(k) <= 0.5) esperar = v.desde ? t - v.desde < v.duration * 1000 : t - v.centrada < 8000;
     });
