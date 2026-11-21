@@ -2769,6 +2769,13 @@ html.js #seo-prerender {
 .about-entrada, .about-texto p { font-size: 1em; color: var(--text-content); }
 .about-enlaces { justify-content: flex-start; }
 .about-contacto { align-items: flex-start; }
+/* About y reseña: el contacto (o el botón de google) ocupa la columna de la
+   izquierda, a la altura del texto; antes quedaba vacía bajo el título (manu,
+   21 nov 2026). Las redes, una debajo de otra. En móvil, una sola columna. */
+@media (min-width: 769px) {
+  .about-content > .about-contacto { grid-column: 1; grid-row: 2 / span 2; margin-top: 0; }
+  .about-content > .about-contacto .contacto-row { flex-direction: column; gap: 0.3rem; }
+}
 @media (max-width: 768px) {
   .about-content, .about-seccion, .metodologia-paso, .metodologia-importante, .footer-seccion { grid-template-columns: minmax(0, 1fr); }
   .about-content > *, .about-seccion > *, .metodologia-paso > *, .metodologia-importante > *, .footer-seccion > * { grid-column: 1; }

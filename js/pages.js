@@ -433,7 +433,7 @@ export function renderAbout(data) {
       <div class="about-entrada">${(d.entrada || []).map(parrafo).join("")}</div>
       <p class="about-enlaces">${enlaces(lang)}</p>
       <div class="about-contacto">
-        <a class="contacto-email" href="${escapeHTML(buildMailto(lang))}">${escapeHTML(email)}</a>
+        <a class="contacto-email" href="${escapeHTML(buildMailto(lang))}">${escapeHTML(email).replace(/\./g, "<wbr>.")}</a>
         <div class="contacto-row">
           ${(redes || []).map(a => {
             // /archive es nuestro y se abre en la misma pestaña; el resto es
