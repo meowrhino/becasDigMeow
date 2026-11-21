@@ -88,6 +88,31 @@ export async function fetchJson(url) {
  * @returns {(lang: string) => void} pone textos y enlaces en un idioma; hay que
  *   llamarla una vez al crear y otra en cada cambio de idioma
  */
+/**
+ * Al pasar por una fila aparece su captura, grande y cada vez en un sitio:
+ * cada fila tiene el suyo, siempre el mismo, sacado de su posición en `items`.
+ * Puede pisar la lista; es decorativa (alt vacío): el nombre ya está en la
+ * fila. En móvil no sale (style.css, `.plista-captura`).
+ *
+ * @param {HTMLElement} lista    — la de `pintarLista`
+ * @param {HTMLImageElement} captura
+ * @param {Object[]} items
+ * @param {(item) => string} src — la ruta de la captura de una fila
+ */
+export function capturaAlPasar(lista, captura, items, src) {
+  captura.onerror = () => captura.classList.remove("visible");   // una fila sin captura
+  lista.addEventListener("mouseover", (e) => {
+    const fila = e.target.closest("a.plista-fila");
+    if (!fila) return;
+    const i = items.indexOf(fila.item);
+    captura.style.translate = `${-((i * 7) % 19)}dvw ${((i * 11) % 25) - 12}dvh`;
+    captura.style.rotate = `${((i * 3) % 5) - 2}deg`;
+    captura.src = src(fila.item);
+    captura.classList.add("visible");
+  });
+  lista.addEventListener("mouseleave", () => captura.classList.remove("visible"));
+}
+
 export function pintarLista(lista, items, { campos, cols, texto, href }) {
   lista.innerHTML = `
     <div class="plista-fila plista-cabecera">${campos.map(c => `<button type="button" data-campo="${c}"></button>`).join("")}</div>

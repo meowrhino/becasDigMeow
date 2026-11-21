@@ -7,7 +7,7 @@ import { slugify } from "./proyecto-template.js";
 import { altProyecto } from "./easy-template.js";
 import { rutaProyectos } from "./rutas.js";
 import { setupScrollGradients } from "./scroll-gradients.js";
-import { pintarLista } from "./utils.js";
+import { pintarLista, capturaAlPasar } from "./utils.js";
 import { celdaHeadingHTML } from "./pages.js";
 
 /** Texto del enlace al caso de estudio, por idioma. */
@@ -245,21 +245,7 @@ function renderListaProyectos(el, proyectos) {
     href: (p, lang) => `${rutaProyectos(lang)}/${slugify(p.nombre)}`,
   });
 
-  // Al pasar por una fila aparece su captura, grande y cada vez en un sitio:
-  // cada web tiene el suyo, siempre el mismo, sacado de su posición en la
-  // lista. Puede pisar la lista; es decorativa (alt vacío): el nombre ya está
-  // en la fila.
-  const captura = el.querySelector(".plista-captura");
-  lista.addEventListener("mouseover", (e) => {
-    const fila = e.target.closest("a.plista-fila");
-    if (!fila) return;
-    const i = proyectos.indexOf(fila.item);
-    captura.style.translate = `${-((i * 7) % 19)}dvw ${((i * 11) % 25) - 12}dvh`;
-    captura.style.rotate = `${((i * 3) % 5) - 2}deg`;
-    captura.src = `/${fila.item.imagen}`;
-    captura.classList.add("visible");
-  });
-  lista.addEventListener("mouseleave", () => captura.classList.remove("visible"));
+  capturaAlPasar(lista, el.querySelector(".plista-captura"), proyectos, (p) => `/${p.imagen}`);
 
   const traducir = (lang) => {
     pintar(lang);

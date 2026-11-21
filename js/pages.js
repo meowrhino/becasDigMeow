@@ -16,7 +16,7 @@ import { setupScrollGradients } from "./scroll-gradients.js";
 // este import (con comillas dobles) y la llamada en renderWelcome. Con comillas
 // simples el build no lo ve como import y quita el modulepreload.
 // import { renderWelcomeCupon } from './welcome-cupon.js';
-import { repaintWithFade, escapeHTML, pintarLista } from "./utils.js";
+import { repaintWithFade, escapeHTML, pintarLista, capturaAlPasar } from "./utils.js";
 import { rutaProyectos, rutaCelda, slugify } from "./rutas.js";
 import { escConEnlaces } from "./easy-template.js";
 import { filaHTML, montarFila } from "./fila.js";
@@ -72,9 +72,10 @@ export function renderTools(data) {
   const labels = l.labels || {};
   const grupo = (label, items = []) => items.map(i => ({ ...i, grupo: label }));
   // Las webs terminadas salen del portfolio, con su `sector` de descripción;
-  // la que tiene dos direcciones (mokakopaTwins) da dos filas.
+  // la que tiene dos direcciones (mokakopaTwins) da dos filas. Su captura es
+  // la del portfolio; la de los demás enlaces, img/links/<slug>.webp.
   const webs = (data.portfolio?.proyectos || []).flatMap(p =>
-    (p.urls || [{ nombre: p.nombre, url: p.url }]).map(u => ({ ...u, desc: p.sector })));
+    (p.urls || [{ nombre: p.nombre, url: p.url }]).map(u => ({ ...u, desc: p.sector, imagen: p.imagen })));
   const items = [
     ...grupo(labels.herramientas, l.herramientas),
     ...grupo(labels.experimentos, l.experimentos),
@@ -89,6 +90,7 @@ export function renderTools(data) {
       <div class="scroll-content tools-content">
         ${celdaHeadingHTML(data, "links", currentLang, "about-pregunta")}
         <div class="plista plista-links"></div>
+        <img class="plista-captura" alt="" decoding="async">
       </div>
     </div>
   `;
@@ -105,6 +107,8 @@ export function renderTools(data) {
     a.rel = "noopener";
     if (!esMovil) a.target = "_blank";
   });
+  capturaAlPasar(lista, el.querySelector(".plista-captura"), items,
+    (i) => `/${i.imagen || `img/links/${slugify(i.nombre)}.webp`}`);
   pintar(currentLang);
   onLangChange(pintar);
 
