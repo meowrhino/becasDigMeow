@@ -2124,7 +2124,7 @@ html.js #seo-prerender {
 .easy-mode .menu-vecinos .menu-btn:last-child::after { content: none; }
 
 .proy-ficha { max-width: none; margin: 0; padding-left: var(--margen); padding-right: var(--margen); }
-.proy-ficha .proy-texto { font-size: inherit; line-height: inherit; }
+.proy-ficha .proy-texto { font-size: inherit; line-height: inherit; max-width: 33em; }   /* la misma columna que las páginas de texto */
 /* El resumen («una web para fotografía de moda y editorial»), debajo del título. */
 .proy-ficha .proy-resumen {
   margin: 0 0 0.8rem;
@@ -2435,7 +2435,10 @@ html.js #seo-prerender {
 .desplegable-opciones .menu-btn.is-active { text-decoration: underline; text-underline-offset: 0.25em; }
 /* Los originales de cada celda siguen ahí (les pasa el clic la barra), sin verse. */
 .celda .lang-group, .celda .footer-bottom-bar, .pvista { display: none; }
-.about-content, .metodologia-content, .footer-content { font-size: calc(0.95rem * var(--zoom, 1)) !important; }
+/* La letra crece con la pantalla: 15 px hasta unos 1000 px de ancho (el móvil
+   no cambia) y hasta 21 px en una grande. En 15 px fijos, en un ordenador las
+   páginas de texto se veían muy comprimidas (manu, 21 nov 2026). */
+.about-content, .metodologia-content, .footer-content { font-size: calc(clamp(0.95rem, 0.35rem + 0.9vw, 1.3rem) * var(--zoom, 1)) !important; }
 
 /* --- El mapa que abre «menú»: una constelación. Cada página es un punto con su
    nombre y cada conexión una línea fina (js/navigation.js, pintarConstelacion).
@@ -2599,8 +2602,9 @@ html.js #seo-prerender {
      sobra y los huecos salen distintos en cada página */
   align-content: start;
 }
-/* El texto, a 30rem: unas 70 letras por línea (a 38rem eran más de 90). */
-.about-content > *, .about-seccion > *, .metodologia-paso > *, .metodologia-importante > *, .footer-seccion > * { grid-column: 1; max-width: 30rem; }
+/* El texto, a 33em: unas 70 letras por línea a cualquier tamaño de letra (a
+   38rem eran más de 90). En em y no en rem: la columna crece con la letra. */
+.about-content > *, .about-seccion > *, .metodologia-paso > *, .metodologia-importante > *, .footer-seccion > * { grid-column: 1; max-width: 33em; }
 .about-content > .about-texto { grid-column: 1 / -1; max-width: none; }
 .about-pregunta, .about-seccion-titular, .metodologia-num, .metodologia-titular,
 .metodologia-importante-titular, .footer-apartado-titular {
