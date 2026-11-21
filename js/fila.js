@@ -111,7 +111,7 @@ export function montarFila(pista, { activa = () => true, rueda = true } = {}) {
   // demás enseñan su captura (el póster) sin bajarlo. Con ahorro de datos o conexión lenta, ni ese:
   // navigator.connection solo existe en Chrome y Android; en Safari, mientras carga, se ve la captura.
   // En móvil, una cosa cada vez: el vídeo suena solo con su web parada en el centro, y la fila
-  // espera a que dé una vuelta (o 4 s, si no llega a cargar) antes de seguir. La misma consulta que
+  // espera a que dé una vuelta (o 8 s, si no llega a cargar: al abrir la página aún bajan las capturas) antes de seguir. La misma consulta que
   // esMovil (pages.js), que no se importa: pages.js ya importa este archivo.
   const movil = matchMedia("(hover: none) and (pointer: coarse)").matches;
   const videos = webs.map(a => a.querySelector("video"));
@@ -134,7 +134,7 @@ export function montarFila(pista, { activa = () => true, rueda = true } = {}) {
       v.toca = toca;
       if (toca && v.paused) v.play().catch(e => { if (e.name !== "AbortError") v.dataset.bloqueado = "1"; });   // si no deja o no puede, se queda la captura (AbortError es solo un pause() a media carga)
       else if (!toca && !v.paused) v.pause();
-      if (movil && toca && alCentro(k) <= 0.5) esperar = v.desde ? t - v.desde < v.duration * 1000 : t - v.centrada < 4000;
+      if (movil && toca && alCentro(k) <= 0.5) esperar = v.desde ? t - v.desde < v.duration * 1000 : t - v.centrada < 8000;
     });
   };
   const avanzar = (t) => {
