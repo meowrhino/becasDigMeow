@@ -8,29 +8,12 @@
 // inline en <head> (ver index.html) para evitar flash.
 
 import { currentLang, onLangChange } from "./data.js";
+import { MODOS, NOMBRES_MODO } from "./modos.js";
 
 const STORAGE_KEY = "meowrhino-theme";
 const TINTE_KEY = "meowrhino-tinte";
 
-/**
- * Los modos de color. Los dos de siempre son el tema (`data-theme`); los
- * demás son un tinte (`data-tinte`, sus colores están en style.css) puesto
- * encima de uno de los dos, del que heredan lo que no cambian.
- */
-export const MODOS = {
-  claro:     { base: "light" },
-  oscuro:    { base: "dark" },
-  papel:     { base: "light", tinte: "papel" },
-  chicle:    { base: "light", tinte: "chicle" },
-  cianotipo: { base: "dark",  tinte: "cianotipo" },
-  fosforo:   { base: "dark",  tinte: "fosforo" },
-  ada:       { base: "light", tinte: "ada" },
-};
-const NOMBRES_MODO = {
-  es:  { claro: "claro", oscuro: "oscuro", papel: "papel", chicle: "chicle", cianotipo: "cianotipo", fosforo: "fósforo" },
-  en:  { claro: "light", oscuro: "dark",   papel: "paper", chicle: "bubblegum", cianotipo: "cyanotype", fosforo: "phosphor" },
-  cat: { claro: "clar",  oscuro: "fosc",   papel: "paper", chicle: "xiclet", cianotipo: "cianotip", fosforo: "fòsfor" },
-};
+export { MODOS };
 
 /** El nombre de un modo en el idioma de la página. */
 export const nombreModo = (modo) => (NOMBRES_MODO[currentLang] || NOMBRES_MODO.es)[modo] || modo;

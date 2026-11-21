@@ -103,57 +103,28 @@ export function renderProyectoHTML(proyecto, seo, lang = "es", rutas = {}, medir
              loading="${i === 0 ? "eager" : "lazy"}" decoding="async">`;
   }).join("");
 
-  // Los dos botones van juntos y DESPUÉS de la galería: antes, «visitar» salía
-  // encima de las capturas (te echaba de la página antes de enseñártela) y la
-  // llamada a escribir quedaba en un cartel aparte al final. Puestos en fila al
-  // salir de las imágenes, se leen como lo que son: ver esa web, o pedir la tuya.
+  // Los dos enlaces van juntos y DESPUÉS de la galería: antes, «visitar» salía
+  // encima de las capturas (te echaba de la página antes de enseñártela). En
+  // texto, como los del about («↖ portfolio», «statement ↗»): ver esa web, o
+  // pedir la tuya.
   const acciones = `
-      <p class="proy-acciones">${enlaces.map(e => `
-        <a class="easy-btn" href="${esc(e.url)}" target="_blank" rel="noopener">${esc(t.visitar)} ${esc(e.nombre)} ↗</a>`
+      <p class="about-enlaces">${enlaces.map(e => `
+        <a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(t.visitar)} ${esc(e.nombre)} ↗</a>`
         ).join("")}
-        <a class="easy-btn easy-btn-secundario" href="mailto:hola@meowrhino.studio?subject=${encodeURIComponent(t.asunto)}">${esc(t.ctaBoton)}</a>
+        <a href="mailto:hola@meowrhino.studio?subject=${encodeURIComponent(t.asunto)}">${esc(t.ctaBoton)} ↗</a>
       </p>`;
 
-  // Las tres variantes de idioma de ESTA ficha. Existían ya como <link
-  // hreflang> para los buscadores, pero una persona que caía aquí desde Google
-  // en el idioma equivocado no tenía forma de cambiarlo: la ficha solo llevaba
-  // cuatro enlaces y ninguno era el selector.
-  const idiomas = (rutas.idiomas || []).map(i =>
-    i.activo
-      ? `<span class="proy-lang-actual" aria-current="true">${esc(i.etiqueta)}</span>`
-      : `<a class="proy-lang" href="${esc(i.href)}" hreflang="${esc(i.htmlLang)}">${esc(i.etiqueta)}</a>`
-  ).join("");
-
-  const cabecera = idiomas
-    ? `
-      <div class="proy-lang-switch" role="group" aria-label="${esc(t.idiomas)}">${idiomas}</div>`
-    : "";
-
-  // Anterior y siguiente van en los BORDES, girados, como las etiquetas de las
-  // celdas vecinas del lienzo de la home: la ficha se lee como una celda que
-  // has abierto, no como una página suelta. En móvil el CSS los baja al pie,
-  // donde sí hay sitio.
-  const vecino = (v, clase) => v
-    ? `
-      <a class="proy-vecino ${clase}" href="${esc(v.href)}" rel="${clase === "proy-vecino-prev" ? "prev" : "next"}">
-        <span class="proy-vecino-nombre">${esc(v.nombre)}</span>
-      </a>`
-    : "";
-
-  const vecinos = vecino(rutas.anterior, "proy-vecino-prev") +
-    vecino(rutas.siguiente, "proy-vecino-next");
-
+  // La misma maqueta que el about (about-content): el nombre grande desde el
+  // margen y el texto en su columna. El resumen va en la columna de la
+  // izquierda, a la altura del texto. La barra (vecinos, portfolio, modo e
+  // idioma) la pone el esqueleto de la página, en build-seo.js.
   return `
-    <article class="proy">${cabecera}
-      <span class="proy-borde-etiqueta" aria-hidden="true">${esc(t.eyebrow)}</span>${vecinos}
-      <p class="easy-eyebrow">${esc(pickLang(seo.resumen, lang))}</p>
-      <h1 class="proy-title">${esc(proyecto.nombre)}</h1>
-      <p class="proy-texto">${esc(pickLang(seo.texto, lang))}</p>
+    <article class="proy proy-ficha about-content">
+      <h1 class="proy-title about-pregunta">${esc(proyecto.nombre)}</h1>
+      <p class="proy-resumen">${esc(pickLang(seo.resumen, lang))}</p>
+      <div class="about-entrada"><p class="proy-texto">${esc(pickLang(seo.texto, lang))}</p></div>
       <div class="proy-galeria">${galeria}
       </div>${acciones}
-      <nav class="proy-pie" aria-label="${esc(t.navegar)}">
-        <a href="${esc(rutas.indice || "/portfolio")}">${esc(t.volverRejilla)}</a>
-      </nav>
     </article>`;
 }
 

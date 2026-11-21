@@ -36,6 +36,7 @@ import {
 import { slugify, RUTA_CELDAS } from "./js/rutas.js";
 import { renderArchivePrerenderHTML } from "./js/archive-pages.js";
 import { renderLandingHTML } from "./js/landing-template.js";
+import { MODOS, NOMBRES_MODO } from "./js/modos.js";
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const DIST = join(ROOT, "dist");
@@ -476,9 +477,13 @@ function scriptLdHTML(schema) {
  * Reutiliza el CSS del modo fácil (html.easy + body.easy-mode): son páginas de
  * scroll lineal, igual que /easy, así que heredan tipografía, ritmo vertical y
  * botones sin duplicar reglas. Lo propio vive en la sección 18 de style.css.
+ *
+ * Lleva la misma barra que el lienzo, escrita aquí en HTML: arriba a la derecha
+ * las páginas a las que se va desde esta (`barra`), abajo a la derecha modo e
+ * idioma, y la trama de puntos de fondo. Los modos los mueve js/ficha.js.
  */
 function paginaProyectoHTML({ title, description, url, imagen, jsonLd, cuerpo, idioma, hreflang,
-                             ogType = "article" }) {
+                             ogType = "article", barra = [], idiomas = [] }) {
   return `<!DOCTYPE html>
 <html lang="${idioma.htmlLang}" class="easy">
 <head>
@@ -520,12 +525,40 @@ ${jsonLd}
   </script>
 </head>
 <body class="easy-mode">
+  <div class="fondo" aria-hidden="true"></div>
+  <div class="header-topright">
+    <nav class="menu-vecinos">${barra.map(b =>
+      `<a class="menu-btn barra-pagina" href="${esc(b.href)}"${b.rel ? ` rel="${b.rel}"` : ""}>${esc(b.texto)}</a>`).join("")}</nav>
+  </div>
   <main id="easy" role="main">
 ${cuerpo}
   </main>
+${controlesHTML(idioma, idiomas)}
+  <script type="module" src="/js/ficha.js"></script>
 </body>
 </html>
 `;
+}
+
+/**
+ * Abajo a la derecha, como en el lienzo (navigation.js, pintarVecinosHeader):
+ * `modo(…)` con todos los modos e `idioma(…)` con las tres versiones de esta
+ * página. Mismos <details> y mismas clases, así que se ven igual.
+ */
+function controlesHTML(idioma, idiomas) {
+  const nombres = NOMBRES_MODO[idioma.code] || NOMBRES_MODO.es;
+  const modos = Object.entries(MODOS).map(([m, { base, tinte }]) =>
+    `<button type="button" class="menu-btn" data-modo="${m}" data-modo-base="${base}"${tinte ? ` data-modo-tinte="${tinte}"` : ""}>${nombres[m] || m}</button>`
+  ).join("");
+  const langs = idiomas.map(i =>
+    `<a class="menu-btn${i.activo ? " is-active" : ""}" href="${esc(i.href)}" hreflang="${esc(i.htmlLang)}"${i.activo ? ' aria-current="true"' : ""}>${esc(i.etiqueta)}</a>`
+  ).join("");
+  const etiquetaModo = idioma.code === "es" ? "modo" : "mode";
+  const etiquetaIdioma = idioma.code === "en" ? "language" : "idioma";
+  return `  <div class="controles">
+    <details class="desplegable" name="controles"><summary class="menu-btn">${etiquetaModo}(${nombres.claro})</summary><div class="desplegable-opciones">${modos}</div></details>${langs ? `
+    <details class="desplegable" name="controles"><summary class="menu-btn">${etiquetaIdioma}(${esc(idioma.code)})</summary><div class="desplegable-opciones">${langs}</div></details>` : ""}
+  </div>`;
 }
 
 /** Página de un proyecto, en un idioma. */
@@ -563,6 +596,13 @@ function paginaProyecto({ proyecto, seo }, idioma, vecinos = {}) {
     hreflang: hreflangProyectoHTML(`/${seo.slug}`),
     jsonLd: jsonLdProyecto(proyecto, seo, idioma),
     cuerpo: renderProyectoHTML(proyecto, seo, idioma.code, rutas, medidasDe),
+    idiomas: rutas.idiomas,
+    // La lista es circular, así que siempre hay anterior y siguiente.
+    barra: [
+      rutas.anterior && { texto: `← ${rutas.anterior.nombre}`, href: rutas.anterior.href, rel: "prev" },
+      rutas.siguiente && { texto: `${rutas.siguiente.nombre} →`, href: rutas.siguiente.href, rel: "next" },
+      { texto: "portfolio", href: idioma.proyBase },
+    ].filter(Boolean),
   });
 }
 
@@ -652,6 +692,8 @@ function paginaLanding({ landing, url }, idioma, fichas, landingsDoc) {
       provider: { "@type": "ProfessionalService", name: "meowrhino studio", url: SITE },
     }),
     cuerpo: renderLandingHTML(landing, propias, idioma.code, rutas, medidasDe),
+    idiomas: rutas.idiomas,
+    barra: [{ texto: "portfolio", href: idioma.proyBase }],
   });
 }
 

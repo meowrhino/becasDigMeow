@@ -2206,180 +2206,37 @@ html.js #seo-prerender {
 .pgrid-caso:hover { color: var(--text); text-decoration: underline; text-underline-offset: 0.16em; }
 
 /* ============================================
-   FICHA DE PROYECTO — el marco de celda
+   FICHA DE PROYECTO — como las páginas de texto del lienzo
    ============================================
 
-   Las fichas (/portfolio/<slug>) eran una columna de texto centrada con dos
-   capturas debajo: correcta y de nadie. Como son las páginas a las que llega
-   la gente desde Google, tenían además tres agujeros — ni selector de idioma,
-   ni cambio de tema, ni forma de ir a otro proyecto sin volver al índice.
+   Las fichas (/portfolio/<slug>) llevan la misma barra que el lienzo (las
+   escribe build-seo.js en el HTML: vecinos y «portfolio» arriba, modo e idioma
+   abajo, la trama de puntos detrás) y la maqueta del about: el cuerpo es un
+   .about-content, así que título, columna y enlaces salen de sus reglas. Aquí
+   solo lo que el about no tiene: el resumen al margen y la galería. Antes eran
+   una «celda abierta», con la palabra gigante de fondo y los vecinos girados en
+   los bordes (manu, 21 nov 2026: «hacerla como el resto de la web»). */
 
-   La respuesta no es añadir una barra de navegación, que sería la solución de
-   cualquier web: es que la ficha se lea como UNA CELDA DEL LIENZO que has
-   abierto. Por eso reutiliza el vocabulario visual de la home — la palabra
-   gigante desvaída del fondo (.zone-label-bg), las etiquetas giradas de las
-   celdas vecinas (.nav-label.left/.right) y los códigos de idioma sueltos
-   (.lang-btn) — en vez de inventarse un lenguaje nuevo.
+/* El contenido, por encima de la trama de puntos (.fondo es fixed, z-index 0). */
+.fondo ~ main { position: relative; z-index: 1; }
+/* En el lienzo detrás del último vecino va «menú»; aquí no hay nada. */
+.easy-mode .menu-vecinos .menu-btn:last-child::after { content: none; }
 
-   Todo esto es CSS y HTML estático: las fichas siguen sin cargar un solo
-   módulo de js/. */
-
-/* La palabra "proyecto" en grande y desvaída, como la de cada celda. */
-.proy-borde-etiqueta {
-  position: fixed;
-  bottom: 4dvh;
-  left: 50%;
-  transform: translateX(-50%);
+.proy-ficha { max-width: none; margin: 0; padding-left: var(--margen); padding-right: var(--margen); }
+.proy-ficha .proy-texto { font-size: inherit; line-height: inherit; max-width: none; margin: 0; }
+/* El resumen («una web para fotografía de moda y editorial»), en la columna
+   de la izquierda, a la altura del texto. */
+.proy-ficha .proy-resumen {
+  grid-column: 1;
+  margin: 0;
   font-family: var(--font-serif);
-  font-size: clamp(4rem, 14dvw, 12rem);
-  color: var(--zone-label);
-  text-transform: lowercase;
-  letter-spacing: -0.03em;
-  line-height: 1;
-  white-space: nowrap;
-  pointer-events: none;
-  user-select: none;
-  /* Es fondo: tiene que quedar DETRÁS del contenido. Con --z-base (vale 1) se
-     pintaba encima del texto y de las capturas, porque .proy es estático y no
-     crea contexto de apilamiento. Y con z-index:-1 desaparecía del todo, que
-     tampoco vale: html lleva su propio background, así que lo negativo cae por
-     detrás de ese fondo opaco. La forma que aguanta las dos cosas es dejar la
-     palabra en el nivel de base y subir el contenido por encima (la regla de
-     .proy > * , justo debajo). */
-  z-index: 0;
-}
-
-/* Sube el contenido de la ficha por encima de la palabra del fondo. Se listan
-   los bloques uno a uno en vez de usar `.proy > *`: el selector de idioma y
-   los vecinos también son hijos de .proy y son `position: fixed`, así que un
-   `position: relative` genérico los arrancaba de los bordes de la ventana y
-   los amontonaba arriba a la izquierda. Y no se pone sobre .proy porque
-   entonces .proy crearía contexto propio y esos `fixed` dejarían de medirse
-   contra la ventana. */
-.proy > .easy-eyebrow,
-.proy > .proy-title,
-.proy > .proy-texto,
-.proy > .proy-galeria,
-.proy > .proy-acciones,
-.proy > .proy-pie {
-  position: relative;
-  z-index: 1;
-}
-
-/* Códigos de idioma arriba a la derecha, con el mismo peso que en la home. */
-.proy-lang-switch {
-  position: fixed;
-  top: 3dvh;
-  right: 3dvw;
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  z-index: var(--z-nav);
-}
-
-.proy-lang,
-.proy-lang-actual {
-  font-size: 0.8rem;
-  padding: 0.2rem 0.3rem;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.proy-lang,
-.proy-lang:visited { color: var(--btn-subtle); }
-.proy-lang:hover   { color: var(--btn-subtle-hover); }
-.proy-lang-actual  { font-weight: 600; color: var(--text); }
-
-/* Los vecinos, girados en los bordes: el mismo gesto que las celdas de al lado
-   en el lienzo. La lista es circular, así que siempre hay los dos. */
-.proy-vecino {
-  position: fixed;
-  top: 50%;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-serif);
-  font-size: clamp(0.7rem, 1dvw, 1rem);
-  letter-spacing: 0.05em;
-  text-decoration: none;
+  font-size: var(--chico);
+  line-height: 1.6;
   color: var(--text-secondary);
-  transition: color 0.3s ease, transform 0.3s ease;
-  z-index: var(--z-nav);
-  max-width: 40dvh;
 }
-
-.proy-vecino:visited { color: var(--text-secondary); }
-.proy-vecino:hover   { color: var(--text); }
-
-.proy-vecino-nombre {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.proy-vecino-prev {
-  left: 3dvw;
-  writing-mode: vertical-rl;
-  transform: translateY(-50%) rotate(180deg);
-}
-.proy-vecino-next {
-  right: 3dvw;
-  writing-mode: vertical-rl;
-  transform: translateY(-50%);
-}
-
-.proy-vecino-prev:hover { transform: translateY(-50%) rotate(180deg) translateY(0.3rem); }
-.proy-vecino-next:hover { transform: translateY(-50%) translateY(0.3rem); }
-
-/* En pantallas estrechas no hay márgenes laterales que gastar: los vecinos
-   bajan al pie, en horizontal, junto a "todos los proyectos". La palabra
-   gigante del fondo desaparece — a este ancho tapa el texto en vez de
-   ambientarlo. */
-@media (max-width: 860px) {
-  .proy-borde-etiqueta { display: none; }
-
-  .proy-vecino {
-    position: static;
-    writing-mode: horizontal-tb;
-    transform: none;
-    max-width: 45%;
-  }
-  .proy-vecino-prev:hover,
-  .proy-vecino-next:hover { transform: none; }
-
-  /* Los dos vecinos COMPARTEN FILA, uno a cada lado, y el pie va debajo:
-     dos filas de dos, no cuatro enlaces escalonados. Con flex cada uno se
-     llevaba su propia línea (align-self no junta hermanos), así que a este
-     ancho .proy es una rejilla de dos columnas: todo ocupa el ancho entero
-     salvo el par de vecinos, que se reparte una columna cada uno. Así el par
-     conserva el "izquierda y derecha" que en ancho le daba el giro. */
-  .proy { display: grid; grid-template-columns: 1fr 1fr; }
-  .proy > * { grid-column: 1 / -1; }
-
-  /* El orden del cierre: primero los vecinos (seguir mirando proyectos),
-     luego los dos botones (visitar esta web o pedir la tuya) y al final el
-     pie (salir de aquí). De lo cercano a lo lejano. */
-  .proy-vecino { margin-top: clamp(2rem, 5dvh, 3rem); }
-  .proy-vecino-prev { grid-column: 1; order: 96; justify-self: start; }
-  .proy-vecino-next { grid-column: 2; order: 96; justify-self: end; }
-  /* Mismo `order` en los dos y adyacentes en el HTML: la rejilla los coloca
-     en la misma fila, en columna 1 y 2. */
-  .proy > .proy-acciones { order: 97; }
-  /* El pie de la ficha. */
-  .proy > .proy-pie { order: 98; margin-top: clamp(1.5rem, 4dvh, 2.5rem); }
-
-  /* Las flechas que en ancho daba la rotación: sin ellas, en horizontal, son
-     dos nombres sueltos y no se ve cuál es el anterior y cuál el siguiente. */
-  .proy-vecino-prev::before { content: "\2190"; }
-  .proy-vecino-next::after  { content: "\2192"; }
-
-  .proy-lang-switch { position: static; justify-content: flex-end; margin-bottom: 1rem; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .proy-vecino { transition: color 0.3s ease; }
-  .proy-vecino-prev:hover { transform: translateY(-50%) rotate(180deg); }
-  .proy-vecino-next:hover { transform: translateY(-50%); }
+.proy-ficha .proy-galeria { max-width: 60rem; margin-top: 2.4rem; gap: 1.6rem; }
+@media (max-width: 768px) {
+  .proy-ficha .proy-resumen { margin-bottom: 0.8rem; }
 }
 
 /* La letra pequeña del cupón: fuera de la tarjeta y siempre a la vista.

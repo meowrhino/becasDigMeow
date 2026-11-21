@@ -39,12 +39,6 @@ export function renderLandingHTML(landing, fichas, lang = "es", rutas = {}, medi
       <ul class="proy-grid proy-grid-inline">${tarjetas(lista)}
       </ul>` : "";
 
-  const idiomas = (rutas.idiomas || []).map(i =>
-    i.activo
-      ? `<span class="proy-lang-actual" aria-current="true">${esc(i.etiqueta)}</span>`
-      : `<a class="proy-lang" href="${esc(i.href)}" hreflang="${esc(i.htmlLang)}">${esc(i.etiqueta)}</a>`
-  ).join("");
-
   const secciones = (pickLang(landing.secciones, lang) || []).map((sec, i) => `
       <h2 class="proy-h2">${esc(sec.titular)}</h2>
       ${(sec.parrafos || []).map(x => p(x)).join("\n      ")}${rejillaInline(fichas.porApartado?.[i])}`).join("");
@@ -62,8 +56,6 @@ export function renderLandingHTML(landing, fichas, lang = "es", rutas = {}, medi
 
   return `
     <article class="proy landing">
-      <div class="proy-lang-switch" role="group" aria-label="${esc(t.idiomas)}">${idiomas}</div>
-      <span class="proy-borde-etiqueta" aria-hidden="true">${esc(pickLang(landing.etiqueta, lang))}</span>
       <p class="easy-eyebrow">${esc(pickLang(landing.eyebrow, lang))}</p>
       <h1 class="proy-title">${esc(pickLang(landing.h1, lang))}</h1>
       ${intro}${secciones}${cierre}
