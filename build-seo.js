@@ -483,7 +483,7 @@ function scriptLdHTML(schema) {
  * idioma, y la trama de puntos de fondo. Los modos los mueve js/ficha.js.
  */
 function paginaProyectoHTML({ title, description, url, imagen, jsonLd, cuerpo, idioma, hreflang,
-                             ogType = "article", barra = [], idiomas = [] }) {
+                             ogType = "article", barra = [], idiomas = [], noindex = false }) {
   return `<!DOCTYPE html>
 <html lang="${idioma.htmlLang}" class="easy">
 <head>
@@ -492,7 +492,8 @@ function paginaProyectoHTML({ title, description, url, imagen, jsonLd, cuerpo, i
   <!-- Generado por build-seo.js a partir de proyectos.json. -->
   <meta name="description" content="${esc(description)}">
   <title>${esc(title)}</title>
-  <link rel="canonical" href="${url}">
+  <link rel="canonical" href="${url}">${noindex ? `
+  <meta name="robots" content="noindex">` : ""}
 ${hreflang}
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
@@ -559,6 +560,36 @@ function controlesHTML(idioma, idiomas) {
     <details class="desplegable" name="controles"><summary class="menu-btn">${etiquetaModo}(${nombres.claro})</summary><div class="desplegable-opciones">${modos}</div></details>${langs ? `
     <details class="desplegable" name="controles"><summary class="menu-btn">${etiquetaIdioma}(${esc(idioma.code)})</summary><div class="desplegable-opciones">${langs}</div></details>` : ""}
   </div>`;
+}
+
+/**
+ * La 404, con la barra y la maqueta de las demás. Una sola para los tres
+ * idiomas: quien llega a una ruta que no existe no tiene idioma todavía.
+ */
+function pagina404() {
+  const idioma = IDIOMAS[0];
+  return paginaProyectoHTML({
+    idioma,
+    title: "esta página no existe · meowrhino studio",
+    description: "esta página no existe.",
+    url: `${SITE}/404`,
+    imagen: `${SITE}/favicon/og-image.png`,
+    hreflang: "",
+    jsonLd: "",
+    ogType: "website",
+    noindex: true,
+    barra: [{ texto: "portfolio", href: idioma.proyBase }],
+    cuerpo: `
+    <article class="proy proy-ficha about-content">
+      <h1 class="proy-title about-pregunta">404</h1>
+      <div class="about-entrada">
+        <p>esta página no existe, o se ha movido.</p>
+        <p lang="en">this page doesn't exist, or it has moved.</p>
+        <p lang="ca">aquesta pàgina no existeix, o s'ha mogut.</p>
+      </div>
+      <p class="about-enlaces"><a href="/">meowrhino studio</a><a href="${idioma.proyBase}">portfolio</a></p>
+    </article>`,
+  });
 }
 
 /** Página de un proyecto, en un idioma. */
@@ -887,6 +918,11 @@ function main() {
           paginaProyecto(ficha, idioma, vecinos));
       });
     }
+
+    // La página de «no existe»: Cloudflare la sirve con un 404 en cualquier
+    // ruta que no encuentre (wrangler.jsonc, not_found_handling). Fuera del
+    // sitemap y de lastmod: no es una página que se busque.
+    escribir("404.html", pagina404());
 
     escribir("sitemap.xml", sitemapXML(fichas, lastmod, landingsDoc));
     // El data.json que baja el navegador: el de la raíz más los proyectos, sin

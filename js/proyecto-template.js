@@ -105,13 +105,13 @@ export function renderProyectoHTML(proyecto, seo, lang = "es", rutas = {}, medir
 
   // Los dos enlaces van juntos y DESPUÉS de la galería: antes, «visitar» salía
   // encima de las capturas (te echaba de la página antes de enseñártela). En
-  // texto, como los del about («↖ portfolio», «statement ↗»): ver esa web, o
+  // texto y sin flechas, como los del about: ver esa web, o
   // pedir la tuya.
   const acciones = `
       <p class="about-enlaces">${enlaces.map(e => `
-        <a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(t.visitar)} ${esc(e.nombre)} ↗</a>`
+        <a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(t.visitar)} ${esc(e.nombre)}</a>`
         ).join("")}
-        <a href="mailto:hola@meowrhino.studio?subject=${encodeURIComponent(t.asunto)}">${esc(t.ctaBoton)} ↗</a>
+        <a href="mailto:hola@meowrhino.studio?subject=${encodeURIComponent(t.asunto)}">${esc(t.ctaBoton)}</a>
       </p>`;
 
   // La misma maqueta que el about (about-content): el nombre grande desde el

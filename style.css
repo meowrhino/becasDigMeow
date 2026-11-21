@@ -2200,7 +2200,7 @@ html.js #seo-prerender {
 .easy-mode .menu-vecinos .menu-btn:last-child::after { content: none; }
 
 .proy-ficha { max-width: none; margin: 0; padding-left: var(--margen); padding-right: var(--margen); }
-.proy-ficha .proy-texto { font-size: inherit; line-height: inherit; max-width: none; margin: 0; }
+.proy-ficha .proy-texto { font-size: inherit; line-height: inherit; }
 /* El resumen («una web para fotografía de moda y editorial»), en la columna
    de la izquierda, a la altura del texto. */
 .proy-ficha .proy-resumen {
@@ -2275,25 +2275,13 @@ html.js #seo-prerender {
 /* ============================================
    19. PÁGINAS LONG-TAIL (/web-para-artistas, /web-sin-cuotas-mensuales)
    ============================================ */
-/* Son fichas (.proy) con varios párrafos y apartados en vez de un texto único
-   y una galería: solo hace falta el ritmo entre párrafos, los subtítulos y que
-   la rejilla de proyectos relacionados quede por encima de la palabra del fondo. */
-.landing .proy-texto + .proy-texto { margin-top: 1rem; }
-.landing .proy-h2 {
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  max-width: 36rem;
-  margin: 2.6rem 0 0.8rem;
-}
-.proy > .proy-h2,
-.proy > .proy-grid { position: relative; z-index: 1; }
-.landing .proy-grid { margin-top: 1.4rem; }
-/* La entrada, un punto más grande: es la frase que dice de qué va la página. */
-.landing .proy-intro { font-size: 1.18rem; line-height: 1.6; color: var(--text); }
-/* Dos webs debajo de cada apartado, a dos columnas y a todo el ancho de la
-   columna de texto: la captura justo debajo de la frase que habla de ella. */
+/* Llevan la maqueta del about, como las fichas (.proy-ficha, más arriba):
+   entrada y apartados salen de sus reglas. Aquí solo las dos webs debajo de
+   cada apartado y los enlaces dentro del texto. */
+/* Dos webs debajo de cada apartado, a dos columnas: la captura justo debajo
+   de la frase que habla de ella. Más ancha que la columna de texto. */
 .landing .proy-grid-inline {
+  max-width: 44rem;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.4rem 1.3rem;
   margin: 1.6rem 0 0.6rem;

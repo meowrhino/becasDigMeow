@@ -5,7 +5,8 @@
   // En git va solo el fuente: Cloudflare construye dist/ al publicar.
   "build": { "command": "node build-seo.js" },
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    "not_found_handling": "404-page"
   },
   // Un segundo Worker con lo mismo, para enseñar una rama en otro dominio sin
   // pisar el de siempre: `npx wrangler deploy --env com` (meowrhino.com).
@@ -20,7 +21,8 @@
         { "pattern": "www.meowrhino.com", "custom_domain": true }
       ],
       "assets": {
-        "directory": "./dist"
+        "directory": "./dist",
+        "not_found_handling": "404-page"
       }
     }
   }
