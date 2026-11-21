@@ -32,8 +32,7 @@ export const rutaProyectos = (lang) => rutaCelda("portfolio", lang);
  * statement. `reseña` debajo del about: es la página que se manda a un cliente, y queda
  * al lado de quién somos y cómo escribirnos.
  *
- * Vive aquí porque lo usan el lienzo (main.js) y el pre-render (node), que
- * pinta con él las flechas del about. Es fijo: hubo una celda `mapa` que
+ * Vive aquí porque lo usan el lienzo (main.js) y el pre-render (node). Es fijo: hubo una celda `mapa` que
  * dejaba recolocarlo (5_4), quitada en noviembre de 2026.
  */
 export const ORIGEN = Object.freeze({
@@ -42,23 +41,6 @@ export const ORIGEN = Object.freeze({
   "4_3": "about", "4_4": "buscaminas",
   "5_3": "reseña",
 });
-
-/**
- * La flecha que, desde la celda `desde`, señala de verdad hacia `hasta` en el
- * reparto `mapa`: ← → ↑ ↓ o una diagonal. `antes` dice si va delante del texto
- * (apunta a la izquierda) o detrás. Si alguna celda no está, `→` y detrás.
- */
-export function flechaHacia(mapa, desde, hasta) {
-  const pos = (n) => Object.keys(mapa).find((k) => mapa[k] === n)?.split("_").map(Number);
-  const a = pos(desde), b = pos(hasta);
-  if (!a || !b) return { flecha: "→", antes: false };
-  const dy = Math.sign(b[0] - a[0]), dx = Math.sign(b[1] - a[1]);
-  const flecha = { "-1,-1": "↖", "-1,0": "↑", "-1,1": "↗", "0,-1": "←", "0,1": "→", "1,-1": "↙", "1,0": "↓", "1,1": "↘" }[`${dy},${dx}`] || "→";
-  return { flecha, antes: dx < 0 };
-}
-
-/** Un enlace con su flecha pegada por el lado que señala. */
-export const textoConFlecha = (texto, { flecha, antes }) => (antes ? `${flecha} ${texto}` : `${texto} ${flecha}`);
 
 /**
  * Convierte el `nombre` de data.json en slug de URL.

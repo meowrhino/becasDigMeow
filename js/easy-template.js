@@ -8,7 +8,7 @@
 // Así el texto que ve Google es EXACTAMENTE el que ve el visitante, sin copias
 // que se desincronicen. Fuente única de contenido: data.json.
 
-import { rutaProyectos, rutaCelda, slugify, ORIGEN, flechaHacia, textoConFlecha } from "./rutas.js";
+import { rutaProyectos, rutaCelda, slugify } from "./rutas.js";
 
 /** Escoge la variante de idioma de un objeto {es,en,cat}, con fallback a es. */
 export const pickLang = (obj, lang) => obj?.[lang] ?? obj?.es ?? "";
@@ -245,8 +245,7 @@ export function aboutHTML(data, lang) {
   const asunto = encodeURIComponent(co.asunto?.[lang] || co.asunto?.es || "");
   const cta = d.cta || {};
   const p = (t) => `<p>${escConEnlaces(t)}</p>`;
-  // Flechas según el reparto del lienzo (ORIGEN).
-  const enlace = (celda, texto) => `<a href="${esc(rutaCelda(celda, lang))}">${esc(textoConFlecha(texto, flechaHacia(ORIGEN, "about", celda)))}</a>`;
+  const enlace = (celda, texto) => `<a href="${esc(rutaCelda(celda, lang))}">${esc(texto)}</a>`;
 
   return `
     <section class="easy-section easy-about" id="about">

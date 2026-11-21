@@ -17,7 +17,7 @@ import { setupScrollGradients } from "./scroll-gradients.js";
 // simples el build no lo ve como import y quita el modulepreload.
 // import { renderWelcomeCupon } from './welcome-cupon.js';
 import { repaintWithFade, escapeHTML, pintarLista } from "./utils.js";
-import { rutaProyectos, rutaCelda, slugify, flechaHacia, textoConFlecha, ORIGEN } from "./rutas.js";
+import { rutaProyectos, rutaCelda, slugify } from "./rutas.js";
 import { escConEnlaces } from "./easy-template.js";
 
 /** true si el viewport es táctil / móvil (mismo criterio que portfolio usa para hover/pointer). */
@@ -418,10 +418,9 @@ export function renderAbout(data) {
     return `mailto:${email}${params.toString() ? `?${params.toString()}` : ""}`;
   };
 
-  // Las flechas señalan a la celda de verdad según el reparto (ORIGEN).
   const enlaces = (lang) => {
     const cta = (data.about[lang] || data.about.es)?.cta || {};
-    const enlace = (celda, texto) => `<a href="${escapeHTML(rutaCelda(celda, lang))}">${escapeHTML(textoConFlecha(texto, flechaHacia(ORIGEN, "about", celda)))}</a>`;
+    const enlace = (celda, texto) => `<a href="${escapeHTML(rutaCelda(celda, lang))}">${escapeHTML(texto)}</a>`;
     return enlace("portfolio", cta.portfolio || "portfolio") + (cta.statement ? enlace("statement", cta.statement) : "");
   };
 
