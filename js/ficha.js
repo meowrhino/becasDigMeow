@@ -3,8 +3,11 @@
 // ============================================
 //
 // La barra y los desplegables de abajo los escribe build-seo.js en el HTML;
-// aquí solo se les da vida a los de `zoom(…)` y `modo(…)` (idioma son enlaces). Sin
+// aquí se les da vida a los de `zoom(…)` y `modo(…)` (idioma son enlaces), y a
+// la fila de capturas. Sin
 // importar theme.js: arrastra data.js, que cambiaría el <html lang> de la ficha.
+
+import { montarFila } from "./fila.js";
 
 const raiz = document.documentElement;
 
@@ -54,3 +57,7 @@ document.querySelectorAll("[data-zoom]").forEach(boton => {
 document.addEventListener("click", (e) => {
   document.querySelectorAll(".controles details[open]").forEach(d => { if (!d.contains(e.target)) d.open = false; });
 });
+
+// La galería de la ficha, en la fila de la portada. Sin la rueda: aquí la
+// página baja, y la fila la atraparía al pasar el ratón por encima.
+document.querySelectorAll(".proy-fila .welcome-proyectos").forEach(p => montarFila(p, { rueda: false }));

@@ -15,6 +15,7 @@
 // /img/…). Con rutas relativas el navegador las buscaría en /portfolio/.
 
 import { esc, pickLang } from "./easy-template.js";
+import { filaHTML } from "./fila.js";
 // `slugify` se mudó a rutas.js (lo necesita también easy-template.js, y tenerlo
 // aquí montaba un import circular). Se re-exporta para no romper a quien lo pida.
 export { slugify } from "./rutas.js";
@@ -95,13 +96,23 @@ export function renderProyectoHTML(proyecto, seo, lang = "es", rutas = {}, medir
   // descargar la captura y el texto no pegue el salto. Quien llama decide de
   // dónde salen (build-seo.js las lee del .webp); sin `medirImagen` la <img>
   // sale como antes, sin atributos, y esta función sigue siendo pura.
-  const galeria = imagenes.map((src, i) => {
+  const img = (src, i, alt = altDe(proyecto, i, t), lazy = i > 0) => {
     const m = medirImagen?.(src);
     const tamano = m ? ` width="${m.ancho}" height="${m.alto}"` : "";
-    return `
-        <img class="proy-img" src="/${esc(src)}" alt="${esc(altDe(proyecto, i, t))}"${tamano}
-             loading="${i === 0 ? "eager" : "lazy"}" decoding="async">`;
-  }).join("");
+    return `<img class="proy-img" src="/${esc(src)}" alt="${esc(alt)}"${tamano}
+             loading="${lazy ? "lazy" : "eager"}" decoding="async">`;
+  };
+
+  // Con tres capturas o más, en la fila de la portada (js/fila.js, la mueve
+  // ficha.js). Con una o dos, una debajo de otra: una fila sin fin de dos
+  // capturas se veía como un tartamudeo.
+  const enFila = imagenes.length >= 3;
+  const galeria = enFila
+    ? filaHTML(imagenes.length, (i, copia, primera) => `
+          <div class="wp${primera ? " visible" : ""}"${copia === 1 ? "" : ' aria-hidden="true"'}>${
+            img(imagenes[i], i, copia === 1 ? undefined : "", !primera)}</div>`)
+    : imagenes.map((src, i) => `
+        ${img(src, i)}`).join("");
 
   // Los dos enlaces van juntos y DESPUÉS de la galería: antes, «visitar» salía
   // encima de las capturas (te echaba de la página antes de enseñártela). En
@@ -122,7 +133,7 @@ export function renderProyectoHTML(proyecto, seo, lang = "es", rutas = {}, medir
       <h1 class="proy-title about-pregunta">${esc(proyecto.nombre)}</h1>
       <p class="proy-resumen">${esc(pickLang(seo.resumen, lang))}</p>
       <div class="about-entrada"><p class="proy-texto">${esc(pickLang(seo.texto, lang))}</p></div>
-      <div class="proy-galeria">${galeria}
+      <div class="proy-galeria${enFila ? " proy-fila" : ""}">${galeria}
       </div>${acciones}
     </article>`;
 }

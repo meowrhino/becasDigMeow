@@ -2136,7 +2136,25 @@ html.js #seo-prerender {
 .proy-ficha .proy-galeria { max-width: 60rem; margin-top: 2.4rem; gap: 1.6rem; }
 /* Las capturas traen el mockup con un 4 % de margen transparente por lado:
    sin esto, la ventana se veía sangrada aunque la imagen ya estuviera al borde. */
-.proy-ficha:not(.landing) .proy-img { margin-left: -4%; }
+.proy-ficha:not(.landing) .proy-galeria > .proy-img { margin-left: -4%; }
+/* Con tres capturas o más, la galería es la fila de la portada (js/fila.js):
+   las mismas clases, aquí en el flujo de la página y de borde a borde. El alto
+   deja sitio a la del centro (1,15), al zigzag y a la ola. */
+.proy-ficha .proy-fila {
+  --wp-ancho: min(46dvw, 62dvh);
+  --wp-juego: 4dvh;
+  max-width: none;
+  margin-left: calc(-1 * var(--margen));
+  margin-right: calc(-1 * var(--margen));
+}
+.proy-fila .welcome-proyectos {
+  position: relative;
+  inset: auto;
+  height: calc(var(--wp-ancho) / 1.45 * 1.5 + 2 * var(--wp-juego));
+}
+@media (max-width: 768px) {
+  .proy-ficha .proy-fila { --wp-ancho: 76dvw; --wp-juego: 3dvh; }
+}
 
 /* La letra pequeña del cupón: fuera de la tarjeta y siempre a la vista.
    Ver la nota en js/welcome-cupon.js — es una decisión de marca, no de
