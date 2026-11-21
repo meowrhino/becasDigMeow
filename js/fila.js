@@ -107,9 +107,24 @@ export function montarFila(pista, { activa = () => true, rueda = true } = {}) {
       a.style.zIndex = g > 0.05 ? String(1 + Math.round(g * 10)) : "";
     });
   };
+  // El vídeo de una web (si lo tiene) solo suena en la del centro y con la fila a la vista; las
+  // demás enseñan su captura (el póster) sin bajarlo. Con ahorro de datos o conexión lenta, ni ese:
+  // navigator.connection solo existe en Chrome y Android; en Safari, mientras carga, se ve la captura.
+  const videos = webs.map(a => a.querySelector("video"));
+  const red = navigator.connection;
+  const sonar = () => {
+    const lenta = !!red && (red.saveData || /2g|3g/.test(red.effectiveType));
+    videos.forEach((v, k) => {
+      if (!v || v.dataset.bloqueado) return;
+      const toca = !lenta && activa() && webs[k].classList.contains("visible");
+      if (toca && v.paused) v.play().catch(e => { if (e.name !== "AbortError") v.dataset.bloqueado = "1"; });   // si no deja o no puede, se queda la captura (AbortError es solo un pause() a media carga)
+      else if (!toca && !v.paused) v.pause();
+    });
+  };
   const avanzar = (t) => {
     const dt = Math.min(100, t - antes);
     antes = t;
+    sonar();
     if (copia && t - tocada > 3000 && activa()) {
       if (Math.abs(pista.scrollLeft - pos) > 2) pos = pista.scrollLeft;   // la movió alguien, o el salto del bucle
       pos += dt * 0.03;   // 30 px por segundo

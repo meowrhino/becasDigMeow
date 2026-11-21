@@ -2786,7 +2786,7 @@ html.js #seo-prerender {
 /* Sin sombra propia: las capturas ya traen la de su ventana, con margen
    transparente alrededor, y otra por fuera dibujaba un recuadro. La proporción
    reserva el sitio de las que aún no han cargado. */
-.wp img { display: block; width: 100%; height: auto; aspect-ratio: auto 1.45; }
+.wp img, .wp video { display: block; width: 100%; height: auto; aspect-ratio: auto 1.45; }
 
 /* El nombre y la frase, en marquee por encima de las webs y con `difference`,
    como la barra: oscuro sobre la página, claro sobre una captura oscura. Va

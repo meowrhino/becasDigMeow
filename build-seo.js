@@ -418,6 +418,8 @@ function fichasDeProyecto(doc) {
     const { slug, keyword, title, description, resumen, texto, ...proyecto } = seo;
     // Las fotos de más no se apuntan en el JSON: se cuentan en la carpeta.
     proyecto.imagenesSecundarias = contarSecundarias(seo.imagen);
+    // El vídeo de la portada tampoco: está si hay video.webm junto a la portada (y video.mov para Safari).
+    if (existsSync(join(dirname(join(ROOT, seo.imagen)), "video.webm"))) proyecto.video = true;
     return { proyecto, seo };
   });
 }
