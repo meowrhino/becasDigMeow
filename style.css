@@ -2704,9 +2704,14 @@ html.js #seo-prerender {
 
 /* --- El mapa que abre «menú»: una constelación. Cada página es un punto con su
    nombre y cada conexión una línea fina (js/navigation.js, pintarConstelacion).
-   La capa es opaca: los nombres llevan el fondo debajo para cortar las líneas
-   que les pasen por detrás, y con una capa translúcida ese parche se vería. --- */
-.minimap-overlay { background: var(--bg); }
+   Detrás se ve la página donde estabas, borrosa y velada con el color del modo.
+   El velo es espeso a propósito: los nombres llevan el fondo liso debajo para
+   cortar las líneas, y así ese parche apenas se distingue del velo (manu, 20 nov 2026). --- */
+.minimap-overlay {
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
 /* Con el mapa abierto, la barra («cerrar») y los controles siguen encima. */
 .menu-abierto .header-topright,
 .menu-abierto .controles { z-index: calc(var(--z-modal) + 1); }

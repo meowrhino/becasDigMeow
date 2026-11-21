@@ -132,15 +132,26 @@ export function renderWelcome(data) {
   // barcelona» es la frase que alguien que acaba de llegar quiere ampliar, y
   // el nombre del estudio es lo primero que se pulsa buscando quién hay detrás.
   const hrefAbout = (lang) => escapeHTML(rutaCelda("about", lang));
-  // PRUEBA (19 nov 2026): la portada son las webs, grandes y una debajo de otra,
-  // en el orden de proyectos.json. Se baja de verdad: la del centro se ve
-  // entera y la de antes y la de después asoman, apagadas, así se ven venir.
+  // PRUEBA (21 nov 2026): la portada son las webs, grandes y en fila, en el
+  // orden de proyectos.json, pasando de lado. La del centro se ve entera y la
+  // de antes y la de después asoman, apagadas, así se ven venir. La fila no se
+  // acaba (tras la última vuelve la primera) y, si nadie la toca, avanza sola.
   // El nombre y la frase pasan por encima en marquee.
   const proyectos = (data.portfolio?.proyectos || []).filter(p => p?.imagen && p?.nombre);
-  // El orden es el de la lista; el lado, a suertes en cada visita: zigzag que
-  // empieza por un lado cualquiera, cada una a una distancia del centro distinta.
+  // El orden es el de la lista; arriba o abajo, a suertes en cada visita: zigzag
+  // que empieza por un lado cualquiera, cada una a una distancia distinta.
   const lado0 = Math.random() < 0.5 ? -1 : 1;
-  const dx = (i) => ((i % 2 ? -lado0 : lado0) * (0.15 + Math.random() * 0.85)).toFixed(2);
+  const lados = proyectos.map((_, i) => ((i % 2 ? -lado0 : lado0) * (0.15 + Math.random() * 0.85)).toFixed(2));
+  // Tres copias iguales de la fila; la buena es la del medio, las otras son
+  // decorado para el bucle (fuera del tabulador y del lector de pantalla).
+  const web = (p, i, copia) => {
+    const slug = escapeHTML(slugify(p.nombre));
+    const primera = copia === 1 && !i;
+    return `
+          <a class="wp${primera ? " visible" : ""}" style="--dx:${lados[i]}" data-slug="${slug}" href="${escapeHTML(`${rutaProyectos(currentLang)}/${slugify(p.nombre)}`)}"${copia === 1 ? "" : ' aria-hidden="true" tabindex="-1"'}>
+            <img src="/${escapeHTML(p.imagen)}" alt="${copia === 1 ? escapeHTML(p.nombre) : ""}"${primera ? "" : ' loading="lazy"'} decoding="async">
+          </a>`;
+  };
   // Copias pares: la pista se desplaza justo la mitad y el bucle no se nota.
   const marquee = (texto, copias) => `<span class="marquee-pista">${
     Array.from({ length: copias }, (_, i) =>
@@ -153,24 +164,55 @@ export function renderWelcome(data) {
     </div>
     <div class="welcome-proyectos">
       <div class="wp-escena">
-        ${proyectos.map((p, i) => `
-          <a class="wp${i ? "" : " visible"}" style="--dx:${dx(i)}" data-slug="${escapeHTML(slugify(p.nombre))}" href="${escapeHTML(`${rutaProyectos(currentLang)}/${slugify(p.nombre)}`)}">
-            <img src="/${escapeHTML(p.imagen)}" alt="${escapeHTML(p.nombre)}"${i ? ' loading="lazy"' : ""} decoding="async">
-          </a>`).join("")}
+        ${[0, 1, 2].map(c => proyectos.map((p, i) => web(p, i, c)).join("")).join("")}
       </div>
     </div>
     ${buildLangButtons()}
   `;
 
-  // La web que está en el centro es la que se ve entera.
+  // La fila: se empieza en la copia del medio y, al pasar media copia hacia un
+  // lado, se salta una copia entera al otro; como son iguales, no se ve.
   const pista = el.querySelector(".welcome-proyectos");
   const webs = [...pista.querySelectorAll(".wp")];
+  const n = proyectos.length;
+  let copia = 0, paso = 0, pos = 0;   // `pos` guarda los decimales que scrollLeft redondea
+  const centrar = (a) => { pista.scrollLeft = pos = a.offsetLeft + a.offsetWidth / 2 - pista.clientWidth / 2; };
+  // Las medidas, al tener tamaño (la celda puede estar oculta al pintarse) y a cada cambio.
+  new ResizeObserver(() => {
+    copia = n ? webs[n].offsetLeft - webs[0].offsetLeft : 0;
+    paso = n > 1 ? webs[1].offsetLeft - webs[0].offsetLeft : 0;
+    if (copia) centrar(pista.querySelector(".wp.visible") || webs[n]);
+  }).observe(pista);
+  // La web que está en el centro es la que se ve entera.
   pista.addEventListener("scroll", () => {
-    const paso = (pista.scrollHeight - pista.clientHeight) / Math.max(1, webs.length - 1);
-    if (!paso) return;
-    const i = Math.min(webs.length - 1, Math.max(0, Math.round(pista.scrollTop / paso)));
+    if (!copia || !paso) return;
+    if (pista.scrollLeft < copia / 2) pista.scrollLeft += copia;
+    else if (pista.scrollLeft > copia * 1.5) pista.scrollLeft -= copia;
+    const centro = pista.scrollLeft + pista.clientWidth / 2 - webs[0].offsetLeft - webs[0].offsetWidth / 2;
+    const i = Math.min(webs.length - 1, Math.max(0, Math.round(centro / paso)));
     webs.forEach((a, k) => a.classList.toggle("visible", k === i));
   }, { passive: true });
+  // Con ratón la rueda baja: aquí mueve la fila (el trackpad ya la mueve de lado).
+  pista.addEventListener("wheel", (e) => {
+    if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+    e.preventDefault();
+    pista.scrollLeft += e.deltaY * (e.deltaMode === 1 ? 40 : 1);
+  }, { passive: false });
+  // Si nadie la toca en tres segundos, la fila avanza sola, despacio.
+  let tocada = 0, antes = 0;
+  ["wheel", "pointerdown", "pointermove", "touchstart", "keydown"].forEach(t =>
+    pista.addEventListener(t, () => { tocada = performance.now(); }, { passive: true }));
+  const avanzar = (t) => {
+    const dt = Math.min(100, t - antes);
+    antes = t;
+    if (copia && t - tocada > 3000 && el.classList.contains("activa")) {
+      if (Math.abs(pista.scrollLeft - pos) > 2) pos = pista.scrollLeft;   // la movió alguien, o el salto del bucle
+      pos += dt * 0.03;   // 30 px por segundo
+      pista.scrollLeft = pos;
+    }
+    requestAnimationFrame(avanzar);
+  };
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) requestAnimationFrame(avanzar);
 
   // El marquee sale de la celda y se cuelga del body, como la barra: lleva
   // `mix-blend-mode: difference`, que solo mezcla con lo que hay dentro de su
