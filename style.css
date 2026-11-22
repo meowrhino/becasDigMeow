@@ -2716,33 +2716,31 @@ html.js #seo-prerender {
 }
 .proy-texto { font-family: var(--font-text); }
 
-/* --- Un emoji por bloque (metodología, statement, condiciones): en ordenador,
-   grande en el hueco de la derecha y fijo mientras se lee su bloque, como la
-   captura del portfolio al pasar por una fila (manu, 21 nov 2026: «para que
-   rellene ese espacio»). El bloque gana una segunda columna solo para él; el
-   texto sigue en la primera, desde el margen. En móvil no sale. --- */
+/* --- Un emoji por página (metodología, statement, condiciones): el del
+   bloque que pasa por el centro, grande en el hueco de la derecha, con un
+   fundido al entrar y al salir (manu, 21 y 22 nov 2026: «para que rellene ese
+   espacio»; «solo uno visible»). Lo pone emojiAlCentro (pages.js). En móvil no
+   sale. --- */
 .footer-seccion > .footer-apartado { max-width: none; }
 .footer-apartado > p { max-width: 33em; }
 .bloque-emoji { display: none; }
 @media (min-width: 1025px) {
-  :is(.metodologia-paso, .metodologia-importante, .about-seccion, .footer-seccion, .footer-apartado):has(> .bloque-emoji) {
-    display: grid;
-    grid-template-columns: minmax(0, 33em) minmax(0, 1fr);
-  }
-  :is(.metodologia-paso, .metodologia-importante, .about-seccion, .footer-seccion, .footer-apartado):has(> .bloque-emoji) > :not(.bloque-emoji) { grid-column: 1; }
   .bloque-emoji {
     display: block;
-    grid-column: 2;
-    grid-row: 1 / span 40;   /* toda la altura del bloque, tenga las filas que tenga */
-    justify-self: center;
-    align-self: start;
-    position: sticky;
-    top: 22dvh;
-    height: 0;               /* no estira el bloque: el emoji cuelga hacia abajo y puede pisar al de al lado */
-    font-size: clamp(8rem, 16vw, 17rem);
+    position: absolute;
+    top: 50%;
+    left: calc(10dvw + 33rem);
+    right: 0;
+    text-align: center;
+    transform: translateY(-50%);
+    font-size: min(24vw, 55dvh);
     line-height: 1;
     user-select: none;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.35s ease;
   }
+  .bloque-emoji.visible { opacity: 1; }
 }
 
 /* --- Bienvenida: las webs en fila, pasando de lado, cada una un poco más

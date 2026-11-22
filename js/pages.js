@@ -44,13 +44,47 @@ export const tituloCelda = (data, nombre, lang) => {
 };
 
 /**
- * El emoji de un bloque de texto (metodología, statement, condiciones): en
- * ordenador sale grande en el hueco de la derecha y se queda fijo mientras se
- * lee su bloque; en móvil no sale (style.css, `.bloque-emoji`). Cada uno un
- * poco movido y girado según su número, como las capturas de los links y el
- * portfolio (utils.js, capturaAlPasar): desordenado pero igual en cada visita.
+ * El emoji de un bloque de texto (metodología, statement, condiciones). El
+ * bloque solo lo lleva apuntado (`data-emoji`); en la página hay uno solo, el
+ * del bloque que pasa por el centro, grande en el hueco de la derecha, y entra
+ * y sale con un fundido (manu, 22 nov 2026). En móvil no sale (style.css,
+ * `.bloque-emoji`). Cada uno un poco movido y girado según su número, como las
+ * capturas de los links y el portfolio: desordenado pero igual en cada visita.
  */
-const emojiHTML = (e, i) => e ? `<span class="bloque-emoji" aria-hidden="true" style="translate: ${((i * 7) % 19) - 9}dvw ${((i * 11) % 25) - 12}dvh; rotate: ${((i * 13) % 31) - 15}deg">${escapeHTML(e)}</span>` : "";
+const emojiHTML = (e, i) => e ? ` data-emoji="${escapeHTML(e)}" data-i="${i}"` : "";
+
+/** Pone el emoji de la celda y devuelve la función que lo vuelve a mirar. */
+function emojiAlCentro(el, content) {
+  const span = document.createElement("span");
+  span.className = "bloque-emoji";
+  span.setAttribute("aria-hidden", "true");
+  el.appendChild(span);
+  let actual = null, espera;
+  const mirar = () => {
+    const r = content.getBoundingClientRect();
+    const y = r.top + r.height / 2;
+    // el último que toca el centro: en condiciones, el apartado antes que su sección
+    const bloque = [...content.querySelectorAll("[data-emoji]")]
+      .findLast(b => { const q = b.getBoundingClientRect(); return q.top <= y && q.bottom >= y; }) ?? null;
+    if (bloque === actual) return;
+    actual = bloque;
+    const fundido = span.classList.contains("visible") ? 350 : 0;
+    span.classList.remove("visible");
+    clearTimeout(espera);
+    if (!bloque) return;
+    espera = setTimeout(() => {
+      const i = +bloque.dataset.i;
+      span.textContent = bloque.dataset.emoji;
+      span.style.translate = `${((i * 7) % 11) - 5}dvw ${((i * 11) % 17) - 8}dvh`;
+      span.style.rotate = `${((i * 13) % 31) - 15}deg`;
+      span.classList.add("visible");
+    }, fundido);
+  };
+  content.addEventListener("scroll", mirar, { passive: true });
+  window.addEventListener("resize", mirar);
+  requestAnimationFrame(mirar);
+  return mirar;
+}
 
 export const celdaHeadingHTML = (data, nombre, lang, clase = "celda-h") =>
   `<h2 class="${clase}">${escapeHTML(tituloCelda(data, nombre, lang))}</h2>`;
@@ -227,7 +261,7 @@ export function renderMetodologia(data) {
   const buildContent = (lang) => {
     const pasos = (data.metodologia[lang] || data.metodologia.es)?.pasos || [];
     const lista = pasos.map((paso, i) => `
-      <div class="metodologia-paso">${emojiHTML(paso.emoji, i)}
+      <div class="metodologia-paso"${emojiHTML(paso.emoji, i)}>
         <span class="metodologia-num">${String(i + 1).padStart(2, "0")}</span>
         <p class="metodologia-titular">${escapeHTML(paso.titular)}</p>
         ${(paso.parrafos || []).map(t => `<p>${escapeHTML(t)}</p>`).join("")}
@@ -238,7 +272,7 @@ export function renderMetodologia(data) {
     // es: la información que necesitas para decidir, junta y sin tono de aviso.
     const imp = (data.metodologia[lang] || data.metodologia.es)?.importante;
     const importante = imp ? `
-      <div class="metodologia-importante">${emojiHTML(imp.emoji, pasos.length)}
+      <div class="metodologia-importante"${emojiHTML(imp.emoji, pasos.length)}>
         <h2 class="metodologia-importante-titular">${escapeHTML(imp.titular)}</h2>
         ${(imp.parrafos || []).map(t => `<p>${escapeHTML(t)}</p>`).join("")}
         ${imp.enlace ? `<a class="metodologia-enlace" href="${escapeHTML(rutaCelda("condiciones", lang))}">${escapeHTML(imp.enlace)}</a>` : ""}
@@ -259,11 +293,12 @@ export function renderMetodologia(data) {
   const content = el.querySelector(".metodologia-content");
   const checkScroll = setupScrollGradients(wrapper, content);
   const applyScale = setupZoom(el, content, checkScroll);
+  const mirarEmoji = emojiAlCentro(el, content);
 
   attachLangListeners(el, (lang) => {
     repaintWithFade(el, content,
       () => { content.innerHTML = buildContent(lang); },
-      () => { applyScale(); requestAnimationFrame(checkScroll); }
+      () => { applyScale(); requestAnimationFrame(checkScroll); requestAnimationFrame(mirarEmoji); }
     );
   });
 
@@ -300,7 +335,7 @@ export function renderCondiciones(data) {
       // en vez de once párrafos seguidos.
       const parrafos = (ps) => (ps || []).map(p => `<p>${p.replace(/\n/g, "<br>")}</p>`).join("");
       body = s.apartados
-        ? s.apartados.map((a, j) => `<div class="footer-apartado">${emojiHTML(a.emoji, j)}<h3 class="footer-apartado-titular">${escapeHTML(a.titulo)}</h3>${parrafos(a.parrafos)}</div>`).join("")
+        ? s.apartados.map((a, j) => `<div class="footer-apartado"${emojiHTML(a.emoji, j)}><h3 class="footer-apartado-titular">${escapeHTML(a.titulo)}</h3>${parrafos(a.parrafos)}</div>`).join("")
         : parrafos(s.parrafos);
       if (s.nota) body += `<p class="footer-nota">${escapeHTML(s.nota)}</p>`;
     } else if (s.tipo === "subvencion") {
@@ -315,7 +350,7 @@ export function renderCondiciones(data) {
       const frase = s.frase ? `<p class="footer-frase">${escapeHTML(s.frase)}</p>` : "";
       body = intro + logos + frase;
     }
-    return `<div class="footer-seccion">${emojiHTML(s.emoji, 20 + k)}<h2 class="footer-seccion-titular">${escapeHTML(s.label)}</h2>${body}</div>`;
+    return `<div class="footer-seccion"${emojiHTML(s.emoji, 20 + k)}><h2 class="footer-seccion-titular">${escapeHTML(s.label)}</h2>${body}</div>`;
   };
   const buildContent = (lang) =>
     ((data.footer[lang] || data.footer.es)?.secciones || []).map(buildSeccion).join("");
@@ -332,12 +367,12 @@ export function renderCondiciones(data) {
   const content = el.querySelector(".footer-content");
   const checkScroll = setupScrollGradients(wrapper, content);
   const applyScale = setupZoom(el, content, checkScroll);
-
+  const mirarEmoji = emojiAlCentro(el, content);
 
   attachLangListeners(el, (lang) => {
     repaintWithFade(el, content,
       () => { content.innerHTML = buildContent(lang); },
-      () => { content.scrollTop = 0; applyScale(); checkScroll(); });
+      () => { content.scrollTop = 0; applyScale(); checkScroll(); mirarEmoji(); });
   });
 }
 
@@ -359,10 +394,11 @@ function montarCeldaTexto(el, prefijo, buildContent) {
   const content = el.querySelector(`.${prefijo}-content`);
   const checkScroll = setupScrollGradients(wrapper, content);
   const applyScale = setupZoom(el, content, checkScroll);
+  const mirarEmoji = content.querySelector("[data-emoji]") ? emojiAlCentro(el, content) : () => {};
   attachLangListeners(el, (lang) => {
     repaintWithFade(el, content,
       () => { content.innerHTML = buildContent(lang); },
-      () => { applyScale(); requestAnimationFrame(checkScroll); }
+      () => { applyScale(); requestAnimationFrame(checkScroll); requestAnimationFrame(mirarEmoji); }
     );
   });
 }
@@ -450,7 +486,7 @@ export function renderStatement(data) {
     const d = data.statement[lang] || data.statement.es;
     if (!d) return "";
     const secciones = (d.secciones || []).map((sec, i) => `
-      <section class="about-seccion">${emojiHTML(sec.emoji, i)}
+      <section class="about-seccion"${emojiHTML(sec.emoji, i)}>
         <h2 class="about-seccion-titular">${escapeHTML(sec.titular)}</h2>
         ${(sec.parrafos || []).map(parrafo).join("")}
       </section>`).join("");
