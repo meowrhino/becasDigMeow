@@ -44,14 +44,15 @@ export const tituloCelda = (data, nombre, lang) => {
 };
 
 /**
- * El emoji de un bloque de texto (metodología, statement, condiciones). El
+ * El emoji de un bloque de texto (about, metodología, statement, condiciones). El
  * bloque solo lo lleva apuntado (`data-emoji`); en la página hay uno solo, el
  * del bloque que pasa por el centro, y entra y sale con un fundido (manu,
  * 22 nov 2026). Sale repetido y pequeño, como pegatinas sueltas por el hueco
  * de la derecha que van saliendo y escondiéndose: en grande el emoji del
  * sistema se veía borroso. En móvil no sale (style.css, `.bloque-emoji`).
  */
-const emojiHTML = (e, i) => e ? ` data-emoji="${escapeHTML(e)}" data-i="${i}"` : "";
+// `e` es un emoji o una lista: las pegatinas del bloque los mezclan.
+const emojiHTML = (e) => e?.length ? ` data-emoji="${escapeHTML([e].flat().join(" "))}"` : "";
 
 /**
  * Una pegatina en la casilla `c` de una rejilla de 3×3 sobre el hueco de la
@@ -73,14 +74,15 @@ function emojiAlCentro(el, content) {
   span.className = "bloque-emoji";
   span.setAttribute("aria-hidden", "true");
   el.appendChild(span);
-  let actual = null, espera, emoji = "";
+  let actual = null, espera, emojis = [];
   // Mientras se lee un bloque, cada poco una pegatina se va y sale en otro sitio.
   setInterval(() => {
     if (!actual || quieto.matches || !el.classList.contains("activa")) return;
     const vieja = span.children[Math.floor(Math.random() * span.children.length)];
     if (!vieja || vieja.classList.contains("fuera")) return;
     vieja.classList.add("fuera");
-    setTimeout(() => vieja.outerHTML = pegatina(emoji, +vieja.dataset.c), 300);
+    const otro = emojis[Math.floor(Math.random() * emojis.length)];
+    setTimeout(() => vieja.outerHTML = pegatina(otro, +vieja.dataset.c), 300);
   }, 900);
   const mirar = () => {
     const r = content.getBoundingClientRect();
@@ -95,10 +97,10 @@ function emojiAlCentro(el, content) {
     clearTimeout(espera);
     if (!bloque) return;
     espera = setTimeout(() => {
-      emoji = escapeHTML(bloque.dataset.emoji);
-      // Salen de una en una, en orden al azar.
+      emojis = bloque.dataset.emoji.split(" ").map(escapeHTML);
+      // Salen de una en una, en orden al azar, y los emojis del bloque por turnos: salen todos.
       const orden = [...Array(9).keys()].sort(() => Math.random() - 0.5);
-      span.innerHTML = orden.map((c, n) => pegatina(emoji, c, n * 70)).join("");
+      span.innerHTML = orden.map((c, n) => pegatina(emojis[n % emojis.length], c, n * 70)).join("");
       span.classList.add("visible");
     }, fundido);
   };
@@ -283,7 +285,7 @@ export function renderMetodologia(data) {
   const buildContent = (lang) => {
     const pasos = (data.metodologia[lang] || data.metodologia.es)?.pasos || [];
     const lista = pasos.map((paso, i) => `
-      <div class="metodologia-paso"${emojiHTML(paso.emoji, i)}>
+      <div class="metodologia-paso"${emojiHTML(paso.emoji)}>
         <span class="metodologia-num">${String(i + 1).padStart(2, "0")}</span>
         <p class="metodologia-titular">${escapeHTML(paso.titular)}</p>
         ${(paso.parrafos || []).map(t => `<p>${escapeHTML(t)}</p>`).join("")}
@@ -294,7 +296,7 @@ export function renderMetodologia(data) {
     // es: la información que necesitas para decidir, junta y sin tono de aviso.
     const imp = (data.metodologia[lang] || data.metodologia.es)?.importante;
     const importante = imp ? `
-      <div class="metodologia-importante"${emojiHTML(imp.emoji, pasos.length)}>
+      <div class="metodologia-importante"${emojiHTML(imp.emoji)}>
         <h2 class="metodologia-importante-titular">${escapeHTML(imp.titular)}</h2>
         ${(imp.parrafos || []).map(t => `<p>${escapeHTML(t)}</p>`).join("")}
         ${imp.enlace ? `<a class="metodologia-enlace" href="${escapeHTML(rutaCelda("condiciones", lang))}">${escapeHTML(imp.enlace)}</a>` : ""}
@@ -347,7 +349,7 @@ export function renderCondiciones(data) {
 
   // Trabajo, privacidad y financiación van seguidas, cada una con su título.
   // Antes eran tres pestañas en el borde de abajo y había que saber que estaban.
-  const buildSeccion = (s, k) => {
+  const buildSeccion = (s) => {
 
     let body = "";
     if (s.tipo === "texto") {
@@ -357,7 +359,7 @@ export function renderCondiciones(data) {
       // en vez de once párrafos seguidos.
       const parrafos = (ps) => (ps || []).map(p => `<p>${p.replace(/\n/g, "<br>")}</p>`).join("");
       body = s.apartados
-        ? s.apartados.map((a, j) => `<div class="footer-apartado"${emojiHTML(a.emoji, j)}><h3 class="footer-apartado-titular">${escapeHTML(a.titulo)}</h3>${parrafos(a.parrafos)}</div>`).join("")
+        ? s.apartados.map(a => `<div class="footer-apartado"${emojiHTML(a.emoji)}><h3 class="footer-apartado-titular">${escapeHTML(a.titulo)}</h3>${parrafos(a.parrafos)}</div>`).join("")
         : parrafos(s.parrafos);
       if (s.nota) body += `<p class="footer-nota">${escapeHTML(s.nota)}</p>`;
     } else if (s.tipo === "subvencion") {
@@ -372,7 +374,7 @@ export function renderCondiciones(data) {
       const frase = s.frase ? `<p class="footer-frase">${escapeHTML(s.frase)}</p>` : "";
       body = intro + logos + frase;
     }
-    return `<div class="footer-seccion"${emojiHTML(s.emoji, 20 + k)}><h2 class="footer-seccion-titular">${escapeHTML(s.label)}</h2>${body}</div>`;
+    return `<div class="footer-seccion"${emojiHTML(s.emoji)}><h2 class="footer-seccion-titular">${escapeHTML(s.label)}</h2>${body}</div>`;
   };
   const buildContent = (lang) =>
     ((data.footer[lang] || data.footer.es)?.secciones || []).map(buildSeccion).join("");
@@ -464,7 +466,7 @@ export function renderAbout(data) {
 
     return `
       <h2 class="about-pregunta">${escapeHTML(d.pregunta)}</h2>
-      <div class="about-entrada">${(d.entrada || []).map(parrafo).join("")}</div>
+      <div class="about-entrada"${emojiHTML(d.emoji)}>${(d.entrada || []).map(parrafo).join("")}</div>
       <div class="about-contacto">
         <a class="contacto-email" href="${escapeHTML(buildMailto(lang))}">${escapeHTML(email)}</a>
         <div class="contacto-row">
@@ -507,8 +509,8 @@ export function renderStatement(data) {
   const buildContent = (lang) => {
     const d = data.statement[lang] || data.statement.es;
     if (!d) return "";
-    const secciones = (d.secciones || []).map((sec, i) => `
-      <section class="about-seccion"${emojiHTML(sec.emoji, i)}>
+    const secciones = (d.secciones || []).map(sec => `
+      <section class="about-seccion"${emojiHTML(sec.emoji)}>
         <h2 class="about-seccion-titular">${escapeHTML(sec.titular)}</h2>
         ${(sec.parrafos || []).map(parrafo).join("")}
       </section>`).join("");

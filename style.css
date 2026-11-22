@@ -2716,7 +2716,7 @@ html.js #seo-prerender {
 }
 .proy-texto { font-family: var(--font-text); }
 
-/* --- Un emoji por página (metodología, statement, condiciones): el del
+/* --- Un emoji por página (about, metodología, statement, condiciones): el del
    bloque que pasa por el centro, repetido y pequeño como pegatinas sueltas por
    el hueco de la derecha, con un fundido al entrar y al salir (manu, 21 y 22
    nov 2026: «para que rellene ese espacio»; «solo uno visible»; «más pequeño y
@@ -2730,8 +2730,9 @@ html.js #seo-prerender {
     position: absolute;
     top: 8dvh;
     bottom: 8dvh;
-    left: calc(10dvw + 33rem);
-    right: 2dvw;
+    /* donde acaba la columna de texto (33em de su letra, que crece con la pantalla y el zoom) más media pegatina grande y girada */
+    left: calc(var(--margen) + 33 * clamp(0.95rem, 0.35rem + 0.9vw, 1.3rem) * var(--zoom, 1) + 5.5rem);
+    right: calc(2dvw + 4rem);   /* sitio para media pegatina grande y girada: si no, a 1280 px alguna asomaba por el borde */
     line-height: 1;
     user-select: none;
     pointer-events: none;
