@@ -88,9 +88,11 @@ function emojiAlCentro(el, content) {
   const mirar = () => {
     const r = content.getBoundingClientRect();
     const y = r.top + r.height / 2;
-    // el último que toca el centro: en condiciones, el apartado antes que su sección
+    // El último que ha empezado antes del centro (en condiciones, el apartado
+    // antes que su sección): aunque ya se haya pasado, para que no queden
+    // huecos sin emoji entre bloques ni en páginas que no llegan al centro (la reseña).
     const bloque = [...content.querySelectorAll("[data-emoji]")]
-      .findLast(b => { const q = b.getBoundingClientRect(); return q.top <= y && q.bottom >= y; }) ?? null;
+      .findLast(b => b.getBoundingClientRect().top <= y) ?? null;
     if (bloque === actual) return;
     actual = bloque;
     const fundido = span.classList.contains("visible") ? 350 : 0;
