@@ -1,3 +1,24 @@
+/* ============================================
+   ÍNDICE
+   Arriba, la maqueta de siempre; al final, LA V3 (el rediseño de noviembre de
+   2026), que pisa lo de arriba por orden: a igual peso gana lo que va después.
+   - Una regla nueva va en la sección de lo que toca, no al final del archivo:
+     al final lo pisa todo, y una regla de arriba que se retoque puede no
+     hacer nada si la v3 ya la pisa (busca el selector en LA V3 primero).
+   - MODOS DE COLOR va antes de LA V3 a propósito: `:root` y `[data-tinte]`
+     pesan lo mismo, así que una variable que cambie algún tinte no puede ir
+     en el `:root` de la v3 (rompería ada y fósforo).
+
+   Fuentes · VARIABLES · TEMA OSCURO · 0 reset · 1 contenedor · 2 celdas
+   4 la barra · 5 el mapa de «menú» · 6 bordes de celda · 7 scroll
+   8 links · 9 portada · 10 metodología · 11b about · 11 condiciones
+   12b buscaminas · 12 portfolio · 13 contacto · 15 archive · subvención
+   16 páginas lineales (easy-*) · skeleton · accesibilidad · pre-render SEO
+   17 fichas de proyecto · transición · 19 landings · MODOS DE COLOR
+   LA V3: barra, controles, mapa, páginas de texto, emoji, portada,
+   portfolio, fondo y entrada
+   ============================================ */
+
 /* Inknut Antiqua self-hosted (400 + 600) — sin Google Fonts externo */
 @font-face {
   font-family: "Inknut Antiqua";
@@ -52,21 +73,13 @@
   --border-hover: rgba(0, 0, 0, 0.35);
 
   /* Shadows */
-  --shadow-sm: rgba(0, 0, 0, 0.05);
-  --shadow-md: rgba(0, 0, 0, 0.08);
 
   /* Scrollbar */
   --scrollbar-thumb: rgba(0, 0, 0, 0.2);
 
   /* Zone label */
-  --zone-label: rgba(0, 0, 0, 0.055);
 
   /* Minimap */
-  --minimap-cell: #d0d0d0;
-  --minimap-active: #000000;
-  --minimap-expanded-bg: #c0c0c0;
-  --minimap-expanded-hover: #555555;
-  --minimap-expanded-text: #ffffff;
   --overlay-bg: rgba(255, 255, 255, 0.97);
 
   /* Buttons (subtle) */
@@ -76,7 +89,6 @@
   --btn-subtle-strong-hover: rgba(0, 0, 0, 0.7);
 
   /* Gradient (scroll fade) */
-  --gradient-color: #ffffff;
 
   /* Tipografía */
   --font-serif: "Inknut Antiqua", serif;
@@ -85,22 +97,12 @@
      usan duraciones específicas distintas). */
   --transition-fast: 0.2s ease;
   --transition-med: 0.3s ease;
-  --transition-slow: 0.4s ease;
-
-  /* Padding desde el borde del viewport para nav-labels, lang/font
-     buttons, theme toggle, etc. */
-  --edge-pad-y: 3dvh;
-  --edge-pad-x: 3dvw;
 
   /* Escala de z-index */
-  --z-base: 1;          /* zone-label-bg, scroll gradients */
   --z-cell: 2;          /* celda */
-  --z-card: 4;          /* card de proyecto flotante (welcome), debajo del cupón */
-  --z-cupon: 5;         /* cupón flotante (welcome) */
-  --z-nav: 10;          /* nav-labels, lang/font/theme buttons, section-nav */
-  --z-overlay-img: 30;  /* overlay sobre imagen (portfolio grid) */
-  --z-header: 100;      /* header fijo (minimapa inline) */
-  --z-modal: 200;       /* overlay modal (minimapa expandido) */
+  --z-nav: 10;
+  --z-header: 100;      /* la barra y los controles */
+  --z-modal: 200;       /* el mapa de «menú» */
 }
 
 /* ============================================
@@ -123,21 +125,13 @@
   --border-hover: rgba(255, 255, 255, 0.25);
 
   /* Shadows */
-  --shadow-sm: rgba(0, 0, 0, 0.2);
-  --shadow-md: rgba(0, 0, 0, 0.35);
 
   /* Scrollbar */
   --scrollbar-thumb: rgba(255, 255, 255, 0.2);
 
   /* Zone label */
-  --zone-label: rgba(255, 255, 255, 0.04);
 
   /* Minimap */
-  --minimap-cell: #3a3a3a;
-  --minimap-active: #f2f2f2;
-  --minimap-expanded-bg: #555555;
-  --minimap-expanded-hover: #999999;
-  --minimap-expanded-text: #121212;
   --overlay-bg: rgba(18, 18, 18, 0.97);
 
   /* Buttons (subtle) */
@@ -147,7 +141,6 @@
   --btn-subtle-strong-hover: rgba(255, 255, 255, 0.7);
 
   /* Gradient (scroll fade) */
-  --gradient-color: #121212;
 }
 
 /* ============================================
@@ -247,34 +240,9 @@ p, h1, h2, h3 {
 }
 
 /* ============================================
-   3. ZONE LABEL
-   Texto grande semi-transparente de fondo que
-   muestra el nombre de la página actual.
-   ============================================ */
-
-.zone-label-bg {
-  position: fixed;
-  top: 80%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: var(--font-serif);
-  font-size: clamp(5rem, 18dvw, 16rem);
-  font-weight: 400;
-  color: var(--zone-label);
-  text-transform: lowercase;
-  letter-spacing: -0.03em;
-  pointer-events: none;
-  z-index: var(--z-base);
-  white-space: nowrap;
-  user-select: none;
-  transition: opacity 0.6s ease;
-  line-height: 1;
-}
-
-/* ============================================
-   4. MINIMAP INLINE (esquina superior derecha)
-   Cuadrícula pequeña que muestra la posición
-   actual en el grid. Click abre el overlay.
+   4. LA BARRA (esquina superior derecha)
+   Las páginas unidas a esta y «menú». Su aspecto
+   está más abajo, con el resto del rediseño.
    ============================================ */
 
 .header-topright {
@@ -287,50 +255,7 @@ p, h1, h2, h3 {
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
-  /* El rectángulo del minimapa tiene huecos (casillas sin sección) y crece
-     y ese vacío no puede tapar lo que hay debajo. Solo se pulsan las
-     casillas que se ven. */
   pointer-events: none;
-}
-
-.minimap-inline {
-  display: grid;
-  /* columnas y filas se definen en JS según GRID.length */
-  gap: 3px;
-  cursor: pointer;
-  opacity: 0.85;
-  transition: opacity 0.2s ease;
-}
-
-.minimap-inline:hover {
-  opacity: 1;
-}
-
-.minimap-inline-cell {
-  background: var(--minimap-cell);
-  position: relative;
-  pointer-events: auto;
-  /* Sin transición: con fade, al cambiar de celda la que dejas y la que
-     llegas se veían a medias las dos, como un parpadeo. */
-}
-
-.minimap-inline-cell.activa {
-  background: var(--minimap-active);
-  /* Anillo sutil para que la sección actual sea inequívoca también en celdas
-     pequeñas de móvil, sin depender solo del brillo. */
-  box-shadow: 0 0 0 1px var(--minimap-active);
-}
-
-.minimap-inline-cell.invisible {
-  visibility: hidden;
-}
-
-/* Halo pulsable: tapa los huecos de 3px entre casillas y deja un margen
-   alrededor, para que en móvil el minimapa no sea más difícil de acertar. */
-.minimap-inline-cell::after {
-  content: "";
-  position: absolute;
-  inset: -8px;
 }
 
 /* ============================================
@@ -363,22 +288,11 @@ p, h1, h2, h3 {
 }
 
 /* ============================================
-   6. NAV LABELS (botones de navegación)
-   Texto en los bordes de la celda activa
-   que indica las celdas vecinas navegables.
-   Posiciones: top, bottom, left, right.
+   6. BORDES DE LA CELDA (.nav-slot)
+   Un sitio en el borde de arriba o de abajo de la celda activa. Hoy solo los
+   usa el buscaminas: arriba minas y tiempo, abajo los niveles
+   (js/navigation.js, bordeCelda).
    ============================================ */
-
-/* Un borde de la celda. El slot dice DÓNDE (qué lado, a qué distancia); lo que
-   va dentro dice QUÉ es. Antes lo hacía todo `.nav-label`, que mezclaba la
-   cosmética, la posición y el ser-un-botón, y por eso los controles de celda
-   —los niveles del buscaminas— tenían que disfrazarse de etiqueta de navegación
-   para heredar el sitio.
-
-   Un slot puede llevar dos cosas: la navegación al vecino y un control de la
-   propia celda. Cuando pasa, manda la navegación: se queda pegada al borde y el
-   control se aparta hacia dentro. La navegación es lo único que está en el
-   mismo sitio en las ocho celdas, y eso no se toca. */
 .nav-slot {
   position: absolute;
   display: flex;
@@ -387,9 +301,8 @@ p, h1, h2, h3 {
   z-index: var(--z-nav);
 }
 
-/* En los cuatro lados, el primer hijo (la navegación, que se antepone en
-   crearNavLabels) queda en el borde EXTERIOR y el resto hacia dentro. De ahí
-   los `-reverse` de abajo y de la derecha. */
+/* El primer hijo queda en el borde EXTERIOR y el resto hacia dentro: de ahí
+   el `-reverse` de abajo. */
 .nav-slot.top {
   top: 3dvh;
   left: 50%;
@@ -404,100 +317,15 @@ p, h1, h2, h3 {
   flex-direction: column-reverse;
 }
 
-.nav-slot.left {
-  left: 3dvw;
-  top: 50%;
-  transform: translateY(-50%);
-  flex-direction: row;
-}
-
-.nav-slot.right {
-  right: 3dvw;
-  top: 50%;
-  transform: translateY(-50%);
-  flex-direction: row-reverse;
-}
-
-/* Cómo se ve una etiqueta de borde. Solo cosmética: dónde va lo dice el slot.
-   La usan la navegación entre celdas y cualquier control que quiera parecerse
-   a ella (`archive` en el portfolio, `studio` en el archive, minas y tiempo en
-   el buscaminas). */
-.nav-label {
-  font-size: clamp(0.7rem, 1dvw, 1rem);
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: color 0.3s ease;
-  font-family: var(--font-serif);
-  letter-spacing: 0.05em;
-  border: none;
-  background: none;
-  padding: 0;
-  text-decoration: none;
-  line-height: normal;
-}
-
-.nav-label:hover,
-a.nav-label:hover {
-  color: var(--text);
-}
-
-a.nav-label,
-a.nav-label:visited {
-  color: var(--text-secondary);
-}
-
-/* Los lados leen en vertical y los bordes de arriba y de la izquierda van del
-   revés: es la vuelta que da el lienzo, y se aplica a la etiqueta, no al slot.
-   Un control que solo informa —minas, tiempo— no tiene por qué ir cabeza abajo
-   aunque comparta borde con una etiqueta que sí. */
-.nav-slot.left  > .nav-label,
-.nav-slot.right > .nav-label { writing-mode: vertical-rl; }
-.nav-slot.left  > .nav-label,
-.nav-slot.top   > .nav-label { transform: rotate(180deg); }
-
-@media (max-width: 768px) {
-  .nav-label {
-    font-size: clamp(0.6rem, 2.5dvw, 0.8rem);
-  }
-}
-
 /* ============================================
    7. SCROLL WRAPPER / CONTENT (compartido)
-   Gradientes top/bottom que aparecen cuando el
-   contenido es scrolleable. JS añade .can-scroll-*
-   según la posición. Cada página puede sobreescribir
+   La caja con scroll de cada página. Cada página puede sobreescribir
    width/height/padding sin repetir el patrón.
    ============================================ */
 
 .scroll-wrapper {
   position: relative;
 }
-
-.scroll-wrapper::before,
-.scroll-wrapper::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 3rem;
-  pointer-events: none;
-  z-index: var(--z-base);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.scroll-wrapper::before {
-  top: 0;
-  background: linear-gradient(to bottom, var(--gradient-color), transparent);
-}
-
-.scroll-wrapper::after {
-  bottom: 0;
-  background: linear-gradient(to top, var(--gradient-color), transparent);
-}
-
-.scroll-wrapper.can-scroll-up::before { opacity: 1; }
-.scroll-wrapper.can-scroll-down::after { opacity: 1; }
 
 .scroll-content {
   width: 100%;
@@ -537,254 +365,16 @@ a.nav-label:visited {
   background-color: transparent;
 }
 
-/* Wordmark y tagline apilados en columna (la celda ya los centra).
-   `pointer-events: none` deja pasar los clics a lo que rebota por detrás: el
-   cupón y las tarjetas de proyecto. Los dos enlaces (nombre y tagline, al
-   about) los recuperan: sin eso no se podían pulsar. */
+/* Wordmark y tagline apilados en columna; el resto, con el marquee (más abajo). */
 .welcome-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  gap: 0.5em;
-  position: relative;
-  z-index: var(--z-nav);
   pointer-events: none;
 }
 
-.welcome-content a {
-  pointer-events: auto;
-}
-
 .welcome-title {
-  display: block;
-  font-size: clamp(1.6rem, 3.5dvw, 3rem);
   font-weight: 400;
-  letter-spacing: 0.05em;
-  text-align: center;
-  text-shadow:
-    0 0 12px var(--bg),
-    0 0 24px var(--bg),
-    0 0 36px var(--bg);
-}
-
-
-@media (max-width: 768px) {
-  .welcome-title {
-    max-width: 60dvw;
-  }
-}
-
-/* Cupón rebotando en la welcome — sello con flip 3D al hacer click.
-   El wrapper recibe el translate+rotate del rebote. El inner gira en Y para
-   mostrar el dorso. Las caras son hermanas con backface-hidden para que solo
-   se vea la que toca. La front está en flujo y marca el tamaño; la back va
-   absoluta encima, rotada 180º. */
-.welcome-cupon-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: var(--z-cupon);
-  perspective: 1200px;
-  will-change: transform;
-  transform-origin: center;
-  pointer-events: auto;
-  cursor: pointer;
-  user-select: none;
-}
-
-/* Las dos caras van apiladas en la MISMA celda de un grid, no una en flujo y la
-   otra absoluta encima. Con la back absoluta el tamaño lo marcaba solo la
-   front, que es la del precio y ocupa cuatro líneas cortas: el dorso, que lleva
-   un párrafo, no cabía y se salía por arriba y por abajo del marco. Medido en
-   390px de ancho: 133px de texto en una caja de 88, o sea 23px asomando por
-   cada lado. Apiladas en grid la caja mide lo que la cara más alta y el dorso
-   no puede desbordar, ni ahora ni cuando cambie el texto o el idioma. */
-.welcome-cupon-inner {
-  display: grid;
-  transform-style: preserve-3d;
-  transition: transform 0.6s cubic-bezier(0.5, 0, 0.3, 1);
-}
-
-.welcome-cupon-front,
-.welcome-cupon-back {
-  grid-area: 1 / 1;
-}
-
-.welcome-cupon-wrapper.flipped .welcome-cupon-inner {
-  transform: rotateY(180deg);
-}
-
-/* Ancho fijo en ambas caras para que el cupón no baile al cambiar de idioma.
-   El valor está calibrado al idioma más ancho (es: "válido hasta finales de agosto"). */
-.welcome-cupon-face {
-  box-sizing: border-box;
-  width: 23rem;
-  padding: 1.3rem 2.8rem;
-  background: var(--bg);
-  border: 1px solid var(--text);
-  outline: 1px solid var(--text);
-  outline-offset: 4px;
-  text-align: center;
-  color: var(--text);
-  line-height: 1.3;
-  white-space: nowrap;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transition: background 0.25s ease, color 0.25s ease, outline-color 0.25s ease;
-}
-
-.welcome-cupon-front {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;   /* la caja la marca el dorso: la promesa va centrada en ella */
-  gap: 0.3rem;
-}
-
-.welcome-cupon-back {
-  /* Hereda padding de .welcome-cupon-face para respirar igual que el anverso
-     (y para que el ajuste mobile del face también le afecte) */
-  transform: rotateY(180deg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-}
-
-/* Invertir colores al pasar por encima — solo en la cara visible */
-.welcome-cupon-wrapper:not(.flipped):hover .welcome-cupon-front,
-.welcome-cupon-wrapper.flipped:hover .welcome-cupon-back {
-  background: var(--text);
-  color: var(--bg);
-  outline-color: var(--text);
-}
-
-.welcome-cupon-hazte {
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-/* Fue el precio (850 €) hasta octubre de 2026; ahora es «tu web en un mes»,
-   que son dieciséis letras en una cara de 23rem con nowrap: de ahí el cuerpo. */
-.welcome-cupon-grande {
-  font-size: 1.7rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  line-height: 1;
-  margin: 0.2rem 0 0.4rem;
-}
-
-.welcome-cupon-iva {
-  font-size: 0.7rem;
-  letter-spacing: 0.04em;
-  color: var(--text-muted);
-  font-style: italic;
-}
-
-.welcome-cupon-caduca {
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-top: 0.45rem;
-}
-
-.welcome-cupon-wrapper:hover .welcome-cupon-hazte,
-.welcome-cupon-wrapper:hover .welcome-cupon-iva,
-.welcome-cupon-wrapper:hover .welcome-cupon-caduca {
-  color: var(--bg);
-  opacity: 0.85;
-}
-
-/* Dorso — párrafo con lo que incluye + la letra pequeña + CTA.
-   `white-space: normal` sobrescribe el `nowrap` heredado de .welcome-cupon-face
-   para que el párrafo pueda partir en varias líneas. */
-.welcome-cupon-incluye {
-  margin: 0;
-  font-size: 0.72rem;
-  letter-spacing: 0.02em;
-  line-height: 1.5;
-  white-space: normal;
-}
-
-/* La letra pequeña, en el dorso y bajo lo que incluye: más chica que el
-   párrafo de arriba porque es el detalle, no el argumento. */
-.welcome-cupon-condiciones {
-  margin: 0;
-  font-size: 0.62rem;
-  letter-spacing: 0.02em;
-  line-height: 1.5;
-  white-space: normal;
-  color: var(--text-muted);
-}
-
-.welcome-cupon-cta {
-  display: inline-block;
-  padding: 0.6rem 1.5rem;
-  color: inherit;
-  text-decoration: none;
-  font-size: 0.78rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  transition: background 0.2s ease, color 0.2s ease;
-  pointer-events: auto;
-}
-
-.welcome-cupon-cta:hover {
-  background: var(--text);
-  color: var(--bg) !important;
-}
-
-.welcome-cupon-wrapper.flipped:hover .welcome-cupon-cta:hover {
-  background: var(--bg);
-  color: var(--text) !important;
-}
-
-@media (max-width: 560px) {
-  .welcome-cupon-face {
-    width: 15rem;
-    padding: 0.8rem 1.2rem;
-    outline-offset: 3px;
-  }
-  .welcome-cupon-front {
-    gap: 0.2rem;
-  }
-  .welcome-cupon-hazte {
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-  }
-  .welcome-cupon-grande {
-    font-size: 1.1rem;
-    margin: 0.15rem 0 0.3rem;
-  }
-  .welcome-cupon-iva {
-    font-size: 0.58rem;
-  }
-  .welcome-cupon-caduca {
-    font-size: 0.52rem;
-    letter-spacing: 0.12em;
-    margin-top: 0.3rem;
-  }
-  .welcome-cupon-back {
-    gap: 0.4rem;
-  }
-  .welcome-cupon-incluye {
-    font-size: 0.58rem;
-    line-height: 1.45;
-  }
-  .welcome-cupon-condiciones {
-    font-size: 0.52rem;
-    line-height: 1.4;
-  }
-  .welcome-cupon-cta {
-    font-size: 0.64rem;
-    padding: 0.45rem 1.1rem;
-    letter-spacing: 0.15em;
-  }
 }
 
 /* ============================================
@@ -796,60 +386,10 @@ a.nav-label:visited {
   flex-direction: column;
 }
 
-.metodologia-scroll-wrapper {
-  width: 70dvw;
-  max-width: 720px;
-  height: 80dvh;
-}
-
-.metodologia-content {
-  text-align: center;
-  line-height: 1.7;
-  font-size: clamp(0.85rem, 1.2dvw, 1.15rem);
-  padding-top: 20dvh;
-  padding-bottom: 20dvh;
-}
-
+/* El texto en el color del cuerpo (también el titular de cada paso: este
+   selector pesa más que el del titular). El resto, con las páginas de texto. */
 .metodologia-content p {
-  margin-bottom: 1.4em;
   color: var(--text-content);
-}
-
-/* Cada paso: su número pequeño arriba, el titular con lo que pasa, y debajo
-   el detalle en el color del cuerpo. Antes eran seis párrafos seguidos y se
-   leían como un muro. */
-.metodologia-paso { margin-bottom: 3rem; }
-.metodologia-paso:last-child { margin-bottom: 0; }
-
-.metodologia-num {
-  display: block;
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  color: var(--text-muted);
-  margin-bottom: 0.7rem;
-}
-
-.metodologia-titular {
-  color: var(--text);
-  margin-bottom: 1em;
-}
-
-/* Plazos, dinero y qué pasa si algo se para. Separado de los pasos por
-   aire: los seis pasos cuentan cómo va a ser trabajar juntos, y esto de aquí
-   son los datos con los que se decide. Cada frase va suelta para poder
-   escanearlas; el número primero y la explicación después. */
-.metodologia-importante {
-  margin-top: 4rem;
-  padding-top: 2.4rem;
-}
-
-.metodologia-importante-titular {
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  font-weight: 400;
-  margin: 0 0 1.8rem;
 }
 
 .metodologia-enlace {
@@ -872,62 +412,6 @@ a.nav-label:visited {
   flex-direction: column;
 }
 
-/* La misma caja que metodología y condiciones: 70dvw, 80dvh de alto y 20dvh
-   de aire arriba y abajo dentro del scroll. Tenía una suya, más estrecha y con
-   otro margen superior, y la ficha se leía como si fuera de otro sitio. */
-.about-scroll-wrapper {
-  width: 70dvw;
-  max-width: 720px;
-  height: 80dvh;
-}
-
-.about-content {
-  text-align: center;
-  line-height: 1.7;
-  font-size: clamp(0.82rem, 1.1dvw, 1.05rem);
-  padding-top: 20dvh;
-  padding-bottom: 20dvh;
-}
-
-/* La pregunta con la que empieza todo. Va sola y grande: es literalmente lo
-   primero que manu le dice a alguien que acaba de conocer. */
-.about-pregunta {
-  font-size: clamp(1.1rem, 2.2dvw, 1.6rem);
-  line-height: 1.35;
-  margin-bottom: 2.4rem;
-  font-weight: 400;
-}
-
-/* Las cuatro líneas de entrada: qué es el estudio, de un tirón. Un punto por
-   encima del cuerpo para que se lean antes que el resto. */
-.about-entrada {
-  font-size: clamp(0.9rem, 1.3dvw, 1.1rem);
-  line-height: 1.6;
-  margin-bottom: 3rem;
-}
-.about-entrada p { margin: 0 0 0.6em; }
-.about-entrada p:last-child { margin-bottom: 0; }
-
-.about-texto p {
-  margin-bottom: 1.4em;
-  color: var(--text-content);
-}
-.about-texto p:last-child { margin-bottom: 0; }
-
-/* Los apartados: quién está detrás, internet puede ser otra cosa, tu web es
-   tuya. El titular va en el tono de los rótulos del sitio (pequeño, espaciado,
-   apagado) para que ordene sin competir con la pregunta de arriba. */
-.about-seccion { margin-top: 3rem; }
-.about-seccion:first-child { margin-top: 2.4rem; }
-
-.about-seccion-titular {
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  font-weight: 400;
-  margin: 0 0 1.4rem;
-}
 
 /* Los enlaces DENTRO del texto, iguales en todas las páginas: del color del
    texto y subrayados, como ya iban en condiciones, metodología y las landings.
@@ -947,27 +431,17 @@ a.nav-label:visited {
 .about-enlaces {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 0.4rem 1.8rem;
-  margin: 2rem 0 0;
+  margin: 0;
   font-size: 0.9rem;
   color: var(--text-secondary);
-}
-
-/* En móvil, 70dvw son 260px: demasiado estrecho para cinco apartados de texto
-   seguidos. El about es la celda más larga del lienzo y se lee de arriba abajo,
-   así que se le da casi todo el ancho. */
-@media (max-width: 768px) {
-  .about-scroll-wrapper { width: 86dvw; }
 }
 
 /* El contacto cierra la página: los mismos estilos que tenía la celda
    contacto, que es de donde vienen estas tres cosas. */
 .about-contacto {
-  margin-top: 3rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 0.6rem;
 }
 
@@ -977,31 +451,7 @@ a.nav-label:visited {
    Términos de pago y condiciones del estudio.
    ============================================ */
 
-.footer-scroll-wrapper {
-  width: 70dvw;
-  max-width: 720px;
-  height: 80dvh;
-}
-
-.footer-content {
-  text-align: center;
-  line-height: 1.7;
-  font-size: 0.88rem;
-  padding-top: 20dvh;
-  padding-bottom: 20dvh;
-}
-
-/* Cuando la sección no necesita scroll, centrar vertical y descartar el padding 20dvh */
-.footer-scroll-wrapper.is-short .footer-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
 .footer-content p {
-  margin-bottom: 1.4em;
   color: var(--text-content);
 }
 
@@ -1012,113 +462,21 @@ a.nav-label:visited {
   font-size: 0.88em;
 }
 
-/* Título de cada condición dentro de «trabajo»: la misma voz que los
-   apartados del statement (versalitas tenues), con aire por encima. */
-.footer-apartado-titular {
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  font-weight: 400;
-  margin: 2.2rem 0 0.8rem;
-}
+/* El primer apartado de «trabajo», sin aire encima. */
 .footer-apartado-titular:first-child { margin-top: 0; }
 
 /* Nota final: "aceptar el presupuesto..." */
-.footer-nota {
+.footer-content p.footer-nota {
   margin-top: 2em;
   font-weight: 600;
-  color: var(--text) !important;
-  font-size: 1em !important;
+  color: var(--text);
+  font-size: 1em;
 }
 
 /* Wrapper para centrar contenedor + barra verticalmente */
 .celda.footer {
   flex-direction: column;
 }
-
-/* Barra inferior: +/- tamaño de fuente */
-.footer-bottom-bar {
-  position: absolute;
-  bottom: 3dvh;
-  left: 3dvw;
-  display: flex;
-  align-items: center;
-  gap: 0;
-}
-
-.lang-group {
-  position: absolute;
-  bottom: 3dvh;
-  right: 3dvw;
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  z-index: var(--z-nav);
-}
-
-.lang-btn {
-  border: none;
-  background: none;
-  color: var(--btn-subtle);
-  font-family: inherit;
-  font-size: 0.8rem;
-  cursor: pointer;
-  padding: 0.2rem 0.3rem;
-  transition: color 0.2s ease;
-}
-
-.lang-btn:hover {
-  color: var(--btn-subtle-hover);
-}
-
-.lang-btn.is-active {
-  font-weight: 600;
-  color: var(--text);
-}
-
-
-.footer-font-btn {
-  width: 32px;
-  height: 32px;
-  border: none;
-  background: none;
-  color: var(--btn-subtle-strong);
-  font-size: 1.2rem;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.2s ease;
-  padding: 0;
-}
-
-.footer-font-btn:hover {
-  color: var(--btn-subtle-strong-hover);
-}
-
-/* Área táctil ≥44px sin alterar el tamaño visual ni la maquetación: el
-   ::before es absoluto (no ocupa espacio) y transparente; solo amplía la
-   zona pulsable de controles pequeños en móvil.
-   - lang-btn: fila horizontal con gap 0.3rem → se tesela el hueco sin solapar.
-   - font-btn: la fila +/- va pegada (gap 0) → solo se amplía en vertical para
-     no robar clicks al botón vecino. */
-.lang-btn,
-.footer-font-btn {
-  position: relative;
-}
-.lang-btn::before,
-.footer-font-btn::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  height: 44px;
-  transform: translate(-50%, -50%);
-}
-.lang-btn::before    { width: calc(100% + 0.3rem); }
-.footer-font-btn::before { width: 100%; }
 
 /* ============================================
    12b. PAGE: BUSCAMINAS
@@ -1357,26 +715,10 @@ a.nav-label:visited {
 .portfolio-scroll-wrapper {
   width: 100%;
   height: 100%;
-  padding: 0 8dvw;
   box-sizing: border-box;
 }
 
-.portfolio-scroll-wrapper::before,
-.portfolio-scroll-wrapper::after {
-  height: 4rem;
-}
-
-/* El mismo aire que metodología, about y condiciones: 30dvh del borde de la
-   pantalla al primer elemento. Iba en rem (5 y 6), así que en una pantalla alta
-   la rejilla arrancaba pegada al borde mientras las páginas de texto
-   respiraban, y las dos cosas se ven seguidas al navegar por el lienzo.
-
-   Son 30 y no 20 porque esta celda lleva `padding: 0` para que la rejilla use
-   todo el ancho: las otras reparten su aire entre los 10dvh del padding de
-   `.celda` y los 20dvh del scroll, y aquí el scroll los pone todos. En dvh el
-   aire escala con la pantalla y no hace falta un ajuste aparte para móvil. */
 .portfolio-scroll-content {
-  padding: 30dvh 0;
   box-sizing: border-box;
 }
 
@@ -1384,41 +726,16 @@ a.nav-label:visited {
 .portfolio-scroll-content::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 3px; }
 
 .portfolio-grid {
-  max-width: 1600px;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
-  gap: 1.6rem 1rem;
 }
 
 .pgrid-item {
   flex: 0 0 100%;
   max-width: 100%;
-}
-
-@media (min-width: 480px) {
-  .pgrid-item {
-    flex-basis: calc((100% - 1rem) / 2);
-    max-width: calc((100% - 1rem) / 2);
-  }
-}
-
-@media (min-width: 720px) {
-  .portfolio-grid { gap: 1.8rem 1.2rem; }
-  .pgrid-item {
-    flex-basis: calc((100% - 2.4rem) / 3);
-    max-width: calc((100% - 2.4rem) / 3);
-  }
-}
-
-@media (min-width: 1200px) {
-  .portfolio-grid { gap: 2rem 1.4rem; }
-  .pgrid-item {
-    flex-basis: calc((100% - 4.2rem) / 4);
-    max-width: calc((100% - 4.2rem) / 4);
-  }
 }
 
 .pgrid-item {
@@ -1478,15 +795,6 @@ a.nav-label:visited {
   text-align: center;
 }
 
-
-@media (max-width: 768px) {
-  .celda.portfolio .nav-slot {
-    z-index: var(--z-overlay-img);
-  }
-  .portfolio-scroll-wrapper {
-    padding: 0 10dvw;
-  }
-}
 
 
 /* ============================================
@@ -1562,18 +870,9 @@ a.nav-label:visited {
 .barra-studio::after { content: ","; margin-right: 0.45em; }
 
 /* ============================================
-   FOOTER — hub con secciones
-   Vista inicial: lista de botones (condiciones,
-   cookies, financiación).
+   SUBVENCIÓN Y ENLACES DE CONDICIONES
+   Los logos y la frase oficial de financiación.
    ============================================ */
-
-.footer-seccion p {
-  margin: 0 0 0.7rem;
-}
-
-.footer-seccion > p:last-child {
-  margin-bottom: 0;
-}
 
 .footer-seccion a { transition: color 0.2s ease; }
 
@@ -1605,10 +904,10 @@ a.nav-label:visited {
   display: block;
 }
 
-.footer-frase {
+/* El color y el tamaño se los pone `.footer-seccion > p:last-child`: es el último párrafo. */
+.footer-content p.footer-frase {
   font-style: italic;
-  margin-top: 1.2rem !important;
-  color: var(--text-content);
+  margin-top: 1.2rem;
 }
 
 /* ============================================
@@ -1643,19 +942,6 @@ html.easy, html.easy body {
   color: var(--text-muted); margin-bottom: 1.4rem;
 }
 .easy-hero-title { font-size: clamp(1.85rem, 4.6dvw, 2.5rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; max-width: 26rem; margin: 0 auto; }
-.easy-ticket {
-  display: inline-block;
-  margin: 2.2rem auto 0;
-  padding: 1.2rem 2.6rem;
-  border: 1px solid var(--text);
-  outline: 1px solid var(--text);
-  outline-offset: 4px;
-}
-.easy-ticket-hazte { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); }
-.easy-ticket-grande { font-size: clamp(1.4rem, 4.5dvw, 2rem); font-weight: 600; letter-spacing: 0.02em; line-height: 1.1; margin: 0.3rem 0 0.2rem; }
-.easy-ticket-iva { font-size: 0.7rem; font-style: italic; color: var(--text-muted); }
-.easy-ticket-caduca { font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-top: 0.4rem; }
-.easy-hero-incluye { font-size: 0.85rem; color: var(--text-content); line-height: 1.6; max-width: 30rem; margin: 1.8rem auto 0; }
 .easy-hero-cta { margin-top: 1.8rem; display: flex; flex-direction: column; align-items: center; gap: 0.7rem; }
 .easy-btn {
   display: inline-flex; align-items: center; gap: 0.5rem;
@@ -1665,14 +951,6 @@ html.easy, html.easy body {
   min-height: 44px;
 }
 .easy-btn:hover { opacity: 0.85; }
-/* Variante en negativo: cuando hay dos botones en fila, el segundo no puede
-   pesar lo mismo que el primero o dejan de ser una acción y una alternativa.
-   Mismo tamaño y misma caja, solo cambia el relleno. */
-.easy-btn-secundario {
-  background: transparent; color: var(--text);
-  box-shadow: inset 0 0 0 1px var(--text);
-}
-.easy-btn-secundario:hover { background: var(--text); color: var(--bg); opacity: 1; }
 
 /* --- Secciones genéricas (ritmo vertical consistente) --- */
 /* El aire entre secciones se mide en dvh, así que en pantallas altas cada
@@ -1753,30 +1031,10 @@ html.easy, html.easy body {
   .pgrid-thumb::before { animation: none; }
 }
 
-/* ============================================
-   WELCOME EXTRAS
-   Tagline bajo el título y, debajo, el hint de
-   navegación (fijo, clicable). Ambos discretos:
-   pequeños, en color secundario, y sin robar
-   protagonismo al título ni bloquear el cupón.
-   El layout en columna vive con .welcome-content
-   en la sección 9.
-   ============================================ */
-
-/* Tagline pegado al título: pequeño, secundario, mismo halo que el título
-   para leerse por encima del cupón. */
+/* La frase de la portada, junto al nombre (el resto, con el marquee). */
 .welcome-tagline {
-  display: block;
   text-decoration: none;
-  font-size: clamp(0.7rem, 1.4dvw, 0.95rem);
   font-weight: 400;
-  letter-spacing: 0.04em;
-  text-align: center;
-  color: var(--text-secondary);
-  text-shadow:
-    0 0 10px var(--bg),
-    0 0 20px var(--bg),
-    0 0 30px var(--bg);
 }
 
 /* ============================================
@@ -1839,9 +1097,8 @@ html.js #seo-prerender {
 }
 
 /* Sin JS es la única versión navegable de la home, así que al menos se lee:
-   una columna centrada y con aire. Las clases `easy-*` que trae dentro solo
-   están estilizadas bajo `html.easy` (sección 16), así que aquí el contenido
-   cae en su HTML semántico, que es exactamente lo que necesita un bot. */
+   una columna centrada y con aire. Las clases `easy-*` que trae dentro son las
+   de las páginas lineales (sección 16). */
 #seo-prerender {
   max-width: 42rem;
   margin: 0 auto;
@@ -1910,18 +1167,6 @@ html.js #seo-prerender {
   max-width: 36rem;
 }
 
-/* --- Los dos botones, al salir de la galería --- */
-/* Visitar esa web o pedir la tuya: las dos únicas cosas que se pueden hacer
-   aquí, en la misma fila y al final, cuando ya has visto las capturas. */
-.proy-acciones {
-  margin-top: clamp(2.5rem, 6dvh, 4rem);
-  display: flex; flex-wrap: wrap; gap: 0.7rem;
-  /* Centrados, no alineados a la izquierda con el texto: son el final de la
-     ficha, no otro párrafo. Pegados al margen izquierdo se leían como una
-     continuación de la columna de texto y el segundo botón quedaba colgando. */
-  justify-content: center;
-}
-
 /* --- Galería: una imagen por fila, a lo ancho de la columna --- */
 .proy-galeria { margin-top: clamp(2.5rem, 6dvh, 4rem); display: flex; flex-direction: column; gap: 1.2rem; }
 /* Sin marco: las capturas ya vienen con su propio mockup de navegador, con
@@ -1933,20 +1178,6 @@ html.js #seo-prerender {
   display: block;
 }
 
-/* --- Pie de navegación --- */
-/* Ahora cierra la página de verdad, así que la fila izquierda/derecha se lee
-   como el pie de toda la vida. Sin `padding-top`: era el hueco de la línea
-   divisoria, que ya no está. */
-.proy-pie {
-  margin-top: clamp(2rem, 5dvh, 3rem);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 1rem;
-  font-size: 0.85rem;
-}
-.proy-pie a { color: var(--text-secondary); }
-.proy-pie a:hover { color: var(--text); }
 
 
 /* --- Índice: rejilla de tarjetas --- */
@@ -1987,102 +1218,6 @@ html.js #seo-prerender {
   transition: color var(--transition-fast);
 }
 .proy-card a:hover .proy-card-kw { color: var(--text-secondary); }
-
-/* ============================================
-   18. WELCOME CARD — tarjeta de proyecto que rebota
-   Segunda tarjeta rebotante de la welcome, junto al cupón. El movimiento lo
-   pone rebote.js vía transform; aquí solo el aspecto y el fundido del cambio.
-   Va por DEBAJO del cupón (--z-card < --z-cupon): si se cruzan, la oferta
-   nunca queda tapada por una captura.
-   ============================================ */
-
-.welcome-card {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: var(--z-card);
-  width: clamp(13rem, 26dvw, 21rem);
-  display: flex;
-  flex-direction: column;
-  /* Sin marco ni fondo: la captura ya tiene su propio borde (son pantallazos de
-     navegador) y encuadrarla otra vez la convertía en una pegatina. Flotando
-     limpia se lee como una ventana suelta, que es lo que es. */
-  overflow: hidden;
-  will-change: transform;
-  transform-origin: center;
-  pointer-events: auto;
-  text-decoration: none;
-}
-
-/* Sin caja fija ni recorte: las capturas van de 1,34 a 1,56 de proporción, así
-   que cualquier caja única obligaba a recortar (con `cover`) o a dejar franjas
-   (con `contain`). Cada una se muestra entera y a su proporción; la card cambia
-   un poco de alto entre proyectos, que es lo natural cuando enseñas pantallazos
-   de webs distintas. Sin fondo tampoco: al no recortarse, no queda hueco que
-   rellenar. */
-.welcome-card-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 3px;
-}
-
-/* Hueco reservado mientras la captura descarga. No lleva width/height en el
-   HTML porque cada proyecto tiene la suya y la proporción real no se sabe hasta
-   que llega; 1,45 es el centro del rango que usan (van de 1,34 a 1,56), así que
-   el reajuste al cargar es de unos 9px en vez de los 50 que se desinflaba antes.
-   `height: auto` de la regla de arriba deja mandar a la proporción de verdad en
-   cuanto la imagen está: esto solo actúa sobre el hueco vacío. */
-.welcome-card-img:not(.cargada) {
-  aspect-ratio: 1.45;
-}
-
-.welcome-card-pie {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.1em;
-  padding: 0.55em 0.4em 0;
-  text-align: center;
-}
-.welcome-card-nombre {
-  font-size: 0.78rem;
-  color: var(--text);
-  line-height: 1.25;
-}
-.welcome-card-cta {
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-.welcome-card:hover .welcome-card-cta { color: var(--text-secondary); }
-/* Sin marco que los sostenga, los textos necesitan el mismo halo que el título
-   para leerse por encima de la marca de agua de la celda. */
-.welcome-card-nombre,
-.welcome-card-cta { text-shadow: 0 0 8px var(--bg), 0 0 16px var(--bg); }
-
-/* Cambio de proyecto: se atenúa, se repinta y vuelve. El fundido va en opacity
-   y no en el elemento entero para no pelearse con el transform del rebote. */
-.welcome-card-img,
-.welcome-card-pie { transition: opacity var(--transition-fast); }
-.welcome-card.cambiando .welcome-card-img,
-.welcome-card.cambiando .welcome-card-pie { opacity: 0; }
-
-/* En móvil la celda es estrecha y la tarjeta competiría con el titular y el
-   cupón, que es lo que vende. Se queda pequeña y sin el pie de texto. */
-@media (max-width: 768px) {
-  .welcome-card { width: clamp(8.5rem, 44dvw, 12rem); }
-  .welcome-card-pie { padding: 0.45em 0.3em 0; }
-  .welcome-card-cta { display: none; }
-}
-
-/* Quien pide menos movimiento no rebota (lo corta rebote.js) y tampoco ve el
-   fundido: el proyecto cambia de golpe, sin transición. */
-@media (prefers-reduced-motion: reduce) {
-  .welcome-card-img,
-  .welcome-card-pie { transition: none; }
-}
 
 /* Enlace al caso de estudio (/portfolio/<slug>) bajo cada proyecto del grid.
    Discreto por defecto: el enlace principal de la ficha sigue siendo la web del
@@ -2145,21 +1280,6 @@ html.js #seo-prerender {
 }
 @media (max-width: 768px) {
   .proy-ficha .proy-fila { --wp-ancho: 76dvw; --wp-juego: 3dvh; }
-}
-
-/* La letra pequeña del cupón: fuera de la tarjeta y siempre a la vista.
-   Ver la nota en js/welcome-cupon.js — es una decisión de marca, no de
-   maquetación: las condiciones que cuestan dinero no se esconden detrás de
-   un gesto que hay que descubrir. */
-.easy-hero-condiciones {
-  margin-top: 0.9rem;
-  max-width: 30rem;
-  font-size: clamp(0.62rem, 0.85dvw, 0.72rem);
-  line-height: 1.6;
-  letter-spacing: 0.01em;
-  color: var(--text-secondary);
-  text-align: center;
-  text-wrap: balance;
 }
 
 
@@ -2250,13 +1370,7 @@ html.js #seo-prerender {
   --text-muted: #2a0d03;
   --border: rgba(24, 24, 27, 0.25);
   --border-hover: rgba(24, 24, 27, 0.55);
-  --minimap-cell: #c23000;
-  --minimap-active: #cab9ee;
-  --minimap-expanded-bg: #cae776;
-  --minimap-expanded-hover: #d6ff56;
-  --minimap-expanded-text: #18181b;
   --overlay-bg: rgba(240, 60, 0, 0.97);
-  --gradient-color: #f03c00;
   --fusion: #18181b;
 }
 [data-tinte="ada"] .header-topright,
@@ -2283,13 +1397,7 @@ html.js #seo-prerender {
   --text-muted: #736958;
   --border: rgba(29, 26, 22, 0.14);
   --border-hover: rgba(29, 26, 22, 0.4);
-  --minimap-cell: #d8d0bd;
-  --minimap-active: #1d1a16;
-  --minimap-expanded-bg: #c6bda7;
-  --minimap-expanded-hover: #5c5445;
-  --minimap-expanded-text: #f3eee2;
   --overlay-bg: rgba(243, 238, 226, 0.97);
-  --gradient-color: #f3eee2;
 }
 [data-tinte="chicle"] {
   --bg: #ffd9ea;
@@ -2300,13 +1408,7 @@ html.js #seo-prerender {
   --text-muted: #963b6d;
   --border: rgba(61, 10, 38, 0.16);
   --border-hover: rgba(61, 10, 38, 0.45);
-  --minimap-cell: #f3b4d0;
-  --minimap-active: #3d0a26;
-  --minimap-expanded-bg: #e89bbf;
-  --minimap-expanded-hover: #93386a;
-  --minimap-expanded-text: #fff3f8;
   --overlay-bg: rgba(255, 217, 234, 0.97);
-  --gradient-color: #ffd9ea;
 }
 [data-tinte="cianotipo"] {
   --bg: #0f2f80;
@@ -2317,13 +1419,7 @@ html.js #seo-prerender {
   --text-muted: #a3b3ec;
   --border: rgba(238, 242, 255, 0.18);
   --border-hover: rgba(238, 242, 255, 0.45);
-  --minimap-cell: #2a4ba8;
-  --minimap-active: #ffffff;
-  --minimap-expanded-bg: #3b5cc0;
-  --minimap-expanded-hover: #8fa6ee;
-  --minimap-expanded-text: #0f2f80;
   --overlay-bg: rgba(15, 47, 128, 0.97);
-  --gradient-color: #0f2f80;
 }
 [data-tinte="fosforo"] {
   --bg: #07130b;
@@ -2334,13 +1430,7 @@ html.js #seo-prerender {
   --text-muted: #4ca968;
   --border: rgba(141, 255, 176, 0.18);
   --border-hover: rgba(141, 255, 176, 0.45);
-  --minimap-cell: #1c3d27;
-  --minimap-active: #8dffb0;
-  --minimap-expanded-bg: #24553a;
-  --minimap-expanded-hover: #3f8a5c;
-  --minimap-expanded-text: #07130b;
   --overlay-bg: rgba(7, 19, 11, 0.97);
-  --gradient-color: #07130b;
   --fusion: #93ffb9;   /* con `difference` sobre este fondo, sale verde y no blanco */
 }
 /* El azul del cianotipo es un tono medio: con `difference`, el blanco salía
@@ -2350,11 +1440,13 @@ html.js #seo-prerender {
 [data-tinte="cianotipo"] .desplegable > summary { color: var(--text-secondary); }
 
 /* ============================================
-   PRUEBA (19 nov 2026) — aire más sobrio. Sin commitear hasta que manu elija.
-   Todo pequeño y en su sitio: una barra arriba (páginas vecinas, «menú»,
-   idiomas y zoom), textos en dos columnas, la portada con las webs una tras
-   otra y el portfolio como lista o rejilla. Inknut se queda en títulos y
-   barra; los textos largos van en una letra de siempre.
+   LA V3 (desde el 19 nov 2026) — aire más sobrio.
+   Todo pequeño y en su sitio: arriba la barra (páginas vecinas y «menú»),
+   abajo los controles (vista, zoom, modo, idioma), textos en una sola
+   columna, la portada con las webs una tras otra y el portfolio como lista
+   o rejilla. Inknut se queda en títulos y barra; los textos largos van en una
+   letra de siempre. Pisa lo de arriba por ir después: ver el índice al
+   principio del archivo.
    ============================================ */
 :root {
   --font-text: Georgia, "Times New Roman", serif;
@@ -2362,10 +1454,6 @@ html.js #seo-prerender {
   --barra: 1.3rem;      /* a qué altura va la barra */
   --chico: 0.78rem;     /* el tamaño de todo lo que no es texto largo */
 }
-.zone-label-bg,
-.proy-borde-etiqueta,
-.minimap-inline,
-.nav-ir { display: none; }
 
 /* --- La barra, arriba a la derecha y en una línea: las páginas vecinas y
    «menú» (vista, zoom, modo e idioma van abajo a la derecha, más abajo aquí). Blanca con `difference`, como el
@@ -2393,7 +1481,6 @@ html.js #seo-prerender {
 }
 .menu-btn:hover { color: #999; }
 .menu-vecinos .menu-btn::after { content: ","; margin-right: 0.45em; }
-/* Los controles van un paso atrás de las páginas; el último de su grupo deja aire. */
 
 /* --- Vista, zoom, modo e idioma, abajo a la derecha. Cada uno despliega sus opciones hacia
    arriba en una cajita, como un tooltip. Cerrados llevan el mismo `difference`
@@ -2439,15 +1526,13 @@ html.js #seo-prerender {
   border: 0.32rem solid transparent;
   border-top-color: var(--text);
 }
-.desplegable-opciones .menu-btn { color: var(--bg); }
+.desplegable-opciones .menu-btn { color: var(--bg); line-height: normal; }   /* enlaces (idioma) y botones, a la misma altura */
 .desplegable-opciones .menu-btn:hover { color: color-mix(in srgb, var(--bg) 60%, var(--text)); }
 .desplegable-opciones .menu-btn.is-active { text-decoration: underline; text-underline-offset: 0.25em; }
-/* Los originales de cada celda siguen ahí (les pasa el clic la barra), sin verse. */
-.celda .lang-group, .celda .footer-bottom-bar, .pvista { display: none; }
 /* La letra crece con la pantalla: 15 px hasta unos 1000 px de ancho (el móvil
    no cambia) y hasta 21 px en una grande. En 15 px fijos, en un ordenador las
    páginas de texto se veían muy comprimidas (manu, 21 nov 2026). */
-.about-content, .metodologia-content, .footer-content { font-size: calc(clamp(0.95rem, 0.35rem + 0.9vw, 1.3rem) * var(--zoom, 1)) !important; }
+.about-content, .metodologia-content, .footer-content { font-size: calc(clamp(0.95rem, 0.35rem + 0.9vw, 1.3rem) * var(--zoom, 1)); }
 
 /* --- El mapa que abre «menú»: una constelación. Cada página es un punto con su
    nombre y cada conexión una línea fina (js/navigation.js, pintarConstelacion).
@@ -2594,12 +1679,9 @@ html.js #seo-prerender {
    fundidos de arriba y abajo: ya no hay un borde que disimular. */
 .celda.about, .celda.statement, .celda.resena, .celda.metodologia, .celda.footer, .celda.tools { padding-top: 0; padding-bottom: 0; }
 .about-scroll-wrapper, .metodologia-scroll-wrapper, .footer-scroll-wrapper, .tools-scroll-wrapper { height: 100%; }
-.about-content, .metodologia-content, .footer-content,
-.footer-scroll-wrapper.is-short .footer-content { padding-top: 18dvh; padding-bottom: 24dvh; }
-.footer-scroll-wrapper.is-short .footer-content { display: block; }
+.about-content, .metodologia-content, .footer-content { padding-top: 18dvh; padding-bottom: 24dvh; }
 /* Links, portfolio y archive: el título a la misma altura que en las páginas de texto. */
 .tools-scroll-wrapper > .scroll-content { padding-top: 18dvh; padding-bottom: 24dvh; box-sizing: border-box; }
-.celda .scroll-wrapper::before, .celda .scroll-wrapper::after { display: none; }
 .about-content, .about-seccion, .metodologia-paso, .metodologia-importante, .footer-seccion {
   display: grid;
   /* Una sola columna en todas las páginas: hubo una segunda para el texto, con
@@ -2648,19 +1730,16 @@ html.js #seo-prerender {
 /* Un solo ritmo en las cinco páginas: mismo interlineado y mismo aire entre
    párrafos (había 0.6em en las entradas y 1.4em en los apartados). */
 .about-content, .metodologia-content, .footer-content { line-height: 1.6; }
-.about-entrada { line-height: inherit; margin-bottom: 0; }
 .about-entrada p, .about-texto p, .metodologia-content p:not(.metodologia-titular), .footer-content p { margin: 0 0 0.8em; }
 .about-entrada p:last-child, .about-seccion p:last-child, .metodologia-paso p:last-child { margin-bottom: 0; }
-/* con `p` delante: `.metodologia-content p` le ponía 1.4em de su letra grande */
+/* con `p` delante, para ganar también a la de móvil (más abajo, 0.6rem) */
 .metodologia-content p.metodologia-titular { margin-bottom: 0.7rem; }
-.footer-content p.footer-nota { margin-top: 2em; }
 .about-enlaces, .about-contacto { margin-top: 2.4rem; }
 /* Cada apartado se separa del anterior solo con aire, sin línea (manu, 21 nov 2026). */
 .about-seccion, .about-seccion:first-child, .metodologia-paso, .metodologia-importante, .footer-apartado-titular {
   padding-top: 1.1rem;
   margin-top: 2.6rem;
 }
-.metodologia-paso { margin-bottom: 0; }
 .about-pregunta + .metodologia-paso, .footer-seccion-titular + .footer-apartado > .footer-apartado-titular { margin-top: 0; }
 /* La lista va de arriba abajo y se funde justo en el borde (manu, 21 nov
    2026): el degradado empieza en el mismo borde y acaba pasados los menús, así
@@ -2919,8 +1998,7 @@ a.plista-fila::before { counter-increment: fila; content: counter(fila, decimal-
 }
 
 /* --- Rejilla del portfolio: piezas más grandes --- */
-.portfolio-grid { max-width: none; gap: 3.5rem 2rem; }
-.pgrid-item { flex-basis: 100%; max-width: 100%; }
+.portfolio-grid { gap: 3.5rem 2rem; }
 @media (min-width: 720px)  { .pgrid-item { flex-basis: calc((100% - 2rem) / 2); max-width: calc((100% - 2rem) / 2); } }
 @media (min-width: 1700px) { .pgrid-item { flex-basis: calc((100% - 4rem) / 3); max-width: calc((100% - 4rem) / 3); } }
 
