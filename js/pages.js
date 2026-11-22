@@ -49,24 +49,25 @@ export const tituloCelda = (data, nombre, lang) => {
  * del bloque que pasa por el centro, y entra y sale con un fundido (manu,
  * 22 nov 2026). Sale repetido y pequeño, como pegatinas sueltas por el hueco
  * de la derecha que van saliendo y escondiéndose: en grande el emoji del
- * sistema se veía borroso. En móvil no sale (style.css, `.bloque-emoji`).
+ * sistema se veía borroso. En móvil sale uno solo, arriba a la izquierda en la
+ * barra, y va cambiando (style.css, `.bloque-emoji`).
  */
 // `e` es un emoji o una lista: las pegatinas del bloque los mezclan.
 const emojiHTML = (e) => e?.length ? ` data-emoji="${escapeHTML([e].flat().join(" "))}"` : "";
 
 /**
- * Una pegatina en la casilla `c` de una rejilla de 3×3 sobre el hueco de la
- * derecha: dentro de su casilla, sitio, tamaño y giro al azar. La rejilla solo
- * está para que no se amontonen.
+ * Una pegatina en el hueco de la derecha: sitio, tamaño y giro al azar, aunque
+ * se pisen (manu, 22 nov 2026: «en orden random en sitios random y ya»).
  */
-const pegatina = (emoji, c, retraso = 0) => {
-  const x = ((c % 3) + 0.15 + Math.random() * 0.7) * 100 / 3;
-  const y = (Math.floor(c / 3) + 0.15 + Math.random() * 0.7) * 100 / 3;
+const pegatina = (emoji, retraso = 0) => {
+  const x = 5 + Math.random() * 90;   // del 5 al 95 %: el hueco ya deja sitio para media pegatina
+  const y = 5 + Math.random() * 90;
   const tam = Math.round(56 + Math.random() * 54);   // hasta 110 px: más grande, el emoji del sistema se emborrona
   const giro = Math.round(Math.random() * 44 - 22);
-  return `<i data-c="${c}" style="left:${x}%;top:${y}%;font-size:${tam}px;rotate:${giro}deg;animation-delay:${retraso}ms">${emoji}</i>`;
+  return `<i style="left:${x}%;top:${y}%;font-size:${tam}px;rotate:${giro}deg;animation-delay:${retraso}ms">${emoji}</i>`;
 };
 const quieto = matchMedia("(prefers-reduced-motion: reduce)");
+const enMovil = matchMedia("(max-width: 1024px)");   // ahí solo se ve la primera, en la barra (style.css)
 
 /** Pone el emoji de la celda y devuelve la función que lo vuelve a mirar. */
 function emojiAlCentro(el, content) {
@@ -78,11 +79,11 @@ function emojiAlCentro(el, content) {
   // Mientras se lee un bloque, cada poco una pegatina se va y sale en otro sitio.
   setInterval(() => {
     if (!actual || quieto.matches || !el.classList.contains("activa")) return;
-    const vieja = span.children[Math.floor(Math.random() * span.children.length)];
+    const vieja = enMovil.matches ? span.children[0] : span.children[Math.floor(Math.random() * span.children.length)];
     if (!vieja || vieja.classList.contains("fuera")) return;
     vieja.classList.add("fuera");
     const otro = emojis[Math.floor(Math.random() * emojis.length)];
-    setTimeout(() => vieja.outerHTML = pegatina(otro, +vieja.dataset.c), 300);
+    setTimeout(() => vieja.outerHTML = pegatina(otro), 300);
   }, 900);
   const mirar = () => {
     const r = content.getBoundingClientRect();
@@ -98,9 +99,8 @@ function emojiAlCentro(el, content) {
     if (!bloque) return;
     espera = setTimeout(() => {
       emojis = bloque.dataset.emoji.split(" ").map(escapeHTML);
-      // Salen de una en una, en orden al azar, y los emojis del bloque por turnos: salen todos.
-      const orden = [...Array(9).keys()].sort(() => Math.random() - 0.5);
-      span.innerHTML = orden.map((c, n) => pegatina(emojis[n % emojis.length], c, n * 70)).join("");
+      // Salen de una en una, y los emojis del bloque por turnos: salen todos.
+      span.innerHTML = Array.from({ length: 9 }, (_, n) => pegatina(emojis[n % emojis.length], n * 70)).join("");
       span.classList.add("visible");
     }, fundido);
   };

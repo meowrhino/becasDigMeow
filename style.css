@@ -1581,29 +1581,21 @@ a.nav-label:visited {
   color: var(--text-secondary);
 }
 
-/* Subvención: logos + frase oficial.
-   Desktop: 2 col, cada logo pegado al gap central (col1→end, col2→start)
-   para que el bloque se lea como un grupo compacto, no disperso.
-   Móvil: 1 col, todo centrado. */
+/* Subvención: logos + frase oficial, al margen izquierdo como el resto del
+   texto (manu, 22 nov 2026). Escritorio: 2 columnas; móvil: 1. */
 .footer-logos {
   display: grid;
   grid-template-columns: auto auto;
   gap: 1.2rem 1.8rem;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
+  justify-items: start;
   margin: 1.8rem 0 1.5rem;
 }
-
-.footer-logos > :nth-child(odd) { justify-self: end; }
-.footer-logos > :nth-child(even) { justify-self: start; }
 
 @media (max-width: 768px) {
   .footer-logos {
     grid-template-columns: 1fr;
-  }
-  .footer-logos > :nth-child(odd),
-  .footer-logos > :nth-child(even) {
-    justify-self: center;
   }
 }
 
@@ -1615,7 +1607,6 @@ a.nav-label:visited {
 
 .footer-frase {
   font-style: italic;
-  text-align: center;
   margin-top: 1.2rem !important;
   color: var(--text-content);
 }
@@ -2723,7 +2714,26 @@ html.js #seo-prerender {
    varias veces»). Lo pone emojiAlCentro (pages.js). En móvil no sale. --- */
 .footer-seccion > .footer-apartado { max-width: none; }
 .footer-apartado > p { max-width: 33em; }
-.bloque-emoji { display: none; }
+@keyframes pegatina-pop { from { scale: 0; } }
+/* En móvil, un solo emoji arriba a la izquierda, en la línea de la barra, que
+   va cambiando entre los del bloque (manu, 22 nov 2026). Mientras se ve, la
+   barra le deja 2rem: si no le cabe al lado, pasa a dos líneas. */
+@media (max-width: 1024px) {
+  .bloque-emoji {
+    position: absolute;
+    top: var(--barra);
+    left: var(--margen);
+    z-index: var(--z-header);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+  .bloque-emoji.visible { opacity: 1; }
+  .bloque-emoji i { display: block; font-style: normal; font-size: 1.15rem !important; line-height: 1; transform-origin: center; animation: pegatina-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) backwards; transition: scale 0.3s ease-in; }
+  .bloque-emoji i:not(:first-child) { display: none; }
+  .bloque-emoji i.fuera { scale: 0; }
+  body:has(.celda.activa .bloque-emoji.visible) .header-topright { max-width: calc(100dvw - 2 * var(--margen) - 2rem); }
+}
 @media (min-width: 1025px) {
   .bloque-emoji {
     display: block;
@@ -2750,7 +2760,6 @@ html.js #seo-prerender {
     transition: scale 0.3s ease-in;
   }
   .bloque-emoji i.fuera { scale: 0; }
-  @keyframes pegatina-pop { from { scale: 0; } }
 }
 
 /* --- Bienvenida: las webs en fila, pasando de lado, cada una un poco más
