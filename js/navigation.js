@@ -1,11 +1,13 @@
 // ============================================
-// NAVIGATION — Grid, celdas, minimaps, nav labels, hash
+// NAVIGATION — Grid, celdas, la barra, el mapa de «menú» y la URL
 // ============================================
 //
 // Configurable: cada página (studio, archive) pasa su
 // propio grid, nombres y callbacks mediante configurarNavegacion().
 
 import { MODOS, modoActual, aplicarModo, nombreModo } from "./theme.js";
+import { normalizarRuta as normalizar } from "./rutas.js";
+import { ZOOMS, etiquetaModo, etiquetaIdioma, textosZoom, cerrarAlClicarFuera } from "./controles.js";
 
 // --- Elemento raíz ---
 const app = document.getElementById("content");
@@ -33,6 +35,13 @@ let rutaDe = null;
 // ida depende del idioma activo y la vuelta no: /en/about es la celda `about`
 // vengas del idioma que vengas, y de hecho es la URL la que decide el idioma.
 let celdaDeRutaFn = null;
+// Las celdas con texto que leer: solo en ellas sale `zoom(…)`.
+let CON_ZOOM = new Set();
+// El idioma, si la página lo tiene (el archive no): { idiomas, actual(), ruta(celda, lang) }.
+let IDIOMA = null;
+// Los controles propios de una celda (el portfolio: lista o rejilla). La celda
+// los registra con controlesDeCelda() y la barra los pinta.
+const CONTROLES_CELDA = {};
 
 // --- La constelación: el lienzo como grafo ---
 // Las celdas siguen teniendo su casilla (`pos_Y_X`, que es solo un selector),
@@ -44,16 +53,16 @@ let CONEX = [];      // pares [a, b] de nombres de celda
 let FABRICA = null;  // { pos, conex } sin tocar, para «restablecer»
 let GUARDADO = null; // clave de sessionStorage; sin ella el mapa no se edita
 
-// Traductor del TEXTO VISIBLE de las celdas (zone label, nav labels, minimapa).
+// Traductor del TEXTO VISIBLE de las celdas (la barra y los nombres del mapa).
 // Por defecto es la identidad: se muestra el propio identificador de la celda.
-// Los identificadores internos (NOMBRES_CELDAS: hash, alias, clase css, dataset)
+// Los identificadores internos (NOMBRES_CELDAS: ruta, alias, clase css, dataset)
 // NUNCA pasan por aquí; solo el texto que ve el usuario. main.js lo sustituye
 // tras cargar data.json para traducir p. ej. metodología→methodology.
 let traducirNombre = (nombre) => nombre;
 
 /**
  * Registra la función que traduce el nombre de celda a su texto visible en el
- * idioma activo. Tras cambiarla, llamar a refrescarTextosCeldas() para re-pintar.
+ * idioma activo. Tras cambiarla, actualizarVista() lo vuelve a pintar.
  */
 export function setTraductorNombres(fn) {
   traducirNombre = typeof fn === "function" ? fn : ((n) => n);
@@ -66,7 +75,7 @@ export function setTraductorNombres(fn) {
  * `redirects` mapea destino → [aliases]. Resuelve en cadena:
  * { macarrones: ["links"], links: ["tools"] } hace que #tools → #links → #macarrones.
  */
-export function configurarNavegacion({ grid, nombres, clasesCss, posInicial, onUpdate, redirects, rutas, editable }) {
+export function configurarNavegacion({ grid, nombres, clasesCss, posInicial, onUpdate, redirects, rutas, editable, conZoom, idioma }) {
   GRID = grid;
   NOMBRES_CELDAS = nombres;
   CLASE_CSS = clasesCss || {};
@@ -77,6 +86,8 @@ export function configurarNavegacion({ grid, nombres, clasesCss, posInicial, onU
   rutaDe = typeof rutas?.de === "function" ? rutas.de : null;
   celdaDeRutaFn = typeof rutas?.celdaDe === "function" ? rutas.celdaDe : null;
   GUARDADO = editable || null;
+  CON_ZOOM = new Set(conZoom || []);
+  IDIOMA = idioma || null;
   FABRICA = deFabrica();
   ({ pos: POS, conex: CONEX } = leerConstelacion() || structuredClone(FABRICA));
 
@@ -172,6 +183,15 @@ function resolverAlias(hash) {
   return actual;
 }
 
+/**
+ * Una celda pone sus propios desplegables en la barra. `fn` devuelve una lista
+ * de { etiqueta, opciones: [{ texto, activa, alPulsar }] }; se llama cada vez
+ * que la barra se pinta, así que puede leer su estado al momento.
+ */
+export function controlesDeCelda(nombre, fn) {
+  CONTROLES_CELDA[nombre] = fn;
+}
+
 export function setPosicion(y, x) {
   posY = y;
   posX = x;
@@ -204,7 +224,7 @@ export function crearCeldas() {
 /**
  * El rectángulo que de verdad tiene celdas dentro del GRID.
  *
- * Es lo que dibuja el minimapa de la esquina, y el marco del mapa de «menú».
+ * Es el marco del mapa de «menú».
  */
 export function marcoOcupado() {
   const ys = [], xs = [];
@@ -217,33 +237,15 @@ export function marcoOcupado() {
   return { y0: Math.min(...ys), y1: Math.max(...ys), x0: Math.min(...xs), x1: Math.max(...xs) };
 }
 
-// --- Zone Label ---
-
-let zoneLabelEl = null;
-
 export function getNombrePagina() {
   return NOMBRES_CELDAS[`${posY}_${posX}`] || "";
 }
 
-export function crearZoneLabel() {
-  zoneLabelEl = document.createElement("div");
-  zoneLabelEl.classList.add("zone-label-bg");
-  document.body.appendChild(zoneLabelEl);
-}
+// --- La barra y los controles ---
 
-function actualizarZoneLabel() {
-  if (!zoneLabelEl) return;
-  zoneLabelEl.textContent = traducirNombre(getNombrePagina());
-}
-
-// --- Minimap inline ---
-
-let minimapInlineEl = null;
 let vecinosEl = null;
 let menuBtn = null;
 
-const IDIOMAS = ["es", "en", "cat"];
-const ZOOMS = [85, 100, 115, 130];
 let zoomIdx = 1;
 let controlesEl = null;
 
@@ -261,14 +263,22 @@ function desplegable(etiqueta, opciones) {
   resumen.textContent = etiqueta;
   const lista = document.createElement("div");
   lista.classList.add("desplegable-opciones");
-  opciones.forEach(({ texto, nombre, activa, alPulsar }) => {
-    const b = document.createElement("button");
-    b.type = "button";
+  opciones.forEach(({ texto, nombre, activa, alPulsar, href, hreflang }) => {
+    // Con `href`, un enlace de verdad (los idiomas: cada uno es una URL que un
+    // buscador puede seguir); si no, un botón.
+    const b = document.createElement(href ? "a" : "button");
+    if (href) {
+      b.href = href;
+      if (hreflang) b.hreflang = hreflang;
+      if (activa) b.setAttribute("aria-current", "true");
+    } else {
+      b.type = "button";
+    }
     b.classList.add("menu-btn");
     b.classList.toggle("is-active", !!activa);
     b.textContent = texto;
     if (nombre) b.setAttribute("aria-label", nombre);
-    b.addEventListener("click", alPulsar);
+    if (alPulsar) b.addEventListener("click", alPulsar);
     lista.appendChild(b);
   });
   caja.append(resumen, lista);
@@ -307,20 +317,15 @@ function botonBarra(texto, grupo, alPulsar) {
 }
 
 /**
- * PRUEBA: pinta la barra entera. Los controles de cada celda (lista/rejilla,
- * idiomas, zoom) siguen existiendo en la celda, escondidos por CSS; aquí se
- * pintan como texto y se les pasa el clic, para no duplicar su lógica.
+ * Pinta la barra entera: arriba las páginas unidas a esta y «menú»; abajo los
+ * desplegables (los de la celda, zoom, modo e idioma).
  */
 function pintarVecinosHeader() {
   if (!vecinosEl || !controlesEl) return;
   vecinosEl.innerHTML = "";
-  const activa = document.querySelector(".celda.activa");
-
   // Los controles van aparte, abajo a la derecha, y cada uno despliega lo suyo:
   // vista (solo en el portfolio), zoom (solo en las páginas de texto), modo e idioma.
   controlesEl.innerHTML = "";
-  const en = document.documentElement.lang === "en";
-  const cat = document.documentElement.lang === "ca";
   const abierto = !!overlayEl?.classList.contains("visible");
   const t = textos();
   if (menuBtn) menuBtn.textContent = abierto ? t.cerrar : t.menu;
@@ -340,28 +345,25 @@ function pintarVecinosHeader() {
     }
   }
 
-  // vista(lista): lista o rejilla
-  const vistas = abierto ? [] : [...(activa?.querySelectorAll(".pvista-btn") || [])];
-  const vistaActiva = vistas.find(v => v.classList.contains("is-active"));
-  if (vistaActiva) {
-    desplegable(`${en ? "view" : "vista"}(${vistaActiva.textContent})`, vistas.map(orig => ({
-      texto: orig.textContent,
-      activa: orig === vistaActiva,
-      alPulsar: () => { orig.click(); pintarVecinosHeader(); },
-    })));
+  // Los de la celda: vista(lista) en el portfolio.
+  if (!abierto) {
+    (CONTROLES_CELDA[getNombrePagina()]?.() || []).forEach(({ etiqueta, opciones }) => {
+      desplegable(etiqueta, opciones.map(o => ({ ...o, alPulsar: () => { o.alPulsar(); pintarVecinosHeader(); } })));
+    });
   }
 
   // zoom(100%): solo en las páginas de texto; despliega el − y el +
-  if (!abierto && activa?.querySelector(".footer-bottom-bar")) {
+  if (!abierto && CON_ZOOM.has(getNombrePagina())) {
     const cambiar = (paso) => {
       zoomIdx = Math.min(ZOOMS.length - 1, Math.max(0, zoomIdx + paso));
       document.documentElement.style.setProperty("--zoom", ZOOMS[zoomIdx] / 100);
       window.dispatchEvent(new Event("resize"));   // los degradados de scroll se recalculan
       zoom.querySelector("summary").textContent = `zoom(${ZOOMS[zoomIdx]}%)`;
     };
+    const [menos, mas] = textosZoom(document.documentElement.lang);
     const zoom = desplegable(`zoom(${ZOOMS[zoomIdx]}%)`, [
-      { texto: "−", nombre: en ? "smaller text" : "letra más pequeña", alPulsar: () => cambiar(-1) },
-      { texto: "+", nombre: en ? "larger text" : "letra más grande", alPulsar: () => cambiar(1) },
+      { texto: "−", nombre: menos, alPulsar: () => cambiar(-1) },
+      { texto: "+", nombre: mas, alPulsar: () => cambiar(1) },
     ]);
   }
 
@@ -369,19 +371,22 @@ function pintarVecinosHeader() {
   // claro y oscuro, y de tercero el tinte que llevas, si llevas uno.
   const modo = modoActual();
   const modos = abierto ? [...new Set(["claro", "oscuro", modo])] : Object.keys(MODOS);
-  desplegable(`${en || cat ? "mode" : "modo"}(${nombreModo(modo)})`, modos.map(m => ({
+  desplegable(`${etiquetaModo(document.documentElement.lang)}(${nombreModo(modo)})`, modos.map(m => ({
     texto: nombreModo(m),
     activa: m === modo,
     alPulsar: () => { aplicarModo(m); pintarVecinosHeader(); },
   })));
 
-  // idioma(es): despliega los tres
-  const langActual = document.querySelector(".lang-btn.is-active")?.dataset.lang;
-  if (langActual) {
-    desplegable(`${langActual === "en" ? "language" : "idioma"}(${langActual})`, IDIOMAS.map(l => ({
+  // idioma(es): despliega los tres, como enlaces a esta misma página en cada uno
+  if (IDIOMA) {
+    const langActual = IDIOMA.actual();
+    desplegable(`${etiquetaIdioma(langActual)}(${langActual})`, IDIOMA.idiomas.map(l => ({
       texto: l,
       activa: l === langActual,
-      alPulsar: () => document.querySelector(`.lang-btn[data-lang="${l}"]`)?.click(),
+      href: IDIOMA.ruta(getNombrePagina(), l),
+      hreflang: l === "cat" ? "ca" : l,
+      // El que ya está puesto no recarga la página.
+      alPulsar: l === langActual ? (e) => e.preventDefault() : null,
     })));
   }
 
@@ -395,61 +400,11 @@ function pintarVecinosHeader() {
   });
 }
 
-function getAspectoViewport() {
-  return window.innerHeight > 0 ? window.innerWidth / window.innerHeight : 1;
-}
-
-export function actualizarTamanoMinimapInline() {
-  if (!minimapInlineEl) return;
-  const base   = 14;
-  const cellW  = Math.max(8, Math.round(base * getAspectoViewport()));
-  const cellH  = base;
-  minimapInlineEl.querySelectorAll(".minimap-inline-cell").forEach(cell => {
-    cell.style.width  = `${cellW}px`;
-    cell.style.height = `${cellH}px`;
-  });
-}
-
-/** Rellena el minimapa de la esquina con el rectángulo ocupado. */
-function pintarMinimapInline() {
-  if (!minimapInlineEl) return;
-  const { y0, y1, x0, x1 } = marcoOcupado();
-  minimapInlineEl.innerHTML = "";
-  minimapInlineEl.style.gridTemplateColumns = `repeat(${x1 - x0 + 1}, 1fr)`;
-  minimapInlineEl.style.gridTemplateRows    = `repeat(${y1 - y0 + 1}, 1fr)`;
-
-  for (let y = y0; y <= y1; y++) {
-    for (let x = x0; x <= x1; x++) {
-      const cell = document.createElement("div");
-      cell.classList.add("minimap-inline-cell");
-      cell.dataset.y = y;
-      cell.dataset.x = x;
-      if (GRID[y]?.[x] !== 1) cell.classList.add("invisible");
-      minimapInlineEl.appendChild(cell);
-    }
-  }
-  actualizarTamanoMinimapInline();
-}
-
 export function crearHeader() {
   const headerEl = document.createElement("div");
   headerEl.classList.add("header-topright");
 
-  minimapInlineEl = document.createElement("div");
-  minimapInlineEl.classList.add("minimap-inline");
-  minimapInlineEl.setAttribute("role", "button");
-  minimapInlineEl.setAttribute("tabindex", "0");
-  minimapInlineEl.setAttribute("aria-label", "Abrir mapa de navegación");
-  pintarMinimapInline();
-  minimapInlineEl.addEventListener("click", () => abrirMinimapExpandido());
-  minimapInlineEl.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      abrirMinimapExpandido();
-    }
-  });
-  // En la esquina, las páginas unidas a esta y «menú», que abre y cierra el
-  // mapa. El minimapa pequeño sigue en el DOM pero el CSS lo esconde.
+  // En la esquina, las páginas unidas a esta y «menú», que abre y cierra el mapa.
   vecinosEl = document.createElement("nav");
   vecinosEl.classList.add("menu-vecinos");
   headerEl.appendChild(vecinosEl);
@@ -459,24 +414,12 @@ export function crearHeader() {
   menuBtn.addEventListener("click", () =>
     overlayEl?.classList.contains("visible") ? cerrarMinimapExpandido() : abrirMinimapExpandido());
   headerEl.appendChild(menuBtn);
-  headerEl.appendChild(minimapInlineEl);
   document.body.appendChild(headerEl);
   ponerFondo();
   controlesEl = document.createElement("div");
   controlesEl.classList.add("controles");
   document.body.appendChild(controlesEl);
-  // Un clic fuera cierra el desplegable que esté abierto.
-  document.addEventListener("click", (e) => {
-    controlesEl.querySelectorAll("details[open]").forEach(d => { if (!d.contains(e.target)) d.open = false; });
-  });
-  actualizarHeader();
-}
-
-function actualizarHeader() {
-  if (!minimapInlineEl) return;
-  minimapInlineEl.querySelectorAll(".minimap-inline-cell").forEach(cell => {
-    cell.classList.toggle("activa", +cell.dataset.y === posY && +cell.dataset.x === posX);
-  });
+  cerrarAlClicarFuera();
 }
 
 // --- El mapa de «menú»: la constelación ---
@@ -698,37 +641,9 @@ export function getOverlayEl() {
   return overlayEl;
 }
 
-// --- Nav Labels ---
-
-const DIRECCIONES = [
-  { dy: -1, dx:  0, pos: "top" },
-  { dy:  1, dx:  0, pos: "bottom" },
-  { dy:  0, dx: -1, pos: "left" },
-  { dy:  0, dx:  1, pos: "right" },
-];
-
-function getVecinos() {
-  const vecinos = {};
-  DIRECCIONES.forEach(({ dy, dx, pos }) => {
-    const ny = posY + dy;
-    const nx = posX + dx;
-    if (GRID[ny]?.[nx] === 1) {
-      vecinos[pos] = { y: ny, x: nx, nombre: NOMBRES_CELDAS[`${ny}_${nx}`] || "" };
-    }
-  });
-  return vecinos;
-}
-
 /**
- * El slot de un borde de la celda, creándolo si aún no existe.
- *
- * Un borde es un sitio, no una cosa: puede llevar la navegación al vecino, un
- * control de la propia celda, o las dos. Antes lo era `.nav-label`, que hacía
- * de estilo, de posición y de botón a la vez, y obligaba a los controles a
- * disfrazarse de etiqueta de navegación para poder colocarse.
- *
- * Lo usan las celdas que se quedan un borde (portfolio, archive, buscaminas)
- * para colgar ahí lo suyo antes de que exista ninguna navegación.
+ * El slot de un borde de la celda, creándolo si aún no existe. Lo usa el
+ * buscaminas para colgar ahí su marcador y sus niveles.
  *
  * @param {HTMLElement} celda
  * @param {"top"|"bottom"|"left"|"right"} pos
@@ -741,36 +656,6 @@ export function bordeCelda(celda, pos) {
     celda.appendChild(slot);
   }
   return slot;
-}
-
-/**
- * Los cuatro bordes de la celda activa: a dónde se va desde aquí.
- *
- * Si el borde ya lo ocupaba un control de la celda —los niveles del
- * buscaminas, `archive` en el portfolio, `studio` en el archive—, los dos
- * comparten el lado: la navegación se antepone y se queda pegada al borde, y
- * el control se aparta hacia dentro.
- *
- * Manda la navegación y no al revés a propósito. Es lo único que está en el
- * mismo sitio en las ocho celdas: si se moviera según lo que cada celda tenga
- * puesto, dejaría de poder confiarse. Antes esto ni se compartía —el control
- * ganaba y la navegación no se dibujaba—, y mover una sección al lado del
- * buscaminas la dejaba sin forma visible de llegar: con teclado y minimapa sí,
- * pero en un móvil no hay flechas.
- */
-function crearNavLabels(celda) {
-  celda.querySelectorAll(".nav-label:not([data-permanent])").forEach(l => l.remove());
-
-  Object.entries(getVecinos()).forEach(([pos, info]) => {
-    const label = document.createElement("button");
-    label.classList.add("nav-label", "nav-ir");
-    label.textContent = traducirNombre(info.nombre);
-    label.addEventListener("click", () => {
-      setPosicion(info.y, info.x);
-      actualizarVista();
-    });
-    bordeCelda(celda, pos).prepend(label);
-  });
 }
 
 // --- La URL ---
@@ -817,9 +702,6 @@ function actualizarURL(historial = true) {
   history.replaceState(null, "", nuevoHash || window.location.pathname);
 }
 
-/** `metodologia.html`, `/metodologia/` y `/metodologia` son la misma ruta. */
-const normalizar = (ruta) =>
-  (String(ruta ?? "").replace(/\.html$/, "").replace(/\/+$/, "") || "/");
 
 /**
  * Coloca el lienzo según la URL de entrada. Primero el pathname (si hay tabla
@@ -870,28 +752,10 @@ export function actualizarVista({ historial = true } = {}) {
   const activa = document.querySelector(`.pos_${posY}_${posX}`);
   if (activa) {
     activa.classList.add("activa");
-    crearNavLabels(activa);
   }
   deslizar(saliente, activa);
-  actualizarHeader();
   pintarVecinosHeader();
-  actualizarZoneLabel();
   pintarConstelacion();
   actualizarURL(historial);
   if (onVistaActualizadaCb) onVistaActualizadaCb();
-}
-
-/**
- * Re-pinta el TEXTO VISIBLE de las celdas con el traductor actual: zone label,
- * nav labels de la celda activa y los nombres del mapa de «menú». Llamar tras setTraductorNombres() y en cada
- * cambio de idioma. No toca identificadores internos ni el hash.
- */
-export function refrescarTextosCeldas() {
-  actualizarZoneLabel();
-
-  pintarConstelacion();
-
-  const activa = document.querySelector(`.pos_${posY}_${posX}`);
-  if (activa) crearNavLabels(activa);
-  pintarVecinosHeader();
 }

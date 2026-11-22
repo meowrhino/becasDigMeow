@@ -3,7 +3,7 @@
 // ============================================
 
 import { fetchJson } from "./utils.js";
-import { celdaDeRuta, rutaCelda } from "./rutas.js";
+import { celdaDeRuta, normalizarRuta } from "./rutas.js";
 
 // --- Idioma global ---
 
@@ -11,13 +11,6 @@ export const LANGS = ["es", "en", "cat"];
 
 /** Caché de data.json. */
 let dataCache = null;
-
-/**
- * URL pública de cada idioma. La home se sirve pre-renderizada en tres
- * variantes (index.html, en.html, ca.html — ver build-seo.js) para que cada
- * idioma tenga su URL indexable, así que cambiar de idioma es navegar.
- */
-export const RUTA_IDIOMA = { es: "/", en: "/en", cat: "/ca" };
 
 /**
  * Detecta idioma desde `navigator.language(s)`. Catalán se mapea a "cat"
@@ -37,14 +30,14 @@ function detectarIdiomaNavegador() {
  * Lo son todas las celdas del lienzo. /archive, que no tiene traducción, va
  * siempre en castellano.
  *
- * Cuando aplica, manda sobre localStorage y sobre el navegador a propósito: si
+ * Cuando aplica, manda sobre el idioma del navegador a propósito: si
  * alguien llega a /en desde una búsqueda en inglés tiene que ver inglés aunque
  * en su última visita eligiera otra cosa. Si no, Google indexaría un texto y el
  * visitante vería otro.
  */
 function idiomaDeLaRuta() {
   // Cloudflare sirve en.html como /en, así que normalizamos ambas formas.
-  const ruta = location.pathname.replace(/\.html$/, "").replace(/\/+$/, "") || "/";
+  const ruta = normalizarRuta(location.pathname);
   // /archive no tiene traducción: va en castellano, como su <html lang>, y no
   // con el idioma del navegador (decía «mode(light)» y no había cómo cambiarlo).
   if (ruta === "/index" || ruta === "/archive") return "es";
@@ -55,10 +48,9 @@ function idiomaDeLaRuta() {
   return celdaDeRuta(ruta)?.lang ?? null;
 }
 
-// Prioridad: idioma que impone la URL > preferencia guardada > navegador.
-const idiomaGuardado = localStorage.getItem("lang");
-export let currentLang = idiomaDeLaRuta()
-  ?? (idiomaGuardado && LANGS.includes(idiomaGuardado) ? idiomaGuardado : detectarIdiomaNavegador());
+// Prioridad: idioma que impone la URL > navegador. Cambiar de idioma es ir a
+// otra URL (la barra, js/navigation.js), así que no cambia con la página abierta.
+export const currentLang = idiomaDeLaRuta() ?? detectarIdiomaNavegador();
 
 /**
  * Refleja el idioma activo en <html lang> (catalán → código BCP-47 "ca").
@@ -72,134 +64,6 @@ function sincronizarLangDocumento(lang) {
   document.documentElement.lang = lang === "cat" ? "ca" : lang;
 }
 sincronizarLangDocumento(currentLang);
-
-/**
- * Callbacks de cada sección para actualizar su contenido al cambiar idioma.
- * Cada entrada guarda también el contenedor que registró el callback, para
- * poder purgar automáticamente los que quedan huérfanos (contenedor ya fuera
- * del DOM) en vez de acumularlos sin límite y dispararlos sobre nodos muertos.
- */
-export const langUpdateCallbacks = [];
-
-/**
- * Registra un callback global que se dispara en cada cambio de idioma, sin
- * requerir un contenedor con botones .lang-btn (p.ej. theme.js, que solo
- * necesita re-traducir su aria-label). Se vincula a document.body, que
- * nunca se desconecta del DOM, así que nunca se purga.
- */
-export function onLangChange(cb) {
-  langUpdateCallbacks.push({ container: document.body, cb });
-}
-
-/** Código BCP-47 de un idioma interno (catalán se guarda como "cat"). */
-const bcp47 = (lang) => (lang === "cat" ? "ca" : lang);
-
-/**
- * La misma celda en el idioma `lang`, o null fuera del lienzo. Se lee de la URL
- * actual, que navigation.js mantiene al día en cada deslizamiento.
- */
-function destinoIdioma(lang) {
-  const aqui = celdaDeRuta(location.pathname);
-  return aqui ? rutaCelda(aqui.nombre, lang) : null;
-}
-
-/**
- * Re-apunta los enlaces de idioma a la celda en la que estás. Se pintan una
- * vez al cargar, y sin esto seguían llevando a la celda por la que entraste:
- * entrar por /about, ir a la portada y pulsar «cat» te dejaba en /ca/about.
- */
-export function actualizarEnlacesIdioma() {
-  document.querySelectorAll("a.lang-btn").forEach(a => {
-    const destino = destinoIdioma(a.dataset.lang);
-    if (destino) a.setAttribute("href", destino);
-  });
-}
-
-/**
- * Genera el HTML de los botones de idioma.
- *
- * En el lienzo cada celda tiene URL propia por idioma, así que ahí se pintan
- * como <a href> de verdad y no como <button>. No es cosmético: eran la única
- * forma de llegar a /en y /ca desde el sitio, y al ser botones con
- * `location.href` no existía NI UN enlace rastreable hacia esas páginas —
- * Google solo las conocía por el sitemap y los hreflang.
- *
- * El destino es la misma celda en el otro idioma (/en/about → /ca/about). Antes
- * el salto era siempre a la portada del idioma, así que cambiar de lengua
- * mientras leías las condiciones te devolvía al principio.
- *
- * Fuera del lienzo (archive y demás) no hay variante por URL: siguen siendo
- * <button> y el cambio se hace en caliente.
- */
-export function buildLangButtons() {
-  return `<div class="lang-group">${LANGS.map(l => {
-    const activo = l === currentLang;
-    const clase = `lang-btn${activo ? " is-active" : ""}`;
-    const destino = destinoIdioma(l);
-    return destino
-      ? `<a class="${clase}" href="${destino}" hreflang="${bcp47(l)}" data-lang="${l}"${activo ? ' aria-current="true"' : ""}>${l}</a>`
-      : `<button class="${clase}" data-lang="${l}" aria-pressed="${activo}">${l}</button>`;
-  }).join("")}</div>`;
-}
-
-/** Sincroniza el estado visual de TODOS los .lang-btn en la página. */
-export function syncAllLangButtons() {
-  document.querySelectorAll(".lang-btn").forEach(b => {
-    const activo = b.dataset.lang === currentLang;
-    b.classList.toggle("is-active", activo);
-    // Los enlaces marcan el idioma activo con aria-current; aria-pressed es de
-    // botones de estado y sobre un <a> no significa nada.
-    if (b.tagName === "A") {
-      if (activo) b.setAttribute("aria-current", "true");
-      else b.removeAttribute("aria-current");
-    } else {
-      b.setAttribute("aria-pressed", activo ? "true" : "false");
-    }
-  });
-}
-
-/**
- * Conecta los botones de idioma dentro de un contenedor.
- * @param {HTMLElement} container
- * @param {Function} onLangChange - Callback(lang)
- */
-export function attachLangListeners(container, onLangChange) {
-  langUpdateCallbacks.push({ container, cb: onLangChange });
-
-  container.querySelectorAll(".lang-btn").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      const lang = btn.dataset.lang;
-
-      // Cmd/Ctrl/Shift/Alt + clic: que el navegador haga lo suyo (abrir en
-      // pestaña o ventana nueva) en vez de que se lo comamos nosotros.
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      if (lang === currentLang) { e.preventDefault(); return; }
-
-      // En el lienzo cada idioma es una URL propia, así que cambiar de idioma
-      // es navegar: si no, la URL diría /en mientras se lee catalán. El
-      // destino se calcula aquí y no se fía del href: es la celda en la que
-      // estás AHORA. Antes se le pegaba el hash que hubiera en la URL, y uno
-      // viejo (`#buscaminas`) te llevaba allí.
-      if (idiomaDeLaRuta()) {
-        e.preventDefault();
-        try { localStorage.setItem("lang", lang); } catch { /* sin almacenamiento: la URL ya manda */ }
-        location.href = destinoIdioma(lang) || RUTA_IDIOMA[lang];
-        return;
-      }
-
-      currentLang = lang;
-      localStorage.setItem("lang", lang);
-      sincronizarLangDocumento(lang);
-      syncAllLangButtons();
-      // Purga huérfanos (contenedor ya fuera del DOM) recorriendo hacia atrás
-      // para que el splice no desordene el resto, y dispara el resto en orden.
-      for (let i = langUpdateCallbacks.length - 1; i >= 0; i--) {
-        if (!langUpdateCallbacks[i].container.isConnected) langUpdateCallbacks.splice(i, 1);
-      }
-      langUpdateCallbacks.forEach(({ cb }) => cb(lang));
-    });
-  });
-}
 
 // --- Carga de datos (data.json) ---
 

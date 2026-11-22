@@ -13,34 +13,21 @@
   <!-- BUILD:head:end -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="meowrhino studio">
-  <meta property="og:image" content="https://meowrhino.studio/favicon/og-image.png">
+  <meta property="og:image" content="{{SITE}}/favicon/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="meowrhino studio — estudio de diseño web en Barcelona">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://meowrhino.studio/favicon/og-image.png">
+  <meta name="twitter:image" content="{{SITE}}/favicon/og-image.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
   <link rel="icon" href="/favicon/favicon.ico">
   <link rel="preload" href="/fonts/inknut-400-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/style.css">
-  <script>
-    // Anti-flash: resuelve el tema antes del primer render.
-    // Prioridad: localStorage > prefers-color-scheme > light (default studio).
-    (function() {
-      var t = localStorage.getItem("meowrhino-theme");
-      if (!t && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";
-      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
-      var c = localStorage.getItem("meowrhino-tinte");
-      if (c) document.documentElement.setAttribute("data-tinte", c);
-      // Marca que hay JS ANTES de que el body se parsee, para que el CSS oculte
-      // el bloque pre-renderizado (#seo-prerender) desde el primer pintado: el
-      // visitante ve el grid, nunca un destello del contenido estático. Sin JS
-      // la clase no se pone y el bloque queda visible como fallback real.
-      document.documentElement.classList.add("js");
-    })();
-  </script>
+  <!-- El tema antes del primer pintado (y html.js): lo escribe build-seo.js, scriptTemaHTML. -->
+  <!-- BUILD:tema:start -->
+  <!-- BUILD:tema:end -->
   <!-- BUILD:preload:start -->
   <!-- BUILD:preload:end -->
 </head>

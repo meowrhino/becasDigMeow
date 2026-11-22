@@ -28,7 +28,7 @@ import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import {
-  esc, renderCeldaPrerenderHTML, cabeceraCelda,
+  esc, pickLang as pick, renderCeldaPrerenderHTML, cabeceraCelda,
 } from "./js/easy-template.js";
 import {
   enlacesDe, renderIndiceHTML, renderProyectoHTML,
@@ -36,7 +36,7 @@ import {
 import { slugify, RUTA_CELDAS } from "./js/rutas.js";
 import { renderArchivePrerenderHTML } from "./js/archive-pages.js";
 import { renderLandingHTML } from "./js/landing-template.js";
-import { MODOS, NOMBRES_MODO } from "./js/modos.js";
+import { MODOS, NOMBRES_MODO, etiquetaModo, etiquetaIdioma, textosZoom } from "./js/controles.js";
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 // Cada servidor de desarrollo puede escribir en su propia carpeta
@@ -50,6 +50,8 @@ if (!/^dist(-[\w-]+)?$/.test(NOMBRE_DIST)) {
 }
 const DIST = join(ROOT, NOMBRE_DIST);
 const LASTMOD_PATH = join(ROOT, "lastmod.json");
+// El dominio, escrito solo aquí: el build lo pone en los canonical, hreflang,
+// og, el sitemap, robots.txt y donde las plantillas dicen {{SITE}}.
 const SITE = "https://meowrhino.studio";
 
 // ============================================
@@ -58,9 +60,9 @@ const SITE = "https://meowrhino.studio";
 //
 // js/ son módulos ES sueltos y el navegador los descubre leyendo los `import`
 // de cada uno. Desde main.js el grafo tiene SEIS niveles de profundidad
-// (main → pages → welcome-card → rebote…), así que sin ayuda el navegador hace
-// seis viajes en serie antes de tener el último módulo: no puede ni pedir
-// rebote.js hasta que ha descargado y parseado welcome-card.js.
+// (main → pages → fila…), así que sin ayuda el navegador hace
+// varios viajes en serie antes de tener el último módulo: no puede ni pedir
+// uno hasta que ha descargado y parseado el que lo importa.
 //
 // Un `<link rel="modulepreload">` por módulo le da la lista entera de golpe y
 // los pide todos en paralelo: la cascada de seis niveles pasa a uno. No es un
@@ -116,9 +118,6 @@ const IDIOMAS = [
 
 /** El idioma por defecto: la raíz y el x-default de los hreflang. */
 const POR_DEFECTO = IDIOMAS[0];
-
-/** Escoge la variante de idioma de un objeto {es,en,cat}, con fallback a es. */
-const pick = (obj, code) => obj?.[code] ?? obj?.es ?? "";
 
 /** URL absoluta de una variante. */
 const urlDe = (idioma) => `${SITE}${idioma.path}`;
@@ -179,13 +178,49 @@ function jsonLdHTML(data, idioma) {
     priceRange: "€€",
   };
 
-  // JSON.stringify ya escapa lo necesario; el contenido sale de data.json y no
-  // lleva `<`, pero cerramos la puerta a que un futuro texto rompa el <script>.
-  const json = JSON.stringify(schema, null, 2)
-    .replace(/</g, "\\u003c")
-    .split("\n").map(l => `  ${l}`).join("\n");
+  return scriptLdHTML(schema);
+}
 
-  return `  <script type="application/ld+json">\n${json}\n  </script>`;
+/**
+ * Las variantes de idioma de una página: [hreflang, ruta] de cada idioma que
+ * la tenga y el x-default. `rutaEn(idioma)` da su ruta, o nada si no la hay.
+ * De aquí salen los <link hreflang> del HTML y los del sitemap.
+ */
+function variantes(rutaEn) {
+  const filas = IDIOMAS.map(i => [i.htmlLang, rutaEn(i)]).filter(([, r]) => r);
+  const porDefecto = rutaEn(POR_DEFECTO);
+  return porDefecto ? [...filas, ["x-default", porDefecto]] : filas;
+}
+const hreflangHTML = (rutaEn) => variantes(rutaEn)
+  .map(([l, r]) => `  <link rel="alternate" hreflang="${l}" href="${SITE}${r}">`).join("\n");
+const alternasXML = (rutaEn) => variantes(rutaEn)
+  .map(([l, r]) => `    <xhtml:link rel="alternate" hreflang="${l}" href="${SITE}${r}"/>`).join("\n");
+
+// Las rutas de cada idioma de una celda, de una ficha y de una landing.
+const rutaCeldaEn = (celda) => (i) => RUTA_CELDAS[i.code]?.[celda];
+const rutaFichaEn = (slug) => (i) => `${i.proyBase}/${slug}`;
+const rutaLandingEn = (landing) => (i) => pick(landing.ruta, i.code);
+
+/**
+ * El tema antes del primer pintado, para que no destelle: el que se eligió y,
+ * si no hay ninguno, el del sistema. El archive va oscuro salvo que el sistema
+ * pida claro. `marcarJS` pone `html.js`, que esconde el pre-render desde el
+ * primer pintado (sin JS se queda a la vista).
+ */
+function scriptTemaHTML({ oscuroPorDefecto = false, marcarJS = false } = {}) {
+  const sinElegir = oscuroPorDefecto
+    ? `if (!t) t = (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) ? "light" : "dark";`
+    : `if (!t && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";`;
+  return `  <script>
+    (function() {
+      var t = localStorage.getItem("meowrhino-theme");
+      ${sinElegir}
+      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+      var c = localStorage.getItem("meowrhino-tinte");
+      if (c) document.documentElement.setAttribute("data-tinte", c);${marcarJS ? `
+      document.documentElement.classList.add("js");` : ""}
+    })();
+  </script>`;
 }
 
 
@@ -213,18 +248,6 @@ function celdasDe(idioma) {
   }));
 }
 
-/** Las alternativas de idioma de una celda, para el <link hreflang>. */
-function hreflangCeldaHTML(celda) {
-  const filas = IDIOMAS.map(i => {
-    const ruta = RUTA_CELDAS[i.code]?.[celda];
-    return ruta ? `  <link rel="alternate" hreflang="${i.htmlLang}" href="${SITE}${ruta}">` : null;
-  }).filter(Boolean);
-  const porDefecto = RUTA_CELDAS[POR_DEFECTO.code]?.[celda];
-  if (porDefecto) {
-    filas.push(`  <link rel="alternate" hreflang="x-default" href="${SITE}${porDefecto}">`);
-  }
-  return filas.join("\n");
-}
 
 /**
  * Los enlaces a las demás celdas, para el pie del bloque pre-renderizado.
@@ -264,7 +287,7 @@ function headCeldaHTML(data, idioma, celda, url) {
     `  <meta name="description" content="${esc(desc)}">`,
     `  <title>${esc(titulo)}</title>`,
     `  <link rel="canonical" href="${url}">`,
-    hreflangCeldaHTML(celda),
+    hreflangHTML(rutaCeldaEn(celda)),
     `  <meta property="og:title" content="${esc(titulo)}">`,
     `  <meta property="og:description" content="${esc(desc)}">`,
     `  <meta property="og:url" content="${url}">`,
@@ -433,16 +456,6 @@ function fichasDeProyecto(doc) {
   });
 }
 
-/**
- * hreflang de una ficha de proyecto: enlaza sus tres variantes de idioma.
- * `sufijo` es "/<slug>". (El índice es la celda portfolio y lleva los suyos.)
- */
-function hreflangProyectoHTML(sufijo) {
-  const alternas = IDIOMAS.map(i =>
-    `  <link rel="alternate" hreflang="${i.htmlLang}" href="${SITE}${i.proyBase}${sufijo}">`
-  ).join("\n");
-  return `${alternas}\n  <link rel="alternate" hreflang="x-default" href="${SITE}${POR_DEFECTO.proyBase}${sufijo}">`;
-}
 
 /** Datos estructurados de una página de proyecto. */
 function jsonLdProyecto(proyecto, seo, idioma) {
@@ -526,15 +539,7 @@ ${hreflang}
   <link rel="preload" href="/fonts/inknut-400-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/style.css">
 ${jsonLd}
-  <script>
-    (function() {
-      var t = localStorage.getItem("meowrhino-theme");
-      if (!t && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";
-      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
-      var c = localStorage.getItem("meowrhino-tinte");
-      if (c) document.documentElement.setAttribute("data-tinte", c);
-    })();
-  </script>
+${scriptTemaHTML()}
 </head>
 <body class="easy-mode">
   <div class="fondo" aria-hidden="true"></div>
@@ -555,24 +560,23 @@ ${controlesHTML(idioma, idiomas, zoom)}
 /**
  * Abajo a la derecha, como en el lienzo (navigation.js, pintarVecinosHeader):
  * `zoom(…)` (en las que tienen texto que leer), `modo(…)` con todos los modos
- * e `idioma(…)` con las tres versiones de esta página. Mismos <details> y
- * mismas clases, así que se ven igual. El zoom lo mueve js/ficha.js.
+ * e `idioma(…)` con las tres versiones de esta página. Mismos <details>,
+ * mismas clases y mismas etiquetas (js/controles.js), así que se ven igual.
+ * Les da vida js/ficha.js.
  */
 function controlesHTML(idioma, idiomas, zoom = true) {
   const nombres = NOMBRES_MODO[idioma.code] || NOMBRES_MODO.es;
-  const modos = Object.entries(MODOS).map(([m, { base, tinte }]) =>
-    `<button type="button" class="menu-btn" data-modo="${m}" data-modo-base="${base}"${tinte ? ` data-modo-tinte="${tinte}"` : ""}>${nombres[m] || m}</button>`
+  const modos = Object.keys(MODOS).map(m =>
+    `<button type="button" class="menu-btn" data-modo="${m}">${nombres[m] || m}</button>`
   ).join("");
   const langs = idiomas.map(i =>
     `<a class="menu-btn${i.activo ? " is-active" : ""}" href="${esc(i.href)}" hreflang="${esc(i.htmlLang)}"${i.activo ? ' aria-current="true"' : ""}>${esc(i.etiqueta)}</a>`
   ).join("");
-  const etiquetaModo = idioma.code === "es" ? "modo" : "mode";
-  const etiquetaIdioma = idioma.code === "en" ? "language" : "idioma";
-  const [menos, mas] = idioma.code === "en" ? ["smaller text", "larger text"] : ["letra más pequeña", "letra más grande"];
+  const [menos, mas] = textosZoom(idioma.code);
   return `  <div class="controles">${zoom ? `
     <details class="desplegable" name="controles"><summary class="menu-btn">zoom(100%)</summary><div class="desplegable-opciones"><button type="button" class="menu-btn" data-zoom="-1" aria-label="${menos}">−</button><button type="button" class="menu-btn" data-zoom="1" aria-label="${mas}">+</button></div></details>` : ""}
-    <details class="desplegable" name="controles"><summary class="menu-btn">${etiquetaModo}(${nombres.claro})</summary><div class="desplegable-opciones">${modos}</div></details>${langs ? `
-    <details class="desplegable" name="controles"><summary class="menu-btn">${etiquetaIdioma}(${esc(idioma.code)})</summary><div class="desplegable-opciones">${langs}</div></details>` : ""}
+    <details class="desplegable" name="controles"><summary class="menu-btn">${etiquetaModo(idioma.code)}(${nombres.claro})</summary><div class="desplegable-opciones">${modos}</div></details>${langs ? `
+    <details class="desplegable" name="controles"><summary class="menu-btn">${etiquetaIdioma(idioma.code)}(${esc(idioma.code)})</summary><div class="desplegable-opciones">${langs}</div></details>` : ""}
   </div>`;
 }
 
@@ -639,7 +643,7 @@ function paginaProyecto({ proyecto, seo }, idioma, vecinos = {}) {
     description: pick(seo.description, idioma.code),
     url: `${SITE}${idioma.proyBase}/${seo.slug}`,
     imagen: `${SITE}/${proyecto.imagen}`,
-    hreflang: hreflangProyectoHTML(`/${seo.slug}`),
+    hreflang: hreflangHTML(rutaFichaEn(seo.slug)),
     jsonLd: jsonLdProyecto(proyecto, seo, idioma),
     cuerpo: renderProyectoHTML(proyecto, seo, idioma.code, rutas, medidasDe),
     idiomas: rutas.idiomas,
@@ -671,13 +675,6 @@ function landingsDe(landingsDoc, idioma) {
   });
 }
 
-/** hreflang de una landing: sus tres rutas, que landings.json declara. */
-function hreflangLandingHTML(landing) {
-  const alternas = IDIOMAS.map(i =>
-    `  <link rel="alternate" hreflang="${i.htmlLang}" href="${SITE}${pick(landing.ruta, i.code)}">`
-  ).join("\n");
-  return `${alternas}\n  <link rel="alternate" hreflang="x-default" href="${SITE}${pick(landing.ruta, POR_DEFECTO.code)}">`;
-}
 
 /**
  * Los proyectos que enseña una landing, resueltos contra las fichas: los de
@@ -725,7 +722,7 @@ function paginaLanding({ landing, url }, idioma, fichas, landingsDoc) {
     idioma, title, description, url,
     ogType: "website",
     imagen: `${SITE}/favicon/og-image.png`,
-    hreflang: hreflangLandingHTML(landing),
+    hreflang: hreflangHTML(rutaLandingEn(landing)),
     jsonLd: scriptLdHTML({
       "@context": "https://schema.org",
       "@type": "Service",
@@ -767,34 +764,13 @@ function leerLastmod() {
 function sitemapXML(fichas = [], lastmod = {}, landingsDoc = { landings: [] }) {
   const fechaDe = (archivo) => lastmod[archivo].fecha;
 
-  /** Alternativas hreflang de una página de proyecto, para el sitemap. */
-  const alternasProy = (sufijo) =>
-    IDIOMAS.map(i =>
-      `    <xhtml:link rel="alternate" hreflang="${i.htmlLang}" href="${SITE}${i.proyBase}${sufijo}"/>`
-    ).join("\n") +
-    `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${POR_DEFECTO.proyBase}${sufijo}"/>`;
-
-  // Cada variante declara sus alternativas también aquí: es la forma que
-  // recomienda Google para que no dependa solo de las etiquetas del HTML.
-  const alternas = IDIOMAS.map(i =>
-    `    <xhtml:link rel="alternate" hreflang="${i.htmlLang}" href="${urlDe(i)}"/>`
-  ).join("\n") +
-    `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${urlDe(POR_DEFECTO)}"/>`;
-
   // Una entrada por celda y por idioma. La portada mantiene prioridad 1.0; las
-  // demás celdas son páginas de contenido, no la puerta del sitio.
-  const alternasCelda = (celda) =>
-    IDIOMAS.map(i => {
-      const r = RUTA_CELDAS[i.code]?.[celda];
-      return r ? `    <xhtml:link rel="alternate" hreflang="${i.htmlLang}" href="${SITE}${r}"/>` : null;
-    }).filter(Boolean).join("\n") +
-    (RUTA_CELDAS[POR_DEFECTO.code]?.[celda]
-      ? `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${RUTA_CELDAS[POR_DEFECTO.code][celda]}"/>`
-      : "");
-
+  // demás celdas son páginas de contenido, no la puerta del sitio. Cada
+  // variante declara sus alternativas también aquí: es la forma que recomienda
+  // Google para que no dependa solo de las etiquetas del HTML.
   const homes = IDIOMAS.flatMap(i => celdasDe(i).map(({ celda, url, archivo }) => `  <url>
     <loc>${url}</loc>
-${alternasCelda(celda)}
+${alternasXML(rutaCeldaEn(celda))}
     <lastmod>${fechaDe(archivo)}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>${celda === "welcome" ? "1.0" : celda === "buscaminas" ? "0.3" : "0.8"}</priority>
@@ -804,8 +780,7 @@ ${alternasCelda(celda)}
   // celdas, así que llevan su misma prioridad.
   const landings = IDIOMAS.flatMap(i => landingsDe(landingsDoc, i).map(({ landing, url, archivo }) => `  <url>
     <loc>${url}</loc>
-${IDIOMAS.map(j => `    <xhtml:link rel="alternate" hreflang="${j.htmlLang}" href="${SITE}${pick(landing.ruta, j.code)}"/>`).join("\n")}
-    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${pick(landing.ruta, POR_DEFECTO.code)}"/>
+${alternasXML(rutaLandingEn(landing))}
     <lastmod>${fechaDe(archivo)}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -827,7 +802,7 @@ ${landings}
   </url>
 ${fichas.flatMap(({ seo }) => IDIOMAS.map(i => `  <url>
     <loc>${SITE}${i.proyBase}/${seo.slug}</loc>
-${alternasProy(`/${seo.slug}`)}
+${alternasXML(rutaFichaEn(seo.slug))}
     <lastmod>${fechaDe(`${i.proyDir}/${seo.slug}.html`)}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
@@ -853,7 +828,7 @@ function leerJSON(nombre) {
  * Lo que se publica tal cual, además de los cv en pdf. dist/ lleva solo esto y
  * lo generado: lo que no esté aquí no llega al dominio (las notas, este script).
  */
-const ESTATICOS = ["style.css", "js", "img", "fonts", "favicon", "robots.txt",
+const ESTATICOS = ["style.css", "js", "img", "fonts", "favicon",
   "_redirects", "_headers", "archive-data.json"];
 
 function copiarEstaticos() {
@@ -872,8 +847,11 @@ function main() {
     const proyectosDoc = leerJSON("proyectos.json");
     const landingsDoc = leerJSON("landings.json");
     const archiveData = leerJSON("archive-data.json");
-    const plantillaHome = readFileSync(join(ROOT, "index.html"), "utf8");
-    const plantillaArchive = readFileSync(join(ROOT, "archive.html"), "utf8");
+    // Las plantillas no llevan el dominio ni el script del tema: se los pone el build.
+    const plantilla = (nombre, tema) => reemplazarBloque(
+      readFileSync(join(ROOT, nombre), "utf8").replaceAll("{{SITE}}", SITE), "tema", scriptTemaHTML(tema));
+    const plantillaHome = plantilla("index.html", { marcarJS: true });
+    const plantillaArchive = plantilla("archive.html", { oscuroPorDefecto: true, marcarJS: true });
 
     // Se resuelve ANTES de escribir nada: si a un proyecto le falta algo,
     // mejor fallar con el dist/ anterior intacto que a medio generar.
@@ -940,6 +918,7 @@ function main() {
     escribir("404.html", pagina404());
 
     escribir("sitemap.xml", sitemapXML(fichas, lastmod, landingsDoc));
+    escribir("robots.txt", `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
     // El data.json que baja el navegador: el de la raíz más los proyectos, sin
     // sus textos de ficha ni las notas `_comment`, y en una línea.
     escribir("data.json", JSON.stringify(data, (clave, valor) => (clave === "_comment" ? undefined : valor)));

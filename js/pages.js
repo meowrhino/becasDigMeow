@@ -5,20 +5,10 @@
 // Cada función renderiza una celda/página específica:
 // Tools, Welcome, Statement, Metodología, Footer, Contacto.
 
-import { currentLang, buildLangButtons, attachLangListeners, onLangChange } from "./data.js";
-import { setupZoom } from "./zoom.js";
-import { setupScrollGradients } from "./scroll-gradients.js";
-// Las tarjetas que rebotan, apagadas con la portada nueva (PRUEBA): mientras no
-// se pinten, su módulo y el del rebote no se piden. Vuelven igual que el cupón:
-// este import con comillas dobles y su llamada en renderWelcome.
-// import { renderWelcomeCard } from './welcome-card.js';
-// Cupón desactivado de momento (recuperable para una promoción): descomentar
-// este import (con comillas dobles) y la llamada en renderWelcome. Con comillas
-// simples el build no lo ve como import y quita el modulepreload.
-// import { renderWelcomeCupon } from './welcome-cupon.js';
-import { repaintWithFade, escapeHTML, pintarLista, capturaAlPasar } from "./utils.js";
+import { currentLang } from "./data.js";
+import { escapeHTML, pintarLista, capturaAlPasar } from "./utils.js";
 import { rutaProyectos, rutaCelda, slugify } from "./rutas.js";
-import { escConEnlaces } from "./easy-template.js";
+import { escConEnlaces, pickLang as pick } from "./easy-template.js";
 import { filaHTML, montarFila } from "./fila.js";
 
 /** true si el viewport es táctil / móvil (mismo criterio que portfolio usa para hover/pointer). */
@@ -133,8 +123,6 @@ function emojiAlCentro(el, content) {
 export const celdaHeadingHTML = (data, nombre, lang, clase = "celda-h") =>
   `<h2 class="${clase}">${escapeHTML(tituloCelda(data, nombre, lang))}</h2>`;
 
-/** Escoge la variante de idioma (con fallback a es) de un objeto {es,en,cat}. */
-const pick = (obj, lang) => (obj?.[lang] ?? obj?.es ?? "");
 
 // --- Links ---
 
@@ -197,9 +185,6 @@ export function renderTools(data) {
   capturaAlPasar(lista, el.querySelector(".plista-captura"), items,
     (i) => `/${i.imagen || `img/links/${slugify(i.nombre)}.webp`}`);
   pintar(currentLang);
-  onLangChange(pintar);
-
-  setupScrollGradients(el.querySelector(".tools-scroll-wrapper"), el.querySelector(".tools-content"));
 }
 
 // --- Welcome ---
@@ -210,15 +195,8 @@ export function renderWelcome(data) {
 
   const w = data.welcome;
 
-  // Solo wordmark y tagline. El cupón va detrás (posicionado absoluto) y los
-  // lang-btn por encima (z-index mayor); `renderWelcomeCupon` engancha sus
-  // listeners al recorrer los .lang-btn dentro de la celda.
-  //
-  // Debajo hubo un hint («navega con los botones de los lados») que explicaba
-  // la interfaz en vez de enseñar trabajo; en su lugar, más portfolio
-  // moviéndose: renderWelcomeCard pinta varias tarjetas. La letra pequeña
-  // también estuvo aquí y era demasiado concreta demasiado pronto; se mudó al
-  // dorso del cupón, que es donde alguien ya está interesado.
+  // Solo wordmark, tagline y la fila de webs. Aquí estuvieron el cupón y las
+  // tarjetas que rebotaban (quitados el 22 nov 2026; siguen en el historial de git).
   //
   // El nombre y la tagline enlazan los dos al about: «estudio de diseño web en
   // barcelona» es la frase que alguien que acaba de llegar quiere ampliar, y
@@ -262,7 +240,6 @@ export function renderWelcome(data) {
       <a class="welcome-tagline" href="${hrefAbout(currentLang)}">${marquee(pick(w.tagline, currentLang), 8)}</a>
     </div>
     ${filaHTML(proyectos.length, web)}
-    ${buildLangButtons()}
   `;
 
   montarFila(el.querySelector(".welcome-proyectos"), { activa: () => el.classList.contains("activa") });
@@ -274,23 +251,6 @@ export function renderWelcome(data) {
   document.querySelector("body > .welcome-content")?.remove();
   const nombre = el.querySelector(".welcome-content");
   document.body.appendChild(nombre);
-  const titleEl = nombre.querySelector(".welcome-title");
-  const taglineEl = nombre.querySelector(".welcome-tagline");
-
-  // i18n en sitio: reusa el mecanismo de attachLangListeners (mismo patrón
-  // que el cupón, que registra el suyo aparte sobre la misma celda).
-  attachLangListeners(el, (lang) => {
-    titleEl.href = rutaCelda("about", lang);
-    if (taglineEl) {
-      taglineEl.querySelectorAll(".marquee-pista > span").forEach(s => { s.textContent = pick(w.tagline, lang); });
-      taglineEl.href = rutaCelda("about", lang);
-    }
-    el.querySelectorAll(".wp").forEach(a => { a.href = `${rutaProyectos(lang)}/${a.dataset.slug}`; });
-  });
-
-  // renderWelcomeCupon(el, w.cupon);
-  // PRUEBA: las tarjetas que rebotaban quedan apagadas mientras se prueba la portada nueva.
-  // renderWelcomeCard(el, data.portfolio?.proyectos);
 }
 
 // --- Metodología ---
@@ -330,21 +290,9 @@ export function renderMetodologia(data) {
     <div class="scroll-wrapper metodologia-scroll-wrapper">
       <div class="scroll-content metodologia-content">${buildContent(currentLang)}</div>
     </div>
-    ${buildLangButtons()}
   `;
 
-  const wrapper = el.querySelector(".metodologia-scroll-wrapper");
-  const content = el.querySelector(".metodologia-content");
-  const checkScroll = setupScrollGradients(wrapper, content);
-  const applyScale = setupZoom(el, content, checkScroll);
-  const mirarEmoji = emojiAlCentro(el, content);
-
-  attachLangListeners(el, (lang) => {
-    repaintWithFade(el, content,
-      () => { content.innerHTML = buildContent(lang); },
-      () => { applyScale(); requestAnimationFrame(checkScroll); requestAnimationFrame(mirarEmoji); }
-    );
-  });
+  emojiAlCentro(el, el.querySelector(".metodologia-content"));
 
 }
 
@@ -404,47 +352,26 @@ export function renderCondiciones(data) {
     <div class="scroll-wrapper footer-scroll-wrapper">
       <div class="scroll-content footer-content">${buildContent(currentLang)}</div>
     </div>
-    ${buildLangButtons()}
   `;
 
-  const wrapper = el.querySelector(".footer-scroll-wrapper");
-  const content = el.querySelector(".footer-content");
-  const checkScroll = setupScrollGradients(wrapper, content);
-  const applyScale = setupZoom(el, content, checkScroll);
-  const mirarEmoji = emojiAlCentro(el, content);
-
-  attachLangListeners(el, (lang) => {
-    repaintWithFade(el, content,
-      () => { content.innerHTML = buildContent(lang); },
-      () => { content.scrollTop = 0; applyScale(); checkScroll(); mirarEmoji(); });
-  });
+  emojiAlCentro(el, el.querySelector(".footer-content"));
 }
 
 // --- About y statement ---
 
 /**
- * La caja de texto con scroll que comparten about y statement: pinta el
- * contenido, engancha los degradados de scroll y el zoom, y lo repinta con
- * fundido al cambiar de idioma. Es el mismo montaje que lleva metodología.
+ * La caja de texto con scroll que comparten about, statement y reseña: pinta
+ * el contenido y engancha el emoji. Es el mismo montaje que lleva
+ * metodología.
  */
 function montarCeldaTexto(el, prefijo, buildContent) {
   el.innerHTML = `
     <div class="scroll-wrapper ${prefijo}-scroll-wrapper">
       <div class="scroll-content ${prefijo}-content">${buildContent(currentLang)}</div>
     </div>
-    ${buildLangButtons()}
   `;
-  const wrapper = el.querySelector(`.${prefijo}-scroll-wrapper`);
   const content = el.querySelector(`.${prefijo}-content`);
-  const checkScroll = setupScrollGradients(wrapper, content);
-  const applyScale = setupZoom(el, content, checkScroll);
-  const mirarEmoji = content.querySelector("[data-emoji]") ? emojiAlCentro(el, content) : () => {};
-  attachLangListeners(el, (lang) => {
-    repaintWithFade(el, content,
-      () => { content.innerHTML = buildContent(lang); },
-      () => { applyScale(); requestAnimationFrame(checkScroll); requestAnimationFrame(mirarEmoji); }
-    );
-  });
+  if (content.querySelector("[data-emoji]")) emojiAlCentro(el, content);
 }
 
 // `escConEnlaces` y no `escapeHTML`: algunos párrafos citan su fuente con un

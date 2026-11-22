@@ -9,6 +9,10 @@
 // que se desincronicen. Fuente única de contenido: data.json.
 
 import { rutaProyectos, rutaCelda, slugify } from "./rutas.js";
+import { escapeHTML as esc } from "./utils.js";
+
+// El mismo escape que el lienzo (utils.js), con su nombre corto de siempre.
+export { esc };
 
 /** Escoge la variante de idioma de un objeto {es,en,cat}, con fallback a es. */
 export const pickLang = (obj, lang) => obj?.[lang] ?? obj?.es ?? "";
@@ -28,10 +32,6 @@ export function cabeceraCelda(data, celda, lang) {
   const texto = (campo) => pickLang(fuente?.[campo], lang).replaceAll("{n}", n);
   return { titulo: texto("title"), descripcion: texto("description") };
 }
-
-export const esc = (s) => String(s ?? "")
-  .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-  .replace(/"/g, "&quot;");
 
 /**
  * Como `esc`, pero deja pasar enlaces en markdown, `[texto](url)`, y cursivas,
@@ -76,9 +76,9 @@ export const ui = (lang) => UI[lang] || UI.es;
 
 // Titular de venta por idioma (el wordmark vive en el pie).
 export const HERO = {
-  es:  { eyebrow: "estudio de diseño web · barcelona", titular: "diseño web en barcelona: tu web en un mes, sin cuotas." },
-  en:  { eyebrow: "web design studio · barcelona",     titular: "web design in barcelona: your website in a month, no monthly fees." },
-  cat: { eyebrow: "estudi de disseny web · barcelona", titular: "disseny web a barcelona: la teva web en un mes, sense quotes." },
+  es:  { eyebrow: "estudio de diseño web · barcelona", titular: "diseño web en barcelona: tu web en un mes, sin cuotas.", cta: "escríbeme" },
+  en:  { eyebrow: "web design studio · barcelona",     titular: "web design in barcelona: your website in a month, no monthly fees.", cta: "let's talk" },
+  cat: { eyebrow: "estudi de disseny web · barcelona", titular: "disseny web a barcelona: la teva web en un mes, sense quotes.", cta: "escriu-me" },
 };
 
 /**
@@ -90,8 +90,7 @@ export const HERO = {
  * distintas: el pre-render describía las 21 capturas en castellano también en
  * /en y /ca, y la rejilla se limitaba a `p.nombre`, que no dice nada.
  *
- * Las tres cadenas ya existían por duplicado en welcome-card.js y en el UI de
- * proyecto-template.js; esto es el tercer sitio, que era el que faltaba.
+ * Las tres cadenas ya existían en el UI de proyecto-template.js.
  * Si un proyecto trae su propio `alt` en data.json, manda ese.
  */
 const ALT_SUFIJO = {
@@ -132,20 +131,16 @@ export const titularCelda = (celda, lang) =>
   TITULARES[celda]?.[lang] ?? TITULARES[celda]?.es ?? "";
 
 export function heroHTML(data, lang) {
-  const c = data.welcome.cupon;
-  const t = c[lang] || c.es || {};
   const h = HERO[lang] || HERO.es;
-  const subject = encodeURIComponent(t.subject || "");
-  const mailto = `mailto:${c.email}?subject=${subject}`;
-  // Sin el cupón: la portada con JS ya no lo pinta (renderWelcomeCupon está
-  // desactivado en pages.js), y el pre-render enseña lo mismo que ve el
-  // visitante. Queda el titular con la keyword y el botón de escribir.
+  const subject = encodeURIComponent(pickLang(data.contacto?.asunto, lang));
+  const mailto = `mailto:${data.contacto?.email}?subject=${subject}`;
+  // El titular con la keyword y el botón de escribir.
   return `
     <section class="easy-hero" id="top">
       <p class="easy-eyebrow">${esc(h.eyebrow)}</p>
       <h1 class="easy-hero-title">${esc(h.titular)}</h1>
       <div class="easy-hero-cta">
-        <a class="easy-btn" href="${mailto}">${esc(t.cta || "escríbeme")}</a>
+        <a class="easy-btn" href="${mailto}">${esc(h.cta)}</a>
       </div>
     </section>`;
 }

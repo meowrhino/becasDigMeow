@@ -8,12 +8,10 @@
 import {
   configurarNavegacion,
   crearCeldas,
-  crearZoneLabel,
   crearHeader,
   crearOverlay,
   leerHash,
   actualizarVista,
-  actualizarTamanoMinimapInline,
   pintarConstelacion,
   cerrarMinimapExpandido,
   getOverlayEl,
@@ -70,7 +68,6 @@ setupKeyboardNav({
   irHacia,
 });
 setupResizeDebounce({
-  actualizarTamanoMinimapInline,
   pintarConstelacion,
 });
 
@@ -121,7 +118,6 @@ configurarNavegacion({
 });
 
 crearCeldas();
-crearZoneLabel();
 crearHeader();
 // «studio», la vuelta a la web, va en la barra de arriba, entre las páginas
 // vecinas y «menú». Fuera de .menu-vecinos: esa la rehace navigation.js cada

@@ -27,7 +27,7 @@
 // anterior: compartir o recargar te mandaba a otro sitio. Sin JS la página
 // cuenta en dos párrafos qué es (buscaminasHTML, en js/easy-template.js).
 
-import { currentLang, buildLangButtons, attachLangListeners } from "./data.js";
+import { currentLang } from "./data.js";
 import { bordeCelda } from "./navigation.js";
 
 /**
@@ -318,15 +318,8 @@ class Tablero {
 // La celda
 // ============================================
 //
-// Los controles viven en los BORDES, como los de cualquier otra celda:
-//
-//   arriba → la navegación a `statement`, y debajo las minas y el tiempo
-//   abajo  → los tres niveles, igual que `archive` en el portfolio
-//
-// Se cuelgan de `bordeCelda(el, lado)`: el borde es un sitio compartido, la
-// navegación se queda pegada al canto y lo de la celda se aparta hacia dentro.
-// El de arriba ya viene compartido —`statement` está justo encima—, así que
-// el caso raro es el caso normal y se ve siempre.
+// Los controles viven en los BORDES de la celda: arriba las minas y el
+// tiempo, abajo los tres niveles. Se cuelgan de `bordeCelda(el, lado)`.
 //
 // No hay menú de inicio: al entrar ya hay una partida fácil empezada. Un menú
 // era una pantalla intermedia para elegir algo que se puede cambiar en
@@ -336,7 +329,7 @@ export function renderBuscaminas() {
   const el = document.querySelector(".celda.buscaminas");
   if (!el) return;
 
-  let lang = currentLang;
+  const lang = currentLang;
   let estado = "jugando";   // 'jugando' | 'fin'
   let nivel = "easy";
   let tablero = null;
@@ -363,12 +356,9 @@ export function renderBuscaminas() {
         <button type="button" class="bm-otra"></button>
       </div>
     </div>
-    ${buildLangButtons()}
   `;
 
-  // Los controles, a sus bordes. No llevan `data-permanent` porque no son
-  // `.nav-label`: crearNavLabels() solo barre etiquetas de navegación, y esto
-  // no lo es aunque se le parezca.
+  // Los controles, a sus bordes.
   bordeCelda(el, "top").insertAdjacentHTML("beforeend", `
     <div class="bm-marcador">
       <span class="bm-dato"><i class="bm-dato-label"></i> <b class="bm-minas">0</b></span>
@@ -607,19 +597,6 @@ export function renderBuscaminas() {
   };
 
   window.addEventListener("resize", reajustarPronto);
-
-  // Los nav-label los pone navigation.js DESPUÉS de este render: si el borde
-  // de arriba o el de abajo pasa a tener dos filas, al tablero le sobra alto
-  // del que creía tener.
-  // Observar la celda es la forma de enterarse sin que navigation.js tenga que
-  // saber que el buscaminas existe. Solo mira los hijos directos, y reajustar()
-  // no toca ninguno, así que no se muerde la cola.
-  new MutationObserver(reajustarPronto).observe(el, { childList: true });
-
-  // Basta con registrarlo una vez: data.js dispara TODOS los callbacks al
-  // cambiar de idioma, se haya pulsado el botón de la celda que se haya
-  // pulsado. Registrarlo también en onLangChange solo repintaba dos veces.
-  attachLangListeners(el, (l) => { lang = l; textos(); });
 
   textos();
   empezar("easy");

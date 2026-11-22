@@ -2,18 +2,18 @@
 // PORTFOLIO — Grid de proyectos con crossfade
 // ============================================
 
-import { currentLang, obtenerDatos, onLangChange } from "./data.js";
+import { currentLang, obtenerDatos } from "./data.js";
+import { controlesDeCelda } from "./navigation.js";
+import { etiquetaVista } from "./controles.js";
 import { slugify } from "./proyecto-template.js";
-import { altProyecto } from "./easy-template.js";
+import { altProyecto, pickLang as pick } from "./easy-template.js";
 import { rutaProyectos } from "./rutas.js";
-import { setupScrollGradients } from "./scroll-gradients.js";
 import { pintarLista, capturaAlPasar } from "./utils.js";
 import { celdaHeadingHTML } from "./pages.js";
 
 /** Texto del enlace al caso de estudio, por idioma. */
 const CASO = { es: "ver el caso", en: "see the case", cat: "veure el cas" };
 
-const pick = (obj, lang) => obj?.[lang] ?? obj?.es ?? "";
 
 // --- Estado centralizado de cycling de imágenes ---
 
@@ -174,11 +174,6 @@ export function renderPortfolio(data) {
     <div class="scroll-wrapper portfolio-scroll-wrapper">
       <div class="scroll-content portfolio-scroll-content">
         ${celdaHeadingHTML(data, "portfolio", currentLang, "about-pregunta")}
-        <div class="pvista">
-          <span>(${proyectos.length})</span>
-          <button type="button" class="pvista-btn is-active" data-vista="lista"></button>
-          <button type="button" class="pvista-btn" data-vista="rejilla"></button>
-        </div>
         <div class="plista" id="portfolio-lista"></div>
         <img class="plista-captura" alt="" decoding="async">
         <div class="portfolio-grid" id="portfolio-grid" hidden></div>
@@ -188,34 +183,24 @@ export function renderPortfolio(data) {
 
   iniciarCiclosImagenes(proyectos);
   renderGridProyectos(proyectos);
-  const traducirLista = renderListaProyectos(el, proyectos);
-  onLangChange(traducirLista);
+  renderListaProyectos(el, proyectos);
 
-  // PRUEBA (19 nov 2026): dos vistas, lista al entrar y la rejilla de siempre a un clic.
-  el.querySelector(".pvista").addEventListener("click", (e) => {
-    const btn = e.target.closest(".pvista-btn");
-    if (!btn) return;
-    const lista = btn.dataset.vista === "lista";
-    el.querySelector("#portfolio-lista").hidden = !lista;
+  // Dos vistas, lista al entrar y la rejilla a un clic: `vista(…)` en la barra.
+  let vista = "lista";
+  const ponerVista = (v) => {
+    vista = v;
+    el.querySelector("#portfolio-lista").hidden = v !== "lista";
     el.querySelector(".plista-captura").classList.remove("visible");
-    el.querySelector("#portfolio-grid").hidden = lista;
-    el.querySelectorAll(".pvista-btn").forEach(b => b.classList.toggle("is-active", b === btn));
+    el.querySelector("#portfolio-grid").hidden = v === "lista";
+  };
+  controlesDeCelda("portfolio", () => {
+    const t = VISTA[currentLang] || VISTA.es;
+    return [{
+      etiqueta: `${etiquetaVista(currentLang)}(${t[vista]})`,
+      opciones: ["lista", "rejilla"].map(v => ({ texto: t[v], activa: v === vista, alPulsar: () => ponerVista(v) })),
+    }];
   });
 
-  // El enlace al caso cambia de texto Y de ruta con el idioma (/portfolio,
-  // /en/portfolio, /ca/portfolio), así que hay que repintar los dos.
-  onLangChange((lang) => {
-    el.querySelectorAll(".pgrid-caso").forEach((a, i) => {
-      const p = proyectos[i];
-      if (!p) return;
-      a.textContent = pick(CASO, lang);
-      a.href = `${rutaProyectos(lang)}/${slugify(p.nombre)}`;
-    });
-  });
-
-  const wrapper = el.querySelector(".portfolio-scroll-wrapper");
-  const content = el.querySelector(".portfolio-scroll-content");
-  setupScrollGradients(wrapper, content);
 
   // El enlace a "archive" vivía aquí, en el borde de abajo. Se fue al pie del
   // about, junto al de neocities: el archivo es de manu, no del portfolio de
@@ -232,10 +217,7 @@ const CAMPOS = ["nombre", "sector"];
 // `sector` va por idioma en proyectos.json; el nombre es un nombre propio.
 const textoCampo = (p, campo, lang) => (typeof p[campo] === "string" ? p[campo] : pick(p[campo], lang));
 
-/**
- * La lista: una fila por web con sus datos, que se ordena al pulsar una columna.
- * Devuelve la función que la retraduce (cabeceras, botones de vista y rutas).
- */
+/** La lista: una fila por web con sus datos, que se ordena al pulsar una columna. */
 function renderListaProyectos(el, proyectos) {
   const lista = el.querySelector("#portfolio-lista");
   const pintar = pintarLista(lista, proyectos, {
@@ -247,13 +229,7 @@ function renderListaProyectos(el, proyectos) {
 
   capturaAlPasar(lista, el.querySelector(".plista-captura"), proyectos, (p) => `/${p.imagen}`);
 
-  const traducir = (lang) => {
-    pintar(lang);
-    const t = VISTA[lang] || VISTA.es;
-    el.querySelectorAll(".pvista-btn").forEach(b => { b.textContent = t[b.dataset.vista]; });
-  };
-  traducir(currentLang);
-  return traducir;
+  pintar(currentLang);
 }
 
 function renderGridProyectos(proyectos) {

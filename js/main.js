@@ -4,20 +4,17 @@
 //
 // Orquesta la carga de todos los módulos del studio.
 
-import { cargarDatos, obtenerDatos, currentLang, onLangChange, actualizarEnlacesIdioma } from "./data.js";
+import { cargarDatos, obtenerDatos, currentLang, LANGS } from "./data.js";
 import {
   configurarNavegacion,
   crearCeldas,
-  crearZoneLabel,
   crearHeader,
   crearOverlay,
   leerURL,
   actualizarVista,
-  actualizarTamanoMinimapInline,
   pintarConstelacion,
   cerrarMinimapExpandido,
   setTraductorNombres,
-  refrescarTextosCeldas,
   getOverlayEl,
   irHacia,
   getNombrePagina,
@@ -106,7 +103,6 @@ setupKeyboardNav({
   irHacia,
 });
 setupResizeDebounce({
-  actualizarTamanoMinimapInline,
   pintarConstelacion,
 });
 
@@ -186,7 +182,11 @@ configurarNavegacion({
   },
   posInicial: { y: 3, x: 3 },   // welcome
   editable: "meowrhino-constelacion",
-  onUpdate: () => { sincronizarCabecera(); actualizarEnlacesIdioma(); cargarBuscaminas(); },
+  // Solo las páginas de texto llevan `zoom(…)` en la barra.
+  conZoom: ["about", "statement", "reseña", "metodología", "condiciones"],
+  // Cada idioma es una URL: cambiar de idioma es ir a esta celda en el otro.
+  idioma: { idiomas: LANGS, actual: () => currentLang, ruta: rutaCelda },
+  onUpdate: () => { sincronizarCabecera(); cargarBuscaminas(); },
   rutas: {
     de: (nombre) => rutaCelda(nombre, currentLang),
     celdaDe: (pathname) => celdaDeRuta(pathname)?.nombre ?? null,
@@ -194,14 +194,13 @@ configurarNavegacion({
 });
 
 crearCeldas();
-crearZoneLabel();
 crearHeader();
 crearOverlay();
 leerURL();
 renderizarContenido().then(() => {
-  // Zone labels traducibles: los identificadores de celda (hash, clase css)
-  // NO cambian; solo el texto visible. Los que faltan en `zoneLabels` (o los 3
-  // idiomas iguales: portfolio, tools, links…) se muestran con su identificador.
+  // Los nombres de las celdas, traducidos: los identificadores (ruta, clase
+  // css) NO cambian; solo el texto visible. Los que faltan en `zoneLabels` (o
+  // los 3 idiomas iguales: portfolio, links…) se muestran con su identificador.
   const data = obtenerDatos();
   const zoneLabels = data?.zoneLabels || {};
   setTraductorNombres((nombre) => {
@@ -209,7 +208,4 @@ renderizarContenido().then(() => {
     return t ? (t[currentLang] ?? t.es ?? nombre) : nombre;
   });
   actualizarVista();
-  refrescarTextosCeldas();       // aplica traducción al minimapa expandido
-  onLangChange(refrescarTextosCeldas);
-  onLangChange(sincronizarCabecera);
 });

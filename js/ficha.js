@@ -4,33 +4,20 @@
 //
 // La barra y los desplegables de abajo los escribe build-seo.js en el HTML;
 // aquí se les da vida a los de `zoom(…)` y `modo(…)` (idioma son enlaces), y a
-// la fila de capturas. Sin
+// la fila de capturas. Lo compartido con el lienzo está en controles.js; sin
 // importar theme.js: arrastra data.js, que cambiaría el <html lang> de la ficha.
 
 import { montarFila } from "./fila.js";
+import { ZOOMS, modoActual, ponerModo, cerrarAlClicarFuera } from "./controles.js";
 
-const raiz = document.documentElement;
-
-document.querySelectorAll("[data-modo-base]").forEach(boton => {
-  boton.addEventListener("click", () => {
-    const { modoBase: base, modoTinte: tinte } = boton.dataset;
-    raiz.setAttribute("data-theme", base);
-    localStorage.setItem("meowrhino-theme", base);
-    if (tinte) {
-      raiz.dataset.tinte = tinte;
-      localStorage.setItem("meowrhino-tinte", tinte);
-    } else {
-      delete raiz.dataset.tinte;
-      localStorage.removeItem("meowrhino-tinte");
-    }
-    marcarModo();
-  });
+document.querySelectorAll(".controles [data-modo]").forEach(boton => {
+  boton.addEventListener("click", () => { ponerModo(boton.dataset.modo); marcarModo(); });
 });
 
 /** El modo activo, subrayado, y su nombre en `modo(…)`. */
 function marcarModo() {
-  const activo = raiz.dataset.tinte || (raiz.getAttribute("data-theme") === "dark" ? "oscuro" : "claro");
-  document.querySelectorAll("[data-modo]").forEach(b => {
+  const activo = modoActual();
+  document.querySelectorAll(".controles [data-modo]").forEach(b => {
     const es = b.dataset.modo === activo;
     b.classList.toggle("is-active", es);
     if (es) {
@@ -41,22 +28,17 @@ function marcarModo() {
 }
 marcarModo();
 
-// zoom(…): los mismos pasos que en el lienzo (navigation.js, ZOOMS). La letra
-// la escala `--zoom` en .about-content (style.css).
-const ZOOMS = [85, 100, 115, 130];
+// zoom(…): los mismos pasos que en el lienzo.
 let zoomIdx = 1;
 document.querySelectorAll("[data-zoom]").forEach(boton => {
   boton.addEventListener("click", () => {
     zoomIdx = Math.min(ZOOMS.length - 1, Math.max(0, zoomIdx + Number(boton.dataset.zoom)));
-    raiz.style.setProperty("--zoom", ZOOMS[zoomIdx] / 100);
+    document.documentElement.style.setProperty("--zoom", ZOOMS[zoomIdx] / 100);
     boton.closest(".desplegable").querySelector("summary").textContent = `zoom(${ZOOMS[zoomIdx]}%)`;
   });
 });
 
-// Un clic fuera cierra el desplegable abierto, como en el lienzo.
-document.addEventListener("click", (e) => {
-  document.querySelectorAll(".controles details[open]").forEach(d => { if (!d.contains(e.target)) d.open = false; });
-});
+cerrarAlClicarFuera();
 
 // La galería de la ficha, en la fila de la portada. Sin la rueda: aquí la
 // página baja, y la fila la atraparía al pasar el ratón por encima.
