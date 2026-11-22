@@ -39,7 +39,16 @@ import { renderLandingHTML } from "./js/landing-template.js";
 import { MODOS, NOMBRES_MODO } from "./js/modos.js";
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
-const DIST = join(ROOT, "dist");
+// Cada servidor de desarrollo puede escribir en su propia carpeta
+// (`DIST=dist-3001 npm run dev`): si dos builds comparten dist/, uno lo borra
+// mientras el otro lo sirve y salen páginas a medias o 404 falsos. Solo
+// dist o dist-<algo>, dentro del repo: el build empieza borrando esa carpeta.
+const NOMBRE_DIST = process.env.DIST || "dist";
+if (!/^dist(-[\w-]+)?$/.test(NOMBRE_DIST)) {
+  console.error(`✗ DIST="${NOMBRE_DIST}" no vale: tiene que ser dist o dist-<algo>.`);
+  process.exit(1);
+}
+const DIST = join(ROOT, NOMBRE_DIST);
 const LASTMOD_PATH = join(ROOT, "lastmod.json");
 const SITE = "https://meowrhino.studio";
 
@@ -939,7 +948,7 @@ function main() {
     const apuntado = JSON.stringify(lastmod, null, 2) + "\n";
     if (apuntado !== JSON.stringify(previo, null, 2) + "\n") writeFileSync(LASTMOD_PATH, apuntado);
 
-    console.log(`✓ dist/: ${Object.keys(lastmod).length} páginas · ${IDIOMAS.length} idiomas · ` +
+    console.log(`✓ ${NOMBRE_DIST}/: ${Object.keys(lastmod).length} páginas · ${IDIOMAS.length} idiomas · ` +
       `${fichas.length} proyectos · ${landingsDoc.landings.length} páginas long-tail.`);
   } catch (err) {
     console.error(`✗ ${err.message}`);

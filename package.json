@@ -6,6 +6,6 @@
   "description": "meowrhino studio — sitio del estudio de diseño web.",
   "scripts": {
     "build": "node build-seo.js",
-    "dev": "trap 'kill 0' EXIT INT TERM; node --watch-path=js --watch-path=img --watch-path=style.css --watch-path=index.html --watch-path=archive.html --watch-path=data.json --watch-path=proyectos.json --watch-path=landings.json --watch-path=archive-data.json build-seo.js & npx serve dist -l ${PORT:-3000} & wait"
+    "dev": "trap 'kill 0' EXIT INT TERM; node --watch-path=js --watch-path=img --watch-path=style.css --watch-path=index.html --watch-path=archive.html --watch-path=data.json --watch-path=proyectos.json --watch-path=landings.json --watch-path=archive-data.json build-seo.js & npx serve ${DIST:-dist} -l ${PORT:-3000} & wait"
   }
 }

@@ -9,3 +9,4 @@ NO_*.html
 
 # Lo construye build-seo.js y lo publica Cloudflare: no va en git
 dist/
+dist-*/
