@@ -2717,10 +2717,10 @@ html.js #seo-prerender {
 .proy-texto { font-family: var(--font-text); }
 
 /* --- Un emoji por página (metodología, statement, condiciones): el del
-   bloque que pasa por el centro, grande en el hueco de la derecha, con un
-   fundido al entrar y al salir (manu, 21 y 22 nov 2026: «para que rellene ese
-   espacio»; «solo uno visible»). Lo pone emojiAlCentro (pages.js). En móvil no
-   sale. --- */
+   bloque que pasa por el centro, repetido y pequeño como pegatinas sueltas por
+   el hueco de la derecha, con un fundido al entrar y al salir (manu, 21 y 22
+   nov 2026: «para que rellene ese espacio»; «solo uno visible»; «más pequeño y
+   varias veces»). Lo pone emojiAlCentro (pages.js). En móvil no sale. --- */
 .footer-seccion > .footer-apartado { max-width: none; }
 .footer-apartado > p { max-width: 33em; }
 .bloque-emoji { display: none; }
@@ -2728,12 +2728,10 @@ html.js #seo-prerender {
   .bloque-emoji {
     display: block;
     position: absolute;
-    top: 50%;
+    top: 8dvh;
+    bottom: 8dvh;
     left: calc(10dvw + 33rem);
-    right: 0;
-    text-align: center;
-    transform: translateY(-50%);
-    font-size: min(24vw, 55dvh);
+    right: 2dvw;
     line-height: 1;
     user-select: none;
     pointer-events: none;
@@ -2741,6 +2739,17 @@ html.js #seo-prerender {
     transition: opacity 0.35s ease;
   }
   .bloque-emoji.visible { opacity: 1; }
+  /* cada pegatina, centrada en su sitio: sale con un pop (el mismo salto que
+     las webs de la portada) y se va encogiendo */
+  .bloque-emoji i {
+    position: absolute;
+    translate: -50% -50%;
+    font-style: normal;
+    animation: pegatina-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;   /* sin «forwards»: si no, el encogerse de .fuera no se vería */
+    transition: scale 0.3s ease-in;
+  }
+  .bloque-emoji i.fuera { scale: 0; }
+  @keyframes pegatina-pop { from { scale: 0; } }
 }
 
 /* --- Bienvenida: las webs en fila, pasando de lado, cada una un poco más

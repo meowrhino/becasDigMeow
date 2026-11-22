@@ -46,12 +46,26 @@ export const tituloCelda = (data, nombre, lang) => {
 /**
  * El emoji de un bloque de texto (metodología, statement, condiciones). El
  * bloque solo lo lleva apuntado (`data-emoji`); en la página hay uno solo, el
- * del bloque que pasa por el centro, grande en el hueco de la derecha, y entra
- * y sale con un fundido (manu, 22 nov 2026). En móvil no sale (style.css,
- * `.bloque-emoji`). Cada uno un poco movido y girado según su número, como las
- * capturas de los links y el portfolio: desordenado pero igual en cada visita.
+ * del bloque que pasa por el centro, y entra y sale con un fundido (manu,
+ * 22 nov 2026). Sale repetido y pequeño, como pegatinas sueltas por el hueco
+ * de la derecha que van saliendo y escondiéndose: en grande el emoji del
+ * sistema se veía borroso. En móvil no sale (style.css, `.bloque-emoji`).
  */
 const emojiHTML = (e, i) => e ? ` data-emoji="${escapeHTML(e)}" data-i="${i}"` : "";
+
+/**
+ * Una pegatina en la casilla `c` de una rejilla de 3×3 sobre el hueco de la
+ * derecha: dentro de su casilla, sitio, tamaño y giro al azar. La rejilla solo
+ * está para que no se amontonen.
+ */
+const pegatina = (emoji, c, retraso = 0) => {
+  const x = ((c % 3) + 0.15 + Math.random() * 0.7) * 100 / 3;
+  const y = (Math.floor(c / 3) + 0.15 + Math.random() * 0.7) * 100 / 3;
+  const tam = Math.round(56 + Math.random() * 54);   // hasta 110 px: más grande, el emoji del sistema se emborrona
+  const giro = Math.round(Math.random() * 44 - 22);
+  return `<i data-c="${c}" style="left:${x}%;top:${y}%;font-size:${tam}px;rotate:${giro}deg;animation-delay:${retraso}ms">${emoji}</i>`;
+};
+const quieto = matchMedia("(prefers-reduced-motion: reduce)");
 
 /** Pone el emoji de la celda y devuelve la función que lo vuelve a mirar. */
 function emojiAlCentro(el, content) {
@@ -59,7 +73,15 @@ function emojiAlCentro(el, content) {
   span.className = "bloque-emoji";
   span.setAttribute("aria-hidden", "true");
   el.appendChild(span);
-  let actual = null, espera;
+  let actual = null, espera, emoji = "";
+  // Mientras se lee un bloque, cada poco una pegatina se va y sale en otro sitio.
+  setInterval(() => {
+    if (!actual || quieto.matches || !el.classList.contains("activa")) return;
+    const vieja = span.children[Math.floor(Math.random() * span.children.length)];
+    if (!vieja || vieja.classList.contains("fuera")) return;
+    vieja.classList.add("fuera");
+    setTimeout(() => vieja.outerHTML = pegatina(emoji, +vieja.dataset.c), 300);
+  }, 900);
   const mirar = () => {
     const r = content.getBoundingClientRect();
     const y = r.top + r.height / 2;
@@ -73,10 +95,10 @@ function emojiAlCentro(el, content) {
     clearTimeout(espera);
     if (!bloque) return;
     espera = setTimeout(() => {
-      const i = +bloque.dataset.i;
-      span.textContent = bloque.dataset.emoji;
-      span.style.translate = `${((i * 7) % 11) - 5}dvw ${((i * 11) % 17) - 8}dvh`;
-      span.style.rotate = `${((i * 13) % 31) - 15}deg`;
+      emoji = escapeHTML(bloque.dataset.emoji);
+      // Salen de una en una, en orden al azar.
+      const orden = [...Array(9).keys()].sort(() => Math.random() - 0.5);
+      span.innerHTML = orden.map((c, n) => pegatina(emoji, c, n * 70)).join("");
       span.classList.add("visible");
     }, fundido);
   };
