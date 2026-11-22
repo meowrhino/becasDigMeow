@@ -516,7 +516,7 @@ export function renderStatement(data) {
       </section>`).join("");
     return `
       <h2 class="about-pregunta">${escapeHTML(d.titulo)}</h2>
-      <div class="about-entrada">${(d.entrada || []).map(parrafo).join("")}</div>
+      <div class="about-entrada"${emojiHTML(d.emoji)}>${(d.entrada || []).map(parrafo).join("")}</div>
       <div class="about-texto">${secciones}</div>`;
   };
 
@@ -539,7 +539,7 @@ export function renderResena(data) {
     if (!d) return "";
     return `
       <h2 class="about-pregunta">${escapeHTML(d.titulo)}</h2>
-      <div class="about-entrada">${(d.entrada || []).map(parrafo).join("")}</div>
+      <div class="about-entrada"${emojiHTML(d.emoji)}>${(d.entrada || []).map(parrafo).join("")}</div>
       <div class="about-contacto">
         <a class="contacto-email" href="${escapeHTML(r.url)}" target="_blank" rel="noopener">${escapeHTML(d.boton)}</a>
       </div>

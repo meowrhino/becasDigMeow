@@ -2719,10 +2719,14 @@ html.js #seo-prerender {
    va cambiando entre los del bloque (manu, 22 nov 2026). Mientras se ve, la
    barra le deja 2rem: si no le cabe al lado, pasa a dos líneas. */
 @media (max-width: 1024px) {
+  /* La letra de la barra (Inknut) con interlineado «normal» hacía cada línea de
+     38 px: cuando la barra se parte en dos, quedaban muy separadas. A 1.4 son
+     24 px, lo justo para pulsar con el dedo (manu, 22 nov 2026). */
+  .header-topright .menu-btn { line-height: 1.4; }
   .bloque-emoji {
     position: absolute;
     top: var(--barra);
-    left: var(--margen);
+    left: calc(var(--margen) + 0.5rem);
     z-index: var(--z-header);
     pointer-events: none;
     opacity: 0;
@@ -2732,7 +2736,7 @@ html.js #seo-prerender {
   .bloque-emoji i { display: block; font-style: normal; font-size: 1.15rem !important; line-height: 1; transform-origin: center; animation: pegatina-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) backwards; transition: scale 0.3s ease-in; }
   .bloque-emoji i:not(:first-child) { display: none; }
   .bloque-emoji i.fuera { scale: 0; }
-  body:has(.celda.activa .bloque-emoji.visible) .header-topright { max-width: calc(100dvw - 2 * var(--margen) - 2rem); }
+  body:has(.celda.activa .bloque-emoji.visible) .header-topright { max-width: calc(100dvw - 2 * var(--margen) - 2.8rem); }
 }
 @media (min-width: 1025px) {
   .bloque-emoji {
